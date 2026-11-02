@@ -266,3 +266,10 @@ def test_parked_after_a_restart_the_saved_position_is_used():
   assert F.where_now(lambda k: live, lambda k: saved) == (41.6, -93.6)       # the live fix first
   assert F.where_now(lambda k: None, lambda k: saved) == (40.0, -90.0)      # after a restart: the saved one
   assert F.where_now(lambda k: None, lambda k: None) is None
+
+
+def test_the_bar_shows_the_hour_we_are_in():
+  fc = _forecast([CLEAR], hours=[(T0, 3, 1.0, True), (T0 + 3600, 0, 3.0, False)])
+  assert F.now_conditions(fc, T0 + 600, metric=False) == ("cloud", "34°")
+  assert F.now_conditions(fc, T0 + 3700, metric=True) == ("moon", "3°")
+  assert F.now_conditions(fc, T0 + 7300, metric=True) is None and F.now_conditions(None, T0, True) is None

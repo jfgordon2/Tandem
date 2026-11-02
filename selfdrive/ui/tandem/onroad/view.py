@@ -42,7 +42,7 @@ from openpilot.selfdrive.ui.tandem.onroad.layers import (AT_LIMIT, BAR_HEIGHT, B
 from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, LimitWatch, chips_for, snapshot
 from openpilot.selfdrive.ui.tandem.onroad.limits import LimitFollower, LimitOfferState, OfferChime
 from openpilot.selfdrive.ui.tandem.onroad.lead import GapTracker, detailed_tag_on, lead_anchor, read_lead_sample
-from openpilot.selfdrive.ui.tandem.forecast import Announcer, heads_up, shared_service, wall_clock
+from openpilot.selfdrive.ui.tandem.forecast import Announcer, heads_up, now_conditions, shared_service, wall_clock
 from openpilot.selfdrive.ui.tandem.prefs import MAX_FOLLOWS_LIMIT, WEATHER_CHIME, WEATHER_HEADS_UP
 
 CONFIRM_TIMEOUT = 30.0      # StarPilot rejects an unanswered higher limit after 30 s
@@ -519,7 +519,14 @@ class EssentialsOnroadView(StarPilotOnroadView):
     arrive, left = self._route_progress(metric) if navigating else ("", "")
     return BarState(engaged=bool(ui_state.engaged), can_engage=bool(ui_state.started), set_speed=set_speed,
                     unit="km/h" if metric else "mph", street=street, navigating=navigating, arrive=arrive, left=left,
-                    heading=extras.heading(get_compass_text()))
+                    heading=extras.heading(get_compass_text()), weather=None if navigating else self._weather_now(metric))
+
+  def _weather_now(self, metric: bool) -> tuple[str, str] | None:
+    """The forecast's current hour for the bar, without a route (Weather heads-up's forecast, General › Temperature)."""
+    if not WEATHER_HEADS_UP.get():
+      return None
+    from openpilot.selfdrive.ui.tandem.prefs import celsius
+    return now_conditions(self._forecast.forecast, wall_clock(), celsius(metric))
 
   def _route_progress(self, metric: bool) -> tuple[str, str]:
     """Arrival time and what's left, from navInstruction. ui_state doesn't subscribe to it, so this view does."""

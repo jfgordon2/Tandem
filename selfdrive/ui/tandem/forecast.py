@@ -331,6 +331,17 @@ def outlook(forecast: Forecast | None, now: float, metric: bool, hours: int = OU
   return Outlook(SKY[sky][0 if day else 1], hour_icon(sky, day), False, clock(forecast.fetched_at, off), tiles)
 
 
+def now_conditions(forecast: Forecast | None, now: float, metric: bool) -> tuple[str, str] | None:
+  """The hour we're in, for the drive screen's bar: (icon, "34°"). metric: °C (prefs.celsius)."""
+  if forecast is None:
+    return None
+  hour = next(((code, temp, day) for t, code, temp, day in forecast.hours if t <= now < t + 3600), None)
+  if hour is None:
+    return None
+  code, temp, day = hour
+  return hour_icon(code, day), f"{round(temp if metric else temp * 9 / 5 + 32)}°"
+
+
 _shared: list[ForecastService] = []
 
 

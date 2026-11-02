@@ -36,6 +36,7 @@ class BarState:
   arrive: str = ""                # e.g. "4:52 PM"
   left: str = ""                  # e.g. "12 min · 8.4 mi"
   heading: str = ""               # StarPilot's compass, when on: "NE"
+  weather: tuple[str, str] | None = None   # without a route: the weather now, (icon, "34°"), from the forecast
 
 
 def _glyph_button(name: str, on_click: Callable[[], None]) -> Button:
@@ -109,6 +110,8 @@ class OnroadBar(Component):
       body = inset(center, x=T.px(22))
       if state.heading:
         body = inset(body, left=heading_tag(body, state.heading) + T.px(20))
+      if state.weather:   # the weather now at the end, as the compass tag starts it; the street centers between them
+        body = inset(body, right=weather_now(body, *state.weather) + T.px(20))
       if state.street:
         self._street(body, state.street, Align.CENTER)
 
@@ -128,6 +131,16 @@ class OnroadBar(Component):
 
 
 STREET_SIZE = T.font_px(22)   # the street name, and the compass tag beside it at the same size
+
+
+def weather_now(rect: rl.Rectangle, icon: str, temperature: str) -> float:
+  """The weather icon and temperature at the end of rect, at the street name's size. Returns the width used."""
+  text_w = draw.text_width(temperature, STREET_SIZE, T.FONT_BOLD)
+  w = T.px(26) + T.px(8) + text_w
+  icon_box, text = row(rl.Rectangle(rect.x + rect.width - w, rect.y, w, rect.height), [T.px(26), FILL], T.px(8))
+  draw.icon(icon_box, icon, T.TEXT_SECONDARY, T.px(26))
+  draw.text(text, temperature, STREET_SIZE, T.TEXT, T.FONT_BOLD)
+  return w
 
 
 def heading_width(heading: str) -> float:

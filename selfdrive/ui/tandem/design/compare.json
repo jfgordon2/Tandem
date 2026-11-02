@@ -365,7 +365,7 @@
   {
    "mock": "onroadextras",
    "title": "Onroad › StarPilot extras",
-   "note": "Matches: pedal tiles and the model chip under the driver monitor, the compass tag at the start of the bar (where it sits while navigating), the stopping line, lane and blind-spot washes, radar dots and the border halves, over a stand-in road.",
+   "note": "Matches: pedal tiles and the model chip under the driver monitor, the compass tag at the start of the bar (where it sits while navigating), the weather now at its end without a route, the stopping line, lane and blind-spot washes, radar dots and the border halves, over a stand-in road.",
    "match": true,
    "built": "onroad_extras"
   },
