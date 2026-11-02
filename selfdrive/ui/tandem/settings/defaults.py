@@ -44,7 +44,7 @@ def _apply(store: SettingsStore, boot_logos=None) -> None:
   alerts = Alerts(store)
   alerts.set_preset(0)                    # Auto
   for key, on in (("GreenLightAlert", True), ("LeadDepartingAlert", True), ("SpeedLimitChangedAlert", False),
-                  ("LoudBlindspotAlert", False)):
+                  ("LoudBlindspotAlert", False), ("WeatherChime", True)):
     alerts.set_chime(key, on)
 
   for bundle in BUNDLES:

@@ -16,6 +16,7 @@ from openpilot.selfdrive.ui.tandem.overlays import Sheet
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, SettingRow
 from openpilot.selfdrive.ui.tandem.settings.pages import TitledPage
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
+from openpilot.selfdrive.ui.tandem.prefs import WEATHER_CHIME
 
 AUTO = 101          # StarPilot's "Auto": the level follows cabin noise
 SAFETY_FLOOR = 25   # StarPilot never plays take-control warnings below this
@@ -45,7 +46,10 @@ CHIMES = [
   ("Lead Departure", "When the car ahead pulls away", "LeadDepartingAlert"),
   ("Speed Limit Change", "When the posted limit changes", "SpeedLimitChangedAlert"),
   ("Loud Blind Spot", "Signalling into an occupied lane, even when paused", "LoudBlindspotAlert"),
+  ("Weather heads-up", "Once, when rain, snow or storms are coming", "WeatherChime"),
 ]
+# Chimes that are Tandem's own, kept as marker files (prefs.py) rather than params the device's prebuilt registry lacks.
+OWN_CHIMES = {"WeatherChime": WEATHER_CHIME}
 
 
 class Alerts:
@@ -95,14 +99,17 @@ class Alerts:
     return "Custom volume" if self.preset == CUSTOM else f"{PRESETS[self.preset]} volume"
 
   def chimes_summary(self) -> str:
-    on = [name for name, _, key in CHIMES if self._store.get_bool(key)]
+    on = [name for name, _, key in CHIMES if self.chime(key)]
     return ", ".join(on).capitalize() if on else "No extra chimes"
 
   def chime(self, key: str) -> bool:
-    return self._store.get_bool(key)
+    return OWN_CHIMES[key].get() if key in OWN_CHIMES else self._store.get_bool(key)
 
   def set_chime(self, key: str, on: bool) -> None:
-    self._store.write({key: on})
+    if key in OWN_CHIMES:
+      OWN_CHIMES[key].set(on)
+    else:
+      self._store.write({key: on})
 
 
 class VolumeEditor(Component):

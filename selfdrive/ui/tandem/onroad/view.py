@@ -42,7 +42,8 @@ from openpilot.selfdrive.ui.tandem.onroad.layers import (AT_LIMIT, BAR_HEIGHT, B
 from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, LimitWatch, chips_for, snapshot
 from openpilot.selfdrive.ui.tandem.onroad.limits import LimitFollower, LimitOfferState, OfferChime
 from openpilot.selfdrive.ui.tandem.onroad.lead import GapTracker, detailed_tag_on, lead_anchor, read_lead_sample
-from openpilot.selfdrive.ui.tandem.prefs import MAX_FOLLOWS_LIMIT
+from openpilot.selfdrive.ui.tandem.forecast import Announcer, ForecastService, heads_up, last_position, wall_clock
+from openpilot.selfdrive.ui.tandem.prefs import MAX_FOLLOWS_LIMIT, WEATHER_CHIME, WEATHER_HEADS_UP, prefs_dir
 
 CONFIRM_TIMEOUT = 30.0      # StarPilot rejects an unanswered higher limit after 30 s
 PREVIEW_SECONDS = 2.5
@@ -155,6 +156,9 @@ class EssentialsOnroadView(StarPilotOnroadView):
     self._memory = Params(memory=True)
     self._memory.put_nonblocking("SteeringHeadroomWarning", 0.0)
     self._chips = ChipStack()
+    self._forecast = ForecastService(prefs_dir() / ".tandem_forecast.json", lambda: last_position(lambda: self._memory.get("LastGPSPosition")),
+                                     WEATHER_HEADS_UP.get)
+    self._announcer = Announcer()
     self._limits = LimitWatch()
     self._chip_list: list = []   # (chip, opacity), nearest the bar first
     self._headroom = Headroom()
@@ -460,6 +464,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
     self._layers_visible = bool(ui_state.started and self._draw_hud_controls and alert is None and not self._headroom_warning)
     now = time.monotonic()
     current = snapshot(ui_state, self._navigating(), self._limits, now)
+    self._apply_forecast(current)
     self._braking_for_lead = any(chip.key == "traffic" for chip in chips_for(current))
     self._chip_list = self._chips.update(current, now, alert is not None or self._headroom_warning)
     if not self._layers_visible:
@@ -542,6 +547,20 @@ class EssentialsOnroadView(StarPilotOnroadView):
     index = min(range(len(times)), key=lambda i: abs(times[i] - PREVIEW_SECONDS))
     max_lat = ui_state.CP.maxLateralAccel if ui_state.CP and ui_state.CP.maxLateralAccel else 3.0
     return float(yaw_rates[index]) * float(ui_state.sm["carState"].vEgo) / max_lat
+
+  def _apply_forecast(self, current) -> None:
+    """Weather heads-up (forecast.py): its chip from 15 minutes before rain, snow or storms until they end, and one soft
+    chime (the pre-alert, as the new-limit card uses) when an event is first seen within the hour."""
+    self._forecast.tick()
+    if not WEATHER_HEADS_UP.get():
+      return
+    wall = wall_clock()
+    hint = heads_up(self._forecast.forecast, wall)
+    show, chime = self._announcer.update(hint, wall)
+    if chime and ui_state.started and WEATHER_CHIME.get():   # Alerts › Chimes › Weather heads-up
+      self._memory.put_nonblocking("TestAlert", "preAlert")
+    if show and hint is not None:
+      current.forecast, current.forecast_active = (hint.text, hint.icon), hint.active
 
   def _chime_for(self, offer: LimitOffer | None) -> None:
     """The pre-alert chime as a new-limit card appears, through soundd's TestAlert (as StarPilot's sound previews play

@@ -6,6 +6,7 @@ from cereal import custom
 from openpilot.common.constants import CV
 from openpilot.selfdrive.ui.onroad.alert_renderer import Alert
 from openpilot.selfdrive.ui.tandem.onroad import view as onroad
+from openpilot.selfdrive.ui.tandem.forecast import Announcer
 from openpilot.selfdrive.ui.tandem.onroad.limits import LimitFollower, LimitOfferState, OfferChime
 from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, LimitWatch
 
@@ -33,6 +34,7 @@ def limit_view(monkeypatch):
   view._limits = LimitWatch()
   view._chips = ChipStack()
   view._headroom_warning = False
+  view._forecast, view._announcer = SimpleNamespace(tick=lambda: None, forecast=None), Announcer()
   view.chimes = []
   view._memory = SimpleNamespace(put_nonblocking=lambda key, value: view.chimes.append((key, value)))
 

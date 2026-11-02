@@ -10,6 +10,7 @@ Tandem 2026.11.01
   * MAX follows each new speed limit, so the car slows promptly when the limit drops
   * Choose whether higher and lower speed limits apply on their own or ask first
   * Status chips say why the car is slowing, stopping or paused
+  * Weather heads-up: a chip before rain, snow or storms start and until when they should stop
   * The steering arc warns before steering runs out, with Help steer at the limit
   * Alerts in three levels: info, warning and critical
   * Turn Signal: chevrons by the speed, or a jumping frog, pouncing cat or bouncing ball

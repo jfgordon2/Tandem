@@ -33,7 +33,7 @@
   {
    "mock": "drivingweather",
    "title": "Speed & Steering › Weather",
-   "note": "Matches: the four conditions are icon cards. Auto also writes preset amounts.",
+   "note": "Matches: the four conditions are icon cards. Auto also writes preset amounts. Adds the Weather heads-up switch.",
    "match": true
   },
   {
@@ -75,7 +75,7 @@
   {
    "mock": "alerts",
    "title": "Alerts",
-   "note": "Matches: Volume and Chimes side by side. The presets add Auto.",
+   "note": "Matches: Volume and Chimes side by side. The presets add Auto. Chimes include Weather heads-up.",
    "match": true
   },
   {

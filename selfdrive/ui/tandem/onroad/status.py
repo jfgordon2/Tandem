@@ -56,6 +56,8 @@ class Snapshot:
   speed_limit: float = 0.0                 # display units
   weather: str = ""                        # "Rain", "Heavy rain", "Snow", "Fog": the condition Weather presets see
   weather_gap: bool = False                # ...and its preset adds following distance
+  forecast: tuple[str, str] | None = None  # Weather heads-up (forecast.py): ("Snow in 12 min" or "Snow until 8:15 PM", icon)
+  forecast_active: bool = False            # ...and it's falling now, so it stands in for the longer-gap chip
   events: set[str] = field(default_factory=set)
 
 
@@ -135,7 +137,9 @@ def chips_for(s: Snapshot) -> list[Chip]:
     out.append(Chip("coasting", "Coasting", ChipTone.INFO, "coast"))
   if s.pulse_glide and s.engaged and not s.speed_paused:
     out.append(Chip("pulse_glide", "Pulse & glide · gliding" if s.gliding else "Pulse & glide", ChipTone.INFO, "pulse_glide"))
-  if s.weather and s.weather_gap:
+  if s.forecast:
+    out.append(Chip("forecast", s.forecast[0], ChipTone.INFO, s.forecast[1]))
+  if s.weather and s.weather_gap and not (s.forecast and s.forecast_active):
     out.append(Chip("weather", f"{s.weather} · longer gap", ChipTone.INFO, {"Snow": "snow", "Fog": "fog"}.get(s.weather, "rain")))
   if green and not s.standstill:
     out.append(Chip("green_light", "Light is green", ChipTone.WAITING, "light_green"))
