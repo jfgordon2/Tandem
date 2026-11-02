@@ -2,6 +2,8 @@ import pyray as rl
 import scene_onroad as O
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.onroad.developer import STRIP_H, WIDTH, DevData, Lead, draw_lead_tag, draw_panel, draw_strip
+from openpilot.selfdrive.ui.tandem.onroad.lead import lead_anchor
+from scene_lead import car, chevron
 from openpilot.selfdrive.ui.tandem.onroad.layers import (DEV_ARC, ArcState, BarState, BAR_HEIGHT, BAR_MARGIN, HeadroomArc, OnroadBar,
                                                          dm_tile, draw_driver_monitor, draw_speed, draw_speed_limit, sign_tile)
 
@@ -20,8 +22,9 @@ def main(frame, save, out, tap, gui_app):
     draw_speed_limit(sign_tile(rect), "60", False, "MAP · +3")
     draw_driver_monitor(dm_tile(rect), 1.0, 1.0, True)
     cx = rect.x + rect.width / 2
-    rl.draw_triangle(rl.Vector2(cx, 560), rl.Vector2(cx - 28, 600), rl.Vector2(cx + 28, 600), rl.Color(240, 179, 90, 255))
-    draw_lead_tag(cx, 560, lead)
+    car(cx, 560, 120)
+    anchor = lead_anchor(chevron(cx, 560, 38))
+    draw_lead_tag(anchor.x, anchor.y, lead, anchored=True, bounds=rect)
     lift = STRIP_H + T.px(6)
     draw_strip(rl.Rectangle(rect.x, rect.y + rect.height - BAR_MARGIN - BAR_HEIGHT - lift, rect.width, STRIP_H), data)
     bar.render(rect)

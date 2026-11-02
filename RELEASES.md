@@ -6,6 +6,7 @@ Tandem 2026.11.01
   * Search settings from the hub
   * Tuner Mode for fine tuning; Developer View and Lead Insights as one switch each
 * Driving screen: the speed, sign and a bar with Menu, MAX, the street and Engage
+  * The car ahead has a gap tag with an anchor and a short entrance transition; Developer View keeps the additional lead data
   * MAX follows each new speed limit, so the car slows promptly when the limit drops
   * Choose whether higher and lower speed limits apply on their own or ask first
   * Status chips say why the car is slowing, stopping or paused

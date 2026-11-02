@@ -41,6 +41,8 @@ def warning_view(monkeypatch):
   view._headroom, view._arc_state = Headroom(), ArcState()
   view._headroom_warning = view._headroom_chimed = False
   view._memory = Memory()
+  view._gap_tracker = onroad.GapTracker()
+  view._gap_state = None
   view.model_renderer = SimpleNamespace(lane_line_color_override=None)
   view.alert_renderer = SimpleNamespace(get_alert=lambda _: alert[0], will_render=lambda: (fading[0], True), level=lambda: None)
   view.is_in_reverse = lambda: False

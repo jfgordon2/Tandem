@@ -41,6 +41,7 @@ from openpilot.selfdrive.ui.tandem.onroad.layers import (AT_LIMIT, BAR_HEIGHT, B
                                                          draw_turn_card, sign_tile, TURN_BELOW_SIGN, TURN_CARD_TOP)
 from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, LimitWatch, chips_for, snapshot
 from openpilot.selfdrive.ui.tandem.onroad.limits import LimitFollower, LimitOfferState, OfferChime
+from openpilot.selfdrive.ui.tandem.onroad.lead import GapTracker, detailed_tag_on, lead_anchor, read_lead_sample
 from openpilot.selfdrive.ui.tandem.prefs import MAX_FOLLOWS_LIMIT
 
 CONFIRM_TIMEOUT = 30.0      # StarPilot rejects an unanswered higher limit after 30 s
@@ -183,10 +184,11 @@ class EssentialsOnroadView(StarPilotOnroadView):
     self._layers_visible = False
     self._dev: DevData | None = None            # Developer View's readout, while StarPilot's Developer UI is on
     self.model_renderer._draw_lead_metrics = self._lead_tag   # Lead Insights' text becomes the mock's tag
-    # The lead marker is our ground bar (design/leadmarker.html); upstream still places and sizes it.
+    # The primary lead uses the shared developer tag with an anchor and connector (design/gaptag.html).
     self.model_renderer._draw_lead_indicator = self._draw_leads
     self.model_renderer._draw_adjacent_leads = self._draw_adjacent_leads
-    self._lead_settle = extras.LeadSettle()
+    self._gap_tracker = GapTracker()
+    self._gap_state = None
     self._braking_for_lead = False   # the Slowing for traffic chip's rule, so the bar turns amber with it
     self._nav_sm = None
 
@@ -263,25 +265,21 @@ class EssentialsOnroadView(StarPilotOnroadView):
       draw_lead_tag(chevron[1][0], min(p[1] for p in chevron), lead)
 
   def _draw_leads(self, radar_state) -> None:
-    """The car ahead as a ground bar: white, amber while braking for it, half opacity when the model is unsure, growing
-    in when it first appears. A second car ahead gets a faint bar. Upstream's _draw_lead_indicator, redrawn."""
+    """The primary lead's gap tag; secondary leads keep their faint ground bars and optional metrics."""
     mr = self.model_renderer
     leads = [radar_state.leadOne, radar_state.leadTwo]
-    threshold = mr._params.get_int("LeadDetectionProbability") or mr._params.get_int("LeadDetectionThreshold") or 50
-    threshold = threshold / 100.0 if threshold > 1.0 else threshold
-    first = mr._lead_vehicles[0] if mr._lead_vehicles else None
-    present = bool(first and first.chevron and leads[0] and leads[0].status)
-    scale = self._lead_settle.update(present, float(leads[0].dRel) if present else 0.0, time.monotonic())
     for i, lead in enumerate(mr._lead_vehicles):
+      if i == 0:
+        state, anchor = self._gap_state, lead_anchor(lead.chevron)
+        if state is not None and anchor is not None:
+          draw_lead_tag(anchor.x, anchor.y, state.lead, compact=not detailed_tag_on(ui_state, mr._params), value=state.label,
+                        anchored=True, braking=self._braking_for_lead, opacity=state.opacity, progress=state.progress,
+                        bounds=self._content_rect)
+        continue
       rect = extras.lead_bar_rect(lead.chevron)
       if rect is None:
         continue
-      if i == 0:
-        sure = not (leads[0] and leads[0].status) or leads[0].modelProb >= threshold
-        color = extras.LEAD_BRAKING_INK if self._braking_for_lead else extras.LEAD_INK
-        extras.draw_lead_bar(rect, color, 1.0 if sure else extras.LEAD_UNSURE, scale)
-      else:
-        extras.draw_lead_bar(rect, extras.LEAD_INK, extras.LEAD_FAINT, outline=False)
+      extras.draw_lead_bar(rect, extras.LEAD_INK, extras.LEAD_FAINT, outline=False)
       if mr._lead_info_enabled and i < len(leads) and leads[i] and leads[i].status:
         mr._draw_lead_metrics(False, lead.chevron, leads[i])
 
@@ -317,7 +315,15 @@ class EssentialsOnroadView(StarPilotOnroadView):
 
   def _update_state(self) -> None:
     super()._update_state()
+    self._update_gap_tag()
     self._update_headroom()
+
+  def _update_gap_tag(self) -> None:
+    # Update even on frames when upstream has no marker to draw, so losing a lead resets acquisition and smoothing.
+    params = self.model_renderer._params
+    threshold = params.get_int("LeadDetectionProbability") or params.get_int("LeadDetectionThreshold") or 50
+    sample = read_lead_sample(ui_state, threshold / 100.0 if threshold > 1.0 else threshold)
+    self._gap_state = self._gap_tracker.update(sample, time.monotonic())
 
   def _update_headroom(self) -> None:
     # Compute before the model and border draw, so all warning layers share this frame's state.
@@ -354,6 +360,8 @@ class EssentialsOnroadView(StarPilotOnroadView):
     return alerts.border(self.alert_renderer.level()) or super()._get_border_color()
 
   def hide_event(self):
+    self._gap_tracker.reset()
+    self._gap_state = None
     self._headroom.stage(0.0, time.monotonic(), active=False)
     self._arc_state = ArcState()
     self._headroom_warning = self._headroom_chimed = False

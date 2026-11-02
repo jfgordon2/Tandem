@@ -184,21 +184,53 @@ def draw_strip(rect: rl.Rectangle, data: DevData) -> None:
     draw.text(rl.Rectangle(x + lw, cell.y, vw, cell.height), value, STRIP_TEXT, T.TEXT, BOLD)
 
 
-def draw_lead_tag(center_x: float, top_y: float, lead: Lead) -> None:
-  """The tag above the lead car: distance, gap, then relative speed in amber when closing."""
-  parts = [(lead.distance, T.TEXT, BOLD), (lead.gap, LABEL, BOLD),
-           (lead.rel_speed, T.WARNING if lead.closing else T.TEXT_SECONDARY, BOLD)]
+def lead_tag_motion(progress: float) -> tuple[float, float, float]:
+  """The anchor appears first, then its connector, then the tag; progress uses LeadSettle's ease-out."""
+  p = max(0.0, min(1.0, progress))
+  return min(1.0, p / 0.25), max(0.0, min(1.0, (p - 0.15) / 0.55)), max(0.0, min(1.0, (p - 0.45) / 0.55))
+
+
+def draw_lead_tag(center_x: float, top_y: float, lead: Lead, *, compact: bool = False, value: str | None = None,
+                  anchored: bool = False, braking: bool = False, opacity: float = 1.0, progress: float = 1.0,
+                  bounds: rl.Rectangle | None = None) -> rl.Rectangle | None:
+  """One shared tag style: a gap in normal view, or the original distance/gap/relative-speed tag in developer views."""
+  ink = T.WARNING if braking else T.TEXT
+  parts = [(value if value is not None else lead.gap, ink, BOLD)] if compact else [
+    (lead.distance, T.TEXT, BOLD), (lead.gap, LABEL, BOLD), (lead.rel_speed, T.WARNING if lead.closing else T.TEXT_SECONDARY, BOLD)]
   size, gap, pad = T.font_px(14), T.px(12), T.px(12)
   widths = [draw.text_width(text, size, weight) for text, _, weight in parts]
-  w = sum(widths) + gap * 2 + pad * 2
+  w = max(T.px(65) if compact else 0.0, sum(widths) + gap * (len(parts) - 1) + pad * 2)
   h = T.px(30)
   box = rl.Rectangle(center_x - w / 2, top_y - h - T.px(14), w, h)
-  draw.fill(box, TAG_FILL, T.px(10))
-  draw.stroke(box, T.TRACK, T.px(10), T.px(1))
-  x = box.x + pad
+  anchor_alpha, connector, tag_alpha = lead_tag_motion(progress) if anchored else (0.0, 0.0, 1.0)
+  if bounds is not None:
+    margin = T.px(8)
+    if not (bounds.x + margin <= center_x <= bounds.x + bounds.width - margin
+            and bounds.y + margin <= top_y <= bounds.y + bounds.height - margin):
+      return None
+    box.x = min(max(box.x, bounds.x + margin), bounds.x + bounds.width - margin - w)
+  if anchored and anchor_alpha * opacity > 0.01:
+    point = rl.Vector2(center_x, top_y)
+    draw.disc(point, T.px(4.2), draw.alpha(TAG_FILL, opacity * anchor_alpha))
+    draw.disc(point, T.px(2.7), draw.alpha(ink, opacity * anchor_alpha))
+  if bounds is not None and (box.y < bounds.y + T.px(8) or w > bounds.width - T.px(16)):
+    return None       # keep the anchor when there is no space for a readable tag above it
+  if anchored and connector > 0:
+    length = T.px(10) * connector
+    for width, color in ((T.px(4.5), TAG_FILL), (T.px(1.5), ink)):
+      draw.fill(rl.Rectangle(center_x - width / 2, top_y - T.px(3) - length, width, length),
+                draw.alpha(color, opacity * anchor_alpha), width / 2)
+    box.y += T.px(4) * (1.0 - tag_alpha)
+  alpha = opacity * tag_alpha
+  if alpha <= 0.01:
+    return box
+  draw.fill(box, draw.alpha(TAG_FILL, alpha), T.px(10))
+  draw.stroke(box, draw.alpha(T.TRACK, alpha), T.px(10), T.px(1))
+  x = box.x + (w - sum(widths)) / 2 if compact else box.x + pad
   for (text, ink, weight), width in zip(parts, widths, strict=True):
-    draw.text(rl.Rectangle(x, box.y, width, box.height), text, size, ink, weight)
+    draw.text(rl.Rectangle(x, box.y, width, box.height), text, size, draw.alpha(ink, alpha), weight)
     x += width + gap
+  return box
 
 
 # ── Reading ──

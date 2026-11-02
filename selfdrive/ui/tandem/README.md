@@ -144,6 +144,7 @@ These are reached from a row or button, never as a tab:
 
 ### Where the code differs from the mocks
 
+- **Lead marker:** the newly approved `design/gaptag.html` supersedes the primary ground bar in `leadmarker.html` and the triangle in the older `onroaddev.html`. The anchor estimates the roof from StarPilot's projected ground point and marker size. A tag too near the top edge keeps only its anchor until there is room for readable text.
 - **Voice setup:** the download panel keeps the mock's layout, but its explanation now includes the one-time native engine setup instead of calling it only a 75 MB model download.
 - **Alerts:** the volume preset adds **Auto**, upstream's default, where the level follows cabin noise.
 - **Uploads:** offers Off, **Parked** and Always. Upstream can hold uploads while driving, but it has no Wi-Fi-only switch.
@@ -161,6 +162,7 @@ These are reached from a row or button, never as a tab:
 `screens.py` creates the screens MainLayout shows. Setting `TANDEM_SIDEBAR=0`, `TANDEM_HOME=0`, `TANDEM_SETTINGS=0` or `TANDEM_ONROAD=0` brings back upstream's version of that screen.
 
 - **Onroad** (`onroad/`): `EssentialsOnroadView` subclasses StarPilot's onroad view and keeps its camera, path and lane lines, and StarPilot still chooses every alert. It replaces the following:
+  - **Lead gap tag** (`onroad/lead.py`, `design/gaptag.html`): the primary car ahead uses the existing developer tag's JetBrains Mono, fill, border and padding, with an anchor and connector above its estimated roof. Normal view shows only the centered actual time gap; below 1 m/s it shows meters or feet, returning to seconds above 1.5 m/s. Developer View or Lead Insights preserves distance, gap and relative speed in the same tag. The display value has a 0.3 s smoothing time constant; driving data is unchanged. The existing `LeadSettle` rule starts the 250 ms anchor/connector/tag entrance for a new lead or a distance jump over 8 m, with full-size text throughout. Low-confidence values become `--` at 45% opacity. Invalid, stale or previous-drive messages hide the tag and reset its state. Secondary and adjacent cars retain their faint bars. Tests in `tests/test_lead_tag.py` cover data validity, smoothing, units, acquisition, centering and view integration.
   - **Bottom bar:** no panel or scrim behind it, so the road shows to the bottom edge. It holds menu (the sidebar), MAX − / + (StarPilot's `SLCForceCruiseSpeed`, only while engaged), the street name, and engage. The street name comes from mapd, with directions and street types shortened as signs write them (`onroad/streets.py`: "North Main Street" reads "N Main St"); the turn card shortens each street in its instruction the same way.
     - Engage and disengage go through the wheel controls' action counters.
     - While a route is active, the street name gives way to arrival time, what's left and End route. That reads `navInstruction` through the view's own subscriber, since `ui_state` doesn't subscribe to it.

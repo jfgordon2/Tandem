@@ -272,13 +272,19 @@
    "built": "onroad_default"
   },
   {
-   "mock": "leadmarker",
-   "title": "Onroad › Path and lead marker",
-   "note": "Matches: the white ground bar with its dark outline while following (top, with a faint bar for a car in the next lane) and amber while braking with the Slowing for traffic chip (bottom). The stand-in road's path is a flat blue; on the device the path is our blue fading toward the horizon.",
+   "mock": "gaptag",
+   "title": "Onroad › Lead gap tag",
+   "note": "Matches the approved shared developer tag: centered gap alone by default, distance near a stop, all three values in Developer View or Lead Insights, and -- while unsure. The anchor and connector appear before the full-size tag settles in over 250 ms. StarPilot's projected ground point and marker size estimate the roof; no vehicle outline detector is added. The stand-in road replaces the camera.",
    "match": true,
    "built": [
     "lead_following",
-    "lead_braking"
+    "lead_braking",
+    "gap_stopped",
+    "gap_uncertain",
+    "gap_developer",
+    "gap_acquire_40",
+    "gap_acquire_120",
+    "gap_acquire_250"
    ]
   },
   {
@@ -335,8 +341,8 @@
   {
    "mock": "onroaddev",
    "title": "Onroad, Developer View",
-   "note": "Matches, in JetBrains Mono, with the 18 px metrics strip. The tag shows only when the lead isn't the adjacent car.",
-   "match": true
+   "note": "Matches the developer panel, strip and tag typography. The approved gaptag.html supersedes this older mock's lead triangle: the same distance/gap/relative-speed tag now has an anchor, connector and acquisition transition.",
+   "match": false
   },
   {
    "mock": "onroadextras",

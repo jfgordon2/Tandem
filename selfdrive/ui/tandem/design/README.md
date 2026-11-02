@@ -30,6 +30,7 @@ Open any `.html` file in this folder in a browser. Each screen is 1125×563, the
 | Keyboard | [keyboard.html](keyboard.html) |
 | Progress, blocked, done, empty | [feedback.html](feedback.html) |
 | Path and lead marker | [leadmarker.html](leadmarker.html) |
+| Lead gap tag | [gaptag.html](gaptag.html) |
 | Parked home | [home.html](home.html) |
 | Home: alerts, update ready | [homealerts.html](homealerts.html), [homeupdate.html](homeupdate.html) |
 | First-run setup | [setup.html](setup.html) |
@@ -79,15 +80,18 @@ Open any `.html` file in this folder in a browser. Each screen is 1125×563, the
 
 ## Path and lead marker
 
-[leadmarker.html](leadmarker.html) shows each situation.
+[gaptag.html](gaptag.html) is the approved lead marker. It supersedes the primary ground bar in
+[leadmarker.html](leadmarker.html) and the triangle in the older Developer View mock.
 
 - **Path:** Essentials blue (`#5AAAF8`, 50% at the car fading toward the horizon) for the Standard and Thin path styles, through StarPilot's `PathColor`. Rainbow and Acceleration keep their own colors.
-- **Lead marker:** a white bar on the road under the car ahead, in place of upstream's arrow, with a thin dark outline so it holds up on bright roads.
-  - Amber while braking for the car ahead: the same rule as the Slowing for traffic chip, so they change together.
-  - Half opacity when the model isn't sure the car is there, rather than another color.
-  - Grows in over a quarter second when a car first appears or cuts in, then holds still.
-  - White and calm when stopped behind a car; the Stopped chip says why.
-  - A second car ahead, and cars in the next lanes (Lead Insights), get a faint bar without the outline.
+- **Lead marker:** the existing developer tag, with its JetBrains Mono type, dark fill, border and rounded corners. An anchor above the car's estimated roof and a thin connector associate it with the car.
+  - Normal view shows the actual time gap in seconds, centered in the tag. Near a stop it shows meters or feet, using the driver's units.
+  - Developer View or Lead Insights keeps the existing distance, time gap and relative speed, centered as a group.
+  - The anchor and connector, and the normal tag's value, turn amber with the Slowing for traffic rule. The developer values keep their existing text colors.
+  - An uncertain lead dims the tag to 45% opacity and replaces its numbers with `--`. Stale, invalid or missing data hides the tag.
+  - A new lead or the existing cut-in rule starts a 250 ms entrance: anchor, connector, then the tag fading in and rising slightly. Text stays at full size.
+  - The displayed value is smoothed. A small speed band keeps seconds and distance from flickering near a stop.
+  - Other detected cars retain their faint ground bars and existing optional Lead Insights behavior.
 
 ## Principles
 
