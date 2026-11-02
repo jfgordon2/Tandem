@@ -30,6 +30,7 @@ import re
 import sys
 import threading
 import time
+import traceback
 import urllib.request
 from pathlib import Path
 
@@ -88,6 +89,12 @@ def model_ready(folder: Path | None = None) -> bool:
 
 def say(**message) -> None:
   print(json.dumps(message), flush=True)
+
+
+def report_error(kind: str, error: Exception) -> None:
+  """Keep the traceback in worker.log as well as the short protocol error the keyboard follows."""
+  traceback.print_exception(error, file=sys.stderr)
+  say(error=kind, detail=str(error)[:200])
 
 
 # ---- audio ----
@@ -310,7 +317,8 @@ def build_model(state):
       return self.jits[x.shape](x, bound, audio)
 
     def forward(self, x, pos, audio):
-      x = self.token_embedding(x) + self.positional_embedding.shrink(((pos, pos + x.shape[-1]), None))
+      # Keep decoder activations in float32 like the encoder's; half-precision reductions fail QCOM kernel verification.
+      x = self.token_embedding(x).float() + self.positional_embedding.shrink(((pos, pos + x.shape[-1]), None))
       for block in self.blocks:
         x = block(x, xa=audio, mask=self.mask, pos=pos)
       return (self.ln(x) @ self.token_embedding.weight.T).realize()
@@ -401,7 +409,8 @@ def record(stop: threading.Event, open_stream=None) -> np.ndarray | None:
       def open_stream(cb):
         return sd.InputStream(channels=1, samplerate=RATE, blocksize=BLOCK, dtype="float32", callback=cb)
     stream = open_stream(callback)
-  except Exception:
+  except Exception as error:
+    traceback.print_exception(error, file=sys.stderr)
     return None
   heard, ends = [], Endpointer()
   with stream:
@@ -428,7 +437,7 @@ def main(style: str = "text") -> int:
     try:
       fetch_model(folder)
     except Exception as e:
-      say(error="download", detail=str(e)[:200])
+      report_error("download", e)
       return 1
 
   loaded: dict = {}
@@ -461,12 +470,12 @@ def main(style: str = "text") -> int:
   say(state="transcribing")
   loader.join()
   if "error" in loaded:
-    say(error="failed", detail=str(loaded["error"])[:200])
+    report_error("failed", loaded["error"])
     return 1
   try:
     text = transcribe(*loaded["model"], samples, style=style)
   except Exception as e:
-    say(error="failed", detail=str(e)[:200])
+    report_error("failed", e)
     return 1
   say(text=text) if text else say(error="no_speech")
   return 0

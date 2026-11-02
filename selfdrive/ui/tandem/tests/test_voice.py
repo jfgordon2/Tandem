@@ -1,7 +1,9 @@
 """Voice typing: the worker's audio and word handling (speech.py), the session that follows it (voice.py), and the mic key.
 
-The model itself needs the 75 MB download, so it isn't run here; speech.py --file runs it on a recording."""
+The full checkpoint needs a 75 MB download; a small synthetic model tests decoder precision here instead.
+speech.py --file runs the full model on a recording."""
 import json
+import io
 import sys
 import threading
 import time
@@ -10,6 +12,11 @@ import numpy as np
 import pytest
 
 from openpilot.selfdrive.ui.tandem import keyboard as K, speech, voice
+
+
+@pytest.fixture(autouse=True)
+def speech_cache(tmp_path, monkeypatch):
+  monkeypatch.setenv("TANDEM_SPEECH_DIR", str(tmp_path))
 
 
 # ---- speech.py ----
@@ -116,6 +123,52 @@ def test_record_stops_on_a_pause_and_on_stop(capsys):
   def broken(callback):
     raise OSError("no device")
   assert speech.record(threading.Event(), broken) is None
+  assert "OSError: no device" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize("stage", ["load", "transcribe"])
+def test_worker_failures_keep_a_traceback_and_report_failure(stage, monkeypatch, capsys):
+  monkeypatch.setattr(speech, "model_ready", lambda folder=None: True)
+  monkeypatch.setattr(speech, "record", lambda stop: np.ones(800, dtype=np.float32))
+  monkeypatch.setattr(speech.sys, "stdin", io.StringIO("stop\n"))
+  monkeypatch.setattr(speech, "load", lambda folder: (object(), object()))
+
+  def broken(*args, **kwargs):
+    raise RuntimeError(f"synthetic {stage} failure")
+
+  monkeypatch.setattr(speech, stage, broken)
+  assert speech.main() == 1
+  output = capsys.readouterr()
+  assert f"RuntimeError: synthetic {stage} failure" in output.err
+  assert json.loads(output.out.splitlines()[-1])["error"] == "failed"
+
+
+def test_half_precision_checkpoint_keeps_decoder_normalization_in_float32(tmp_path, monkeypatch):
+  monkeypatch.setenv("XDG_CACHE_HOME", str(tmp_path / "cache"))
+  from tinygrad import Context, Tensor, dtypes
+  from tinygrad.nn.state import get_state_dict
+
+  dims = dict(n_mels=2, n_audio_ctx=3, n_audio_state=4, n_audio_head=2, n_audio_layer=1,
+              n_vocab=8, n_text_ctx=8, n_text_state=4, n_text_head=2, n_text_layer=1)
+  with Context(DEV="CPU", PARALLEL=0):
+    model = speech.build_model({"dims": dims, "model_state_dict": {}})
+    for key, value in get_state_dict(model).items():
+      if key != "decoder.mask":
+        value.replace(Tensor.full(value.shape, 0.01, dtype=dtypes.float16).realize())
+    normalization = model.decoder.blocks[0].attn_ln
+    seen = []
+
+    def normalize(x):
+      seen.append(x.dtype)
+      return normalization(x)
+
+    model.decoder.blocks[0].attn_ln = normalize
+    audio = Tensor.full((1, 3, 4), 0.2, dtype=dtypes.float32)
+    for position in (0, 2, 3):
+      tokens = [[0, 1]] if position == 0 else [[1]]
+      output = model.decoder(Tensor(tokens, dtype=dtypes.int32), position, audio).numpy()
+      assert output.shape == (1, len(tokens[0]), 8) and np.isfinite(output).all()
+    assert seen and all(dtype == dtypes.float32 for dtype in seen)
 
 
 # ---- voice.py ----
