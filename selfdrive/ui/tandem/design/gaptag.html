@@ -13,7 +13,7 @@ h1{font-size:34px;margin:0 0 8px}header p{font-size:17px;color:#AEB6C2;margin:0 
 article{background:#13161A;border-radius:22px;padding:18px;min-width:0}h2{font-size:21px;margin:0 0 12px}
 svg{display:block;width:100%;border-radius:16px;background:#10161D}article p{color:#C9D0DA;font-size:15px;line-height:1.45;margin:12px 0 0}
 .entrance{grid-column:1/-1}.frames{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.frames figure{margin:0}
-figcaption{font-size:15px;color:#AEB6C2;margin-top:10px}.tag{font-family:JetBrains,monospace;font-weight:700;font-size:14px}
+figcaption{font-size:15px;color:#AEB6C2;margin-top:10px}.tag{font-family:JetBrains,monospace;font-weight:700;font-size:18px}
 </style>
 <div class="sheet">
   <header>
@@ -27,7 +27,7 @@ figcaption{font-size:15px;color:#AEB6C2;margin-top:10px}.tag{font-family:JetBrai
     <article><h2>Slowing for traffic</h2><div data-scene="braking"></div><p>The normal tag's value, anchor and connector turn amber with the existing Slowing for traffic rule.</p></article>
     <article><h2>Stopped</h2><div data-scene="stopped"></div><p>Distance replaces seconds near a stop, using meters or feet. A small speed band prevents flickering between units.</p></article>
     <article><h2>Unsure</h2><div data-scene="uncertain"></div><p>The tag fades to 45% opacity and its values become --. Missing, stale or invalid lead data hides the tag.</p></article>
-    <article><h2>Developer View / Lead Insights</h2><div data-scene="developer"></div><p>The same tag expands to show distance, time gap and relative speed, preserving the existing text colors and type size.</p></article>
+    <article><h2>Developer View / Lead Insights</h2><div data-scene="developer"></div><p>The same tag expands to show distance, time gap and relative speed, in the same text colors, at the 18 px size of the Developer View's metrics strip.</p></article>
     <article><h2>Bright road</h2><div data-scene="bright"></div><p>The existing dark tag fill and a thin dark outline on the anchor and connector maintain contrast.</p></article>
     <article class="entrance"><h2>A new car ahead</h2><div class="frames">
       <figure><div data-scene="acquire" data-ms="40"></div><figcaption>40 ms: anchor, then connector</figcaption></figure>
@@ -48,10 +48,10 @@ figcaption{font-size:15px;color:#AEB6C2;margin-top:10px}.tag{font-family:JetBrai
     const cx = 350, bottom = 222, roof = 156, anchor = roof - 2;
     const label = unsure ? '--' : kind === 'stopped' ? '8 m' : '1.6 s';
     const parts = kind === 'developer' ? [['105 ft','#F2F5F9'],['1.6 s','#9FAABA'],['−4 mph','#F0B35A']] : [[label,ink]];
-    const widths = parts.map(part => part[0].length * 8.4), width = Math.max(65, widths.reduce((a,b)=>a+b,0) + 24 + 12 * (parts.length - 1));
-    const x = cx - width / 2, y = anchor - 14 - 30 + 4 * (1 - tagAlpha), stemLength = 10 * stem;
-    let cursor = parts.length === 1 ? x + (width - widths[0]) / 2 : x + 12;
-    const words = parts.map((part,i) => { const text = `<text class="tag" x="${cursor}" y="${y+19.5}" fill="${part[1]}">${part[0]}</text>`; cursor += widths[i] + 12; return text; }).join('');
+    const widths = parts.map(part => part[0].length * 10.8), width = Math.max(78, widths.reduce((a,b)=>a+b,0) + 28 + 14 * (parts.length - 1));
+    const x = cx - width / 2, y = anchor - 14 - 36 + 4 * (1 - tagAlpha), stemLength = 10 * stem;
+    let cursor = parts.length === 1 ? x + (width - widths[0]) / 2 : x + 14;
+    const words = parts.map((part,i) => { const text = `<text class="tag" x="${cursor}" y="${y+24}" fill="${part[1]}">${part[0]}</text>`; cursor += widths[i] + 14; return text; }).join('');
     return `<svg viewBox="0 0 700 320" role="img" aria-label="${kind} lead gap tag">
       <defs><linearGradient id="path-${index}" x1="0" y1="1" x2="0" y2="0"><stop stop-color="#5AAAF8" stop-opacity=".5"/><stop offset=".55" stop-color="#5AAAF8" stop-opacity=".28"/><stop offset="1" stop-color="#5AAAF8" stop-opacity=".06"/></linearGradient></defs>
       <rect width="700" height="320" fill="${fill}"/><rect width="700" height="110" fill="${sky}"/>
@@ -63,7 +63,7 @@ figcaption{font-size:15px;color:#AEB6C2;margin-top:10px}.tag{font-family:JetBrai
       <g opacity="${opacity}">
         <g opacity="${anchorAlpha}"><circle cx="350" cy="${anchor}" r="4.2" fill="#0B0D10" fill-opacity=".85"/><circle cx="350" cy="${anchor}" r="2.7" fill="${ink}"/></g>
         <g opacity="${anchorAlpha}"><path d="M350 ${anchor-3}v${-stemLength}" stroke="#0B0D10" stroke-opacity=".85" stroke-width="4.5" stroke-linecap="round"/><path d="M350 ${anchor-3}v${-stemLength}" stroke="${ink}" stroke-width="1.5" stroke-linecap="round"/></g>
-        <g opacity="${tagAlpha}"><rect x="${x}" y="${y}" width="${width}" height="30" rx="10" fill="#0B0D10" fill-opacity=".9" stroke="#242A32" stroke-width="1"/>${words}</g>
+        <g opacity="${tagAlpha}"><rect x="${x}" y="${y}" width="${width}" height="36" rx="11" fill="#0B0D10" fill-opacity=".9" stroke="#242A32" stroke-width="1"/>${words}</g>
       </g>
     </svg>`;
   }

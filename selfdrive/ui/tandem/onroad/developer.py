@@ -197,10 +197,10 @@ def draw_lead_tag(center_x: float, top_y: float, lead: Lead, *, compact: bool = 
   ink = T.WARNING if braking else T.TEXT
   parts = [(value if value is not None else lead.gap, ink, BOLD)] if compact else [
     (lead.distance, T.TEXT, BOLD), (lead.gap, LABEL, BOLD), (lead.rel_speed, T.WARNING if lead.closing else T.TEXT_SECONDARY, BOLD)]
-  size, gap, pad = T.font_px(14), T.px(12), T.px(12)
+  size, gap, pad = STRIP_TEXT, T.px(14), T.px(14)   # the metrics strip's size (design/gaptag.html)
   widths = [draw.text_width(text, size, weight) for text, _, weight in parts]
-  w = max(T.px(65) if compact else 0.0, sum(widths) + gap * (len(parts) - 1) + pad * 2)
-  h = T.px(30)
+  w = max(T.px(78) if compact else 0.0, sum(widths) + gap * (len(parts) - 1) + pad * 2)
+  h = T.px(36)
   box = rl.Rectangle(center_x - w / 2, top_y - h - T.px(14), w, h)
   anchor_alpha, connector, tag_alpha = lead_tag_motion(progress) if anchored else (0.0, 0.0, 1.0)
   if bounds is not None:
@@ -224,8 +224,8 @@ def draw_lead_tag(center_x: float, top_y: float, lead: Lead, *, compact: bool = 
   alpha = opacity * tag_alpha
   if alpha <= 0.01:
     return box
-  draw.fill(box, draw.alpha(TAG_FILL, alpha), T.px(10))
-  draw.stroke(box, draw.alpha(T.TRACK, alpha), T.px(10), T.px(1))
+  draw.fill(box, draw.alpha(TAG_FILL, alpha), T.px(11))
+  draw.stroke(box, draw.alpha(T.TRACK, alpha), T.px(11), T.px(1))
   x = box.x + (w - sum(widths)) / 2 if compact else box.x + pad
   for (text, ink, weight), width in zip(parts, widths, strict=True):
     draw.text(rl.Rectangle(x, box.y, width, box.height), text, size, draw.alpha(ink, alpha), weight)
