@@ -15,6 +15,7 @@ from pathlib import Path
 
 CATALOG_DIR = Path(__file__).resolve().parent / "translations"
 _HOLE = re.compile(r"\{\}")
+_MEASURED = re.compile(r"^(.*[^\d\s]) (\d[\d.,:]*\s?[^\s\d]{0,4})$")
 _OUT_HOLE = re.compile(r"\{(\d*)\}")   # a translation may number its holes ({1} {0}) to put the values in its own order
 
 
@@ -56,6 +57,9 @@ class Catalog:
       return self.folded[text.casefold()]
     if " · " in text:   # "Standard · Auto lane change"
       return " · ".join(self.translate(part, depth + 1) for part in text.split(" · "))
+    m = _MEASURED.match(text)
+    if m and m.group(1).casefold() in self.folded:   # "Drives 21.0 GB": the name, then its value as is
+      return f"{self.folded[m.group(1).casefold()]} {m.group(2)}"
     parts = text.split(", ")
     if len(parts) > 1 and all(p.casefold() in self.folded for p in parts):   # "Green light, lead departure"
       return ", ".join(self.folded[p.casefold()] for p in parts)

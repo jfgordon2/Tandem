@@ -14,8 +14,8 @@ msgstr ""
 msgid "Off"
 msgstr ""
 
-#: controls.py:265
-msgid " · recommended"
+#: controls.py:270
+msgid "RECOMMENDED"
 msgstr ""
 
 #: controls.py:541
@@ -26,6 +26,7 @@ msgstr ""
 
 #: destinations.py:321
 #: settings/search.py:264
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:695
 msgid "Search"
 msgstr ""
 
@@ -39,10 +40,15 @@ msgid "Where to?"
 msgstr ""
 
 #: destinations.py:121
+msgid "Searching…"
+msgstr ""
+
+#: destinations.py:121
 msgid "Looking up places"
 msgstr ""
 
 #: destinations.py:123
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:680
 msgid "Search unavailable"
 msgstr ""
 
@@ -59,6 +65,7 @@ msgid "Say a place or an address. Tap the mic when you're done."
 msgstr ""
 
 #: destinations.py:357
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:635
 msgid "Start"
 msgstr ""
 
@@ -100,6 +107,10 @@ msgstr ""
 msgid "Turns and speed follow the route automatically while navigating"
 msgstr ""
 
+#: destinations.py:484
+msgid "RECENT"
+msgstr ""
+
 #: destinations.py:332
 msgid "Add favorite"
 msgstr ""
@@ -117,6 +128,10 @@ msgstr ""
 msgid "To {}"
 msgstr ""
 
+#: destinations.py:481
+msgid "FAVORITES"
+msgstr ""
+
 #: destinations.py:492
 msgid "Places you navigate to show up here."
 msgstr ""
@@ -132,6 +147,7 @@ msgstr ""
 
 #: destinations.py:326
 #: settings/speed_steering.py:388
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:663
 msgid "Home"
 msgstr ""
 
@@ -145,6 +161,7 @@ msgstr ""
 
 #: destinations.py:329
 #: settings/speed_steering.py:389
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:663
 msgid "Work"
 msgstr ""
 
@@ -318,6 +335,10 @@ msgstr ""
 msgid "Nudge to change lanes"
 msgstr ""
 
+#: home.py:39
+msgid "READY"
+msgstr ""
+
 #: home.py:38
 msgid "NEEDS ATTENTION"
 msgstr ""
@@ -347,6 +368,12 @@ msgstr ""
 #: home.py:205
 #: settings/software_tab.py:72
 msgid "A new version"
+msgstr ""
+
+#: home.py:81
+#: home.py:87
+#: tokens.py:61
+msgid "DCEBFF"
 msgstr ""
 
 #: home.py:143
@@ -472,6 +499,14 @@ msgstr ""
 msgid "openpilot may not start until these are sorted out"
 msgstr ""
 
+#: keyboard.py:40
+msgid "ABC"
+msgstr ""
+
+#: keyboard.py:40
+msgid "space"
+msgstr ""
+
 #: keyboard.py:113
 #: mapbox_help.py:83
 #: settings/alerts.py:164
@@ -483,10 +518,22 @@ msgstr ""
 msgid "Speak now. Tap the mic when you're done."
 msgstr ""
 
+#: keyboard.py:30
+msgid "QWERTYUIOP"
+msgstr ""
+
 #: keyboard.py:119
 #: overlays.py:162
 #: settings/bluetooth_tab.py:246
 msgid "Cancel"
+msgstr ""
+
+#: keyboard.py:30
+msgid "ASDFGHJKL"
+msgstr ""
+
+#: keyboard.py:30
+msgid "ZXCVBNM"
 msgstr ""
 
 #: mapbox_help.py:19
@@ -664,8 +711,24 @@ msgstr ""
 msgid "active · {} {}"
 msgstr ""
 
+#: onroad/developer.py:165
+msgid "FPS"
+msgstr ""
+
+#: onroad/developer.py:157
+msgid "CPU"
+msgstr ""
+
 #: onroad/developer.py:157
 msgid "Temp"
+msgstr ""
+
+#: onroad/developer.py:161
+msgid "GPU"
+msgstr ""
+
+#: onroad/developer.py:163
+msgid "RAM"
 msgstr ""
 
 #: onroad/extras.py:41
@@ -704,6 +767,18 @@ msgstr ""
 msgid "Steering is at its limit for this curve"
 msgstr ""
 
+#: onroad/layers.py:495
+msgid "SPEED"
+msgstr ""
+
+#: onroad/layers.py:496
+msgid "LIMIT"
+msgstr ""
+
+#: onroad/layers.py:99
+msgid "MAX"
+msgstr ""
+
 #: onroad/layers.py:398
 #, python-brace-format
 msgid "New limit {}"
@@ -736,6 +811,14 @@ msgstr ""
 msgid "Ignore"
 msgstr ""
 
+#: onroad/layers.py:113
+msgid "ARRIVE"
+msgstr ""
+
+#: onroad/layers.py:113
+msgid "LEFT"
+msgstr ""
+
 #: onroad/limits.py:5
 msgid "Dashboard"
 msgstr ""
@@ -759,10 +842,6 @@ msgstr ""
 
 #: onroad/status.py:117
 msgid "Stopping"
-msgstr ""
-
-#: onroad/status.py:68
-msgid "roundabout turn"
 msgstr ""
 
 #: onroad/status.py:91
@@ -974,11 +1053,6 @@ msgstr ""
 
 #: onroad/streets.py:16
 msgid "Byp"
-msgstr ""
-
-#: onroad/view.py:558
-#: routemap.py:42
-msgid "%-I:%M %p"
 msgstr ""
 
 #: onroad/view.py:559
@@ -1374,6 +1448,10 @@ msgstr ""
 msgid "Buttons don't run their actions while this screen is open."
 msgstr ""
 
+#: settings/bluetooth_tab.py:316
+msgid "PRESSED"
+msgstr ""
+
 #: settings/bluetooth_tab.py:364
 msgid "Sound test"
 msgstr ""
@@ -1465,6 +1543,10 @@ msgstr ""
 msgid "Paired"
 msgstr ""
 
+#: settings/bluetooth_tab.py:441
+msgid "Scanning…"
+msgstr ""
+
 #: settings/bluetooth_tab.py:182
 #: settings/bluetooth_tab.py:228
 msgid "Button"
@@ -1489,6 +1571,10 @@ msgstr ""
 msgid "CAR AUDIO"
 msgstr ""
 
+#: settings/bluetooth_tab.py:444
+msgid "NEARBY"
+msgstr ""
+
 #: settings/bluetooth_tab.py:231
 #: settings/vehicle.py:171
 msgid "What this button does while driving"
@@ -1509,7 +1595,6 @@ msgid "No devices found yet."
 msgstr ""
 
 #: settings/bundles.py:42
-#: settings/display.py:209
 #: settings/search.py:97
 msgid "Developer View"
 msgstr ""
@@ -1519,7 +1604,6 @@ msgid "Sidebar with live metrics, CPU, GPU, memory and temperatures, and where s
 msgstr ""
 
 #: settings/bundles.py:46
-#: settings/display.py:210
 #: settings/search.py:98
 msgid "Lead Insights"
 msgstr ""
@@ -1542,6 +1626,10 @@ msgstr ""
 #: settings/connections.py:45
 #, python-brace-format
 msgid "{} button{}"
+msgstr ""
+
+#: settings/connections.py:58
+msgid "CONNECTIONS"
 msgstr ""
 
 #: settings/connections.py:61
@@ -1602,6 +1690,7 @@ msgstr ""
 
 #: settings/developer.py:93
 #: settings/developer.py:132
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:558
 msgid "Add"
 msgstr ""
 
@@ -1615,7 +1704,17 @@ msgid "Turn On"
 msgstr ""
 
 #: settings/developer.py:136
+#: settings/search.py:180
+msgid "ADB"
+msgstr ""
+
+#: settings/developer.py:136
 msgid "Connect over USB or the network (docs.comma.ai). Change it with the car off."
+msgstr ""
+
+#: settings/developer.py:137
+#: settings/search.py:181
+msgid "SSH"
 msgstr ""
 
 #: settings/developer.py:137
@@ -1624,11 +1723,13 @@ msgstr ""
 
 #: settings/developer.py:138
 #: settings/search.py:182
+#: selfdrive/ui/layouts/settings/developer.py:53
 msgid "SSH Keys"
 msgstr ""
 
 #: settings/developer.py:139
 #: settings/search.py:183
+#: selfdrive/ui/layouts/settings/developer.py:56
 msgid "Joystick Debug Mode"
 msgstr ""
 
@@ -1638,12 +1739,17 @@ msgstr ""
 
 #: settings/developer.py:141
 #: settings/search.py:185
+#: selfdrive/ui/layouts/settings/developer.py:72
 msgid "UI Debug Mode"
 msgstr ""
 
 #: settings/developer.py:141
 #: settings/search.py:185
 msgid "Shows touches and the frame rate"
+msgstr ""
+
+#: settings/developer.py:132
+msgid "Adding…"
 msgstr ""
 
 #: settings/device.py:24
@@ -1728,6 +1834,7 @@ msgstr ""
 
 #: settings/device.py:245
 #: settings/device.py:246
+#: selfdrive/ui/layouts/settings/device.py:334
 msgid "Unpair"
 msgstr ""
 
@@ -1743,6 +1850,7 @@ msgstr ""
 
 #: settings/device.py:67
 #: settings/search.py:126
+#: selfdrive/ui/layouts/settings/device.py:152
 msgid "Driver Camera"
 msgstr ""
 
@@ -1875,6 +1983,10 @@ msgstr ""
 msgid "Not set up"
 msgstr ""
 
+#: settings/device.py:251
+msgid "GALAXY"
+msgstr ""
+
 #: settings/device.py:260
 msgid "Your code appears here once you choose a password"
 msgstr ""
@@ -1899,9 +2011,18 @@ msgstr ""
 msgid "Rules, features and limits"
 msgstr ""
 
+#: settings/device.py:110
+msgid "MORE"
+msgstr ""
+
 #: settings/device.py:112
 #: settings/search.py:160
 msgid "Device ID and Serial"
+msgstr ""
+
+#: settings/device.py:113
+#: settings/search.py:161
+msgid "IMEI"
 msgstr ""
 
 #: settings/device.py:109
@@ -2039,18 +2160,16 @@ msgid "Restore"
 msgstr ""
 
 #: settings/device_sections.py:215
-#: settings/device_sections.py:448
 msgid "Drives"
 msgstr ""
 
 #: settings/device_sections.py:215
-#: settings/device_sections.py:449
 #: sidebar.py:112
+#: sidebar.py:133
 msgid "Maps"
 msgstr ""
 
 #: settings/device_sections.py:215
-#: settings/device_sections.py:449
 msgid "Models"
 msgstr ""
 
@@ -2208,16 +2327,9 @@ msgstr ""
 msgid "So we can follow up"
 msgstr ""
 
-#: settings/device_sections.py:450
-msgid "Total"
-msgstr ""
-
-#: settings/device_sections.py:450
-msgid "Free"
-msgstr ""
-
 #: settings/device_sections.py:497
-msgid "Backup %Y-%m-%d %H%M"
+#, python-brace-format
+msgid "Backup {}"
 msgstr ""
 
 #: settings/device_sections.py:171
@@ -2238,6 +2350,10 @@ msgstr ""
 msgid "{} can't be recovered."
 msgstr ""
 
+#: settings/device_sections.py:181
+msgid "SAVED"
+msgstr ""
+
 #: settings/device_sections.py:184
 msgid "Back up now"
 msgstr ""
@@ -2256,10 +2372,6 @@ msgstr ""
 
 #: settings/device_sections.py:399
 msgid "Discord name"
-msgstr ""
-
-#: settings/device_sections.py:488
-msgid "%b %-d, %Y %-I:%M %p"
 msgstr ""
 
 #: settings/device_sections.py:338
@@ -2416,11 +2528,6 @@ msgstr ""
 msgid "Whimsy animations cross the road above the bar while you signal; the chevrons by the speed stay."
 msgstr ""
 
-#: settings/display.py:703
-#, python-brace-format
-msgid "{}.jpg"
-msgstr ""
-
 #: settings/display.py:266
 #: settings/search.py:91
 msgid "Camera View"
@@ -2554,6 +2661,22 @@ msgstr ""
 msgid "No preview"
 msgstr ""
 
+#: settings/display.py:594
+msgid "ESSENTIALS"
+msgstr ""
+
+#: settings/display.py:594
+msgid "WHIMSY"
+msgstr ""
+
+#: settings/display.py:674
+msgid "RGB"
+msgstr ""
+
+#: settings/display.py:679
+msgid "PNG"
+msgstr ""
+
 #: settings/display.py:301
 msgid "Sets path color, width, edges and lane lines together"
 msgstr ""
@@ -2593,6 +2716,10 @@ msgstr ""
 
 #: settings/driving_tab.py:92
 msgid "SPEED & STEERING"
+msgstr ""
+
+#: settings/driving_tab.py:107
+msgid "DISPLAY"
 msgstr ""
 
 #: settings/driving_tab.py:114
@@ -2736,13 +2863,17 @@ msgstr ""
 msgid "Choose at least one region"
 msgstr ""
 
+#: settings/maps.py:128
+msgid "Cancelling…"
+msgstr ""
+
 #: settings/maps.py:130
 #, python-brace-format
 msgid "Downloading {} · {}%"
 msgstr ""
 
 #: settings/maps.py:131
-#: settings/maps.py:185
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:239
 msgid "Downloaded"
 msgstr ""
 
@@ -2832,7 +2963,13 @@ msgstr ""
 msgid "Pick a region, or switch to states for less storage"
 msgstr ""
 
+#: settings/maps.py:255
+#: settings/maps.py:491
+msgid "REGIONS"
+msgstr ""
+
 #: settings/maps.py:344
+#: sidebar.py:93
 msgid "Online"
 msgstr ""
 
@@ -2856,10 +2993,12 @@ msgstr ""
 
 #: settings/maps.py:203
 #: settings/model.py:315
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:276
 msgid "Storage"
 msgstr ""
 
 #: settings/maps.py:311
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:479
 msgid "Whole U.S."
 msgstr ""
 
@@ -2870,6 +3009,10 @@ msgstr ""
 #: settings/maps.py:269
 #, python-brace-format
 msgid "{}: not yet"
+msgstr ""
+
+#: settings/maps.py:273
+msgid "SELECTED"
 msgstr ""
 
 #: settings/maps.py:260
@@ -2930,6 +3073,11 @@ msgstr ""
 
 #: settings/model.py:403
 msgid "Park to remove models"
+msgstr ""
+
+#: settings/model.py:125
+#: settings/model.py:273
+msgid "ACTIVE"
 msgstr ""
 
 #: settings/model.py:145
@@ -3003,6 +3151,10 @@ msgstr ""
 msgid "No models here yet."
 msgstr ""
 
+#: settings/network_tab.py:55
+msgid "Connecting…"
+msgstr ""
+
 #: settings/network_tab.py:56
 msgid "Saved"
 msgstr ""
@@ -3018,6 +3170,11 @@ msgstr ""
 
 #: settings/network_tab.py:98
 msgid "Hotspot password"
+msgstr ""
+
+#: settings/network_tab.py:126
+#: settings/network_tab.py:191
+msgid "APN"
 msgstr ""
 
 #: settings/network_tab.py:126
@@ -3839,6 +3996,10 @@ msgstr ""
 msgid "A new version is available to download"
 msgstr ""
 
+#: settings/software_tab.py:80
+msgid "Check now"
+msgstr ""
+
 #: settings/software_tab.py:123
 #, python-brace-format
 msgid "What's new in {}"
@@ -3856,6 +4017,17 @@ msgstr ""
 msgid "pkill -SIGUSR1 -f system.updated.updated"
 msgstr ""
 
+#: settings/software_tab.py:70
+#: settings/software_tab.py:64
+msgid "Updating"
+msgstr ""
+
+#: settings/software_tab.py:97
+#: settings/software_tab.py:97
+#: settings/software_tab.py:97
+msgid "Stable"
+msgstr ""
+
 #: settings/software_tab.py:186
 msgid "Choose another branch"
 msgstr ""
@@ -3869,10 +4041,6 @@ msgid "Back to the Essentials defaults. Backups are kept."
 msgstr ""
 
 #: settings/software_tab.py:64
-msgid "Updating"
-msgstr ""
-
-#: settings/software_tab.py:64
 msgid "Ready to install"
 msgstr ""
 
@@ -3882,6 +4050,22 @@ msgstr ""
 
 #: settings/software_tab.py:65
 msgid "Update available"
+msgstr ""
+
+#: settings/software_tab.py:80
+msgid "Working…"
+msgstr ""
+
+#: settings/software_tab.py:80
+msgid "Restart to install"
+msgstr ""
+
+#: settings/software_tab.py:80
+msgid "Try again"
+msgstr ""
+
+#: settings/software_tab.py:97
+msgid "Beta"
 msgstr ""
 
 #: settings/software_tab.py:156
@@ -3905,6 +4089,7 @@ msgid "A factory reset also deletes every setting, drive and download. Skip keep
 msgstr ""
 
 #: settings/software_tab.py:165
+#: selfdrive/ui/layouts/settings/software.py:350
 msgid "Factory Reset"
 msgstr ""
 
@@ -3914,6 +4099,7 @@ msgid "Version {}"
 msgstr ""
 
 #: settings/software_tab.py:165
+#: selfdrive/ui/layouts/settings/software.py:350
 msgid "Skip"
 msgstr ""
 
@@ -4160,6 +4346,11 @@ msgid "From style"
 msgstr ""
 
 #: settings/tuner.py:77
+#: settings/tuner.py:137
+msgid "NNFF"
+msgstr ""
+
+#: settings/tuner.py:77
 msgid "Lite"
 msgstr ""
 
@@ -4354,6 +4545,8 @@ msgid "Favorite 3"
 msgstr ""
 
 #: settings/vehicle.py:253
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:780
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:68
 msgid "Never"
 msgstr ""
 
@@ -4387,6 +4580,14 @@ msgstr ""
 
 #: settings/vehicle.py:193
 msgid "Preset for your car. Tap a button to change what it does."
+msgstr ""
+
+#: settings/vehicle.py:142
+msgid "MAKE"
+msgstr ""
+
+#: settings/vehicle.py:142
+msgid "MODEL"
 msgstr ""
 
 #: settings/vehicle.py:156
@@ -4434,6 +4635,10 @@ msgstr ""
 
 #: settings/vehicle.py:157
 msgid "Only needed if detection picked the wrong car. Choosing turns off automatic detection."
+msgstr ""
+
+#: settings/vehicle.py:230
+msgid "LKAS"
 msgstr ""
 
 #: settings/vehicle.py:235
@@ -4594,6 +4799,10 @@ msgstr ""
 msgid "Turn off"
 msgstr ""
 
+#: settings/window.py:318
+msgid "DEVICE"
+msgstr ""
+
 #: settings/window.py:253
 msgid "Driving model"
 msgstr ""
@@ -4692,6 +4901,10 @@ msgstr ""
 msgid "Start driving"
 msgstr ""
 
+#: setup.py:117
+msgid ", then "
+msgstr ""
+
 #: sidebar.py:93
 msgid "comma connect"
 msgstr ""
@@ -4701,7 +4914,9 @@ msgstr ""
 msgid "Network"
 msgstr ""
 
+#: sidebar.py:93
 #: sidebar.py:98
+#: sidebar.py:93
 msgid "Offline"
 msgstr ""
 
@@ -4715,6 +4930,10 @@ msgstr ""
 
 #: sidebar.py:112
 msgid "Checking"
+msgstr ""
+
+#: sidebar.py:93
+msgid "Error"
 msgstr ""
 
 #: sidebar.py:142
@@ -4731,6 +4950,12 @@ msgstr ""
 
 #: sidebar.py:137
 msgid "Not downloaded"
+msgstr ""
+
+#: tokens.py:101
+#: tokens.py:102
+#: tokens.py:165
+msgid "FFFFFF"
 msgstr ""
 
 #: voice.py:35
@@ -4761,6 +4986,10 @@ msgstr ""
 msgid "Listening"
 msgstr ""
 
+#: voice.py:92
+msgid "QCOM"
+msgstr ""
+
 #: voice.py:195
 msgid "Getting voice typing ready"
 msgstr ""
@@ -4779,4 +5008,1158 @@ msgstr ""
 
 #: voice.py:199
 msgid "Voice typing"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:72
+msgid "U.S. Midwest Region (12 States)"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:73
+msgid "IL, IN, IA, KS, MI, MN, MO, NE, ND, OH, SD, WI"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:77
+msgid "U.S. Northeast Region (9 States)"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:78
+msgid "CT, ME, MA, NH, NJ, NY, PA, RI, VT"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:82
+msgid "U.S. South Region (17 States)"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:83
+msgid "AL, AR, DE, DC, FL, GA, KY, LA, MD, MS, NC, OK, SC, TN, TX, VA, WV"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:87
+msgid "U.S. West Region (13 States)"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:88
+msgid "AK, AZ, CA, CO, HI, ID, MT, NV, NM, OR, UT, WA, WY"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:92
+msgid "U.S. Territories (5 Territories)"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:93
+msgid "AS, GU, MP, PR, VI"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:120
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:132
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:138
+msgid "Calculating..."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:135
+msgid "Almost done"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:553
+msgid "Tap to select state"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:678
+msgid "Download Offline Maps"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:795
+msgid "Download Readiness"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:463
+msgid "No regions selected"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:465
+msgid "Whole U.S. (56 states)"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:485
+msgid "No regions selected yet"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:487
+msgid "Whole U.S. package"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:548
+msgid "Master Package - Full country map data"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:552
+msgid "Selected for download"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:557
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:275
+msgid "Selected"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:561
+msgid "No regions available"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:561
+msgid "Switch sources to keep browsing maps."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:673
+msgid "Cancelling..."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:675
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:749
+msgid "Cancel Download"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:677
+msgid "Select Regions Below"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:707
+msgid "Auto Update Schedule"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:784
+msgid "Cancelling Download"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:786
+msgid "Downloading Maps"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:788
+msgid "Starting Download"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:792
+msgid "Checking Offline Maps"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:794
+msgid "Select Map Data"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:813
+msgid "Stop request sent. The current transfer will wind down safely."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:816
+msgid "Preparing the selected regions for download."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:819
+msgid "No regions selected yet. Tap 'Whole U.S.' or pick specific states below to get started."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:190
+msgid "Available for Download"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:190
+msgid "Map Packages & Regions"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:239
+msgid "Downloaded on device"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:277
+msgid "Last Updated"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:466
+#, python-brace-format
+msgid "{} region selected"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:466
+#, python-brace-format
+msgid "{} regions selected"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:491
+#, python-brace-format
+msgid "{} + {} more"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:516
+msgid "Whole U.S. (All 50 States & Territories)"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:531
+msgid "Whole U.S. Selected"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:535
+#, python-brace-format
+msgid "{} selected | {} available"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:657
+msgid "Download in progress"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:659
+msgid "Connect to the internet"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:661
+msgid "Park the vehicle to download"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:690
+msgid "Auto: Off"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:691
+msgid "Auto: Weekly"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:692
+msgid "Auto: Monthly"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:708
+msgid "Choose how often to update downloaded offline maps."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:735
+msgid "Start downloading offline maps for the selected regions?"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:749
+msgid "Cancel the current map download?"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:776
+msgid "Delete all downloaded offline map data?"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:776
+msgid "Remove Maps"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:825
+#, python-brace-format
+msgid "Ready to download {}."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:173
+msgid "U.S. States & Regions"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:173
+msgid "Other Countries"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:188
+msgid "On This Device"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:534
+#, python-brace-format
+msgid "{} available - Tap to select"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:722
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:684
+msgid "Please select 'Whole U.S.' or pick individual states from the list below."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:804
+#, python-brace-format
+msgid "{} / {} ({}%)\nElapsed {} | ETA {}"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:754
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:761
+msgid "Park to remove downloaded maps."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:774
+msgid "Removing offline maps..."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:803
+#, python-brace-format
+msgid "{}\nElapsed {} | ETA {}"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:188
+#, python-brace-format
+msgid "{} region"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:188
+#, python-brace-format
+msgid "{} regions"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:47
+msgid "No Action"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:48
+msgid "Change Personality"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:49
+msgid "Force Coast"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:50
+msgid "Pulse and Glide"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:51
+msgid "Pause Steering"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:52
+msgid "Pause Accel/Brake"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:53
+msgid "Toggle Experimental"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:54
+msgid "Toggle Traffic"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:55
+msgid "Toggle Switchback"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:56
+msgid "Create Bookmark"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:57
+msgid "Toggle Always On Lateral"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:58
+msgid "Adopt Current Speed Limit"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:59
+msgid "Favorite #1"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:60
+msgid "Favorite #2"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:61
+msgid "Favorite #3"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:407
+msgid "Choose an action for each press type, then tap Apply."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:573
+msgid "Select Make"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:602
+msgid "Select Model"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:656
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:671
+msgid "None"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:103
+msgid "Disable Fingerprinting"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:107
+msgid "Car Make"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:111
+msgid "Car Model"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:137
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:527
+msgid "Distance Button"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:155
+msgid "CC Main Button"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:238
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:253
+msgid "Features"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:281
+msgid "Disable openpilot Long"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:282
+msgid "Revert to stock longitudinal control."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:507
+msgid "Flash"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:532
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:145
+msgid "Cancel Button"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:537
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:163
+msgid "Mode Button"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:542
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:168
+msgid "Star Button"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:574
+msgid "Choose your vehicle manufacturer."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:603
+msgid "Choose the model that matches your vehicle."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:636
+msgid "Choose the action this button press will trigger."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:644
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:117
+msgid "Lock Doors Timer"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:104
+msgid "Manually select vehicle instead of auto-detecting."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:151
+msgid "LKAS Button"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:289
+msgid "Pedal for Long"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:294
+msgid "Offsets on Dash Spoof"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:300
+msgid "CAN Ignition Only"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:301
+msgid "Use Panda firmware that ignores the physical ignition line and starts only from CAN ignition."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:306
+msgid "Remote Start Panda"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:312
+msgid "Volt SNG Hack"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:318
+msgid "Jeep Brake Hold"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:319
+msgid "Hold after ACC times out at a stop and resume when traffic moves."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:326
+msgid "Stop and Go"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:339
+msgid "Auto Lock Doors"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:344
+msgid "Auto Unlock Doors"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:350
+msgid "Stop-and-Go Hack"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:356
+msgid "Remap Cancel Button"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:357
+msgid "Treat the Cancel button as an extra mappable steering-wheel button."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:364
+msgid "EV Remote Climate"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:369
+msgid "Nostalgia Mode"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:370
+msgid "Use the left paddle to pause openpilot acceleration and braking."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:505
+msgid "Panda flashing started. Device will reboot when finished."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:529
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:534
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:539
+msgid "Long Press"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:529
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:534
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:539
+msgid "Very Long"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:558
+msgid "No fingerprint list available."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:558
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:580
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:584
+msgid "OK"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:580
+msgid "Please select a Car Make first!"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:584
+msgid "No models available for this make."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:647
+msgid "How long to wait before locking the doors."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:332
+msgid "Manual Parking Brake SNG"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:468
+msgid "Disable openpilot longitudinal control?"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:468
+msgid "Disable"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:303
+msgid "CAN Ignition Only requires a Panda firmware update."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:308
+msgid "Remote Start requires a Panda firmware update."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:366
+msgid "EV Remote Climate requires a Panda firmware update."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:380
+msgid "Search destination"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:380
+msgid "Enter a place or address"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:398
+msgid "Enter at least 3 characters to search."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:403
+msgid "Mapbox search is not configured on this device."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:433
+msgid "That result did not include a usable location."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:460
+msgid "That destination is missing a valid location."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:503
+msgid "Rename favorite"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:503
+msgid "Choose a short name"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:539
+msgid "That destination is not valid."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:632
+msgid "Ready to navigate"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:638
+msgid "Navigation active"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:635
+msgid "Unavailable"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:678
+msgid "Searching..."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:678
+msgid "Looking up destinations"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:684
+msgid "No destinations yet"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:684
+msgid "Search for a place or address to begin."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:692
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:656
+msgid "Destination"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:336
+msgid "Search is unavailable. Check your connection and try again."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:655
+msgid "Search results"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:666
+msgid "Favorite destinations"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:668
+msgid "Recent destinations"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:683
+msgid "No matching destinations"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:683
+msgid "Try a different place or address."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:695
+msgid "Use the on-device keyboard to search Mapbox locations"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:703
+msgid "Route"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:714
+msgid "Destinations"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:342
+msgid "Could not determine that location. Try another result."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:529
+#, python-brace-format
+msgid "Remove {} from favorites?"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:529
+msgid "this destination"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:603
+msgid "Rename"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:694
+msgid "Search for a destination"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:665
+msgid "Favorite destination"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:670
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:669
+msgid "Recent destination"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:664
+msgid "Unnamed favorite"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:727
+msgid "Select"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:26
+msgid "checking..."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:27
+msgid "downloading..."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:28
+msgid "finalizing update..."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:80
+msgid "never"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:91
+msgid "now"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:245
+#: selfdrive/ui/layouts/settings/software.py:117
+#: selfdrive/ui/layouts/settings/software.py:201
+msgid "CHECK"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:274
+#: selfdrive/ui/layouts/settings/software.py:183
+msgid "FAST UPDATE"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:275
+#: selfdrive/ui/layouts/settings/software.py:272
+msgid "Starting fast update..."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:354
+msgid "Are you sure you want to uninstall?"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:391
+msgid "Select a branch"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:94
+#, python-brace-format
+msgid "{} minute ago"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:94
+#, python-brace-format
+msgid "{} minutes ago"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:97
+#, python-brace-format
+msgid "{} hour ago"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:97
+#, python-brace-format
+msgid "{} hours ago"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:100
+#, python-brace-format
+msgid "{} day ago"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:100
+#, python-brace-format
+msgid "{} days ago"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:108
+msgid "Updates are only downloaded while the car is off."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:109
+msgid "Current Version"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:111
+msgid "Automatically Install Updates"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:112
+msgid "Automatically install updates when parked with an active internet connection."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:123
+msgid "Install Update"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:123
+#: selfdrive/ui/layouts/settings/software.py:230
+msgid "INSTALL"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:131
+msgid "Target Branch"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:131
+msgid "SELECT"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:175
+msgid "REBOOTING"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:176
+#: selfdrive/ui/layouts/settings/software.py:317
+msgid "Update applied, rebooting..."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:262
+msgid "Fast update will replace the current installation without backup and reboot the device. Continue?"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:263
+msgid "Fast Update"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:268
+msgid "Cannot update while driving"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:361
+msgid "No error log found."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:392
+msgid "Choose the software branch to install."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:179
+msgid "RETRY"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:350
+msgid "Do you want to perform a full factory reset? All saved assets and settings will be permanently deleted!"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:144
+msgid "UNINSTALL"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:145
+msgid "Error Log"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:145
+#: selfdrive/ui/layouts/settings/device.py:159
+msgid "VIEW"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:200
+msgid "failed to check for update"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:294
+msgid "Fetching latest commit..."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:302
+msgid "Applying update..."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:180
+#, python-brace-format
+msgid "Failed: {}"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:184
+msgid "Starting..."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:203
+msgid "update available"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:204
+msgid "DOWNLOAD"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:310
+msgid "Updating submodules..."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:344
+msgid "This is a complete factory reset and cannot be undone. Are you absolutely sure?"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:211
+msgid "up to date, last checked never"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/software.py:209
+#, python-brace-format
+msgid "up to date, last checked {}"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:34
+msgid "Pair your device with comma connect (connect.comma.ai) and claim your comma prime offer."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:35
+msgid "Pair your device with Galaxy for remote access to The Galaxy."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:36
+msgid "Preview the driver facing camera to ensure that driver monitoring has good visibility. (vehicle must be off)"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:37
+msgid "Clears the saved driver monitoring wheel-side calibration and any manual right-hand-driving override."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:38
+msgid "openpilot requires the device to be mounted within 4° left or right and within 5° up or 9° down."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:39
+msgid "Review the rules, features, and limitations of openpilot"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:91
+msgid "Scan to open Galaxy"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:104
+msgid "Tap anywhere to dismiss"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:183
+msgid "Select a language"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:212
+msgid "Are you sure you want to reset calibration?"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:229
+msgid "Are you sure you want to reset driver monitoring calibration?"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:258
+msgid "<br><br>Steering lag calibration is complete."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:281
+msgid "Are you sure you want to reboot?"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:281
+#: selfdrive/ui/layouts/settings/device.py:144
+msgid "Reboot"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:297
+msgid "Are you sure you want to power off?"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:316
+msgid "MANAGE"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:316
+#: selfdrive/ui/layouts/settings/device.py:135
+msgid "PAIR"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:333
+msgid "Show QR"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:351
+msgid "Set Galaxy Password"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:351
+msgid "Set a password to secure your Galaxy access. Min 6 characters."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:94
+msgid "QR Code Error"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:135
+msgid "Pair Device"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:137
+msgid "Pair with Galaxy"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:140
+msgid "Reset Calibration"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:140
+#: selfdrive/ui/layouts/settings/device.py:154
+msgid "RESET"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:185
+msgid "Choose the language used for menus and alerts."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:345
+msgid "Galaxy"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:148
+msgid "Dongle ID"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:149
+msgid "Serial"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:152
+msgid "PREVIEW"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:154
+msgid "Reset Driver Monitoring"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:157
+msgid "Review Training Guide"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:157
+msgid "REVIEW"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:160
+msgid "Change Language"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:160
+msgid "CHANGE"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:196
+msgid "Disengage to Reset Calibration"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:217
+msgid "Disengage to Reset Driver Monitoring"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:256
+#, python-brace-format
+msgid "<br><br>Steering lag calibration is {}% complete."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:294
+msgid "Disengage to Power Off"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:327
+msgid "Galaxy is not paired yet."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:346
+msgid "View pairing information or unlink your Galaxy account."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:362
+msgid "Password must be at least 6 characters."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:148
+#: selfdrive/ui/layouts/settings/device.py:149
+msgid "N/A"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:270
+msgid " Steering torque response calibration is complete."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:373
+msgid "Failed to pair with Galaxy."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:243
+#, python-brace-format
+msgid " Your device is pointed {}° {} and {}° {}."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:243
+msgid "down"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:243
+msgid "up"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:244
+msgid "left"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:244
+msgid "right"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:268
+#, python-brace-format
+msgid " Steering torque response calibration is {}% complete."
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/device.py:343
+msgid "Are you sure you want to unpair from Galaxy?"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/developer.py:39
+msgid "Enable ADB"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/developer.py:48
+msgid "Enable SSH"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/developer.py:64
+msgid "openpilot Longitudinal Control (Alpha)"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/developer.py:153
+msgid "Enable"
 msgstr ""

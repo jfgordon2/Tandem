@@ -73,3 +73,23 @@ def test_po_reader_round_trips_quotes_and_escapes(tmp_path):
   path = tmp_path / "tandem_xx.po"
   tool.write(path, "xx", {'for "{}"': ["a.py:1"], "Line\\one": ["a.py:2"]}, {'for "{}"': 'para "{}"', "Line\\one": "L\\1"}, {})
   assert i18n.parse_po(path.read_text(encoding="utf-8")) == {'for "{}"': 'para "{}"', "Line\\one": "L\\1"}
+
+
+def test_the_strings_drivers_reported_missing_are_in_the_catalog():
+  """Labels in .get() defaults, the keyboard's space bar, strftime names, captions and StarPilot's own text."""
+  pot = i18n.parse_po((i18n.CATALOG_DIR / "tandem.pot").read_text(encoding="utf-8"))
+  for msgid in ("Check now", "Working…", "space", "Backup {}", "REGIONS", "{} regions selected", "U.S. Midwest Region (12 States)"):
+    assert msgid in pot, msgid
+
+
+def test_keys_icons_and_states_stay_out_of_the_catalog():
+  pot = i18n.parse_po((i18n.CATALOG_DIR / "tandem.pot").read_text(encoding="utf-8"))
+  for key in ("Total", "Free", "trash", "busy", "roundabout turn"):
+    assert key not in pot, key
+
+
+def test_a_name_with_its_value_keeps_the_value():
+  c = i18n.Catalog({"Drives": "Fahrten", "Maps": "Karten"})
+  assert c.translate("Drives 21.0 GB") == "Fahrten 21.0 GB"
+  assert c.translate("Maps 4 GB") == "Karten 4 GB"
+  assert c.translate("Unknown 3 GB") == "Unknown 3 GB"

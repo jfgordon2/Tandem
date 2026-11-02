@@ -14,9 +14,9 @@ msgstr "オン"
 msgid "Off"
 msgstr "オフ"
 
-#: controls.py:265
-msgid " · recommended"
-msgstr " · おすすめ"
+#: controls.py:270
+msgid "RECOMMENDED"
+msgstr "おすすめ"
 
 #: controls.py:541
 #: settings/display.py:167
@@ -26,6 +26,7 @@ msgstr "デフォルト"
 
 #: destinations.py:321
 #: settings/search.py:264
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:695
 msgid "Search"
 msgstr "検索"
 
@@ -39,10 +40,15 @@ msgid "Where to?"
 msgstr "どこへ？"
 
 #: destinations.py:121
+msgid "Searching…"
+msgstr "検索中…"
+
+#: destinations.py:121
 msgid "Looking up places"
 msgstr "場所を検索中"
 
 #: destinations.py:123
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:680
 msgid "Search unavailable"
 msgstr "検索できません"
 
@@ -59,6 +65,7 @@ msgid "Say a place or an address. Tap the mic when you're done."
 msgstr "場所か住所を話してください。終わったらマイクをタップします。"
 
 #: destinations.py:357
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:635
 msgid "Start"
 msgstr "開始"
 
@@ -100,6 +107,10 @@ msgstr "場所や住所を検索"
 msgid "Turns and speed follow the route automatically while navigating"
 msgstr "ナビ中は曲がる場所と速度が自動でルートに従います"
 
+#: destinations.py:484
+msgid "RECENT"
+msgstr "最近"
+
 #: destinations.py:332
 msgid "Add favorite"
 msgstr "お気に入りに追加"
@@ -117,6 +128,10 @@ msgstr "ルート案内中"
 msgid "To {}"
 msgstr "{}へ"
 
+#: destinations.py:481
+msgid "FAVORITES"
+msgstr "お気に入り"
+
 #: destinations.py:492
 msgid "Places you navigate to show up here."
 msgstr "ナビした場所がここに表示されます。"
@@ -132,6 +147,7 @@ msgstr "{} 文字から入力中に結果が表示されます"
 
 #: destinations.py:326
 #: settings/speed_steering.py:388
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:663
 msgid "Home"
 msgstr "自宅"
 
@@ -145,6 +161,7 @@ msgstr "自宅の住所を検索"
 
 #: destinations.py:329
 #: settings/speed_steering.py:389
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:663
 msgid "Work"
 msgstr "職場"
 
@@ -318,6 +335,10 @@ msgstr "自動車線変更"
 msgid "Nudge to change lanes"
 msgstr "ハンドルを軽く切って車線変更"
 
+#: home.py:39
+msgid "READY"
+msgstr "準備完了"
+
 #: home.py:38
 msgid "NEEDS ATTENTION"
 msgstr "要確認"
@@ -348,6 +369,12 @@ msgstr "メモ"
 #: settings/software_tab.py:72
 msgid "A new version"
 msgstr "新しいバージョン"
+
+#: home.py:81
+#: home.py:87
+#: tokens.py:61
+msgid "DCEBFF"
+msgstr ""
 
 #: home.py:143
 msgid "Home · Work · Recent"
@@ -472,6 +499,14 @@ msgstr "{0}件のアラート"
 msgid "openpilot may not start until these are sorted out"
 msgstr "これらを解決するまで openpilot が起動しない場合があります"
 
+#: keyboard.py:40
+msgid "ABC"
+msgstr ""
+
+#: keyboard.py:40
+msgid "space"
+msgstr "空白"
+
 #: keyboard.py:113
 #: mapbox_help.py:83
 #: settings/alerts.py:164
@@ -483,11 +518,23 @@ msgstr "完了"
 msgid "Speak now. Tap the mic when you're done."
 msgstr "話してください。終わったらマイクをタップします。"
 
+#: keyboard.py:30
+msgid "QWERTYUIOP"
+msgstr ""
+
 #: keyboard.py:119
 #: overlays.py:162
 #: settings/bluetooth_tab.py:246
 msgid "Cancel"
 msgstr "キャンセル"
+
+#: keyboard.py:30
+msgid "ASDFGHJKL"
+msgstr ""
+
+#: keyboard.py:30
+msgid "ZXCVBNM"
+msgstr ""
 
 #: mapbox_help.py:19
 msgid "Settings › Driving › Speed & Steering › Navigation"
@@ -664,9 +711,25 @@ msgstr ""
 msgid "active · {} {}"
 msgstr ""
 
+#: onroad/developer.py:165
+msgid "FPS"
+msgstr ""
+
+#: onroad/developer.py:157
+msgid "CPU"
+msgstr ""
+
 #: onroad/developer.py:157
 msgid "Temp"
 msgstr "温度"
+
+#: onroad/developer.py:161
+msgid "GPU"
+msgstr ""
+
+#: onroad/developer.py:163
+msgid "RAM"
+msgstr ""
 
 #: onroad/extras.py:41
 msgid "Jumping frog"
@@ -704,6 +767,18 @@ msgstr "ハンドル操作を手伝って"
 msgid "Steering is at its limit for this curve"
 msgstr "このカーブではステアリングが限界です"
 
+#: onroad/layers.py:495
+msgid "SPEED"
+msgstr ""
+
+#: onroad/layers.py:496
+msgid "LIMIT"
+msgstr ""
+
+#: onroad/layers.py:99
+msgid "MAX"
+msgstr ""
+
 #: onroad/layers.py:398
 #, python-brace-format
 msgid "New limit {}"
@@ -736,6 +811,14 @@ msgstr "合わせる"
 msgid "Ignore"
 msgstr "無視"
 
+#: onroad/layers.py:113
+msgid "ARRIVE"
+msgstr "到着"
+
+#: onroad/layers.py:113
+msgid "LEFT"
+msgstr "残り"
+
 #: onroad/limits.py:5
 msgid "Dashboard"
 msgstr "メーター"
@@ -760,10 +843,6 @@ msgstr "停止中"
 #: onroad/status.py:117
 msgid "Stopping"
 msgstr "停止しています"
-
-#: onroad/status.py:68
-msgid "roundabout turn"
-msgstr "ラウンドアバウト"
 
 #: onroad/status.py:91
 #: onroad/status.py:103
@@ -974,11 +1053,6 @@ msgstr ""
 
 #: onroad/streets.py:16
 msgid "Byp"
-msgstr ""
-
-#: onroad/view.py:558
-#: routemap.py:42
-msgid "%-I:%M %p"
 msgstr ""
 
 #: onroad/view.py:559
@@ -1374,6 +1448,10 @@ msgstr "ボタンを割り当て"
 msgid "Buttons don't run their actions while this screen is open."
 msgstr "この画面を開いている間、ボタンの動作は実行されません。"
 
+#: settings/bluetooth_tab.py:316
+msgid "PRESSED"
+msgstr ""
+
 #: settings/bluetooth_tab.py:364
 msgid "Sound test"
 msgstr "サウンドテスト"
@@ -1465,6 +1543,10 @@ msgstr "接続"
 msgid "Paired"
 msgstr "ペアリング済み"
 
+#: settings/bluetooth_tab.py:441
+msgid "Scanning…"
+msgstr "検索中…"
+
 #: settings/bluetooth_tab.py:182
 #: settings/bluetooth_tab.py:228
 msgid "Button"
@@ -1489,6 +1571,10 @@ msgstr "保存"
 msgid "CAR AUDIO"
 msgstr "車のオーディオ"
 
+#: settings/bluetooth_tab.py:444
+msgid "NEARBY"
+msgstr "近く"
+
 #: settings/bluetooth_tab.py:231
 #: settings/vehicle.py:171
 msgid "What this button does while driving"
@@ -1509,7 +1595,6 @@ msgid "No devices found yet."
 msgstr "デバイスはまだ見つかっていません。"
 
 #: settings/bundles.py:42
-#: settings/display.py:209
 #: settings/search.py:97
 msgid "Developer View"
 msgstr "開発者ビュー"
@@ -1519,7 +1604,6 @@ msgid "Sidebar with live metrics, CPU, GPU, memory and temperatures, and where s
 msgstr "ライブ指標、CPU、GPU、メモリ、温度、制限速度の出どころを表示するサイドバー"
 
 #: settings/bundles.py:46
-#: settings/display.py:210
 #: settings/search.py:98
 msgid "Lead Insights"
 msgstr "先行車の詳細"
@@ -1543,6 +1627,10 @@ msgstr "アクセル、ブレーキ、ステアリング、追従の微調整画
 #, python-brace-format
 msgid "{} button{}"
 msgstr "ボタン {0} 個"
+
+#: settings/connections.py:58
+msgid "CONNECTIONS"
+msgstr "接続"
 
 #: settings/connections.py:61
 #: settings/network_tab.py:185
@@ -1602,6 +1690,7 @@ msgstr "openpilot の開発者向けオプションです。チューナーモ�
 
 #: settings/developer.py:93
 #: settings/developer.py:132
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:558
 msgid "Add"
 msgstr "追加"
 
@@ -1615,8 +1704,18 @@ msgid "Turn On"
 msgstr "オンにする"
 
 #: settings/developer.py:136
+#: settings/search.py:180
+msgid "ADB"
+msgstr ""
+
+#: settings/developer.py:136
 msgid "Connect over USB or the network (docs.comma.ai). Change it with the car off."
 msgstr "USB またはネットワークで接続します（docs.comma.ai）。車の電源を切って変更してください。"
+
+#: settings/developer.py:137
+#: settings/search.py:181
+msgid "SSH"
+msgstr ""
 
 #: settings/developer.py:137
 msgid "Remote shell access with the keys below"
@@ -1624,11 +1723,13 @@ msgstr "下のキーでリモートシェルにアクセス"
 
 #: settings/developer.py:138
 #: settings/search.py:182
+#: selfdrive/ui/layouts/settings/developer.py:53
 msgid "SSH Keys"
 msgstr "SSH キー"
 
 #: settings/developer.py:139
 #: settings/search.py:183
+#: selfdrive/ui/layouts/settings/developer.py:56
 msgid "Joystick Debug Mode"
 msgstr "ジョイスティックデバッグモード"
 
@@ -1638,6 +1739,7 @@ msgstr "ジョイスティックで openpilot を操作します。車の電源�
 
 #: settings/developer.py:141
 #: settings/search.py:185
+#: selfdrive/ui/layouts/settings/developer.py:72
 msgid "UI Debug Mode"
 msgstr "UI デバッグモード"
 
@@ -1645,6 +1747,10 @@ msgstr "UI デバッグモード"
 #: settings/search.py:185
 msgid "Shows touches and the frame rate"
 msgstr "タッチとフレームレートを表示します"
+
+#: settings/developer.py:132
+msgid "Adding…"
+msgstr "追加中…"
 
 #: settings/device.py:24
 msgid "Calibrated"
@@ -1724,10 +1830,11 @@ msgstr "スマホから設定変更やドライブの確認ができます"
 #: settings/device.py:242
 #: settings/device.py:406
 msgid "Set up"
-msgstr "設定済み"
+msgstr "設定"
 
 #: settings/device.py:245
 #: settings/device.py:246
+#: selfdrive/ui/layouts/settings/device.py:334
 msgid "Unpair"
 msgstr "ペアリング解除"
 
@@ -1743,6 +1850,7 @@ msgstr "Galaxy のウェブアプリからこのデバイスにアクセス"
 
 #: settings/device.py:67
 #: settings/search.py:126
+#: selfdrive/ui/layouts/settings/device.py:152
 msgid "Driver Camera"
 msgstr "ドライバーカメラ"
 
@@ -1875,6 +1983,10 @@ msgstr "設定済み · パスワードで保護"
 msgid "Not set up"
 msgstr "未設定"
 
+#: settings/device.py:251
+msgid "GALAXY"
+msgstr ""
+
 #: settings/device.py:260
 msgid "Your code appears here once you choose a password"
 msgstr "パスワードを決めるとここにコードが表示されます"
@@ -1899,10 +2011,19 @@ msgstr "しくみ"
 msgid "Rules, features and limits"
 msgstr "ルール、機能、制限"
 
+#: settings/device.py:110
+msgid "MORE"
+msgstr "その他"
+
 #: settings/device.py:112
 #: settings/search.py:160
 msgid "Device ID and Serial"
 msgstr "デバイス ID とシリアル番号"
+
+#: settings/device.py:113
+#: settings/search.py:161
+msgid "IMEI"
+msgstr ""
 
 #: settings/device.py:109
 msgid "Review"
@@ -2039,18 +2160,16 @@ msgid "Restore"
 msgstr "復元"
 
 #: settings/device_sections.py:215
-#: settings/device_sections.py:448
 msgid "Drives"
 msgstr "ドライブ"
 
 #: settings/device_sections.py:215
-#: settings/device_sections.py:449
 #: sidebar.py:112
+#: sidebar.py:133
 msgid "Maps"
 msgstr "地図"
 
 #: settings/device_sections.py:215
-#: settings/device_sections.py:449
 msgid "Models"
 msgstr "モデル"
 
@@ -2208,17 +2327,10 @@ msgstr "Discord の名前（任意）"
 msgid "So we can follow up"
 msgstr "こちらから連絡するため"
 
-#: settings/device_sections.py:450
-msgid "Total"
-msgstr "合計"
-
-#: settings/device_sections.py:450
-msgid "Free"
-msgstr "空き"
-
 #: settings/device_sections.py:497
-msgid "Backup %Y-%m-%d %H%M"
-msgstr ""
+#, python-brace-format
+msgid "Backup {}"
+msgstr "バックアップ {}"
 
 #: settings/device_sections.py:171
 msgid "Restore this backup?"
@@ -2237,6 +2349,10 @@ msgstr "このバックアップを削除しますか？"
 #, python-brace-format
 msgid "{} can't be recovered."
 msgstr "{} は元に戻せません。"
+
+#: settings/device_sections.py:181
+msgid "SAVED"
+msgstr "保存済み"
 
 #: settings/device_sections.py:184
 msgid "Back up now"
@@ -2257,10 +2373,6 @@ msgstr "詳細"
 #: settings/device_sections.py:399
 msgid "Discord name"
 msgstr "Discord の名前"
-
-#: settings/device_sections.py:488
-msgid "%b %-d, %Y %-I:%M %p"
-msgstr ""
 
 #: settings/device_sections.py:338
 msgid "Delete all drives?"
@@ -2416,11 +2528,6 @@ msgstr "加速度では、加速中はパスが緑、減速中は琥珀色にな
 msgid "Whimsy animations cross the road above the bar while you signal; the chevrons by the speed stay."
 msgstr "ウインカー中は遊び心のあるアニメーションがバーの上の道路を横切ります。速度横の矢印はそのままです。"
 
-#: settings/display.py:703
-#, python-brace-format
-msgid "{}.jpg"
-msgstr ""
-
 #: settings/display.py:266
 #: settings/search.py:91
 msgid "Camera View"
@@ -2554,6 +2661,22 @@ msgstr "起動メッセージ：2 行目"
 msgid "No preview"
 msgstr "プレビューなし"
 
+#: settings/display.py:594
+msgid "ESSENTIALS"
+msgstr ""
+
+#: settings/display.py:594
+msgid "WHIMSY"
+msgstr "遊び心"
+
+#: settings/display.py:674
+msgid "RGB"
+msgstr ""
+
+#: settings/display.py:679
+msgid "PNG"
+msgstr ""
+
 #: settings/display.py:301
 msgid "Sets path color, width, edges and lane lines together"
 msgstr "パスの色・幅・縁・車線をまとめて設定します"
@@ -2594,6 +2717,10 @@ msgstr "おすすめの設定がオンになっています。必要なものだ
 #: settings/driving_tab.py:92
 msgid "SPEED & STEERING"
 msgstr "速度とステアリング"
+
+#: settings/driving_tab.py:107
+msgid "DISPLAY"
+msgstr "表示"
 
 #: settings/driving_tab.py:114
 #: settings/vehicle.py:61
@@ -2736,13 +2863,17 @@ msgstr "ダウンロードが終わるまでお待ちください"
 msgid "Choose at least one region"
 msgstr "地域を1つ以上選んでください"
 
+#: settings/maps.py:128
+msgid "Cancelling…"
+msgstr "中止しています…"
+
 #: settings/maps.py:130
 #, python-brace-format
 msgid "Downloading {} · {}%"
 msgstr "{}をダウンロード中 · {}%"
 
 #: settings/maps.py:131
-#: settings/maps.py:185
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:239
 msgid "Downloaded"
 msgstr "ダウンロード済み"
 
@@ -2832,7 +2963,13 @@ msgstr "地図の地域を追加"
 msgid "Pick a region, or switch to states for less storage"
 msgstr "地域を選ぶか、容量を減らすなら州に切り替えます"
 
+#: settings/maps.py:255
+#: settings/maps.py:491
+msgid "REGIONS"
+msgstr "地域"
+
 #: settings/maps.py:344
+#: sidebar.py:93
 msgid "Online"
 msgstr "オンライン"
 
@@ -2856,10 +2993,12 @@ msgstr "州・地域・国を追加または削除"
 
 #: settings/maps.py:203
 #: settings/model.py:315
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:276
 msgid "Storage"
 msgstr "ストレージ"
 
 #: settings/maps.py:311
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:479
 msgid "Whole U.S."
 msgstr "米国全土"
 
@@ -2871,6 +3010,10 @@ msgstr "すべての州と準州"
 #, python-brace-format
 msgid "{}: not yet"
 msgstr "{}：まだ"
+
+#: settings/maps.py:273
+msgid "SELECTED"
+msgstr "選択済み"
 
 #: settings/maps.py:260
 msgid "No regions available."
@@ -2931,6 +3074,11 @@ msgstr "運転モデル"
 #: settings/model.py:403
 msgid "Park to remove models"
 msgstr "モデルを削除するには駐車してください"
+
+#: settings/model.py:125
+#: settings/model.py:273
+msgid "ACTIVE"
+msgstr "有効"
 
 #: settings/model.py:145
 #, python-brace-format
@@ -3003,6 +3151,10 @@ msgstr "新しいモデルは次のドライブから使われます。"
 msgid "No models here yet."
 msgstr "ここにはまだモデルがありません。"
 
+#: settings/network_tab.py:55
+msgid "Connecting…"
+msgstr "接続中…"
+
 #: settings/network_tab.py:56
 msgid "Saved"
 msgstr "保存済み"
@@ -3019,6 +3171,11 @@ msgstr "ネットワーク名"
 #: settings/network_tab.py:98
 msgid "Hotspot password"
 msgstr "ホットスポットのパスワード"
+
+#: settings/network_tab.py:126
+#: settings/network_tab.py:191
+msgid "APN"
+msgstr ""
 
 #: settings/network_tab.py:126
 msgid "Leave empty for automatic"
@@ -3839,6 +3996,10 @@ msgstr "アップデートを確認できませんでした。接続を確認し
 msgid "A new version is available to download"
 msgstr "新しいバージョンをダウンロードできます"
 
+#: settings/software_tab.py:80
+msgid "Check now"
+msgstr "今すぐ確認"
+
 #: settings/software_tab.py:123
 #, python-brace-format
 msgid "What's new in {}"
@@ -3856,6 +4017,17 @@ msgstr "デバイスから openpilot を削除し、セットアップをやり�
 msgid "pkill -SIGUSR1 -f system.updated.updated"
 msgstr ""
 
+#: settings/software_tab.py:70
+#: settings/software_tab.py:64
+msgid "Updating"
+msgstr "更新中"
+
+#: settings/software_tab.py:97
+#: settings/software_tab.py:97
+#: settings/software_tab.py:97
+msgid "Stable"
+msgstr "安定版"
+
 #: settings/software_tab.py:186
 msgid "Choose another branch"
 msgstr "別のブランチを選ぶ"
@@ -3869,10 +4041,6 @@ msgid "Back to the Essentials defaults. Backups are kept."
 msgstr "Essentials のデフォルトに戻します。バックアップは残ります。"
 
 #: settings/software_tab.py:64
-msgid "Updating"
-msgstr "更新中"
-
-#: settings/software_tab.py:64
 msgid "Ready to install"
 msgstr "インストールの準備完了"
 
@@ -3883,6 +4051,22 @@ msgstr "確認に失敗"
 #: settings/software_tab.py:65
 msgid "Update available"
 msgstr "アップデートあり"
+
+#: settings/software_tab.py:80
+msgid "Working…"
+msgstr "処理中…"
+
+#: settings/software_tab.py:80
+msgid "Restart to install"
+msgstr "再起動してインストール"
+
+#: settings/software_tab.py:80
+msgid "Try again"
+msgstr "もう一度試す"
+
+#: settings/software_tab.py:97
+msgid "Beta"
+msgstr "ベータ"
 
 #: settings/software_tab.py:156
 msgid "Erase everything?"
@@ -3905,6 +4089,7 @@ msgid "A factory reset also deletes every setting, drive and download. Skip keep
 msgstr "工場出荷時リセットでは、すべての設定・ドライブ・ダウンロードも削除されます。スキップすると残ります。"
 
 #: settings/software_tab.py:165
+#: selfdrive/ui/layouts/settings/software.py:350
 msgid "Factory Reset"
 msgstr "工場出荷時リセット"
 
@@ -3914,6 +4099,7 @@ msgid "Version {}"
 msgstr "バージョン {}"
 
 #: settings/software_tab.py:165
+#: selfdrive/ui/layouts/settings/software.py:350
 msgid "Skip"
 msgstr "スキップ"
 
@@ -4160,6 +4346,11 @@ msgid "From style"
 msgstr "スタイルから"
 
 #: settings/tuner.py:77
+#: settings/tuner.py:137
+msgid "NNFF"
+msgstr ""
+
+#: settings/tuner.py:77
 msgid "Lite"
 msgstr "ライト"
 
@@ -4354,6 +4545,8 @@ msgid "Favorite 3"
 msgstr "お気に入り 3"
 
 #: settings/vehicle.py:253
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:780
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:68
 msgid "Never"
 msgstr "しない"
 
@@ -4388,6 +4581,14 @@ msgstr "車のデフォルトのボタン"
 #: settings/vehicle.py:193
 msgid "Preset for your car. Tap a button to change what it does."
 msgstr "あなたの車向けのプリセットです。ボタンをタップすると動作を変えられます。"
+
+#: settings/vehicle.py:142
+msgid "MAKE"
+msgstr "メーカー"
+
+#: settings/vehicle.py:142
+msgid "MODEL"
+msgstr "車種"
 
 #: settings/vehicle.py:156
 msgid "Choose your car"
@@ -4435,6 +4636,10 @@ msgstr "openpilot のアクセルとブレーキ制御をオフにします。�
 #: settings/vehicle.py:157
 msgid "Only needed if detection picked the wrong car. Choosing turns off automatic detection."
 msgstr "検出された車が違う場合だけ必要です。選ぶと自動検出がオフになります。"
+
+#: settings/vehicle.py:230
+msgid "LKAS"
+msgstr ""
 
 #: settings/vehicle.py:235
 msgid "Mode"
@@ -4594,6 +4799,10 @@ msgstr "オンにする"
 msgid "Turn off"
 msgstr "オフにする"
 
+#: settings/window.py:318
+msgid "DEVICE"
+msgstr "デバイス"
+
 #: settings/window.py:253
 msgid "Driving model"
 msgstr "運転モデル"
@@ -4692,6 +4901,10 @@ msgstr "戻る"
 msgid "Start driving"
 msgstr "運転を始める"
 
+#: setup.py:117
+msgid ", then "
+msgstr ""
+
 #: sidebar.py:93
 msgid "comma connect"
 msgstr "comma connect"
@@ -4701,7 +4914,9 @@ msgstr "comma connect"
 msgid "Network"
 msgstr "ネットワーク"
 
+#: sidebar.py:93
 #: sidebar.py:98
+#: sidebar.py:93
 msgid "Offline"
 msgstr "オフライン"
 
@@ -4716,6 +4931,10 @@ msgstr "音声を録音中"
 #: sidebar.py:112
 msgid "Checking"
 msgstr "確認中"
+
+#: sidebar.py:93
+msgid "Error"
+msgstr "エラー"
 
 #: sidebar.py:142
 msgid "Good"
@@ -4732,6 +4951,12 @@ msgstr "高温"
 #: sidebar.py:137
 msgid "Not downloaded"
 msgstr "未ダウンロード"
+
+#: tokens.py:101
+#: tokens.py:102
+#: tokens.py:165
+msgid "FFFFFF"
+msgstr ""
 
 #: voice.py:35
 msgid "Didn't catch that. Tap the mic to try again."
@@ -4761,6 +4986,10 @@ msgstr "キーボードで入力"
 msgid "Listening"
 msgstr "聞いています"
 
+#: voice.py:92
+msgid "QCOM"
+msgstr ""
+
 #: voice.py:195
 msgid "Getting voice typing ready"
 msgstr "音声入力を準備中"
@@ -4780,3 +5009,1157 @@ msgstr "数秒かかります。あとで文字を編集できます。"
 #: voice.py:199
 msgid "Voice typing"
 msgstr "音声入力"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:72
+msgid "U.S. Midwest Region (12 States)"
+msgstr "米国中西部（12 州）"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:73
+msgid "IL, IN, IA, KS, MI, MN, MO, NE, ND, OH, SD, WI"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:77
+msgid "U.S. Northeast Region (9 States)"
+msgstr "米国北東部（9 州）"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:78
+msgid "CT, ME, MA, NH, NJ, NY, PA, RI, VT"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:82
+msgid "U.S. South Region (17 States)"
+msgstr "米国南部（17 州）"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:83
+msgid "AL, AR, DE, DC, FL, GA, KY, LA, MD, MS, NC, OK, SC, TN, TX, VA, WV"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:87
+msgid "U.S. West Region (13 States)"
+msgstr "米国西部（13 州）"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:88
+msgid "AK, AZ, CA, CO, HI, ID, MT, NV, NM, OR, UT, WA, WY"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:92
+msgid "U.S. Territories (5 Territories)"
+msgstr "米国の準州（5 準州）"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:93
+msgid "AS, GU, MP, PR, VI"
+msgstr ""
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:120
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:132
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:138
+msgid "Calculating..."
+msgstr "計算中..."
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:135
+msgid "Almost done"
+msgstr "まもなく完了"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:553
+msgid "Tap to select state"
+msgstr "タップして州を選択"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:678
+msgid "Download Offline Maps"
+msgstr "オフラインマップをダウンロード"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:795
+msgid "Download Readiness"
+msgstr "ダウンロードの準備"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:463
+msgid "No regions selected"
+msgstr "地域が選ばれていません"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:465
+msgid "Whole U.S. (56 states)"
+msgstr "米国全土（56 州）"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:485
+msgid "No regions selected yet"
+msgstr "まだ地域が選ばれていません"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:487
+msgid "Whole U.S. package"
+msgstr "米国全土パッケージ"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:548
+msgid "Master Package - Full country map data"
+msgstr "マスターパッケージ：国全体の地図データ"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:552
+msgid "Selected for download"
+msgstr "ダウンロード対象"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:557
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:275
+msgid "Selected"
+msgstr "選択済み"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:561
+msgid "No regions available"
+msgstr "利用できる地域がありません"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:561
+msgid "Switch sources to keep browsing maps."
+msgstr "地図を見続けるにはソースを切り替えてください。"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:673
+msgid "Cancelling..."
+msgstr "中止しています..."
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:675
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:749
+msgid "Cancel Download"
+msgstr "ダウンロードを中止"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:677
+msgid "Select Regions Below"
+msgstr "下で地域を選択"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:707
+msgid "Auto Update Schedule"
+msgstr "自動更新のスケジュール"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:784
+msgid "Cancelling Download"
+msgstr "ダウンロードを中止しています"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:786
+msgid "Downloading Maps"
+msgstr "地図をダウンロード中"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:788
+msgid "Starting Download"
+msgstr "ダウンロードを開始中"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:792
+msgid "Checking Offline Maps"
+msgstr "オフラインマップを確認中"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:794
+msgid "Select Map Data"
+msgstr "地図データを選択"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:813
+msgid "Stop request sent. The current transfer will wind down safely."
+msgstr "停止を要求しました。現在の転送は安全に終了します。"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:816
+msgid "Preparing the selected regions for download."
+msgstr "選んだ地域のダウンロードを準備中です。"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:819
+msgid "No regions selected yet. Tap 'Whole U.S.' or pick specific states below to get started."
+msgstr "まだ地域が選ばれていません。「米国全土」をタップするか、下で州を選んでください。"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:190
+msgid "Available for Download"
+msgstr "ダウンロード可能"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:190
+msgid "Map Packages & Regions"
+msgstr "地図パッケージと地域"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:239
+msgid "Downloaded on device"
+msgstr "デバイスにダウンロード済み"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:277
+msgid "Last Updated"
+msgstr "最終更新"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:466
+#, python-brace-format
+msgid "{} region selected"
+msgstr "{} 地域を選択"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:466
+#, python-brace-format
+msgid "{} regions selected"
+msgstr "{} 地域を選択"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:491
+#, python-brace-format
+msgid "{} + {} more"
+msgstr "{} ほか {} 件"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:516
+msgid "Whole U.S. (All 50 States & Territories)"
+msgstr "米国全土（全 50 州と準州）"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:531
+msgid "Whole U.S. Selected"
+msgstr "米国全土を選択済み"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:535
+#, python-brace-format
+msgid "{} selected | {} available"
+msgstr "{} 件選択 | {} 件利用可能"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:657
+msgid "Download in progress"
+msgstr "ダウンロード中"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:659
+msgid "Connect to the internet"
+msgstr "インターネットに接続してください"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:661
+msgid "Park the vehicle to download"
+msgstr "ダウンロードするには駐車してください"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:690
+msgid "Auto: Off"
+msgstr "自動：オフ"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:691
+msgid "Auto: Weekly"
+msgstr "自動：毎週"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:692
+msgid "Auto: Monthly"
+msgstr "自動：毎月"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:708
+msgid "Choose how often to update downloaded offline maps."
+msgstr "オフラインマップを更新する頻度を選びます。"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:735
+msgid "Start downloading offline maps for the selected regions?"
+msgstr "選んだ地域のオフラインマップのダウンロードを始めますか？"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:749
+msgid "Cancel the current map download?"
+msgstr "現在の地図のダウンロードを中止しますか？"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:776
+msgid "Delete all downloaded offline map data?"
+msgstr "ダウンロードしたオフライン地図データをすべて削除しますか？"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:776
+msgid "Remove Maps"
+msgstr "地図を削除"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:825
+#, python-brace-format
+msgid "Ready to download {}."
+msgstr "{}をダウンロードできます。"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:173
+msgid "U.S. States & Regions"
+msgstr "米国の州と地域"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:173
+msgid "Other Countries"
+msgstr "その他の国"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:188
+msgid "On This Device"
+msgstr "このデバイス上"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:534
+#, python-brace-format
+msgid "{} available - Tap to select"
+msgstr "{} 件利用可能 · タップして選択"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:722
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:684
+msgid "Please select 'Whole U.S.' or pick individual states from the list below."
+msgstr "「米国全土」を選ぶか、下のリストから州を選んでください。"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:804
+#, python-brace-format
+msgid "{} / {} ({}%)\nElapsed {} | ETA {}"
+msgstr "{} / {} ({}%)\n経過 {} | 残り {}"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:754
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:761
+msgid "Park to remove downloaded maps."
+msgstr "ダウンロードした地図を削除するには駐車してください。"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:774
+msgid "Removing offline maps..."
+msgstr "オフラインマップを削除中..."
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:803
+#, python-brace-format
+msgid "{}\nElapsed {} | ETA {}"
+msgstr "{}\n経過 {} | 残り {}"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:188
+#, python-brace-format
+msgid "{} region"
+msgstr "{} 地域"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:188
+#, python-brace-format
+msgid "{} regions"
+msgstr "{} 地域"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:47
+msgid "No Action"
+msgstr "動作なし"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:48
+msgid "Change Personality"
+msgstr "運転スタイルを変更"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:49
+msgid "Force Coast"
+msgstr "惰性走行を強制"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:50
+msgid "Pulse and Glide"
+msgstr "パルス＆グライド"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:51
+msgid "Pause Steering"
+msgstr "ステアリングを一時停止"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:52
+msgid "Pause Accel/Brake"
+msgstr "加速とブレーキを一時停止"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:53
+msgid "Toggle Experimental"
+msgstr "実験モードを切り替え"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:54
+msgid "Toggle Traffic"
+msgstr "渋滞を切り替え"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:55
+msgid "Toggle Switchback"
+msgstr "つづら折りを切り替え"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:56
+msgid "Create Bookmark"
+msgstr "ブックマークを作成"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:57
+msgid "Toggle Always On Lateral"
+msgstr "常時ステアリングを切り替え"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:58
+msgid "Adopt Current Speed Limit"
+msgstr "現在の制限速度を採用"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:59
+msgid "Favorite #1"
+msgstr "お気に入り 1"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:60
+msgid "Favorite #2"
+msgstr "お気に入り 2"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:61
+msgid "Favorite #3"
+msgstr "お気に入り 3"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:407
+msgid "Choose an action for each press type, then tap Apply."
+msgstr "押し方ごとに動作を選び、「適用」をタップします。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:573
+msgid "Select Make"
+msgstr "メーカーを選択"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:602
+msgid "Select Model"
+msgstr "車種を選択"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:656
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:671
+msgid "None"
+msgstr "なし"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:103
+msgid "Disable Fingerprinting"
+msgstr "自動検出を無効にする"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:107
+msgid "Car Make"
+msgstr "メーカー"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:111
+msgid "Car Model"
+msgstr "車種"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:137
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:527
+msgid "Distance Button"
+msgstr "車間ボタン"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:155
+msgid "CC Main Button"
+msgstr "クルーズのメインボタン"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:238
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:253
+msgid "Features"
+msgstr "機能"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:281
+msgid "Disable openpilot Long"
+msgstr "openpilot の縦制御をオフ"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:282
+msgid "Revert to stock longitudinal control."
+msgstr "純正の縦制御に戻します。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:507
+msgid "Flash"
+msgstr "書き込む"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:532
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:145
+msgid "Cancel Button"
+msgstr "キャンセルボタン"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:537
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:163
+msgid "Mode Button"
+msgstr "モードボタン"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:542
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:168
+msgid "Star Button"
+msgstr "スターボタン"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:574
+msgid "Choose your vehicle manufacturer."
+msgstr "車のメーカーを選びます。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:603
+msgid "Choose the model that matches your vehicle."
+msgstr "あなたの車に合う車種を選びます。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:636
+msgid "Choose the action this button press will trigger."
+msgstr "このボタンを押したときの動作を選びます。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:644
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:117
+msgid "Lock Doors Timer"
+msgstr "ドアロックのタイマー"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:104
+msgid "Manually select vehicle instead of auto-detecting."
+msgstr "自動検出ではなく手動で車を選びます。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:151
+msgid "LKAS Button"
+msgstr "LKAS ボタン"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:289
+msgid "Pedal for Long"
+msgstr "縦制御に Pedal"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:294
+msgid "Offsets on Dash Spoof"
+msgstr "メーターにオフセット"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:300
+msgid "CAN Ignition Only"
+msgstr "CAN イグニッションのみ"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:301
+msgid "Use Panda firmware that ignores the physical ignition line and starts only from CAN ignition."
+msgstr "物理的なイグニッション線を無視し、CAN イグニッションだけで起動する Panda ファームウェアを使います。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:306
+msgid "Remote Start Panda"
+msgstr "リモートスタート（Panda）"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:312
+msgid "Volt SNG Hack"
+msgstr "Volt のストップ＆ゴーのハック"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:318
+msgid "Jeep Brake Hold"
+msgstr "Jeep ブレーキホールド"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:319
+msgid "Hold after ACC times out at a stop and resume when traffic moves."
+msgstr "停止中に ACC が切れても保持し、車列が動いたら再開します。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:326
+msgid "Stop and Go"
+msgstr "ストップ＆ゴー"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:339
+msgid "Auto Lock Doors"
+msgstr "自動ドアロック"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:344
+msgid "Auto Unlock Doors"
+msgstr "自動ドアロック解除"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:350
+msgid "Stop-and-Go Hack"
+msgstr "ストップ＆ゴーのハック"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:356
+msgid "Remap Cancel Button"
+msgstr "キャンセルボタンを割り当て直す"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:357
+msgid "Treat the Cancel button as an extra mappable steering-wheel button."
+msgstr "キャンセルボタンを割り当て可能なハンドルボタンとして扱います。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:364
+msgid "EV Remote Climate"
+msgstr "EV のリモート空調"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:369
+msgid "Nostalgia Mode"
+msgstr "ノスタルジアモード"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:370
+msgid "Use the left paddle to pause openpilot acceleration and braking."
+msgstr "左のパドルで openpilot の加速とブレーキを一時停止します。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:505
+msgid "Panda flashing started. Device will reboot when finished."
+msgstr "Panda への書き込みを開始しました。完了するとデバイスが再起動します。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:529
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:534
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:539
+msgid "Long Press"
+msgstr "長押し"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:529
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:534
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:539
+msgid "Very Long"
+msgstr "とても長い"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:558
+msgid "No fingerprint list available."
+msgstr "車両リストがありません。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:558
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:580
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:584
+msgid "OK"
+msgstr "OK"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:580
+msgid "Please select a Car Make first!"
+msgstr "先にメーカーを選んでください！"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:584
+msgid "No models available for this make."
+msgstr "このメーカーの車種はありません。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:647
+msgid "How long to wait before locking the doors."
+msgstr "ドアをロックするまでの待ち時間。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:332
+msgid "Manual Parking Brake SNG"
+msgstr "手動パーキングブレーキでストップ＆ゴー"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:468
+msgid "Disable openpilot longitudinal control?"
+msgstr "openpilot の縦制御をオフにしますか？"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:468
+msgid "Disable"
+msgstr "無効にする"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:303
+msgid "CAN Ignition Only requires a Panda firmware update."
+msgstr "CAN イグニッションのみには Panda のファームウェア更新が必要です。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:308
+msgid "Remote Start requires a Panda firmware update."
+msgstr "リモートスタートには Panda のファームウェア更新が必要です。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:366
+msgid "EV Remote Climate requires a Panda firmware update."
+msgstr "EV のリモート空調には Panda のファームウェア更新が必要です。"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:380
+msgid "Search destination"
+msgstr "目的地を検索"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:380
+msgid "Enter a place or address"
+msgstr "場所か住所を入力"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:398
+msgid "Enter at least 3 characters to search."
+msgstr "検索するには 3 文字以上入力してください。"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:403
+msgid "Mapbox search is not configured on this device."
+msgstr "このデバイスでは Mapbox 検索が設定されていません。"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:433
+msgid "That result did not include a usable location."
+msgstr "その結果には使える位置が含まれていませんでした。"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:460
+msgid "That destination is missing a valid location."
+msgstr "その目的地には有効な位置がありません。"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:503
+msgid "Rename favorite"
+msgstr "お気に入りの名前を変更"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:503
+msgid "Choose a short name"
+msgstr "短い名前を付けてください"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:539
+msgid "That destination is not valid."
+msgstr "その目的地は無効です。"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:632
+msgid "Ready to navigate"
+msgstr "ナビの準備完了"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:638
+msgid "Navigation active"
+msgstr "ナビゲーション中"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:635
+msgid "Unavailable"
+msgstr "利用不可"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:678
+msgid "Searching..."
+msgstr "検索中..."
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:678
+msgid "Looking up destinations"
+msgstr "目的地を検索中"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:684
+msgid "No destinations yet"
+msgstr "目的地はまだありません"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:684
+msgid "Search for a place or address to begin."
+msgstr "場所か住所を検索して始めましょう。"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:692
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:656
+msgid "Destination"
+msgstr "目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:336
+msgid "Search is unavailable. Check your connection and try again."
+msgstr "検索できません。接続を確認してもう一度お試しください。"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:655
+msgid "Search results"
+msgstr "検索結果"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:666
+msgid "Favorite destinations"
+msgstr "お気に入りの目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:668
+msgid "Recent destinations"
+msgstr "最近の目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:683
+msgid "No matching destinations"
+msgstr "一致する目的地はありません"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:683
+msgid "Try a different place or address."
+msgstr "別の場所や住所をお試しください。"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:695
+msgid "Use the on-device keyboard to search Mapbox locations"
+msgstr "デバイスのキーボードで Mapbox の場所を検索"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:703
+msgid "Route"
+msgstr "ルート"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:714
+msgid "Destinations"
+msgstr "目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:342
+msgid "Could not determine that location. Try another result."
+msgstr "その場所を特定できませんでした。別の結果をお試しください。"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:529
+#, python-brace-format
+msgid "Remove {} from favorites?"
+msgstr "{}をお気に入りから削除しますか？"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:529
+msgid "this destination"
+msgstr "この目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:603
+msgid "Rename"
+msgstr "名前を変更"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:694
+msgid "Search for a destination"
+msgstr "目的地を検索"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:665
+msgid "Favorite destination"
+msgstr "お気に入りの目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:670
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:669
+msgid "Recent destination"
+msgstr "最近の目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:664
+msgid "Unnamed favorite"
+msgstr "名前のないお気に入り"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:727
+msgid "Select"
+msgstr "選択"
+
+#: selfdrive/ui/layouts/settings/software.py:26
+msgid "checking..."
+msgstr "確認中..."
+
+#: selfdrive/ui/layouts/settings/software.py:27
+msgid "downloading..."
+msgstr "ダウンロード中..."
+
+#: selfdrive/ui/layouts/settings/software.py:28
+msgid "finalizing update..."
+msgstr "アップデートを仕上げ中..."
+
+#: selfdrive/ui/layouts/settings/software.py:80
+msgid "never"
+msgstr "なし"
+
+#: selfdrive/ui/layouts/settings/software.py:91
+msgid "now"
+msgstr "今"
+
+#: selfdrive/ui/layouts/settings/software.py:245
+#: selfdrive/ui/layouts/settings/software.py:117
+#: selfdrive/ui/layouts/settings/software.py:201
+msgid "CHECK"
+msgstr "確認"
+
+#: selfdrive/ui/layouts/settings/software.py:274
+#: selfdrive/ui/layouts/settings/software.py:183
+msgid "FAST UPDATE"
+msgstr "高速アップデート"
+
+#: selfdrive/ui/layouts/settings/software.py:275
+#: selfdrive/ui/layouts/settings/software.py:272
+msgid "Starting fast update..."
+msgstr "高速アップデートを開始中..."
+
+#: selfdrive/ui/layouts/settings/software.py:354
+msgid "Are you sure you want to uninstall?"
+msgstr "本当にアンインストールしますか？"
+
+#: selfdrive/ui/layouts/settings/software.py:391
+msgid "Select a branch"
+msgstr "ブランチを選択"
+
+#: selfdrive/ui/layouts/settings/software.py:94
+#, python-brace-format
+msgid "{} minute ago"
+msgstr "{} 分前"
+
+#: selfdrive/ui/layouts/settings/software.py:94
+#, python-brace-format
+msgid "{} minutes ago"
+msgstr "{} 分前"
+
+#: selfdrive/ui/layouts/settings/software.py:97
+#, python-brace-format
+msgid "{} hour ago"
+msgstr "{} 時間前"
+
+#: selfdrive/ui/layouts/settings/software.py:97
+#, python-brace-format
+msgid "{} hours ago"
+msgstr "{} 時間前"
+
+#: selfdrive/ui/layouts/settings/software.py:100
+#, python-brace-format
+msgid "{} day ago"
+msgstr "{} 日前"
+
+#: selfdrive/ui/layouts/settings/software.py:100
+#, python-brace-format
+msgid "{} days ago"
+msgstr "{} 日前"
+
+#: selfdrive/ui/layouts/settings/software.py:108
+msgid "Updates are only downloaded while the car is off."
+msgstr "アップデートは車両の電源が切れている間のみダウンロードされます。"
+
+#: selfdrive/ui/layouts/settings/software.py:109
+msgid "Current Version"
+msgstr "現在のバージョン"
+
+#: selfdrive/ui/layouts/settings/software.py:111
+msgid "Automatically Install Updates"
+msgstr "アップデートを自動でインストール"
+
+#: selfdrive/ui/layouts/settings/software.py:112
+msgid "Automatically install updates when parked with an active internet connection."
+msgstr "駐車中かつインターネット接続時にアップデートを自動でインストールします。"
+
+#: selfdrive/ui/layouts/settings/software.py:123
+msgid "Install Update"
+msgstr "アップデートをインストール"
+
+#: selfdrive/ui/layouts/settings/software.py:123
+#: selfdrive/ui/layouts/settings/software.py:230
+msgid "INSTALL"
+msgstr "インストール"
+
+#: selfdrive/ui/layouts/settings/software.py:131
+msgid "Target Branch"
+msgstr "対象ブランチ"
+
+#: selfdrive/ui/layouts/settings/software.py:131
+msgid "SELECT"
+msgstr "選択"
+
+#: selfdrive/ui/layouts/settings/software.py:175
+msgid "REBOOTING"
+msgstr "再起動中"
+
+#: selfdrive/ui/layouts/settings/software.py:176
+#: selfdrive/ui/layouts/settings/software.py:317
+msgid "Update applied, rebooting..."
+msgstr "アップデートを適用しました。再起動中..."
+
+#: selfdrive/ui/layouts/settings/software.py:262
+msgid "Fast update will replace the current installation without backup and reboot the device. Continue?"
+msgstr "高速アップデートはバックアップなしで現在のインストールを置き換え、デバイスを再起動します。続けますか？"
+
+#: selfdrive/ui/layouts/settings/software.py:263
+msgid "Fast Update"
+msgstr "高速アップデート"
+
+#: selfdrive/ui/layouts/settings/software.py:268
+msgid "Cannot update while driving"
+msgstr "運転中は更新できません"
+
+#: selfdrive/ui/layouts/settings/software.py:361
+msgid "No error log found."
+msgstr "エラーログが見つかりません。"
+
+#: selfdrive/ui/layouts/settings/software.py:392
+msgid "Choose the software branch to install."
+msgstr "インストールするソフトウェアのブランチを選びます。"
+
+#: selfdrive/ui/layouts/settings/software.py:179
+msgid "RETRY"
+msgstr "再試行"
+
+#: selfdrive/ui/layouts/settings/software.py:350
+msgid "Do you want to perform a full factory reset? All saved assets and settings will be permanently deleted!"
+msgstr "完全な工場出荷時リセットを行いますか？保存したデータと設定はすべて完全に削除されます！"
+
+#: selfdrive/ui/layouts/settings/software.py:144
+msgid "UNINSTALL"
+msgstr "アンインストール"
+
+#: selfdrive/ui/layouts/settings/software.py:145
+msgid "Error Log"
+msgstr "エラーログ"
+
+#: selfdrive/ui/layouts/settings/software.py:145
+#: selfdrive/ui/layouts/settings/device.py:159
+msgid "VIEW"
+msgstr "表示"
+
+#: selfdrive/ui/layouts/settings/software.py:200
+msgid "failed to check for update"
+msgstr "アップデートの確認に失敗しました"
+
+#: selfdrive/ui/layouts/settings/software.py:294
+msgid "Fetching latest commit..."
+msgstr "最新のコミットを取得中..."
+
+#: selfdrive/ui/layouts/settings/software.py:302
+msgid "Applying update..."
+msgstr "アップデートを適用中..."
+
+#: selfdrive/ui/layouts/settings/software.py:180
+#, python-brace-format
+msgid "Failed: {}"
+msgstr "失敗：{}"
+
+#: selfdrive/ui/layouts/settings/software.py:184
+msgid "Starting..."
+msgstr "開始中..."
+
+#: selfdrive/ui/layouts/settings/software.py:203
+msgid "update available"
+msgstr "更新があります"
+
+#: selfdrive/ui/layouts/settings/software.py:204
+msgid "DOWNLOAD"
+msgstr "ダウンロード"
+
+#: selfdrive/ui/layouts/settings/software.py:310
+msgid "Updating submodules..."
+msgstr "サブモジュールを更新中..."
+
+#: selfdrive/ui/layouts/settings/software.py:344
+msgid "This is a complete factory reset and cannot be undone. Are you absolutely sure?"
+msgstr "完全な工場出荷時リセットで、元に戻せません。本当によろしいですか？"
+
+#: selfdrive/ui/layouts/settings/software.py:211
+msgid "up to date, last checked never"
+msgstr "最新です。最終確認: なし"
+
+#: selfdrive/ui/layouts/settings/software.py:209
+#, python-brace-format
+msgid "up to date, last checked {}"
+msgstr "最新です。最終確認: {}"
+
+#: selfdrive/ui/layouts/settings/device.py:34
+msgid "Pair your device with comma connect (connect.comma.ai) and claim your comma prime offer."
+msgstr "デバイスを comma connect（connect.comma.ai）とペアリングして、comma prime 特典を受け取りましょう。"
+
+#: selfdrive/ui/layouts/settings/device.py:35
+msgid "Pair your device with Galaxy for remote access to The Galaxy."
+msgstr "デバイスを Galaxy とペアリングするとリモートでアクセスできます。"
+
+#: selfdrive/ui/layouts/settings/device.py:36
+msgid "Preview the driver facing camera to ensure that driver monitoring has good visibility. (vehicle must be off)"
+msgstr "ドライバー向きカメラのプレビューでモニタリングの視界を確認します。（車両は停止状態である必要があります）"
+
+#: selfdrive/ui/layouts/settings/device.py:37
+msgid "Clears the saved driver monitoring wheel-side calibration and any manual right-hand-driving override."
+msgstr "保存されたハンドル位置のキャリブレーションと右ハンドルの手動設定を消去します。"
+
+#: selfdrive/ui/layouts/settings/device.py:38
+msgid "openpilot requires the device to be mounted within 4° left or right and within 5° up or 9° down."
+msgstr "openpilotでは、デバイスの取り付け角度が左右±4°、上方向5°以内、下方向9°以内である必要があります。"
+
+#: selfdrive/ui/layouts/settings/device.py:39
+msgid "Review the rules, features, and limitations of openpilot"
+msgstr "openpilotのルール、機能、制限を確認"
+
+#: selfdrive/ui/layouts/settings/device.py:91
+msgid "Scan to open Galaxy"
+msgstr "スキャンして Galaxy を開く"
+
+#: selfdrive/ui/layouts/settings/device.py:104
+msgid "Tap anywhere to dismiss"
+msgstr "どこかをタップして閉じる"
+
+#: selfdrive/ui/layouts/settings/device.py:183
+msgid "Select a language"
+msgstr "言語を選択"
+
+#: selfdrive/ui/layouts/settings/device.py:212
+msgid "Are you sure you want to reset calibration?"
+msgstr "本当にキャリブレーションをリセットしますか？"
+
+#: selfdrive/ui/layouts/settings/device.py:229
+msgid "Are you sure you want to reset driver monitoring calibration?"
+msgstr "ドライバーモニタリングのキャリブレーションをリセットしますか？"
+
+#: selfdrive/ui/layouts/settings/device.py:258
+msgid "<br><br>Steering lag calibration is complete."
+msgstr "<br><br>ステアリング遅延のキャリブレーションが完了しました。"
+
+#: selfdrive/ui/layouts/settings/device.py:281
+msgid "Are you sure you want to reboot?"
+msgstr "本当に再起動しますか？"
+
+#: selfdrive/ui/layouts/settings/device.py:281
+#: selfdrive/ui/layouts/settings/device.py:144
+msgid "Reboot"
+msgstr "再起動"
+
+#: selfdrive/ui/layouts/settings/device.py:297
+msgid "Are you sure you want to power off?"
+msgstr "本当に電源をオフにしますか？"
+
+#: selfdrive/ui/layouts/settings/device.py:316
+msgid "MANAGE"
+msgstr "管理"
+
+#: selfdrive/ui/layouts/settings/device.py:316
+#: selfdrive/ui/layouts/settings/device.py:135
+msgid "PAIR"
+msgstr "ペアリング"
+
+#: selfdrive/ui/layouts/settings/device.py:333
+msgid "Show QR"
+msgstr "QR を表示"
+
+#: selfdrive/ui/layouts/settings/device.py:351
+msgid "Set Galaxy Password"
+msgstr "Galaxy のパスワードを設定"
+
+#: selfdrive/ui/layouts/settings/device.py:351
+msgid "Set a password to secure your Galaxy access. Min 6 characters."
+msgstr "Galaxy へのアクセスを守るパスワードを設定します。6 文字以上。"
+
+#: selfdrive/ui/layouts/settings/device.py:94
+msgid "QR Code Error"
+msgstr "QRコードエラー"
+
+#: selfdrive/ui/layouts/settings/device.py:135
+msgid "Pair Device"
+msgstr "デバイスをペアリング"
+
+#: selfdrive/ui/layouts/settings/device.py:137
+msgid "Pair with Galaxy"
+msgstr "Galaxy とペアリング"
+
+#: selfdrive/ui/layouts/settings/device.py:140
+msgid "Reset Calibration"
+msgstr "キャリブレーションをリセット"
+
+#: selfdrive/ui/layouts/settings/device.py:140
+#: selfdrive/ui/layouts/settings/device.py:154
+msgid "RESET"
+msgstr "リセット"
+
+#: selfdrive/ui/layouts/settings/device.py:185
+msgid "Choose the language used for menus and alerts."
+msgstr "メニューとアラートの言語を選びます。"
+
+#: selfdrive/ui/layouts/settings/device.py:345
+msgid "Galaxy"
+msgstr "Galaxy"
+
+#: selfdrive/ui/layouts/settings/device.py:148
+msgid "Dongle ID"
+msgstr "ドングルID"
+
+#: selfdrive/ui/layouts/settings/device.py:149
+msgid "Serial"
+msgstr "シリアル"
+
+#: selfdrive/ui/layouts/settings/device.py:152
+msgid "PREVIEW"
+msgstr "プレビュー"
+
+#: selfdrive/ui/layouts/settings/device.py:154
+msgid "Reset Driver Monitoring"
+msgstr "ドライバーモニタリングをリセット"
+
+#: selfdrive/ui/layouts/settings/device.py:157
+msgid "Review Training Guide"
+msgstr "トレーニングガイドを確認"
+
+#: selfdrive/ui/layouts/settings/device.py:157
+msgid "REVIEW"
+msgstr "確認"
+
+#: selfdrive/ui/layouts/settings/device.py:160
+msgid "Change Language"
+msgstr "言語を変更"
+
+#: selfdrive/ui/layouts/settings/device.py:160
+msgid "CHANGE"
+msgstr "変更"
+
+#: selfdrive/ui/layouts/settings/device.py:196
+msgid "Disengage to Reset Calibration"
+msgstr "解除してキャリブレーションをリセット"
+
+#: selfdrive/ui/layouts/settings/device.py:217
+msgid "Disengage to Reset Driver Monitoring"
+msgstr "解除してからドライバーモニタリングをリセット"
+
+#: selfdrive/ui/layouts/settings/device.py:256
+#, python-brace-format
+msgid "<br><br>Steering lag calibration is {}% complete."
+msgstr "<br><br>ステアリング遅延のキャリブレーションは{}%完了しました。"
+
+#: selfdrive/ui/layouts/settings/device.py:294
+msgid "Disengage to Power Off"
+msgstr "解除して電源オフ"
+
+#: selfdrive/ui/layouts/settings/device.py:327
+msgid "Galaxy is not paired yet."
+msgstr "Galaxy はまだペアリングされていません。"
+
+#: selfdrive/ui/layouts/settings/device.py:346
+msgid "View pairing information or unlink your Galaxy account."
+msgstr "ペアリング情報を表示、または Galaxy アカウントの連携を解除します。"
+
+#: selfdrive/ui/layouts/settings/device.py:362
+msgid "Password must be at least 6 characters."
+msgstr "パスワードは 6 文字以上にしてください。"
+
+#: selfdrive/ui/layouts/settings/device.py:148
+#: selfdrive/ui/layouts/settings/device.py:149
+msgid "N/A"
+msgstr "なし"
+
+#: selfdrive/ui/layouts/settings/device.py:270
+msgid " Steering torque response calibration is complete."
+msgstr " ステアリングトルク応答のキャリブレーションが完了しました。"
+
+#: selfdrive/ui/layouts/settings/device.py:373
+msgid "Failed to pair with Galaxy."
+msgstr "Galaxy とのペアリングに失敗しました。"
+
+#: selfdrive/ui/layouts/settings/device.py:243
+#, python-brace-format
+msgid " Your device is pointed {}° {} and {}° {}."
+msgstr " デバイスは{}°{}、{}°{}の向きです。"
+
+#: selfdrive/ui/layouts/settings/device.py:243
+msgid "down"
+msgstr "下"
+
+#: selfdrive/ui/layouts/settings/device.py:243
+msgid "up"
+msgstr "上"
+
+#: selfdrive/ui/layouts/settings/device.py:244
+msgid "left"
+msgstr "左"
+
+#: selfdrive/ui/layouts/settings/device.py:244
+msgid "right"
+msgstr "右"
+
+#: selfdrive/ui/layouts/settings/device.py:268
+#, python-brace-format
+msgid " Steering torque response calibration is {}% complete."
+msgstr " ステアリングトルク応答のキャリブレーションは{}%完了しました。"
+
+#: selfdrive/ui/layouts/settings/device.py:343
+msgid "Are you sure you want to unpair from Galaxy?"
+msgstr "Galaxy とのペアリングを解除しますか？"
+
+#: selfdrive/ui/layouts/settings/developer.py:39
+msgid "Enable ADB"
+msgstr "ADBを有効化"
+
+#: selfdrive/ui/layouts/settings/developer.py:48
+msgid "Enable SSH"
+msgstr "SSHを有効化"
+
+#: selfdrive/ui/layouts/settings/developer.py:64
+msgid "openpilot Longitudinal Control (Alpha)"
+msgstr "openpilot 縦制御（アルファ）"
+
+#: selfdrive/ui/layouts/settings/developer.py:153
+msgid "Enable"
+msgstr "有効化"

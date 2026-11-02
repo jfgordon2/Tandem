@@ -21,6 +21,8 @@ PACKAGE = Path(__file__).resolve().parents[1]
 OUT = PACKAGE / "translations"
 SKIP_DIRS = {"tests", "tools", "translations", "design", "assets", "__pycache__"}
 SKIP_FILES = {"arabic.py", "speech.py", "speech_native.py", "i18n.py"}   # tables and worker processes, not drawn text
+# One lowercase word is usually a key or an icon name; these are drawn as they are (the keyboard's space bar)
+DRAWN_LOWERCASE = {"space"}
 _IDENTIFIER = re.compile(r"^[A-Za-z0-9_.:/\\-]+$")
 
 
@@ -31,15 +33,26 @@ def _is_text(value: str) -> bool:
     return False
   if len(value) < 2:
     return False
-  if " " not in value:   # one word: a label like "Off" or "Weather", not "SteerKP", "wifi_lock" or "main_en"
-    return bool(_IDENTIFIER.match(value)) and value[0].isupper() and "_" not in value \
-      and not any(c.isupper() for c in value[1:]) and not value.endswith((".py", ".png", ".json", ".fnt"))
+  if " " not in value:   # one word: a label like "Off", "Weather" or "space", not "SteerKP", "wifi_lock" or "main_en"
+    value = value.removesuffix("…").removesuffix("...")   # "Working…"
+    if value in DRAWN_LOWERCASE or (value.isalpha() and value.isupper() and len(value) >= 3):   # captions like "REGIONS"
+      return True
+    return bool(_IDENTIFIER.match(value)) and "_" not in value and value.isalpha() and len(value) >= 2 and value[0].isupper() \
+      and not any(c.isupper() for c in value[1:])
   return not value.startswith("{") or any(c.isalpha() for c in value.replace("{}", ""))
 
 
-_NOT_SHOWN = {"print", "debug", "info", "warning", "error", "exception", "_log", "log", "event", "getenv", "get", "put", "put_bool",
-              "get_bool", "get_int", "get_float", "get_str", "put_nonblocking", "startswith", "endswith", "split", "join", "replace",
-              "environ", "setdefault", "Path", "open", "glob", "icon", "write", "remove_param"}
+_LOGS = {"print", "debug", "info", "warning", "error", "exception", "_log", "log", "event"}   # never drawn
+_KEYED = {"getenv": 1, "get": 1, "put": 1, "put_bool": 1, "get_bool": 1, "get_int": 1, "get_float": 1, "get_str": 1,
+          "put_nonblocking": 1, "startswith": 1, "endswith": 1, "split": 1, "replace": 2, "setdefault": 1, "Path": 1, "open": 2,
+          "glob": 1, "icon": 1, "write": 1, "remove_param": 1, "removesuffix": 1, "removeprefix": 1, "strip": 1, "rstrip": 1}
+_STRFTIME = re.compile(r"(?:%-?[a-zA-Z][ :/.-]*)+")   # "Backup %Y-%m-%d %H%M" draws as "Backup {}"
+# StarPilot screens Tandem's Upstream adapters read text from: their tr(), tr_noop() and trn() strings join the catalog
+UPSTREAM = ["selfdrive/ui/layouts/settings/starpilot/maps.py", "selfdrive/ui/layouts/settings/starpilot/model.py",
+            "selfdrive/ui/layouts/settings/starpilot/vehicle.py", "selfdrive/ui/layouts/settings/starpilot/navigation.py",
+            "selfdrive/ui/layouts/settings/software.py", "selfdrive/ui/layouts/settings/device.py",
+            "selfdrive/ui/layouts/settings/developer.py"]
+_TR_CALLS = {"tr": 1, "tr_noop": 1, "trn": 2}
 
 
 def _call_name(node: ast.Call) -> str:
@@ -82,11 +95,17 @@ def strings() -> dict[str, list[str]]:
     in_fstring = {id(v) for n in ast.walk(tree) if isinstance(n, ast.JoinedStr) for v in n.values}
     annotations = [n.annotation for n in ast.walk(tree) if isinstance(n, (ast.arg, ast.AnnAssign)) and n.annotation] + \
       [n.returns for n in ast.walk(tree) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and n.returns]
-    logged = [n for n in ast.walk(tree) if isinstance(n, ast.Raise) or isinstance(n, ast.Call) and _call_name(n) in _NOT_SHOWN]
+    logged = [n for n in ast.walk(tree) if isinstance(n, ast.Raise) or isinstance(n, ast.Call) and _call_name(n) in _LOGS]
+    keys = [a for n in ast.walk(tree) if isinstance(n, ast.Call) and _call_name(n) in _KEYED for a in n.args[:_KEYED[_call_name(n)]]] + \
+      [k for n in ast.walk(tree) if isinstance(n, ast.Dict) for k in n.keys if k is not None] + \
+      [c for n in ast.walk(tree) if isinstance(n, ast.Compare) for c in [n.left, *n.comparators]] + \
+      [n.slice for n in ast.walk(tree) if isinstance(n, ast.Subscript)]   # param keys, states and dict keys: not drawn
+    dated = {id(n.args[0]): _STRFTIME.sub("{}", n.args[0].value).strip() for n in ast.walk(tree) if isinstance(n, ast.Call)
+             and _call_name(n) == "strftime" and n.args and isinstance(n.args[0], ast.Constant) and isinstance(n.args[0].value, str)}
     keywords = [n.args[5] for n in ast.walk(tree) if isinstance(n, ast.Call) and _call_name(n) in ("Entry", "_place") and len(n.args) > 5] + \
       [k.value for n in ast.walk(tree) if isinstance(n, ast.Call) for k in n.keywords if k.arg == "words"]   # search words, never drawn
     exported = [n.value for n in ast.walk(tree) if isinstance(n, ast.Assign) and any(getattr(t, "id", "") == "__all__" for t in n.targets)]
-    skip = docstrings | in_fstring | {id(c) for n in logged + annotations + exported + keywords for c in ast.walk(n)}
+    skip = docstrings | in_fstring | {id(c) for n in logged + annotations + exported + keywords + keys for c in ast.walk(n)}
     joined = {}   # "a " + "b" (or with f-strings) is one string at runtime
     for node in ast.walk(tree):
       if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Add) and id(node) not in skip:
@@ -96,7 +115,9 @@ def strings() -> dict[str, list[str]]:
           skip |= {id(c) for c in ast.walk(node) if c is not node}
     for node in ast.walk(tree):
       text = None
-      if id(node) in joined:
+      if id(node) in dated:
+        text = dated[id(node)] if any(c.isalpha() for c in dated[id(node)]) else None
+      elif id(node) in joined:
         text = joined[id(node)] if _is_text(joined[id(node)].replace("{}", "X")) else None
       elif isinstance(node, ast.JoinedStr) and id(node) not in skip:
         text = _template(node)
@@ -104,6 +125,16 @@ def strings() -> dict[str, list[str]]:
         text = node.value if _is_text(node.value) else None
       if text:
         found.setdefault(text, []).append(f"{path.relative_to(PACKAGE)}:{node.lineno}")
+  for name in UPSTREAM:
+    path = PACKAGE.parents[2] / name
+    if not path.is_file():
+      continue
+    for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+      if isinstance(node, ast.Call) and _call_name(node) in _TR_CALLS:
+        for arg in node.args[:_TR_CALLS[_call_name(node)]]:
+          if isinstance(arg, ast.Constant) and isinstance(arg.value, str) and any(c.isalpha() for c in arg.value):
+            text = re.sub(r"\{[^{}]*\}", "{}", arg.value)   # "{count} regions" is formatted before it's drawn
+            found.setdefault(text, []).append(f"{name}:{node.lineno}")
   return found
 
 
