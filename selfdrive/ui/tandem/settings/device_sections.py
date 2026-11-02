@@ -137,9 +137,19 @@ def same_language(a: str, b: str) -> bool:
   return a.removeprefix("main_") == b.removeprefix("main_")
 
 
+# StarPilot's style languages: English rewritten for fun, not languages a driver reads. Hidden from Tandem's list
+# (StarPilot's own list, with TANDEM_SETTINGS=0, still has them); a driver already using one keeps it.
+NOVELTY_LANGUAGES = {"caveman", "duck", "frog", "pirate", "shakespearean"}
+
+
+def picker_languages(languages: list[tuple[str, str]], current: str) -> list[tuple[str, str]]:
+  return [(name, code) for name, code in languages
+          if code.removeprefix("main_") not in NOVELTY_LANGUAGES or same_language(code, current)]
+
+
 def open_language(data: DeviceData, window) -> None:
   """The language sheet, opened from General."""
-  languages = data.languages()
+  languages = picker_languages(data.languages(), data.language())
 
   def pick(index: int):
     data.set_language(languages[index][1])

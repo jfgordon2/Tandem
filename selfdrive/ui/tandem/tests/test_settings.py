@@ -1447,3 +1447,11 @@ def test_tandem_text_keeps_figtree_when_the_language_needs_unifont(monkeypatch):
       pass
     assert application.font_fallback(figtree) is figtree
   assert not application.KEEP_FONT and application.font_fallback(figtree) is unifont
+
+
+def test_the_language_list_leaves_out_the_novelty_styles():
+  from openpilot.selfdrive.ui.tandem.settings.device_sections import picker_languages
+  languages = [("English", "main_en"), ("Caveman", "main_caveman"), ("Deutsch", "main_de"), ("Pirate", "main_pirate"),
+               ("Shakespearean", "main_shakespearean"), ("日本語", "main_ja")]
+  assert [n for n, _ in picker_languages(languages, "en")] == ["English", "Deutsch", "日本語"]
+  assert [n for n, _ in picker_languages(languages, "pirate")] == ["English", "Deutsch", "Pirate", "日本語"]   # in use: kept
