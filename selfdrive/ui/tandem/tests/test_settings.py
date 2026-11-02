@@ -1418,3 +1418,17 @@ def test_imei_is_read_once_from_the_modem_in_the_background(monkeypatch):
   while failing._imei_reading and time.monotonic() < end:
     time.sleep(0.01)
   assert failing.imei() == "Not available" and not failing._imei_reading   # gives up, and can try again next time
+
+
+def test_language_names_use_figtree_unless_it_lacks_a_letter(monkeypatch):
+  from types import SimpleNamespace
+  from openpilot.selfdrive.ui.tandem import fonts, tokens as T
+  latin = [ord(c) for c in "?EnglishFraçaisTürkçeEspañol"]
+  atlas = SimpleNamespace(glyphs=[SimpleNamespace(value=cp) for cp in latin])
+  monkeypatch.setattr(fonts, "font", lambda face: atlas)
+  monkeypatch.setattr(fonts.rl, "get_glyph_index", lambda f, cp: latin.index(cp) if cp in latin else 0)
+  monkeypatch.setattr(fonts, "_covered", {})
+  assert fonts.face_for("Français", T.FONT_SEMIBOLD) == T.FONT_SEMIBOLD
+  assert fonts.face_for("Español", T.FONT_SEMIBOLD) == T.FONT_SEMIBOLD
+  assert fonts.face_for("Українська", T.FONT_SEMIBOLD) == T.FONT_UNIFONT
+  assert fonts.face_for("日本語", T.FONT_SEMIBOLD) == T.FONT_UNIFONT

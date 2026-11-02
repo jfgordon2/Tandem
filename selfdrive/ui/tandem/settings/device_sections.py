@@ -14,6 +14,7 @@ import pyray as rl
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.blocks import SPACER, Columns, Field, Label, Stack, Surface
+from openpilot.selfdrive.ui.tandem.fonts import face_for
 from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, Segmented, Switch, Tone, ValueButton
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, row
 from openpilot.selfdrive.ui.tandem.overlays import Dialog, Sheet
@@ -145,7 +146,8 @@ def open_language(data: DeviceData, window) -> None:
     window.dismiss()
   window.present(Sheet("Language", OptionList([name for name, _ in languages],
                                               lambda: next((i for i, (_, c) in enumerate(languages) if same_language(c, data.language())), 0),
-                                              pick, weight=T.FONT_UNIFONT), subtitle="For menus and alerts", on_dismiss=window.dismiss))
+                                              pick, weight=lambda name: face_for(name, T.FONT_SEMIBOLD)),   # unifont only where Figtree lacks
+                       subtitle="For menus and alerts", on_dismiss=window.dismiss))
 
 
 def general_panel(model: General, window) -> ListPanel:

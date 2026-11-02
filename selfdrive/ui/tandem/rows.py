@@ -376,7 +376,8 @@ class OptionList(Component):
 
   def __init__(self, options: list[str] | list[tuple[str, str]], selected: Bindable[int], on_change: Callable[[int], None],
                row_height: float = T.px(60), weight=T.FONT_SEMIBOLD, outlined: bool = False, font_size: int = T.SIZE_ROW_TITLE):
-    """outlined marks the choice with an accent outline instead of a check (the Report a Problem list)."""
+    """outlined marks the choice with an accent outline instead of a check (the Report a Problem list). weight may be a
+    function of the option's title, to pick its face (the language list)."""
     super().__init__()
     self._weight = weight
     self._outlined = outlined
@@ -431,6 +432,7 @@ class OptionList(Component):
         draw.check(rl.Rectangle(body.x + body.width - size, body.y, size, body.height), T.ACCENT_TEXT, size)
       body = inset(body, right=size + T.px(12))
       weight = T.FONT_BOLD if chosen and self._outlined else self._weight
+      weight = weight(title) if callable(weight) else weight   # a face per option, e.g. fonts.face_for
       if subtitle:
         w = draw.text(body, title, self._font_size, T.TEXT, weight)
         draw.text(inset(body, left=w + T.px(14)), subtitle, T.SIZE_SUBTITLE, T.TEXT_TERTIARY)

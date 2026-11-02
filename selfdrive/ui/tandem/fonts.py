@@ -36,3 +36,20 @@ def font(face: Face) -> rl.Font:
     rl.set_texture_filter(loaded.texture, rl.TextureFilter.TEXTURE_FILTER_TRILINEAR)
     _loaded[face] = loaded
   return _loaded[face]
+
+
+_covered: dict[tuple[str, str], bool] = {}
+
+
+def covers(face: Face, text: str) -> bool:
+  """Whether face's atlas has a glyph for every character of text (raylib draws "?" for the rest)."""
+  key = (str(face), text)
+  if key not in _covered:
+    loaded = font(face)
+    _covered[key] = all(loaded.glyphs[rl.get_glyph_index(loaded, ord(c))].value == ord(c) for c in text)
+  return _covered[key]
+
+
+def face_for(text: str, preferred: Face, fallback: Face = FontWeight.UNIFONT) -> Face:
+  """preferred when it can draw text, else fallback: a language's own name in Figtree when it can, unifont when not."""
+  return preferred if covers(preferred, text) else fallback
