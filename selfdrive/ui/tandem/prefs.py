@@ -65,6 +65,44 @@ class Choice:
         pass
 
 
+BACKUP_DIR = ".tandem_prefs"          # inside a settings backup, beside the copied params
+NOT_BACKED_UP = {".tandem_forecast.json"}   # a cache, not a setting
+
+
+def pref_files(folder: Path | None = None) -> list[Path]:
+  """Tandem's settings files (marker files and choices) beside the params folder."""
+  folder = folder or prefs_dir()
+  try:
+    return sorted(p for p in folder.glob(".tandem_*") if p.is_file() and p.name not in NOT_BACKED_UP)
+  except OSError:
+    return []
+
+
+def save_prefs(backup: Path, folder: Path | None = None) -> None:
+  """Copy Tandem's settings into a backup, so it holds them along with the params."""
+  import shutil
+  target = backup / BACKUP_DIR
+  target.mkdir(parents=True, exist_ok=True)
+  for path in pref_files(folder):
+    shutil.copy2(path, target / path.name)
+
+
+def restore_prefs(backup: Path, folder: Path | None = None) -> bool:
+  """Make Tandem's settings what the backup saved: a file there is restored, one it lacks goes back to its default.
+  A backup made before Tandem saved its settings leaves the current ones alone (returns False)."""
+  import shutil
+  source = backup / BACKUP_DIR
+  if not source.is_dir():
+    return False
+  folder = folder or prefs_dir()
+  for path in pref_files(folder):
+    path.unlink(missing_ok=True)
+  for path in source.glob(".tandem_*"):
+    if path.is_file() and path.name not in NOT_BACKED_UP:
+      shutil.copy2(path, folder / path.name)
+  return True
+
+
 MAX_FOLLOWS_LIMIT = Flag("max_follows_limit", True)   # Speed Limits › MAX follows limits (onroad/limits.py LimitFollower)
 WEATHER_HEADS_UP = Flag("weather_heads_up", True)     # Weather › Weather heads-up (forecast.py)
 WEATHER_CHIME = Flag("weather_chime", True)           # Alerts › Chimes › Weather heads-up: its one chime

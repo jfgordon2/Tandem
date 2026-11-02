@@ -208,3 +208,53 @@ def test_temperature_is_its_own_choice_and_follows_units_until_picked(tandem_pre
   assert celsius(False)                                # mph with °C
   TEMPERATURE.set("K")
   assert TEMPERATURE.get() == "C"                      # only °F or °C
+
+
+def test_backups_carry_tandems_own_settings_but_not_the_forecast_cache(tandem_prefs, tmp_path):
+  from openpilot.selfdrive.ui.tandem.prefs import BACKUP_DIR, MAX_FOLLOWS_LIMIT, TEMPERATURE, WEATHER_CHIME, restore_prefs, save_prefs
+  from openpilot.selfdrive.ui.tandem.settings.device_sections import UpstreamData
+  params = tmp_path / "params"
+  params.mkdir()
+  (params / "IsMetric").write_text("1")
+  data = UpstreamData()
+  data._backups, data._params_dir = tmp_path / "backups", params
+  MAX_FOLLOWS_LIMIT.set(False)
+  TEMPERATURE.set("C")
+  (tandem_prefs / ".tandem_forecast.json").write_text("{}")
+  data.create_backup()
+  backup = next((tmp_path / "backups").iterdir())
+  assert (backup / "IsMetric").exists()
+  saved = sorted(p.name for p in (backup / BACKUP_DIR).iterdir())
+  assert saved == [".tandem_max_follows_limit_off", ".tandem_temperature"]   # no forecast cache
+
+  MAX_FOLLOWS_LIMIT.set(True)            # changed after the backup...
+  WEATHER_CHIME.set(False)
+  TEMPERATURE.set("F")
+  assert restore_prefs(backup)           # ...and put back: off, °C, and the chime back to its default
+  assert not MAX_FOLLOWS_LIMIT.get() and TEMPERATURE.get() == "C" and WEATHER_CHIME.get()
+  assert (tandem_prefs / ".tandem_forecast.json").exists()
+
+  old = tmp_path / "old_backup"           # made before backups held Tandem's settings: leave the current ones
+  old.mkdir()
+  WEATHER_CHIME.set(False)
+  assert not restore_prefs(old) and not WEATHER_CHIME.get()
+  save_prefs(tmp_path / "again")
+  assert (tmp_path / "again" / BACKUP_DIR).is_dir()
+
+
+def test_restoring_a_backup_keeps_tandems_settings_out_of_the_params_folder(tandem_prefs, tmp_path, monkeypatch):
+  import sys
+  import types
+  from openpilot.selfdrive.ui.tandem.prefs import BACKUP_DIR, TEMPERATURE
+  from openpilot.selfdrive.ui.tandem.settings.device_sections import UpstreamData
+  fake = types.SimpleNamespace(LEGACY_STARPILOT_PARAM_RENAMES={}, update_starpilot_toggles=lambda: None)
+  monkeypatch.setitem(sys.modules, "openpilot.starpilot.common.starpilot_variables", fake)
+  params = tmp_path / "params"
+  params.mkdir()
+  data = UpstreamData()
+  data._backups, data._params_dir = tmp_path / "backups", params
+  TEMPERATURE.set("C")
+  data.create_backup()
+  TEMPERATURE.set("F")
+  data.restore_backup(data.backups()[0].name)
+  assert not (params / BACKUP_DIR).exists() and TEMPERATURE.get() == "C"

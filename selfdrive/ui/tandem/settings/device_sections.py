@@ -20,7 +20,7 @@ from openpilot.selfdrive.ui.tandem.overlays import Dialog, Sheet
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, OptionList, Padded, SectionHeader, SettingRow, Text
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
 from openpilot.system.ui.widgets import DialogResult, Widget
-from openpilot.selfdrive.ui.tandem.prefs import TEMPERATURE, celsius
+from openpilot.selfdrive.ui.tandem.prefs import BACKUP_DIR, TEMPERATURE, celsius, restore_prefs, save_prefs
 
 
 @dataclass(frozen=True)
@@ -463,6 +463,7 @@ class UpstreamData:
     from pathlib import Path
     self._Path = Path
     self._backups = Path("/data/toggle_backups")
+    self._params_dir = Path("/data/params/d")
 
   def languages(self) -> list[tuple[str, str]]:
     from openpilot.system.ui.lib.multilang import multilang
@@ -493,16 +494,18 @@ class UpstreamData:
     import shutil
     target = self._dir(datetime.datetime.now().strftime("Backup %Y-%m-%d %H%M"))
     target.mkdir(parents=True, exist_ok=True)
-    shutil.copytree("/data/params/d", str(target), dirs_exist_ok=True)
+    shutil.copytree(str(self._params_dir), str(target), dirs_exist_ok=True)
+    save_prefs(target)   # Tandem's own settings live beside the params folder (prefs.py)
 
   def restore_backup(self, name: str) -> None:
     import shutil
     from openpilot.starpilot.common.starpilot_variables import LEGACY_STARPILOT_PARAM_RENAMES, update_starpilot_toggles
-    src, params_dir = self._dir(name), self._Path("/data/params/d")
+    src, params_dir = self._dir(name), self._params_dir
     for old_key, new_key in LEGACY_STARPILOT_PARAM_RENAMES.items():
       if (src / old_key).exists():
         (params_dir / new_key).unlink(missing_ok=True)
-    shutil.copytree(str(src), str(params_dir), dirs_exist_ok=True)
+    shutil.copytree(str(src), str(params_dir), dirs_exist_ok=True, ignore=shutil.ignore_patterns(BACKUP_DIR))
+    restore_prefs(src)   # Tandem's own settings, beside the params folder
     for old_key, new_key in LEGACY_STARPILOT_PARAM_RENAMES.items():
       if (params_dir / old_key).exists():
         (params_dir / old_key).replace(params_dir / new_key)
