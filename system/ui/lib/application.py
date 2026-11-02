@@ -164,9 +164,12 @@ class FontWeight(StrEnum):
   DISPLAY = "Figtree-Bold.fnt"
 
 
+KEEP_FONT = False  # Tandem: True while it draws its own untranslated text, which keeps its font in every language
+
+
 def font_fallback(font: rl.Font) -> rl.Font:
   """Fall back to unifont for languages that require it."""
-  if multilang.requires_unifont():
+  if multilang.requires_unifont() and not KEEP_FONT:
     try:
       if font.texture.id == gui_app.font(FontWeight.BRAND).texture.id:
         return font

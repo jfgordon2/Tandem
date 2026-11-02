@@ -1432,3 +1432,18 @@ def test_language_names_use_figtree_unless_it_lacks_a_letter(monkeypatch):
   assert fonts.face_for("Español", T.FONT_SEMIBOLD) == T.FONT_SEMIBOLD
   assert fonts.face_for("Українська", T.FONT_SEMIBOLD) == T.FONT_UNIFONT
   assert fonts.face_for("日本語", T.FONT_SEMIBOLD) == T.FONT_UNIFONT
+
+
+def test_tandem_text_keeps_figtree_when_the_language_needs_unifont(monkeypatch):
+  from types import SimpleNamespace
+  from openpilot.selfdrive.ui.tandem import draw
+  from openpilot.system.ui.lib import application
+  monkeypatch.setattr(application.multilang, "requires_unifont", lambda: True)
+  unifont, figtree = SimpleNamespace(texture=SimpleNamespace(id=1)), SimpleNamespace(texture=SimpleNamespace(id=2))
+  monkeypatch.setattr(application.gui_app, "font", lambda weight=None: unifont)
+  assert not application.KEEP_FONT and application.font_fallback(figtree) is unifont   # upstream's text still falls back
+  with draw._own_font:
+    with draw._own_font:                                     # nesting keeps it on until the outermost use ends
+      pass
+    assert application.font_fallback(figtree) is figtree
+  assert not application.KEEP_FONT and application.font_fallback(figtree) is unifont

@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pyray as rl
 
+from openpilot.system.ui.lib import application
 from openpilot.system.ui.lib.application import FONT_SCALE, gui_app
 from openpilot.system.ui.lib.text_measure import measure_text_cached
 from openpilot.system.ui.lib.wrap_text import wrap_text
@@ -105,8 +106,28 @@ def pressed(rect: rl.Rectangle, radius: float = 0) -> None:
 
 # ── Text ──
 
+class _OwnFont:
+  """Tandem's text is English (it doesn't go through StarPilot's translations), so it keeps Figtree when the language
+  picked needs unifont: upstream's font_fallback is off just while these functions measure and draw it."""
+
+  depth = 0   # nesting-safe: the flag goes back to off only when the outermost use ends
+
+  def __enter__(self):
+    _OwnFont.depth += 1
+    application.KEEP_FONT = True
+
+  def __exit__(self, *_):
+    _OwnFont.depth -= 1
+    if not _OwnFont.depth:
+      application.KEEP_FONT = False
+
+
+_own_font = _OwnFont()
+
+
 def text_width(text: str, size: int, weight: Face = T.FONT, tracking: float = 0) -> float:
-  return measure_text_cached(font(weight), text, size, tracking).x
+  with _own_font:
+    return measure_text_cached(font(weight), text, size, tracking).x
 
 
 def line_height(size: int) -> float:
@@ -129,7 +150,8 @@ def text(rect: rl.Rectangle, value: str, size: int, color: rl.Color, weight: Fac
     value = fit(value, size, weight, rect.width, tracking)
   width = text_width(value, size, weight, tracking)
   box = place(rect, width, line_height(size), h, v)
-  rl.draw_text_ex(font(weight), value, rl.Vector2(round(box.x), round(box.y)), size, tracking, color)
+  with _own_font:
+    rl.draw_text_ex(font(weight), value, rl.Vector2(round(box.x), round(box.y)), size, tracking, color)
   return width
 
 
@@ -139,7 +161,8 @@ def caption(rect: rl.Rectangle, value: str, color: rl.Color = T.TEXT_MUTED, h: A
 
 
 def paragraph_lines(value: str, size: int, weight: Face, width: float) -> list[str]:
-  return wrap_text(font(weight), value, size, int(width))
+  with _own_font:
+    return wrap_text(font(weight), value, size, int(width))
 
 
 def paragraph_height(value: str, size: int, weight: Face, width: float, spacing: float = 1.3) -> float:
@@ -156,7 +179,8 @@ def paragraph(rect: rl.Rectangle, value: str, size: int, color: rl.Color, weight
   if max_lines is not None and len(lines) > max_lines:
     lines = lines[:max_lines - 1] + [fit(" ".join(lines[max_lines - 1:]) + ELLIPSIS, size, weight, rect.width)]
   for line in lines:
-    rl.draw_text_ex(font(weight), line, rl.Vector2(round(rect.x), round(y)), size, 0, color)
+    with _own_font:
+      rl.draw_text_ex(font(weight), line, rl.Vector2(round(rect.x), round(y)), size, 0, color)
     y += step
   return y - rect.y
 
