@@ -23,8 +23,7 @@ STEPS = [
   ("Get two keys", "Your default public token (pk.) is there already. Create a token, keep its public scopes, and also " +
                    "check DOWNLOADS:READ so it starts with sk."),
   ("Open Galaxy", "On this device: Device › This Device › Remote Access › Set Up, then open its link on your phone."),
-  ("Paste both keys", "In Galaxy, open App Keys: in the menu under Tools, or Navigation & Maps › App Keys. Public is " +
-                      "for search, secret for routes."),
+  ("Paste both keys", "In Galaxy: Navigation & Maps › App Keys. The public key is for search, the secret one for routes."),
 ]
 
 

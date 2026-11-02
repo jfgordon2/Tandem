@@ -104,4 +104,4 @@ def test_mapbox_keys_each_do_their_part_and_the_steps_point_to_app_keys():
   assert status(saved(MapboxSecretKey="sk.b"))[0].startswith("Secret key only")
   assert status(saved()) == ("Not added · needed for place search and routes", False)
   text = " ".join(line for _, line in STEPS)
-  assert "open App Keys" in text and "under Tools" in text and "Navigation & Maps › App Keys" in text and "DOWNLOADS:READ" in text and "pk." in text
+  assert "Navigation & Maps › App Keys" in text and "DOWNLOADS:READ" in text and "pk." in text
