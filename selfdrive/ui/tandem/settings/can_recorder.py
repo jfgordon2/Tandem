@@ -11,7 +11,8 @@ from openpilot.selfdrive.ui.tandem.settings.pages import TitledPage
 from openpilot.starpilot.tandem.can_recorder import ACTIVE, CanRecorder, boot_time_ns
 
 PHASES = {"idle": N_("Ready"), "starting": N_("Starting…"), "recording": N_("Recording"),
-          "saving": N_("Saving…"), "saved": N_("Saved"), "error": N_("Error")}
+          "saving": N_("Saving…"), "saved": N_("Saved"), "error": N_("Error"),
+          "aborting": N_("Discarding…"), "discarded": N_("Discarded")}
 
 
 def recording_allowed() -> bool:
@@ -34,18 +35,21 @@ class CanRecorderPage(Component):
     self._allowed, self._clock_ns = allowed, clock_ns
     self.state = self.recorder.snapshot()
     self._start = Button(N_("Start logging"), self.start, ButtonStyle.PRIMARY, height=T.px(56), font_size=T.font_px(19), radius=T.px(14))
-    self._start.set_enabled(lambda: self.state.phase not in ACTIVE and self._allowed())
+    self._start.set_enabled(lambda: self.state.phase not in ACTIVE and self.state.reason != "delete" and self._allowed())
     self._stop = Button(N_("Stop logging"), self.recorder.stop, height=T.px(56), font_size=T.font_px(19), radius=T.px(14))
     self._stop.set_enabled(lambda: self.state.phase in {"starting", "recording"})
+    self._abort = Button(N_("Abort"), self.recorder.abort, ButtonStyle.DANGER_SOFT,
+                         height=T.px(44), font_size=T.font_px(16), radius=T.px(14))
+    self._abort.set_enabled(lambda: bool(self.state.session) and self.state.phase != "aborting")
     self._mark_lock = self._marker(N_("Mark lock"), "lock")
     self._mark_unlock = self._marker(N_("Mark unlock"), "unlock")
     controls = ListPanel([Padded(Stack([
       Text(N_("Tap a marker as you press the car's lock control."), size=T.font_px(15), padding=(0, 0)),
       ButtonRow([self._start, self._stop], height=T.px(56), gap=T.px(12)),
       ButtonRow([self._mark_lock, self._mark_unlock], height=T.px(88), gap=T.px(12)),
-      Text(N_("Markers only timestamp your taps."), padding=(0, 0)),
+      Text(N_("Abort deletes this test. Markers only timestamp your taps."), padding=(0, 0)),
       Text(N_("Stops after 10 minutes or when you leave this screen."), padding=(0, 0)),
-    ], gap=T.px(14)), x=T.px(22), y=T.px(20))], title=N_("Test controls"), dividers=False, header_divider=False)
+    ], gap=T.px(14)), x=T.px(22), y=T.px(20))], title=N_("Test controls"), dividers=False, header_divider=False, header_control=self._abort)
     status = ListPanel([Padded(Stack([
       ValueLine(N_("Elapsed"), self.elapsed, size=T.font_px(22)),
       ValueLine(N_("CAN frames"), lambda: f"{self.state.frames:,}"),
@@ -74,7 +78,11 @@ class CanRecorderPage(Component):
     return duration(end-self.state.started_ns) if self.state.session else "00:00.000"
 
   def detail(self):
+    if self.state.phase == "discarded":
+      return N_("Test discarded. Start a new test.")
     if self.state.phase == "error":
+      if self.state.reason == "delete":
+        return N_("Couldn't delete the log. Try Abort again.")
       return N_("Park the car to start a test.") if self.state.reason == "parked" else N_("Couldn't save the log. Check storage and try again.")
     if self.state.phase == "saved" and self.state.reason == "parked":
       return N_("Saved: the car is no longer parked.")

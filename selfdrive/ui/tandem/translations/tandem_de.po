@@ -1653,120 +1653,140 @@ msgstr "Gespeichert"
 msgid "Error"
 msgstr "Fehler"
 
-#: settings/can_recorder.py:36
+#: settings/can_recorder.py:15
+msgid "Discarding…"
+msgstr "Wird gelöscht…"
+
+#: settings/can_recorder.py:15
+msgid "Discarded"
+msgstr "Verworfen"
+
+#: settings/can_recorder.py:37
 msgid "Start logging"
 msgstr "Aufzeichnung starten"
 
-#: settings/can_recorder.py:38
+#: settings/can_recorder.py:39
 msgid "Stop logging"
 msgstr "Aufzeichnung stoppen"
 
-#: settings/can_recorder.py:40
+#: settings/can_recorder.py:41
+msgid "Abort"
+msgstr "Abbrechen"
+
+#: settings/can_recorder.py:44
 msgid "Mark lock"
 msgstr "Verriegeln markieren"
 
-#: settings/can_recorder.py:41
+#: settings/can_recorder.py:45
 msgid "Mark unlock"
 msgstr "Entriegeln markieren"
 
-#: settings/can_recorder.py:80
+#: settings/can_recorder.py:82
+msgid "Test discarded. Start a new test."
+msgstr "Test verworfen. Starte einen neuen Test."
+
+#: settings/can_recorder.py:88
 msgid "Saved: the car is no longer parked."
 msgstr "Gespeichert: Das Auto ist nicht mehr geparkt."
 
-#: settings/can_recorder.py:82
+#: settings/can_recorder.py:90
 msgid "Saved: storage is running low."
 msgstr "Gespeichert: Der Speicher wird knapp."
 
-#: settings/can_recorder.py:84
+#: settings/can_recorder.py:92
 msgid "Saved: the recording limit was reached."
 msgstr "Gespeichert: Die Aufzeichnungsgrenze wurde erreicht."
 
-#: settings/can_recorder.py:87
+#: settings/can_recorder.py:95
 #, python-brace-format
 msgid "Last marker: {} at {}"
 msgstr "Letzte Markierung: {} bei {}"
 
-#: settings/can_recorder.py:89
+#: settings/can_recorder.py:97
 msgid "Waiting for CAN traffic. Some channels sleep with the car off."
 msgstr "Warte auf CAN-Daten. Einige Kanäle ruhen bei ausgeschaltetem Auto."
 
-#: settings/can_recorder.py:90
+#: settings/can_recorder.py:98
 msgid "No markers yet."
 msgstr "Noch keine Markierungen."
 
-#: settings/can_recorder.py:90
-#: settings/can_recorder.py:78
+#: settings/can_recorder.py:98
+#: settings/can_recorder.py:86
 msgid "Park the car to start a test."
 msgstr "Parke das Auto, um einen Test zu starten."
 
-#: settings/can_recorder.py:48
+#: settings/can_recorder.py:52
 msgid "Test controls"
 msgstr "Teststeuerung"
 
-#: settings/can_recorder.py:58
+#: settings/can_recorder.py:62
 msgid "Test status"
 msgstr "Teststatus"
 
-#: settings/can_recorder.py:60
+#: settings/can_recorder.py:64
 #: settings/developer.py:154
 #: settings/search.py:183
 msgid "CAN test recorder"
 msgstr "CAN-Testrekorder"
 
-#: settings/can_recorder.py:60
+#: settings/can_recorder.py:64
 msgid "Device › Developer"
 msgstr "Gerät › Entwickler"
 
-#: settings/can_recorder.py:78
+#: settings/can_recorder.py:85
+msgid "Couldn't delete the log. Try Abort again."
+msgstr "Das Protokoll konnte nicht gelöscht werden. Tippe erneut auf Abbrechen."
+
+#: settings/can_recorder.py:86
 msgid "Couldn't save the log. Check storage and try again."
 msgstr "Das Protokoll konnte nicht gespeichert werden. Prüfe den Speicher und versuche es erneut."
 
-#: settings/can_recorder.py:86
+#: settings/can_recorder.py:94
 msgid "Lock"
 msgstr "Verriegeln"
 
-#: settings/can_recorder.py:86
+#: settings/can_recorder.py:94
 msgid "Unlock"
 msgstr "Entriegeln"
 
-#: settings/can_recorder.py:43
+#: settings/can_recorder.py:47
 msgid "Tap a marker as you press the car's lock control."
 msgstr "Tippe auf die Markierung, während du die Türtaste am Auto drückst."
 
-#: settings/can_recorder.py:46
-msgid "Markers only timestamp your taps."
-msgstr "Markierungen speichern nur den Zeitpunkt deines Tippens."
+#: settings/can_recorder.py:50
+msgid "Abort deletes this test. Markers only timestamp your taps."
+msgstr "Abbrechen löscht diesen Test. Markierungen speichern nur den Zeitpunkt deines Tippens."
 
-#: settings/can_recorder.py:47
+#: settings/can_recorder.py:51
 msgid "Stops after 10 minutes or when you leave this screen."
 msgstr "Stoppt nach 10 Minuten oder beim Verlassen dieser Seite."
 
-#: settings/can_recorder.py:50
+#: settings/can_recorder.py:54
 msgid "Elapsed"
 msgstr "Dauer"
 
-#: settings/can_recorder.py:51
+#: settings/can_recorder.py:55
 msgid "CAN frames"
 msgstr "CAN-Frames"
 
-#: settings/can_recorder.py:52
+#: settings/can_recorder.py:56
 msgid "Lock markers"
 msgstr "Verriegelungsmarken"
 
-#: settings/can_recorder.py:53
+#: settings/can_recorder.py:57
 msgid "Unlock markers"
 msgstr "Entriegelungsmarken"
 
-#: settings/can_recorder.py:57
+#: settings/can_recorder.py:61
 msgid "Full and focused logs stay on this device."
 msgstr "Vollständige und gefilterte Protokolle bleiben auf diesem Gerät."
 
-#: settings/can_recorder.py:55
+#: settings/can_recorder.py:59
 #, python-brace-format
 msgid "Log: {}"
 msgstr "Protokoll: {}"
 
-#: settings/can_recorder.py:55
+#: settings/can_recorder.py:59
 msgid "Start logging to create a new test log."
 msgstr "Starte eine Aufzeichnung, um ein neues Testprotokoll anzulegen."
 

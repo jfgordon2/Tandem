@@ -177,11 +177,13 @@
   {
    "mock": "canrecorder",
    "title": "Device › Developer › CAN test recorder",
-   "note": "Matches: shared panels, large manual-action markers, Start/Stop, live counts, elapsed time and session name. Ready and Saved show the button states; additional renders check German, Spanish, Japanese and longer pseudo text. Both panels scroll independently. This is a passive recording, not a door control.",
+   "note": "Matches: shared panels, large manual-action markers, Start/Stop and a pinned Abort button that discards the current test in one tap. Ready, Recording, Discarding and Discarded renders check button states and counter reset; translated renders check German, Spanish, Japanese and longer pseudo text. Both panels scroll independently. This is a passive recording, not a door control.",
    "match": true,
    "built": [
     "canrecorder",
     "canrecorder_ready",
+    "canrecorder_aborting",
+    "canrecorder_discarded",
     "canrecorder_saved"
    ]
   },

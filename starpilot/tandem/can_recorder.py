@@ -13,7 +13,7 @@ import shutil
 import threading
 import time
 
-ACTIVE = {"starting", "recording", "saving"}
+ACTIVE = {"starting", "recording", "saving", "aborting"}
 MAX_SECONDS = 600
 MIN_FREE_BYTES = 64 * 1024 * 1024
 CLOCK_ID = getattr(time, "CLOCK_BOOTTIME", time.CLOCK_MONOTONIC)
@@ -101,6 +101,8 @@ class CanRecorder:
     self._state = RecorderState()
     self._thread: threading.Thread | None = None
     self._stop = threading.Event()
+    self._abort_requested = threading.Event()
+    self._directory: Path | None = None
     self._markers: queue.SimpleQueue = queue.SimpleQueue()
     self._stop_reason = "user"
 
@@ -110,16 +112,20 @@ class CanRecorder:
 
   def _update(self, **values):
     with self._lock:
+      if self._abort_requested.is_set() and "phase" in values:
+        values["phase"] = "aborting"
       self._state = replace(self._state, **values)
 
   def start(self) -> bool:
     with self._lock:
-      if self._state.phase in ACTIVE or (self._thread is not None and self._thread.is_alive()):
+      if self._state.phase in ACTIVE or self._state.reason == "delete" or (self._thread is not None and self._thread.is_alive()):
         return False
       session = datetime.datetime.now(datetime.UTC).strftime("%Y%m%dT%H%M%SZ-") + secrets.token_hex(3)
       self._state = RecorderState(phase="starting", session=session, started_ns=self._clock_ns())
       self._markers = queue.SimpleQueue()
       self._stop.clear()
+      self._abort_requested.clear()
+      self._directory = None
       self._stop_reason = "user"
       self._thread = threading.Thread(target=self._run, daemon=True, name="tandem-can-recorder")
       self._thread.start()
@@ -143,6 +149,31 @@ class CanRecorder:
         self._state = replace(self._state, phase="saving")
         self._stop.set()
 
+  def abort(self) -> bool:
+    """Discard only this session, after its writer has closed. Never wait on the UI thread."""
+    with self._lock:
+      if not self._state.session or self._state.phase == "aborting":
+        return False
+      self._abort_requested.set()
+      self._stop.set()
+      self._state = replace(self._state, phase="aborting")
+      writer = self._thread
+      self._thread = threading.Thread(target=self._discard, args=(writer,), daemon=True, name="tandem-can-discard")
+      self._thread.start()
+    return True
+
+  def _discard(self, writer):
+    if writer is not None:
+      writer.join()
+    try:
+      if self._directory is not None and self._directory.exists():
+        shutil.rmtree(self._directory)
+      with self._lock:
+        self._state = RecorderState(phase="discarded")
+    except OSError:
+      with self._lock:
+        self._state = replace(self._state, phase="error", reason="delete", ended_ns=self._clock_ns())
+
   def _run(self):
     state = self.snapshot()
     directory = None
@@ -165,8 +196,9 @@ class CanRecorder:
       if not source.allowed():
         self._update(phase="error", reason="parked", ended_ns=self._clock_ns())
         return
-      directory = root / state.session
-      directory.mkdir()
+      candidate = root / state.session
+      candidate.mkdir()
+      directory = self._directory = candidate
       vehicle = source.info()
       excluded = GM_FOCUS_EXCLUDED if vehicle.get("brand") == "gm" else {}
       metadata.update(vehicle=vehicle, status="recording", ready_ns=self._clock_ns(),
@@ -230,7 +262,7 @@ class CanRecorder:
               reason = "storage"
               break
         with self._lock:
-          self._state = replace(self._state, phase="saving")
+          self._state = replace(self._state, phase="aborting" if self._abort_requested.is_set() else "saving")
           if self._stop.is_set():
             reason = self._stop_reason
         drain_markers()   # preserve every tap accepted before Stop, including taps queued during a CAN read

@@ -210,6 +210,126 @@ def test_io_failure_does_not_escape_worker_or_leave_an_unclosed_gzip(log_dir):
   assert json.loads((log_dir/state.session/"metadata.json").read_text())["status"] == "error"
 
 
+def test_abort_closes_writer_deletes_only_current_test_and_retries_cleanly(log_dir):
+  log_dir.mkdir()
+  older = log_dir/"older-test"
+  older.mkdir()
+  (older/"keep.txt").write_text("keep this test")
+  entered, release = threading.Event(), threading.Event()
+  source = Source()
+  normal_poll = source.poll
+  polls = 0
+
+  def poll():
+    nonlocal polls
+    polls += 1
+    if polls == 1:
+      return [(10, 0, 0x123, b"bad test")], None
+    entered.set()
+    release.wait(2)
+    return [], None
+
+  source.poll = poll
+  recorder = C.CanRecorder(log_dir, lambda: source)
+  assert not recorder.abort()
+  recorder.start()
+  assert entered.wait(2)
+  session = recorder.snapshot().session
+  assert recorder.mark("lock")
+  assert recorder.abort()
+  assert recorder.snapshot().phase == "aborting"
+  assert not recorder.start() and not recorder.mark("unlock") and not recorder.abort()
+  recorder.stop("screen_closed")   # leaving the page must not turn Abort back into Save
+  assert (log_dir/session).exists()   # files are still open: deletion waits for the writer
+  release.set()
+  recorder._thread.join(2)
+  assert recorder.snapshot() == C.RecorderState(phase="discarded")
+  assert source.closed and not (log_dir/session).exists()
+  assert (older/"keep.txt").read_text() == "keep this test"
+  source.poll = normal_poll
+  source.batches.put(([(20, 0, 0x123, b"fresh test")], None))
+  assert recorder.start()
+  wait_for(lambda: recorder.snapshot().frames == 1)
+  finish(recorder)
+  state = recorder.snapshot()
+  assert state.session != session and state.lock_markers == state.unlock_markers == 0
+  assert lines(log_dir/state.session/"can.jsonl.gz") == [[20, 0, 0x123, b"fresh test".hex()]]
+  assert (log_dir/state.session/"markers.jsonl").read_text() == ""
+
+
+@pytest.mark.parametrize("phase", ["starting", "saving"])
+def test_abort_during_startup_or_save_never_leaves_a_saved_log(log_dir, monkeypatch, phase):
+  entered, release = threading.Event(), threading.Event()
+  source = Source()
+  if phase == "starting":
+    def info():
+      entered.set()
+      release.wait(2)
+      return {"brand": "gm"}
+    source.info = info
+  else:
+    write_text = Path.write_text
+
+    def write(path, text, *args, **kwargs):
+      if path.name == "metadata.tmp" and json.loads(text).get("status") == "saved":
+        entered.set()
+        release.wait(2)
+      return write_text(path, text, *args, **kwargs)
+    monkeypatch.setattr(Path, "write_text", write)
+  recorder = C.CanRecorder(log_dir, lambda: source)
+  recorder.start()
+  if phase == "saving":
+    wait_for(lambda: recorder.snapshot().phase == "recording")
+    recorder.stop()
+  assert entered.wait(2) and recorder.snapshot().phase == phase
+  assert recorder.abort()
+  release.set()
+  recorder._thread.join(2)
+  assert recorder.snapshot().phase == "discarded" and not list(log_dir.iterdir())
+
+
+@pytest.mark.parametrize("failed", [False, True])
+def test_abort_can_discard_a_just_saved_or_failed_test(log_dir, failed):
+  source = Source()
+  if failed:
+    def poll():
+      raise OSError("read failed")
+    source.poll = poll
+  recorder = C.CanRecorder(log_dir, lambda: source)
+  recorder.start()
+  wait_for(lambda: recorder.snapshot().phase == ("error" if failed else "recording"))
+  finish(recorder)
+  assert list(log_dir.iterdir())
+  assert recorder.abort()
+  recorder._thread.join(2)
+  assert recorder.snapshot().phase == "discarded" and not list(log_dir.iterdir())
+
+
+def test_failed_delete_is_visible_and_can_be_retried(log_dir, monkeypatch):
+  recorder = C.CanRecorder(log_dir, Source)
+  recorder.start()
+  wait_for(lambda: recorder.snapshot().phase == "recording")
+  finish(recorder)
+  remove = C.shutil.rmtree
+
+  def fail(path):
+    raise OSError("read only")
+
+  monkeypatch.setattr(C.shutil, "rmtree", fail)
+  assert recorder.abort()
+  recorder._thread.join(2)
+  state = recorder.snapshot()
+  assert state.phase == "error" and state.reason == "delete"
+  assert (log_dir/state.session/"metadata.json").exists() and not recorder.start()
+  page = CanRecorderPage(recorder, allowed=lambda: True)
+  assert not page._start.enabled and page._abort.enabled
+  assert page.detail() == "Couldn't delete the log. Try Abort again."
+  monkeypatch.setattr(C.shutil, "rmtree", remove)
+  assert recorder.abort()
+  recorder._thread.join(2)
+  assert recorder.snapshot().phase == "discarded" and not list(log_dir.iterdir())
+
+
 class FakeRecorder:
   def __init__(self):
     self.state = C.RecorderState()
@@ -227,6 +347,24 @@ class FakeRecorder:
 
   def stop(self, reason="user"):
     self.calls.append(("stop", reason))
+
+  def abort(self):
+    self.calls.append("abort")
+    self.state = C.RecorderState(phase="discarded")
+
+
+def test_page_aborts_in_one_tap_and_resets_for_the_next_test():
+  recorder = FakeRecorder()
+  page = CanRecorderPage(recorder, allowed=lambda: True)
+  assert not page._abort.enabled
+  page.start()
+  page._update_state()
+  assert page._abort.enabled
+  page._abort._click_callback()
+  page._update_state()
+  assert recorder.calls == ["start", "abort"]
+  assert page._start.enabled and not page._abort.enabled and not page._mark_lock.enabled
+  assert page.elapsed() == "00:00.000" and page.detail() == "Test discarded. Start a new test."
 
 
 def test_page_uses_marker_callbacks_and_saves_on_hide_without_blocking():

@@ -16,6 +16,7 @@ Tandem 2026.11.02
 * Hotspot: view and edit its name under Connections > Cellular
 * CAN test recorder: start a passive log and mark manual lock/unlock actions under Device > Developer
   * Keeps full and focused logs locally, with tap timestamps on the CAN clock
+  * Abort deletes the current test and resets the recorder for a clean retry
 * Navigation settings show whether a Mapbox key is saved, with steps to add one
   * The steering arc warns before steering runs out, with Help steer at the limit
   * Alerts in three levels: info, warning and critical

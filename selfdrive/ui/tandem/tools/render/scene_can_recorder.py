@@ -32,8 +32,14 @@ def main(frame, save, out, tap, gui_app):
   recorder.state = replace(recorder.state, phase="recording", session="20261102T213000Z-a1b2c3", started_ns=1_000_000_000,
                            frames=21504, lock_markers=1, unlock_markers=1, last_kind="unlock", last_marker_ns=11_418_000_000)
   shot("canrecorder")
+  recorder.state = replace(recorder.state, phase="aborting")
+  shot("canrecorder_aborting")
   recorder.state = replace(recorder.state, phase="saved", ended_ns=13_034_000_000)
   shot("canrecorder_saved")
+  saved = recorder.state
+  recorder.abort()
+  shot("canrecorder_discarded")
+  recorder.state = saved
   original = i18n._language
   try:
     for code in ("de", "es", "ja", "pseudo"):
