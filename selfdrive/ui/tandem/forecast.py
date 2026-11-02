@@ -216,10 +216,21 @@ class ForecastService:
           self._store.write_text(json.dumps(forecast.to_json()))
         except OSError:
           pass
-    except Exception:
-      pass
+      elif data is not None:
+        _log("weather forecast: Open-Meteo's answer had no forecast steps")
+    except Exception as e:
+      _log(f"weather forecast fetch failed: {e!r}")
     finally:
       self._busy = False
+
+
+def _log(message: str) -> None:
+  """To openpilot's log (swaglog) on the device; nowhere in tests and renders."""
+  try:
+    from openpilot.common.swaglog import cloudlog
+    cloudlog.warning(message)
+  except Exception:
+    pass
 
 
 def fetch_open_meteo(lat: float, lon: float) -> dict | None:
@@ -229,6 +240,12 @@ def fetch_open_meteo(lat: float, lon: float) -> dict | None:
   request = urllib.request.Request(f"{OPEN_METEO_URL}?{urllib.parse.urlencode(params)}", headers={"User-Agent": "tandem/1.0"})
   with urllib.request.urlopen(request, timeout=10) as response:
     return json.loads(response.read().decode())
+
+
+def where_now(memory: Callable[[str], object], saved: Callable[[str], object]) -> tuple[float, float] | None:
+  """StarPilot's live GPS position (in memory, cleared on restart), else the one it saved when the car last turned off or
+  while parked with a fix, as Galaxy finds the car. Parked after a restart, only the saved one is there."""
+  return last_position(lambda: memory("LastGPSPosition")) or last_position(lambda: saved("LastGPSPosition"))
 
 
 def last_position(read: Callable[[], object]) -> tuple[float, float] | None:
@@ -322,7 +339,6 @@ def shared_service() -> ForecastService:
   if not _shared:
     from openpilot.common.params import Params
     from openpilot.selfdrive.ui.tandem.prefs import WEATHER_HEADS_UP, prefs_dir
-    memory = Params(memory=True)
-    _shared.append(ForecastService(prefs_dir() / ".tandem_forecast.json", lambda: last_position(lambda: memory.get("LastGPSPosition")),
-                                   WEATHER_HEADS_UP.get))
+    memory, saved = Params(memory=True), Params()
+    _shared.append(ForecastService(prefs_dir() / ".tandem_forecast.json", lambda: where_now(memory.get, saved.get), WEATHER_HEADS_UP.get))
   return _shared[0]

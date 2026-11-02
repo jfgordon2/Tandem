@@ -258,3 +258,11 @@ def test_restoring_a_backup_keeps_tandems_settings_out_of_the_params_folder(tand
   TEMPERATURE.set("F")
   data.restore_backup(data.backups()[0].name)
   assert not (params / BACKUP_DIR).exists() and TEMPERATURE.get() == "C"
+
+
+def test_parked_after_a_restart_the_saved_position_is_used():
+  live = json.dumps({"latitude": 41.6, "longitude": -93.6})
+  saved = json.dumps({"latitude": 40.0, "longitude": -90.0})
+  assert F.where_now(lambda k: live, lambda k: saved) == (41.6, -93.6)       # the live fix first
+  assert F.where_now(lambda k: None, lambda k: saved) == (40.0, -90.0)      # after a restart: the saved one
+  assert F.where_now(lambda k: None, lambda k: None) is None
