@@ -105,6 +105,7 @@ def restore_prefs(backup: Path, folder: Path | None = None) -> bool:
 
 MAX_FOLLOWS_LIMIT = Flag("max_follows_limit", True)   # Speed Limits › MAX follows limits (onroad/limits.py LimitFollower)
 WEATHER_HEADS_UP = Flag("weather_heads_up", True)     # Weather › Weather heads-up (forecast.py)
+LEAD_TAG = Flag("lead_tag", True)                     # Display › Driving Screen › Lead Car Tag (onroad/view.py)
 WEATHER_CHIME = Flag("weather_chime", True)           # Alerts › Chimes › Weather heads-up: its one chime
 TEMPERATURE = Choice("temperature", ("F", "C"))       # General › Temperature; until picked, it follows Units (km/h: °C)
 

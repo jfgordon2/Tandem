@@ -220,7 +220,7 @@ def test_view_draws_one_primary_tag_and_keeps_secondary_bars(monkeypatch):
   tracker = GapTracker()
   tracker.update(sample(), 0.0)
   view = SimpleNamespace(model_renderer=renderer, _gap_state=tracker.update(sample(), 0.25), _braking_for_lead=False,
-                         _content_rect=rl.Rectangle(0, 0, 2160, 1080), _tag_floor=lambda: 950)
+                         _content_rect=rl.Rectangle(0, 0, 2160, 1080), _tag_floor=lambda: 950, _lead_tag_on=True)
   radar = SimpleNamespace(leadOne=s.sm['radarState'].leadOne, leadTwo=SimpleNamespace(status=True))
   monkeypatch.setattr(extras, 'draw_lead_bar', lambda *args, **kwargs: bars.append(kwargs))
   method = view_method('_draw_leads', dict(extras=extras, lead_anchor=lead_anchor, detailed_tag_on=detailed_tag_on, ui_state=s,
@@ -230,12 +230,15 @@ def test_view_draws_one_primary_tag_and_keeps_secondary_bars(monkeypatch):
   params.values.update(DeveloperUI=True, DeveloperSidebar=True)
   method(view, radar)
   assert not calls[-1]['compact']
+  view._lead_tag_on, count = False, len(calls)   # Lead Car Tag off: no tag, the secondary bar stays
+  method(view, radar)
+  assert len(calls) == count and len(bars) == 3
 
 
 def test_view_resets_acquisition_even_when_upstream_stops_drawing_a_lead():
   s, clock = state(), [0.0]
-  view = SimpleNamespace(model_renderer=SimpleNamespace(_params=Params()), _gap_tracker=GapTracker())
-  method = view_method('_update_gap_tag', dict(ui_state=s, read_lead_sample=read_lead_sample,
+  view = SimpleNamespace(model_renderer=SimpleNamespace(_params=Params()), _gap_tracker=GapTracker(), _lead_tag_read=-1.0)
+  method = view_method('_update_gap_tag', dict(ui_state=s, read_lead_sample=read_lead_sample, LEAD_TAG=SimpleNamespace(get=lambda: True),
                                             time=SimpleNamespace(monotonic=lambda: clock[0])))
   method(view)
   clock[0] = 0.3
@@ -277,3 +280,15 @@ def test_strip_and_tag_floor_stay_above_the_bar():
   strip = strip_rect(view, c)
   assert strip.y + strip.height <= bar_top and strip.height == STRIP_H
   assert tag_floor(view) == strip.y - STRIP_GAP
+
+
+def test_view_reads_the_lead_car_tag_switch_once_a_second():
+  s, clock, reads = state(), [0.0], []
+  view = SimpleNamespace(model_renderer=SimpleNamespace(_params=Params()), _gap_tracker=GapTracker(), _lead_tag_read=-1.0)
+  switch = SimpleNamespace(get=lambda: reads.append(clock[0]) or False)
+  method = view_method('_update_gap_tag', dict(ui_state=s, read_lead_sample=read_lead_sample, LEAD_TAG=switch,
+                                            time=SimpleNamespace(monotonic=lambda: clock[0])))
+  for t in (0.0, 0.3, 0.9, 1.1):
+    clock[0] = t
+    method(view)
+  assert reads == [0.0, 1.1] and view._lead_tag_on is False

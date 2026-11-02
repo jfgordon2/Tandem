@@ -1321,6 +1321,18 @@ def test_compass_switch_writes_starpilots_compass():
   assert cache.values["Compass"] and display.compass
 
 
+def test_lead_car_tag_is_a_marker_file_on_by_default(tandem_prefs):
+  from openpilot.selfdrive.ui.tandem.settings.display import Display, driving_screen_panel
+  store, cache = _store({})
+  display = Display(store)
+  row = _rows(driving_screen_panel(display, None))["Lead Car Tag"]
+  assert row._control.value and display.lead_tag and not list(tandem_prefs.iterdir())
+  params = dict(cache.values)
+  display.set_lead_tag(False)
+  assert not display.lead_tag and not row._control.value and list(tandem_prefs.iterdir())
+  assert cache.values == params   # no param: unknown keys crash the prebuilt params on the device
+
+
 def test_quiet_is_25_percent_for_every_alert_sound():
   from openpilot.selfdrive.ui.tandem.settings.alerts import GROUPS, SAFETY_FLOOR, Alerts
   store, cache = _store({"AlertVolumeControl": False})

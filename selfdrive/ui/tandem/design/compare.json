@@ -51,7 +51,7 @@
   {
    "mock": "display",
    "title": "Display › Driving Screen",
-   "note": "Matches: Camera View, Driver Camera in Reverse, Driving Style Banner, Compass and Blind Spot Highlights, then the power-user bundles. The rows are taller than the mock's, so the panel scrolls to Lead Insights.",
+   "note": "Matches: Camera View, Driver Camera in Reverse, Driving Style Banner, Compass, Blind Spot Highlights and Lead Car Tag, then the power-user bundles. The rows are taller than the mock's, so the panel scrolls to Lead Insights.",
    "match": true
   },
   {

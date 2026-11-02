@@ -93,6 +93,7 @@ ENTRIES: list[Entry] = [
   Entry("Driving Style Banner", "Shows the current style when it changes", 0, D, 0),
   Entry("Compass", "Heading beside the street name, like NE", 0, D, 0, "heading direction north"),
   Entry("Blind Spot Highlights", "Colors the screen edge and lane when a car is beside you", 0, D, 0, "bsm"),
+  Entry("Lead Car Tag", "Numbers above the car ahead. Off keeps only the bar under it", 0, D, 0, "gap distance lead numbers"),
   Entry("Developer View", "Side panel with system and controls data", 0, D, 0, "developer ui metrics"),
   Entry("Lead Insights", "Distance, gap and speed of the car ahead, plus radar points", 0, D, 0, "lead metrics radar"),
   Entry("Path Style", "Color, width and edges as one preset", 0, D, 1, "rainbow path lane lines"),

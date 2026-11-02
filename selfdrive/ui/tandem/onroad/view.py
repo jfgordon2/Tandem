@@ -43,7 +43,7 @@ from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, LimitWatch, c
 from openpilot.selfdrive.ui.tandem.onroad.limits import LimitFollower, LimitOfferState, OfferChime
 from openpilot.selfdrive.ui.tandem.onroad.lead import GapTracker, detailed_tag_on, lead_anchor, read_lead_sample
 from openpilot.selfdrive.ui.tandem.forecast import Announcer, heads_up, now_conditions, shared_service, wall_clock
-from openpilot.selfdrive.ui.tandem.prefs import MAX_FOLLOWS_LIMIT, WEATHER_CHIME, WEATHER_HEADS_UP
+from openpilot.selfdrive.ui.tandem.prefs import LEAD_TAG, MAX_FOLLOWS_LIMIT, WEATHER_CHIME, WEATHER_HEADS_UP
 
 CONFIRM_TIMEOUT = 30.0      # StarPilot rejects an unanswered higher limit after 30 s
 PREVIEW_SECONDS = 2.5
@@ -192,6 +192,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
     self.model_renderer._draw_adjacent_leads = self._draw_adjacent_leads
     self._gap_tracker = GapTracker()
     self._gap_state = None
+    self._lead_tag_on, self._lead_tag_read = True, -1.0   # prefs.LEAD_TAG, read once a second
     self._braking_for_lead = False   # the Slowing for traffic chip's rule, so the bar turns amber with it
     self._nav_sm = None
 
@@ -272,7 +273,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
 
   def _lead_tag(self, adjacent, chevron, lead_data) -> None:
     """Lead Insights for the lead car: our tag above it. Adjacent cars keep only StarPilot's markers, as in the mock."""
-    if adjacent:
+    if adjacent or not self._lead_tag_on:
       return
     car = ui_state.sm["carState"]
     lead = lead_of(lead_data, car.vEgo, bool(ui_state.is_metric))
@@ -286,7 +287,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
     for i, lead in enumerate(mr._lead_vehicles):
       if i == 0:
         state, anchor = self._gap_state, lead_anchor(lead.chevron)
-        if state is not None and anchor is not None:
+        if state is not None and anchor is not None and self._lead_tag_on:
           draw_lead_tag(anchor.x, anchor.y, state.lead, compact=not detailed_tag_on(ui_state, mr._params), value=state.label,
                         anchored=True, braking=self._braking_for_lead, opacity=state.opacity, progress=state.progress,
                         bounds=self._content_rect, floor=self._tag_floor())
@@ -338,7 +339,10 @@ class EssentialsOnroadView(StarPilotOnroadView):
     params = self.model_renderer._params
     threshold = params.get_int("LeadDetectionProbability") or params.get_int("LeadDetectionThreshold") or 50
     sample = read_lead_sample(ui_state, threshold / 100.0 if threshold > 1.0 else threshold)
-    self._gap_state = self._gap_tracker.update(sample, time.monotonic())
+    now = time.monotonic()
+    self._gap_state = self._gap_tracker.update(sample, now)
+    if now - self._lead_tag_read >= 1.0:   # Display › Driving Screen › Lead Car Tag
+      self._lead_tag_on, self._lead_tag_read = LEAD_TAG.get(), now
 
   def _update_headroom(self) -> None:
     # Compute before the model and border draw, so all warning layers share this frame's state.

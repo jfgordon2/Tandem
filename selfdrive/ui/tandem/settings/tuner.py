@@ -89,7 +89,7 @@ CRUISE_STEPS = [1, 5, 10]
 ITEM_NAMES = {
   "DeveloperSidebar": "Developer sidebar", "FPSCounter": "FPS counter", "ShowCPU": "CPU load", "ShowGPU": "GPU load",
   "NumericalTemp": "Numeric temperature", "ShowMemoryUsage": "Memory use", "AdjacentPathMetrics": "Adjacent lane widths",
-  "SpeedLimitSources": "Speed limit sources", "LeadInfo": "Lead distance and speed", "RadarTracksUI": "Radar points",
+  "SpeedLimitSources": "Speed limit sources", "LeadInfo": "Lead details on the tag", "RadarTracksUI": "Radar points",
   "ShowStoppingPoint": "Stopping point", "ShowStoppingPointMetrics": "Stopping point distance", "AdjacentPath": "Adjacent paths",
   "PedalsOnUI": "Pedals",
 }

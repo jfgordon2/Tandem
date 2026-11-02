@@ -13,6 +13,7 @@ from openpilot.selfdrive.ui.tandem.blocks import Grid
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, place
 from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, Segmented, Switch, ValueButton
 from openpilot.selfdrive.ui.tandem.overlays import Sheet
+from openpilot.selfdrive.ui.tandem.prefs import LEAD_TAG
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, SectionHeader, SettingRow
 from openpilot.selfdrive.ui.tandem.settings.bundles import DEVELOPER_VIEW, LEAD_INSIGHTS, Bundle
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
@@ -117,6 +118,14 @@ class Display:
 
   def set_blind_spot(self, on: bool) -> None:
     self._store.write({"CustomUI": True, "BlindSpotPath": on})
+
+  @property
+  def lead_tag(self) -> bool:
+    """Tandem's tag above the car ahead (prefs.LEAD_TAG); off leaves only StarPilot's bar under it."""
+    return LEAD_TAG.get()
+
+  def set_lead_tag(self, on: bool) -> None:
+    LEAD_TAG.set(on)
 
   def bundle(self, bundle: Bundle) -> tuple[Callable[[], bool], Callable[[bool], None]]:
     return (lambda: bundle.is_on(self._store)), (lambda on: bundle.set(self._store, on))
@@ -263,6 +272,7 @@ def driving_screen_panel(model: Display, window) -> ListPanel:
     SettingRow("Compass", "Heading beside the street name, like NE", Switch(lambda: model.compass, model.set_compass)),
     SettingRow("Blind Spot Highlights", "Colors the screen edge and lane when a car is beside you",
                Switch(lambda: model.blind_spot, model.set_blind_spot)),
+    SettingRow("Lead Car Tag", "Numbers above the car ahead. Off keeps only the bar under it", Switch(lambda: model.lead_tag, model.set_lead_tag)),
     SectionHeader("POWER USER"),
     SettingRow(DEVELOPER_VIEW.name, BUNDLE_LINES[DEVELOPER_VIEW.name], Switch(dev_get, dev_set),
                link=(f"Sets {len(bundle_items(DEVELOPER_VIEW))} options", lambda: window.present(bundle_sheet(window, 0)))),
