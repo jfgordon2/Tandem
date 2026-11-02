@@ -224,7 +224,8 @@ def essentials_home():
       service.tick()   # parked, it refreshes too (from the last GPS fix, once the car has had one since starting)
       if not WEATHER_HEADS_UP.get():
         return None
-      return outlook(service.forecast, wall_clock(), bool(ui_state.is_metric))
+      from openpilot.selfdrive.ui.tandem.prefs import celsius
+      return outlook(service.forecast, wall_clock(), celsius(bool(ui_state.is_metric)))   # General › Temperature
 
     def _render_home_content(self):
       if not self._setup_checked:   # first-run setup, as soon as onboarding has closed

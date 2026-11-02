@@ -20,6 +20,7 @@ from openpilot.selfdrive.ui.tandem.overlays import Dialog, Sheet
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, OptionList, Padded, SectionHeader, SettingRow, Text
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
 from openpilot.system.ui.widgets import DialogResult, Widget
+from openpilot.selfdrive.ui.tandem.prefs import TEMPERATURE, celsius
 
 
 @dataclass(frozen=True)
@@ -61,6 +62,14 @@ class General:
 
   def set_metric(self, index: int) -> None:
     self._store.write({"IsMetric": index == 1})
+
+  @property
+  def temperature(self) -> int:
+    """0 °F, 1 °C: Tandem's own choice (prefs.TEMPERATURE), following Units until it's picked."""
+    return 1 if celsius(bool(self.metric)) else 0
+
+  def set_temperature(self, index: int) -> None:
+    TEMPERATURE.set("C" if index == 1 else "F")
 
   def language_name(self) -> str:
     code = self.data.language()
@@ -145,6 +154,7 @@ def general_panel(model: General, window) -> ListPanel:
 
   return ListPanel([
     SettingRow("Units", "Speed and distance everywhere", Segmented(["mph", "km/h"], lambda: model.metric, model.set_metric)),
+    SettingRow("Temperature", "For the weather forecast", Segmented(["°F", "°C"], lambda: model.temperature, model.set_temperature)),
     SettingRow("Language", None, ValueButton(model.language_name, language_sheet)),
     SettingRow("Screen Brightness", "Auto follows ambient light, day and night",
                Segmented([name for name, _, _ in BRIGHTNESS], lambda: model.brightness, model.set_brightness)),

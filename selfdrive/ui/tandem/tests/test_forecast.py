@@ -197,3 +197,14 @@ def test_the_parked_screen_hands_its_forecast_to_the_ready_card():
   home = HomeContent(lambda: HomeState(), lambda: None, lambda: None, lambda: None, forecast=lambda: look)
   assert home._hero._forecast() is look
   assert HomeContent(lambda: HomeState(), lambda: None, lambda: None, lambda: None)._hero._forecast() is None   # no strip
+
+
+def test_temperature_is_its_own_choice_and_follows_units_until_picked(tandem_prefs):
+  from openpilot.selfdrive.ui.tandem.prefs import TEMPERATURE, celsius
+  assert celsius(True) and not celsius(False)          # not picked: km/h means °C
+  TEMPERATURE.set("F")
+  assert not celsius(True)                             # km/h with °F
+  TEMPERATURE.set("C")
+  assert celsius(False)                                # mph with °C
+  TEMPERATURE.set("K")
+  assert TEMPERATURE.get() == "C"                      # only °F or °C

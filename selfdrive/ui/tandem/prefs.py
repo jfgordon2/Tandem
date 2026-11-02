@@ -41,6 +41,37 @@ class Flag:
       pass
 
 
+class Choice:
+  """A preference with a few values, kept as a small file holding the chosen one; None until the driver picks."""
+
+  def __init__(self, name: str, values: tuple[str, ...]):
+    self.name, self.values = name, values
+
+  def _file(self) -> Path:
+    return prefs_dir() / f".tandem_{self.name}"
+
+  def get(self) -> str | None:
+    try:
+      value = self._file().read_text().strip()
+    except OSError:
+      return None
+    return value if value in self.values else None
+
+  def set(self, value: str) -> None:
+    if value in self.values:
+      try:
+        self._file().write_text(value)
+      except OSError:
+        pass
+
+
 MAX_FOLLOWS_LIMIT = Flag("max_follows_limit", True)   # Speed Limits › MAX follows limits (onroad/limits.py LimitFollower)
 WEATHER_HEADS_UP = Flag("weather_heads_up", True)     # Weather › Weather heads-up (forecast.py)
 WEATHER_CHIME = Flag("weather_chime", True)           # Alerts › Chimes › Weather heads-up: its one chime
+TEMPERATURE = Choice("temperature", ("F", "C"))       # General › Temperature; until picked, it follows Units (km/h: °C)
+
+
+def celsius(metric: bool) -> bool:
+  """Temperatures in °C: the driver's choice, or Units until they've made one."""
+  chosen = TEMPERATURE.get()
+  return metric if chosen is None else chosen == "C"

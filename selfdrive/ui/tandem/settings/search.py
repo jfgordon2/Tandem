@@ -161,6 +161,7 @@ ENTRIES: list[Entry] = [
   _place("Power Off", "Turn the device off until the car starts", 1, section=0, words="shut down"),
   _place("General", "Units, language, brightness and standby", 1, section=1),
   Entry("Units", "Speed and distance everywhere", 1, section=1, words="metric imperial mph km"),
+  Entry("Temperature", "For the weather forecast", 1, section=1, words="fahrenheit celsius degrees weather units"),
   Entry("Language", "Menus and alerts", 1, section=1),
   Entry("Screen Brightness", "Auto follows ambient light, day and night", 1, section=1, words="dim bright"),
   Entry("Standby", "Screen sleeps while driving, wakes for alerts", 1, section=1, words="screen off"),

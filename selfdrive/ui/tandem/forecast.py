@@ -288,7 +288,7 @@ def _next_event(forecast: Forecast, now: float, horizon: float) -> tuple[str, st
 
 def outlook(forecast: Forecast | None, now: float, metric: bool, hours: int = OUTLOOK_HOURS) -> Outlook | None:
   """The next 12 hours for the parked screen: a tile an hour, and one line saying what matters. None without enough
-  forecast left (fewer than 3 hours ahead)."""
+  forecast left (fewer than 3 hours ahead). metric: temperatures in °C (prefs.celsius, General › Temperature)."""
   if forecast is None:
     return None
   ahead = [h for h in forecast.hours if h[0] > now][:hours]
