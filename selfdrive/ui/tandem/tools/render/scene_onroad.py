@@ -76,6 +76,11 @@ def main(frame, save, out, tap, gui_app):
     "onroad_nav_limit": scene(BarState(True, True, 48, "mph", "SE Hawthorne Blvd", True, "4:52 PM", "12 min · 8.4 mi"), ArcState(0.15, 0.2, True),
                               None, LimitOffer(55, 58, "mph", "Map Data", 18), speed=44, limit="45",
                               turn=("0.4 mi", "Turn right onto Market St", "turn", "right")),
+    # The README's first image: a new-limit offer, a lane change and a weather heads-up, the compass and the weather now.
+    "onroad_hero": scene(BarState(True, True, 48, "mph", "N Main St", heading="NE", weather=("rain", "52°")), ArcState(0.25, 0.3, True),
+                         [(chip_for(Snapshot(engaged=True, lane_change="starting", lane_change_direction="left")), 1.0),
+                          (chip_for(Snapshot(forecast=("Light rain in 12 min", "rain"))), 1.0)],
+                         LimitOffer(55, 58, "mph", "Map Data", 18), speed=46, limit="45", signal="left"),
     "onroad_green": scene(BarState(True, True, 44, "mph", "SE Hawthorne Blvd"), ArcState(0, 0, False),
                           chip_for(Snapshot(engaged=True, standstill=True, events={"greenLight"})), speed=0, limit="45"),
   }

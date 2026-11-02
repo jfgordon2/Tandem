@@ -9,7 +9,7 @@ I built this for my own preferences, and I do not encourage others to use it.
 
 [What's new](RELEASES.md) · [Development guide](selfdrive/ui/tandem/README.md) · [Report a problem](https://github.com/jfgordon2/Tandem/issues)
 
-![Tandem driving screen showing speed, the speed limit, turn directions, driver monitoring, and route controls](selfdrive/ui/tandem/assets/screenshots/onroad.png)
+![Tandem driving screen asking to match a new 55 mph limit, with status chips for a lane change and light rain ahead, and the compass, street, and temperature in the bar](selfdrive/ui/tandem/assets/screenshots/onroad.png)
 
 ## What makes Tandem different
 
@@ -44,6 +44,11 @@ StarPilot continues to provide the driving logic, vehicle integrations, and unde
 | --- | --- |
 | [![Everyday speed and steering settings with driving styles and speed limit controls](selfdrive/ui/tandem/assets/screenshots/everyday.png)](selfdrive/ui/tandem/assets/screenshots/everyday.png) | [![Destination picker with Home, Work, favorites, and recent places](selfdrive/ui/tandem/assets/screenshots/destinations.png)](selfdrive/ui/tandem/assets/screenshots/destinations.png) |
 | Driving style, speed limits, and lane changes in one place. | Saved places and recent destinations, a tap away. |
+
+| Voice typing | Help steer |
+| --- | --- |
+| [![Voice typing listening for a destination, with a level meter and a Type instead button](selfdrive/ui/tandem/assets/screenshots/voice.png)](selfdrive/ui/tandem/assets/screenshots/voice.png) | [![Help steer warning while the steering arc is at its limit in a curve](selfdrive/ui/tandem/assets/screenshots/helpsteer.png)](selfdrive/ui/tandem/assets/screenshots/helpsteer.png) |
+| Speak a place or a setting while parked; it's transcribed on the device. | A gentle warning before steering runs out in a curve. |
 
 ## Using Tandem
 

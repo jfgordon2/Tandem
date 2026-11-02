@@ -6,11 +6,13 @@ The driving screen uses a schematic road instead of a camera recording.
 
 | Published image | Render output | Scene in `../../tools/render/` |
 | --- | --- | --- |
-| `onroad.png` | `onroad_nav.png` | `scene_onroad.py` |
+| `onroad.png` | `onroad_hero.png` (a new-limit offer, two chips, compass and weather) | `scene_onroad.py` |
 | `home.png` | `homeweather.png` (with the forecast strip) | `scene_sidebar.py` |
 | `settings.png` | `hub.png` | `scene_compare.py` |
 | `everyday.png` | `driving.png` | `scene_compare.py` |
 | `destinations.png` | `destinations.png` | `scene_destinations.py` |
+| `voice.png` | `voicelistening.png` | `scene_destinations.py` |
+| `helpsteer.png` | `onroad_helpsteer.png` | `scene_onroad.py` |
 
 To refresh them, use the built-screen rendering instructions in the root
 [AGENTS.md](../../../../../AGENTS.md), then copy the selected render outputs here with the
