@@ -130,7 +130,7 @@ def test_record_stops_on_a_pause_and_on_stop(capsys):
 @pytest.mark.parametrize("stage", ["load", "transcribe"])
 def test_worker_failures_keep_a_traceback_and_report_failure(stage, monkeypatch, capsys):
   monkeypatch.setattr(speech, "model_ready", lambda folder=None: True)
-  monkeypatch.setattr(speech, "record", lambda stop: np.ones(800, dtype=np.float32))
+  monkeypatch.setattr(speech, "record", lambda stop, source=None: np.ones(800, dtype=np.float32))
   monkeypatch.setattr(speech.sys, "stdin", io.StringIO("stop\n"))
   monkeypatch.setattr(speech, "load", lambda folder: (object(), object()))
 
@@ -287,3 +287,52 @@ def test_worker_runs_as_a_background_job_not_at_the_uis_priority(ready, tmp_path
   assert _until(session, lambda: seen)
   assert seen[0]["policy"] == os.SCHED_OTHER and seen[0]["nice"] >= 10 and seen[0]["cpus"] == os.cpu_count()
   assert (tmp_path / "worker.log").exists()                       # the worker's errors land here
+
+
+def test_no_audio_at_all_ends_listening_instead_of_waiting(monkeypatch, capsys):
+  monkeypatch.setattr(speech, "FIRST_AUDIO_S", 0.1)
+
+  class Silent:                                   # micd isn't publishing: nothing ever arrives
+    def __init__(self, callback):
+      pass
+
+    def __enter__(self):
+      return self
+
+    def __exit__(self, *_):
+      return False
+  assert speech.record(threading.Event(), Silent) is None
+
+
+def test_driving_uses_two_threads_on_the_cores_away_from_the_control_loop(monkeypatch):
+  import os
+  monkeypatch.delenv("TANDEM_SPEECH_THREADS", raising=False)
+  pinned = []
+  monkeypatch.setattr(os, "sched_getaffinity", lambda pid: set(range(8)), raising=False)
+  monkeypatch.setattr(os, "sched_setaffinity", lambda pid, cores: pinned.append(set(cores)), raising=False)
+  monkeypatch.setattr(speech.sys, "platform", "linux")
+  speech.driving_limits()
+  assert os.environ["TANDEM_SPEECH_THREADS"] == "2" and pinned == [{0, 1, 2, 3}]
+  monkeypatch.delenv("TANDEM_SPEECH_THREADS")
+
+
+def test_voice_typing_is_offered_driving_with_the_native_runner_only(monkeypatch):
+  monkeypatch.setattr(voice, "driving", lambda: True)
+  monkeypatch.setattr(speech, "native_backend", lambda: object())
+  assert voice.available()
+  monkeypatch.setattr(speech, "native_backend", lambda: None)   # the tinygrad fallback uses the GPU: parked only
+  assert not voice.available()
+  monkeypatch.setattr(voice, "driving", lambda: False)
+  assert voice.available()
+
+
+def test_the_worker_hears_when_the_car_is_on(ready, monkeypatch, tmp_path):
+  import json as _json
+  monkeypatch.setattr(voice, "driving", lambda: True)
+  monkeypatch.setenv("TANDEM_SPEECH_DIR", str(tmp_path))
+  probe = "import os, json; print(json.dumps({'driving': os.environ.get('TANDEM_SPEECH_DRIVING')}), flush=True)"
+  seen = []
+  session = voice.VoiceTyping(lambda text: None, [sys.executable, "-c", probe])
+  monkeypatch.setattr(session, "_handle", lambda line: seen.append(_json.loads(line)))
+  session.start()
+  assert _until(session, lambda: seen) and seen[0]["driving"] == "1"

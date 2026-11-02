@@ -17,9 +17,9 @@ Tandem 2026.11.01
   * Alerts in three levels: info, warning and critical
   * Turn Signal: chevrons by the speed, or a jumping frog, pouncing cat or bouncing ball
 * Where to?: destination search, favorites and a route preview with arrival time
-* Voice typing while parked: tap the mic and say a place, a setting or any text but a password
+* Voice typing, parked or driving: tap the mic and say a place, a setting or any text but a password
 * Voice typing: fixed a speech-decoder failure on the comma 3X
-* Faster voice typing while parked, with an offline CPU speech engine
+* Faster voice typing, with an offline CPU speech engine
 * First-run setup: three questions, or Essentials defaults
 * Automatic crash and diagnostics reports are off; reports you send are kept
 

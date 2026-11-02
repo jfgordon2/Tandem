@@ -130,7 +130,7 @@ class EssentialsKeyboard(upstream.Keyboard):
     return self._voice.active
 
   def voice_offered(self) -> bool:
-    """The mic key: never for passwords (spoken aloud, and Whisper would guess at them), and only while parked."""
+    """The mic key: never for passwords (spoken aloud, and Whisper would guess at them); voice.available says when."""
     return not (self._password_mode or self._show_password_toggle) and voice.available()
 
   def _insert_spoken(self, words: str) -> None:

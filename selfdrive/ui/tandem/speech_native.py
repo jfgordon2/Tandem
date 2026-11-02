@@ -1,4 +1,4 @@
-"""Parked voice typing with whisper.cpp's CPU runner. No audio leaves the worker's pipes.
+"""Voice typing with whisper.cpp's CPU runner (2 threads while driving, speech.driving_limits). No audio leaves the worker's pipes.
 
 The source and tiny.en Q8 model are pinned and checked on first use. Only the resulting
 executable and model are needed after setup; nothing is installed into AGNOS or openpilot.
@@ -79,7 +79,7 @@ class NativeWhisper:
       wav.writeframes((np.clip(samples, -1, 1) * 32767).astype("<i2").tobytes())
     command = [sys.executable, str(Path(__file__)), "--exec", str(os.getpid()), str(executable(self.folder)),
                "-m", str(self.folder / MODEL_NAME), "-f", "-", "-otxt", "-of", "-", "-ng", "-nt", "-np", "-nf", "-bs", "1", "-bo", "1",
-               "-t", str(min(4, os.cpu_count() or 1)), "-l", "en", "-ac", str(context)]
+               "-t", os.environ.get("TANDEM_SPEECH_THREADS") or str(min(4, os.cpu_count() or 1)), "-l", "en", "-ac", str(context)]
     if style == "address":
       command.extend(["--prompt", ADDRESS_PROMPT])
     result = subprocess.run(command, input=audio.getvalue(), stdout=subprocess.PIPE, stderr=sys.stderr, check=True, timeout=30)

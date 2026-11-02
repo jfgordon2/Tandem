@@ -27,7 +27,7 @@ StarPilot continues to provide the driving logic, vehicle integrations, and unde
 - **Weather ahead.** A status chip warns before rain, snow, or storms start and says when
   they should stop. Parked, the home screen shows the next 12 hours.
 - **Navigation from the home screen.** Search for a place, pick a favorite, and preview the route
-  before starting. Voice typing works while parked and runs on the device.
+  before starting. Voice typing runs on the device, parked or driving.
 - **A consistent look throughout.** Figtree type, shared controls, and plain language carry through
   setup, the parked home screen, settings, the keyboard, and alerts.
 - **Control over diagnostics.** Automatic crash and diagnostics reporting is off. You can still
@@ -48,7 +48,7 @@ StarPilot continues to provide the driving logic, vehicle integrations, and unde
 | Voice typing | Help steer |
 | --- | --- |
 | [![Voice typing listening for a destination, with a level meter and a Type instead button](selfdrive/ui/tandem/assets/screenshots/voice.png)](selfdrive/ui/tandem/assets/screenshots/voice.png) | [![Help steer warning while the steering arc is at its limit in a curve](selfdrive/ui/tandem/assets/screenshots/helpsteer.png)](selfdrive/ui/tandem/assets/screenshots/helpsteer.png) |
-| Speak a place or a setting while parked; it's transcribed on the device. | A gentle warning before steering runs out in a curve. |
+| Speak a place or a setting; it's transcribed on the device. | A gentle warning before steering runs out in a curve. |
 
 | Turn-by-turn directions | Developer View |
 | --- | --- |

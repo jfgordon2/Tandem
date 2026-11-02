@@ -56,8 +56,28 @@ def relax_priority() -> None:
     pass
 
 
+DRIVING = os.environ.get("TANDEM_SPEECH_DRIVING") == "1"   # voice.py sets it when the car is on
+DRIVING_CORES = {0, 1, 2, 3}             # away from controlsd and card (4), plannerd, radard and selfdrived (5) and modeld (7)
+DRIVING_THREADS = 2
+
+
+def driving_limits() -> None:
+  """While driving: fewer threads, on the cores openpilot's control loop and driving model don't use. They run at real-time
+  priority and would win anyway; this keeps memory traffic and heat down too."""
+  os.environ.setdefault("TANDEM_SPEECH_THREADS", str(DRIVING_THREADS))
+  if sys.platform.startswith("linux"):
+    try:
+      cores = DRIVING_CORES & set(os.sched_getaffinity(0))
+      if cores:
+        os.sched_setaffinity(0, cores)
+    except (OSError, AttributeError):
+      pass
+
+
 if __name__ == "__main__":
   relax_priority()                        # before numpy and tinygrad load
+  if DRIVING:
+    driving_limits()
 
 import numpy as np
 
@@ -68,6 +88,7 @@ BLOCK = 800                               # 50 ms of audio per level reading
 
 SILENCE_AFTER_S = 1.5                     # stop this long after the person stops talking
 NO_SPEECH_S = 6.0                         # stop if nobody has said anything by now
+FIRST_AUDIO_S = 2.0                       # no audio at all by then: the microphone isn't reaching us
 MAX_S = 15.0
 SPEECH_LEVEL = 0.06                       # a level (0..1, see level()) that counts as talking
 
@@ -435,12 +456,16 @@ def record(stop: threading.Event, open_stream=None) -> np.ndarray | None:
     traceback.print_exception(error, file=sys.stderr)
     return None
   heard, ends = [], Endpointer()
+  opened = time.monotonic()
   with stream:
     say(state="listening")
     while not stop.is_set():
       try:
         block = blocks.get(timeout=0.5)
       except queue.Empty:
+        if not heard and time.monotonic() - opened > FIRST_AUDIO_S:
+          print("Speech: no audio arrived", file=sys.stderr, flush=True)
+          return None
         continue
       heard.append(block)
       value = level(block)
@@ -451,6 +476,36 @@ def record(stop: threading.Event, open_stream=None) -> np.ndarray | None:
       if reason:
         break
   return np.concatenate(heard) if heard and ends.heard else np.zeros(0, dtype=np.float32)
+
+
+class MicdStream:
+  """While driving, openpilot's micd has the microphone and publishes what it hears (rawAudioData: 16 kHz int16, 800
+  samples a message, the same blocks the recorder uses). Hand those to the recorder as the microphone would."""
+
+  def __init__(self, callback):
+    from cereal import messaging
+    self._sock = messaging.sub_sock("rawAudioData", timeout=100)
+    self._callback = callback
+    self._running = False
+
+  def __enter__(self):
+    self._running = True
+    threading.Thread(target=self._pump, daemon=True).start()
+    return self
+
+  def __exit__(self, *_):
+    self._running = False
+    return False
+
+  def _pump(self) -> None:
+    from cereal import messaging
+    while self._running:
+      msg = messaging.recv_one(self._sock)
+      if msg is None:
+        continue
+      data = np.frombuffer(msg.rawAudioData.data, dtype=np.int16).astype(np.float32) / 32768.0
+      if data.size:
+        self._callback(data.reshape(-1, 1), data.size, None, None)
 
 
 def main(style: str = "text") -> int:
@@ -482,9 +537,9 @@ def main(style: str = "text") -> int:
     stop.set()
 
   threading.Thread(target=watch_stdin, daemon=True).start()
-  samples = record(stop)
+  samples = record(stop, MicdStream if DRIVING else None)
   if samples is None:
-    say(error="no_mic")
+    say(error="no_audio_driving" if DRIVING else "no_mic")
     return 1
   if samples.size == 0:
     say(error="no_speech")
@@ -500,7 +555,8 @@ def main(style: str = "text") -> int:
   except Exception as e:
     report_error("failed", e)
     return 1
-  print(f"Speech transcription: {time.monotonic() - started:.3f} s", file=sys.stderr, flush=True)
+  mode = f"{'driving' if DRIVING else 'parked'}, {os.environ.get('TANDEM_SPEECH_THREADS', 'default')} threads"
+  print(f"Speech transcription: {time.monotonic() - started:.3f} s ({mode})", file=sys.stderr, flush=True)
   say(text=text) if text else say(error="no_speech")
   return 0
 

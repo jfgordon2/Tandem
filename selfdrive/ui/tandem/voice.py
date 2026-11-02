@@ -3,7 +3,8 @@
 VoiceTyping runs speech.py as its own process and follows what it prints; VoicePanel draws that in place of the keys.
 The words land in the field for editing; nothing is sent or searched until the person presses the action key.
 
-Voice typing is offered only while parked. Its native runner uses the CPU; the diagnostic tinygrad fallback uses the GPU.
+Voice typing works parked and driving. Its native runner uses the CPU; driving, it uses micd's audio, two threads and cores 0-3
+(speech.driving_limits). The diagnostic tinygrad fallback uses the GPU, so it stays parked-only.
 """
 from __future__ import annotations
 
@@ -33,18 +34,25 @@ UNSEEN_S = 3.0                               # the panel went off screen (the pa
 ERRORS = {
   "no_speech": "Didn't catch that. Tap the mic to try again.",
   "no_mic": "The microphone isn't available right now.",
+  "no_audio_driving": "Voice typing can't hear the microphone while driving right now. Try again parked.",
   "download": "Couldn't download the speech model. Check the connection and try again.",
   "failed": "Voice typing didn't work this time. Try again or type it.",
 }
 
 
-def available() -> bool:
-  """Parked: the driving model has the GPU while the car is on."""
+def driving() -> bool:
   try:
     from openpilot.selfdrive.ui.ui_state import ui_state
   except ImportError:                        # the headless renders and tests, without cereal: parked
-    return True
-  return not getattr(ui_state, "started", False)
+    return False
+  return bool(getattr(ui_state, "started", False))
+
+
+def available() -> bool:
+  """Parked or driving with the native CPU runner; the tinygrad fallback uses the GPU the driving model needs, so it
+  stays parked-only."""
+  from openpilot.selfdrive.ui.tandem import speech
+  return speech.native_backend() is not None or not driving()
 
 
 class VoiceTyping:
@@ -78,8 +86,10 @@ class VoiceTyping:
     self.progress, self.message = 0.0, ""
     self.levels.extend([0.0] * BARS)
     env = dict(os.environ)
+    if driving():
+      env["TANDEM_SPEECH_DRIVING"] = "1"     # micd's audio, two threads, cores 0-3 (speech.driving_limits)
     if os.path.isfile("/TICI"):
-      env.setdefault("DEV", "QCOM")          # the device's GPU, free while parked
+      env.setdefault("DEV", "QCOM")          # the tinygrad fallback's GPU, free while parked (it's parked-only)
     try:
       log = speech.model_dir() / "worker.log"   # the last run's errors, for a bug report
       log.parent.mkdir(parents=True, exist_ok=True)
