@@ -34,7 +34,7 @@ from openpilot.system.ui.lib.application import MousePos
 from openpilot.selfdrive.ui.onroad.starpilot.navigation_card import NavigationCardRenderer
 from openpilot.selfdrive.ui.tandem import tokens as T
 from openpilot.selfdrive.ui.tandem.onroad import alerts, extras
-from openpilot.selfdrive.ui.tandem.onroad.developer import STRIP_H, DevData, developer_view_on, draw_lead_tag, draw_strip, lead_of, read
+from openpilot.selfdrive.ui.tandem.onroad.developer import STRIP_GAP, STRIP_H, DevData, developer_view_on, draw_lead_tag, draw_strip, lead_of, read
 from openpilot.selfdrive.ui.tandem.onroad.layers import (AT_LIMIT, BAR_HEIGHT, BAR_MARGIN, LIMIT_BORDER_COLOR, LIMIT_LANE_COLOR, ArcState, BarState,
                                                          Headroom, HeadroomArc, HelpSteer, ARC, DEV_ARC, LimitCard, LimitOffer, OnroadBar, StatusChip,
                                                          dm_tile, draw_driver_monitor, draw_speed, draw_speed_limit,
@@ -258,6 +258,18 @@ class EssentialsOnroadView(StarPilotOnroadView):
     offset = round(plan.slcSpeedLimitOffset * (CV.MS_TO_KPH if ui_state.is_metric else CV.MS_TO_MPH))
     return f"{self._dev.limit_source.upper()} · {offset:+d}".replace("-", "−")
 
+  def _strip_rect(self, c: rl.Rectangle) -> rl.Rectangle | None:
+    """Developer View's metrics strip, just above the bar, or None when it's off."""
+    if self._dev is None or not self._dev.strip:
+      return None
+    return rl.Rectangle(c.x, c.y + c.height - BAR_MARGIN - BAR_HEIGHT - STRIP_GAP - STRIP_H, c.width, STRIP_H)
+
+  def _tag_floor(self) -> float:
+    """The lowest a lead tag may sit: above the metrics strip when it's shown, otherwise above the bar."""
+    c = self._content_rect
+    strip = self._strip_rect(c)
+    return (strip.y if strip is not None else c.y + c.height - BAR_MARGIN - BAR_HEIGHT) - STRIP_GAP
+
   def _lead_tag(self, adjacent, chevron, lead_data) -> None:
     """Lead Insights for the lead car: our tag above it. Adjacent cars keep only StarPilot's markers, as in the mock."""
     if adjacent:
@@ -265,7 +277,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
     car = ui_state.sm["carState"]
     lead = lead_of(lead_data, car.vEgo, bool(ui_state.is_metric))
     if lead is not None:
-      draw_lead_tag(chevron[1][0], min(p[1] for p in chevron), lead)
+      draw_lead_tag(chevron[1][0], min(p[1] for p in chevron), lead, floor=self._tag_floor())
 
   def _draw_leads(self, radar_state) -> None:
     """The primary lead's gap tag; secondary leads keep their faint ground bars and optional metrics."""
@@ -277,7 +289,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
         if state is not None and anchor is not None:
           draw_lead_tag(anchor.x, anchor.y, state.lead, compact=not detailed_tag_on(ui_state, mr._params), value=state.label,
                         anchored=True, braking=self._braking_for_lead, opacity=state.opacity, progress=state.progress,
-                        bounds=self._content_rect)
+                        bounds=self._content_rect, floor=self._tag_floor())
         continue
       rect = extras.lead_bar_rect(lead.chevron)
       if rect is None:
@@ -471,9 +483,10 @@ class EssentialsOnroadView(StarPilotOnroadView):
     c = self._content_rect
     self._render_corner_extras(c)
     lift = 0.0
-    if self._dev is not None and self._dev.strip:   # the picked metrics, just above the bar; the chip moves up over it
-      lift = STRIP_H + T.px(6)
-      draw_strip(rl.Rectangle(c.x, c.y + c.height - BAR_MARGIN - BAR_HEIGHT - lift, c.width, STRIP_H), self._dev)
+    strip = self._strip_rect(c)
+    if strip is not None:   # the picked metrics, just above the bar; the chip moves up over it
+      lift = STRIP_H + STRIP_GAP
+      draw_strip(strip, self._dev)
     self._chip_view.render(rl.Rectangle(c.x, c.y, c.width, c.height - lift))
     self._limit.render(c)
     self._bar.render(c)

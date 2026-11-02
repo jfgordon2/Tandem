@@ -25,6 +25,7 @@ from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, row
 PANEL_W = T.px(256)                 # the mock's sidebar
 WIDTH = PANEL_W + T.px(10)          # with its gap from the road view
 STRIP_H = T.px(40)          # as onroaddev.html (was 30)
+STRIP_GAP = T.px(6)         # between the strip and the bar, and the lowest lead tag and whatever it rests on
 STRIP_TEXT = T.font_px(18)  # as onroaddev.html (13 was too small to read while driving)
 TILE_FILL = T._hex("1E2227")
 LABEL = T._hex("9FAABA")
@@ -192,8 +193,11 @@ def lead_tag_motion(progress: float) -> tuple[float, float, float]:
 
 def draw_lead_tag(center_x: float, top_y: float, lead: Lead, *, compact: bool = False, value: str | None = None,
                   anchored: bool = False, braking: bool = False, opacity: float = 1.0, progress: float = 1.0,
-                  bounds: rl.Rectangle | None = None) -> rl.Rectangle | None:
-  """One shared tag style: a gap in normal view, or the original distance/gap/relative-speed tag in developer views."""
+                  bounds: rl.Rectangle | None = None, floor: float | None = None) -> rl.Rectangle | None:
+  """One shared tag style: a gap in normal view, or the original distance/gap/relative-speed tag in developer views.
+
+  floor is the lowest the tag may reach (the top of the metrics strip, or of the bar): a car close to it keeps its tag
+  just above, without the anchor or connector, which would sit under the strip or bar."""
   ink = T.WARNING if braking else T.TEXT
   parts = [(value if value is not None else lead.gap, ink, BOLD)] if compact else [
     (lead.distance, T.TEXT, BOLD), (lead.gap, LABEL, BOLD), (lead.rel_speed, T.WARNING if lead.closing else T.TEXT_SECONDARY, BOLD)]
@@ -209,6 +213,9 @@ def draw_lead_tag(center_x: float, top_y: float, lead: Lead, *, compact: bool = 
             and bounds.y + margin <= top_y <= bounds.y + bounds.height - margin):
       return None
     box.x = min(max(box.x, bounds.x + margin), bounds.x + bounds.width - margin - w)
+  if floor is not None and box.y + h > floor:
+    box.y = floor - h
+    anchored = False      # the car is at or under the strip or bar: the tag alone, resting on it
   if anchored and anchor_alpha * opacity > 0.01:
     point = rl.Vector2(center_x, top_y)
     draw.disc(point, T.px(4.2), draw.alpha(TAG_FILL, opacity * anchor_alpha))

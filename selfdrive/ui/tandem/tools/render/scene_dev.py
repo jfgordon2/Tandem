@@ -1,7 +1,7 @@
 import pyray as rl
 import scene_onroad as O
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
-from openpilot.selfdrive.ui.tandem.onroad.developer import STRIP_H, WIDTH, DevData, Lead, draw_lead_tag, draw_panel, draw_strip
+from openpilot.selfdrive.ui.tandem.onroad.developer import STRIP_GAP, STRIP_H, WIDTH, DevData, Lead, draw_lead_tag, draw_panel, draw_strip
 from openpilot.selfdrive.ui.tandem.onroad.lead import lead_anchor
 from scene_lead import car, chevron
 from openpilot.selfdrive.ui.tandem.onroad.layers import (DEV_ARC, ArcState, BarState, BAR_HEIGHT, BAR_MARGIN, HeadroomArc, OnroadBar,
@@ -15,6 +15,8 @@ def main(frame, save, out, tap, gui_app):
   lead = Lead("38 m", "1.4 s", "−2 mph", True, "radar")
   data = DevData(lead, 0.38, "61°C", 0.22, 0.52, "3.1 GB", "20", "idle", "map", "3.6 / 3.5 m", "+0.42", "+0.38", "0.6", "0.9 m/s²", "0.18 s")
 
+  car_y = [560]
+
   def render():
     draw.fill(rl.Rectangle(0, 0, 2160, 1080), T.BG)
     O.road(rect)
@@ -23,11 +25,11 @@ def main(frame, save, out, tap, gui_app):
     draw_speed_limit(sign_tile(rect), "60", False, "MAP · +3")
     draw_driver_monitor(dm_tile(rect), 1.0, 1.0, True)
     cx = rect.x + rect.width / 2
-    car(cx, 560, 120)
-    anchor = lead_anchor(chevron(cx, 560, 38))
-    draw_lead_tag(anchor.x, anchor.y, lead, anchored=True, bounds=rect)
-    lift = STRIP_H + T.px(6)
-    draw_strip(rl.Rectangle(rect.x, rect.y + rect.height - BAR_MARGIN - BAR_HEIGHT - lift, rect.width, STRIP_H), data)
+    car(cx, car_y[0], 120)
+    anchor = lead_anchor(chevron(cx, car_y[0], 38))
+    strip = rl.Rectangle(rect.x, rect.y + rect.height - BAR_MARGIN - BAR_HEIGHT - STRIP_GAP - STRIP_H, rect.width, STRIP_H)
+    draw_lead_tag(anchor.x, anchor.y, lead, anchored=True, bounds=rect, floor=strip.y - STRIP_GAP)   # as view._tag_floor
+    draw_strip(strip, data)
     bar.render(rect)
     draw_panel(rl.Rectangle(2160 - WIDTH, 0, WIDTH, 1080), data)
   for _ in range(4):
@@ -38,3 +40,7 @@ def main(frame, save, out, tap, gui_app):
   for _ in range(4):
     frame(render)
   save(f"{out}/onroaddev_four.png")
+  car_y[0] = 960          # a car close enough to reach the strip: the tag rests above it (a check, not a mock)
+  for _ in range(4):
+    frame(render)
+  save(f"{out}/onroaddev_close.png")

@@ -1,3 +1,4 @@
+import __future__
 import ast
 from dataclasses import replace
 from pathlib import Path
@@ -206,7 +207,7 @@ def view_method(name, namespace):
   path = Path(__file__).resolve().parents[1] / 'onroad' / 'view.py'
   cls = next(node for node in ast.parse(path.read_text()).body if isinstance(node, ast.ClassDef) and node.name == 'EssentialsOnroadView')
   method = next(node for node in cls.body if isinstance(node, ast.FunctionDef) and node.name == name)
-  exec(compile(ast.Module([method], []), str(path), 'exec'), namespace)
+  exec(compile(ast.Module([method], []), str(path), 'exec', flags=__future__.annotations.compiler_flag), namespace)   # as view.py
   return namespace[name]
 
 
@@ -219,7 +220,7 @@ def test_view_draws_one_primary_tag_and_keeps_secondary_bars(monkeypatch):
   tracker = GapTracker()
   tracker.update(sample(), 0.0)
   view = SimpleNamespace(model_renderer=renderer, _gap_state=tracker.update(sample(), 0.25), _braking_for_lead=False,
-                         _content_rect=rl.Rectangle(0, 0, 2160, 1080))
+                         _content_rect=rl.Rectangle(0, 0, 2160, 1080), _tag_floor=lambda: 950)
   radar = SimpleNamespace(leadOne=s.sm['radarState'].leadOne, leadTwo=SimpleNamespace(status=True))
   monkeypatch.setattr(extras, 'draw_lead_bar', lambda *args, **kwargs: bars.append(kwargs))
   method = view_method('_draw_leads', dict(extras=extras, lead_anchor=lead_anchor, detailed_tag_on=detailed_tag_on, ui_state=s,
@@ -247,3 +248,32 @@ def test_view_resets_acquisition_even_when_upstream_stops_drawing_a_lead():
   clock[0] = 1.0
   method(view)
   assert view._gap_state.progress == 0
+
+
+def test_tag_never_sinks_below_the_floor_and_drops_the_anchor_there(painted):
+  words, discs, _ = painted
+  lead = GapTracker().update(sample(), 0.0).lead
+  bounds = rl.Rectangle(0, 0, 1000, 1000)
+  high = draw_lead_tag(500, 300, lead, anchored=True, bounds=bounds, floor=600)
+  assert high.y + high.height <= 600 and discs        # far above the floor: as before, with its anchor
+  discs.clear()
+  for top_y in (640, 690, 750):                       # at or under the strip or bar
+    box = draw_lead_tag(500, top_y, lead, anchored=True, bounds=bounds, floor=600)
+    assert box.y + box.height == 600
+  assert not discs
+
+
+def test_strip_and_tag_floor_stay_above_the_bar():
+  from openpilot.selfdrive.ui.tandem.onroad.developer import STRIP_GAP, STRIP_H
+  from openpilot.selfdrive.ui.tandem.onroad.layers import BAR_HEIGHT, BAR_MARGIN
+  names = dict(rl=rl, BAR_MARGIN=BAR_MARGIN, BAR_HEIGHT=BAR_HEIGHT, STRIP_GAP=STRIP_GAP, STRIP_H=STRIP_H)
+  strip_rect, tag_floor = view_method('_strip_rect', dict(names)), view_method('_tag_floor', dict(names))
+  c = rl.Rectangle(0, 0, 2000, 1000)
+  bar_top = c.height - BAR_MARGIN - BAR_HEIGHT
+  view = SimpleNamespace(_content_rect=c, _dev=None)
+  view._strip_rect = lambda rect: strip_rect(view, rect)
+  assert strip_rect(view, c) is None and tag_floor(view) == bar_top - STRIP_GAP
+  view._dev = SimpleNamespace(strip=True)
+  strip = strip_rect(view, c)
+  assert strip.y + strip.height <= bar_top and strip.height == STRIP_H
+  assert tag_floor(view) == strip.y - STRIP_GAP
