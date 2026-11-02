@@ -176,8 +176,8 @@ def alerts_page(model: Alerts, window) -> Widget:
     Stack([ValueLine(g.name, lambda g=g: model.level_label(g), editor(g), T.font_px(17), height=T.px(48)) for g in GROUPS], gap=T.px(6)),
     Label(note, T.SIZE_SUBTITLE, T.TEXT_MUTED, T.FONT),
   ], gap=T.px(12))
-  chimes = ListPanel([SettingRow(title, subtitle, Switch(lambda k=key: model.chime(k), lambda on, k=key: model.set_chime(k, on)),
-                                 height=T.px(66)) for title, subtitle, key in CHIMES],
+  chimes = ListPanel([SettingRow(title, subtitle, Switch(lambda k=key: model.chime(k), lambda on, k=key: model.set_chime(k, on)))
+                      for title, subtitle, key in CHIMES],
                      title=N_("Chimes"), title_size=T.font_px(20), header_divider=False)
   return TitledPage(N_("Alerts"), N_("One volume for everything. Safety warnings never go below 25%."), Columns([volume, chimes]))
 

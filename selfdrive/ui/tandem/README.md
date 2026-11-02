@@ -155,7 +155,7 @@ These are reached from a row or button, never as a tab:
 - **Lead marker:** the newly approved `design/gaptag.html` supersedes the primary ground bar in `leadmarker.html` and the triangle in the older `onroaddev.html`. The anchor estimates the roof from StarPilot's projected ground point and marker size. A tag too near the top edge keeps only its anchor until there is room for readable text.
 - **Voice setup:** the download panel keeps the mock's layout, but its explanation now includes the one-time native engine setup instead of calling it only a 75 MB model download.
 - **Alerts:** the volume preset adds **Auto**, upstream's default, where the level follows cabin noise.
-- **Row heights:** settings rows keep the standard height everywhere for consistency, even where a mock draws them shorter to fit. On Assistance, the Driver Monitoring card's While parked section (Sentry Mode and its Sensitivity) scrolls into view rather than fitting as in `design/assistance.html`.
+- **Row heights:** settings rows keep the standard height (`T.ROW_HEIGHT`, sub-rows `T.SUB_ROW_HEIGHT`) everywhere for consistency, even where a mock draws them shorter or taller to fit. So a few cards scroll a little instead of fitting as in their mocks: Assistance's Driver Monitoring (While parked), Alerts' Chimes (Weather heads-up) and Vehicle's Steering Wheel Buttons. Two exceptions keep their own height: the Speed Limit Sign row, which holds the two sign pictures, and the Where to? list, whose rows are search results.
 - **Uploads:** offers Off, **Parked** and Always. Upstream can hold uploads while driving, but it has no Wi-Fi-only switch.
 - **Things upstream has no support for:**
   - Automatic weekly backups.

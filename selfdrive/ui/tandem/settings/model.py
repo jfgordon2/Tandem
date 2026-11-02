@@ -277,7 +277,7 @@ def model_page(models: Models, open_catalog: Callable[[], None]) -> Widget:
            else N_("Picked by you"), T.font_px(16), T.TEXT_TERTIARY, padding=(0, 0)),
       SPACER,
       Surface(SettingRow(N_("Use recommended"), N_("Turn off to pick your own"), Switch(lambda: models.use_recommended,
-                                                                              models.set_use_recommended), height=T.px(66)),
+                                                                              models.set_use_recommended)),
               T.ACCENT_INSET, T.px(16)),
     ], padding=(T.px(22), T.px(22)), tone="accent")
     browse = Button(N_("Browse all"), open_catalog, ButtonStyle.GHOST, height=T.px(32))

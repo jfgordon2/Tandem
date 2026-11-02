@@ -218,7 +218,7 @@ def vehicle_profile_panel(model: VehicleProfile) -> Widget:
   """The profiles as tiles filling the panel, then Trailer Load. No line under the title, as in the mock."""
   load = SettingRow(N_("Trailer Load"), lambda: N_("Weight of a loaded trailer") if model.towing else N_("Available with Towing"),
                     Segmented(TRAILER_LOADS, lambda: model.trailer_load, model.set_trailer_load, height=T.px(44),
-                              font_size=T.font_px(15)), height=T.px(64))
+                              font_size=T.font_px(15)))
   load.set_enabled(lambda: model.towing)
   return Card([
     Padded(Stack([Label(N_("Vehicle Profile"), T.SIZE_PANEL_TITLE),

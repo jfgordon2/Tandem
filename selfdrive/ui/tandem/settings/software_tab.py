@@ -186,15 +186,15 @@ def software_page(model: Software, confirm, window=None) -> Widget:
             gap=T.px(10)),
   ], gap=T.px(10), padding=(T.px(24), T.px(24)))
   channel = SettingRow(N_("Release Channel"), lambda: N_("Choose another branch") if model.tuner() else N_("Other branches are in Tuner Mode"),
-                       ValueButton(model.channel, lambda: choose_branch(model, window)), height=T.px(76))
+                       ValueButton(model.channel, lambda: choose_branch(model, window)))
   channel.set_enabled(model.tuner)
   settings = ListPanel([
     SettingRow(N_("Automatic Updates"), N_("Download while parked, install when you turn off the car"),
-               Switch(lambda: model.automatic, model.set_automatic), height=T.px(76)),
+               Switch(lambda: model.automatic, model.set_automatic)),
     channel,
     SettingRow(N_("Reset Settings"), N_("Back to the Essentials defaults. Backups are kept."),
                Button(N_("Reset"), lambda: confirm(N_("Reset settings?"), N_("Every setting goes back to the Essentials default. Your backups are kept."),
-                                               N_("Reset"), model.reset_settings)), height=T.px(76)),
+                                               N_("Reset"), model.reset_settings))),
   ], footer=Button(N_("Uninstall"), lambda: uninstall(model, window), ButtonStyle.DANGER_SOFT, height=T.px(52)))
   return FillPage(Columns([version, settings], [1, 1.15]))
 

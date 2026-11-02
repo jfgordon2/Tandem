@@ -183,14 +183,14 @@ def vehicle_page(vehicle: Vehicle, window, open_more: Callable[[], None]) -> Wid
                   font_size=T.font_px(16))),
   ], gap=T.px(10), padding=(T.px(22), T.px(22)))
   lock = Sized(ListPanel([SettingRow(N_("Auto-Lock Doors"), N_("Locks when you shift out of park"), Switch(lambda: vehicle.auto_lock,
-                                                                                                   vehicle.set_auto_lock), height=T.px(76))]),
+                                                                                                   vehicle.set_auto_lock))]),
                T.px(76))
   lock.set_visible(vehicle.catalog.has_auto_lock)
-  buttons = [SettingRow(f"{b.name}", b.press, ValueButton(lambda b=b: vehicle.action_name(b), pick_action(b)), height=T.px(64))
+  buttons = [SettingRow(f"{b.name}", b.press, ValueButton(lambda b=b: vehicle.action_name(b), pick_action(b)))
              for b in vehicle.catalog.buttons()]
   wheel = ListPanel([
     *buttons,
-    SettingRow(N_("More for your car"), N_("Features specific to your make and model"), on_click=open_more, height=T.px(64)),
+    SettingRow(N_("More for your car"), N_("Features specific to your make and model"), on_click=open_more),
   ], title=N_("Steering Wheel Buttons"), subtitle=N_("Preset for your car. Tap a button to change what it does."), title_size=T.font_px(20))
   return FillPage(Columns([Stack([car, lock], gap=T.px(14), grow=0), wheel], [1, 1.35]))
 

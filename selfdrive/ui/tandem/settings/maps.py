@@ -192,7 +192,7 @@ def maps_page(maps: Maps, open_regions: Callable[[], None], sizes: Callable[[], 
     ProgressCard(maps, padding=0),
     SPACER,
     download,
-    Surface(SettingRow(N_("Choose regions"), N_("Add or remove states, regions and countries"), on_click=open_regions, height=T.px(64)),
+    Surface(SettingRow(N_("Choose regions"), N_("Add or remove states, regions and countries"), on_click=open_regions),
             T.SURFACE_4, T.px(14)),
   ], gap=T.px(14))
   schedule = Card([
