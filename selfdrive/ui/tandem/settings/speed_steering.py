@@ -372,13 +372,13 @@ class Navigation:
   def set_end_when_parked(self, on: bool) -> None:
     self._store.write({"ClearNavOnOffroad": on})
 
-  def has_mapbox_key(self) -> bool:
-    from openpilot.selfdrive.ui.tandem.mapbox_help import has_key
-    return has_key(self._store.get_str)
+  def mapbox_status(self) -> tuple[str, bool]:
+    """The Mapbox Key row's line, and whether both keys are saved."""
+    from openpilot.selfdrive.ui.tandem.mapbox_help import status
+    return status(self._store.get_str)
 
 
 def navigation_panel(model: Navigation, open_destinations, open_offline_maps, open_mapbox_help=lambda: None) -> ListPanel:
-  from openpilot.selfdrive.ui.tandem.mapbox_help import NOT_ADDED
 
   def place(title: str, icon: str, get) -> SettingRow:
     return SettingRow(title, lambda: get() or "Not set", Button(lambda: "Change" if get() else "Set", open_destinations),
@@ -390,8 +390,8 @@ def navigation_panel(model: Navigation, open_destinations, open_offline_maps, op
     SettingRow("Other favorites", lambda: f"{model.others()} saved", on_click=open_destinations, leading=Icon("star")),
     SettingRow("End Route When Parked", "Clears the destination when you turn off the car",
                Switch(lambda: model.end_when_parked, model.set_end_when_parked)),
-    SettingRow("Mapbox Key", lambda: "Added" if model.has_mapbox_key() else NOT_ADDED,
-               Button(lambda: "How to change" if model.has_mapbox_key() else "How to add", open_mapbox_help),
-               subtitle_color=lambda: T.SUCCESS_TEXT if model.has_mapbox_key() else T.WARNING),
+    SettingRow("Mapbox Keys", lambda: model.mapbox_status()[0],
+               Button(lambda: "How to change" if model.mapbox_status()[1] else "How to add", open_mapbox_help),
+               subtitle_color=lambda: T.SUCCESS_TEXT if model.mapbox_status()[1] else T.WARNING),
     SettingRow("Offline Maps", "Speed limits and routing without a connection", on_click=open_offline_maps),
   ], title="Navigation", subtitle="While a route is active, the car slows for turns and uses route speed limits")

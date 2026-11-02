@@ -39,13 +39,13 @@
   {
    "mock": "drivingnav",
    "title": "Speed & Steering › Navigation",
-   "note": "Matches, with the mock's row icons. Set and Change open StarPilot's destination search. Adds the Mapbox Key row: Added, or Not added with How to add.",
+   "note": "Matches, with the mock's row icons. Set and Change open StarPilot's destination search. Adds the Mapbox Keys row: which keys are saved, and How to add.",
    "match": true
   },
   {
    "mock": "mapboxkey",
    "title": "Mapbox key help",
-   "note": "Matches: four steps from an account to pasting the keys in Galaxy, with the token's scopes. Opens from Navigation's Mapbox Key row; Where to? points here when there's no key.",
+   "note": "Matches: four steps from an account to pasting both keys on Galaxy's App Keys page, with the secret token's scopes. Opens from Navigation's Mapbox Keys row. The mock bolds pk. and sk.; the wrapped text can't.",
    "match": true
   },
   {

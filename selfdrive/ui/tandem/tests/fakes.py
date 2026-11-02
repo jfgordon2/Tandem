@@ -471,6 +471,9 @@ class FakePlaces:
   def can_start(self):
     return self.routing
 
+  def can_search(self):
+    return self.routing
+
   def start(self):
     if not self.routing:
       return False

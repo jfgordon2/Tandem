@@ -84,7 +84,7 @@ ENTRIES: list[Entry] = [
   _place("Navigation", "Home, Work and favorites; slows for turns on a route", 0, S, 3, "route destination"),
   Entry("Other favorites", "Saved places for Where to?", 0, S, 3, "destinations"),
   Entry("End Route When Parked", "Clears the destination when you turn off the car", 0, S, 3),
-  Entry("Mapbox Key", "Needed for place search and routes", 0, S, 3, "mapbox key token api secret search routing navigation"),
+  Entry("Mapbox Keys", "Needed for place search and routes", 0, S, 3, "mapbox key token api secret search routing navigation"),
   Entry("Offline Maps", "Speed limits and routing without a connection", 0, S, 3, "download map regions"),
   # Driving › Display
   _place("Display", "The driving screen, theme and startup, and the map", 0, D),

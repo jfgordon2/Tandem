@@ -2,6 +2,7 @@ import pytest
 
 from openpilot.selfdrive.ui.tandem import keyboard as K
 from openpilot.selfdrive.ui.tandem import destinations as D
+from openpilot.selfdrive.ui.tandem.routemap import NOT_SET_UP
 from openpilot.selfdrive.ui.tandem.tests.fakes import FakePlaces
 
 
@@ -89,12 +90,18 @@ def test_preview_star_saves_and_start_follows_routing():
   assert closed and places.active() is not None
   screen, places, _ = _screen(routing=False)
   screen._pick(places.recents()[0])
-  assert not screen._start_button.enabled and places.route() == (None, "Routes need a Mapbox key: see Settings › Driving › Speed & Steering › Navigation")
+  assert not screen._start_button.enabled and places.route() == (None, NOT_SET_UP)
 
 
-def test_mapbox_key_check_and_help_steps():
-  from openpilot.selfdrive.ui.tandem.mapbox_help import STEPS, has_key
-  assert not has_key(lambda key: "") and not has_key(lambda key: b"  ") and not has_key(lambda key: None)
-  assert has_key(lambda key: "sk.abc" if key == "MapboxSecretKey" else "")
+def test_mapbox_keys_each_do_their_part_and_the_steps_point_to_app_keys():
+  from openpilot.selfdrive.ui.tandem.mapbox_help import STEPS, keys, status
+
+  def saved(**values):
+    return lambda key: values.get(key, "")
+  assert keys(saved()) == (False, False) and keys(saved(MapboxPublicKey=b"  ")) == (False, False)
+  assert status(saved(MapboxPublicKey="pk.a", MapboxSecretKey="sk.b")) == ("Added", True)
+  assert status(saved(MapboxPublicKey="pk.a"))[0].startswith("Public key only")
+  assert status(saved(MapboxSecretKey="sk.b"))[0].startswith("Secret key only")
+  assert status(saved()) == ("Not added · needed for place search and routes", False)
   text = " ".join(line for _, line in STEPS)
-  assert "DOWNLOADS:READ" in text and "sk." in text and "Mapbox Keys" in text and "Remote Access" in text
+  assert "open App Keys" in text and "under Tools" in text and "Navigation & Maps › App Keys" in text and "DOWNLOADS:READ" in text and "pk." in text

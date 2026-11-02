@@ -153,7 +153,7 @@ def start_position(live: str, saved: str) -> tuple[float, float, float | None] |
 FINDING = "Finding a route…"
 NO_FIX = "Needs a GPS fix to plan the route"
 NO_ROUTE = "Couldn't find a route. Check the connection."
-NOT_SET_UP = "Routes need a Mapbox key: see Settings › Driving › Speed & Steering › Navigation"
+NOT_SET_UP = "Routes need the secret Mapbox key: see Settings › Driving › Speed & Steering › Navigation"
 
 
 class RouteFetcher:

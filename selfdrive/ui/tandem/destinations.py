@@ -63,7 +63,8 @@ class Places(Protocol):
   def clear_draft(self) -> None: ...
   def saved_as(self) -> tuple[bool, bool, bool]: ...   # the draft: favorite, home, work
   def toggle(self, kind: str) -> None: ...             # "favorite", "home" or "work"
-  def can_start(self) -> bool: ...
+  def can_start(self) -> bool: ...                   # the secret Mapbox key, for routes
+  def can_search(self) -> bool: ...                  # the public Mapbox key, for place search
   def start(self) -> bool: ...
   def end_route(self) -> None: ...
   def maps_ready(self) -> bool: ...
@@ -155,6 +156,9 @@ class UpstreamPlaces:
 
   def can_start(self) -> bool:
     return self._nav._routing_available()
+
+  def can_search(self) -> bool:
+    return bool(self._nav._public_mapbox_key())
 
   def start(self) -> bool:
     self._nav._start_navigation()
@@ -513,8 +517,8 @@ class DestinationsScreen(Component):
     field, strip = column(body, [T.px(56), FILL], T.px(8))
     self._render_field(field)
     status = self._places.status() if self._searched else None
-    if not self._places.can_start():   # no Mapbox key: search would quietly find nothing
-      draw.text(inset(strip, left=T.px(6)), "Search needs a Mapbox key · see Settings › Driving › Speed & Steering › Navigation",
+    if not self._places.can_search():   # no public Mapbox key: search would quietly find nothing
+      draw.text(inset(strip, left=T.px(6)), "Search needs the public Mapbox key · see Settings › Driving › Speed & Steering › Navigation",
                 T.font_px(15), T.WARNING)
     elif status is not None or not self._places.results():
       title, line = status or ("Type a place or address", f"Results show as you type, from {MIN_QUERY} letters")
