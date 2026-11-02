@@ -2,6 +2,8 @@
 
 Tandem is this fork of StarPilot. Its design language is **Essentials**: fewer choices and better defaults, with the car explaining what it's doing. This package holds the Essentials component library. The mocks, screenshots and tokens are in [`design/`](design/). It's built on raylib and the existing `Widget` base class. Screens are put together from these pieces instead of drawing with raylib directly.
 
+To run the real UI on a Mac, follow the [desktop setup guide](docs/mac-desktop.md). `./c3` opens the large UI with Essentials; `./c4` opens upstream's small UI.
+
 | Module | Contents |
 | --- | --- |
 | `fonts.py` | `font(face)`: the shared `FontWeight` faces from `gui_app`, plus `ExtraFont.EXTRA_BOLD` and `ExtraFont.MONO`, which load on first use. |
@@ -64,7 +66,7 @@ This fork is rebased onto StarPilot, and everything outside this package belongs
 
 - **Ours:** everything in `selfdrive/ui/tandem/`, meaning the code, `design/` (mocks and docs), `tools/` and `tests/`. Also the new font files `selfdrive/assets/fonts/Figtree-*` and `Figtree-OFL.txt`, which have to sit where the app loads fonts from.
 - **Upstream integration:**
-  - Root `README.md`: Tandem's project introduction, release and development links, and screenshots from `assets/screenshots/`. Reapply this overview after an upstream merge, preserving the upstream credits and third-party notices.
+  - Root `README.md`: Tandem's project introduction, release and development links (including the Mac desktop setup guide), and screenshots from `assets/screenshots/`. Reapply this overview after an upstream merge, preserving the upstream credits and third-party notices.
   - The file names in `FontWeight` (`system/ui/lib/application.py`), which switch the whole UI to Figtree.
   - In `selfdrive/ui/layouts/main.py`: the imports, the calls that create the sidebar, home, settings and onroad screens (`screens.py`), and the left sidebar's width. StarPilot's developer sidebar on the right keeps upstream's width.
   - In the wheel controls daemon and its manager predicate: temporary button testing runs while the Bluetooth screen is open, including onroad, without changing the saved enable setting. Tests cover the service and screen lifecycle.

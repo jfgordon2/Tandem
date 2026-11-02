@@ -65,6 +65,8 @@ git remote add upstream https://github.com/StarPilotHQ/StarPilot.git
 
 With the host dependencies installed, `./c3` runs the large UI and `./c4` runs the small UI.
 `./build` produces device binaries using the configured sysroot and toolchain.
+Follow the [Mac desktop UI setup guide](selfdrive/ui/tandem/docs/mac-desktop.md) for dependencies,
+Python setup, launch commands, and troubleshooting. Use `./c3` for Tandem's Essentials UI.
 
 Tandem's UI lives in [`selfdrive/ui/tandem/`](selfdrive/ui/tandem/), and its supporting code lives in
 [`starpilot/tandem/`](starpilot/tandem/). Start with the [development guide](selfdrive/ui/tandem/README.md) for components, screen implementations,

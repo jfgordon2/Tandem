@@ -393,7 +393,7 @@ def report_panel(report: Report) -> Widget:
 
 
 class StorageSizes:
-  """Space used on /data by kind, measured on a background thread and shared by every page that shows it (Storage &
+  """Device data sizes and disk capacity, measured on a background thread and shared by every page that shows it (Storage &
   Data, Offline Maps, the model catalog). Until a measurement finishes it returns the last one (zeros at first);
   forget() re-measures right away after something is deleted."""
   REFRESH = 30.0
@@ -421,6 +421,7 @@ class StorageSizes:
     import shutil
     import time
     from pathlib import Path
+    from openpilot.system.hardware import PC
 
     def size(*paths: str) -> float:
       total = 0
@@ -431,7 +432,7 @@ class StorageSizes:
       return float(total)
 
     try:
-      usage = shutil.disk_usage("/data")
+      usage = shutil.disk_usage(Path.home() if PC else "/data")
       sizes = {"Drives": size("/data/media/0/realdata", "/data/media/0/realdata_HD", "/data/media/0/realdata_konik"),
                      "Maps": size("/data/media/0/osm/offline"), "Models": size("/data/models"),
                      "Total": float(usage.total), "Free": float(usage.free)}
