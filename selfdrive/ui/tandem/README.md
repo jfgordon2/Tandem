@@ -64,6 +64,7 @@ This fork is rebased onto StarPilot, and everything outside this package belongs
 
 - **Ours:** everything in `selfdrive/ui/tandem/`, meaning the code, `design/` (mocks and docs), `tools/` and `tests/`. Also the new font files `selfdrive/assets/fonts/Figtree-*` and `Figtree-OFL.txt`, which have to sit where the app loads fonts from.
 - **Upstream integration:**
+  - Root `README.md`: Tandem's project introduction, release and development links, and screenshots from `assets/screenshots/`. Reapply this overview after an upstream merge, preserving the upstream credits and third-party notices.
   - The file names in `FontWeight` (`system/ui/lib/application.py`), which switch the whole UI to Figtree.
   - In `selfdrive/ui/layouts/main.py`: the imports, the calls that create the sidebar, home, settings and onroad screens (`screens.py`), and the left sidebar's width. StarPilot's developer sidebar on the right keeps upstream's width.
   - In the wheel controls daemon and its manager predicate: temporary button testing runs while the Bluetooth screen is open, including onroad, without changing the saved enable setting. Tests cover the service and screen lifecycle.
@@ -77,7 +78,7 @@ This fork is rebased onto StarPilot, and everything outside this package belongs
 
 ## Branches and merging upstream
 
-Tandem has one branch, `release`, on `jfgordon2/StarPilot`. Upstream is StarPilot's `StarPilot` branch on `StarPilotHQ/StarPilot` (firestar5683's repo), which sits on openpilot. Tandem merges upstream rather than rebasing, so `release` keeps its history and pushes never need force.
+Tandem has one branch, `release`, on `jfgordon2/Tandem`. Upstream is StarPilot's `StarPilot` branch on `StarPilotHQ/StarPilot` (firestar5683's repo), which sits on openpilot. Tandem merges upstream rather than rebasing, so `release` keeps its history and pushes never need force.
 
 Set up once in a clone:
 
