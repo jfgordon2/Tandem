@@ -180,6 +180,7 @@ ENTRIES: list[Entry] = [
   Entry(N_("Uploads"), N_("Drive logs and video for debugging"), 1, section=3),
   _place(N_("Report a Problem"), N_("Send what happened to the developers"), 1, section=4, words="bug discord"),
   _place(N_("Developer"), N_("ADB, SSH and debug modes"), 1, section=5),
+  Entry(N_("CAN test recorder"), N_("Record traffic and mark manual lock/unlock actions"), 1, section=5, words="diagnostic log lock unlock test"),
   Entry(N_("ADB"), N_("Connect over USB or the network"), 1, section=5),
   Entry(N_("SSH"), N_("Remote shell access"), 1, section=5),
   Entry(N_("SSH Keys"), N_("Adds every public key in a GitHub account"), 1, section=5, words="github"),

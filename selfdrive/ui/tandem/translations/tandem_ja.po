@@ -26,7 +26,7 @@ msgid "Default"
 msgstr "デフォルト"
 
 #: destinations.py:322
-#: settings/search.py:268
+#: settings/search.py:269
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:695
 msgid "Search"
 msgstr "検索"
@@ -396,7 +396,7 @@ msgstr "アップデートの準備完了"
 
 #: home.py:147
 #: settings/search.py:24
-#: settings/search.py:202
+#: settings/search.py:203
 msgid "Software"
 msgstr "ソフトウェア"
 
@@ -1580,7 +1580,7 @@ msgid "What this button does while driving"
 msgstr "運転中のこのボタンの動作"
 
 #: settings/bluetooth_tab.py:234
-#: settings/developer.py:134
+#: settings/developer.py:144
 #: settings/device_sections.py:335
 msgid "Remove"
 msgstr "削除"
@@ -1622,6 +1622,151 @@ msgstr "チューナーモード"
 msgid "Fine-tuning screens for gas, brake, steering and following"
 msgstr "アクセル、ブレーキ、ステアリング、追従の微調整画面"
 
+#: settings/can_recorder.py:13
+#: settings/maps.py:405
+msgid "Ready"
+msgstr "準備完了"
+
+#: settings/can_recorder.py:13
+msgid "Starting…"
+msgstr "開始中…"
+
+#: settings/can_recorder.py:13
+msgid "Recording"
+msgstr "記録中"
+
+#: settings/can_recorder.py:14
+#: settings/network_tab.py:207
+msgid "Saving…"
+msgstr "保存中…"
+
+#: settings/can_recorder.py:14
+#: settings/network_tab.py:57
+msgid "Saved"
+msgstr "保存済み"
+
+#: settings/can_recorder.py:14
+#: sidebar.py:94
+msgid "Error"
+msgstr "エラー"
+
+#: settings/can_recorder.py:36
+msgid "Start logging"
+msgstr "記録を開始"
+
+#: settings/can_recorder.py:38
+msgid "Stop logging"
+msgstr "記録を停止"
+
+#: settings/can_recorder.py:40
+msgid "Mark lock"
+msgstr "ロックをマーク"
+
+#: settings/can_recorder.py:41
+msgid "Mark unlock"
+msgstr "ロック解除をマーク"
+
+#: settings/can_recorder.py:80
+msgid "Saved: the car is no longer parked."
+msgstr "保存済み：車が駐車状態ではなくなりました。"
+
+#: settings/can_recorder.py:82
+msgid "Saved: storage is running low."
+msgstr "保存済み：空き容量が少なくなりました。"
+
+#: settings/can_recorder.py:84
+msgid "Saved: the recording limit was reached."
+msgstr "保存済み：記録の上限で停止しました。"
+
+#: settings/can_recorder.py:87
+#, python-brace-format
+msgid "Last marker: {} at {}"
+msgstr "最後のマーク：{}、{}"
+
+#: settings/can_recorder.py:89
+msgid "Waiting for CAN traffic. Some channels sleep with the car off."
+msgstr "CANデータを待っています。車の電源が切れていると一部の通信は休止します。"
+
+#: settings/can_recorder.py:90
+msgid "No markers yet."
+msgstr "まだマークがありません。"
+
+#: settings/can_recorder.py:90
+#: settings/can_recorder.py:78
+msgid "Park the car to start a test."
+msgstr "テストを始めるには車を駐車してください。"
+
+#: settings/can_recorder.py:48
+msgid "Test controls"
+msgstr "テスト操作"
+
+#: settings/can_recorder.py:58
+msgid "Test status"
+msgstr "テスト状態"
+
+#: settings/can_recorder.py:60
+#: settings/developer.py:154
+#: settings/search.py:183
+msgid "CAN test recorder"
+msgstr "CANテスト記録"
+
+#: settings/can_recorder.py:60
+msgid "Device › Developer"
+msgstr "デバイス › 開発者"
+
+#: settings/can_recorder.py:78
+msgid "Couldn't save the log. Check storage and try again."
+msgstr "ログを保存できませんでした。空き容量を確認して、もう一度お試しください。"
+
+#: settings/can_recorder.py:86
+msgid "Lock"
+msgstr "ロック"
+
+#: settings/can_recorder.py:86
+msgid "Unlock"
+msgstr "ロック解除"
+
+#: settings/can_recorder.py:43
+msgid "Tap a marker as you press the car's lock control."
+msgstr "車のロック操作と同時にマークをタップしてください。"
+
+#: settings/can_recorder.py:46
+msgid "Markers only timestamp your taps."
+msgstr "マークはタップした時刻だけを記録します。"
+
+#: settings/can_recorder.py:47
+msgid "Stops after 10 minutes or when you leave this screen."
+msgstr "10分後、またはこの画面を閉じると停止します。"
+
+#: settings/can_recorder.py:50
+msgid "Elapsed"
+msgstr "経過時間"
+
+#: settings/can_recorder.py:51
+msgid "CAN frames"
+msgstr "CANフレーム"
+
+#: settings/can_recorder.py:52
+msgid "Lock markers"
+msgstr "ロックのマーク"
+
+#: settings/can_recorder.py:53
+msgid "Unlock markers"
+msgstr "ロック解除のマーク"
+
+#: settings/can_recorder.py:57
+msgid "Full and focused logs stay on this device."
+msgstr "完全ログとフィルタ済みログはこのデバイスに保存されます。"
+
+#: settings/can_recorder.py:55
+#, python-brace-format
+msgid "Log: {}"
+msgstr "ログ：{}"
+
+#: settings/can_recorder.py:55
+msgid "Start logging to create a new test log."
+msgstr "記録を開始すると新しいテストログが作成されます。"
+
 #: settings/connections.py:50
 #, python-brace-format
 msgid "{} button"
@@ -1646,7 +1791,7 @@ msgstr "モバイル通信"
 
 #: settings/connections.py:69
 #: settings/search.py:31
-#: settings/search.py:200
+#: settings/search.py:201
 msgid "Car Audio & Devices"
 msgstr "車のオーディオとデバイス"
 
@@ -1654,107 +1799,112 @@ msgstr "車のオーディオとデバイス"
 msgid "openpilot longitudinal control is in alpha for this car and turns off Automatic Emergency Braking (AEB). The car's own cruise control is the default. Experimental mode is recommended with it. openpilot restarts if the car is on."
 msgstr "この車での openpilot の縦制御はアルファ版で、自動緊急ブレーキ（AEB）がオフになります。デフォルトは車の純正クルーズコントロールです。使う場合は実験モードをおすすめします。車がオンなら openpilot が再起動します。"
 
-#: settings/developer.py:135
-#: settings/search.py:187
+#: settings/developer.py:145
+#: settings/search.py:188
 msgid "openpilot Longitudinal (Alpha)"
 msgstr "openpilot の縦制御（アルファ）"
 
-#: settings/developer.py:135
+#: settings/developer.py:145
 msgid "Turns off the car's emergency braking. Off while engaged."
 msgstr "車の緊急ブレーキをオフにします。作動中はオフ。"
 
-#: settings/developer.py:96
+#: settings/developer.py:106
 msgid "GitHub username"
 msgstr "GitHub ユーザー名"
 
-#: settings/developer.py:96
+#: settings/developer.py:106
 msgid "Your own account only: every public key in it gets SSH access"
 msgstr "自分のアカウントのみ：そのすべての公開キーに SSH アクセスが付与されます"
 
-#: settings/developer.py:108
+#: settings/developer.py:118
 msgid "Getting keys from GitHub…"
 msgstr "GitHub からキーを取得中…"
 
-#: settings/developer.py:112
+#: settings/developer.py:122
 #, python-brace-format
 msgid "Keys from GitHub user {}"
 msgstr "GitHub ユーザー {} のキー"
 
-#: settings/developer.py:112
+#: settings/developer.py:122
 msgid "Adds every public key in a GitHub account. Never use someone else's."
 msgstr "GitHub アカウントの公開キーをすべて追加します。他人のものは使わないでください。"
 
-#: settings/developer.py:144
+#: settings/developer.py:155
 #: settings/search.py:30
 #: settings/search.py:182
 msgid "Developer"
 msgstr "開発者"
 
-#: settings/developer.py:144
+#: settings/developer.py:155
 msgid "openpilot's developer options. They're only here with Tuner Mode on."
 msgstr "openpilot の開発者向けオプションです。チューナーモードがオンのときだけ表示されます。"
 
-#: settings/developer.py:95
-#: settings/developer.py:134
+#: settings/developer.py:105
+#: settings/developer.py:144
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:558
 msgid "Add"
 msgstr "追加"
 
-#: settings/developer.py:125
+#: settings/developer.py:135
 msgid "Turn on alpha longitudinal?"
 msgstr "アルファ版の縦制御をオンにしますか？"
 
-#: settings/developer.py:125
+#: settings/developer.py:135
 #: settings/vehicle.py:290
 msgid "Turn On"
 msgstr "オンにする"
 
-#: settings/developer.py:138
-#: settings/search.py:183
+#: settings/developer.py:148
+#: settings/search.py:184
 msgid "ADB"
 msgstr ""
 
-#: settings/developer.py:138
+#: settings/developer.py:148
 msgid "Connect over USB or the network (docs.comma.ai). Change it with the car off."
 msgstr "USB またはネットワークで接続します（docs.comma.ai）。車の電源を切って変更してください。"
 
-#: settings/developer.py:139
-#: settings/search.py:184
+#: settings/developer.py:149
+#: settings/search.py:185
 msgid "SSH"
 msgstr ""
 
-#: settings/developer.py:139
+#: settings/developer.py:149
 msgid "Remote shell access with the keys below"
 msgstr "下のキーでリモートシェルにアクセス"
 
-#: settings/developer.py:140
-#: settings/search.py:185
+#: settings/developer.py:150
+#: settings/search.py:186
 #: selfdrive/ui/layouts/settings/developer.py:53
 msgid "SSH Keys"
 msgstr "SSH キー"
 
-#: settings/developer.py:141
-#: settings/search.py:186
+#: settings/developer.py:151
+#: settings/search.py:187
 #: selfdrive/ui/layouts/settings/developer.py:56
 msgid "Joystick Debug Mode"
 msgstr "ジョイスティックデバッグモード"
 
-#: settings/developer.py:141
+#: settings/developer.py:151
 msgid "Drive openpilot's controls from a joystick. Change it with the car off."
 msgstr "ジョイスティックで openpilot を操作します。車の電源を切って変更してください。"
 
-#: settings/developer.py:143
-#: settings/search.py:188
+#: settings/developer.py:153
+#: settings/search.py:189
 #: selfdrive/ui/layouts/settings/developer.py:72
 msgid "UI Debug Mode"
 msgstr "UI デバッグモード"
 
-#: settings/developer.py:143
-#: settings/search.py:188
+#: settings/developer.py:153
+#: settings/search.py:189
 msgid "Shows touches and the frame rate"
 msgstr "タッチとフレームレートを表示します"
 
-#: settings/developer.py:134
+#: settings/developer.py:154
+#: settings/search.py:183
+msgid "Record traffic and mark manual lock/unlock actions"
+msgstr "通信を記録し、手動のロックと解除をマーク"
+
+#: settings/developer.py:144
 msgid "Adding…"
 msgstr "追加中…"
 
@@ -2843,10 +2993,6 @@ msgstr "ダウンロード"
 msgid "Install"
 msgstr "インストール"
 
-#: settings/maps.py:405
-msgid "Ready"
-msgstr "準備完了"
-
 #: settings/maps.py:249
 msgid "U.S. regions"
 msgstr "米国の地域"
@@ -3164,10 +3310,6 @@ msgstr "ここにはまだモデルがありません。"
 msgid "Connecting…"
 msgstr "接続中…"
 
-#: settings/network_tab.py:57
-msgid "Saved"
-msgstr "保存済み"
-
 #: settings/network_tab.py:76
 #, python-brace-format
 msgid "for \"{}\""
@@ -3213,7 +3355,7 @@ msgstr "編集"
 
 #: settings/network_tab.py:225
 #: settings/network_tab.py:217
-#: settings/search.py:198
+#: settings/search.py:199
 msgid "Roaming, APN and IP address"
 msgstr "ローミング、APN、IP アドレス"
 
@@ -3228,7 +3370,7 @@ msgstr "パスワードを入力"
 
 #: settings/network_tab.py:106
 #: settings/network_tab.py:213
-#: settings/search.py:195
+#: settings/search.py:196
 msgid "Hotspot name"
 msgstr "ホットスポット名"
 
@@ -3236,37 +3378,33 @@ msgstr "ホットスポット名"
 msgid "A saved network already uses this name"
 msgstr "保存済みのネットワークがこの名前を使用しています"
 
-#: settings/network_tab.py:207
-msgid "Saving…"
-msgstr "保存中…"
-
 #: settings/network_tab.py:212
-#: settings/search.py:194
+#: settings/search.py:195
 msgid "Hotspot"
 msgstr "ホットスポット"
 
 #: settings/network_tab.py:212
-#: settings/search.py:194
+#: settings/search.py:195
 msgid "Share this device's connection"
 msgstr "このデバイスの接続を共有"
 
 #: settings/network_tab.py:215
-#: settings/search.py:196
+#: settings/search.py:197
 msgid "Hotspot Password"
 msgstr "ホットスポットのパスワード"
 
 #: settings/network_tab.py:215
-#: settings/search.py:196
+#: settings/search.py:197
 msgid "For phones joining this device's hotspot"
 msgstr "このデバイスのホットスポットにつなぐスマホ用"
 
 #: settings/network_tab.py:216
-#: settings/search.py:197
+#: settings/search.py:198
 msgid "Save Data"
 msgstr "データ節約"
 
 #: settings/network_tab.py:216
-#: settings/search.py:197
+#: settings/search.py:198
 msgid "No large uploads on cellular or phone hotspots"
 msgstr "モバイル通信やスマホのホットスポットでは大きなアップロードをしません"
 
@@ -3279,7 +3417,7 @@ msgid "Use cellular data outside your carrier's network"
 msgstr "契約キャリアの圏外でもモバイル通信を使う"
 
 #: settings/network_tab.py:224
-#: settings/search.py:191
+#: settings/search.py:192
 msgid "IP Address"
 msgstr "IP アドレス"
 
@@ -3293,7 +3431,7 @@ msgid "Scanning for networks…"
 msgstr "ネットワークを検索中…"
 
 #: settings/network_tab.py:199
-#: settings/search.py:192
+#: settings/search.py:193
 msgid "Join a hidden network"
 msgstr "非公開ネットワークに接続"
 
@@ -3913,118 +4051,118 @@ msgstr "起きたことを開発者に送ります"
 msgid "ADB, SSH and debug modes"
 msgstr "ADB、SSH、デバッグモード"
 
-#: settings/search.py:183
+#: settings/search.py:184
 msgid "Connect over USB or the network"
 msgstr "USB またはネットワークで接続"
 
-#: settings/search.py:184
+#: settings/search.py:185
 msgid "Remote shell access"
 msgstr "リモートシェルアクセス"
 
-#: settings/search.py:185
+#: settings/search.py:186
 msgid "Adds every public key in a GitHub account"
 msgstr "GitHub アカウントの公開キーをすべて追加"
 
-#: settings/search.py:186
+#: settings/search.py:187
 msgid "Drive openpilot's controls from a joystick"
 msgstr "ジョイスティックで openpilot を操作"
 
-#: settings/search.py:187
+#: settings/search.py:188
 msgid "Turns off the car's emergency braking"
 msgstr "車の緊急ブレーキをオフにします"
 
-#: settings/search.py:190
+#: settings/search.py:191
 msgid "Networks nearby, and joining one"
 msgstr "近くのネットワークと接続"
 
-#: settings/search.py:191
+#: settings/search.py:192
 msgid "This device's local address, beside the connected network"
 msgstr "接続中のネットワークの横に、このデバイスのローカルアドレス"
 
-#: settings/search.py:192
+#: settings/search.py:193
 msgid "Enter its name and password"
 msgstr "名前とパスワードを入力"
 
-#: settings/search.py:193
+#: settings/search.py:194
 msgid "Hotspot, data use, roaming and APN"
 msgstr "ホットスポット、データ使用量、ローミング、APN"
 
-#: settings/search.py:195
+#: settings/search.py:196
 msgid "The name phones see when joining this device"
 msgstr "スマートフォンをこのデバイスに接続するときに表示される名前"
 
-#: settings/search.py:198
+#: settings/search.py:199
 msgid "Roaming, APN and the device's IP address"
 msgstr "ローミング、APN、デバイスの IP アドレス"
 
-#: settings/search.py:199
+#: settings/search.py:200
 msgid "A wheel remote's buttons and what they do"
 msgstr "ハンドル用リモコンのボタンとその動作"
 
-#: settings/search.py:200
+#: settings/search.py:201
 msgid "Car audio for alerts, and pairing devices"
 msgstr "アラート用の車のオーディオとデバイスのペアリング"
 
-#: settings/search.py:202
+#: settings/search.py:203
 msgid "Updates and the release notes"
 msgstr "アップデートとリリースノート"
 
-#: settings/search.py:203
+#: settings/search.py:204
 #: settings/software_tab.py:192
 msgid "Automatic Updates"
 msgstr "自動アップデート"
 
-#: settings/search.py:203
+#: settings/search.py:204
 #: settings/software_tab.py:192
 msgid "Download while parked, install when you turn off the car"
 msgstr "駐車中にダウンロードし、車の電源を切るとインストール"
 
-#: settings/search.py:204
+#: settings/search.py:205
 #: settings/software_tab.py:188
 #: settings/software_tab.py:140
 msgid "Release Channel"
 msgstr "リリースチャンネル"
 
-#: settings/search.py:204
+#: settings/search.py:205
 #: settings/software_tab.py:140
 msgid "The branch to download updates from"
 msgstr "アップデートをダウンロードするブランチ"
 
-#: settings/search.py:205
+#: settings/search.py:206
 #: settings/software_tab.py:195
 msgid "Reset Settings"
 msgstr "設定をリセット"
 
-#: settings/search.py:205
+#: settings/search.py:206
 msgid "Back to the Essentials defaults"
 msgstr "Essentials のデフォルトに戻す"
 
-#: settings/search.py:206
+#: settings/search.py:207
 #: settings/software_tab.py:169
 #: settings/software_tab.py:198
 msgid "Uninstall"
 msgstr "アンインストール"
 
-#: settings/search.py:206
+#: settings/search.py:207
 msgid "Remove this software from the device"
 msgstr "このソフトウェアをデバイスから削除"
 
-#: settings/search.py:380
-#: settings/search.py:371
+#: settings/search.py:381
+#: settings/search.py:372
 msgid "Search settings"
 msgstr "設定を検索"
 
-#: settings/search.py:269
+#: settings/search.py:270
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "「制限速度」などの設定名を話してください。終わったらマイクをタップします。"
 
-#: settings/search.py:351
-#: settings/search.py:310
+#: settings/search.py:352
+#: settings/search.py:311
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "「{}」に一致する設定はありません"
 
-#: settings/search.py:352
+#: settings/search.py:353
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "設定の名前か機能を入力してください（例：明るさ、車線変更）"
 
@@ -5012,10 +5150,6 @@ msgstr "音声を録音中"
 #: sidebar.py:113
 msgid "Checking"
 msgstr "確認中"
-
-#: sidebar.py:94
-msgid "Error"
-msgstr "エラー"
 
 #: sidebar.py:143
 msgid "Good"

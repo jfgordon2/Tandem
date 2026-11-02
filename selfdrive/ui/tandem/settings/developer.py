@@ -88,6 +88,16 @@ class DeveloperPage(Component):
 
 
 def developer_panel(dev: Developer, window) -> ListPanel:
+  recorder = None
+
+  def open_recorder():
+    nonlocal recorder
+    from openpilot.selfdrive.ui.tandem.settings.can_recorder import CanRecorderPage
+    from openpilot.starpilot.tandem.can_recorder import CanRecorder
+    if recorder is None:
+      recorder = CanRecorder()
+    window.push(CanRecorderPage(recorder))
+
   def ask_username() -> None:
     from openpilot.system.ui.lib.application import gui_app
     from openpilot.system.ui.widgets import DialogResult
@@ -141,6 +151,7 @@ def developer_panel(dev: Developer, window) -> ListPanel:
     SettingRow(N_("Joystick Debug Mode"), N_("Drive openpilot's controls from a joystick. Change it with the car off."), joystick),
     alpha_row,
     SettingRow(N_("UI Debug Mode"), N_("Shows touches and the frame rate"), Switch(lambda: dev.flag("ShowDebugInfo"), dev.set_ui_debug)),
+    SettingRow(N_("CAN test recorder"), N_("Record traffic and mark manual lock/unlock actions"), on_click=open_recorder),
   ], title=N_("Developer"), footnote=N_("openpilot's developer options. They're only here with Tuner Mode on."))
 
 

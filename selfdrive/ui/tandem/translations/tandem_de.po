@@ -26,7 +26,7 @@ msgid "Default"
 msgstr "Standard"
 
 #: destinations.py:322
-#: settings/search.py:268
+#: settings/search.py:269
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:695
 msgid "Search"
 msgstr "Suchen"
@@ -397,7 +397,7 @@ msgstr "Update bereit"
 
 #: home.py:147
 #: settings/search.py:24
-#: settings/search.py:202
+#: settings/search.py:203
 msgid "Software"
 msgstr "Software"
 
@@ -1583,7 +1583,7 @@ msgid "What this button does while driving"
 msgstr "Was diese Taste beim Fahren macht"
 
 #: settings/bluetooth_tab.py:234
-#: settings/developer.py:134
+#: settings/developer.py:144
 #: settings/device_sections.py:335
 msgid "Remove"
 msgstr "Entfernen"
@@ -1625,6 +1625,151 @@ msgstr "Tuner-Modus"
 msgid "Fine-tuning screens for gas, brake, steering and following"
 msgstr "Feineinstellungen für Gas, Bremse, Lenkung und Folgen"
 
+#: settings/can_recorder.py:13
+#: settings/maps.py:405
+msgid "Ready"
+msgstr "Bereit"
+
+#: settings/can_recorder.py:13
+msgid "Starting…"
+msgstr "Startet…"
+
+#: settings/can_recorder.py:13
+msgid "Recording"
+msgstr "Aufzeichnung"
+
+#: settings/can_recorder.py:14
+#: settings/network_tab.py:207
+msgid "Saving…"
+msgstr "Wird gespeichert…"
+
+#: settings/can_recorder.py:14
+#: settings/network_tab.py:57
+msgid "Saved"
+msgstr "Gespeichert"
+
+#: settings/can_recorder.py:14
+#: sidebar.py:94
+msgid "Error"
+msgstr "Fehler"
+
+#: settings/can_recorder.py:36
+msgid "Start logging"
+msgstr "Aufzeichnung starten"
+
+#: settings/can_recorder.py:38
+msgid "Stop logging"
+msgstr "Aufzeichnung stoppen"
+
+#: settings/can_recorder.py:40
+msgid "Mark lock"
+msgstr "Verriegeln markieren"
+
+#: settings/can_recorder.py:41
+msgid "Mark unlock"
+msgstr "Entriegeln markieren"
+
+#: settings/can_recorder.py:80
+msgid "Saved: the car is no longer parked."
+msgstr "Gespeichert: Das Auto ist nicht mehr geparkt."
+
+#: settings/can_recorder.py:82
+msgid "Saved: storage is running low."
+msgstr "Gespeichert: Der Speicher wird knapp."
+
+#: settings/can_recorder.py:84
+msgid "Saved: the recording limit was reached."
+msgstr "Gespeichert: Die Aufzeichnungsgrenze wurde erreicht."
+
+#: settings/can_recorder.py:87
+#, python-brace-format
+msgid "Last marker: {} at {}"
+msgstr "Letzte Markierung: {} bei {}"
+
+#: settings/can_recorder.py:89
+msgid "Waiting for CAN traffic. Some channels sleep with the car off."
+msgstr "Warte auf CAN-Daten. Einige Kanäle ruhen bei ausgeschaltetem Auto."
+
+#: settings/can_recorder.py:90
+msgid "No markers yet."
+msgstr "Noch keine Markierungen."
+
+#: settings/can_recorder.py:90
+#: settings/can_recorder.py:78
+msgid "Park the car to start a test."
+msgstr "Parke das Auto, um einen Test zu starten."
+
+#: settings/can_recorder.py:48
+msgid "Test controls"
+msgstr "Teststeuerung"
+
+#: settings/can_recorder.py:58
+msgid "Test status"
+msgstr "Teststatus"
+
+#: settings/can_recorder.py:60
+#: settings/developer.py:154
+#: settings/search.py:183
+msgid "CAN test recorder"
+msgstr "CAN-Testrekorder"
+
+#: settings/can_recorder.py:60
+msgid "Device › Developer"
+msgstr "Gerät › Entwickler"
+
+#: settings/can_recorder.py:78
+msgid "Couldn't save the log. Check storage and try again."
+msgstr "Das Protokoll konnte nicht gespeichert werden. Prüfe den Speicher und versuche es erneut."
+
+#: settings/can_recorder.py:86
+msgid "Lock"
+msgstr "Verriegeln"
+
+#: settings/can_recorder.py:86
+msgid "Unlock"
+msgstr "Entriegeln"
+
+#: settings/can_recorder.py:43
+msgid "Tap a marker as you press the car's lock control."
+msgstr "Tippe auf die Markierung, während du die Türtaste am Auto drückst."
+
+#: settings/can_recorder.py:46
+msgid "Markers only timestamp your taps."
+msgstr "Markierungen speichern nur den Zeitpunkt deines Tippens."
+
+#: settings/can_recorder.py:47
+msgid "Stops after 10 minutes or when you leave this screen."
+msgstr "Stoppt nach 10 Minuten oder beim Verlassen dieser Seite."
+
+#: settings/can_recorder.py:50
+msgid "Elapsed"
+msgstr "Dauer"
+
+#: settings/can_recorder.py:51
+msgid "CAN frames"
+msgstr "CAN-Frames"
+
+#: settings/can_recorder.py:52
+msgid "Lock markers"
+msgstr "Verriegelungsmarken"
+
+#: settings/can_recorder.py:53
+msgid "Unlock markers"
+msgstr "Entriegelungsmarken"
+
+#: settings/can_recorder.py:57
+msgid "Full and focused logs stay on this device."
+msgstr "Vollständige und gefilterte Protokolle bleiben auf diesem Gerät."
+
+#: settings/can_recorder.py:55
+#, python-brace-format
+msgid "Log: {}"
+msgstr "Protokoll: {}"
+
+#: settings/can_recorder.py:55
+msgid "Start logging to create a new test log."
+msgstr "Starte eine Aufzeichnung, um ein neues Testprotokoll anzulegen."
+
 #: settings/connections.py:50
 #, python-brace-format
 msgid "{} button"
@@ -1650,7 +1795,7 @@ msgstr "Mobilfunk"
 
 #: settings/connections.py:69
 #: settings/search.py:31
-#: settings/search.py:200
+#: settings/search.py:201
 msgid "Car Audio & Devices"
 msgstr "Auto-Audio & Geräte"
 
@@ -1658,107 +1803,112 @@ msgstr "Auto-Audio & Geräte"
 msgid "openpilot longitudinal control is in alpha for this car and turns off Automatic Emergency Braking (AEB). The car's own cruise control is the default. Experimental mode is recommended with it. openpilot restarts if the car is on."
 msgstr "Die Längsregelung von openpilot ist für dieses Auto im Alpha-Stadium und schaltet den Notbremsassistenten (AEB) ab. Standard ist der eigene Tempomat des Autos. Dazu wird der experimentelle Modus empfohlen. openpilot startet neu, wenn das Auto an ist."
 
-#: settings/developer.py:135
-#: settings/search.py:187
+#: settings/developer.py:145
+#: settings/search.py:188
 msgid "openpilot Longitudinal (Alpha)"
 msgstr "openpilot-Längsregelung (Alpha)"
 
-#: settings/developer.py:135
+#: settings/developer.py:145
 msgid "Turns off the car's emergency braking. Off while engaged."
 msgstr "Schaltet die Notbremsung des Autos ab. Aus, solange aktiv."
 
-#: settings/developer.py:96
+#: settings/developer.py:106
 msgid "GitHub username"
 msgstr "GitHub-Benutzername"
 
-#: settings/developer.py:96
+#: settings/developer.py:106
 msgid "Your own account only: every public key in it gets SSH access"
 msgstr "Nur dein eigenes Konto: jeder öffentliche Schlüssel darin bekommt SSH-Zugang"
 
-#: settings/developer.py:108
+#: settings/developer.py:118
 msgid "Getting keys from GitHub…"
 msgstr "Schlüssel werden von GitHub geholt…"
 
-#: settings/developer.py:112
+#: settings/developer.py:122
 #, python-brace-format
 msgid "Keys from GitHub user {}"
 msgstr "Schlüssel von GitHub-Nutzer {}"
 
-#: settings/developer.py:112
+#: settings/developer.py:122
 msgid "Adds every public key in a GitHub account. Never use someone else's."
 msgstr "Fügt jeden öffentlichen Schlüssel eines GitHub-Kontos hinzu. Nutze nie das einer anderen Person."
 
-#: settings/developer.py:144
+#: settings/developer.py:155
 #: settings/search.py:30
 #: settings/search.py:182
 msgid "Developer"
 msgstr "Entwickler"
 
-#: settings/developer.py:144
+#: settings/developer.py:155
 msgid "openpilot's developer options. They're only here with Tuner Mode on."
 msgstr "Entwickleroptionen von openpilot. Nur mit eingeschaltetem Tuner-Modus sichtbar."
 
-#: settings/developer.py:95
-#: settings/developer.py:134
+#: settings/developer.py:105
+#: settings/developer.py:144
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:558
 msgid "Add"
 msgstr "Hinzufügen"
 
-#: settings/developer.py:125
+#: settings/developer.py:135
 msgid "Turn on alpha longitudinal?"
 msgstr "Alpha-Längsregelung einschalten?"
 
-#: settings/developer.py:125
+#: settings/developer.py:135
 #: settings/vehicle.py:290
 msgid "Turn On"
 msgstr "Einschalten"
 
-#: settings/developer.py:138
-#: settings/search.py:183
+#: settings/developer.py:148
+#: settings/search.py:184
 msgid "ADB"
 msgstr ""
 
-#: settings/developer.py:138
+#: settings/developer.py:148
 msgid "Connect over USB or the network (docs.comma.ai). Change it with the car off."
 msgstr "Verbinde dich per USB oder Netzwerk (docs.comma.ai). Bei ausgeschaltetem Auto ändern."
 
-#: settings/developer.py:139
-#: settings/search.py:184
+#: settings/developer.py:149
+#: settings/search.py:185
 msgid "SSH"
 msgstr ""
 
-#: settings/developer.py:139
+#: settings/developer.py:149
 msgid "Remote shell access with the keys below"
 msgstr "Fernzugriff auf die Shell mit den Schlüsseln unten"
 
-#: settings/developer.py:140
-#: settings/search.py:185
+#: settings/developer.py:150
+#: settings/search.py:186
 #: selfdrive/ui/layouts/settings/developer.py:53
 msgid "SSH Keys"
 msgstr "SSH-Schlüssel"
 
-#: settings/developer.py:141
-#: settings/search.py:186
+#: settings/developer.py:151
+#: settings/search.py:187
 #: selfdrive/ui/layouts/settings/developer.py:56
 msgid "Joystick Debug Mode"
 msgstr "Joystick-Debugmodus"
 
-#: settings/developer.py:141
+#: settings/developer.py:151
 msgid "Drive openpilot's controls from a joystick. Change it with the car off."
 msgstr "Steuert openpilot mit einem Joystick. Bei ausgeschaltetem Auto ändern."
 
-#: settings/developer.py:143
-#: settings/search.py:188
+#: settings/developer.py:153
+#: settings/search.py:189
 #: selfdrive/ui/layouts/settings/developer.py:72
 msgid "UI Debug Mode"
 msgstr "UI-Debugmodus"
 
-#: settings/developer.py:143
-#: settings/search.py:188
+#: settings/developer.py:153
+#: settings/search.py:189
 msgid "Shows touches and the frame rate"
 msgstr "Zeigt Berührungen und die Bildrate"
 
-#: settings/developer.py:134
+#: settings/developer.py:154
+#: settings/search.py:183
+msgid "Record traffic and mark manual lock/unlock actions"
+msgstr "CAN-Daten aufzeichnen und manuelles Ver- und Entriegeln markieren"
+
+#: settings/developer.py:144
 msgid "Adding…"
 msgstr "Wird hinzugefügt…"
 
@@ -2849,10 +2999,6 @@ msgstr "Herunterladen"
 msgid "Install"
 msgstr "Installieren"
 
-#: settings/maps.py:405
-msgid "Ready"
-msgstr "Bereit"
-
 #: settings/maps.py:249
 msgid "U.S. regions"
 msgstr "US-Regionen"
@@ -3170,10 +3316,6 @@ msgstr "Hier gibt es noch keine Modelle."
 msgid "Connecting…"
 msgstr "Verbindet…"
 
-#: settings/network_tab.py:57
-msgid "Saved"
-msgstr "Gespeichert"
-
 #: settings/network_tab.py:76
 #, python-brace-format
 msgid "for \"{}\""
@@ -3219,7 +3361,7 @@ msgstr "Bearbeiten"
 
 #: settings/network_tab.py:225
 #: settings/network_tab.py:217
-#: settings/search.py:198
+#: settings/search.py:199
 msgid "Roaming, APN and IP address"
 msgstr "Roaming, APN und IP-Adresse"
 
@@ -3234,7 +3376,7 @@ msgstr "Passwort eingeben"
 
 #: settings/network_tab.py:106
 #: settings/network_tab.py:213
-#: settings/search.py:195
+#: settings/search.py:196
 msgid "Hotspot name"
 msgstr "Hotspot-Name"
 
@@ -3242,37 +3384,33 @@ msgstr "Hotspot-Name"
 msgid "A saved network already uses this name"
 msgstr "Ein gespeichertes Netzwerk verwendet bereits diesen Namen"
 
-#: settings/network_tab.py:207
-msgid "Saving…"
-msgstr "Wird gespeichert…"
-
 #: settings/network_tab.py:212
-#: settings/search.py:194
+#: settings/search.py:195
 msgid "Hotspot"
 msgstr "Hotspot"
 
 #: settings/network_tab.py:212
-#: settings/search.py:194
+#: settings/search.py:195
 msgid "Share this device's connection"
 msgstr "Die Verbindung dieses Geräts teilen"
 
 #: settings/network_tab.py:215
-#: settings/search.py:196
+#: settings/search.py:197
 msgid "Hotspot Password"
 msgstr "Hotspot-Passwort"
 
 #: settings/network_tab.py:215
-#: settings/search.py:196
+#: settings/search.py:197
 msgid "For phones joining this device's hotspot"
 msgstr "Für Handys, die sich mit dem Hotspot verbinden"
 
 #: settings/network_tab.py:216
-#: settings/search.py:197
+#: settings/search.py:198
 msgid "Save Data"
 msgstr "Daten sparen"
 
 #: settings/network_tab.py:216
-#: settings/search.py:197
+#: settings/search.py:198
 msgid "No large uploads on cellular or phone hotspots"
 msgstr "Keine großen Uploads über Mobilfunk oder Handy-Hotspots"
 
@@ -3285,7 +3423,7 @@ msgid "Use cellular data outside your carrier's network"
 msgstr "Mobile Daten außerhalb des eigenen Netzes nutzen"
 
 #: settings/network_tab.py:224
-#: settings/search.py:191
+#: settings/search.py:192
 msgid "IP Address"
 msgstr "IP-Adresse"
 
@@ -3299,7 +3437,7 @@ msgid "Scanning for networks…"
 msgstr "Suche nach Netzwerken…"
 
 #: settings/network_tab.py:199
-#: settings/search.py:192
+#: settings/search.py:193
 msgid "Join a hidden network"
 msgstr "Verstecktem Netzwerk beitreten"
 
@@ -3919,118 +4057,118 @@ msgstr "Schick den Entwicklern, was passiert ist"
 msgid "ADB, SSH and debug modes"
 msgstr "ADB, SSH und Debugmodi"
 
-#: settings/search.py:183
+#: settings/search.py:184
 msgid "Connect over USB or the network"
 msgstr "Per USB oder Netzwerk verbinden"
 
-#: settings/search.py:184
+#: settings/search.py:185
 msgid "Remote shell access"
 msgstr "Fernzugriff auf die Shell"
 
-#: settings/search.py:185
+#: settings/search.py:186
 msgid "Adds every public key in a GitHub account"
 msgstr "Fügt jeden öffentlichen Schlüssel eines GitHub-Kontos hinzu"
 
-#: settings/search.py:186
+#: settings/search.py:187
 msgid "Drive openpilot's controls from a joystick"
 msgstr "Steuert openpilot mit einem Joystick"
 
-#: settings/search.py:187
+#: settings/search.py:188
 msgid "Turns off the car's emergency braking"
 msgstr "Schaltet die Notbremsung des Autos ab"
 
-#: settings/search.py:190
+#: settings/search.py:191
 msgid "Networks nearby, and joining one"
 msgstr "Netzwerke in der Nähe und verbinden"
 
-#: settings/search.py:191
+#: settings/search.py:192
 msgid "This device's local address, beside the connected network"
 msgstr "Die lokale Adresse dieses Geräts, neben dem verbundenen Netz"
 
-#: settings/search.py:192
+#: settings/search.py:193
 msgid "Enter its name and password"
 msgstr "Namen und Passwort eingeben"
 
-#: settings/search.py:193
+#: settings/search.py:194
 msgid "Hotspot, data use, roaming and APN"
 msgstr "Hotspot, Datennutzung, Roaming und APN"
 
-#: settings/search.py:195
+#: settings/search.py:196
 msgid "The name phones see when joining this device"
 msgstr "Der Name, den Handys beim Verbinden mit diesem Gerät sehen"
 
-#: settings/search.py:198
+#: settings/search.py:199
 msgid "Roaming, APN and the device's IP address"
 msgstr "Roaming, APN und die IP-Adresse des Geräts"
 
-#: settings/search.py:199
+#: settings/search.py:200
 msgid "A wheel remote's buttons and what they do"
 msgstr "Die Tasten einer Lenkrad-Fernbedienung und ihre Funktionen"
 
-#: settings/search.py:200
+#: settings/search.py:201
 msgid "Car audio for alerts, and pairing devices"
 msgstr "Auto-Audio für Hinweise und Geräte koppeln"
 
-#: settings/search.py:202
+#: settings/search.py:203
 msgid "Updates and the release notes"
 msgstr "Updates und Versionshinweise"
 
-#: settings/search.py:203
+#: settings/search.py:204
 #: settings/software_tab.py:192
 msgid "Automatic Updates"
 msgstr "Automatische Updates"
 
-#: settings/search.py:203
+#: settings/search.py:204
 #: settings/software_tab.py:192
 msgid "Download while parked, install when you turn off the car"
 msgstr "Laden im Parken, installieren beim Ausschalten"
 
-#: settings/search.py:204
+#: settings/search.py:205
 #: settings/software_tab.py:188
 #: settings/software_tab.py:140
 msgid "Release Channel"
 msgstr "Release-Kanal"
 
-#: settings/search.py:204
+#: settings/search.py:205
 #: settings/software_tab.py:140
 msgid "The branch to download updates from"
 msgstr "Der Branch, aus dem Updates geladen werden"
 
-#: settings/search.py:205
+#: settings/search.py:206
 #: settings/software_tab.py:195
 msgid "Reset Settings"
 msgstr "Einstellungen zurücksetzen"
 
-#: settings/search.py:205
+#: settings/search.py:206
 msgid "Back to the Essentials defaults"
 msgstr "Zurück zu den Essentials-Standards"
 
-#: settings/search.py:206
+#: settings/search.py:207
 #: settings/software_tab.py:169
 #: settings/software_tab.py:198
 msgid "Uninstall"
 msgstr "Deinstallieren"
 
-#: settings/search.py:206
+#: settings/search.py:207
 msgid "Remove this software from the device"
 msgstr "Diese Software vom Gerät entfernen"
 
-#: settings/search.py:380
-#: settings/search.py:371
+#: settings/search.py:381
+#: settings/search.py:372
 msgid "Search settings"
 msgstr "Einstellungen durchsuchen"
 
-#: settings/search.py:269
+#: settings/search.py:270
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "Sag eine Einstellung, etwa Tempolimit. Tippe auf das Mikrofon, wenn du fertig bist."
 
-#: settings/search.py:351
-#: settings/search.py:310
+#: settings/search.py:352
+#: settings/search.py:311
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "Keine Einstellung passt zu „{}“"
 
-#: settings/search.py:352
+#: settings/search.py:353
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "Gib den Namen einer Einstellung oder ihre Funktion ein, etwa Helligkeit oder Spurwechsel"
 
@@ -5018,10 +5156,6 @@ msgstr "Audioaufnahme läuft"
 #: sidebar.py:113
 msgid "Checking"
 msgstr "Wird geprüft"
-
-#: sidebar.py:94
-msgid "Error"
-msgstr "Fehler"
 
 #: sidebar.py:143
 msgid "Good"

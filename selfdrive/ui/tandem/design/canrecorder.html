@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>CAN test recorder</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>body{margin:0}button{font:700 19px Figtree,system-ui;border:0;border-radius:14px;color:#F2F5F9;background:#23272E}.panel{background:#16191D;border-radius:22px;overflow:hidden;min-width:0}.header{padding:16px 22px 12px;font-size:20px;font-weight:700}.body{padding:20px 22px;display:flex;flex-direction:column;gap:14px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}.line{display:flex;justify-content:space-between;gap:14px;color:#AEB6C2;font-size:16px}.value{color:#F2F5F9;font-weight:600}.note{font-size:14px;color:#AEB6C2;line-height:1.4}</style></head><body>
+<div style="width:1125px;height:563px;box-sizing:border-box;background:#0A0C0F;color:#F2F5F9;font-family:Figtree,system-ui;display:flex;flex-direction:column;overflow:hidden">
+<div style="flex:1;min-height:0;padding:20px 20px 14px;display:flex;flex-direction:column;gap:14px">
+<div style="height:36px;display:flex;align-items:center;gap:16px;padding:0 6px"><span style="font-size:30px;font-weight:800">CAN test recorder</span><span style="font-size:16px;color:#AEB6C2">Device › Developer</span></div>
+<div style="flex:1;min-height:0;display:grid;grid-template-columns:1.25fr 1fr;gap:14px">
+<div class="panel"><div class="header">Test controls</div><div class="body">
+<div style="font-size:15px;color:#AEB6C2">Tap a marker as you press the car's lock control.</div>
+<div class="pair"><button style="height:56px;color:#6F7785;background:#23272E" disabled>Start logging</button><button style="height:56px">Stop logging</button></div>
+<div class="pair"><button style="height:88px;background:#5AAAF8;color:#0B1A2B;font-size:22px;font-weight:800">Mark lock</button><button style="height:88px;background:#5AAAF8;color:#0B1A2B;font-size:22px;font-weight:800">Mark unlock</button></div>
+<div class="note">Markers only timestamp your taps.</div>
+<div class="note">Stops after 10 minutes or when you leave this screen.</div>
+</div></div>
+<div class="panel"><div class="header" style="display:flex;align-items:center;justify-content:space-between">Test status<span style="background:#182434;color:#7DBBF9;padding:5px 12px;border-radius:10px;font-size:14px">RECORDING</span></div><div class="body" style="gap:10px;padding-top:18px">
+<div class="line" style="font-size:22px"><span>Elapsed</span><span class="value">00:12.034</span></div>
+<div class="line"><span>CAN frames</span><span class="value">21,504</span></div>
+<div class="line"><span>Lock markers</span><span class="value">1</span></div>
+<div class="line"><span>Unlock markers</span><span class="value">1</span></div>
+<div class="note">Last marker: Unlock at 00:10.418</div>
+<div class="note">Log: 20261102T213000Z-a1b2c3</div>
+<div class="note">Full and focused logs stay on this device.</div>
+</div></div>
+</div></div>
+  <nav style="height: 102px; flex-shrink: 0; border-top: 1px solid #1F242B; background: #0E1013; display: flex; align-items: center; gap: 10px; padding: 0 16px;">
+    <a href="hub.html" aria-label="Back" style="width: 74px; height: 74px; flex-shrink: 0; border-radius: 18px; background: #1F2328; display: flex; align-items: center; justify-content: center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F2F5F9" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></a>
+    <div style="flex-grow: 1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px;">
+      <a href="hub.html" style="text-decoration: none; height: 74px; border-radius: 18px; color: #C9D0DA; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Driving</a>
+      <a href="devicetab.html" aria-current="page" style="text-decoration: none; height: 74px; border-radius: 18px; background: #5AAAF8; color: #0B1A2B; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center;">Device</a>
+      <a href="connections.html" style="text-decoration: none; height: 74px; border-radius: 18px; color: #C9D0DA; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Connections</a>
+      <a href="softwaretab.html" style="text-decoration: none; height: 74px; border-radius: 18px; color: #C9D0DA; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Software</a>
+    </div>
+  </nav>
+</div></body></html>

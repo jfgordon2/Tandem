@@ -41,6 +41,7 @@ Open any `.html` file in this folder in a browser. Each screen is 1125×563, the
 | Status chips | [statuschips.html](statuschips.html) |
 | Onroad extras (StarPilot options) | [onroadextras.html](onroadextras.html) |
 | Device tab | [devicetab.html](devicetab.html) |
+| Device › Developer › CAN test recorder | [canrecorder.html](canrecorder.html) |
 | Pair the phone app | [pairing.html](pairing.html) |
 | Driver camera preview | [drivercamera.html](drivercamera.html) |
 | Remote Access (Galaxy) | [remoteaccess.html](remoteaccess.html), set up: [remoteaccessqr.html](remoteaccessqr.html) |
@@ -304,6 +305,7 @@ Values in square brackets are placeholders, not proposed defaults.
 
 ## Remaining screens
 
+- **CAN test recorder**, under Device › Developer with Tuner Mode on: two independently scrolling panels, using the shared settings components. Start and Stop sit above large Mark lock and Mark unlock buttons. The status panel shows elapsed time, received frames, marker counts, the last marker and the session name. Markers describe manual actions; the page never operates the locks. Leaving the page saves the session.
 - **Parked home** shows readiness and the current setup, plus Where to? and update status. Detailed device stats move to Developer View.
 - **First-run setup** asks three questions: driving style, then speed limits, then lane changes. "Use defaults" skips all three.
 - **Driving Model** defaults to the recommended model for the car, which updates automatically. Picking another model means turning Use recommended off. The randomizer and blacklist move to Tuner Mode.

@@ -175,6 +175,17 @@
    "match": false
   },
   {
+   "mock": "canrecorder",
+   "title": "Device › Developer › CAN test recorder",
+   "note": "Matches: shared panels, large manual-action markers, Start/Stop, live counts, elapsed time and session name. Ready and Saved show the button states; additional renders check German, Spanish, Japanese and longer pseudo text. Both panels scroll independently. This is a passive recording, not a door control.",
+   "match": true,
+   "built": [
+    "canrecorder",
+    "canrecorder_ready",
+    "canrecorder_saved"
+   ]
+  },
+  {
    "mock": "pairing",
    "title": "Pair the phone app",
    "note": "Matches: the comma connect steps beside the QR code on a white tile. The code is upstream's, refreshed every 5 minutes.",

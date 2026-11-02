@@ -1,0 +1,255 @@
+"""Receive-only CAN test logs and tap markers. No transmitter or panda configuration APIs live here."""
+from __future__ import annotations
+
+from collections.abc import Callable
+from dataclasses import dataclass, replace
+import datetime
+import gzip
+import json
+from pathlib import Path
+import queue
+import secrets
+import shutil
+import threading
+import time
+
+ACTIVE = {"starting", "recording", "saving"}
+MAX_SECONDS = 600
+MIN_FREE_BYTES = 64 * 1024 * 1024
+CLOCK_ID = getattr(time, "CLOCK_BOOTTIME", time.CLOCK_MONOTONIC)
+CLOCK_NAME = "CLOCK_BOOTTIME" if hasattr(time, "CLOCK_BOOTTIME") else "CLOCK_MONOTONIC"
+GM_FOCUS_EXCLUDED = {
+  0xBE: "ECMAcceleratorPos", 0xD1: "EBCMBrakePedalSensors", 0xF1: "EBCMBrakePedalPosition",
+  0x180: "ASCMLKASteeringCmd", 0x1A1: "AcceleratorPedal", 0x1C4: "AcceleratorPedal2",
+  0x1E5: "PSCMSteeringAngle", 0x2CB: "ASCMGasRegenCmd", 0x348: "EBCMWheelSpdFront", 0x34A: "EBCMWheelSpdRear",
+}
+
+
+def boot_time_ns() -> int:
+  """Match cereal/messaging/messaging.h and common/timing.h, including the macOS fallback."""
+  return time.clock_gettime_ns(CLOCK_ID)
+
+
+@dataclass(frozen=True)
+class RecorderState:
+  phase: str = "idle"
+  session: str = ""
+  started_ns: int = 0
+  ended_ns: int = 0
+  frames: int = 0
+  lock_markers: int = 0
+  unlock_markers: int = 0
+  last_kind: str = ""
+  last_marker_ns: int = 0
+  reason: str = ""
+  power_save: bool | None = None
+
+
+def default_folder() -> Path:
+  from openpilot.system.hardware import PC
+  if PC:
+    from openpilot.system.hardware.hw import Paths
+    return Path(Paths.comma_home()) / "tandem" / "diagnostics" / "can-tests"
+  return Path("/data/tandem/diagnostics/can-tests")
+
+
+class CanSource:
+  """Subscribe to pandad's existing feed; this never opens or reconfigures a panda."""
+
+  def __init__(self):
+    from cereal import messaging
+    from openpilot.common.params import Params
+    from openpilot.starpilot.tandem.bluetooth import ParkMonitor
+    self._messaging = messaging
+    self._params = Params()
+    self._park = ParkMonitor()
+    self._can = messaging.sub_sock("can", timeout=50)
+    self._panda = messaging.sub_sock("pandaStates", conflate=True, timeout=0)
+
+  def allowed(self) -> bool:
+    return self._params.get_bool("IsOffroad") or self._park.allowed()
+
+  def info(self) -> dict:
+    from cereal import car
+    raw = self._params.get("CarParamsPersistent")
+    if raw:
+      with car.CarParams.from_bytes(raw) as cp:
+        return {"fingerprint": cp.carFingerprint, "brand": getattr(cp, "brand", ""), "network_location": str(cp.networkLocation)}
+    return {}
+
+  def poll(self) -> tuple[list[tuple[int, int, int, bytes]], dict | None]:
+    health = self._messaging.recv_one_or_none(self._panda)
+    state = None
+    if health is not None:
+      state = {"time_ns": health.logMonoTime, "pandas": [
+        {"power_save": p.powerSaveEnabled, "safety": str(p.safetyModel), "rx_overflow": p.rxBufferOverflow,
+         "buses": [{"speed": c.canSpeed, "rx_lost": c.totalRxLostCnt} for c in (p.canState0, p.canState1, p.canState2)]}
+        for p in health.pandaStates]}
+    msg = self._messaging.recv_one(self._can)
+    frames = [(msg.logMonoTime, f.src, f.address, bytes(f.dat)) for f in msg.can if f.src < 128] if msg is not None else []
+    return frames, state
+
+
+class CanRecorder:
+  def __init__(self, folder: Path | None = None, source: Callable = CanSource, clock_ns: Callable[[], int] = boot_time_ns,
+               max_seconds: float = MAX_SECONDS):
+    self._folder = folder
+    self._source = source
+    self._clock_ns = clock_ns
+    self._max_seconds = max_seconds
+    self._lock = threading.Lock()
+    self._state = RecorderState()
+    self._thread: threading.Thread | None = None
+    self._stop = threading.Event()
+    self._markers: queue.SimpleQueue = queue.SimpleQueue()
+    self._stop_reason = "user"
+
+  def snapshot(self) -> RecorderState:
+    with self._lock:
+      return self._state
+
+  def _update(self, **values):
+    with self._lock:
+      self._state = replace(self._state, **values)
+
+  def start(self) -> bool:
+    with self._lock:
+      if self._state.phase in ACTIVE or (self._thread is not None and self._thread.is_alive()):
+        return False
+      session = datetime.datetime.now(datetime.UTC).strftime("%Y%m%dT%H%M%SZ-") + secrets.token_hex(3)
+      self._state = RecorderState(phase="starting", session=session, started_ns=self._clock_ns())
+      self._markers = queue.SimpleQueue()
+      self._stop.clear()
+      self._stop_reason = "user"
+      self._thread = threading.Thread(target=self._run, daemon=True, name="tandem-can-recorder")
+      self._thread.start()
+    return True
+
+  def mark(self, kind: str) -> bool:
+    # Capture the tap time here, before the worker or filesystem can delay the event.
+    stamp = self._clock_ns()
+    if kind not in {"lock", "unlock"}:
+      return False
+    with self._lock:
+      if self._state.phase != "recording":
+        return False
+      self._markers.put({"time_ns": stamp, "elapsed_ns": stamp-self._state.started_ns, "event": kind})
+    return True
+
+  def stop(self, reason: str = "user") -> None:
+    with self._lock:
+      if self._state.phase in {"starting", "recording"}:
+        self._stop_reason = reason
+        self._state = replace(self._state, phase="saving")
+        self._stop.set()
+
+  def _run(self):
+    state = self.snapshot()
+    directory = None
+    source = None
+    metadata = {"version": 1, "clock": CLOCK_NAME, "started_ns": state.started_ns, "session": state.session,
+                "passive": True, "status": "starting"}
+
+    def save_metadata():
+      temporary = directory / "metadata.tmp"
+      temporary.write_text(json.dumps(metadata, indent=2) + "\n")
+      temporary.replace(directory / "metadata.json")
+
+    try:
+      root = self._folder if self._folder is not None else default_folder()
+      root.mkdir(parents=True, exist_ok=True)
+      if shutil.disk_usage(root).free < MIN_FREE_BYTES:
+        self._update(phase="error", reason="storage", ended_ns=self._clock_ns())
+        return
+      source = self._source()
+      if not source.allowed():
+        self._update(phase="error", reason="parked", ended_ns=self._clock_ns())
+        return
+      directory = root / state.session
+      directory.mkdir()
+      vehicle = source.info()
+      excluded = GM_FOCUS_EXCLUDED if vehicle.get("brand") == "gm" else {}
+      metadata.update(vehicle=vehicle, status="recording", ready_ns=self._clock_ns(),
+                      focus_excluded_bus=0, focus_excluded={hex(k): v for k, v in excluded.items()})
+      save_metadata()
+      with gzip.open(directory / "can.jsonl.gz", "xt", compresslevel=1) as frames_file, \
+           gzip.open(directory / "focus.jsonl.gz", "xt", compresslevel=1) as focus_file, \
+           (directory / "markers.jsonl").open("x") as markers_file, (directory / "health.jsonl").open("x") as health_file:
+        with self._lock:
+          if not self._stop.is_set():
+            self._state = replace(self._state, phase="recording")
+        frame_count = lock_count = unlock_count = 0
+        last_check = last_flush = self._clock_ns()
+        last_kind, last_marker = "", 0
+        power_save = None
+
+        def drain_markers():
+          nonlocal lock_count, unlock_count, last_kind, last_marker
+          while not self._markers.empty():
+            marker = self._markers.get_nowait()
+            markers_file.write(json.dumps(marker, separators=(",", ":")) + "\n")
+            markers_file.flush()
+            last_kind, last_marker = marker["event"], marker["time_ns"]
+            lock_count += last_kind == "lock"
+            unlock_count += last_kind == "unlock"
+          self._update(lock_markers=lock_count, unlock_markers=unlock_count, last_kind=last_kind, last_marker_ns=last_marker)
+
+        reason = "user"
+        while not self._stop.is_set():
+          drain_markers()
+          batch, health = source.poll()
+          if batch:
+            for t, bus, address, data in batch:
+              line = json.dumps([t, bus, address, data.hex()], separators=(",", ":")) + "\n"
+              frames_file.write(line)
+              if bus != 0 or address not in excluded:
+                focus_file.write(line)
+            frame_count += len(batch)
+          if health is not None:
+            health_file.write(json.dumps(health, separators=(",", ":")) + "\n")
+            power_save = any(p["power_save"] for p in health.get("pandas", []))
+          now = self._clock_ns()
+          self._update(frames=frame_count, power_save=power_save)
+          if now-last_flush >= 1_000_000_000:
+            frames_file.flush()
+            focus_file.flush()
+            health_file.flush()
+            last_flush = now
+          if now-state.started_ns >= self._max_seconds*1e9:
+            reason = "time_limit"
+            break
+          if frame_count >= 1_000_000:
+            reason = "frame_limit"
+            break
+          if now-last_check >= 1_000_000_000:
+            last_check = now
+            if not source.allowed():
+              reason = "parked"
+              break
+            if shutil.disk_usage(root).free < MIN_FREE_BYTES//2:
+              reason = "storage"
+              break
+        with self._lock:
+          self._state = replace(self._state, phase="saving")
+          if self._stop.is_set():
+            reason = self._stop_reason
+        drain_markers()   # preserve every tap accepted before Stop, including taps queued during a CAN read
+      ended = self._clock_ns()
+      final = self.snapshot()
+      metadata.update(status="saved", ended_ns=ended, reason=reason, frames=frame_count,
+                      lock_markers=final.lock_markers, unlock_markers=final.unlock_markers)
+      save_metadata()
+      self._update(phase="saved", reason=reason, ended_ns=ended)
+    except Exception:
+      ended = self._clock_ns()
+      if directory is not None:
+        metadata.update(status="error", ended_ns=ended)
+        try:
+          save_metadata()
+        except OSError:
+          pass
+      self._update(phase="error", reason="write", ended_ns=ended)
+    finally:
+      close = getattr(source, "close", None)
+      if close is not None:
+        close()
