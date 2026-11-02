@@ -41,7 +41,9 @@ def onroad_view() -> Widget:
   if not _enabled("TANDEM_ONROAD"):
     from openpilot.selfdrive.ui.onroad.starpilot.starpilot_onroad_view import StarPilotOnroadView
     return StarPilotOnroadView()
+  from openpilot.selfdrive.ui.tandem.menu_idle import watch
   from openpilot.selfdrive.ui.tandem.onroad.view import EssentialsOnroadView
+  watch()   # an untouched menu while driving goes back to this view after 10 s
   return EssentialsOnroadView()
 
 

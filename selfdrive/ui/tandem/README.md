@@ -102,6 +102,7 @@ After a merge, check what Tandem reads from StarPilot, which can change without 
 - the turn signal renderer's `render()` arguments and `BUNDLED_SIGNAL_PATHS` (`onroad/view.py`, `settings/display.py`);
 - the messages and fields the status chips read (`onroad/status.py`) and the alert names in `onroad/alerts.py`;
 - `RELEASE_BRANCHES` still lists `release`.
+- MainLayout's `_sidebar`, `_current_mode` (by its name, `ONROAD`) and `_set_mode_for_state()`, and gui_app's `_nav_stack`, `pop_widgets_to` and `add_nav_stack_tick`, which `menu_idle.py` reads to leave an idle menu while driving.
 
 ## The settings window
 
@@ -183,6 +184,7 @@ These are reached from a row or button, never as a tab:
   - The preview: the place, what Essentials does on the way, and Favorite / Home / Work toggles, then Start. There is no map or arrival estimate before starting: StarPilot only routes once a destination is set. Renaming a favorite isn't offered.
 - **Home's alerts and update** (`home_alerts.py`, `design/homealerts.html`, `homeupdate.html`): upstream's OffroadAlert and UpdateAlert still read the params and own Snooze update, Acknowledge excessive actuation and Reboot and update; we draw alert cards by severity (with short titles for the alerts we know) and the release notes, and Home no longer shows upstream's header.
 - **Home** (`home.py`): upstream's HomeLayout with new home content: readiness and the current setup, Where to? (`destinations.py`), and the Software card: it opens the release notes when an update is ready, and otherwise Settings › Software (MainLayout opens settings as usual, then `screens.show_settings_tab` moves the window to Software). The home cards use the full content height without the legacy header or its tap targets. Offroad alerts and update details retain upstream's header and navigation.
+- **Idle menu while driving** (`menu_idle.py`): 10 s with no touch on the menu, settings or anything opened from them (a keyboard, Where to?, a dialog) closes them all and goes back to the driving view. Upstream's MainLayout does the same on the screen's interaction timeout, but with screen management on that's `ScreenTimeoutOnroad` (30 s by default), which Standby also waits on, so the menu has its own timer. It runs as a gui_app nav-stack tick and reads MainLayout's state; no upstream edit.
 - **Sidebar** (`sidebar.py`): subclasses upstream's Sidebar, which still tracks device state and owns the callbacks. It has a Settings button and a status card with Network, comma connect, Temperature, Vehicle and Maps, each with a colored dot. Onroad it adds Save a clip (upstream's flag button), and it shows a recording indicator while cabin audio is recorded.
 - **First-run setup** (`setup.py`): three questions, or Use defaults. Either way it applies the Essentials defaults first. Home shows it once, as soon as onboarding has closed; a marker file beside the params folder records that it's done, so no new param key is needed.
 
