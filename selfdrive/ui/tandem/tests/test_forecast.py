@@ -140,6 +140,7 @@ def test_the_weather_chime_is_its_own_switch_on_the_alerts_page(tandem_prefs):
 
 
 @pytest.mark.parametrize("code, name", [(71, "Light snow"), (73, "Snow"), (75, "Heavy snow"), (77, "Fine, icy snow"),
-                                        (85, "Light snow showers"), (86, "Heavy snow"), (61, "Light rain"), (65, "Heavy rain")])
+                                        (85, "Light snow flurries"), (86, "Heavy snow"), (96, "Storm with hail"),
+                                        (99, "Storm with hail"), (61, "Light rain"), (65, "Heavy rain")])
 def test_snow_and_rain_are_named_by_strength(code, name):
   assert F.HAZARDS[code][0] == name

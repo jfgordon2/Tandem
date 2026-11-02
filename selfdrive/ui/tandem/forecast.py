@@ -40,8 +40,8 @@ HAZARDS: dict[int, tuple[str, str]] = {
   66: ("Freezing rain", "snow"), 67: ("Freezing rain", "snow"),
   71: ("Light snow", "snow"), 73: ("Snow", "snow"), 75: ("Heavy snow", "snow"), 77: ("Fine, icy snow", "snow"),
   80: ("Light rain", "rain"), 81: ("Rain showers", "rain"), 82: ("Heavy rain", "storm"),
-  85: ("Light snow showers", "snow"), 86: ("Heavy snow", "snow"),
-  95: ("Thunderstorm", "storm"), 96: ("Thunderstorm with hail", "storm"), 99: ("Thunderstorm with hail", "storm"),
+  85: ("Light snow flurries", "snow"), 86: ("Heavy snow", "snow"),
+  95: ("Thunderstorm", "storm"), 96: ("Storm with hail", "storm"), 99: ("Storm with hail", "storm"),
 }
 
 
