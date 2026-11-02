@@ -39,7 +39,13 @@
   {
    "mock": "drivingnav",
    "title": "Speed & Steering › Navigation",
-   "note": "Matches, with the mock's row icons. Set and Change open StarPilot's destination search.",
+   "note": "Matches, with the mock's row icons. Set and Change open StarPilot's destination search. Adds the Mapbox Key row: Added, or Not added with How to add.",
+   "match": true
+  },
+  {
+   "mock": "mapboxkey",
+   "title": "Mapbox key help",
+   "note": "Matches: four steps from an account to pasting the keys in Galaxy, with the token's scopes. Opens from Navigation's Mapbox Key row; Where to? points here when there's no key.",
    "match": true
   },
   {

@@ -89,4 +89,12 @@ def test_preview_star_saves_and_start_follows_routing():
   assert closed and places.active() is not None
   screen, places, _ = _screen(routing=False)
   screen._pick(places.recents()[0])
-  assert not screen._start_button.enabled and places.route() == (None, "Routing isn't set up on this device")
+  assert not screen._start_button.enabled and places.route() == (None, "Routes need a Mapbox key: see Settings › Driving › Speed & Steering › Navigation")
+
+
+def test_mapbox_key_check_and_help_steps():
+  from openpilot.selfdrive.ui.tandem.mapbox_help import STEPS, has_key
+  assert not has_key(lambda key: "") and not has_key(lambda key: b"  ") and not has_key(lambda key: None)
+  assert has_key(lambda key: "sk.abc" if key == "MapboxSecretKey" else "")
+  text = " ".join(line for _, line in STEPS)
+  assert "DOWNLOADS:READ" in text and "sk." in text and "Mapbox Keys" in text and "Remote Access" in text

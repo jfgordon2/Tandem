@@ -513,7 +513,10 @@ class DestinationsScreen(Component):
     field, strip = column(body, [T.px(56), FILL], T.px(8))
     self._render_field(field)
     status = self._places.status() if self._searched else None
-    if status is not None or not self._places.results():
+    if not self._places.can_start():   # no Mapbox key: search would quietly find nothing
+      draw.text(inset(strip, left=T.px(6)), "Search needs a Mapbox key · see Settings › Driving › Speed & Steering › Navigation",
+                T.font_px(15), T.WARNING)
+    elif status is not None or not self._places.results():
       title, line = status or ("Type a place or address", f"Results show as you type, from {MIN_QUERY} letters")
       draw.text(inset(strip, left=T.px(6)), f"{title} · {line}", T.font_px(15), T.TEXT_TERTIARY)
     else:

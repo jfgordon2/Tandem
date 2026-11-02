@@ -28,6 +28,7 @@ def _apply(store: SettingsStore, boot_logos=None) -> None:
   speed.set_higher_limits(1)              # Tap to confirm
   speed.set_lower_limits(0)               # Update automatically
   speed.set_max_follows(True)
+  store.write({"SLCMapboxFiller": True})   # Mapbox fills in limits the maps don't have (with a key)
   speed.set_lane_changes(0)               # Nudge
   speed.set_smart_slowdowns(True)
   speed.set_always_on_steering(True)

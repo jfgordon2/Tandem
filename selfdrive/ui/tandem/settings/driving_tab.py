@@ -68,6 +68,10 @@ def driving_hub(window) -> Widget:
     from openpilot.selfdrive.ui.tandem.destinations import destinations_screen
     gui_app.push_widget(destinations_screen(gui_app.pop_widget, lambda: (gui_app.pop_widget(), open_maps())))
 
+  def open_mapbox_help() -> None:
+    from openpilot.selfdrive.ui.tandem.mapbox_help import mapbox_key_sheet
+    window.present(mapbox_key_sheet(window.dismiss))
+
   def tuner() -> bool:
     return TUNER_MODE.is_on(store)
 
@@ -89,7 +93,7 @@ def driving_hub(window) -> Widget:
       Section("Everyday", lambda: everyday_panel(speed)),
       Section("Vehicle Profile", lambda: vehicle_profile_panel(profile), value=profile.summary),
       Section("Weather", lambda: weather_panel(weather), value=weather.summary),
-      Section("Navigation", lambda: navigation_panel(navigation, open_destinations, open_maps)),
+      Section("Navigation", lambda: navigation_panel(navigation, open_destinations, open_maps, open_mapbox_help)),
     ], footer=[tuner_button])
 
   def assistance_page() -> Widget:
