@@ -50,6 +50,11 @@ StarPilot continues to provide the driving logic, vehicle integrations, and unde
 | [![Voice typing listening for a destination, with a level meter and a Type instead button](selfdrive/ui/tandem/assets/screenshots/voice.png)](selfdrive/ui/tandem/assets/screenshots/voice.png) | [![Help steer warning while the steering arc is at its limit in a curve](selfdrive/ui/tandem/assets/screenshots/helpsteer.png)](selfdrive/ui/tandem/assets/screenshots/helpsteer.png) |
 | Speak a place or a setting while parked; it's transcribed on the device. | A gentle warning before steering runs out in a curve. |
 
+| Turn-by-turn directions | Developer View |
+| --- | --- |
+| [![Navigating with a next-turn card, arrival time, time and distance left, and End route in the bar](selfdrive/ui/tandem/assets/screenshots/navigation.png)](selfdrive/ui/tandem/assets/screenshots/navigation.png) | [![Developer View with lead, device, and controls metrics beside the road, a metrics strip above the bar, and the lead car's distance tag](selfdrive/ui/tandem/assets/screenshots/developer.png)](selfdrive/ui/tandem/assets/screenshots/developer.png) |
+| The next turn, arrival, and time left, with End route a tap away. | The lead car, device, and controls in numbers, behind one switch. |
+
 ## Using Tandem
 
 In general, it would be inappropriate to use this fork over StarPilot directly.  Knowning that, if you want to try it anyway,

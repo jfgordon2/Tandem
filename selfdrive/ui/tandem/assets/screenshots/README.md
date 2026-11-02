@@ -13,6 +13,8 @@ The driving screen uses a schematic road instead of a camera recording.
 | `destinations.png` | `destinations.png` | `scene_destinations.py` |
 | `voice.png` | `voicelistening.png` | `scene_destinations.py` |
 | `helpsteer.png` | `onroad_helpsteer.png` | `scene_onroad.py` |
+| `navigation.png` | `onroad_nav.png` | `scene_onroad.py` |
+| `developer.png` | `onroaddev.png` | `scene_dev.py` |
 
 To refresh them, use the built-screen rendering instructions in the root
 [AGENTS.md](../../../../../AGENTS.md), then copy the selected render outputs here with the

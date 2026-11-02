@@ -10,7 +10,7 @@ from openpilot.selfdrive.ui.tandem.onroad.layers import (DEV_ARC, ArcState, BarS
 
 def main(frame, save, out, tap, gui_app):
   rect = rl.Rectangle(15, 15, 2160 - WIDTH - 30, 1050)
-  bar = OnroadBar(lambda: BarState(True, True, 63, "mph", "[Current street name]"), lambda: None, lambda d: None, lambda: None, lambda: None)
+  bar = OnroadBar(lambda: BarState(True, True, 63, "mph", "SE Hawthorne Blvd"), lambda: None, lambda d: None, lambda: None, lambda: None)
   lead = Lead("38 m", "1.4 s", "−2 mph", True, "radar")
   data = DevData(lead, 0.38, "61°C", 0.22, 0.52, "3.1 GB", "20", "idle", "map", "3.6 / 3.5 m", "+0.42", "+0.38", "0.6", "0.9 m/s²", "0.18 s")
 
