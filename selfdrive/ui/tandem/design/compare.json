@@ -383,7 +383,7 @@
   {
    "mock": "voicedownload",
    "title": "Voice typing: first use",
-   "note": "Matches: the one-time model download with its progress; listening starts when it's done.",
+   "note": "Matches layout. Setup text also covers preparing the native voice engine; the mock only names the model download.",
    "match": true
   },
   {

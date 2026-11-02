@@ -17,6 +17,7 @@ from openpilot.selfdrive.ui.tandem import keyboard as K, speech, voice
 @pytest.fixture(autouse=True)
 def speech_cache(tmp_path, monkeypatch):
   monkeypatch.setenv("TANDEM_SPEECH_DIR", str(tmp_path))
+  monkeypatch.setenv("TANDEM_SPEECH_BACKEND", "tinygrad")
 
 
 # ---- speech.py ----

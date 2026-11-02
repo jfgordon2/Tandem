@@ -15,6 +15,7 @@ Tandem 2026.11.01
 * Where to?: destination search, favorites and a route preview with arrival time
 * Voice typing while parked: tap the mic and say a place, a setting or any text but a password
 * Voice typing: fixed a speech-decoder failure on the comma 3X
+* Faster voice typing while parked, with an offline CPU speech engine
 * First-run setup: three questions, or Essentials defaults
 * Automatic crash and diagnostics reports are off; reports you send are kept
 

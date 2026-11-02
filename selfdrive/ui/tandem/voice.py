@@ -3,7 +3,7 @@
 VoiceTyping runs speech.py as its own process and follows what it prints; VoicePanel draws that in place of the keys.
 The words land in the field for editing; nothing is sent or searched until the person presses the action key.
 
-Voice typing is offered only while parked: the speech model runs on the same GPU as the driving model.
+Voice typing is offered only while parked. Its native runner uses the CPU; the diagnostic tinygrad fallback uses the GPU.
 """
 from __future__ import annotations
 
@@ -182,7 +182,7 @@ class VoicePanel(Component):
   def words(self) -> tuple[str, str]:
     s = self.session
     if s.state == "download":
-      return "Getting voice typing ready", "A one-time download of the speech model (75 MB). It stays on this device."
+      return "Getting voice typing ready", "One-time setup for the speech model and voice engine. Everything stays on this device."
     if s.state == "transcribing":
       return "Writing it down", "This takes a few seconds. You can edit the words after."
     if s.state == "message":

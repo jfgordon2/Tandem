@@ -1,4 +1,4 @@
-"""On-device speech to text for the keyboard's mic key: Whisper tiny.en on tinygrad.
+"""On-device speech to text for the keyboard's mic key: Whisper tiny.en.
 
 It runs as its own process (python3 speech.py, by path: the package would load raylib), so the UI never loads tinygrad or opens the
 microphone itself, and the UI keeps drawing while it works. voice.py starts it and reads what it prints, one JSON object a
@@ -15,7 +15,8 @@ line:
 street ordinals (address_text). A line "stop" on its stdin ends listening early. Listening also ends after a pause once someone has spoken, after
 NO_SPEECH_S of quiet, or at MAX_S. The model loads while the person speaks.
 
-The model is the network from tinygrad's examples/whisper.py (MIT, after openai/whisper), kept here because release
+The comma uses whisper.cpp's native CPU runner (speech_native.py); tinygrad remains available with
+TANDEM_SPEECH_BACKEND=tinygrad. The fallback model is from tinygrad's examples/whisper.py (MIT, after openai/whisper), kept here because release
 builds don't ship tinygrad's examples. The spectrogram and the word list need neither librosa nor tiktoken.
 """
 from __future__ import annotations
@@ -82,8 +83,21 @@ def model_dir() -> Path:
   return Path("/data/tandem/speech") if Path("/data").is_dir() and os.access("/data", os.W_OK) else Path.home() / ".comma/tandem/speech"
 
 
+def native_backend():
+  """The native CPU runner on the comma; keep tinygrad available for diagnostics and PC previews."""
+  if os.environ.get("TANDEM_SPEECH_BACKEND", "native" if Path("/TICI").is_file() else "tinygrad") != "native":
+    return None
+  if __package__:
+    from openpilot.selfdrive.ui.tandem import speech_native
+  else:
+    import speech_native
+  return speech_native
+
+
 def model_ready(folder: Path | None = None) -> bool:
   folder = folder or model_dir()
+  if native := native_backend():
+    return native.ready(folder)
   return (folder / "tiny.en.pt").is_file() and (folder / "gpt2.tiktoken").is_file()
 
 
@@ -334,12 +348,17 @@ def build_model(state):
 
 
 def load(folder: Path):
+  if native := native_backend():
+    return native.NativeWhisper(folder), None
   from tinygrad.nn.state import torch_load
   return build_model(torch_load(str(folder / "tiny.en.pt"))), Vocab(folder / "gpt2.tiktoken")
 
 
 def transcribe(model, vocab: Vocab, samples: np.ndarray, max_tokens: int = 64, style: str = "text") -> str:
   """style "address" primes Whisper with ADDRESS_PROMPT and tidies the result with address_text()."""
+  if native_backend() is not None:
+    text = clean(model.transcribe(samples, style))
+    return address_text(text) if style == "address" else text
   from tinygrad import Tensor, dtypes
   audio = model.encoder(Tensor(log_mel(samples)))
   prompt = [vocab.start_of_prev, *ADDRESS_PROMPT] if style == "address" else []
@@ -388,6 +407,9 @@ def fetch_model(folder: Path) -> None:
       say(state="download", progress=round(share, 3))
 
   say(state="download", progress=0.0)
+  if native := native_backend():
+    native.prepare(folder, download, report)
+    return
   if not (folder / "gpt2.tiktoken").is_file():
     download(VOCAB_URL, folder / "gpt2.tiktoken", lambda p: None)
   if not (folder / "tiny.en.pt").is_file():
@@ -468,6 +490,7 @@ def main(style: str = "text") -> int:
     say(error="no_speech")
     return 0
   say(state="transcribing")
+  started = time.monotonic()
   loader.join()
   if "error" in loaded:
     report_error("failed", loaded["error"])
@@ -477,12 +500,17 @@ def main(style: str = "text") -> int:
   except Exception as e:
     report_error("failed", e)
     return 1
+  print(f"Speech transcription: {time.monotonic() - started:.3f} s", file=sys.stderr, flush=True)
   say(text=text) if text else say(error="no_speech")
   return 0
 
 
 if __name__ == "__main__":
   t0 = time.monotonic()
+  if sys.argv[1:2] == ["--prepare"]:
+    if not model_ready():
+      fetch_model(model_dir())
+    sys.exit(0)
   if len(sys.argv) > 1 and sys.argv[1] == "--file":       # for testing: transcribe a 16 kHz mono float32 .npy file
     folder = model_dir()
     if not model_ready(folder):
