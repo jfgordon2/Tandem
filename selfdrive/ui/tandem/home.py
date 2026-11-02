@@ -40,23 +40,54 @@ def readiness(state: HomeState) -> tuple[str, str, rl.Color]:
 
 
 class Hero(Component):
+  """Readiness and the current setup; with a forecast (forecast.outlook), the next 12 hours along the bottom
+  (design/homeweather.html)."""
   grow_touch_target = False
 
-  def __init__(self, state: Callable[[], HomeState], on_alerts: Callable[[], None]):
+  def __init__(self, state: Callable[[], HomeState], on_alerts: Callable[[], None], forecast: Callable[[], object] = lambda: None):
     super().__init__()
     self._state = state
+    self._forecast = forecast
     self.set_click_callback(lambda: on_alerts() if self._state().alerts else None)
 
   def _render(self, rect: rl.Rectangle):
     draw.fill(rect, T.SURFACE_2, T.RADIUS_PANEL)
     caption, headline, ink = readiness(self._state())
+    outlook = self._forecast()
     body = inset(rect, x=T.px(28))
     lines = [draw.line_height(T.font_px(15)), draw.line_height(T.font_px(38)), draw.line_height(T.font_px(18))]
+    if outlook is not None:
+      body = inset(rect, left=T.px(28), right=T.px(24), top=T.px(28), bottom=T.px(20))
+      top, strip = column(body, [sum(lines) + T.px(20), FILL])
+      self._render_outlook(strip, outlook)
+      body = top
     cap, title, setup = column(place(body, body.width, sum(lines) + T.px(20)), lines, T.px(10))
     # The mock's status label is a size up from other captions.
     draw.text(cap, caption.upper(), T.font_px(15), ink, T.FONT_BOLD, tracking=T.CAPTION_TRACKING)
     draw.text(title, headline, T.font_px(38), T.TEXT, T.FONT_EXTRABOLD)
     draw.text(setup, self._state().setup, T.font_px(18), T.TEXT_TERTIARY)
+
+  @staticmethod
+  def _render_outlook(rect: rl.Rectangle, outlook) -> None:
+    """The line that matters, when it was updated, then a tile an hour; hours with rain or snow tinted as the chips are."""
+    t_size, temp_size = T.font_px(13), T.font_px(15)
+    tile_h = T.px(8) * 2 + draw.line_height(t_size) + T.px(4) + T.px(22) + T.px(4) + draw.line_height(temp_size)
+    head_h = T.px(24)
+    block = place(rect, rect.width, head_h + T.px(12) + tile_h, v=Align.END)
+    head, _, tiles = column(block, [head_h, T.px(12), tile_h])
+    ink = T.ACCENT_TEXT if outlook.hazard else T.TEXT_TERTIARY
+    icon, words = row(head, [T.px(22), FILL], T.px(10))
+    draw.icon(icon, outlook.icon, ink, T.px(22))
+    draw.text(words, outlook.summary, T.font_px(18), T._hex("DCEBFF") if outlook.hazard else T.TEXT, T.FONT_BOLD)
+    draw.text(head, f"Forecast · updated {outlook.updated}", T.font_px(13), T.TEXT_MUTED, T.FONT, Align.END)
+    for tile, cell in zip(outlook.tiles, row(tiles, [FILL] * len(outlook.tiles), T.px(6)), strict=True):
+      draw.fill(cell, T.ACCENT_SURFACE if tile.hazard else T._hex("1E2227"), T.px(14))
+      inner = inset(cell, y=T.px(8))
+      when, _, glyph, _, temp = column(inner, [draw.line_height(t_size), T.px(4), T.px(22), T.px(4), draw.line_height(temp_size)])
+      draw.text(when, tile.time, t_size, T._hex("DCEBFF") if tile.hazard else T.TEXT_TERTIARY,
+                T.FONT_BOLD if tile.hazard else T.FONT_MEDIUM, Align.CENTER)
+      draw.icon(glyph, tile.icon, T.ACCENT_TEXT if tile.hazard else T.TEXT_SECONDARY, T.px(22))
+      draw.text(temp, f"{tile.temp}°", temp_size, T.TEXT, T.FONT_BOLD, Align.CENTER)
 
 
 def short_version(description) -> str:
@@ -104,11 +135,11 @@ class HomeContent(Component):
   grow_touch_target = False
 
   def __init__(self, state: Callable[[], HomeState], on_alerts: Callable[[], None], on_where_to: Callable[[], None],
-               on_notes: Callable[[], None], on_software: Callable[[], None] = lambda: None):
+               on_notes: Callable[[], None], on_software: Callable[[], None] = lambda: None, forecast: Callable[[], object] = lambda: None):
     """The update card opens the release notes when an update is ready, else Settings › Software (on_software)."""
     super().__init__()
     self._state = state
-    self._hero = self._child(Hero(state, on_alerts))
+    self._hero = self._child(Hero(state, on_alerts, forecast))
     self._where = self._child(Card("navigate", lambda: "Where to?", lambda: "Home · Work · Recent", on_where_to))
     notes = Button("Notes", on_notes)
     notes.set_visible(lambda: state().update_ready)
@@ -140,7 +171,7 @@ def essentials_home():
       self._speed = SpeedSteering(SettingsStore())
       self._setup_checked = False
       self._content = HomeContent(self._state, lambda: self._set_state(HomeLayoutState.ALERTS), self._where_to,
-                                  lambda: self._set_state(HomeLayoutState.UPDATE), self._open_software)
+                                  lambda: self._set_state(HomeLayoutState.UPDATE), self._open_software, self._outlook)
       home = lambda: self._set_state(HomeLayoutState.HOME)  # noqa: E731
       self._alerts_view = AlertsView(self._home_alerts, home, self._alert_action)
       self._update_view = UpdateView(self._new_version, lambda: notes_text(self.update_alert.release_notes), home,
@@ -184,6 +215,16 @@ def essentials_home():
       return HomeState(alerts=self.alert_count, ignition=bool(ui_state.ignition), setup=setup_line(speed),
                        update_ready=self.update_available,
                        version=short_version(ui_state.ui_params.get("UpdaterCurrentDescription")))
+
+    def _outlook(self):
+      """The next 12 hours (forecast.py), sharing the drive screen's forecast; none while Weather heads-up is off."""
+      from openpilot.selfdrive.ui.tandem.forecast import outlook, shared_service, wall_clock
+      from openpilot.selfdrive.ui.tandem.prefs import WEATHER_HEADS_UP
+      service = shared_service()
+      service.tick()   # parked, it refreshes too (from the last GPS fix, once the car has had one since starting)
+      if not WEATHER_HEADS_UP.get():
+        return None
+      return outlook(service.forecast, wall_clock(), bool(ui_state.is_metric))
 
     def _render_home_content(self):
       if not self._setup_checked:   # first-run setup, as soon as onboarding has closed

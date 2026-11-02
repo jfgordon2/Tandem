@@ -42,8 +42,8 @@ from openpilot.selfdrive.ui.tandem.onroad.layers import (AT_LIMIT, BAR_HEIGHT, B
 from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, LimitWatch, chips_for, snapshot
 from openpilot.selfdrive.ui.tandem.onroad.limits import LimitFollower, LimitOfferState, OfferChime
 from openpilot.selfdrive.ui.tandem.onroad.lead import GapTracker, detailed_tag_on, lead_anchor, read_lead_sample
-from openpilot.selfdrive.ui.tandem.forecast import Announcer, ForecastService, heads_up, last_position, wall_clock
-from openpilot.selfdrive.ui.tandem.prefs import MAX_FOLLOWS_LIMIT, WEATHER_CHIME, WEATHER_HEADS_UP, prefs_dir
+from openpilot.selfdrive.ui.tandem.forecast import Announcer, heads_up, shared_service, wall_clock
+from openpilot.selfdrive.ui.tandem.prefs import MAX_FOLLOWS_LIMIT, WEATHER_CHIME, WEATHER_HEADS_UP
 
 CONFIRM_TIMEOUT = 30.0      # StarPilot rejects an unanswered higher limit after 30 s
 PREVIEW_SECONDS = 2.5
@@ -156,8 +156,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
     self._memory = Params(memory=True)
     self._memory.put_nonblocking("SteeringHeadroomWarning", 0.0)
     self._chips = ChipStack()
-    self._forecast = ForecastService(prefs_dir() / ".tandem_forecast.json", lambda: last_position(lambda: self._memory.get("LastGPSPosition")),
-                                     WEATHER_HEADS_UP.get)
+    self._forecast = shared_service()   # the parked screen shows the same forecast
     self._announcer = Announcer()
     self._limits = LimitWatch()
     self._chip_list: list = []   # (chip, opacity), nearest the bar first

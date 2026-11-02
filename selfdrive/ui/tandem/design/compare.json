@@ -327,6 +327,18 @@
    "built": "sidebar_home"
   },
   {
+   "mock": "homeweather",
+   "title": "Parked home: weather coming",
+   "note": "Matches: the next 12 hours under Ready, the coming snow named with when it starts and stops, its hours tinted as the chips are. The same forecast as Weather heads-up.",
+   "match": true
+  },
+  {
+   "mock": "homeweatherdry",
+   "title": "Parked home: dry weather",
+   "note": "Matches: Open-Meteo's sky in plain words (Sunny, Mostly sunny, Partly cloudy, Cloudy; Clear at night), from the most hours. Hidden without a forecast or with Weather heads-up off.",
+   "match": true
+  },
+  {
    "mock": "homealerts",
    "title": "Home: alerts",
    "note": "Matches: alert cards by severity with short titles, and StarPilot's one action (here Snooze update).",

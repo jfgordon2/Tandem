@@ -9,8 +9,9 @@ T0 = 1_700_000_000 - 1_700_000_000 % 900       # a quarter-hour boundary
 CLEAR, LIGHT_RAIN, SNOW, STORM = 0, 61, 73, 95
 
 
-def _forecast(codes, offset=0, fetched_at=T0, lat=41.6, lon=-93.6):
-  return F.Forecast([(T0 + i * 900, c) for i, c in enumerate(codes)], 900, fetched_at, lat, lon, offset)
+def _forecast(codes, offset=0, fetched_at=T0, lat=41.6, lon=-93.6, hours=None):
+  hours = hours if hours is not None else [(T0 + h * 3600, CLEAR, 15.0, True) for h in range(24)]
+  return F.Forecast([(T0 + i * 900, c) for i, c in enumerate(codes)], 900, fetched_at, lat, lon, offset, hours)
 
 
 def test_parse_prefers_15_minute_steps_and_falls_back_to_hourly():
@@ -30,6 +31,7 @@ def test_fetch_at_most_hourly_unless_the_car_moved_20_miles():
   assert F.needs_fetch(fc, T0 + 3600, 41.6, -93.6)
   assert not F.needs_fetch(fc, T0 + 60, 41.6 + 0.25, -93.6)       # about 17 miles north
   assert F.needs_fetch(fc, T0 + 60, 41.6 + 0.35, -93.6)           # about 24 miles
+  assert F.needs_fetch(_forecast([CLEAR], hours=[]), T0 + 60, 41.6, -93.6)   # stored before hours were kept
 
 
 def test_light_rain_is_named_and_says_when_it_stops():
@@ -85,7 +87,8 @@ def test_service_fetches_when_due_stores_it_and_backs_off(tmp_path, monkeypatch)
 
   def fetch(lat, lon):
     calls.append((lat, lon))
-    return {"minutely_15": {"time": [T0], "weather_code": [SNOW]}} if len(calls) > 1 else None
+    return {"minutely_15": {"time": [T0], "weather_code": [SNOW]},
+            "hourly": {"time": [T0], "weather_code": [SNOW], "temperature_2m": [-1.0], "is_day": [1]}} if len(calls) > 1 else None
   store = tmp_path / "forecast.json"
   svc = F.ForecastService(store, lambda: (41.6, -93.6), lambda: True, fetch, lambda: now[0])
   svc.tick()
@@ -144,3 +147,53 @@ def test_the_weather_chime_is_its_own_switch_on_the_alerts_page(tandem_prefs):
                                         (99, "Storm with hail"), (61, "Light rain"), (65, "Heavy rain")])
 def test_snow_and_rain_are_named_by_strength(code, name):
   assert F.HAZARDS[code][0] == name
+
+
+def _hours(spec, start=T0 + 3600):
+  """(code, °C, daytime) per hour from the next hour on."""
+  return [(start + i * 3600, code, temp, day) for i, (code, temp, day) in enumerate(spec)]
+
+
+def test_parse_keeps_hours_with_temperature_and_daylight():
+  data = {"minutely_15": {"time": [T0], "weather_code": [0]},
+          "hourly": {"time": [T0, T0 + 3600], "weather_code": [0, 2], "temperature_2m": [20.0, 18.5], "is_day": [1, 0]}}
+  assert F.parse(data, T0, 1.0, 2.0).hours == [(T0, 0, 20.0, True), (T0 + 3600, 2, 18.5, False)]
+
+
+def test_outlook_names_the_coming_snow_and_tints_its_hours():
+  hours = _hours([(3, 1.0, True)] * 3 + [(SNOW, -1.0, True)] * 3 + [(3, -2.0, False)] * 8)
+  codes = [CLEAR] * 4 + [CLEAR] * 7 + [SNOW] * 11 + [CLEAR] * 10   # snow from T0 + 11 steps for 11 steps
+  look = F.outlook(_forecast(codes, hours=hours), T0 + 600, metric=False)
+  assert look.hazard and look.icon == "snow" and len(look.tiles) == 12
+  assert look.summary == f"Snow from {F.clock(T0 + 11 * 900, 0)} to {F.clock(T0 + 22 * 900, 0)}"
+  assert [t.hazard for t in look.tiles[:6]] == [False] * 3 + [True] * 3
+  assert look.tiles[0].temp == 34 and look.tiles[0].time == F.hour_label(T0 + 3600, 0)   # °F
+
+
+def test_outlook_says_until_when_it_is_already_falling_and_uses_celsius_when_metric():
+  look = F.outlook(_forecast([LIGHT_RAIN] * 3 + [CLEAR] * 60, hours=_hours([(61, 9.6, True)] * 12)), T0 + 100, metric=True)
+  assert look.summary == f"Light rain until {F.clock(T0 + 2700, 0)}" and look.tiles[0].temp == 10
+
+
+def test_a_dry_outlook_reads_like_the_sky():
+  sunny = _hours([(1, 20.0, True)] * 7 + [(0, 15.0, False)] * 3 + [(2, 14.0, False)] * 2)
+  look = F.outlook(_forecast([CLEAR] * 60, hours=sunny), T0 + 100, metric=True)
+  assert not look.hazard and look.summary == "Mostly sunny" and look.icon == "sun"
+  night = _hours([(0, 5.0, False)] * 12)
+  assert F.outlook(_forecast([CLEAR] * 60, hours=night), T0 + 100, metric=True).summary == "Clear"
+  cloudy = _hours([(3, 5.0, True)] * 6 + [(2, 5.0, True)] * 6)          # a tie goes to the cloudier
+  assert F.outlook(_forecast([CLEAR] * 60, hours=cloudy), T0 + 100, metric=True).summary == "Cloudy"
+  assert [t.icon for t in F.outlook(_forecast([CLEAR] * 60, hours=sunny), T0 + 100, True).tiles][6:9] == ["sun", "moon", "moon"]
+
+
+def test_no_outlook_without_enough_forecast_ahead():
+  assert F.outlook(None, T0, True) is None
+  assert F.outlook(_forecast([CLEAR], hours=_hours([(0, 5.0, True)] * 2)), T0, True) is None
+
+
+def test_the_parked_screen_hands_its_forecast_to_the_ready_card():
+  from openpilot.selfdrive.ui.tandem.home import HomeContent, HomeState
+  look = F.Outlook("Mostly sunny", "sun", False, "2:10 PM", [F.HourTile("3 PM", "sun", 68, False)] * 12)
+  home = HomeContent(lambda: HomeState(), lambda: None, lambda: None, lambda: None, forecast=lambda: look)
+  assert home._hero._forecast() is look
+  assert HomeContent(lambda: HomeState(), lambda: None, lambda: None, lambda: None)._hero._forecast() is None   # no strip

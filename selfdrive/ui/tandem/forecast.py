@@ -45,6 +45,11 @@ HAZARDS: dict[int, tuple[str, str]] = {
 }
 
 
+# The sky when nothing's falling (WMO 0-3), by day and by night: the parked screen's outlook line.
+SKY: dict[int, tuple[str, str]] = {0: ("Sunny", "Clear"), 1: ("Mostly sunny", "Mostly clear"), 2: ("Partly cloudy", "Partly cloudy"),
+                                   3: ("Cloudy", "Cloudy")}
+
+
 @dataclass
 class Forecast:
   steps: list[tuple[int, int]]      # (unix start, WMO code), in order
@@ -53,25 +58,32 @@ class Forecast:
   lat: float
   lon: float
   utc_offset: int = 0               # the place's local time, for "until 8:15 PM"
+  hours: list[tuple[int, int, float, bool]] = field(default_factory=list)   # (unix hour, WMO code, °C, daytime): the parked screen
 
   def to_json(self) -> dict:
     return {"steps": self.steps, "step_s": self.step_s, "fetched_at": self.fetched_at, "lat": self.lat, "lon": self.lon,
-            "utc_offset": self.utc_offset}
+            "utc_offset": self.utc_offset, "hours": self.hours}
 
   @staticmethod
   def from_json(data: dict) -> Forecast:
     return Forecast([(int(t), int(c)) for t, c in data["steps"]], int(data["step_s"]), float(data["fetched_at"]),
-                    float(data["lat"]), float(data["lon"]), int(data.get("utc_offset", 0)))
+                    float(data["lat"]), float(data["lon"]), int(data.get("utc_offset", 0)),
+                    [(int(t), int(c), float(temp), bool(day)) for t, c, temp, day in data.get("hours", [])])
 
 
 def parse(data: dict, fetched_at: float, lat: float, lon: float) -> Forecast | None:
-  """Open-Meteo's answer (timeformat=unixtime): the 15-minute steps, or the hourly ones where those are missing."""
+  """Open-Meteo's answer (timeformat=unixtime): the 15-minute steps, or the hourly ones where those are missing; and the
+  hours with their temperature and whether it's day."""
+  hourly = data.get("hourly") or {}
+  hours = [(int(t), int(c), float(temp), bool(day)) for t, c, temp, day in
+           zip(hourly.get("time") or [], hourly.get("weather_code") or [], hourly.get("temperature_2m") or [],
+               hourly.get("is_day") or [], strict=False) if None not in (t, c, temp, day)]
   for key, step_s in (("minutely_15", 900), ("hourly", 3600)):
     block = data.get(key) or {}
     times, codes = block.get("time") or [], block.get("weather_code") or []
     steps = [(int(t), int(c)) for t, c in zip(times, codes, strict=False) if t is not None and c is not None]
     if steps:
-      return Forecast(steps, step_s, fetched_at, lat, lon, int(data.get("utc_offset_seconds") or 0))
+      return Forecast(steps, step_s, fetched_at, lat, lon, int(data.get("utc_offset_seconds") or 0), hours)
   return None
 
 
@@ -87,9 +99,15 @@ def distance_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
 
 
 def needs_fetch(forecast: Forecast | None, now: float, lat: float, lon: float) -> bool:
-  if forecast is None:
+  if forecast is None or not forecast.hours:   # none yet, or stored before the hours were kept
     return True
   return now - forecast.fetched_at >= REFRESH_S or distance_km(forecast.lat, forecast.lon, lat, lon) > MOVED_KM
+
+
+def hour_label(ts: float, utc_offset: int) -> str:
+  """3 PM."""
+  hour = time.gmtime(ts + utc_offset).tm_hour
+  return f"{hour % 12 or 12} {'AM' if hour < 12 else 'PM'}"
 
 
 def clock(ts: float, utc_offset: int) -> str:
@@ -205,7 +223,8 @@ class ForecastService:
 
 
 def fetch_open_meteo(lat: float, lon: float) -> dict | None:
-  params = {"latitude": f"{lat:.3f}", "longitude": f"{lon:.3f}", "minutely_15": "weather_code", "hourly": "weather_code",
+  params = {"latitude": f"{lat:.3f}", "longitude": f"{lon:.3f}", "minutely_15": "weather_code",
+            "hourly": "weather_code,temperature_2m,is_day",
             "forecast_minutely_15": 96, "forecast_hours": 24, "timezone": "auto", "timeformat": "unixtime"}
   request = urllib.request.Request(f"{OPEN_METEO_URL}?{urllib.parse.urlencode(params)}", headers={"User-Agent": "tandem/1.0"})
   with urllib.request.urlopen(request, timeout=10) as response:
@@ -221,3 +240,89 @@ def last_position(read: Callable[[], object]) -> tuple[float, float] | None:
   except (TypeError, ValueError, KeyError):
     return None
   return (lat, lon) if (lat or lon) and math.isfinite(lat) and math.isfinite(lon) else None
+
+
+# ---- the parked screen's outlook ----
+
+OUTLOOK_HOURS = 12
+
+
+@dataclass
+class HourTile:
+  time: str                         # "3 PM"
+  icon: str                         # sun, moon, partly, cloud, rain, snow, storm, fog
+  temp: int                         # in the driver's units
+  hazard: bool
+
+
+@dataclass
+class Outlook:
+  summary: str                      # "Light snow from 5:45 to 8:30 PM", or "Mostly sunny"
+  icon: str
+  hazard: bool
+  updated: str                      # "2:10 PM", when it was fetched
+  tiles: list[HourTile]
+
+
+def hour_icon(code: int, day: bool) -> str:
+  if code in HAZARDS:
+    return HAZARDS[code][1]
+  if code in (0, 1):
+    return "sun" if day else "moon"
+  return "partly" if code == 2 and day else "cloud"
+
+
+def _next_event(forecast: Forecast, now: float, horizon: float) -> tuple[str, str, int, int | None] | None:
+  """The first hazard falling now or starting before horizon: (label, icon, start, end or None past the data)."""
+  steps, dur = forecast.steps, forecast.step_s
+  for i, (t, code) in enumerate(steps):
+    if code in HAZARDS and t + dur > now and t < horizon:
+      start = i
+      while start > 0 and steps[start - 1][1] in HAZARDS:
+        start -= 1
+      end = next((s for s, c in steps[i:] if c not in HAZARDS), None)
+      label, icon = HAZARDS[code]
+      return label, icon, steps[start][0], end
+  return None
+
+
+def outlook(forecast: Forecast | None, now: float, metric: bool, hours: int = OUTLOOK_HOURS) -> Outlook | None:
+  """The next 12 hours for the parked screen: a tile an hour, and one line saying what matters. None without enough
+  forecast left (fewer than 3 hours ahead)."""
+  if forecast is None:
+    return None
+  ahead = [h for h in forecast.hours if h[0] > now][:hours]
+  if len(ahead) < 3:
+    return None
+  off = forecast.utc_offset
+  tiles = [HourTile(hour_label(t, off), hour_icon(code, day), round(temp if metric else temp * 9 / 5 + 32), code in HAZARDS)
+           for t, code, temp, day in ahead]
+  event = _next_event(forecast, now, ahead[-1][0] + 3600)
+  if event is not None:
+    label, icon, start, end = event
+    if start <= now:
+      summary = f"{label} until {clock(end, off)}" if end is not None else label
+    else:
+      summary = f"{label} from {clock(start, off)}" + (f" to {clock(end, off)}" if end is not None else "")
+    return Outlook(summary, icon, True, clock(forecast.fetched_at, off), tiles)
+  skies = [(code, day) for _, code, _, day in ahead if code in SKY]
+  if not skies:
+    return Outlook("No rain or snow ahead", "cloud", False, clock(forecast.fetched_at, off), tiles)
+  codes = [c for c, _ in skies]
+  sky = max(set(codes), key=lambda c: (codes.count(c), c))       # the most hours; a tie goes to the cloudier
+  day = sum(d for c, d in skies if c == sky) * 2 >= codes.count(sky)
+  return Outlook(SKY[sky][0 if day else 1], hour_icon(sky, day), False, clock(forecast.fetched_at, off), tiles)
+
+
+_shared: list[ForecastService] = []
+
+
+def shared_service() -> ForecastService:
+  """One forecast for the drive screen and the parked screen, kept beside the params folder."""
+  if not _shared:
+    from openpilot.common.params import Params
+    from openpilot.selfdrive.ui.tandem.prefs import WEATHER_HEADS_UP, prefs_dir
+    memory = Params(memory=True)
+    _shared.append(ForecastService(prefs_dir() / ".tandem_forecast.json", lambda: last_position(lambda: memory.get("LastGPSPosition")),
+                                   WEATHER_HEADS_UP.get))
+  return _shared[0]
