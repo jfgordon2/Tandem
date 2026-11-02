@@ -1382,10 +1382,27 @@ def test_imei_is_read_once_from_the_modem_in_the_background(monkeypatch):
   device._read_imei()                                # already known: the modem isn't asked again
   assert device.imei() == "351234567890123" and calls == [0]
 
+  # The first calls miss openpilot's 0.1 s modem timeout; it keeps trying on its own.
+  monkeypatch.setattr(UpstreamDevice, "IMEI_WAIT_S", 0.01)
+  tries = []
+
+  def slow_modem(slot):
+    tries.append(slot)
+    if len(tries) < 3:
+      raise RuntimeError("modem busy")
+    return "351234567890124"
+  monkeypatch.setattr(hardware.HARDWARE, "get_imei", slow_modem, raising=False)
+  retrying = UpstreamDevice.__new__(UpstreamDevice)
+  retrying._tici, retrying._imei, retrying._imei_reading = True, "", False
+  retrying._read_imei()
+  while retrying._imei_reading and time.monotonic() < end:
+    time.sleep(0.01)
+  assert retrying.imei() == "351234567890124" and len(tries) == 3
+
+  monkeypatch.setattr(hardware.HARDWARE, "get_imei", lambda slot: (_ for _ in ()).throw(RuntimeError("no modem")), raising=False)
   failing = UpstreamDevice.__new__(UpstreamDevice)
   failing._tici, failing._imei, failing._imei_reading = True, "", False
-  monkeypatch.setattr(hardware.HARDWARE, "get_imei", lambda slot: (_ for _ in ()).throw(RuntimeError("modem busy")), raising=False)
   failing._read_imei()
   while failing._imei_reading and time.monotonic() < end:
     time.sleep(0.01)
-  assert failing.imei() == "Not available" and not failing._imei_reading   # it can try again next time
+  assert failing.imei() == "Not available" and not failing._imei_reading   # gives up, and can try again next time
