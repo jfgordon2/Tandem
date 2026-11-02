@@ -11,7 +11,8 @@ from openpilot.system.ui.lib.application import FONT_SCALE, gui_app
 from openpilot.system.ui.lib.text_measure import measure_text_cached
 from openpilot.system.ui.lib.wrap_text import wrap_text
 from openpilot.selfdrive.ui.tandem import tokens as T
-from openpilot.selfdrive.ui.tandem.fonts import Face, font
+from openpilot.selfdrive.ui.tandem.fonts import Face, face_for, font
+from openpilot.selfdrive.ui.tandem.i18n import translate
 from openpilot.selfdrive.ui.tandem.layout import Align, place
 
 SEGMENTS = 16
@@ -107,8 +108,8 @@ def pressed(rect: rl.Rectangle, radius: float = 0) -> None:
 # ── Text ──
 
 class _OwnFont:
-  """Tandem's text is English (it doesn't go through StarPilot's translations), so it keeps Figtree when the language
-  picked needs unifont: upstream's font_fallback is off just while these functions measure and draw it."""
+  """Tandem picks its own face for each string (Figtree, or the Noto fallback for scripts Figtree lacks), so upstream's
+  font_fallback, which would swap every face for the fallback in some languages, is off while these functions run."""
 
   depth = 0   # nesting-safe: the flag goes back to off only when the outermost use ends
 
@@ -125,9 +126,34 @@ class _OwnFont:
 _own_font = _OwnFont()
 
 
-def text_width(text: str, size: int, weight: Face = T.FONT, tracking: float = 0) -> float:
+def _face(value: str, weight: Face) -> rl.Font:
+  """weight's font when it has every letter of value, else the Noto fallback (Japanese, Arabic, Cyrillic...)."""
+  return font(weight if value.isascii() else face_for(value, weight))
+
+
+def _width(value: str, size: int, weight: Face, tracking: float = 0) -> float:
   with _own_font:
-    return measure_text_cached(font(weight), text, size, tracking).x
+    return measure_text_cached(_face(value, weight), value, size, tracking).x
+
+
+def _fit(value: str, size: int, weight: Face, max_width: float, tracking: float = 0) -> str:
+  max_width += 0.5  # layout math leaves float error; text measured for a rect must still fit in it
+  if _width(value, size, weight, tracking) <= max_width:
+    return value
+  while value and _width(value + ELLIPSIS, size, weight, tracking) > max_width:
+    value = value[:-1]
+  return value.rstrip() + ELLIPSIS if value else ""
+
+
+def _lines(value: str, size: int, weight: Face, width: float) -> list[str]:
+  with _own_font:
+    return wrap_text(_face(value, weight), value, size, int(width))
+
+
+# The public functions take Tandem's English and measure and draw it in the driver's language (i18n.translate).
+
+def text_width(text: str, size: int, weight: Face = T.FONT, tracking: float = 0) -> float:
+  return _width(translate(text), size, weight, tracking)
 
 
 def line_height(size: int) -> float:
@@ -135,34 +161,30 @@ def line_height(size: int) -> float:
 
 
 def fit(text: str, size: int, weight: Face, max_width: float, tracking: float = 0) -> str:
-  max_width += 0.5  # layout math leaves float error; text measured for a rect must still fit in it
-  if text_width(text, size, weight, tracking) <= max_width:
-    return text
-  while text and text_width(text + ELLIPSIS, size, weight, tracking) > max_width:
-    text = text[:-1]
-  return text.rstrip() + ELLIPSIS if text else ""
+  """text translated, cut with an ellipsis to fit max_width."""
+  return _fit(translate(text), size, weight, max_width, tracking)
 
 
 def text(rect: rl.Rectangle, value: str, size: int, color: rl.Color, weight: Face = T.FONT,
          h: Align = Align.START, v: Align = Align.CENTER, tracking: float = 0, elide: bool = True) -> float:
   """Draw one line inside rect. Returns the drawn width."""
+  value = translate(value)
   if elide:
-    value = fit(value, size, weight, rect.width, tracking)
-  width = text_width(value, size, weight, tracking)
+    value = _fit(value, size, weight, rect.width, tracking)
+  width = _width(value, size, weight, tracking)
   box = place(rect, width, line_height(size), h, v)
   with _own_font:
-    rl.draw_text_ex(font(weight), value, rl.Vector2(round(box.x), round(box.y)), size, tracking, color)
+    rl.draw_text_ex(_face(value, weight), value, rl.Vector2(round(box.x), round(box.y)), size, tracking, color)
   return width
 
 
 def caption(rect: rl.Rectangle, value: str, color: rl.Color = T.TEXT_MUTED, h: Align = Align.START, v: Align = Align.CENTER) -> float:
   """Section labels: small bold capitals with tracking."""
-  return text(rect, value.upper(), T.SIZE_CAPTION, color, T.FONT_BOLD, h, v, tracking=T.CAPTION_TRACKING)
+  return text(rect, translate(value).upper(), T.SIZE_CAPTION, color, T.FONT_BOLD, h, v, tracking=T.CAPTION_TRACKING)
 
 
 def paragraph_lines(value: str, size: int, weight: Face, width: float) -> list[str]:
-  with _own_font:
-    return wrap_text(font(weight), value, size, int(width))
+  return _lines(translate(value), size, weight, width)
 
 
 def paragraph_height(value: str, size: int, weight: Face, width: float, spacing: float = 1.3) -> float:
@@ -177,10 +199,10 @@ def paragraph(rect: rl.Rectangle, value: str, size: int, color: rl.Color, weight
   step = line_height(size) * spacing
   lines = paragraph_lines(value, size, weight, rect.width)
   if max_lines is not None and len(lines) > max_lines:
-    lines = lines[:max_lines - 1] + [fit(" ".join(lines[max_lines - 1:]) + ELLIPSIS, size, weight, rect.width)]
+    lines = lines[:max_lines - 1] + [_fit(" ".join(lines[max_lines - 1:]) + ELLIPSIS, size, weight, rect.width)]
   for line in lines:
     with _own_font:
-      rl.draw_text_ex(font(weight), line, rl.Vector2(round(rect.x), round(y)), size, 0, color)
+      rl.draw_text_ex(_face(line, weight), line, rl.Vector2(round(rect.x), round(y)), size, 0, color)
     y += step
   return y - rect.y
 

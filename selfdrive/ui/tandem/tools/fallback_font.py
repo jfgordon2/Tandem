@@ -23,6 +23,7 @@ ROOT = Path(__file__).resolve().parents[4]
 FONT_DIR = ROOT / "selfdrive" / "assets" / "fonts"
 TRANSLATIONS = ROOT / "selfdrive" / "ui" / "translations"
 SOURCES = Path(__file__).resolve().parent / "fonts"
+TANDEM_CATALOGS = Path(__file__).resolve().parents[1] / "translations"
 NAME = "NotoSans-Fallback"
 SIZE = 64            # px per em in the atlas; text is drawn from 14 to ~60 px, so this keeps it sharp without a huge atlas
 EXTRA = "…−·—" + "".join(chr(c) for c in range(0xFE70, 0xFEFD) if unicodedata.name(chr(c), ""))   # ellipsis, signs, Arabic forms
@@ -47,6 +48,10 @@ def charset() -> tuple[set[int], dict[str, set[int]]]:
   languages = json.loads((TRANSLATIONS / "languages.json").read_text(encoding="utf-8"))
   by_language = {code.removeprefix("main_"): _po_chars(code.removeprefix("main_")) for code in languages.values()}
   chars = set(range(32, 127)) | {ord(c) for c in EXTRA} | {ord(c) for name in languages for c in name}
+  for path in TANDEM_CATALOGS.glob("tandem_*.po"):   # Tandem's own translations (i18n.py)
+    code = path.stem.removeprefix("tandem_")
+    used = {ord(c) for c in "".join(re.findall(r'msgstr "(.*)"', path.read_text(encoding="utf-8")))}
+    by_language[code] = by_language.get(code, set()) | used
   for used in by_language.values():
     chars |= used
   return {c for c in chars if c >= 32 and not 0xFE00 <= c <= 0xFE0F and c < 0x1F000}, by_language   # emoji draw as images

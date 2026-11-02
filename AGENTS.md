@@ -26,6 +26,10 @@ Everything outside Tandem's own files belongs to StarPilot or openpilot and chan
 - **Keep StarPilot's logic.** Essentials redraws StarPilot's settings, alerts and onroad state; StarPilot still decides what's true, what's allowed and when. Settings write StarPilot's own params.
 - **Wording:** plain words about what the car does, sentence case, and no em dashes (Figtree has none in the atlases).
 
+## Translations
+
+Tandem's screens are written in English and translated where they're drawn, from its own catalog in `selfdrive/ui/tandem/translations/` (not StarPilot's `app_*.po`). After changing any wording, run `python3 selfdrive/ui/tandem/tools/translations.py update`; `tests/test_translations.py` checks the template is current. New strings start untranslated (they show in English) until someone translates them. If new translations add characters, rebuild the fallback font (`tools/fallback_font.py subset`, then `build`).
+
 ## Settings search
 
 Every settings row is indexed in `selfdrive/ui/tandem/settings/search.py`. When you add, rename or move a setting, update its entry; `tests/test_settings.py` checks the index against every screen.

@@ -218,9 +218,10 @@ def test_paragraph_max_lines_ends_the_last_line_in_an_ellipsis(monkeypatch):
   from openpilot.selfdrive.ui.tandem import draw
   drawn = []
   monkeypatch.setattr(draw, "paragraph_lines", lambda value, size, weight, width: ["one two", "three four", "five six"])
-  monkeypatch.setattr(draw, "fit", lambda text, size, weight, width, tracking=0: text)
+  monkeypatch.setattr(draw, "_fit", lambda text, size, weight, width, tracking=0: text)   # paragraph fits the already-translated line
   monkeypatch.setattr(draw.rl, "draw_text_ex", lambda font, line, *a: drawn.append(line))
   monkeypatch.setattr(draw, "font", lambda weight: None)
+  monkeypatch.setattr(draw, "_face", lambda value, weight: None)   # no fonts loaded in tests
   draw.paragraph(rl.Rectangle(0, 0, 100, 100), "x", 20, rl.WHITE, max_lines=2)
   assert drawn == ["one two", "three four five six" + draw.ELLIPSIS]
 
