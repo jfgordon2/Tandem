@@ -53,3 +53,24 @@ def covers(face: Face, text: str) -> bool:
 def face_for(text: str, preferred: Face, fallback: Face = FontWeight.UNIFONT) -> Face:
   """preferred when it can draw text, else fallback: a language's own name in Figtree when it can, unifont when not."""
   return preferred if covers(preferred, text) else fallback
+
+
+_prepared: list[bool] = []
+
+
+def prepare_fallback() -> None:
+  """Once, after gui_app loads its fonts: smooth scaling for the Noto fallback (upstream loads it unfiltered, as it did
+  pixel unifont), and Arabic shaping for every line drawn (arabic.shape; a no-op for text without Arabic)."""
+  if _prepared:
+    return
+  _prepared.append(True)
+  from openpilot.system.ui.lib import application
+  from openpilot.selfdrive.ui.tandem.arabic import shape
+  if shape not in application.TEXT_SHAPERS:
+    application.TEXT_SHAPERS.append(shape)
+  try:
+    fallback = gui_app.font(FontWeight.UNIFONT)
+  except KeyError:      # fonts not loaded (tests)
+    return
+  rl.gen_texture_mipmaps(fallback.texture)
+  rl.set_texture_filter(fallback.texture, rl.TextureFilter.TEXTURE_FILTER_TRILINEAR)

@@ -16,6 +16,8 @@ TRANSLATIONS_DIR = UI_DIR.joinpath("translations")
 LANGUAGES_FILE = TRANSLATIONS_DIR.joinpath("languages.json")
 
 UNIFONT_LANGUAGES = [
+  "ar",  # Tandem: Figtree has no Arabic or Cyrillic, so these use the fallback font too
+  "uk",
   "th",
   "zh-CHT",
   "zh-CHS",

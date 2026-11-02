@@ -6,7 +6,7 @@ Tandem is a fork of StarPilot (which sits on openpilot). Its UI design language 
 
 Everything outside Tandem's own files belongs to StarPilot or openpilot and changes with every upstream merge. The less of it we edit, the easier merges are.
 
-- **Ours:** `selfdrive/ui/tandem/` (code, `design/`, `tools/`, `tests/`), `starpilot/tandem/`, the Figtree and JetBrains Mono font files in `selfdrive/assets/fonts/`, `RELEASES.md`'s top entry, and this file.
+- **Ours:** `selfdrive/ui/tandem/` (code, `design/`, `tools/`, `tests/`), `starpilot/tandem/`, the Figtree, JetBrains Mono and NotoSans-Fallback font files (and `NotoSans-OFL.txt`) in `selfdrive/assets/fonts/`, `RELEASES.md`'s top entry, and this file.
 - **Everything else is unowned.** Put new behavior in our files: subclass, wrap or call upstream code instead of editing it. Read upstream's state rather than adding fields to it.
 - **When an upstream edit can't be avoided,** make it the smallest hook that works: a flag that defaults to upstream's behavior, an overridable method, or one line. Don't reformat or reorganize around it.
 - **List every upstream edit** in `selfdrive/ui/tandem/README.md` under "Keeping rebases easy" › Upstream integration, so a merge knows what to reapply.

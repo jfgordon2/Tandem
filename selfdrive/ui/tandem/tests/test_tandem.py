@@ -164,6 +164,8 @@ def _ui_strings() -> list[tuple[str, str]]:
          and isinstance(node.args[0], ast.Constant) and isinstance(node.args[0].value, str):
         found.append((path.name, node.args[0].value))
   for path in (root / "tandem").glob("*.py"):
+    if path.name == "arabic.py":   # character tables for shaping, drawn with the Noto fallback, not UI text
+      continue
     tree = ast.parse(path.read_text())
     docstrings = {id(n.value) for n in ast.walk(tree) if isinstance(n, ast.Expr) and isinstance(n.value, ast.Constant)}
     found += [(path.name, n.value) for n in ast.walk(tree) if isinstance(n, ast.Constant) and isinstance(n.value, str) and id(n) not in docstrings]

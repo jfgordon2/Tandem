@@ -155,7 +155,7 @@ class FontWeight(StrEnum):
   MEDIUM = "Figtree-Medium.fnt"
   BOLD = "Figtree-Bold.fnt"
   SEMI_BOLD = "Figtree-SemiBold.fnt"
-  UNIFONT = "unifont.fnt"
+  UNIFONT = "NotoSans-Fallback.fnt"   # Tandem: Noto for scripts Figtree lacks (selfdrive/ui/tandem/tools/fallback_font.py)
   BRAND = "como-heavy.fnt"
 
   # Small UI fonts
@@ -165,6 +165,7 @@ class FontWeight(StrEnum):
 
 
 KEEP_FONT = False  # Tandem: True while it draws its own untranslated text, which keeps its font in every language
+TEXT_SHAPERS: list[Callable[[str], str]] = []  # Tandem: what to draw for a line, e.g. Arabic joined and right to left
 
 
 def font_fallback(font: rl.Font) -> rl.Font:
@@ -1250,6 +1251,8 @@ class GuiApplication:
 
     def _draw_text_ex_scaled(font, text, position, font_size, spacing, tint):
       font = font_fallback(font)
+      for shaper in TEXT_SHAPERS:
+        text = shaper(text)
       return rl._orig_draw_text_ex(font, text, position, font_size * FONT_SCALE, spacing, tint)
 
     rl.draw_text_ex = _draw_text_ex_scaled

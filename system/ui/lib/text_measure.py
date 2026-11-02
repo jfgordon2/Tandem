@@ -1,5 +1,5 @@
 import pyray as rl
-from openpilot.system.ui.lib.application import FONT_SCALE, font_fallback
+from openpilot.system.ui.lib.application import FONT_SCALE, TEXT_SHAPERS, font_fallback
 from openpilot.system.ui.lib.emoji import find_emoji
 
 _cache: dict[int, rl.Vector2] = {}
@@ -14,6 +14,8 @@ def draw_text_with_shadow(font: rl.Font, text: str, pos: rl.Vector2, font_size: 
 def measure_text_cached(font: rl.Font, text: str, font_size: int, spacing: float = 0) -> rl.Vector2:
   """Caches text measurements to avoid redundant calculations."""
   font = font_fallback(font)
+  for shaper in TEXT_SHAPERS:
+    text = shaper(text)
   spacing = round(spacing, 4)
   key = hash((font.texture.id, text, font_size, spacing))
   if key in _cache:
