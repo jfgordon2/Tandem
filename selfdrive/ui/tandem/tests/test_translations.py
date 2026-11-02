@@ -140,6 +140,7 @@ def test_the_extractor_reads_marks_and_their_context(tmp_path, monkeypatch):
   monkeypatch.setattr(tool, "files", lambda: [tmp_path / "screen.py"])
   monkeypatch.setattr(tool, "PACKAGE", tmp_path)
   monkeypatch.setattr(tool, "UPSTREAM", [])
+  monkeypatch.setattr(tool, "UPSTREAM_ALERTS", "none.json")
   entries = tool.strings()
   assert set(entries) == {"One two", i18n.key("Set up", "action"), "Sets {} options", "{} alert"}
   assert entries["{} alert"].plural == "{} alerts"
@@ -152,3 +153,10 @@ def test_tandem_templates_dont_rewrite_other_text_as_it_is_drawn():
   assert es.translate(alert) == alert                       # not "{} hasta las {}"
   assert es.translate("2 regions") == "2 regiones"           # StarPilot's trn() text still matches
   assert es.translate("Backup 2026-10-24 0910").startswith("Copia ")   # an N_() template
+
+
+def test_the_home_screen_alert_sentences_are_in_the_catalog():
+  """StarPilot's offroad alerts (alerts_offroad.json), with %1 as a hole matched when drawn."""
+  es = i18n.load("es")
+  assert es.translate("Taking camera snapshots. System won't start until finished.").startswith("Tomando capturas")
+  assert es.translate("Chestnut USB link is slow. Check the USB cable. The current speed is 480 Mbps.").endswith("es 480 Mbps.")

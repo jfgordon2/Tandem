@@ -31,6 +31,7 @@ UPSTREAM = ["selfdrive/ui/layouts/settings/starpilot/maps.py", "selfdrive/ui/lay
             "selfdrive/ui/layouts/settings/software.py", "selfdrive/ui/layouts/settings/device.py",
             "selfdrive/ui/layouts/settings/developer.py"]
 UPSTREAM_CALLS = {"tr": 1, "tr_noop": 1, "trn": 2}
+UPSTREAM_ALERTS = "selfdrive/selfdrived/alerts_offroad.json"   # the home screen's alert sentences ("%1" is filled in)
 PLURAL_FORMS = {"ja": 1, "ko": 1, "zh-CHS": 1, "zh-CHT": 1, "th": 1, "uk": 3, "ar": 6}   # others: 2
 
 
@@ -101,6 +102,14 @@ def strings() -> dict[str, Entry]:
   for name in UPSTREAM:
     if (ROOT / name).is_file():
       _collect(found, ROOT / name, name, UPSTREAM_CALLS, upstream=True)
+  if (ROOT / UPSTREAM_ALERTS).is_file():
+    import json
+    for alert_key, alert in json.loads((ROOT / UPSTREAM_ALERTS).read_text(encoding="utf-8")).items():
+      text = alert.get("text", "").replace("%1", "{}")
+      if any(c.isalpha() for c in text.replace("{}", "")):
+        entry = found.setdefault(text, Entry(text))
+        entry.where.append(f"{UPSTREAM_ALERTS}:{alert_key}")
+        entry.drawn = True
   return found
 
 

@@ -6184,3 +6184,73 @@ msgstr "openpilot Längsregelung (Alpha)"
 #: selfdrive/ui/layouts/settings/developer.py:153
 msgid "Enable"
 msgstr "Aktivieren"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_TemperatureTooHigh
+#, python-brace-format, drawn
+msgid "Device temperature too high. System cooling down before starting. Current internal component temperature: {}"
+msgstr "Gerätetemperatur zu hoch. Das System kühlt vor dem Start ab. Aktuelle Innentemperatur: {}"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ConnectivityNeededPrompt
+#, python-brace-format, drawn
+msgid "Immediately connect to the internet to check for updates. If you do not connect to the internet, openpilot won't engage in {}"
+msgstr "Verbinde dich sofort mit dem Internet, um nach Updates zu suchen. Ohne Verbindung lässt sich openpilot in {} nicht mehr aktivieren"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ConnectivityNeeded
+msgid "Connect to internet to check for updates. openpilot won't automatically start until it connects to internet to check for updates."
+msgstr "Verbinde dich mit dem Internet, um nach Updates zu suchen. openpilot startet erst wieder automatisch, wenn es dafür online war."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_UpdateFailed
+#, python-brace-format, drawn
+msgid "Unable to download updates\n{}"
+msgstr "Updates konnten nicht geladen werden\n{}"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ChestnutNotDetected
+msgid "Chestnut not detected. Check USB and 12V connections."
+msgstr "Chestnut nicht erkannt. Prüfe USB- und 12-V-Anschluss."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ChestnutOverheated
+#, python-brace-format, drawn
+msgid "Chestnut overheated. Ensure good airflow. Current GPU temperature is {}."
+msgstr "Chestnut ist überhitzt. Sorge für gute Belüftung. Aktuelle GPU-Temperatur: {}."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ChestnutUncompiled
+msgid "The active Chestnut model is not installed. Download it in Model Manager."
+msgstr "Das aktive Chestnut-Modell ist nicht installiert. Lade es in der Modellverwaltung herunter."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ChestnutUpdateFailed
+msgid "Chestnut update failed. Check the USB cable."
+msgstr "Chestnut-Update fehlgeschlagen. Prüfe das USB-Kabel."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ChestnutUsbSlow
+#, python-brace-format, drawn
+msgid "Chestnut USB link is slow. Check the USB cable. The current speed is {}."
+msgstr "Die USB-Verbindung von Chestnut ist langsam. Prüfe das USB-Kabel. Aktuelle Geschwindigkeit: {}."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_IsTakingSnapshot
+msgid "Taking camera snapshots. System won't start until finished."
+msgstr "Kamera-Schnappschüsse werden aufgenommen. Das System startet erst danach."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_NeosUpdate
+msgid "An update to your device's operating system is downloading in the background. You will be prompted to update when it's ready to install."
+msgstr "Ein Update für das Betriebssystem des Geräts wird im Hintergrund geladen. Du wirst gefragt, sobald es installiert werden kann."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_UnregisteredHardware
+msgid "Failed to register with comma.ai backend. It will not connect or upload to comma.ai servers, and receives no support from comma.ai. If this is a device purchased at comma.ai/shop, open a ticket at https://comma.ai/support."
+msgstr "Registrierung bei comma.ai fehlgeschlagen. Das Gerät verbindet sich nicht mit den Servern von comma.ai, lädt nichts hoch und erhält keinen Support. Wurde es bei comma.ai/shop gekauft, eröffne ein Ticket unter https://comma.ai/support."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_CarUnrecognized
+msgid "openpilot was unable to identify your car. Your car is either unsupported or its ECUs are not recognized. Please submit a pull request to add the firmware versions to the proper vehicle. Need help? Join discord.comma.ai."
+msgstr "openpilot konnte dein Auto nicht erkennen. Es wird nicht unterstützt oder seine Steuergeräte sind unbekannt. Reiche einen Pull Request ein, um die Firmware-Versionen dem richtigen Fahrzeug hinzuzufügen. Hilfe? discord.comma.ai."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_Recalibration
+msgid "openpilot detected a change in the device's mounting position. Ensure the device is fully seated in the mount and the mount is firmly secured to the windshield."
+msgstr "openpilot hat eine Änderung der Geräteposition erkannt. Achte darauf, dass das Gerät fest in der Halterung sitzt und die Halterung fest an der Scheibe klebt."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_DriverMonitoringUncertain
+msgid "Poor visibility detected for driver monitoring. Ensure the device has a clear view of the driver. This can be checked in the device settings. Extreme lighting conditions and/or unconventional mounting positions may also trigger this alert."
+msgstr "Schlechte Sicht für die Fahrerüberwachung. Das Gerät muss den Fahrer gut sehen; das lässt sich in den Geräteeinstellungen prüfen. Auch extremes Licht oder eine ungewöhnliche Montage können diesen Hinweis auslösen."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ExcessiveActuation
+#, python-brace-format, drawn
+msgid "Excessive {} actuation detected on your last drive. Please contact support at https://comma.ai/support and share your device's Dongle ID for troubleshooting."
+msgstr "Bei der letzten Fahrt wurde übermäßige {}-Ansteuerung erkannt. Wende dich an https://comma.ai/support und gib die Dongle-ID deines Geräts an."
