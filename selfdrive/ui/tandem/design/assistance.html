@@ -37,17 +37,32 @@ a{color:#5AAAF8}a:hover{color:#8CC4FA}
     </div>
     <div style="flex-grow: 1; min-width: 0; background: #16191D; border-radius: 22px; display: flex; flex-direction: column; overflow: hidden;">
       <div style="padding: 12px 22px 8px; border-bottom: 1px solid #23272E; display: flex; flex-direction: column; gap: 3px; flex-shrink: 0;"><h2 style="margin: 0; font-size: 24px; font-weight: 700;">Driver Monitoring</h2><span style="font-size: 14px; color: #AEB6C2;">Watches that you're paying attention</span></div>
-      <div style="display: flex; align-items: center; gap: 16px; padding: 0 14px 0 22px; height: 78px; border-bottom: 1px solid #23272E; flex-shrink: 0;">
+      <div style="display: flex; align-items: center; gap: 16px; padding: 0 14px 0 22px; height: 62px; border-bottom: 1px solid #23272E; flex-shrink: 0;">
         <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0;"><span style="font-size: 18px; font-weight: 600;">Always-On Driver Monitoring</span><span style="font-size: 14px; color: #AEB6C2;">Watches for distraction even when openpilot is off</span></div>
         <button type="button" role="switch" aria-checked="false" style="width: 72px; height: 42px; border-radius: 21px; border: 0; background: #343A44; padding: 4px; display: flex; justify-content: flex-start; flex-shrink: 0;"><span style="width: 34px; height: 34px; border-radius: 17px; background: #F2F5F9; display: block;"></span></button>
       </div>
-      <div style="display: flex; align-items: center; gap: 16px; padding: 0 14px 0 22px; height: 78px; border-bottom: 1px solid #23272E; flex-shrink: 0;">
+      <div style="display: flex; align-items: center; gap: 16px; padding: 0 14px 0 22px; height: 62px; border-bottom: 1px solid #23272E; flex-shrink: 0;">
         <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0;"><span style="font-size: 18px; font-weight: 600;">Driver Camera</span><span style="font-size: 14px; color: #AEB6C2;">Check that it can see your face</span></div>
         <button type="button" style="font-family: inherit; height: 44px; padding: 0 18px; border: 0; border-radius: 12px; background: #23272E; color: #F2F5F9; font-size: 16px; font-weight: 700; flex-shrink: 0;">Preview</button>
       </div>
-      <div style="display: flex; align-items: center; gap: 16px; padding: 0 14px 0 22px; height: 78px; flex-shrink: 0;">
+      <div style="display: flex; align-items: center; gap: 16px; padding: 0 14px 0 22px; height: 62px; flex-shrink: 0;">
         <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0;"><span style="font-size: 18px; font-weight: 600;">Driver Monitoring</span><span style="font-size: 14px; color: #AEB6C2;">Forget which side of the car the driver sits on</span></div>
         <button type="button" style="font-family: inherit; height: 44px; padding: 0 18px; border: 0; border-radius: 12px; background: #23272E; color: #F2F5F9; font-size: 16px; font-weight: 700; flex-shrink: 0;">Reset</button>
+      </div>
+      <div style="padding: 0 22px; height: 30px; display: flex; align-items: flex-end; border-top: 1px solid #23272E; flex-shrink: 0;">
+        <span style="font-size: 13px; font-weight: 700; letter-spacing: 1.6px; color: #8FA0B5;">WHILE PARKED</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px; padding: 0 14px 0 22px; height: 62px; border-bottom: 1px solid #23272E; flex-shrink: 0;">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0;"><span style="font-size: 18px; font-weight: 600;">Sentry Mode</span><span style="font-size: 14px; color: #AEB6C2;">Pictures in Galaxy if the parked car is bumped</span></div>
+        <button type="button" role="switch" aria-checked="true" aria-label="Sentry Mode" style="width: 72px; height: 42px; border-radius: 21px; border: 0; background: #5AAAF8; padding: 4px; display: flex; justify-content: flex-end; flex-shrink: 0;"><span style="width: 34px; height: 34px; border-radius: 17px; background: #0B1A2B; display: block;"></span></button>
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px; padding: 0 14px 0 22px; height: 62px; flex-shrink: 0;">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0;"><span style="font-size: 18px; font-weight: 600;">Sensitivity</span><span style="font-size: 14px; color: #AEB6C2;">High notices smaller bumps</span></div>
+        <div role="radiogroup" aria-label="Sentry sensitivity" style="display: flex; background: #23272E; border-radius: 13px; padding: 4px; flex-shrink: 0;">
+          <button type="button" role="radio" aria-checked="false" style="font-family: inherit; border: 0; background: transparent; color: #C9D0DA; height: 38px; padding: 0 14px; border-radius: 10px; font-size: 15px; font-weight: 600;">Low</button>
+          <button type="button" role="radio" aria-checked="true" style="font-family: inherit; border: 0; background: #5AAAF8; color: #0B1A2B; height: 38px; padding: 0 14px; border-radius: 10px; font-size: 15px; font-weight: 700;">Standard</button>
+          <button type="button" role="radio" aria-checked="false" style="font-family: inherit; border: 0; background: transparent; color: #C9D0DA; height: 38px; padding: 0 14px; border-radius: 10px; font-size: 15px; font-weight: 600;">High</button>
+        </div>
       </div>
     </div>
   </div>
