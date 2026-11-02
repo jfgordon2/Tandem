@@ -95,6 +95,9 @@ class BluetoothController:
   def _offroad(self) -> bool:
     return self.params.get_bool("IsOffroad")
 
+  def _settings_allowed(self, offroad: bool | None = None) -> bool:
+    return self._offroad() if offroad is None else offroad
+
   def status(self) -> dict[str, Any]:
     # Status lazily initializes the radio, so serialize it with power changes.
     with self._lock:
@@ -128,7 +131,7 @@ class BluetoothController:
       return result
 
   def _require_offroad(self, command: str) -> None:
-    if command in OFFROAD_COMMANDS and not self._offroad():
+    if command in OFFROAD_COMMANDS and not self._settings_allowed():
       raise RuntimeError("Bluetooth settings can only be changed offroad")
 
   def _pair_worker(self, address: str) -> None:
@@ -151,7 +154,7 @@ class BluetoothController:
   def _test_audio_worker(self, address: str, deadline: float) -> None:
     try:
       self._sleep(max(0.0, deadline - time.monotonic()))
-      if (not self._offroad() or not self.params.get_bool("BluetoothEnabled") or
+      if (not self._settings_allowed() or not self.params.get_bool("BluetoothEnabled") or
           (self.params.get("BluetoothAudioAddress", encoding="utf-8") or "").upper() != address.upper()):
         return
       device = self._client().device_for_address(address)
@@ -277,7 +280,7 @@ class BluetoothController:
   def _maintain_scan(self, status: dict[str, Any], now: float) -> None:
     if not status["discovering"]:
       self._scan_deadline = 0.0
-    elif not status["offroad"] or (self._scan_deadline and now >= self._scan_deadline):
+    elif not self._settings_allowed(status["offroad"]) or (self._scan_deadline and now >= self._scan_deadline):
       self._client().stop_discovery()
       self._scan_deadline = 0.0
 
@@ -426,7 +429,8 @@ def main() -> None:
     os.unlink(BLUETOOTH_SOCKET_PATH)
   except FileNotFoundError:
     pass
-  controller = BluetoothController()
+  from openpilot.starpilot.tandem.bluetooth import controller_type
+  controller = controller_type(BluetoothController)()
   threading.Thread(target=controller.initialize, daemon=True).start()
   threading.Thread(target=controller.maintain_connections, daemon=True).start()
   try:

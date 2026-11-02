@@ -23,11 +23,15 @@ class WhileShown(Component):
   """A section's panel, with work to start when it shows and stop when it hides."""
   grow_touch_target = False
 
-  def __init__(self, panel: Widget, on_show: Callable[[], None], on_hide: Callable[[], None]):
+  def __init__(self, panel: Widget, on_show: Callable[[], None], on_hide: Callable[[], None], on_tick: Callable[[], None] = lambda: None):
     super().__init__()
     self._panel = self._child(panel)
     self._on_show = on_show
     self._on_hide = on_hide
+    self._on_tick = on_tick
+
+  def _update_state(self):
+    self._on_tick()
 
   def show_event(self):
     self._on_show()
@@ -60,7 +64,7 @@ def connections_page(network: Network, open_advanced: Callable[[], None], wheel:
     Section(N_("Wi-Fi"), lambda: WhileShown(wifi_panel(network), lambda: network.wifi.set_active(True), lambda: network.wifi.set_active(False)),
             value=network.summary),
     Section(N_("Cellular"), lambda: cellular_panel(network, open_advanced)),
-    Section(N_("Bluetooth Remote"), lambda: WhileShown(wheel_panel(wheel, window), bluetooth_on, bluetooth_off),
+    Section(N_("Bluetooth Remote"), lambda: WhileShown(wheel_panel(wheel, window), bluetooth_on, bluetooth_off, bt.tick),
             value=lambda: buttons_label(len(wheel.buttons()))),
-    Section(N_("Car Audio & Devices"), lambda: WhileShown(devices_panel(bt, window), bluetooth_on, bluetooth_off)),
+    Section(N_("Car Audio & Devices"), lambda: WhileShown(devices_panel(bt, window), bluetooth_on, bluetooth_off, bt.tick)),
   ])

@@ -7,6 +7,7 @@ its row instead of running its action. Pairing and audio go through upstream's B
 from __future__ import annotations
 
 from collections.abc import Callable
+from dataclasses import replace
 from typing import Protocol
 
 import pyray as rl
@@ -454,7 +455,6 @@ def devices_panel(bt: BluetoothDevices, window=None) -> Component:
   last_prompt = [""]
 
   def tick() -> None:
-    bt.tick()
     prompt = bt.prompt()
     prompt_id = str(prompt.get("id", "")) if prompt else ""
     if prompt_id and prompt_id != last_prompt[0] and window is not None:
@@ -555,13 +555,35 @@ class UpstreamBluetooth:
 
   def __init__(self):
     from openpilot.system.ui.lib.bluetooth_manager import BluetoothManager
-    from openpilot.system.ui.widgets.bluetooth import BluetoothManagerUI
     self._manager = BluetoothManager()
     self._manager.set_active(False)
-    self._ui = BluetoothManagerUI(self._manager)
+    self._active = False
+    self._power_requested = False
+    self._scan_requested = False
 
   def tick(self) -> None:
-    pass   # pairing prompts are ours now (pairing_prompt); upstream's _handle_prompt would push its own dialogs
+    """Our panel replaces upstream's _update_state: wait for its asynchronous status before starting the radio or scan."""
+    if not self._active:
+      return
+    status = self.status()
+    if not status.offroad:
+      self._power_requested = self._scan_requested = False
+      return
+    if not status.available or status.error:
+      return
+    if not status.enabled:
+      if not self._power_requested:
+        self._power_requested = True
+        self._manager.set_power(True)
+      return
+    if not status.powered:
+      return
+    self._power_requested = False
+    if status.discovering:
+      self._scan_requested = False
+    elif not self._scan_requested and not status.pairing_address:
+      self._scan_requested = True
+      self._manager.set_scanning(True)   # renew after the daemon's scan window; there is no manual Scan button in our panel
 
   def prompt(self):
     return self._manager.status.prompt
@@ -570,23 +592,40 @@ class UpstreamBluetooth:
     self._manager.respond(prompt_id, accept, value)
 
   def set_active(self, active: bool) -> None:
-    (self._ui.show_event if active else self._ui.hide_event)()
+    if active == self._active:
+      return
+    self._active = active
+    status = self.status()
+    if not active and (self._scan_requested or status.discovering) and status.offroad:
+      self._manager.set_scanning(False)   # a start may still be queued before the first discovering=True poll
+    self._power_requested = self._scan_requested = False
+    self._manager.set_active(active)
     if active:
-      self._ui._scan()
+      self.tick()
 
   def status(self):
-    return self._manager.status
+    status = self._manager.status
+    return replace(status, offroad=True) if not status.offroad and self._parked() else status
+
+  @staticmethod
+  def _parked() -> bool:
+    from openpilot.selfdrive.ui.ui_state import ui_state
+    from openpilot.starpilot.tandem.bluetooth import stationary_park
+    return stationary_park(ui_state.sm)
 
   def select(self, address: str) -> bool:
     """Upstream's pair and connect, under its policy; a connected device gets our actions instead of its option list."""
     from openpilot.system.ui.widgets.bluetooth import device_action_allowed
-    device = self._ui._find_device(address)
-    status = self._manager.status
-    if device is None or not device_action_allowed(device, self._ui._operation_for(device, status), status.offroad):
+    status = self.status()
+    device = next((d for d in status.devices if d.address.upper() == address.upper()), None)
+    operation = self._manager.operation_for(address)
+    if not operation and status.pairing_address.upper() == address.upper():
+      operation = "pairing"
+    if device is None or not device_action_allowed(device, operation, status.offroad):
       return False
     if device.paired and device.connected:
       return True
-    self._ui._select_device(address)   # pairs or connects; never reaches its option list
+    (self._manager.connect if device.paired else self._manager.pair)(device.address)
     return False
 
   def disconnect(self, address: str) -> None:
@@ -616,7 +655,8 @@ class UpstreamBluetooth:
 
 
   def forget(self, address: str) -> None:
-    """Our sheet asked first, with the car off, as upstream's confirm required."""
-    device = self._ui._find_device(address)
-    if device is not None and device.paired and self._manager.status.offroad:
+    """Our sheet asked first; the service independently checks offroad or verified Park."""
+    status = self.status()
+    device = next((d for d in status.devices if d.address.upper() == address.upper()), None)
+    if device is not None and device.paired and status.offroad:
       self._manager.forget(address)
