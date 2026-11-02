@@ -70,8 +70,8 @@ class Hero(Component):
   @staticmethod
   def _render_outlook(rect: rl.Rectangle, outlook) -> None:
     """The line that matters, when it was updated, then a tile an hour; hours with rain or snow tinted as the chips are."""
-    t_size, temp_size = T.font_px(13), T.font_px(15)
-    tile_h = T.px(8) * 2 + draw.line_height(t_size) + T.px(4) + T.px(22) + T.px(4) + draw.line_height(temp_size)
+    t_size, temp_size, glyph_size = T.font_px(15), T.font_px(21), T.px(26)   # read at a glance from the driver's seat
+    tile_h = T.px(10) * 2 + draw.line_height(t_size) + T.px(4) + glyph_size + T.px(4) + draw.line_height(temp_size)
     head_h = T.px(24)
     block = place(rect, rect.width, head_h + T.px(12) + tile_h, v=Align.END)
     head, _, tiles = column(block, [head_h, T.px(12), tile_h])
@@ -82,11 +82,11 @@ class Hero(Component):
     draw.text(head, f"Forecast · updated {outlook.updated}", T.font_px(13), T.TEXT_MUTED, T.FONT, Align.END)
     for tile, cell in zip(outlook.tiles, row(tiles, [FILL] * len(outlook.tiles), T.px(6)), strict=True):
       draw.fill(cell, T.ACCENT_SURFACE if tile.hazard else T._hex("1E2227"), T.px(14))
-      inner = inset(cell, y=T.px(8))
-      when, _, glyph, _, temp = column(inner, [draw.line_height(t_size), T.px(4), T.px(22), T.px(4), draw.line_height(temp_size)])
+      inner = inset(cell, y=T.px(10))
+      when, _, glyph, _, temp = column(inner, [draw.line_height(t_size), T.px(4), glyph_size, T.px(4), draw.line_height(temp_size)])
       draw.text(when, tile.time, t_size, T._hex("DCEBFF") if tile.hazard else T.TEXT_TERTIARY,
                 T.FONT_BOLD if tile.hazard else T.FONT_MEDIUM, Align.CENTER)
-      draw.icon(glyph, tile.icon, T.ACCENT_TEXT if tile.hazard else T.TEXT_SECONDARY, T.px(22))
+      draw.icon(glyph, tile.icon, T.ACCENT_TEXT if tile.hazard else T.TEXT_SECONDARY, glyph_size)
       draw.text(temp, f"{tile.temp}°", temp_size, T.TEXT, T.FONT_BOLD, Align.CENTER)
 
 
