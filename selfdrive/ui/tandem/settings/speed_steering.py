@@ -8,7 +8,7 @@ from openpilot.selfdrive.ui.tandem.blocks import Card, Grid, Icon, InfoCard, Lab
 from openpilot.selfdrive.ui.tandem.controls import TILE_CARDS, Button, ChoiceCards, Segmented, Stepper, Switch
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, Padded, SectionHeader, SettingRow
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
-from openpilot.selfdrive.ui.tandem.prefs import MAX_FOLLOWS_LIMIT
+from openpilot.selfdrive.ui.tandem.prefs import MAX_FOLLOWS_LIMIT, WEATHER_HEADS_UP
 
 STYLES = ["Relaxed", "Standard", "Sport"]
 SPEED_LIMITS = ["Off", "Show", "Match"]
@@ -260,6 +260,13 @@ class Weather:
   def summary(self) -> str:
     return WEATHER[self.mode]
 
+  @property
+  def heads_up(self) -> bool:
+    return WEATHER_HEADS_UP.get()
+
+  def set_heads_up(self, on: bool) -> None:
+    WEATHER_HEADS_UP.set(on)
+
 
 def weather_panel(model: Weather) -> ListPanel:
   conditions = [("Fog or low visibility", "Longer following gap", "fog"), ("Rain", "Longer gap, earlier braking", "rain"),
@@ -268,10 +275,12 @@ def weather_panel(model: Weather) -> ListPanel:
   cards = [InfoCard(title, line, icon) for title, line, icon in conditions]
   for card in cards:
     card.set_enabled(lambda: model.mode == 0)
-  return ListPanel([SectionHeader("WHAT CHANGES"), Padded(Grid(cards), x=T.px(16), y=T.px(6))], title="Weather",
+  heads_up = SettingRow("Weather heads-up", "Warns before rain, snow or storms start, and says when they should stop",
+                        Switch(lambda: model.heads_up, model.set_heads_up))
+  return ListPanel([SectionHeader("WHAT CHANGES"), Padded(Grid(cards), x=T.px(16), y=T.px(6)), heads_up], title="Weather",
                    subtitle="Drives more cautiously in bad conditions, using local weather",
                    header_control=Segmented(WEATHER, lambda: model.mode, model.set_mode),
-                   footnote="Needs an internet connection. The status chip shows when it's active.", footnote_divider=True)
+                   footnote="Needs an internet connection. Chips show it ahead and while it lasts.", footnote_divider=True)
 
 
 # ── Assistance: openpilot's own switches ──
