@@ -289,19 +289,28 @@ class UpstreamDevice:
     self._ids = f"{dongle} · {serial}"
     self._read_imei()
 
+  IMEI_TRIES, IMEI_WAIT_S = 6, 1.5   # openpilot gives each modem call 0.1 s, which the first call often misses
+
   def _read_imei(self) -> None:
-    """Asking the modem goes over D-Bus and can be slow or fail while it starts up, so it's read off the UI thread, once
-    it succeeds; until then the row says Not available, and opening the screen again tries again."""
+    """Asking the modem goes over D-Bus and can be slow or fail while it starts up, so it's read off the UI thread and
+    tried a few times, about 10 s in all; until then the row says Not available, and opening the screen again retries."""
     if self._imei or self._imei_reading or not self._tici:
       return
     import threading
+    import time
 
     def read():
       try:
         from openpilot.system.hardware import HARDWARE
-        self._imei = str(HARDWARE.get_imei(0) or "").strip()
-      except Exception:
-        pass
+        for attempt in range(self.IMEI_TRIES):
+          try:
+            self._imei = str(HARDWARE.get_imei(0) or "").strip()
+          except Exception:
+            pass
+          if self._imei:
+            return
+          if attempt + 1 < self.IMEI_TRIES:
+            time.sleep(self.IMEI_WAIT_S)
       finally:
         self._imei_reading = False
 
