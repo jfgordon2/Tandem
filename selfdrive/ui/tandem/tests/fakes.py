@@ -130,6 +130,10 @@ class FakeWifi:
     self.connecting_to_ssid = None
     self.ipv4_address = "192.168.1.42"
     self.tethering_password = "swordfish1"
+    self.tethering_ssid = "weedle-c488"
+    self.tethering_name_ready = True
+    self.tethering_name_busy = False
+    self.tethering_name_failed = False
     self.tethering = False
     self.calls = []
     self.need_auth = None
@@ -163,6 +167,9 @@ class FakeWifi:
 
   def set_tethering_password(self, password):
     self.tethering_password = password
+
+  def set_tethering_ssid(self, name):
+    self.tethering_ssid = name
 
   def set_current_network_metered(self, metered):
     self.calls.append(("metered", metered))

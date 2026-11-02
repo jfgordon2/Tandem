@@ -26,7 +26,7 @@ msgid "Default"
 msgstr "デフォルト"
 
 #: destinations.py:322
-#: settings/search.py:267
+#: settings/search.py:268
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:695
 msgid "Search"
 msgstr "検索"
@@ -396,7 +396,7 @@ msgstr "アップデートの準備完了"
 
 #: home.py:147
 #: settings/search.py:24
-#: settings/search.py:201
+#: settings/search.py:202
 msgid "Software"
 msgstr "ソフトウェア"
 
@@ -1633,20 +1633,20 @@ msgid "CONNECTIONS"
 msgstr "接続"
 
 #: settings/connections.py:64
-#: settings/network_tab.py:176
+#: settings/network_tab.py:199
 #: settings/search.py:31
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
 #: settings/connections.py:66
-#: settings/network_tab.py:186
+#: settings/network_tab.py:217
 #: settings/search.py:31
 msgid "Cellular"
 msgstr "モバイル通信"
 
 #: settings/connections.py:69
 #: settings/search.py:31
-#: settings/search.py:199
+#: settings/search.py:200
 msgid "Car Audio & Devices"
 msgstr "車のオーディオとデバイス"
 
@@ -3177,28 +3177,43 @@ msgstr "「{}」用"
 msgid "Network name"
 msgstr "ネットワーク名"
 
-#: settings/network_tab.py:99
+#: settings/network_tab.py:100
+#, python-brace-format
+msgid "{} · Couldn't save"
+msgstr "{} · 保存できませんでした"
+
+#: settings/network_tab.py:119
+msgid "Connected devices will need to reconnect."
+msgstr "接続中のデバイスは再接続が必要です。"
+
+#: settings/network_tab.py:122
 msgid "Hotspot password"
 msgstr "ホットスポットのパスワード"
 
-#: settings/network_tab.py:127
-#: settings/network_tab.py:192
+#: settings/network_tab.py:150
+#: settings/network_tab.py:223
 msgid "APN"
 msgstr ""
 
-#: settings/network_tab.py:127
+#: settings/network_tab.py:150
 msgid "Leave empty for automatic"
 msgstr "空欄で自動"
 
-#: settings/network_tab.py:133
-#: settings/network_tab.py:193
+#: settings/network_tab.py:156
+#: settings/network_tab.py:224
 #: sidebar.py:149
 msgid "Not connected"
 msgstr "未接続"
 
-#: settings/network_tab.py:194
-#: settings/network_tab.py:186
-#: settings/search.py:197
+#: settings/network_tab.py:209
+#: settings/network_tab.py:207
+#: settings/network_tab.py:223
+msgid "Edit"
+msgstr "編集"
+
+#: settings/network_tab.py:225
+#: settings/network_tab.py:217
+#: settings/search.py:198
 msgid "Roaming, APN and IP address"
 msgstr "ローミング、APN、IP アドレス"
 
@@ -3211,45 +3226,59 @@ msgstr "パスワードが違います"
 msgid "Enter password"
 msgstr "パスワードを入力"
 
-#: settings/network_tab.py:183
+#: settings/network_tab.py:106
+#: settings/network_tab.py:213
+#: settings/search.py:195
+msgid "Hotspot name"
+msgstr "ホットスポット名"
+
+#: settings/network_tab.py:113
+msgid "A saved network already uses this name"
+msgstr "保存済みのネットワークがこの名前を使用しています"
+
+#: settings/network_tab.py:207
+msgid "Saving…"
+msgstr "保存中…"
+
+#: settings/network_tab.py:212
 #: settings/search.py:194
 msgid "Hotspot"
 msgstr "ホットスポット"
 
-#: settings/network_tab.py:183
+#: settings/network_tab.py:212
 #: settings/search.py:194
 msgid "Share this device's connection"
 msgstr "このデバイスの接続を共有"
 
-#: settings/network_tab.py:184
-#: settings/search.py:195
+#: settings/network_tab.py:215
+#: settings/search.py:196
 msgid "Hotspot Password"
 msgstr "ホットスポットのパスワード"
 
-#: settings/network_tab.py:184
-#: settings/search.py:195
+#: settings/network_tab.py:215
+#: settings/search.py:196
 msgid "For phones joining this device's hotspot"
 msgstr "このデバイスのホットスポットにつなぐスマホ用"
 
-#: settings/network_tab.py:185
-#: settings/search.py:196
+#: settings/network_tab.py:216
+#: settings/search.py:197
 msgid "Save Data"
 msgstr "データ節約"
 
-#: settings/network_tab.py:185
-#: settings/search.py:196
+#: settings/network_tab.py:216
+#: settings/search.py:197
 msgid "No large uploads on cellular or phone hotspots"
 msgstr "モバイル通信やスマホのホットスポットでは大きなアップロードをしません"
 
-#: settings/network_tab.py:191
+#: settings/network_tab.py:222
 msgid "Roaming"
 msgstr "ローミング"
 
-#: settings/network_tab.py:191
+#: settings/network_tab.py:222
 msgid "Use cellular data outside your carrier's network"
 msgstr "契約キャリアの圏外でもモバイル通信を使う"
 
-#: settings/network_tab.py:193
+#: settings/network_tab.py:224
 #: settings/search.py:191
 msgid "IP Address"
 msgstr "IP アドレス"
@@ -3259,29 +3288,36 @@ msgstr "IP アドレス"
 msgid "for \"{}\", or leave empty for an open network"
 msgstr "「{}」用。オープンネットワークなら空欄"
 
-#: settings/network_tab.py:175
+#: settings/network_tab.py:198
 msgid "Scanning for networks…"
 msgstr "ネットワークを検索中…"
 
-#: settings/network_tab.py:176
+#: settings/network_tab.py:199
 #: settings/search.py:192
 msgid "Join a hidden network"
 msgstr "非公開ネットワークに接続"
 
-#: settings/network_tab.py:167
+#: settings/network_tab.py:110
+msgid "Enter a hotspot name"
+msgstr "ホットスポット名を入力してください"
+
+#: settings/network_tab.py:110
+msgid "Name is too long. Use a shorter name."
+msgstr "名前が長すぎます。短い名前にしてください。"
+
+#: settings/network_tab.py:111
+msgid "Use letters, numbers, spaces or punctuation"
+msgstr "文字、数字、スペース、記号を使ってください"
+
+#: settings/network_tab.py:190
 msgid "Secured"
 msgstr "保護あり"
 
-#: settings/network_tab.py:167
+#: settings/network_tab.py:190
 msgid "Open"
 msgstr "オープン"
 
-#: settings/network_tab.py:184
-#: settings/network_tab.py:192
-msgid "Edit"
-msgstr "編集"
-
-#: settings/network_tab.py:192
+#: settings/network_tab.py:223
 msgid "Automatic"
 msgstr "自動"
 
@@ -3913,78 +3949,82 @@ msgstr "名前とパスワードを入力"
 msgid "Hotspot, data use, roaming and APN"
 msgstr "ホットスポット、データ使用量、ローミング、APN"
 
-#: settings/search.py:197
+#: settings/search.py:195
+msgid "The name phones see when joining this device"
+msgstr "スマートフォンをこのデバイスに接続するときに表示される名前"
+
+#: settings/search.py:198
 msgid "Roaming, APN and the device's IP address"
 msgstr "ローミング、APN、デバイスの IP アドレス"
 
-#: settings/search.py:198
+#: settings/search.py:199
 msgid "A wheel remote's buttons and what they do"
 msgstr "ハンドル用リモコンのボタンとその動作"
 
-#: settings/search.py:199
+#: settings/search.py:200
 msgid "Car audio for alerts, and pairing devices"
 msgstr "アラート用の車のオーディオとデバイスのペアリング"
 
-#: settings/search.py:201
+#: settings/search.py:202
 msgid "Updates and the release notes"
 msgstr "アップデートとリリースノート"
 
-#: settings/search.py:202
+#: settings/search.py:203
 #: settings/software_tab.py:192
 msgid "Automatic Updates"
 msgstr "自動アップデート"
 
-#: settings/search.py:202
+#: settings/search.py:203
 #: settings/software_tab.py:192
 msgid "Download while parked, install when you turn off the car"
 msgstr "駐車中にダウンロードし、車の電源を切るとインストール"
 
-#: settings/search.py:203
+#: settings/search.py:204
 #: settings/software_tab.py:188
 #: settings/software_tab.py:140
 msgid "Release Channel"
 msgstr "リリースチャンネル"
 
-#: settings/search.py:203
+#: settings/search.py:204
 #: settings/software_tab.py:140
 msgid "The branch to download updates from"
 msgstr "アップデートをダウンロードするブランチ"
 
-#: settings/search.py:204
+#: settings/search.py:205
 #: settings/software_tab.py:195
 msgid "Reset Settings"
 msgstr "設定をリセット"
 
-#: settings/search.py:204
+#: settings/search.py:205
 msgid "Back to the Essentials defaults"
 msgstr "Essentials のデフォルトに戻す"
 
-#: settings/search.py:205
+#: settings/search.py:206
 #: settings/software_tab.py:169
 #: settings/software_tab.py:198
 msgid "Uninstall"
 msgstr "アンインストール"
 
-#: settings/search.py:205
+#: settings/search.py:206
 msgid "Remove this software from the device"
 msgstr "このソフトウェアをデバイスから削除"
 
-#: settings/search.py:379
-#: settings/search.py:370
+#: settings/search.py:380
+#: settings/search.py:371
 msgid "Search settings"
 msgstr "設定を検索"
 
-#: settings/search.py:268
+#: settings/search.py:269
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "「制限速度」などの設定名を話してください。終わったらマイクをタップします。"
 
-#: settings/search.py:350
-#: settings/search.py:309
+#: settings/search.py:351
+#: settings/search.py:310
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "「{}」に一致する設定はありません"
 
-#: settings/search.py:351
+#: settings/search.py:352
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "設定の名前か機能を入力してください（例：明るさ、車線変更）"
 

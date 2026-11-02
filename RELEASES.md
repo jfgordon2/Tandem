@@ -13,6 +13,7 @@ Tandem 2026.11.01
   * Weather heads-up: a chip before rain, snow or storms start and until when they should stop
 * Parked screen: the next 12 hours of weather, with what's coming and when
 * Bluetooth: enables the radio while parked and keeps scanning while its Connections page is open
+* Hotspot: view and edit its name under Connections > Cellular
 * Navigation settings show whether a Mapbox key is saved, with steps to add one
   * The steering arc warns before steering runs out, with Help steer at the limit
   * Alerts in three levels: info, warning and critical

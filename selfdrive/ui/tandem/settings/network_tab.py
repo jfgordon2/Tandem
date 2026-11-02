@@ -23,12 +23,12 @@ METERED_YES, METERED_NO = 1, 2
 
 
 def ask_text(title: str, subtitle: str, current: str, on_done: Callable[[str], None], min_length: int = 0, password: bool = False,
-             action: str = N_("Save")) -> None:
+             action: str = N_("Save"), max_length: int = 64) -> None:
   """The Essentials keyboard (upstream's, restyled); it closes itself and reports the result."""
   from openpilot.system.ui.lib.application import gui_app
   from openpilot.system.ui.widgets import DialogResult
   from openpilot.selfdrive.ui.tandem.keyboard import EssentialsKeyboard
-  keyboard = EssentialsKeyboard(max_text_size=64, min_text_size=min_length, password_mode=password, show_password_toggle=password,
+  keyboard = EssentialsKeyboard(max_text_size=max_length, min_text_size=min_length, password_mode=password, show_password_toggle=password,
                                 action=action)
   keyboard.set_title(title, subtitle)
   keyboard.set_text(current)
@@ -94,6 +94,29 @@ class Network:
 
   def set_hotspot(self, on: bool) -> None:
     self.wifi.set_tethering_active(on)
+
+  def hotspot_name_detail(self) -> str:
+    name = self.wifi.tethering_ssid
+    return t_("{} · Couldn't save", name) if self.wifi.tethering_name_failed else name
+
+  def edit_hotspot_name(self) -> None:
+    from openpilot.starpilot.tandem.wifi import name_problem
+
+    def ask(current: str, subtitle: str) -> None:
+      self._ask(N_("Hotspot name"), subtitle, current, done, 1, False, N_("Save"), max_length=32)
+
+    def done(name: str) -> None:
+      problem = name_problem(name)
+      error = {"empty": N_("Enter a hotspot name"), "long": N_("Name is too long. Use a shorter name."),
+               "control": N_("Use letters, numbers, spaces or punctuation")}.get(problem, "")
+      if name != self.wifi.tethering_ssid and self.wifi.is_connection_saved(name):
+        error = N_("A saved network already uses this name")
+      if error:
+        ask(name, error)
+      else:
+        self.wifi.set_tethering_ssid(name)
+
+    ask(self.wifi.tethering_ssid, N_("Connected devices will need to reconnect."))
 
   def edit_hotspot_password(self) -> None:
     self._ask(N_("Hotspot password"), "", self.wifi.tethering_password, self.wifi.set_tethering_password, MIN_PASSWORD, True)
@@ -179,9 +202,17 @@ def wifi_panel(model: Network) -> Component:
 
 
 def cellular_panel(model: Network, open_advanced: Callable[[], None]) -> ListPanel:
+  hotspot = Switch(lambda: model.hotspot, model.set_hotspot)
+  hotspot.set_enabled(lambda: not model.wifi.tethering_name_busy)
+  edit_name = ValueButton(lambda: N_("Saving…") if model.wifi.tethering_name_busy else N_("Edit"), model.edit_hotspot_name)
+  edit_name.set_enabled(lambda: model.wifi.tethering_name_ready)
+  password = ValueButton(lambda: N_("Edit"), model.edit_hotspot_password)
+  password.set_enabled(lambda: not model.wifi.tethering_name_busy)
   return ListPanel([
-    SettingRow(N_("Hotspot"), N_("Share this device's connection"), Switch(lambda: model.hotspot, model.set_hotspot)),
-    SettingRow(N_("Hotspot Password"), N_("For phones joining this device's hotspot"), ValueButton(lambda: N_("Edit"), model.edit_hotspot_password)),
+    SettingRow(N_("Hotspot"), N_("Share this device's connection"), hotspot),
+    SettingRow(N_("Hotspot name"), model.hotspot_name_detail, edit_name,
+               subtitle_color=lambda: T.DANGER_TEXT if model.wifi.tethering_name_failed else T.ACCENT_TEXT),
+    SettingRow(N_("Hotspot Password"), N_("For phones joining this device's hotspot"), password),
     SettingRow(N_("Save Data"), N_("No large uploads on cellular or phone hotspots"), Switch(lambda: model.save_data, model.set_save_data)),
   ], title=N_("Cellular"), end_divider=True, bottom=SettingRow(N_("Roaming, APN and IP address"), None, on_click=open_advanced))
 
@@ -195,7 +226,7 @@ def advanced_panel(model: Network) -> ListPanel:
 
 
 def upstream_wifi():
-  from openpilot.system.ui.lib.wifi_manager import WifiManager
+  from openpilot.starpilot.tandem.wifi import WifiManager
   wifi = WifiManager()
   wifi.set_active(False)
   return wifi

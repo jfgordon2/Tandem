@@ -213,7 +213,7 @@ The bottom bar has four tabs: Driving, Device, Connections and Software. The cur
   - Serial, device ID and driver monitoring reset move to Developer View.
 - **Connections › Wi-Fi and Cellular:**
   - The Wi-Fi list, with the connected network on top, plus "Join a hidden network".
-  - Cellular status, Hotspot (tethering) with its password, and Save Data, which is on by default and covers metered Wi-Fi.
+  - Cellular status, Hotspot (tethering) with its current name, an Edit button and its password, and Save Data, which is on by default and covers metered Wi-Fi.
   - Roaming, APN and IP address sit behind one row.
 - **Connections › Bluetooth Remote and Car Audio & Devices:** Bluetooth Remote comes first in the Bluetooth sections, because a remote mounted on the steering wheel is the main reason to pair something. It's named apart from the car's own Steering Wheel Buttons (Vehicle).
   - The connected remote is listed with its assigned buttons, each with its action.

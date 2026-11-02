@@ -243,7 +243,7 @@
   {
    "mock": "connectionscellular",
    "title": "Connections › Cellular",
-   "note": "Matches: Hotspot with its password, Save Data, and Roaming, APN and IP address behind one row.",
+   "note": "Matches: Hotspot, its current name and Edit button, its password, Save Data, and Roaming, APN and IP address behind one row. Both Edit buttons use the shared value pill, including its chevron.",
    "match": true
   },
   {

@@ -201,6 +201,6 @@ def main(frame, save, out, tap, gui_app):
   # The other screens have scenes of their own.
   for scene in ("scene_onroad.py", "scene_sidebar.py", "scene_setup.py", "scene_alerts.py", "scene_extras.py", "scene_dev.py",
                 "scene_homealerts.py", "scene_destinations.py", "scene_keyboard.py", "scene_bundlesheet.py", "scene_camera.py",
-                "scene_lead.py", "scene_mapbox.py"):
+                "scene_lead.py", "scene_mapbox.py", "scene_hotspot.py"):
     runpy.run_path(os.path.join(os.path.dirname(os.path.abspath(__file__)), scene))["main"](
       frame=frame, save=save, out=out, tap=tap, gui_app=gui_app)

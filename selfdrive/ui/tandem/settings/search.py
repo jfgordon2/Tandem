@@ -192,6 +192,7 @@ ENTRIES: list[Entry] = [
   Entry(N_("Join a hidden network"), N_("Enter its name and password"), 2, section=0, words="wifi"),
   _place(N_("Cellular"), N_("Hotspot, data use, roaming and APN"), 2, section=1, words="lte sim"),
   Entry(N_("Hotspot"), N_("Share this device's connection"), 2, section=1, words="tether"),
+  Entry(N_("Hotspot name"), N_("The name phones see when joining this device"), 2, section=1, words="tether ssid rename"),
   Entry(N_("Hotspot Password"), N_("For phones joining this device's hotspot"), 2, section=1, words="tether"),
   Entry(N_("Save Data"), N_("No large uploads on cellular or phone hotspots"), 2, section=1, words="metered"),
   Entry(N_("Roaming, APN and IP address"), N_("Roaming, APN and the device's IP address"), 2, section=1, words="ip"),

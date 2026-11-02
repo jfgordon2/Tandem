@@ -26,7 +26,7 @@ msgid "Default"
 msgstr ""
 
 #: destinations.py:322
-#: settings/search.py:267
+#: settings/search.py:268
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:695
 msgid "Search"
 msgstr ""
@@ -397,7 +397,7 @@ msgstr ""
 
 #: home.py:147
 #: settings/search.py:24
-#: settings/search.py:201
+#: settings/search.py:202
 msgid "Software"
 msgstr ""
 
@@ -1637,20 +1637,20 @@ msgid "CONNECTIONS"
 msgstr ""
 
 #: settings/connections.py:64
-#: settings/network_tab.py:176
+#: settings/network_tab.py:199
 #: settings/search.py:31
 msgid "Wi-Fi"
 msgstr ""
 
 #: settings/connections.py:66
-#: settings/network_tab.py:186
+#: settings/network_tab.py:217
 #: settings/search.py:31
 msgid "Cellular"
 msgstr ""
 
 #: settings/connections.py:69
 #: settings/search.py:31
-#: settings/search.py:199
+#: settings/search.py:200
 msgid "Car Audio & Devices"
 msgstr ""
 
@@ -3183,28 +3183,43 @@ msgstr ""
 msgid "Network name"
 msgstr ""
 
-#: settings/network_tab.py:99
+#: settings/network_tab.py:100
+#, python-brace-format
+msgid "{} · Couldn't save"
+msgstr ""
+
+#: settings/network_tab.py:119
+msgid "Connected devices will need to reconnect."
+msgstr ""
+
+#: settings/network_tab.py:122
 msgid "Hotspot password"
 msgstr ""
 
-#: settings/network_tab.py:127
-#: settings/network_tab.py:192
+#: settings/network_tab.py:150
+#: settings/network_tab.py:223
 msgid "APN"
 msgstr ""
 
-#: settings/network_tab.py:127
+#: settings/network_tab.py:150
 msgid "Leave empty for automatic"
 msgstr ""
 
-#: settings/network_tab.py:133
-#: settings/network_tab.py:193
+#: settings/network_tab.py:156
+#: settings/network_tab.py:224
 #: sidebar.py:149
 msgid "Not connected"
 msgstr ""
 
-#: settings/network_tab.py:194
-#: settings/network_tab.py:186
-#: settings/search.py:197
+#: settings/network_tab.py:209
+#: settings/network_tab.py:207
+#: settings/network_tab.py:223
+msgid "Edit"
+msgstr ""
+
+#: settings/network_tab.py:225
+#: settings/network_tab.py:217
+#: settings/search.py:198
 msgid "Roaming, APN and IP address"
 msgstr ""
 
@@ -3217,45 +3232,59 @@ msgstr ""
 msgid "Enter password"
 msgstr ""
 
-#: settings/network_tab.py:183
+#: settings/network_tab.py:106
+#: settings/network_tab.py:213
+#: settings/search.py:195
+msgid "Hotspot name"
+msgstr ""
+
+#: settings/network_tab.py:113
+msgid "A saved network already uses this name"
+msgstr ""
+
+#: settings/network_tab.py:207
+msgid "Saving…"
+msgstr ""
+
+#: settings/network_tab.py:212
 #: settings/search.py:194
 msgid "Hotspot"
 msgstr ""
 
-#: settings/network_tab.py:183
+#: settings/network_tab.py:212
 #: settings/search.py:194
 msgid "Share this device's connection"
 msgstr ""
 
-#: settings/network_tab.py:184
-#: settings/search.py:195
+#: settings/network_tab.py:215
+#: settings/search.py:196
 msgid "Hotspot Password"
 msgstr ""
 
-#: settings/network_tab.py:184
-#: settings/search.py:195
+#: settings/network_tab.py:215
+#: settings/search.py:196
 msgid "For phones joining this device's hotspot"
 msgstr ""
 
-#: settings/network_tab.py:185
-#: settings/search.py:196
+#: settings/network_tab.py:216
+#: settings/search.py:197
 msgid "Save Data"
 msgstr ""
 
-#: settings/network_tab.py:185
-#: settings/search.py:196
+#: settings/network_tab.py:216
+#: settings/search.py:197
 msgid "No large uploads on cellular or phone hotspots"
 msgstr ""
 
-#: settings/network_tab.py:191
+#: settings/network_tab.py:222
 msgid "Roaming"
 msgstr ""
 
-#: settings/network_tab.py:191
+#: settings/network_tab.py:222
 msgid "Use cellular data outside your carrier's network"
 msgstr ""
 
-#: settings/network_tab.py:193
+#: settings/network_tab.py:224
 #: settings/search.py:191
 msgid "IP Address"
 msgstr ""
@@ -3265,29 +3294,36 @@ msgstr ""
 msgid "for \"{}\", or leave empty for an open network"
 msgstr ""
 
-#: settings/network_tab.py:175
+#: settings/network_tab.py:198
 msgid "Scanning for networks…"
 msgstr ""
 
-#: settings/network_tab.py:176
+#: settings/network_tab.py:199
 #: settings/search.py:192
 msgid "Join a hidden network"
 msgstr ""
 
-#: settings/network_tab.py:167
+#: settings/network_tab.py:110
+msgid "Enter a hotspot name"
+msgstr ""
+
+#: settings/network_tab.py:110
+msgid "Name is too long. Use a shorter name."
+msgstr ""
+
+#: settings/network_tab.py:111
+msgid "Use letters, numbers, spaces or punctuation"
+msgstr ""
+
+#: settings/network_tab.py:190
 msgid "Secured"
 msgstr ""
 
-#: settings/network_tab.py:167
+#: settings/network_tab.py:190
 msgid "Open"
 msgstr ""
 
-#: settings/network_tab.py:184
-#: settings/network_tab.py:192
-msgid "Edit"
-msgstr ""
-
-#: settings/network_tab.py:192
+#: settings/network_tab.py:223
 msgid "Automatic"
 msgstr ""
 
@@ -3919,78 +3955,82 @@ msgstr ""
 msgid "Hotspot, data use, roaming and APN"
 msgstr ""
 
-#: settings/search.py:197
-msgid "Roaming, APN and the device's IP address"
+#: settings/search.py:195
+msgid "The name phones see when joining this device"
 msgstr ""
 
 #: settings/search.py:198
-msgid "A wheel remote's buttons and what they do"
+msgid "Roaming, APN and the device's IP address"
 msgstr ""
 
 #: settings/search.py:199
+msgid "A wheel remote's buttons and what they do"
+msgstr ""
+
+#: settings/search.py:200
 msgid "Car audio for alerts, and pairing devices"
 msgstr ""
 
-#: settings/search.py:201
+#: settings/search.py:202
 msgid "Updates and the release notes"
 msgstr ""
 
-#: settings/search.py:202
+#: settings/search.py:203
 #: settings/software_tab.py:192
 msgid "Automatic Updates"
 msgstr ""
 
-#: settings/search.py:202
+#: settings/search.py:203
 #: settings/software_tab.py:192
 msgid "Download while parked, install when you turn off the car"
 msgstr ""
 
-#: settings/search.py:203
+#: settings/search.py:204
 #: settings/software_tab.py:188
 #: settings/software_tab.py:140
 msgid "Release Channel"
 msgstr ""
 
-#: settings/search.py:203
+#: settings/search.py:204
 #: settings/software_tab.py:140
 msgid "The branch to download updates from"
 msgstr ""
 
-#: settings/search.py:204
+#: settings/search.py:205
 #: settings/software_tab.py:195
 msgid "Reset Settings"
 msgstr ""
 
-#: settings/search.py:204
+#: settings/search.py:205
 msgid "Back to the Essentials defaults"
 msgstr ""
 
-#: settings/search.py:205
+#: settings/search.py:206
 #: settings/software_tab.py:169
 #: settings/software_tab.py:198
 msgid "Uninstall"
 msgstr ""
 
-#: settings/search.py:205
+#: settings/search.py:206
 msgid "Remove this software from the device"
 msgstr ""
 
-#: settings/search.py:379
-#: settings/search.py:370
+#: settings/search.py:380
+#: settings/search.py:371
 msgid "Search settings"
 msgstr ""
 
-#: settings/search.py:268
+#: settings/search.py:269
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr ""
 
-#: settings/search.py:350
-#: settings/search.py:309
+#: settings/search.py:351
+#: settings/search.py:310
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr ""
 
-#: settings/search.py:351
+#: settings/search.py:352
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr ""
 
