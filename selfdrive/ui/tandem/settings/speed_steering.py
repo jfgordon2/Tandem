@@ -286,6 +286,9 @@ def weather_panel(model: Weather) -> ListPanel:
 
 # ── Assistance: openpilot's own switches ──
 
+# sentryd's motion threshold (m/s² of change): lower notices smaller bumps. Standard is StarPilot's default.
+SENTRY_SENSITIVITY = [(N_("Low"), 0.08), (N_("Standard"), 0.04), (N_("High"), 0.02)]
+
 class Assistance:
   def __init__(self, store: SettingsStore, live):
     self._store = store
@@ -309,6 +312,24 @@ class Assistance:
 
   def summary(self) -> str:
     return N_("Gas pedal disengages") if self.get("DisengageOnAccelerator") else N_("Gas pedal doesn't disengage")
+
+  # Sentry (StarPilot's sentryd): pictures when the parked car is bumped, viewed in Galaxy › Tools › Sentry
+
+  @property
+  def sentry(self) -> bool:
+    return self.get("SentryModeEnabled")
+
+  def set_sentry(self, on: bool) -> None:
+    self._store.write({"SentryModeEnabled": on})
+
+  @property
+  def sentry_sensitivity(self) -> int:
+    """Index into SENTRY_SENSITIVITY, or -1 for a value set elsewhere (Galaxy's slider)."""
+    value = self._store.get_float("SentryModeSensitivity") or SENTRY_SENSITIVITY[1][1]
+    return next((i for i, (_, threshold) in enumerate(SENTRY_SENSITIVITY) if abs(value - threshold) < 1e-6), -1)
+
+  def set_sentry_sensitivity(self, index: int) -> None:
+    self._store.write({"SentryModeSensitivity": SENTRY_SENSITIVITY[index][1]})
 
   def monitoring_summary(self) -> str:
     return N_("Driver monitoring always on") if self.get("AlwaysOnDM") else N_("Driver monitoring while engaged")
@@ -338,6 +359,12 @@ def driver_monitoring_panel(model: Assistance, rows: list) -> ListPanel:
     SettingRow(N_("Always-On Driver Monitoring"), N_("Watches for distraction even when openpilot is off"),
                Switch(lambda: model.get("AlwaysOnDM"), model.setter("AlwaysOnDM"))),
     *rows,
+    SectionHeader(N_("WHILE PARKED")),
+    SettingRow(N_("Sentry Mode"), N_("Pictures in Galaxy if the parked car is bumped"),
+               Switch(lambda: model.sentry, model.set_sentry)),
+    SettingRow(N_("Sensitivity"), N_("High notices smaller bumps"), indent=True,
+               control=Segmented([name for name, _ in SENTRY_SENSITIVITY], lambda: model.sentry_sensitivity, model.set_sentry_sensitivity,
+                                 height=T.px(42), font_size=T.font_px(15))),   # as the other sub-rows' choices
   ], title=N_("Driver Monitoring"), subtitle=N_("Watches that you're paying attention"))
 
 

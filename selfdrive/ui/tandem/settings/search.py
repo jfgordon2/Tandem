@@ -126,6 +126,8 @@ ENTRIES: list[Entry] = [
   Entry(N_("Always-On Driver Monitoring"), N_("Watches for distraction even when openpilot is off"), 0, "assistance", words="dm"),
   Entry(N_("Driver Camera"), N_("Check that it can see your face"), 0, "assistance", words="preview dm"),
   Entry(N_("Driver Monitoring"), N_("Forget which side of the car the driver sits on"), 0, "assistance", words="reset dm"),
+  Entry(N_("Sentry Mode"), N_("Pictures in Galaxy if the parked car is bumped"), 0, "assistance", words="security parked camera bump theft"),
+  Entry(N_("Sensitivity"), N_("High notices smaller bumps"), 0, "assistance", words="sentry motion"),
   _place(N_("Tuner Mode"), N_("Fine-tuning screens for gas, brake, steering and following"), 0, words="tuning"),
   # Driving › Tuner Mode
   _place(N_("Steering"), N_("Learned steering values and the controller"), 0, TN, 0),

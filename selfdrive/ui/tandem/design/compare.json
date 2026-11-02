@@ -9,7 +9,7 @@
   {
    "mock": "assistance",
    "title": "Driving › Assistance",
-   "note": "Matches: openpilot's core switches beside Driver Monitoring, which gathers Always-On Driver Monitoring, the Driver Camera preview and the reset.",
+   "note": "openpilot's core switches beside Driver Monitoring: Always-On Driver Monitoring, the Driver Camera preview, the reset, and While parked (Sentry Mode, and its Sensitivity as a sub-row). Rows keep the standard height, so While parked scrolls into view instead of fitting as in the mock.",
    "match": true
   },
   {

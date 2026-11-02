@@ -359,7 +359,7 @@ def test_driver_monitoring_lives_under_assistance():
   model = Assistance(store, FakeLive())
   rows = _rows(driver_monitoring_panel(model, driver_monitoring_rows(
     device, lambda title, message, label, action, danger, icon: asked.append((label, action)))))
-  assert list(rows) == ["Always-On Driver Monitoring", "Driver Camera", "Driver Monitoring"]
+  assert list(rows) == ["Always-On Driver Monitoring", "Driver Camera", "Driver Monitoring", "Sentry Mode", "Sensitivity"]
   assert "Always-On Driver Monitoring" not in _rows(assistance_panel(model))
   assert not rows["Driver Camera"]._control.enabled and not rows["Driver Monitoring"]._control.enabled   # the car must be off
   device.offroad = True
@@ -1455,3 +1455,18 @@ def test_the_language_list_leaves_out_the_novelty_styles():
                ("Shakespearean", "main_shakespearean"), ("日本語", "main_ja")]
   assert [n for n, _ in picker_languages(languages, "en")] == ["English", "Deutsch", "日本語"]
   assert [n for n, _ in picker_languages(languages, "pirate")] == ["English", "Deutsch", "Pirate", "日本語"]   # in use: kept
+
+
+
+def test_sentry_mode_writes_starpilots_params_and_sensitivity_presets():
+  from openpilot.selfdrive.ui.tandem.settings.device import driver_monitoring_rows
+  from openpilot.selfdrive.ui.tandem.settings.speed_steering import Assistance, driver_monitoring_panel
+  store, cache = _store({"SentryModeEnabled": False, "SentryModeSensitivity": 0.04})
+  model = Assistance(store, FakeLive())
+  rows = _rows(driver_monitoring_panel(model, driver_monitoring_rows(FakeDevice(), None)))
+  assert not rows["Sentry Mode"]._control.value and model.sentry_sensitivity == 1   # off by default, Standard
+  model.set_sentry(True)
+  model.set_sentry_sensitivity(2)
+  assert cache.values["SentryModeEnabled"] and cache.values["SentryModeSensitivity"] == 0.02 and model.sentry_sensitivity == 2
+  cache.values["SentryModeSensitivity"] = 0.013   # set with Galaxy's slider: none of the three
+  assert model.sentry_sensitivity == -1
