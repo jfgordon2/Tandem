@@ -137,3 +137,9 @@ def test_the_weather_chime_is_its_own_switch_on_the_alerts_page(tandem_prefs):
   assert alerts.chime("WeatherChime") and "Weather heads-up" in alerts.chimes_summary()
   alerts.set_chime("WeatherChime", False)
   assert not alerts.chime("WeatherChime") and "WeatherChime" not in cache.values   # a marker file, not a param
+
+
+@pytest.mark.parametrize("code, name", [(71, "Light snow"), (73, "Snow"), (75, "Heavy snow"), (77, "Snow grains"),
+                                        (85, "Light snow showers"), (86, "Heavy snow"), (61, "Light rain"), (65, "Heavy rain")])
+def test_snow_and_rain_are_named_by_strength(code, name):
+  assert F.HAZARDS[code][0] == name
