@@ -501,7 +501,8 @@ class BundleOverrides(Component):
     self._tab = index
 
   def _render(self, rect: rl.Rectangle):
-    tuner, bundle = self._tuner, OVERRIDE_BUNDLES[self._tab]
+    tab = self._tab   # once: a tap on the tabs lands while they render below, and the rest of this frame must match
+    tuner, bundle = self._tuner, OVERRIDE_BUNDLES[tab]
     draw.fill(rect, T.SURFACE_2, T.RADIUS_PANEL)
     header = inset(rl.Rectangle(rect.x, rect.y, rect.width, self.HEADER), left=T.px(22), right=T.px(16), y=T.px(8))
     w, h = self._tabs.preferred_size(header.width)
@@ -514,7 +515,7 @@ class BundleOverrides(Component):
     note_h = draw.line_height(T.SIZE_SUBTITLE) + T.px(28)
     grid = inset(rl.Rectangle(rect.x, rect.y + self.HEADER, rect.width, rect.height - self.HEADER - note_h), x=T.px(10), y=T.px(6))
     col_w = (grid.width - T.px(10)) / 2
-    for i, (key, badge, switch) in enumerate(self._items[self._tab]):
+    for i, (key, badge, switch) in enumerate(self._items[tab]):
       col, line = i % 2, i // 2
       cell = rl.Rectangle(grid.x + col * (col_w + T.px(10)), grid.y + line * (self.ROW + T.DIVIDER), col_w, self.ROW)
       if line > 0:
@@ -528,8 +529,8 @@ class BundleOverrides(Component):
         badge.render(place(text, bw, bh, Align.END))
         text = inset(text, right=bw + T.px(10))
       draw.text(text, ITEM_NAMES[key], T.font_px(16), T.TEXT, T.FONT_SEMIBOLD)
-    if OVERRIDE_BUNDLES[self._tab] is DEVELOPER_VIEW:   # the strip's metrics, under the switches
-      lines = -(-len(self._items[self._tab]) // 2)
+    if bundle is DEVELOPER_VIEW:   # the strip's metrics, under the switches
+      lines = -(-len(self._items[tab]) // 2)
       cell = rl.Rectangle(grid.x, grid.y + lines * (self.ROW + T.DIVIDER), grid.width, self.ROW)
       draw.hline(cell.x, cell.y - T.DIVIDER, cell.width)
       body = inset(cell, x=T.px(10))

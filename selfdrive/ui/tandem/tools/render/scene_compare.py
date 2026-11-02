@@ -81,6 +81,12 @@ def main(frame, save, out, tap, gui_app):
   for i, name in enumerate(["tuner", "tunergas", "tunerfollowing", "tunerbundles"]):
     win.top.select(i)
     shot(name)
+  r = win.top.current._tabs.rect        # tap Lead Insights: the tab changes while the panel draws (it once crashed here)
+  down, up = tap(r.x + r.width * 0.75, r.y + r.height / 2)
+  frame(draw, down)
+  frame(draw, up)
+  shot("tunerbundles_lead")
+  win.top.current._select(0)
   win.top.current._choose._click_callback()
   shot("barmetrics", 30)
   win.dismiss()
