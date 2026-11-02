@@ -167,7 +167,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
     self._limit_offer = LimitOfferState()
     self._follower = LimitFollower()
     self._offer_chime = OfferChime()
-    self._bar = OnroadBar(self._bar_state, self._open_menu, self._step_speed, self._toggle_engaged, self._end_route)
+    self._bar = OnroadBar(self._bar_state, self._open_menu, self._step_speed, self._toggle_engaged, self._end_route, self._where_to)
     self._chip_view = StatusChip(lambda: self._chip_list)
     self._arc = HeadroomArc(lambda: self._arc_state, lambda: DEV_ARC if self._dev is not None else ARC,   # each mock's curve
                             lambda: self._headroom_warning)
@@ -633,6 +633,12 @@ class EssentialsOnroadView(StarPilotOnroadView):
     from openpilot.starpilot.common.controller_actions import CONTROLLER_ACTION_DISENGAGE, CONTROLLER_ACTION_ENGAGE
     from openpilot.starpilot.system.wheel_controls.wheel_controlsd import trigger_controller_action
     trigger_controller_action(CONTROLLER_ACTION_DISENGAGE if ui_state.engaged else CONTROLLER_ACTION_ENGAGE, self._memory)
+
+  def _where_to(self) -> None:
+    """The bar's Where to? (without a route): the same screen as the parked card, over the driving view."""
+    from openpilot.system.ui.lib.application import gui_app
+    from openpilot.selfdrive.ui.tandem.destinations import destinations_screen
+    gui_app.push_widget(destinations_screen(gui_app.pop_widget))
 
   def _end_route(self) -> None:
     self._params.remove("NavDestination")

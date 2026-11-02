@@ -370,6 +370,16 @@
    "built": "onroad_extras"
   },
   {
+   "mock": "onroadwhereto",
+   "title": "Where to? in the bar",
+   "note": "Matches: without a route, a tinted Where to? button beside MAX opens the same screen as the parked card; none while navigating, so the route's arrival, time left and End route keep their room.",
+   "match": true,
+   "built": [
+    "onroad_hero",
+    "onroad_nav"
+   ]
+  },
+  {
    "mock": "statuschips",
    "title": "Onroad › Status chips",
    "note": "Text, icons and order match. Top: the four steering pauses. Middle: the wheel-button modes with Lane change blocked, which replaces the blind spot banner. Each set is shown together here; on the road one pause and one Pulse & glide show at a time. Bottom: a real stack, the curve chip fading. Built chips use the dark fill from the onroad mock; this sheet tints each chip by tone, so the two mocks differ there.",

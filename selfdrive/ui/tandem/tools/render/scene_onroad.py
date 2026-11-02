@@ -23,7 +23,7 @@ def road(rect):
 
 def scene(state, arc, chip, offer=None, help_=False, speed=62, limit="60", turn=None, signal=None, attentive=1.0):
   rect = rl.Rectangle(15, 15, W - 30, H - 30)
-  bar = OnroadBar(lambda: state, lambda: None, lambda d: None, lambda: None, lambda: None)
+  bar = OnroadBar(lambda: state, lambda: None, lambda d: None, lambda: None, lambda: None, lambda: None)
   def render():
     road(rect)
     HeadroomArc(lambda: arc, help_steer=lambda: help_).render(rect)

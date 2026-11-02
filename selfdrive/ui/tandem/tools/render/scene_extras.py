@@ -22,7 +22,7 @@ def main(frame, save, out, tap, gui_app):
   left_lane = ribbon((cx - 90, horizon), (cx - 30, horizon), (cx - 1400, bottom), (cx - 340, bottom))
   right_lane = ribbon((cx + 30, horizon), (cx + 90, horizon), (cx + 340, bottom), (cx + 1400, bottom))
   state = BarState(True, True, 63, "mph", "Market Street", heading="NE", weather=("cloud", "34°"))
-  bar = OnroadBar(lambda: state, lambda: None, lambda d: None, lambda: None, lambda: None)
+  bar = OnroadBar(lambda: state, lambda: None, lambda d: None, lambda: None, lambda: None, lambda: None)
   marker = rl.load_render_texture(22, 22)
   rl.begin_texture_mode(marker)
   rl.clear_background(rl.Color(0, 0, 0, 0))

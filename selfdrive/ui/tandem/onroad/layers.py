@@ -45,14 +45,19 @@ def _glyph_button(name: str, on_click: Callable[[], None]) -> Button:
 
 
 class OnroadBar(Component):
-  """Menu, MAX − / +, the street name (with arrival, time left and End route while navigating), and engage."""
+  """Menu, MAX − / +, Where to? (without a route, design/onroadwhereto.html), the street name (with arrival, time left and
+  End route while navigating), and engage."""
   grow_touch_target = False
 
   def __init__(self, state: Callable[[], BarState], on_menu: Callable[[], None], on_speed: Callable[[int], None],
-               on_engage: Callable[[], None], on_end_route: Callable[[], None]):
+               on_engage: Callable[[], None], on_end_route: Callable[[], None], on_where_to: Callable[[], None] | None = None):
     super().__init__()
     self._state = state
     self._menu = self._child(_glyph_button("menu", on_menu))
+    # Ghost style over our own tinted fill, as the parked screen's Where to? card's icon well.
+    self._where = self._child(Button(on_click=on_where_to, style=ButtonStyle.GHOST, height=BAR_HEIGHT, width=BAR_HEIGHT,
+                                     radius=T.RADIUS_CARD, glyph=lambda r, c, s: draw.icon(r, "navigate", T.ACCENT_TEXT, T.px(28))))
+    self._has_where = on_where_to is not None
     self._minus = self._child(Button("−", lambda: on_speed(-1), ButtonStyle.GHOST, height=BAR_HEIGHT, width=T.px(56),
                                      font_size=T.font_px(30)))
     self._plus = self._child(Button("+", lambda: on_speed(1), ButtonStyle.GHOST, height=BAR_HEIGHT, width=T.px(56),
@@ -64,8 +69,14 @@ class OnroadBar(Component):
     for b in (self._minus, self._plus):
       b.set_enabled(lambda: self._state().engaged and self._state().set_speed > 0)
 
+  def where_to_shown(self) -> bool:
+    return self._has_where and not self._state().navigating
+
   def rects(self, rect: rl.Rectangle) -> dict[str, rl.Rectangle]:
     body = rl.Rectangle(rect.x + BAR_MARGIN, rect.y + rect.height - BAR_MARGIN - BAR_HEIGHT, rect.width - BAR_MARGIN * 2, BAR_HEIGHT)
+    if self.where_to_shown():
+      menu, speed, where, center, engage = row(body, [BAR_HEIGHT, T.px(194), BAR_HEIGHT, FILL, BAR_HEIGHT], T.px(12))
+      return {"menu": menu, "speed": speed, "where": where, "center": center, "engage": engage}
     menu, speed, center, engage = row(body, [BAR_HEIGHT, T.px(194), FILL, BAR_HEIGHT], T.px(12))
     return {"menu": menu, "speed": speed, "center": center, "engage": engage}
 
@@ -76,6 +87,9 @@ class OnroadBar(Component):
     state = self._state()
     r = self.rects(rect)
     self._menu.render(r["menu"])
+    if "where" in r:
+      draw.fill(r["where"], T.ACCENT_SURFACE, T.RADIUS_CARD)
+      self._where.render(r["where"])
 
     draw.fill(r["speed"], CONTROL_FILL, T.RADIUS_CARD)
     minus, value, plus = row(r["speed"], [T.px(56), FILL, T.px(56)])
