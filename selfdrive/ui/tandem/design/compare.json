@@ -61,6 +61,12 @@
    "match": false
   },
   {
+   "mock": "bootlogo",
+   "title": "Tandem boot logo",
+   "note": "Matches the HTML source. The shipped 2160×1080 JPEG uses a true-black background; decoded outer margins are RGB (0, 0, 0), so they can test the OLED's black level during boot.",
+   "match": true
+  },
+  {
    "mock": "displaymap",
    "title": "Display › Map",
    "note": "Matches, with the note at the bottom. No Auto sign option: StarPilot's setting is US or Vienna.",

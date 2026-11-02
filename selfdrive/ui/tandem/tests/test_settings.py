@@ -1067,6 +1067,10 @@ def test_essentials_choose_and_install_the_tandem_boot_logo():
   from PIL import Image
   with Image.open(TANDEM_LOGO_FILE) as image:
     assert image.size == (2160, 1080)   # StarPilot's boot logo size
+    # Check decoded pixels: a near-black background still lights the OLED during boot.
+    image = image.convert("RGB")
+    for margin in ((0, 0, 2160, 200), (0, 880, 2160, 1080), (0, 0, 200, 1080), (1960, 0, 2160, 1080)):
+      assert image.crop(margin).getextrema() == ((0, 0), (0, 0), (0, 0))
 
 
 def test_upstream_boot_logos_install_tandem_once(tmp_path):
