@@ -64,7 +64,8 @@ def test_snapshot_accepts_live_model_lane_change_enums(lane_state, expected, dir
 @pytest.mark.parametrize("hide_turn_banner", [False, True])
 def test_turn_chip_follows_actual_slowdown_then_turn(direction, hide_turn_banner):
   cs = car.CarState.new_message(vEgo=12.0, aEgo=0.0)
-  plan = custom.StarPilotPlan.new_message(experimentalMode=True, vCruise=8.0, navTurnManeuver="turn", navTurnModifier=direction)
+  plan = custom.StarPilotPlan.new_message(lateralCheck=True, experimentalMode=True, vCruise=8.0,
+                                         navTurnManeuver="turn", navTurnModifier=direction)
   state = SimpleNamespace(sm=StatusMessages(carState=cs, starpilotPlan=plan), engaged=True, is_metric=False,
                           always_on_lateral_active=False, starpilot_toggles={"hide_turning_banner": hide_turn_banner})
   picker = ChipPicker()
@@ -255,7 +256,7 @@ def test_home_software_card_shows_only_the_version_number():
 
 
 def test_weather_chip_only_when_its_preset_adds_distance():
-  plan = custom.StarPilotPlan.new_message(weatherId=501)
+  plan = custom.StarPilotPlan.new_message(lateralCheck=True, weatherId=501)
   def chip(toggles):
     state = SimpleNamespace(sm=StatusMessages(starpilotPlan=plan), engaged=True, is_metric=False, always_on_lateral_active=False,
                             starpilot_toggles=toggles)
@@ -263,4 +264,19 @@ def test_weather_chip_only_when_its_preset_adds_distance():
   assert chip({"weather_presets": True, "increase_following_distance_rain": 0.5}).label == "Rain · longer gap"
   assert chip({"weather_presets": True, "increase_following_distance_rain": 0}) is None   # rain, but its preset keeps the gap
   assert chip({"weather_presets": False, "increase_following_distance_rain": 0.5}) is None
+
+
+@pytest.mark.parametrize("lateral_check,expected", [(True, "turn"), (False, "pause_held")])
+def test_live_planner_steering_gate_keeps_priority_over_turn_and_weather(lateral_check, expected):
+  cs = car.CarState.new_message(vEgo=12.0, aEgo=-0.5)
+  plan = custom.StarPilotPlan.new_message(lateralCheck=lateral_check, vCruise=8.0, navTurnControllingSpeed=True,
+                                         navTurnManeuver="turn", navTurnModifier="left", weatherId=501)
+  with custom.StarPilotPlan.from_bytes(plan.to_bytes()) as received:
+    state = SimpleNamespace(sm=StatusMessages(carState=cs, starpilotPlan=received), engaged=True, is_metric=False,
+                            always_on_lateral_active=False,
+                            starpilot_toggles={"weather_presets": True, "increase_following_distance_rain": 0.5})
+    current = snapshot(state, nav_active=True)
+    assert current.steering_held is (not lateral_check)
+    assert current.nav_turn and current.weather_gap
+    assert chip_for(current).key == expected
 

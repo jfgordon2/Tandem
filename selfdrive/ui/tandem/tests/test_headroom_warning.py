@@ -6,6 +6,7 @@ import pyray as rl
 from cereal import custom, log
 
 from openpilot.selfdrive.ui import soundd
+from openpilot.selfdrive.ui.onroad.alert_renderer import Alert
 from openpilot.selfdrive.ui.onroad import model_renderer
 from openpilot.selfdrive.ui.tandem.onroad import view as onroad
 from openpilot.selfdrive.ui.tandem.onroad.layers import (
@@ -14,7 +15,12 @@ from openpilot.selfdrive.ui.tandem.onroad.layers import (
 
 
 class Memory(dict):
+  def __init__(self):
+    super().__init__()
+    self.writes = []
+
   def put_nonblocking(self, key, value):
+    self.writes.append((key, value))
     self[key] = value
 
 
@@ -133,28 +139,69 @@ def test_warning_clears_and_restarts_hold_when_steering_is_unavailable(warning_v
   assert view._arc_state.stage == WORKING and not view._headroom_warning
 
 
-def test_existing_alert_and_its_exit_animation_keep_visual_priority(warning_view):
+@pytest.mark.parametrize("alert_type", ["takeOver/critical", "promptDriverDistracted/warning", ""])
+def test_existing_alert_and_its_exit_animation_keep_visual_priority(warning_view, alert_type):
   f, view = warning_view, warning_view.view
-  f.alert[0] = object()
+  alert = Alert(alert_type=alert_type)
+  f.alert[0] = alert
   enter_limit(f)
   assert view._arc_state.stage == AT_LIMIT and not view._headroom_warning
   assert view.model_renderer.lane_line_color_override is None and not view._memory
-  f.alert[0], f.fading[0] = None, object()
+  f.alert[0], f.fading[0] = None, alert
   view._update_headroom()
   assert not view._headroom_warning
   f.fading[0] = None
   view._update_headroom()
   assert view._headroom_warning
+  assert view.model_renderer.lane_line_color_override == LIMIT_LANE_COLOR
+  assert view._memory["SteeringHeadroomWarning"] == f.now[0]
+
+
+def test_each_visible_headroom_warning_chimes_once_after_an_alert_clears(warning_view):
+  f, view = warning_view, warning_view.view
+  enter_limit(f)
   first_event = view._memory["SteeringHeadroomWarning"]
-  f.alert[0] = object()
+  for _ in range(3):
+    f.now[0] += 0.1
+    view._update_headroom()
+  assert view._memory.writes == [("SteeringHeadroomWarning", first_event)]
+  f.alert[0] = Alert(alert_type="takeOver/critical")
   view._update_headroom()
   assert not view._headroom_warning
-  f.alert[0] = None
+  assert view._memory["SteeringHeadroomWarning"] == 0.0
+  f.alert[0], f.fading[0] = None, f.alert[0]
   f.now[0] += 1
   view._update_headroom()
+  assert not view._headroom_warning
+  assert len(view._memory.writes) == 2
+  f.fading[0] = None
+  view._update_headroom()
   assert view._headroom_warning
-  assert view._memory["SteeringHeadroomWarning"] != f.now[0]  # no second chime for the same curve
-  assert first_event > 0
+  second_event = view._memory["SteeringHeadroomWarning"]
+  assert second_event == f.now[0] and second_event > first_event
+  for _ in range(3):
+    f.now[0] += 0.1
+    view._update_headroom()
+  assert view._memory.writes == [("SteeringHeadroomWarning", first_event), ("SteeringHeadroomWarning", 0.0),
+                                 ("SteeringHeadroomWarning", second_event)]
+
+
+@pytest.mark.parametrize("service", ["selfdriveState", "starpilotSelfdriveState"])
+@pytest.mark.parametrize("alert_type", ["steerSaturated/warning", "goatSteerSaturated/warning",
+                                       "firefoxSteerSaturated/warning", "thisIsFineSteerSaturated/warning"])
+def test_steering_limit_alert_starts_one_warning_before_headroom_estimate_reaches_limit(warning_view, service, alert_type):
+  f, view = warning_view, warning_view.view
+  f.usage[0] = 0.7
+  f.sm.valid[service] = True
+  f.sm[service].alertType = alert_type
+  f.alert[0] = Alert(alert_type=alert_type)
+  view._update_headroom()
+  assert view._arc_state.stage == WORKING and view._headroom_warning
+  assert view.model_renderer.lane_line_color_override == LIMIT_LANE_COLOR
+  assert view._memory.writes == [("SteeringHeadroomWarning", f.now[0])]
+  f.now[0] += 1
+  view._update_headroom()
+  assert len(view._memory.writes) == 1
 
 
 def test_hidden_view_clears_feedback(warning_view, monkeypatch):

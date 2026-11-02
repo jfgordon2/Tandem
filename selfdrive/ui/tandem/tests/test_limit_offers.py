@@ -1,20 +1,21 @@
 from types import SimpleNamespace
 
 import pytest
-import pyray as rl
 from cereal import custom
 
 from openpilot.common.constants import CV
+from openpilot.selfdrive.ui.onroad.alert_renderer import Alert
 from openpilot.selfdrive.ui.tandem.onroad import view as onroad
 from openpilot.selfdrive.ui.tandem.onroad.limits import LimitFollower, LimitOfferState, OfferChime
-from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, Snapshot
+from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, LimitWatch
 
 
 @pytest.fixture
 def limit_view(monkeypatch):
-  plan = custom.StarPilotPlan.new_message()
+  plan = custom.StarPilotPlan.new_message(lateralCheck=True)
   sm = {"starpilotPlan": plan}
   state = SimpleNamespace(sm=SimpleNamespace(valid={"starpilotPlan": True}), is_metric=False, started=True,
+                          engaged=True, always_on_lateral_active=False, starpilot_toggles={},
                           ui_params=SimpleNamespace(get_bool=lambda _: False))
 
   class Messages(dict):
@@ -29,6 +30,9 @@ def limit_view(monkeypatch):
   view._limit_offer = LimitOfferState()
   view._follower = LimitFollower()
   view._offer_chime = OfferChime()
+  view._limits = LimitWatch()
+  view._chips = ChipStack()
+  view._headroom_warning = False
   view.chimes = []
   view._memory = SimpleNamespace(put_nonblocking=lambda key, value: view.chimes.append((key, value)))
 
@@ -109,7 +113,8 @@ def test_a_new_drive_clears_the_dismissal(limit_view, monkeypatch):
   assert update().limit == pytest.approx(65)
 
 
-def test_limit_changes_are_observed_while_an_alert_covers_the_card(limit_view, monkeypatch):
+@pytest.mark.parametrize("hidden_by", ["alert", "headroom", "hidden_hud", "offroad"])
+def test_limit_changes_are_observed_while_the_card_is_hidden(limit_view, hidden_by):
   view, update, _, state = limit_view
   update()
   view._ignore_limit()
@@ -117,12 +122,12 @@ def test_limit_changes_are_observed_while_an_alert_covers_the_card(limit_view, m
   plan.speedLimitChanged = False
   plan.unconfirmedSlcSpeedLimit = 0
   plan.slcSpeedLimitSource = "Map Data"  # a live 55 after the dismissed 65
-  view.alert_renderer = SimpleNamespace(will_render=lambda: (object(), False))
-  view._draw_hud_controls = True
-  view._chips = ChipStack()
+  alert = Alert(alert_type="takeOver/critical") if hidden_by == "alert" else None
+  view.alert_renderer = SimpleNamespace(will_render=lambda: (alert, False))
+  view._draw_hud_controls = hidden_by != "hidden_hud"
+  view._headroom_warning = hidden_by == "headroom"
+  state.started = hidden_by != "offroad"
   view._navigating = lambda: False
-  view._render_driver_monitor = lambda: None  # this state-only fixture has no driver-camera renderer
-  monkeypatch.setattr(onroad.StarPilotOnroadView, "_render", lambda self, rect: None)
-  monkeypatch.setattr(onroad, "snapshot", lambda *args: Snapshot())
-  view._render(rl.Rectangle(0, 0, 2160, 1080))
+  view._render_layers()   # production draws these under the border, not after the inherited _render
+  assert not view._layers_visible
   assert update().limit == pytest.approx(65)
