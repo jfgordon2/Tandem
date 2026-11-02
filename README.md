@@ -24,6 +24,8 @@ StarPilot continues to provide the driving logic, vehicle integrations, and unde
   braking together; Tuner Mode opens the individual controls.
 - **Speed limits on your terms.** Show limits or match them, choose whether higher and lower
   limits need confirmation, and let MAX follow each new limit.
+- **Weather ahead.** A status chip warns before rain, snow, or storms start and says when
+  they should stop. Parked, the home screen shows the next 12 hours.
 - **Navigation from the home screen.** Search for a place, pick a favorite, and preview the route
   before starting. Voice typing works while parked and runs on the device.
 - **A consistent look throughout.** Figtree type, shared controls, and plain language carry through
@@ -35,8 +37,8 @@ StarPilot continues to provide the driving logic, vehicle integrations, and unde
 
 | Parked home | Driving settings |
 | --- | --- |
-| [![Parked home with vehicle status, navigation, and an update notice](selfdrive/ui/tandem/assets/screenshots/home.png)](selfdrive/ui/tandem/assets/screenshots/home.png) | [![Driving hub with six settings groups, search, and power-user controls](selfdrive/ui/tandem/assets/screenshots/settings.png)](selfdrive/ui/tandem/assets/screenshots/settings.png) |
-| Vehicle and device status, destinations, and updates. | Everyday settings together, with more detail when you want it. |
+| [![Parked home with vehicle status, a 12-hour weather forecast, navigation, and an update notice](selfdrive/ui/tandem/assets/screenshots/home.png)](selfdrive/ui/tandem/assets/screenshots/home.png) | [![Driving hub with six settings groups, search, and power-user controls](selfdrive/ui/tandem/assets/screenshots/settings.png)](selfdrive/ui/tandem/assets/screenshots/settings.png) |
+| Vehicle and device status, the next 12 hours of weather, destinations, and updates. | Everyday settings together, with more detail when you want it. |
 
 | Speed and steering | Where to? |
 | --- | --- |

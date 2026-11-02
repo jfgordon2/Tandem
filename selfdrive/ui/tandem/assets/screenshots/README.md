@@ -7,7 +7,7 @@ The driving screen uses a schematic road instead of a camera recording.
 | Published image | Render output | Scene in `../../tools/render/` |
 | --- | --- | --- |
 | `onroad.png` | `onroad_nav.png` | `scene_onroad.py` |
-| `home.png` | `sidebar_home.png` | `scene_sidebar.py` |
+| `home.png` | `homeweather.png` (with the forecast strip) | `scene_sidebar.py` |
 | `settings.png` | `hub.png` | `scene_compare.py` |
 | `everyday.png` | `driving.png` | `scene_compare.py` |
 | `destinations.png` | `destinations.png` | `scene_destinations.py` |
