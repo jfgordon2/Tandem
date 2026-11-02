@@ -6,6 +6,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
 
 class ChipTone(Enum):
@@ -88,67 +89,67 @@ def chips_for(s: Snapshot) -> list[Chip]:
   # openpilot says it in its "Steer Unavailable Under …" alert, with the car's figure.
   below = 0 < s.pause_lateral_ms and s.speed < s.pause_lateral_ms
   if s.lateral_paused:
-    out.append(Chip("pause_button", "Steering paused", ChipTone.PAUSED, "wheel_pause"))
+    out.append(Chip("pause_button", N_("Steering paused"), ChipTone.PAUSED, "wheel_pause"))
   elif s.steering_held and not s.standstill:
     # As StarPilot's planner decides: with Pause on signal, speed alone doesn't pause, only signalling below it, then a
     # short hold once the signal ends (Lateral Resume Delay) so the driver can straighten the wheel after a slow turn.
     if s.pause_on_signal and s.signal_on:
       icon = {"left": "signal", "right": "signal_right", "both": "warning"}.get(s.signal_direction, "wheel_pause")
-      out.append(Chip("pause_signal", "Steering paused for signal", ChipTone.PAUSED, icon))
+      out.append(Chip("pause_signal", N_("Steering paused for signal"), ChipTone.PAUSED, icon))
     elif s.pause_on_signal:
-      out.append(Chip("pause_turn", "Steering paused after turn", ChipTone.PAUSED, "wheel_pause"))
+      out.append(Chip("pause_turn", N_("Steering paused after turn"), ChipTone.PAUSED, "wheel_pause"))
     elif below:
-      out.append(Chip("pause_speed", f"Steering paused · under {s.pause_lateral_speed:.0f} {unit}", ChipTone.PAUSED, "wheel_pause"))
+      out.append(Chip("pause_speed", t_("Steering paused · under {} {}", f"{s.pause_lateral_speed:.0f}", unit), ChipTone.PAUSED, "wheel_pause"))
     else:
-      out.append(Chip("pause_held", "Steering paused", ChipTone.PAUSED, "wheel_pause"))
+      out.append(Chip("pause_held", N_("Steering paused"), ChipTone.PAUSED, "wheel_pause"))
   if s.speed_paused and s.engaged:
-    out.append(Chip("speed_paused", "Speed control paused", ChipTone.PAUSED, "gauge_pause"))
+    out.append(Chip("speed_paused", N_("Speed control paused"), ChipTone.PAUSED, "gauge_pause"))
   # Also whenever openpilot or StarPilot raises Car Detected in Blindspot (camera blind spot too, and StarPilot's loud
   # version while signalling without steering): the chip stands in for that banner, so it must show whenever it would.
   blocked_alert = bool(s.events & {"laneChangeBlocked", "laneChangeBlockedLoud"})
   if (s.lane_change in ("pre", "starting") and s.blindspot) or blocked_alert:
-    out.append(Chip("lane_blocked", "Lane change blocked", ChipTone.PAUSED, "lane_blocked"))
+    out.append(Chip("lane_blocked", N_("Lane change blocked"), ChipTone.PAUSED, "lane_blocked"))
   elif s.lane_change in ("starting", "finishing") and s.lane_change_direction in ("left", "right"):
-    out.append(Chip("lane_change", f"Changing lanes {s.lane_change_direction}", ChipTone.INFO, f"lane_{s.lane_change_direction}"))
+    out.append(Chip("lane_change", t_("Changing lanes {}", s.lane_change_direction), ChipTone.INFO, f"lane_{s.lane_change_direction}"))
   green = "greenLight" in s.events
   if s.standstill and green:   # at a stop the news is the light changing, not that we're stopped
-    out.append(Chip("green_light", "Light is green", ChipTone.WAITING, "light_green"))
+    out.append(Chip("green_light", N_("Light is green"), ChipTone.WAITING, "light_green"))
   else:
-    stop = "Stopped" if s.standstill else "Stopping"   # once the car is stopped, the chip says so
+    stop = N_("Stopped") if s.standstill else N_("Stopping")   # once the car is stopped, the chip says so
     if s.stop_sign:
-      out.append(Chip("stop_sign", f"{stop} for stop sign", ChipTone.INFO, "stop_sign"))
+      out.append(Chip("stop_sign", t_("{} for stop sign", stop), ChipTone.INFO, "stop_sign"))
     elif s.red_light:
       # StarPilot's redLight is the model predicting a stop, for a light or a sign alike; only the dashboard confirms a sign.
-      out.append(Chip("red_light", "Stopped" if s.standstill else "Stopping ahead", ChipTone.INFO, "stop"))
+      out.append(Chip("red_light", N_("Stopped") if s.standstill else N_("Stopping ahead"), ChipTone.INFO, "stop"))
   if s.curve_control:
-    out.append(Chip("curve", "Slowing for curve", ChipTone.INFO, "curve"))
+    out.append(Chip("curve", N_("Slowing for curve"), ChipTone.INFO, "curve"))
   if s.nav_turn:
-    out.append(Chip("turn", "Slowing for turn", ChipTone.INFO, turn_icon(s.nav_turn_maneuver, s.nav_turn_modifier)))
+    out.append(Chip("turn", N_("Slowing for turn"), ChipTone.INFO, turn_icon(s.nav_turn_maneuver, s.nav_turn_modifier)))
   # Turn events stand on their own, including steering-only turns with the driver on the pedals.
   if "turningLeft" in s.events:
-    out.append(Chip("turning", "Turning left", ChipTone.INFO, "turn_left"))
+    out.append(Chip("turning", N_("Turning left"), ChipTone.INFO, "turn_left"))
   elif "turningRight" in s.events:
-    out.append(Chip("turning", "Turning right", ChipTone.INFO, "turn_right"))
+    out.append(Chip("turning", N_("Turning right"), ChipTone.INFO, "turn_right"))
   if s.slowing_for_lead and not s.standstill and s.speed > MOVING_SPEED and s.accel < SLOWING_ACCEL:
-    out.append(Chip("traffic", "Slowing for traffic", ChipTone.INFO, "car"))
+    out.append(Chip("traffic", N_("Slowing for traffic"), ChipTone.INFO, "car"))
   if s.limit_changed and s.speed_limit:
-    out.append(Chip("limit", f"Matching limit {s.speed_limit:.0f}", ChipTone.INFO, "gauge"))
+    out.append(Chip("limit", t_("Matching limit {}", f"{s.speed_limit:.0f}"), ChipTone.INFO, "gauge"))
   if s.coasting and s.engaged and not s.speed_paused:
-    out.append(Chip("coasting", "Coasting", ChipTone.INFO, "coast"))
+    out.append(Chip("coasting", N_("Coasting"), ChipTone.INFO, "coast"))
   if s.pulse_glide and s.engaged and not s.speed_paused:
-    out.append(Chip("pulse_glide", "Pulse & glide · gliding" if s.gliding else "Pulse & glide", ChipTone.INFO, "pulse_glide"))
+    out.append(Chip("pulse_glide", N_("Pulse & glide · gliding") if s.gliding else N_("Pulse & glide"), ChipTone.INFO, "pulse_glide"))
   if s.forecast:
     out.append(Chip("forecast", s.forecast[0], ChipTone.INFO, s.forecast[1]))
   if s.weather and s.weather_gap and not (s.forecast and s.forecast_active):
-    out.append(Chip("weather", f"{s.weather} · longer gap", ChipTone.INFO, {"Snow": "snow", "Fog": "fog"}.get(s.weather, "rain")))
+    out.append(Chip("weather", t_("{} · longer gap", s.weather), ChipTone.INFO, {"Snow": "snow", "Fog": "fog"}.get(s.weather, "rain")))
   if green and not s.standstill:
-    out.append(Chip("green_light", "Light is green", ChipTone.WAITING, "light_green"))
+    out.append(Chip("green_light", N_("Light is green"), ChipTone.WAITING, "light_green"))
   if "leadDeparting" in s.events:
-    out.append(Chip("lead_moved", "Car ahead moved", ChipTone.WAITING, "car_up"))
+    out.append(Chip("lead_moved", N_("Car ahead moved"), ChipTone.WAITING, "car_up"))
   if s.engaged and s.standstill and s.waiting_for_resume:   # cars that resume on their own aren't waiting on you
-    out.append(Chip("ready", "Ready · tap resume", ChipTone.WAITING, "play"))
+    out.append(Chip("ready", N_("Ready · tap resume"), ChipTone.WAITING, "play"))
   if s.always_on_lateral and not s.engaged:
-    out.append(Chip("steering_only", "Steering only", ChipTone.INFO, "wheel"))
+    out.append(Chip("steering_only", N_("Steering only"), ChipTone.INFO, "wheel"))
   return out
 
 
@@ -212,10 +213,10 @@ class ChipPicker:
 
 # OpenWeather condition ids, grouped as StarPilot's weather checker groups them (WEATHER_CATEGORIES): (name, preset suffix).
 WEATHER_GROUPS = (
-  ("Rain", "rain", ((300, 321), (500, 504))),
-  ("Heavy rain", "rain_storm", ((200, 232), (511, 511), (520, 531))),
-  ("Snow", "snow", ((600, 622),)),
-  ("Fog", "low_visibility", ((701, 762),)),
+  (N_("Rain"), "rain", ((300, 321), (500, 504))),
+  (N_("Heavy rain"), "rain_storm", ((200, 232), (511, 511), (520, 531))),
+  (N_("Snow"), "snow", ((600, 622),)),
+  (N_("Fog"), "low_visibility", ((701, 762),)),
 )
 
 

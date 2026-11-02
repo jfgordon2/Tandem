@@ -1,192 +1,170 @@
 #!/usr/bin/env python3
 """Tandem's translation catalog (i18n.py reads it).
 
-  extract          Collects the text Tandem draws into translations/tandem.pot: each string constant in the package,
-                   and each f-string as a template with {} for its values ("Sets {} options").
+  extract          Collects the marked text into translations/tandem.pot: every N_(), t_() and tn_() in the package
+                   (with its context and plural), and the tr() / tr_noop() / trn() strings of the StarPilot screens
+                   Tandem's adapters show text from (UPSTREAM).
   update [codes]   Merges tandem.pot into translations/tandem_<code>.po for each code given and each that exists:
                    new strings come in untranslated, translations are kept, strings the code no longer has are dropped.
   status           How much of each language is translated.
 
-Run extract and update after changing Tandem's wording; tests/test_translations.py fails until then.
+Run update after changing Tandem's wording; tests/test_translations.py fails until then.
 Codes are StarPilot's (languages.json without "main_"): de, es, fr, ja, ko, pt-BR, tr, uk, ar, th, zh-CHS, zh-CHT.
 """
 from __future__ import annotations
 
 import ast
+import importlib.util
 import re
 import sys
+from dataclasses import dataclass, field
 from pathlib import Path
 
 PACKAGE = Path(__file__).resolve().parents[1]
+ROOT = PACKAGE.parents[2]
 OUT = PACKAGE / "translations"
 SKIP_DIRS = {"tests", "tools", "translations", "design", "assets", "__pycache__"}
-SKIP_FILES = {"arabic.py", "speech.py", "speech_native.py", "i18n.py"}   # tables and worker processes, not drawn text
-# One lowercase word is usually a key or an icon name; these are drawn as they are (the keyboard's space bar)
-DRAWN_LOWERCASE = {"space"}
-_IDENTIFIER = re.compile(r"^[A-Za-z0-9_.:/\\-]+$")
-
-
-def _is_text(value: str) -> bool:
-  """Words a driver reads, not param keys, file names, icon names or formats."""
-  value = value.strip()
-  if not value or not any(c.isalpha() for c in value) or value.startswith(("http", "/", "#", ".")):
-    return False
-  if len(value) < 2:
-    return False
-  if " " not in value:   # one word: a label like "Off", "Weather" or "space", not "SteerKP", "wifi_lock" or "main_en"
-    value = value.removesuffix("…").removesuffix("...")   # "Working…"
-    if value in DRAWN_LOWERCASE or (value.isalpha() and value.isupper() and len(value) >= 3):   # captions like "REGIONS"
-      return True
-    return bool(_IDENTIFIER.match(value)) and "_" not in value and value.isalpha() and len(value) >= 2 and value[0].isupper() \
-      and not any(c.isupper() for c in value[1:])
-  return not value.startswith("{") or any(c.isalpha() for c in value.replace("{}", ""))
-
-
-_LOGS = {"print", "debug", "info", "warning", "error", "exception", "_log", "log", "event"}   # never drawn
-_KEYED = {"getenv": 1, "get": 1, "put": 1, "put_bool": 1, "get_bool": 1, "get_int": 1, "get_float": 1, "get_str": 1,
-          "put_nonblocking": 1, "startswith": 1, "endswith": 1, "split": 1, "replace": 2, "setdefault": 1, "Path": 1, "open": 2,
-          "glob": 1, "icon": 1, "write": 1, "remove_param": 1, "removesuffix": 1, "removeprefix": 1, "strip": 1, "rstrip": 1}
-_STRFTIME = re.compile(r"(?:%-?[a-zA-Z][ :/.-]*)+")   # "Backup %Y-%m-%d %H%M" draws as "Backup {}"
+MARKERS = {"N_": 1, "t_": 1, "tn_": 2}   # how many leading string arguments are catalog text
 # StarPilot screens Tandem's Upstream adapters read text from: their tr(), tr_noop() and trn() strings join the catalog
 UPSTREAM = ["selfdrive/ui/layouts/settings/starpilot/maps.py", "selfdrive/ui/layouts/settings/starpilot/model.py",
             "selfdrive/ui/layouts/settings/starpilot/vehicle.py", "selfdrive/ui/layouts/settings/starpilot/navigation.py",
             "selfdrive/ui/layouts/settings/software.py", "selfdrive/ui/layouts/settings/device.py",
             "selfdrive/ui/layouts/settings/developer.py"]
-_TR_CALLS = {"tr": 1, "tr_noop": 1, "trn": 2}
-
-
-def _call_name(node: ast.Call) -> str:
-  return getattr(node.func, "attr", None) or getattr(node.func, "id", "")
-
-
-def _template(node: ast.JoinedStr) -> str | None:
-  parts = []
-  for piece in node.values:
-    if isinstance(piece, ast.Constant):
-      parts.append(str(piece.value))
-    else:
-      parts.append("{}")
-  text = "".join(parts)
-  return text if "{}" in text and any(c.isalpha() for c in text.replace("{}", "")) and _is_text(text.replace("{}", "X")) else None
-
-
-def _concat(node: ast.expr) -> str | None:
-  """The text of a + chain of strings and f-strings, or None when any part isn't one."""
-  if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Add):
-    left, right = _concat(node.left), _concat(node.right)
-    return None if left is None or right is None else left + right
-  if isinstance(node, ast.Constant) and isinstance(node.value, str):
-    return node.value
-  if isinstance(node, ast.JoinedStr):
-    return "".join(str(p.value) if isinstance(p, ast.Constant) else "{}" for p in node.values)
-  return None
-
-
-def files() -> list[Path]:
-  return sorted(p for p in PACKAGE.rglob("*.py") if not SKIP_DIRS & set(p.relative_to(PACKAGE).parts) and p.name not in SKIP_FILES)
-
-
-def strings() -> dict[str, list[str]]:
-  """msgid -> where it appears ("settings/display.py:201")."""
-  found: dict[str, list[str]] = {}
-  for path in files():
-    tree = ast.parse(path.read_text(encoding="utf-8"))
-    docstrings = {id(n.value) for n in ast.walk(tree) if isinstance(n, ast.Expr) and isinstance(n.value, ast.Constant)}
-    in_fstring = {id(v) for n in ast.walk(tree) if isinstance(n, ast.JoinedStr) for v in n.values}
-    annotations = [n.annotation for n in ast.walk(tree) if isinstance(n, (ast.arg, ast.AnnAssign)) and n.annotation] + \
-      [n.returns for n in ast.walk(tree) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and n.returns]
-    logged = [n for n in ast.walk(tree) if isinstance(n, ast.Raise) or isinstance(n, ast.Call) and _call_name(n) in _LOGS]
-    keys = [a for n in ast.walk(tree) if isinstance(n, ast.Call) and _call_name(n) in _KEYED for a in n.args[:_KEYED[_call_name(n)]]] + \
-      [k for n in ast.walk(tree) if isinstance(n, ast.Dict) for k in n.keys if k is not None] + \
-      [c for n in ast.walk(tree) if isinstance(n, ast.Compare) for c in [n.left, *n.comparators]] + \
-      [n.slice for n in ast.walk(tree) if isinstance(n, ast.Subscript)]   # param keys, states and dict keys: not drawn
-    dated = {id(n.args[0]): _STRFTIME.sub("{}", n.args[0].value).strip() for n in ast.walk(tree) if isinstance(n, ast.Call)
-             and _call_name(n) == "strftime" and n.args and isinstance(n.args[0], ast.Constant) and isinstance(n.args[0].value, str)}
-    keywords = [n.args[5] for n in ast.walk(tree) if isinstance(n, ast.Call) and _call_name(n) in ("Entry", "_place") and len(n.args) > 5] + \
-      [k.value for n in ast.walk(tree) if isinstance(n, ast.Call) for k in n.keywords if k.arg == "words"]   # search words, never drawn
-    exported = [n.value for n in ast.walk(tree) if isinstance(n, ast.Assign) and any(getattr(t, "id", "") == "__all__" for t in n.targets)]
-    skip = docstrings | in_fstring | {id(c) for n in logged + annotations + exported + keywords + keys for c in ast.walk(n)}
-    joined = {}   # "a " + "b" (or with f-strings) is one string at runtime
-    for node in ast.walk(tree):
-      if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Add) and id(node) not in skip:
-        text = _concat(node)
-        if text is not None:
-          joined[id(node)] = text
-          skip |= {id(c) for c in ast.walk(node) if c is not node}
-    for node in ast.walk(tree):
-      text = None
-      if id(node) in dated:
-        text = dated[id(node)] if any(c.isalpha() for c in dated[id(node)]) else None
-      elif id(node) in joined:
-        text = joined[id(node)] if _is_text(joined[id(node)].replace("{}", "X")) else None
-      elif isinstance(node, ast.JoinedStr) and id(node) not in skip:
-        text = _template(node)
-      elif isinstance(node, ast.Constant) and isinstance(node.value, str) and id(node) not in skip:
-        text = node.value if _is_text(node.value) else None
-      if text:
-        found.setdefault(text, []).append(f"{path.relative_to(PACKAGE)}:{node.lineno}")
-  for name in UPSTREAM:
-    path = PACKAGE.parents[2] / name
-    if not path.is_file():
-      continue
-    for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
-      if isinstance(node, ast.Call) and _call_name(node) in _TR_CALLS:
-        for arg in node.args[:_TR_CALLS[_call_name(node)]]:
-          if isinstance(arg, ast.Constant) and isinstance(arg.value, str) and any(c.isalpha() for c in arg.value):
-            text = re.sub(r"\{[^{}]*\}", "{}", arg.value)   # "{count} regions" is formatted before it's drawn
-            found.setdefault(text, []).append(f"{name}:{node.lineno}")
-  return found
-
-
-def _quote(text: str) -> str:
-  return '"' + text.replace("\\", "\\\\").replace('"', '\\"').replace("\n", "\\n").replace("\t", "\\t") + '"'
-
-
-def _header(code: str) -> str:
-  return ('msgid ""\nmsgstr ""\n"Content-Type: text/plain; charset=UTF-8\\n"\n'
-          + f'"Language: {code}\\n"\n"X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\\n"\n')
-
-
-def write(path: Path, code: str, entries: dict[str, list[str]], translated: dict[str, str], notes: dict[str, str]) -> None:
-  out = [_header(code)]
-  for msgid, where in entries.items():
-    block = ""
-    if notes.get(msgid):
-      block += f"#. {notes[msgid]}\n"
-    block += "".join(f"#: {w}\n" for w in where[:3])
-    if "{}" in msgid:
-      block += "#, python-brace-format\n"
-    block += f"msgid {_quote(msgid)}\nmsgstr {_quote(translated.get(msgid, ''))}\n"
-    out.append(block)
-  path.write_text("\n".join(out), encoding="utf-8")
+UPSTREAM_CALLS = {"tr": 1, "tr_noop": 1, "trn": 2}
+PLURAL_FORMS = {"ja": 1, "ko": 1, "zh-CHS": 1, "zh-CHT": 1, "th": 1, "uk": 3, "ar": 6}   # others: 2
 
 
 def _i18n():
-  import importlib.util
   spec = importlib.util.spec_from_file_location("tandem_i18n", PACKAGE / "i18n.py")
   module = importlib.util.module_from_spec(spec)
   spec.loader.exec_module(module)
   return module
 
 
-def read(path: Path) -> tuple[dict[str, str], dict[str, str]]:
-  """(msgid -> msgstr, msgid -> translator note) from a Tandem .po."""
+i18n = _i18n()
+
+
+@dataclass
+class Entry:
+  msgid: str
+  context: str | None = None
+  plural: str | None = None
+  where: list[str] = field(default_factory=list)
+  drawn: bool = False   # matched against drawn text: an N_() template, or StarPilot's text formatted before Tandem draws it
+
+  @property
+  def key(self) -> str:
+    return i18n.key(self.msgid, self.context)
+
+
+def _text(node: ast.expr) -> str | None:
+  """A string literal, or a + chain of them (long sentences are split over lines)."""
+  if isinstance(node, ast.Constant) and isinstance(node.value, str):
+    return node.value
+  if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Add):
+    left, right = _text(node.left), _text(node.right)
+    return None if left is None or right is None else left + right
+  return None
+
+
+def _call_name(node: ast.Call) -> str:
+  return getattr(node.func, "attr", None) or getattr(node.func, "id", "")
+
+
+def files() -> list[Path]:
+  return sorted(p for p in PACKAGE.rglob("*.py") if not SKIP_DIRS & set(p.relative_to(PACKAGE).parts) and p.name != "i18n.py")
+
+
+def _collect(found: dict[str, Entry], path: Path, label: str, calls: dict[str, int], upstream: bool) -> None:
+  for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+    if not (isinstance(node, ast.Call) and _call_name(node) in calls and node.args):
+      continue
+    texts = [_text(a) for a in node.args[:calls[_call_name(node)]]]
+    if texts[0] is None:
+      if not upstream:
+        raise SystemExit(f"{label}:{node.lineno}: {_call_name(node)}() needs a string literal")
+      continue
+    if upstream:   # StarPilot formats "{count} regions" before it's drawn
+      texts = [re.sub(r"\{[^{}]*\}", "{}", x) if x else x for x in texts]
+    context = next((_text(k.value) for k in node.keywords if k.arg == "context"), None)
+    entry = Entry(texts[0], context, texts[1] if len(texts) > 1 else None)
+    entry = found.setdefault(entry.key, entry)
+    entry.where.append(f"{label}:{node.lineno}")
+    entry.drawn |= upstream or _call_name(node) == "N_"
+
+
+def strings() -> dict[str, Entry]:
+  """Catalog key -> the marked text and where it appears."""
+  found: dict[str, Entry] = {}
+  for path in files():
+    _collect(found, path, str(path.relative_to(PACKAGE)), MARKERS, upstream=False)
+  for name in UPSTREAM:
+    if (ROOT / name).is_file():
+      _collect(found, ROOT / name, name, UPSTREAM_CALLS, upstream=True)
+  return found
+
+
+# ── .po files ──
+
+def _quote(text: str) -> str:
+  return '"' + text.replace("\\", "\\\\").replace('"', '\\"').replace("\n", "\\n").replace("\t", "\\t") + '"'
+
+
+def _header(code: str) -> str:
+  forms = PLURAL_FORMS.get(code, 2)
+  return ('msgid ""\nmsgstr ""\n"Content-Type: text/plain; charset=UTF-8\\n"\n'
+          + f'"Language: {code}\\n"\n"Plural-Forms: nplurals={forms};\\n"\n'
+          + '"X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\\n"\n')
+
+
+def write(path: Path, code: str, entries: dict[str, Entry], translated: dict[str, str | list[str]], notes: dict[str, str]) -> None:
+  out = [_header(code)]
+  forms = PLURAL_FORMS.get(code, 2)
+  for k, e in entries.items():
+    block = f"#. {notes[k]}\n" if notes.get(k) else ""
+    block += "".join(f"#: {w}\n" for w in e.where[:3])
+    flags = ["python-brace-format"] if "{}" in e.msgid else []
+    if "{}" in e.msgid and e.drawn:
+      flags.append("drawn")   # i18n matches drawn text against it (t_() and tn_() fill theirs)
+    if flags:
+      block += f"#, {', '.join(flags)}\n"
+    if e.context:
+      block += f"msgctxt {_quote(e.context)}\n"
+    block += f"msgid {_quote(e.msgid)}\n"
+    value = translated.get(k, "")
+    if e.plural is not None:
+      values = value if isinstance(value, list) else []
+      block += f"msgid_plural {_quote(e.plural)}\n"
+      block += "".join(f"msgstr[{i}] {_quote(values[i] if i < len(values) else '')}\n" for i in range(forms))
+    else:
+      block += f"msgstr {_quote(value if isinstance(value, str) else '')}\n"
+    out.append(block)
+  path.write_text("\n".join(out), encoding="utf-8")
+
+
+def read(path: Path) -> tuple[dict[str, str | list[str]], dict[str, str]]:
+  """(key -> msgstr or plural forms, key -> translator note) from a Tandem .po."""
   if not path.is_file():
     return {}, {}
   text = path.read_text(encoding="utf-8")
-  i18n = _i18n()
-  notes, note = {}, ""
+  notes, note, context = {}, "", None
   for line in text.splitlines():
     if line.startswith("#. "):
       note = line[3:]
+    elif line.startswith('msgctxt "'):
+      context = i18n._unquote(line[9:-1])
     elif line.startswith('msgid "'):
       if note:
-        notes[i18n._unquote(line[7:-1])] = note
-      note = ""
+        notes[i18n.key(i18n._unquote(line[7:-1]), context)] = note
+      note, context = "", None
   return i18n.parse_po(text), notes
 
 
-def extract() -> dict[str, list[str]]:
+def done(value) -> bool:
+  return all(value) if isinstance(value, list) else bool(value)
+
+
+def extract() -> dict[str, Entry]:
   entries = strings()
   OUT.mkdir(exist_ok=True)
   write(OUT / "tandem.pot", "", entries, {}, {})
@@ -201,15 +179,14 @@ def update(codes: list[str]) -> None:
     path = OUT / f"tandem_{code}.po"
     translated, notes = read(path)
     write(path, code, entries, translated, notes)
-    done = sum(bool(translated.get(k)) for k in entries)
-    print(f"tandem_{code}.po: {done}/{len(entries)} translated")
+    print(f"tandem_{code}.po: {sum(done(translated.get(k, '')) for k in entries)}/{len(entries)} translated")
 
 
 def status() -> None:
   entries = strings()
   for path in sorted(OUT.glob("tandem_*.po")):
     translated, _ = read(path)
-    print(f"{path.stem}: {sum(bool(translated.get(k)) for k in entries)}/{len(entries)}")
+    print(f"{path.stem}: {sum(done(translated.get(k, '')) for k in entries)}/{len(entries)}")
 
 
 if __name__ == "__main__":

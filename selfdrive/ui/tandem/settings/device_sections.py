@@ -22,6 +22,7 @@ from openpilot.selfdrive.ui.tandem.rows import ListPanel, OptionList, Padded, Se
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
 from openpilot.system.ui.widgets import DialogResult, Widget
 from openpilot.selfdrive.ui.tandem.prefs import BACKUP_DIR, TEMPERATURE, celsius, restore_prefs, save_prefs
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_, tn_
 
 
 @dataclass(frozen=True)
@@ -45,10 +46,10 @@ class DeviceData(Protocol):
   def send_report(self, issue: str, discord: str) -> None: ...
 
 
-BRIGHTNESS = [("Dimmer", 40, 30), ("Auto", 101, 101), ("Brighter", 100, 100)]   # name, parked, driving. 101 is Auto.
-UPLOADS = ["Off", "Parked", "Always"]
-REPORT_CATEGORIES = ["Acceleration felt harsh or jerky", "Braking was too sudden", "It disengaged when I didn't expect it",
-                     "It felt slow to respond", "An alert was unclear", "My steering wheel buttons aren't working", "Something else"]
+BRIGHTNESS = [(N_("Dimmer"), 40, 30), (N_("Auto"), 101, 101), (N_("Brighter"), 100, 100)]   # name, parked, driving. 101 is Auto.
+UPLOADS = [N_("Off"), N_("Parked"), N_("Always")]
+REPORT_CATEGORIES = [N_("Acceleration felt harsh or jerky"), N_("Braking was too sudden"), N_("It disengaged when I didn't expect it"),
+                     N_("It felt slow to respond"), N_("An alert was unclear"), N_("My steering wheel buttons aren't working"), N_("Something else")]
 
 
 class General:
@@ -154,10 +155,10 @@ def open_language(data: DeviceData, window) -> None:
   def pick(index: int):
     data.set_language(languages[index][1])
     window.dismiss()
-  window.present(Sheet("Language", OptionList([name for name, _ in languages],
+  window.present(Sheet(N_("Language"), OptionList([name for name, _ in languages],
                                               lambda: next((i for i, (_, c) in enumerate(languages) if same_language(c, data.language())), 0),
                                               pick, weight=lambda name: face_for(name, T.FONT_SEMIBOLD)),   # unifont only where Figtree lacks
-                       subtitle="For menus and alerts", on_dismiss=window.dismiss))
+                       subtitle=N_("For menus and alerts"), on_dismiss=window.dismiss))
 
 
 def general_panel(model: General, window) -> ListPanel:
@@ -165,33 +166,33 @@ def general_panel(model: General, window) -> ListPanel:
     open_language(model.data, window)
 
   return ListPanel([
-    SettingRow("Units", "Speed and distance everywhere", Segmented(["mph", "km/h"], lambda: model.metric, model.set_metric)),
-    SettingRow("Temperature", "For the weather forecast", Segmented(["°F", "°C"], lambda: model.temperature, model.set_temperature)),
-    SettingRow("Language", None, ValueButton(model.language_name, language_sheet)),
-    SettingRow("Screen Brightness", "Auto follows ambient light, day and night",
+    SettingRow(N_("Units"), N_("Speed and distance everywhere"), Segmented(["mph", "km/h"], lambda: model.metric, model.set_metric)),
+    SettingRow(N_("Temperature"), N_("For the weather forecast"), Segmented(["°F", "°C"], lambda: model.temperature, model.set_temperature)),
+    SettingRow(N_("Language"), None, ValueButton(model.language_name, language_sheet)),
+    SettingRow(N_("Screen Brightness"), N_("Auto follows ambient light, day and night"),
                Segmented([name for name, _, _ in BRIGHTNESS], lambda: model.brightness, model.set_brightness)),
-    SettingRow("Standby", "Screen sleeps while driving, wakes for alerts", Switch(lambda: model.standby, model.set_standby)),
-  ], title="General")
+    SettingRow(N_("Standby"), N_("Screen sleeps while driving, wakes for alerts"), Switch(lambda: model.standby, model.set_standby)),
+  ], title=N_("General"))
 
 
 def backups_panel(model: General, window) -> Component:
   from openpilot.selfdrive.ui.tandem.settings.model import Rebuilding
 
   def row_for(backup: Backup) -> SettingRow:
-    restore = Button("Restore", lambda: confirm(window, "Restore this backup?", f"Your current settings are replaced with {backup.name}.",
-                                                "Restore", lambda: model.data.restore_backup(backup.name), danger=False,
+    restore = Button(N_("Restore"), lambda: confirm(window, N_("Restore this backup?"), t_("Your current settings are replaced with {}.", backup.name),
+                                                N_("Restore"), lambda: model.data.restore_backup(backup.name), danger=False,
                                                 icon="restart"))
-    delete = Button("Delete", lambda: confirm(window, "Delete this backup?", f"{backup.name} can't be recovered.", "Delete",
+    delete = Button(N_("Delete"), lambda: confirm(window, N_("Delete this backup?"), t_("{} can't be recovered.", backup.name), N_("Delete"),
                                               lambda: model.data.delete_backup(backup.name)), ButtonStyle.DANGER_SOFT)
     return SettingRow(backup.name, backup.when, ButtonPair(delete, restore))
 
   def build() -> ListPanel:
     backups = model.data.backups()
     return ListPanel([
-      SectionHeader("SAVED"),
-      *([row_for(b) for b in backups] or [Text("No backups yet.")]),
-    ], title="Backups", subtitle="Snapshots of your settings. Drives aren't included.",
-       header_control=Button("Back up now", model.data.create_backup, ButtonStyle.PRIMARY))
+      SectionHeader(N_("SAVED")),
+      *([row_for(b) for b in backups] or [Text(N_("No backups yet."))]),
+    ], title=N_("Backups"), subtitle=N_("Snapshots of your settings. Drives aren't included."),
+       header_control=Button(N_("Back up now"), model.data.create_backup, ButtonStyle.PRIMARY))
 
   return Rebuilding(lambda: tuple(b.name for b in model.data.backups()), build)
 
@@ -222,7 +223,7 @@ class StorageBar(Component):
   """Used space split by kind, with a legend. On Storage & Data it heads the panel; in Offline Maps' Storage card it
   takes a heading, with the used space on the right."""
   grow_touch_target = False
-  KINDS = [("Drives", T.ACCENT), ("Maps", T.SUCCESS_BRIGHT), ("Models", T.WARNING)]
+  KINDS = [(N_("Drives"), T.ACCENT), (N_("Maps"), T.SUCCESS_BRIGHT), (N_("Models"), T.WARNING)]
 
   def __init__(self, sizes: Callable[[], dict[str, float]], heading: str | None = None, padding: tuple[float, float] | None = None):
     super().__init__()
@@ -262,9 +263,9 @@ class StorageBar(Component):
     title, bar, legend = column(body, [draw.line_height(title_size), T.px(14), FILL], T.px(10))
     if self._heading:
       draw.text(title, self._heading, title_size, T.TEXT, T.FONT_BOLD)
-      draw.text(title, f"{_gb(used)} of {_gb(total)}", T.font_px(15), T.TEXT_TERTIARY, T.FONT, Align.END)
+      draw.text(title, t_("{} of {}", _gb(used), _gb(total)), T.font_px(15), T.TEXT_TERTIARY, T.FONT, Align.END)
     else:
-      draw.text(title, f"{_gb(used)} of {_gb(total)} used", title_size, T.TEXT, T.FONT_SEMIBOLD)
+      draw.text(title, t_("{} of {} used", _gb(used), _gb(total)), title_size, T.TEXT, T.FONT_SEMIBOLD)
     draw.fill(bar, T.TRACK, T.px(7))
     # Flat segments, as in the mock's clipped track: only the bar's own ends are round.
     x, radius = bar.x, T.px(7)
@@ -297,22 +298,23 @@ class StorageBar(Component):
 
 
 def _gb(size: float) -> str:
-  return f"{size / 1e9:.1f} GB" if size >= 1e8 else f"{size / 1e6:.0f} MB"
+  return t_("{} GB", f"{size / 1e9:.1f}") if size >= 1e8 else t_("{} MB", f"{size / 1e6:.0f}")
 
 
-DELETE_DRIVES_MESSAGE = "Every recorded drive and its video is removed. This can't be undone."
-DELETE_MAPS_MESSAGE = ("Speed limits and curves will need a connection until maps download again. Your regions stay chosen, " +
-                       "so a scheduled update downloads them again.")
+DELETE_DRIVES_MESSAGE = N_("Every recorded drive and its video is removed. This can't be undone.")
+BACKUP_NAME = N_("Backup {}")   # a backup folder's name as drawn: "Backup 2026-10-24 0910"
+DELETE_MAPS_MESSAGE = N_("Speed limits and curves will need a connection until maps download again. Your regions stay chosen, " +
+                         "so a scheduled update downloads them again.")
 
 
 def delete_maps_row(data: DeviceData, window, height: float | None = None) -> SettingRow:
   """Storage & Data's row for offline maps: Delete, or why it can't be deleted yet."""
   def subtitle() -> str:
-    return data.maps_blocked() or "Speed limits and curves work without a connection"
-  delete = Button("Delete", lambda: confirm(window, "Delete offline maps?", DELETE_MAPS_MESSAGE, "Delete", data.delete_maps),
+    return data.maps_blocked() or N_("Speed limits and curves work without a connection")
+  delete = Button(N_("Delete"), lambda: confirm(window, N_("Delete offline maps?"), DELETE_MAPS_MESSAGE, N_("Delete"), data.delete_maps),
                   ButtonStyle.DANGER_SOFT)
   delete.set_enabled(lambda: data.storage().get("Maps", 0.0) > 0 and not data.maps_blocked())
-  return SettingRow("Offline Maps", subtitle, delete, height=height)
+  return SettingRow(N_("Offline Maps"), subtitle, delete, height=height)
 
 
 def unused_models_row(models, window) -> SettingRow:
@@ -322,39 +324,39 @@ def unused_models_row(models, window) -> SettingRow:
     blocked = models.source.removal_blocked()
     if blocked and count:
       return blocked
-    return f"{count} downloaded model{'s' if count != 1 else ''} not in use" if count else "Only the models you use are downloaded"
+    return tn_("{} downloaded model not in use", "{} downloaded models not in use", count) if count else N_("Only the models you use are downloaded")
 
   def remove() -> None:
     count = len(models.unused())
-    confirm(window, "Remove unused models?",
-            f"{count} model{'s' if count != 1 else ''} you aren't using {'are' if count != 1 else 'is'} removed. " +
-            "You can download them again from the model catalog.", "Remove",
+    confirm(window, N_("Remove unused models?"),
+            tn_("{} model you aren't using is removed. You can download it again from the model catalog.",
+                "{} models you aren't using are removed. You can download them again from the model catalog.", count), N_("Remove"),
             lambda: (models.remove_unused(), STORAGE.forget()))
-  button = Button("Remove", remove, ButtonStyle.DANGER_SOFT)
+  button = Button(N_("Remove"), remove, ButtonStyle.DANGER_SOFT)
   button.set_enabled(lambda: bool(models.unused()) and not models.source.removal_blocked())
-  return SettingRow("Unused Models", subtitle, button)
+  return SettingRow(N_("Unused Models"), subtitle, button)
 
 
 def storage_panel(model: General, window, models) -> ListPanel:
-  driver = SettingRow("Record Driver Camera", "Saved and uploaded with your drives. Restarts openpilot if the car is on.",
+  driver = SettingRow(N_("Record Driver Camera"), N_("Saved and uploaded with your drives. Restarts openpilot if the car is on."),
                       Switch(lambda: model.record_driver, model.set_record_driver))
-  audio = SettingRow("Record Microphone", "Cabin audio in your drive recordings. Restarts openpilot if the car is on.",
+  audio = SettingRow(N_("Record Microphone"), N_("Cabin audio in your drive recordings. Restarts openpilot if the car is on."),
                      Switch(lambda: model.record_audio, model.set_record_audio))
   for r in (driver, audio):
     r.set_enabled(lambda: not model.recording_locked())
   return ListPanel([
     StorageBar(model.data.storage),
-    SettingRow("Recorded Drives", "Oldest drives are removed when space runs low",
-               Button("Delete all", lambda: confirm(window, "Delete all drives?", DELETE_DRIVES_MESSAGE, "Delete", model.data.delete_drives),
+    SettingRow(N_("Recorded Drives"), N_("Oldest drives are removed when space runs low"),
+               Button(N_("Delete all"), lambda: confirm(window, N_("Delete all drives?"), DELETE_DRIVES_MESSAGE, N_("Delete"), model.data.delete_drives),
                       ButtonStyle.DANGER_SOFT)),
     delete_maps_row(model.data, window),
     unused_models_row(models, window),
-    SectionHeader("RECORDING & UPLOADS"),
+    SectionHeader(N_("RECORDING & UPLOADS")),
     driver,
     audio,
-    SettingRow("Uploads", "Drive logs and video for debugging", Segmented(UPLOADS, lambda: model.uploads, model.set_uploads)),
-  ], title="Storage & Data", header_divider=False, end_divider=True,   # the usage bar belongs to the header, as in the mock
-     footnote="High-quality recording, logging and error logs are in Tuner Mode.")
+    SettingRow(N_("Uploads"), N_("Drive logs and video for debugging"), Segmented(UPLOADS, lambda: model.uploads, model.set_uploads)),
+  ], title=N_("Storage & Data"), header_divider=False, end_divider=True,   # the usage bar belongs to the header, as in the mock
+     footnote=N_("High-quality recording, logging and error logs are in Tuner Mode."))
 
 
 class Report:
@@ -384,8 +386,8 @@ def report_panel(report: Report) -> Widget:
     def open_keyboard():
       from openpilot.system.ui.lib.application import gui_app
       from openpilot.selfdrive.ui.tandem.keyboard import EssentialsKeyboard
-      keyboard = EssentialsKeyboard(min_text_size=0, action="Save")
-      keyboard.set_title(title, "Optional")
+      keyboard = EssentialsKeyboard(min_text_size=0, action=N_("Save"))
+      keyboard.set_title(title, N_("Optional"))
       keyboard.set_text(get())
       keyboard.set_callback(lambda result: set_(keyboard.text.strip()) if result == DialogResult.CONFIRM else None)
       gui_app.push_widget(keyboard)
@@ -395,18 +397,18 @@ def report_panel(report: Report) -> Widget:
     report.category = index
     report.sent = False
 
-  send = Button(lambda: "Sent. Thank you!" if report.sent else "Send report", report.send, ButtonStyle.PRIMARY, height=T.px(56),
+  send = Button(lambda: N_("Sent. Thank you!") if report.sent else N_("Send report"), report.send, ButtonStyle.PRIMARY, height=T.px(56),
                 weight=T.FONT_EXTRABOLD)
   send.set_enabled(lambda: report.ready() and not report.sent)
   happened = Stack([
-    Padded(Label("What happened?", T.font_px(22)), x=T.px(10), y=T.px(4)),
+    Padded(Label(N_("What happened?"), T.font_px(22)), x=T.px(10), y=T.px(4)),
     OptionList(REPORT_CATEGORIES, lambda: report.category, pick, row_height=T.px(52), outlined=True, font_size=T.font_px(15)),
   ], gap=T.px(4))
   details = Stack([
-    Field("Details (optional)", lambda: report.details, "Where and when it happened",
-          edit("Details", lambda: report.details, lambda v: setattr(report, "details", v)), height=T.px(72)),
-    Field("Discord name (optional)", lambda: report.discord, "So we can follow up",
-          edit("Discord name", lambda: report.discord, lambda v: setattr(report, "discord", v))),
+    Field(N_("Details (optional)"), lambda: report.details, N_("Where and when it happened"),
+          edit(N_("Details"), lambda: report.details, lambda v: setattr(report, "details", v)), height=T.px(72)),
+    Field(N_("Discord name (optional)"), lambda: report.discord, N_("So we can follow up"),
+          edit(N_("Discord name"), lambda: report.discord, lambda v: setattr(report, "discord", v))),
     SPACER,
     send,
   ], gap=T.px(14))
@@ -504,7 +506,7 @@ class UpstreamData:
   def create_backup(self) -> None:
     import datetime
     import shutil
-    target = self._dir(datetime.datetime.now().strftime("Backup %Y-%m-%d %H%M"))
+    target = self._dir(datetime.datetime.now().strftime("Backup %Y-%m-%d %H%M"))   # drawn as N_("Backup {}") (BACKUP_NAME)
     target.mkdir(parents=True, exist_ok=True)
     shutil.copytree(str(self._params_dir), str(target), dirs_exist_ok=True)
     save_prefs(target)   # Tandem's own settings live beside the params folder (prefs.py)

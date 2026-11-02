@@ -50,7 +50,7 @@ def charset() -> tuple[set[int], dict[str, set[int]]]:
   chars = set(range(32, 127)) | {ord(c) for c in EXTRA} | {ord(c) for name in languages for c in name}
   for path in TANDEM_CATALOGS.glob("tandem_*.po"):   # Tandem's own translations (i18n.py)
     code = path.stem.removeprefix("tandem_")
-    used = {ord(c) for c in "".join(re.findall(r'msgstr "(.*)"', path.read_text(encoding="utf-8")))}
+    used = {ord(c) for c in "".join(re.findall(r'msgstr(?:\[\d+\])? "(.*)"', path.read_text(encoding="utf-8")))}
     by_language[code] = by_language.get(code, set()) | used
   for used in by_language.values():
     chars |= used

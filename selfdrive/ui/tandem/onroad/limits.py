@@ -1,8 +1,9 @@
 """Track consecutive posted limits and the driver's dismissal in native m/s, independent of display units."""
 import math
 from dataclasses import dataclass
+from openpilot.selfdrive.ui.tandem.i18n import N_
 
-LIVE_SOURCES = {"Dashboard", "Map Data", "Vision", "Mapbox"}
+LIVE_SOURCES = {N_("Dashboard"), N_("Map Data"), N_("Vision"), N_("Mapbox")}
 
 
 @dataclass

@@ -15,15 +15,16 @@ import pyray as rl
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, place, row
+from openpilot.selfdrive.ui.tandem.i18n import N_
 
-WHERE = "Settings › Driving › Speed & Steering › Navigation"
+WHERE = N_("Settings › Driving › Speed & Steering › Navigation")
 
 STEPS = [
-  ("Make a Mapbox account", "At account.mapbox.com. The free tier covers personal driving."),
-  ("Get two keys", "Your default public token (pk.) is there already. Create a token, keep its public scopes, and also " +
-                   "check DOWNLOADS:READ so it starts with sk."),
-  ("Open Galaxy", "On this device: Device › This Device › Remote Access › Set Up, then open its link on your phone."),
-  ("Paste both keys", "In Galaxy: Navigation & Maps › App Keys. The public key is for search, the secret one for routes."),
+  (N_("Make a Mapbox account"), N_("At account.mapbox.com. The free tier covers personal driving.")),
+  (N_("Get two keys"), N_("Your default public token (pk.) is there already. Create a token, keep its public scopes, and also " +
+      "check DOWNLOADS:READ so it starts with sk.")),
+  (N_("Open Galaxy"), N_("On this device: Device › This Device › Remote Access › Set Up, then open its link on your phone.")),
+  (N_("Paste both keys"), N_("In Galaxy: Navigation & Maps › App Keys. The public key is for search, the secret one for routes.")),
 ]
 
 
@@ -42,18 +43,18 @@ def status(read: Callable[[str], object]) -> tuple[str, bool]:
   """The Mapbox Key row's line, and whether both keys are there."""
   public, secret = keys(read)
   if public and secret:
-    return "Added", True
+    return N_("Added"), True
   if public:
-    return "Public key only · routes need the secret key too", False
+    return N_("Public key only · routes need the secret key too"), False
   if secret:
-    return "Secret key only · search needs the public key too", False
-  return "Not added · needed for place search and routes", False
+    return N_("Secret key only · search needs the public key too"), False
+  return N_("Not added · needed for place search and routes"), False
 
 
 class Steps(Component):
   """The four numbered steps, two by two, and the note under them."""
   grow_touch_target = False
-  NOTE = "The keys stay on this device. Search and routes work as soon as they're saved."
+  NOTE = N_("The keys stay on this device. Search and routes work as soon as they're saved.")
 
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, T.px(128) * 2 + T.px(12) + T.px(14) + draw.line_height(T.font_px(14))
@@ -79,5 +80,5 @@ class Steps(Component):
 def mapbox_key_sheet(done: Callable[[], None]):
   from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle
   from openpilot.selfdrive.ui.tandem.overlays import Sheet
-  return Sheet("Add Mapbox keys", Steps(), subtitle="For place search, routes, and speed limits the maps don't have",
-               actions=[Button("Done", done, ButtonStyle.PRIMARY)], on_dismiss=done)
+  return Sheet(N_("Add Mapbox keys"), Steps(), subtitle=N_("For place search, routes, and speed limits the maps don't have"),
+               actions=[Button(N_("Done"), done, ButtonStyle.PRIMARY)], on_dismiss=done)

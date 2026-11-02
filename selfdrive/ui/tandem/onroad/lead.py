@@ -10,6 +10,7 @@ from openpilot.common.constants import CV
 from openpilot.selfdrive.ui.tandem import tokens as T
 from openpilot.selfdrive.ui.tandem.onroad.developer import Lead, developer_view_on
 from openpilot.selfdrive.ui.tandem.onroad.extras import LEAD_UNSURE, LeadSettle
+from openpilot.selfdrive.ui.tandem.i18n import t_
 
 DISTANCE_SPEED = 1.0       # m/s: enter distance mode near a stop
 GAP_SPEED = 1.5            # m/s: return to seconds above this, avoiding flicker
@@ -93,7 +94,7 @@ class GapTracker:
     elif sample.speed > GAP_SPEED:
       self._distance_mode = False
 
-    distance = f"{round(sample.distance)} m" if sample.metric else f"{round(sample.distance * CV.METER_TO_FOOT)} ft"
+    distance = t_("{} m", round(sample.distance)) if sample.metric else t_("{} ft", round(sample.distance * CV.METER_TO_FOOT))
     relative = sample.relative_speed * (CV.MS_TO_KPH if sample.metric else CV.MS_TO_MPH)
     relative_text = f"{round(relative):+d} {'km/h' if sample.metric else 'mph'}".replace("-", "−")
     if sample.confident:
@@ -103,8 +104,8 @@ class GapTracker:
       else:
         dt = max(0.0, now - self._last_time)
         self._value += (target - self._value) * (1.0 - math.exp(-dt / VALUE_TAU))
-      label = (f"{round(self._value)} m" if sample.metric else f"{round(self._value * CV.METER_TO_FOOT)} ft") \
-              if self._distance_mode else f"{self._value:.1f} s"
+      label = (t_("{} m", round(self._value)) if sample.metric else t_("{} ft", round(self._value * CV.METER_TO_FOOT))) \
+              if self._distance_mode else t_("{} s", f"{self._value:.1f}")
       gap = "--" if self._distance_mode else label
     else:
       self._value = None      # returning confidence starts with the current value, never an old one

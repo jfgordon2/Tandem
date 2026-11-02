@@ -18,27 +18,28 @@ from openpilot.selfdrive.ui.tandem.rows import ListPanel, SectionHeader, Setting
 from openpilot.selfdrive.ui.tandem.settings.bundles import DEVELOPER_VIEW, LEAD_INSIGHTS, Bundle
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
 from openpilot.selfdrive.ui.tandem.onroad.extras import PATH_COLOR, WHIMSY_SIGNALS
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
 # Path Style -> the path and lane line params it sets. Standard is upstream's path without the acceleration tint.
 # PathColor is Essentials blue (design/leadmarker.html); Rainbow and Acceleration draw their own colors over it.
 _STANDARD_PATH = {"ModelUI": True, "CustomUI": True, "PathColor": PATH_COLOR, "PathWidth": 6.1, "PathEdgeWidth": 20.0, "LaneLinesWidth": 4.0,
                   "RainbowPath": False, "AccelerationPath": False, "DynamicPathWidth": False}
 PATH_STYLES = [
-  ("Standard", "The usual path and lane lines", _STANDARD_PATH),
-  ("Thin", "A narrower path and lighter lines", _STANDARD_PATH | {"PathWidth": 3.0, "PathEdgeWidth": 10.0, "LaneLinesWidth": 2.0}),
-  ("Rainbow", "A rainbow path", _STANDARD_PATH | {"RainbowPath": True}),
-  ("Acceleration", "Green when speeding up, amber when slowing", _STANDARD_PATH | {"AccelerationPath": True}),
+  (N_("Standard"), N_("The usual path and lane lines"), _STANDARD_PATH),
+  (N_("Thin"), N_("A narrower path and lighter lines"), _STANDARD_PATH | {"PathWidth": 3.0, "PathEdgeWidth": 10.0, "LaneLinesWidth": 2.0}),
+  (N_("Rainbow"), N_("A rainbow path"), _STANDARD_PATH | {"RainbowPath": True}),
+  (N_("Acceleration"), N_("Green when speeding up, amber when slowing"), _STANDARD_PATH | {"AccelerationPath": True}),
 ]
 # Turn Signal: (name, SignalAnimation slug). Standard is Essentials' chevrons in the speed pill; the rest are StarPilot's
 # animations, offered as Whimsy. The chevrons stay with any of them.
-SIGNAL_STANDARD = ("Standard", "stock")
+SIGNAL_STANDARD = (N_("Standard"), "stock")
 PREVIEW_ROAD = T._hex("132231")   # the picture behind each Turn Signal choice, as the mock
 SIGNAL_STYLES = [SIGNAL_STANDARD] + [(name, slug) for slug, name in WHIMSY_SIGNALS.items()]
 # CameraView values: 0 Auto, 1 Driver, 2 Standard, 3 Wide. Driver is left to upstream's developer screens.
-CAMERA_VIEWS = [("Auto", 0), ("Standard", 2), ("Wide", 3)]
+CAMERA_VIEWS = [(N_("Auto"), 0), (N_("Standard"), 2), (N_("Wide"), 3)]
 # (BootLogo slug, name). Tandem's is the Essentials default; StarPilot installs it from its boot logos folder like any other.
 TANDEM_LOGO = "tandem"
-BUILT_IN_LOGOS = [(TANDEM_LOGO, "Tandem"), ("starpilot", "StarPilot"), ("stock", "comma")]
+BUILT_IN_LOGOS = [(TANDEM_LOGO, N_("Tandem")), ("starpilot", "StarPilot"), ("stock", "comma")]
 TANDEM_LOGO_FILE = Path(__file__).resolve().parents[1] / "assets" / "boot_logo.jpg"
 _STARPILOT_IMAGES = Path(__file__).resolve().parents[4] / "starpilot" / "assets" / "other_images"
 BUILT_IN_IMAGES = {TANDEM_LOGO: TANDEM_LOGO_FILE, "starpilot": _STARPILOT_IMAGES / "starpilot_boot_logo.jpg",
@@ -51,7 +52,7 @@ class BootLogoSource(Protocol):
   def image(self, slug: str) -> Path | None: ...        # a downloaded logo's file, for its preview
 STARTUP_TOP = "StartupMessageTop"
 STARTUP_BOTTOM = "StartupMessageBottom"
-STARTUP_DEFAULTS = ("Be ready to take over at any time", "Always keep hands on wheel and eyes on road")
+STARTUP_DEFAULTS = (N_("Be ready to take over at any time"), N_("Always keep hands on wheel and eyes on road"))
 
 
 class Display:
@@ -164,7 +165,7 @@ class Display:
   def boot_logo_name(self) -> str:
     slug = self.boot_logo
     if slug == TANDEM_LOGO:
-      return "Default"
+      return N_("Default")
     return dict(self.boot_logo_options()).get(slug) or slug.replace("_", " ").replace("-", " ").title()
 
   def set_boot_logo(self, slug: str) -> None:
@@ -199,15 +200,15 @@ class Display:
     self._store.write({"NavigationUI": True, "UseVienna": index == 1})
 
   def summary(self) -> str:
-    return "Style banner shown" if self.driving_style_banner else "Style banner hidden"
+    return N_("Style banner shown") if self.driving_style_banner else N_("Style banner hidden")
 
   def path_summary(self) -> str:
-    return f"{PATH_STYLES[self.path_style][0]} path"
+    return t_("{} path", PATH_STYLES[self.path_style][0])
 
 
-GATE_NAMES = {"DeveloperUI": "Developer UI", "DeveloperMetrics": "Controls metrics bar", "DeveloperWidgets": "Developer widgets"}
-BUNDLE_LINES = {"Developer View": "Side panel with system and controls data.",
-                "Lead Insights": "Distance, gap and speed of the car ahead, plus radar points."}
+GATE_NAMES = {"DeveloperUI": N_("Developer UI"), "DeveloperMetrics": N_("Controls metrics bar"), "DeveloperWidgets": N_("Developer widgets")}
+BUNDLE_LINES = {"Developer View": N_("Side panel with system and controls data."),
+                "Lead Insights": N_("Distance, gap and speed of the car ahead, plus radar points.")}
 
 
 def bundle_items(bundle: Bundle) -> list[tuple[str, str]]:
@@ -245,7 +246,7 @@ class BundleGrid(Component):
     note_y = rect.y + self._rows() * (self.TILE + self.GAP) + T.px(6)
     note = rl.Rectangle(rect.x, note_y, rect.width, draw.line_height(T.SIZE_SUBTITLE))
     draw.icon(rl.Rectangle(note.x, note.y, T.px(18), note.height), "info", T.ACCENT_TEXT, T.px(18))
-    draw.text(inset(note, left=T.px(28)), "Switching off turns these back off. To change one on its own, turn on Tuner Mode.",
+    draw.text(inset(note, left=T.px(28)), N_("Switching off turns these back off. To change one on its own, turn on Tuner Mode."),
               T.SIZE_SUBTITLE, T.TEXT_SECONDARY)
 
 
@@ -254,31 +255,31 @@ def bundle_sheet(window, start: int = 0) -> Sheet:
   bundles = [DEVELOPER_VIEW, LEAD_INSIGHTS]
   tab = [start]
   tabs = Segmented([b.name for b in bundles], lambda: tab[0], lambda i: tab.__setitem__(0, i), height=T.px(52), font_size=T.font_px(16))
-  return Sheet(lambda: f"{bundles[tab[0]].name} sets", BundleGrid(lambda: bundles[tab[0]]),
-               subtitle="One switch for the details most drivers never need",
-               actions=[Button("Done", window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss, header=tabs)
+  return Sheet(lambda: t_("{} sets", bundles[tab[0]].name), BundleGrid(lambda: bundles[tab[0]]),
+               subtitle=N_("One switch for the details most drivers never need"),
+               actions=[Button(N_("Done"), window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss, header=tabs)
 
 
 def driving_screen_panel(model: Display, window) -> ListPanel:
   dev_get, dev_set = model.bundle(DEVELOPER_VIEW)
   lead_get, lead_set = model.bundle(LEAD_INSIGHTS)
   return ListPanel([
-    SettingRow("Camera View", "Wide shows more of the road at low speed",
+    SettingRow(N_("Camera View"), N_("Wide shows more of the road at low speed"),
                Segmented([name for name, _ in CAMERA_VIEWS], lambda: model.camera_view, model.set_camera_view)),
-    SettingRow("Driver Camera in Reverse", "Shows the inside camera while backing up",
+    SettingRow(N_("Driver Camera in Reverse"), N_("Shows the inside camera while backing up"),
                Switch(lambda: model.driver_camera_in_reverse, model.set_driver_camera_in_reverse)),
-    SettingRow("Driving Style Banner", "Shows the current style when it changes",
+    SettingRow(N_("Driving Style Banner"), N_("Shows the current style when it changes"),
                Switch(lambda: model.driving_style_banner, model.set_driving_style_banner)),
-    SettingRow("Compass", "Heading beside the street name, like NE", Switch(lambda: model.compass, model.set_compass)),
-    SettingRow("Blind Spot Highlights", "Colors the screen edge and lane when a car is beside you",
+    SettingRow(N_("Compass"), N_("Heading beside the street name, like NE"), Switch(lambda: model.compass, model.set_compass)),
+    SettingRow(N_("Blind Spot Highlights"), N_("Colors the screen edge and lane when a car is beside you"),
                Switch(lambda: model.blind_spot, model.set_blind_spot)),
-    SettingRow("Lead Car Tag", "Numbers above the car ahead. Off keeps only the bar under it", Switch(lambda: model.lead_tag, model.set_lead_tag)),
-    SectionHeader("POWER USER"),
+    SettingRow(N_("Lead Car Tag"), N_("Numbers above the car ahead. Off keeps only the bar under it"), Switch(lambda: model.lead_tag, model.set_lead_tag)),
+    SectionHeader(N_("POWER USER")),
     SettingRow(DEVELOPER_VIEW.name, BUNDLE_LINES[DEVELOPER_VIEW.name], Switch(dev_get, dev_set),
-               link=(f"Sets {len(bundle_items(DEVELOPER_VIEW))} options", lambda: window.present(bundle_sheet(window, 0)))),
+               link=(t_("Sets {} options", len(bundle_items(DEVELOPER_VIEW))), lambda: window.present(bundle_sheet(window, 0)))),
     SettingRow(LEAD_INSIGHTS.name, BUNDLE_LINES[LEAD_INSIGHTS.name], Switch(lead_get, lead_set),
-               link=(f"Sets {len(bundle_items(LEAD_INSIGHTS))} options", lambda: window.present(bundle_sheet(window, 1)))),
-  ], title="Driving Screen")
+               link=(t_("Sets {} options", len(bundle_items(LEAD_INSIGHTS))), lambda: window.present(bundle_sheet(window, 1)))),
+  ], title=N_("Driving Screen"))
 
 
 def boot_logo_sheet(model: Display, window) -> None:
@@ -289,41 +290,41 @@ def boot_logo_sheet(model: Display, window) -> None:
 
   cards = [LogoCard(name, model.boot_logo_image(slug), lambda s=slug: model.boot_logo == s, lambda s=slug: pick(s))
            for slug, name in model.boot_logo_options()]
-  window.present(Sheet("Boot Logo", ListPanel([Grid(cards, columns=4, gap=T.px(14))], background=T.SURFACE_2, dividers=False),
-                       subtitle="Shown while the device starts up",
-                       actions=[Button("Done", window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss))
+  window.present(Sheet(N_("Boot Logo"), ListPanel([Grid(cards, columns=4, gap=T.px(14))], background=T.SURFACE_2, dividers=False),
+                       subtitle=N_("Shown while the device starts up"),
+                       actions=[Button(N_("Done"), window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss))
 
 
 def theme_panel(model: Display, edit_startup_message: Callable[[], None], window=None) -> ListPanel:
   """The customizations: how the path and turn signal look, and what shows at startup."""
   def path_sheet():
-    window.present(Sheet("Path Style", PathStylePicker(lambda: model.path_style, model.set_path_style),
-                         subtitle="Sets path color, width, edges and lane lines together",
-                         actions=[Button("Done", window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss))
+    window.present(Sheet(N_("Path Style"), PathStylePicker(lambda: model.path_style, model.set_path_style),
+                         subtitle=N_("Sets path color, width, edges and lane lines together"),
+                         actions=[Button(N_("Done"), window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss))
 
   def signal_sheet():
-    window.present(Sheet("Turn Signal", SignalPicker(lambda: model.signal_style, model.set_signal_style),
-                         subtitle="Plays beside the speed while a blinker is on",
-                         actions=[Button("Done", window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss))
+    window.present(Sheet(N_("Turn Signal"), SignalPicker(lambda: model.signal_style, model.set_signal_style),
+                         subtitle=N_("Plays beside the speed while a blinker is on"),
+                         actions=[Button(N_("Done"), window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss))
 
   return ListPanel([
-    SettingRow("Path Style", "Color, width and edges as one preset", ValueButton(lambda: PATH_STYLES[model.path_style][0], path_sheet)),
-    SettingRow("Turn Signal", "Chevrons by the speed, or a whimsical animation", ValueButton(model.signal_name, signal_sheet)),
-    SettingRow("Boot Logo", "Shown while the device starts up", ValueButton(model.boot_logo_name, lambda: boot_logo_sheet(model, window))),
-    SettingRow("Startup Message", lambda: "The banner when you start the car" if model.startup_is_default() else model.startup_message()[0],
-               ValueButton(lambda: "Default" if model.startup_is_default() else "Custom", edit_startup_message)),
-  ], title="Theme & Startup", end_divider=True)
+    SettingRow(N_("Path Style"), N_("Color, width and edges as one preset"), ValueButton(lambda: PATH_STYLES[model.path_style][0], path_sheet)),
+    SettingRow(N_("Turn Signal"), N_("Chevrons by the speed, or a whimsical animation"), ValueButton(model.signal_name, signal_sheet)),
+    SettingRow(N_("Boot Logo"), N_("Shown while the device starts up"), ValueButton(model.boot_logo_name, lambda: boot_logo_sheet(model, window))),
+    SettingRow(N_("Startup Message"), lambda: N_("The banner when you start the car") if model.startup_is_default() else model.startup_message()[0],
+               ValueButton(lambda: N_("Default") if model.startup_is_default() else N_("Custom"), edit_startup_message)),
+  ], title=N_("Theme & Startup"), end_divider=True)
 
 
 def map_panel(model: Display, open_offline_maps: Callable[[], None]) -> ListPanel:
   return ListPanel([
-    SettingRow("Turn-by-Turn on Screen", "Next turn, arrival time and distance while navigating",
+    SettingRow(N_("Turn-by-Turn on Screen"), N_("Next turn, arrival time and distance while navigating"),
                Switch(lambda: model.turn_by_turn, model.set_turn_by_turn)),
-    SettingRow("Speed Limit Sign", "US style, or the round Vienna style used in most other countries",
+    SettingRow(N_("Speed Limit Sign"), N_("US style, or the round Vienna style used in most other countries"),
                SignPicker(lambda: model.vienna, model.set_vienna), height=T.px(96)),
-    SettingRow("Offline Maps", "Speed limits and routing without a connection", on_click=open_offline_maps),
-  ], title="Map", end_divider=True,
-     footnote="The street name is always shown in the onroad bar. Speed limit sources and their order are in Tuner Mode.")
+    SettingRow(N_("Offline Maps"), N_("Speed limits and routing without a connection"), on_click=open_offline_maps),
+  ], title=N_("Map"), end_divider=True,
+     footnote=N_("The street name is always shown in the onroad bar. Speed limit sources and their order are in Tuner Mode."))
 
 
 def edit_startup_message(model: Display) -> None:
@@ -332,13 +333,13 @@ def edit_startup_message(model: Display) -> None:
   from openpilot.system.ui.widgets import DialogResult
   from openpilot.selfdrive.ui.tandem.keyboard import EssentialsKeyboard
 
-  keyboard = EssentialsKeyboard(min_text_size=0, action="Next")
+  keyboard = EssentialsKeyboard(min_text_size=0, action=N_("Next"))
   top, bottom = model.startup_message()
   lines: list[str] = []
 
   def ask(title: str, current: str) -> None:
     keyboard.clear()
-    keyboard.set_title(title, "Leave empty for the default")
+    keyboard.set_title(title, N_("Leave empty for the default"))
     keyboard.set_text(current)
     gui_app.push_widget(keyboard)
 
@@ -348,13 +349,13 @@ def edit_startup_message(model: Display) -> None:
       return
     lines.append(keyboard.text.strip() or STARTUP_DEFAULTS[len(lines)])
     if len(lines) == 1:
-      keyboard.set_action("Save")
-      ask("Startup Message: second line", bottom)
+      keyboard.set_action(N_("Save"))
+      ask(N_("Startup Message: second line"), bottom)
     else:
       model.set_startup_message(*lines)
 
   keyboard.set_callback(on_result)
-  ask("Startup Message: first line", top)
+  ask(N_("Startup Message: first line"), top)
 
 
 VIENNA_RED = rl.Color(0xD9, 0x43, 0x4F, 255)
@@ -494,7 +495,7 @@ class PathStylePicker(Component):
       draw.text(rl.Rectangle(body.x, body.y + body.height - label_h, body.width, label_h), PATH_STYLES[i][0], T.font_px(18), T.TEXT,
                 T.FONT_BOLD if chosen else T.FONT_SEMIBOLD, Align.CENTER)
     note = rl.Rectangle(rect.x, rect.y + T.px(214) + T.px(14), rect.width, draw.line_height(T.SIZE_SUBTITLE))
-    draw.text(note, "Acceleration tints the path green when speeding up and amber when slowing. Each value can be changed in Tuner Mode.",
+    draw.text(note, N_("Acceleration tints the path green when speeding up and amber when slowing. Each value can be changed in Tuner Mode."),
               T.SIZE_SUBTITLE, T.TEXT_TERTIARY)
 
 
@@ -529,7 +530,7 @@ class SignalThumb:
     if not self._loaded:
       self._load()
     if self._texture is None:
-      draw.text(rect, "No preview", T.SIZE_SUBTITLE, T.TEXT_TERTIARY, h=Align.CENTER)
+      draw.text(rect, N_("No preview"), T.SIZE_SUBTITLE, T.TEXT_TERTIARY, h=Align.CENTER)
       return
     t = self._texture
     scale = min(rect.width * 0.8 / t.width, rect.height * 0.8 / t.height, 1.5)   # small figures (the ball) stay near their size on the road
@@ -591,7 +592,7 @@ class SignalPicker(Component):
     selected = self._selected()
     cards = self._cards()
     label = rl.Rectangle(rect.x, rect.y, rect.width, draw.line_height(T.font_px(13)))
-    for x, text in ((cards[0].x, "ESSENTIALS"), (cards[1].x, "WHIMSY")):
+    for x, text in ((cards[0].x, N_("ESSENTIALS")), (cards[1].x, N_("WHIMSY"))):
       draw.text(rl.Rectangle(x, label.y, rect.width, label.height), text, T.font_px(13), T.TEXT_SECONDARY, T.FONT_BOLD, tracking=T.px(1.6))
     for i, card in enumerate(cards):
       chosen = i == selected
@@ -611,7 +612,7 @@ class SignalPicker(Component):
       draw.text(rl.Rectangle(body.x, body.y + body.height - label_h, body.width, label_h), SIGNAL_STYLES[i][0], T.font_px(18), T.TEXT,
                 T.FONT_BOLD if chosen else T.FONT_SEMIBOLD, Align.CENTER)
     note = rl.Rectangle(rect.x, cards[0].y + self.CARD_H + T.px(14), rect.width, draw.line_height(T.SIZE_SUBTITLE))
-    draw.text(note, "Whimsy animations cross the road above the bar while you signal; the chevrons by the speed stay.",
+    draw.text(note, N_("Whimsy animations cross the road above the bar while you signal; the chevrons by the speed stay."),
               T.SIZE_SUBTITLE, T.TEXT_TERTIARY)
 
 
@@ -640,7 +641,7 @@ class LogoCard(Component):
       rl.draw_texture_pro(texture, rl.Rectangle(0, 0, texture.width, texture.height), preview, rl.Vector2(0, 0), 0, rl.WHITE)
     else:
       draw.fill(preview, T.BG, T.px(12))
-      draw.text(preview, "No preview", T.SIZE_SUBTITLE, T.TEXT_MUTED, h=Align.CENTER)
+      draw.text(preview, N_("No preview"), T.SIZE_SUBTITLE, T.TEXT_MUTED, h=Align.CENTER)
     label = rl.Rectangle(body.x, preview.y + preview.height + T.px(12), body.width, draw.line_height(T.font_px(18)))
     draw.text(label, self._name, T.font_px(18), T.TEXT, T.FONT_BOLD if chosen else T.FONT_SEMIBOLD, Align.CENTER)
 
@@ -671,12 +672,12 @@ def _logo_png(path: Path, width: int) -> bytes | None:
   from PIL import Image
   try:
     with Image.open(path) as image:
-      image = image.convert("RGB")
+      image = image.convert(N_("RGB"))
       if image.height > image.width:
         image = image.rotate(90, expand=True)   # counterclockwise, as raylib's image_rotate_ccw did
       image = image.resize((width, width // 2), Image.LANCZOS)
       out = io.BytesIO()
-      image.save(out, "PNG")
+      image.save(out, N_("PNG"))
       return out.getvalue()
   except OSError:
     return None

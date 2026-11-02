@@ -16,6 +16,7 @@ from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, place, row
+from openpilot.selfdrive.ui.tandem.i18n import N_
 
 WIDTH = T.px(288)       # the mock's sidebar, including its 18 px margin
 
@@ -55,11 +56,11 @@ class SidebarView(Component):
                on_microphone: Callable[[], None]):
     super().__init__()
     self._state = state
-    self._settings = self._child(Button("Settings", on_settings, ButtonStyle.NAV, glyph=gear, height=T.px(74), radius=T.RADIUS_CARD,
+    self._settings = self._child(Button(N_("Settings"), on_settings, ButtonStyle.NAV, glyph=gear, height=T.px(74), radius=T.RADIUS_CARD,
                                         font_size=T.font_px(19)))
-    self._clip = self._child(Button("Save a clip", on_clip, ButtonStyle.SECONDARY, height=T.px(60)))
+    self._clip = self._child(Button(N_("Save a clip"), on_clip, ButtonStyle.SECONDARY, height=T.px(60)))
     self._clip.set_visible(lambda: self._state().onroad)
-    self._mic = self._child(Button("Recording audio", on_microphone, ButtonStyle.DANGER_SOFT, height=T.px(44)))
+    self._mic = self._child(Button(N_("Recording audio"), on_microphone, ButtonStyle.DANGER_SOFT, height=T.px(44)))
     self._mic.set_visible(lambda: self._state().recording_audio)
 
   def _render(self, rect: rl.Rectangle):
@@ -90,13 +91,13 @@ class SidebarView(Component):
 
 def connect_status(health: Health) -> Status:
   """comma connect: online, offline (no ping yet), or an error (no ping for 80 s), as upstream decides."""
-  return Status("comma connect", {Health.GOOD: "Online", Health.WARN: "Offline", Health.BAD: "Error"}.get(health, "Offline"), health)
+  return Status(N_("comma connect"), {Health.GOOD: N_("Online"), Health.WARN: N_("Offline"), Health.BAD: N_("Error")}.get(health, N_("Offline")), health)
 
 
 def network_status(kind: str, strength: int) -> Status:
   if kind in ("", "--"):
-    return Status("Network", "Offline", Health.OFF)
-  return Status("Network", kind, Health.GOOD if strength >= 2 else Health.WARN)
+    return Status(N_("Network"), N_("Offline"), Health.OFF)
+  return Status(N_("Network"), kind, Health.GOOD if strength >= 2 else Health.WARN)
 
 
 def essentials_sidebar():
@@ -109,7 +110,7 @@ def essentials_sidebar():
       super().__init__()
       self._view = SidebarView(self._state, lambda: self._call(self._on_settings_click), lambda: self._call(self._on_flag_click),
                                lambda: self._call(self._open_settings_callback))
-      self._maps = Status("Maps", "Checking", Health.OFF)
+      self._maps = Status(N_("Maps"), N_("Checking"), Health.OFF)
       self._maps_checked = -1e9
 
     @staticmethod
@@ -130,22 +131,22 @@ def essentials_sidebar():
         self._maps_checked = now
         cache = load_maps_storage_cache(ui_state.ui_params.get(MAPS_STORAGE_CACHE_PARAM, encoding="utf-8") or "")
         if ui_state.params_memory.get_bool("DownloadMaps"):
-          self._maps = Status("Maps", "Downloading", Health.WARN)
+          self._maps = Status(N_("Maps"), N_("Downloading"), Health.WARN)
         elif cache.maps_present:
-          self._maps = Status("Maps", "Up to date", Health.GOOD)
+          self._maps = Status(N_("Maps"), N_("Up to date"), Health.GOOD)
         else:
-          self._maps = Status("Maps", "Not downloaded", Health.OFF)
+          self._maps = Status(N_("Maps"), N_("Not downloaded"), Health.OFF)
       return self._maps
 
     def _state(self) -> SidebarState:
       temp = self._temp_status
-      temperature = {Health.GOOD: "Good", Health.WARN: "Warm", Health.BAD: "Hot"}[self._health(temp.color)]
+      temperature = {Health.GOOD: N_("Good"), Health.WARN: N_("Warm"), Health.BAD: N_("Hot")}[self._health(temp.color)]
       vehicle_ok = self._health(self._panda_status.color) == Health.GOOD
       return SidebarState(rows=[
         network_status(self._net_type, self._net_strength),
         connect_status(self._health(self._connect_status.color)),
-        Status("Temperature", temperature, self._health(temp.color)),
-        Status("Vehicle", "Connected" if vehicle_ok else "Not connected", Health.GOOD if vehicle_ok else Health.BAD),
+        Status(N_("Temperature"), temperature, self._health(temp.color)),
+        Status(N_("Vehicle"), N_("Connected") if vehicle_ok else N_("Not connected"), Health.GOOD if vehicle_ok else Health.BAD),
         self._maps_status(),
       ], onroad=bool(ui_state.started), recording_audio=bool(self._recording_audio))
 

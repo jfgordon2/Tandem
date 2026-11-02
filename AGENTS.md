@@ -28,7 +28,7 @@ Everything outside Tandem's own files belongs to StarPilot or openpilot and chan
 
 ## Translations
 
-Tandem's screens are written in English and translated where they're drawn, from its own catalog in `selfdrive/ui/tandem/translations/` (not StarPilot's `app_*.po`). After changing any wording, run `python3 selfdrive/ui/tandem/tools/translations.py update`; `tests/test_translations.py` checks the template is current. New strings start untranslated (they show in English) until someone translates them. If new translations add characters, rebuild the fallback font (`tools/fallback_font.py subset`, then `build`).
+Tandem's screens are written in English, with the text a driver reads marked for translation (`selfdrive/ui/tandem/i18n.py`): `N_("…")` for labels and constants (translated where drawn), `t_("… {} …", value)` for text built at runtime, `tn_(singular, plural, n)` for counts, and `context=` for English with two meanings. Mark new text the same way; never put an English plural "s" in a hole. After changing wording, run `python3 selfdrive/ui/tandem/tools/translations.py update`; `tests/test_translations.py` checks the template is current. To find unmarked text and layouts that won't fit longer languages, render `tools/render/scene_pseudo.py` and read its `missed.txt`. New strings show in English until translated. If translations add characters, rebuild the fallback font (`tools/fallback_font.py subset`, then `build`).
 
 ## Settings search
 

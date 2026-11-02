@@ -23,8 +23,9 @@ from openpilot.selfdrive.ui.tandem.settings.device_sections import DELETE_MAPS_M
 from openpilot.selfdrive.ui.tandem.settings.model import Rebuilding
 from openpilot.selfdrive.ui.tandem.settings.pages import TitledPage, body_rect
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_, translate
 
-SCHEDULES = ["Off", "Weekly", "Monthly"]   # PreferredSchedule 0, 1, 2
+SCHEDULES = [N_("Off"), N_("Weekly"), N_("Monthly")]   # PreferredSchedule 0, 1, 2
 
 
 @dataclass(frozen=True)
@@ -119,16 +120,16 @@ class Maps:
 
   def blocked_reason(self) -> str:
     if not self.source.has_selection():
-      return "Choose at least one region"
-    return next((f"Waiting: {name.lower()}" for name, ok in self.source.checks() if not ok), "")
+      return N_("Choose at least one region")
+    return next((t_("Waiting: {}", name.lower()) for name, ok in self.source.checks() if not ok), "")
 
   def status(self) -> str:
     progress = self.source.progress()
     if self.source.cancelling():
-      return "Cancelling…"
+      return N_("Cancelling…")
     if progress.active:
-      return f"Downloading {progress.location or 'maps'} · {round(progress.fraction * 100)}%"
-    return "Downloaded" if self.source.downloaded() else "Not downloaded yet"
+      return t_("Downloading {} · {}%", progress.location or 'maps', round(progress.fraction * 100))
+    return N_("Downloaded") if self.source.downloaded() else N_("Not downloaded yet")
 
   def summary(self) -> str:
     return f"{self.source.selection_summary()} · {self.status().lower()}"
@@ -143,7 +144,7 @@ class ProgressCard(Component):
     self._maps = maps
     self._padding = padding
     self._bar = self._child(ProgressBar(lambda: maps.source.progress().fraction))
-    self._cancel = self._child(Button("Cancel download", maps.source.cancel, ButtonStyle.DANGER_SOFT))
+    self._cancel = self._child(Button(N_("Cancel download"), maps.source.cancel, ButtonStyle.DANGER_SOFT))
     self.set_visible(lambda: maps.source.progress().active)
 
   def preferred_size(self, max_width: float) -> tuple[float, float]:
@@ -161,7 +162,7 @@ class ProgressCard(Component):
     draw.text(text, f"{round(progress.fraction * 100)}%", T.font_px(30), T.TEXT, T.FONT_EXTRABOLD)
     self._cancel.render(cancel)
     self._bar.render(bar)
-    draw.text(note, f"{progress.done} of {progress.total} files · {progress.location}. Pauses if you drive or lose the connection.",
+    draw.text(note, t_("{} of {} files · {}. Pauses if you drive or lose the connection.", progress.done, progress.total, progress.location),
               T.SIZE_SUBTITLE, T.TEXT_TERTIARY)
 
 
@@ -172,40 +173,40 @@ def maps_page(maps: Maps, open_regions: Callable[[], None], sizes: Callable[[], 
 
   def label() -> str:
     if not maps.ready():
-      return maps.blocked_reason() or "Download"
-    return "Update now" if maps.source.downloaded() else "Download"
+      return maps.blocked_reason() or N_("Download")
+    return N_("Update now") if maps.source.downloaded() else N_("Download")
 
   download = Button(label, maps.source.download, ButtonStyle.PRIMARY, height=T.px(58))
   download.set_enabled(maps.ready)
   download.set_visible(lambda: not maps.source.progress().active)
-  remove = Button(lambda: "Park to remove maps" if not parked() else "Remove maps",
-                  lambda: confirm(window, "Remove offline maps?", DELETE_MAPS_MESSAGE, "Remove", maps.source.remove),
+  remove = Button(lambda: N_("Park to remove maps") if not parked() else N_("Remove maps"),
+                  lambda: confirm(window, N_("Remove offline maps?"), DELETE_MAPS_MESSAGE, N_("Remove"), maps.source.remove),
                   ButtonStyle.DANGER_SOFT, height=T.px(48))
   remove.set_enabled(lambda: maps.source.downloaded() and not maps.source.progress().active and parked())
   downloaded = lambda: maps.status() == "Downloaded"  # noqa: E731
   regions = Card([
-    Label("YOUR REGIONS", color=T.ACCENT_TEXT, caption=True),
-    IconTitle("map", maps.source.selection_summary, "Change them in Choose regions"),
+    Label(N_("YOUR REGIONS"), color=T.ACCENT_TEXT, caption=True),
+    IconTitle("map", maps.source.selection_summary, N_("Change them in Choose regions")),
     Label(maps.status, T.font_px(15), lambda: T.SUCCESS_TEXT if downloaded() else T.TEXT_TERTIARY, T.FONT,
           icon=lambda: "check" if downloaded() else None),
     ProgressCard(maps, padding=0),
     SPACER,
     download,
-    Surface(SettingRow("Choose regions", "Add or remove states, regions and countries", on_click=open_regions, height=T.px(64)),
+    Surface(SettingRow(N_("Choose regions"), N_("Add or remove states, regions and countries"), on_click=open_regions, height=T.px(64)),
             T.SURFACE_4, T.px(14)),
   ], gap=T.px(14))
   schedule = Card([
-    Label("Keep up to date", T.font_px(18)),
+    Label(N_("Keep up to date"), T.font_px(18)),
     Segmented(SCHEDULES, lambda: maps.schedule, maps.set_schedule, height=T.px(52), font_size=T.font_px(16), equal=True),
-    Label("Updates download only while parked and online", T.SIZE_SUBTITLE, T.TEXT_MUTED, T.FONT),
+    Label(N_("Updates download only while parked and online"), T.SIZE_SUBTITLE, T.TEXT_MUTED, T.FONT),
   ], padding=(T.px(20), T.px(18)))
   storage = Card([
-    StorageBar(sizes, heading="Storage", padding=(0, 0)),
-    Label("Without maps, speed limits need a connection.", T.SIZE_SUBTITLE, T.TEXT_MUTED, T.FONT),
+    StorageBar(sizes, heading=N_("Storage"), padding=(0, 0)),
+    Label(N_("Without maps, speed limits need a connection."), T.SIZE_SUBTITLE, T.TEXT_MUTED, T.FONT),
     SPACER,
     remove,
   ], padding=(T.px(20), T.px(18)), gap=T.px(10))
-  return TitledPage("Offline Maps", "Speed limits and curves work without a connection",
+  return TitledPage(N_("Offline Maps"), N_("Speed limits and curves work without a connection"),
                     Columns([regions, Stack([schedule, storage], gap=T.px(14), grow=1)], [1.25, 1]))
 
 
@@ -245,32 +246,32 @@ class RegionCard(Component):
 class RegionsPage(Component):
   """Region kinds on the left, the regions as cards in the middle, and the selection with its download on the right."""
   grow_touch_target = False
-  TABS = ["U.S. regions", "U.S. states", "Other countries"]
+  TABS = [N_("U.S. regions"), N_("U.S. states"), N_("Other countries")]
 
   def __init__(self, maps: Maps, on_download: Callable[[], None]):
     super().__init__()
     self._maps = maps
     self._tab = 0
-    self._header = self._child(PageHeader("Add map regions", "Pick a region, or switch to states for less storage"))
-    self._tabs = self._child(Sidebar("REGIONS", [SidebarItem(t, on_select=lambda i=i: self._select(i)) for i, t in enumerate(self.TABS)],
+    self._header = self._child(PageHeader(N_("Add map regions"), N_("Pick a region, or switch to states for less storage")))
+    self._tabs = self._child(Sidebar(N_("REGIONS"), [SidebarItem(t, on_select=lambda i=i: self._select(i)) for i, t in enumerate(self.TABS)],
                                      selected=lambda: self._tab, width=T.px(220)))
 
     def build() -> ListPanel:
       cards = [RegionCard(r, maps) for r in maps.source.regions(self._tab)]
-      return ListPanel([Grid(cards, columns=2 if self._tab == 0 else 3)] if cards else [Text("No regions available.")],
+      return ListPanel([Grid(cards, columns=2 if self._tab == 0 else 3)] if cards else [Text(N_("No regions available."))],
                        background=T.BG, dividers=False)
 
     self._list = self._child(Rebuilding(lambda: self._tab, build, maps.source.tick))
-    download = Button("Download", on_download, ButtonStyle.PRIMARY, height=T.px(60))
+    download = Button(N_("Download"), on_download, ButtonStyle.PRIMARY, height=T.px(60))
     download.set_enabled(maps.ready)
 
     def check(name: str) -> Label:
       ok = lambda: bool(dict(maps.source.checks()).get(name))  # noqa: E731
-      return Label(lambda: name if ok() else f"{name}: not yet", T.font_px(15), lambda: T.TEXT_SECONDARY if ok() else T.WARNING, T.FONT,
+      return Label(lambda: name if ok() else t_("{}: not yet", name), T.font_px(15), lambda: T.TEXT_SECONDARY if ok() else T.WARNING, T.FONT,
                    icon=lambda: "check" if ok() else "warning", icon_color=lambda: T.SUCCESS_TEXT if ok() else T.WARNING)
 
     self._side = self._child(Card([
-      Label("SELECTED", color=T.ACCENT_TEXT, caption=True),
+      Label(N_("SELECTED"), color=T.ACCENT_TEXT, caption=True),
       Text(maps.source.selection_summary, T.font_px(22), T.TEXT, T.FONT_EXTRABOLD, padding=(0, 0)),
       Stack([check(name) for name, _ in maps.source.checks()], gap=T.px(8)),
       SPACER,
@@ -308,7 +309,7 @@ class UpstreamMaps:
     m = self._m
     if tab == 0:
       packages = [Region(token, m.tr(spec["title"]), m.tr(spec["subtitle"])) for token, spec in m.REGIONAL_PACKAGES.items()]
-      return [Region(m.US_COUNTRY_TOKEN, "Whole U.S.", "Every state and territory"), *packages]
+      return [Region(m.US_COUNTRY_TOKEN, N_("Whole U.S."), N_("Every state and territory")), *packages]
     regions = self._layout._all_us_states_regions() if tab == 1 else self._layout._all_country_regions()
     return [Region(r["token"], m.tr(r["label"])) for r in regions]
 
@@ -341,7 +342,7 @@ class UpstreamMaps:
     return self._layout._is_visually_cancelling()
 
   def checks(self) -> list[tuple[str, bool]]:
-    return [("Parked", self._layout._is_parked()), ("Online", self._layout._is_online())]
+    return [(N_("Parked"), self._layout._is_parked()), (N_("Online"), self._layout._is_online())]
 
   def download(self) -> None:
     self._layout._params_memory.remove("CancelDownloadMaps")
@@ -367,12 +368,12 @@ def removal_blocked() -> str:
   sm = ui_state.sm
   parked = ui_state.is_offroad() or (sm.valid.get("starpilotCarState", False) and bool(sm["starpilotCarState"].isParked))
   if not parked:
-    return "Park to delete offline maps"
+    return N_("Park to delete offline maps")
   if _memory_params is None:
     from openpilot.common.params import Params
     _memory_params = Params(memory=True)
   if _memory_params.get_bool("DownloadMaps"):
-    return "Wait for the download to finish"
+    return N_("Wait for the download to finish")
   return ""
 
 
@@ -401,8 +402,8 @@ def remove_offline_maps(on_done: Callable[[], None] | None = None) -> None:
   threading.Thread(target=worker, daemon=True).start()
 
 
-STEPS = ["Prepare", "Download", "Install", "Ready"]
-DOWNLOAD_NOTE = "Pauses if you start driving or lose Wi-Fi, and picks up where it stopped. Keep the device powered."
+STEPS = [N_("Prepare"), N_("Download"), N_("Install"), N_("Ready")]
+DOWNLOAD_NOTE = N_("Pauses if you start driving or lose Wi-Fi, and picks up where it stopped. Keep the device powered.")
 
 
 def tile_window(count: int, current: int | None, capacity: int) -> tuple[int, int, int]:
@@ -435,7 +436,7 @@ class DownloadView(Component):
   def __init__(self, maps: Maps):
     super().__init__()
     self._maps = maps
-    self._cancel = self._child(Button("Cancel download", maps.source.cancel, ButtonStyle.DANGER_SOFT, height=T.px(52)))
+    self._cancel = self._child(Button(N_("Cancel download"), maps.source.cancel, ButtonStyle.DANGER_SOFT, height=T.px(52)))
     self._bar = self._child(ProgressBar(lambda: maps.source.progress().fraction))
     self._started: tuple[float, int] | None = None
 
@@ -457,8 +458,8 @@ class DownloadView(Component):
     self._cancel.render(place(cancel, w, T.px(52)))
     title, line = column(place(words, words.width, T.px(60)), [T.px(34), FILL], T.px(2))
     what = self._maps.source.selection_summary().removesuffix(" selected")   # "13 regions", "Whole U.S. (56 states)"
-    draw.text(title, f"Downloading {what}", T.font_px(26), T.TEXT, T.FONT_EXTRABOLD)
-    draw.text(line, "You can leave this screen. It keeps going in the background.", T.SIZE_SUBTITLE, T.TEXT_TERTIARY)
+    draw.text(title, t_("Downloading {}", what), T.font_px(26), T.TEXT, T.FONT_EXTRABOLD)
+    draw.text(line, N_("You can leave this screen. It keeps going in the background."), T.SIZE_SUBTITLE, T.TEXT_TERTIARY)
     # Percent, bar and steps
     draw.fill(top, T.SURFACE_2, T.RADIUS_PANEL)
     inner = inset(top, x=T.px(22), y=T.px(16))
@@ -466,9 +467,9 @@ class DownloadView(Component):
     pct = f"{round(progress.fraction * 100)}%"
     pw = draw.text(figure, pct, T.font_px(44), T.TEXT, T.FONT_EXTRABOLD)
     left = minutes_left(self._started, rl.get_time(), progress.done, progress.total)
-    detail = f"{progress.done} of {progress.total} files" if progress.total else "Getting ready"
+    detail = t_("{} of {} files", progress.done, progress.total) if progress.total else N_("Getting ready")
     if left is not None:
-      detail += f" · about {left} min left"
+      detail += t_(" · about {} min left", left)
     draw.text(inset(figure, left=pw + T.px(16)), detail, T.font_px(17), T.TEXT_SECONDARY)
     self._bar.render(bar)
     for i, (name, cell) in enumerate(zip(STEPS, row(steps, [FILL] * len(STEPS), T.px(12)), strict=True)):
@@ -481,14 +482,14 @@ class DownloadView(Component):
         rl.draw_circle_v(rl.Vector2(mark.x + T.px(7), mark.y + mark.height / 2), T.px(5), T.ACCENT)
       else:
         rl.draw_circle_lines_v(rl.Vector2(mark.x + T.px(7), mark.y + mark.height / 2), T.px(5), T.TEXT_MUTED)
-      draw.text(inset(cell, left=T.px(26)), f"{i + 1} {name}", T.font_px(16), ink, T.FONT_SEMIBOLD if now or done else T.FONT)
+      draw.text(inset(cell, left=T.px(26)), f"{i + 1} {translate(name)}", T.font_px(16), ink, T.FONT_SEMIBOLD if now or done else T.FONT)
     # Regions
     draw.fill(grid, T.SURFACE_2, T.RADIUS_PANEL)
     inner = inset(grid, x=T.px(22), y=T.px(14))
     regions = progress.regions
     finished = sum(r.finished for r in regions)
     caption, tiles, note = column(inner, [draw.line_height(T.SIZE_CAPTION), FILL, draw.line_height(T.SIZE_SUBTITLE)], T.px(12))
-    draw.caption(caption, f"REGIONS · {finished} OF {len(regions)} DONE" if regions else "REGIONS")
+    draw.caption(caption, t_("REGIONS · {} OF {} DONE", finished, len(regions)) if regions else N_("REGIONS"))
     current = progress.current
     tile_w = (tiles.width - T.px(10) * (self.COLUMNS - 1)) / self.COLUMNS
     rows = max(1, int((tiles.height + T.px(8)) // T.px(56)))
@@ -498,7 +499,7 @@ class DownloadView(Component):
     if more:
       tile = cell(end - start)
       draw.fill(tile, T.SURFACE_4, T.px(12))
-      draw.text(tile, f"+{more} more", T.font_px(15), T.TEXT_TERTIARY, T.FONT_SEMIBOLD, Align.CENTER)
+      draw.text(tile, t_("+{} more", more), T.font_px(15), T.TEXT_TERTIARY, T.FONT_SEMIBOLD, Align.CENTER)
     for i, region in enumerate(regions[start:end]):
       tile = cell(i)
       is_current = region is current

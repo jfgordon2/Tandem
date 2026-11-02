@@ -23,6 +23,7 @@ from openpilot.selfdrive.ui.tandem.layout import FILL, column, inset, place, row
 from openpilot.selfdrive.ui.tandem.routemap import NOT_SET_UP, RouteFetcher, RoutePlan, arrive_text, distance_text, draw_route_map, \
   mapbox_route, time_text
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, SectionHeader, SettingRow, Text
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
 SEARCH_PAUSE = 0.6          # seconds after the last key before searching as you type
 MIN_QUERY = 3               # StarPilot's minimum
@@ -118,11 +119,11 @@ class UpstreamPlaces:
   def status(self):
     nav = self._nav
     if nav._search_loading:
-      return "Searching…", "Looking up places"
+      return N_("Searching…"), N_("Looking up places")
     if nav._search_error:
-      return "Search unavailable", nav._search_error
+      return N_("Search unavailable"), nav._search_error
     if nav._query and not nav._search_results:
-      return "Nothing found", "Try a different place or address"
+      return N_("Nothing found"), N_("Try a different place or address")
     return None
 
   def pick_result(self, index: int) -> None:
@@ -267,7 +268,7 @@ class SearchPill(Component):
     icon, words = row(inset(rect, x=T.px(20)), [T.px(22), FILL], T.px(14))
     draw.icon(icon, "search", T.TEXT_TERTIARY, T.px(22))
     text = self._text()
-    draw.text(words, draw.fit(text or "Search for a place or address", T.font_px(18), T.FONT, words.width), T.font_px(18),
+    draw.text(words, draw.fit(text or N_("Search for a place or address"), T.font_px(18), T.FONT, words.width), T.font_px(18),
               T.TEXT if text else T.TEXT_TERTIARY)
 
 
@@ -318,23 +319,23 @@ class DestinationsScreen(Component):
     self._intent: str | None = None      # "home" or "work" when a tile is setting one
     self._awaiting = False               # a picked result is resolving
     self._typed, self._typed_at, self._searched = "", 0.0, ""
-    self._keys = KeyPad(self._search_now, "Search", MIN_QUERY,
-                        voice_hint="Say a place or an address. Tap the mic when you're done.", voice_style="address")
+    self._keys = KeyPad(self._search_now, N_("Search"), MIN_QUERY,
+                        voice_hint=N_("Say a place or an address. Tap the mic when you're done."), voice_style="address")
 
     # List
     self._search_pill = self._child(SearchPill(lambda: self._go(SEARCH)))
-    self._tiles = [self._child(Tile("home", lambda: "Home" if self._special("is_home") else "Set Home",
-                                    lambda: self._address("is_home") or "Search for your home address",
+    self._tiles = [self._child(Tile("home", lambda: N_("Home") if self._special("is_home") else N_("Set Home"),
+                                    lambda: self._address("is_home") or N_("Search for your home address"),
                                     lambda: self._open_special("is_home"), lambda: self._special("is_home") is None)),
-                   self._child(Tile("work", lambda: "Work" if self._special("is_work") else "Set Work",
-                                    lambda: self._address("is_work") or "Search for your work address",
+                   self._child(Tile("work", lambda: N_("Work") if self._special("is_work") else N_("Set Work"),
+                                    lambda: self._address("is_work") or N_("Search for your work address"),
                                     lambda: self._open_special("is_work"), lambda: self._special("is_work") is None)),
-                   self._child(Tile("plus", lambda: "Add favorite", lambda: "Search for a place", lambda: self._go(SEARCH),
+                   self._child(Tile("plus", lambda: N_("Add favorite"), lambda: N_("Search for a place"), lambda: self._go(SEARCH),
                                     lambda: True))]
-    maps = Button("Offline maps", open_maps or (lambda: None), ButtonStyle.NAV, height=T.NAV_BUTTON, font_size=T.font_px(18),
+    maps = Button(N_("Offline maps"), open_maps or (lambda: None), ButtonStyle.NAV, height=T.NAV_BUTTON, font_size=T.font_px(18),
                   radius=T.RADIUS_CARD, padding=T.px(26))
     maps.set_visible(open_maps is not None)
-    self._list_footer = self._child(Footer(self._back, lambda: "Turns and speed follow the route automatically while navigating", maps))
+    self._list_footer = self._child(Footer(self._back, lambda: N_("Turns and speed follow the route automatically while navigating"), maps))
     self._list_panel: ListPanel | None = None
     self._list_key: object = None
 
@@ -354,7 +355,7 @@ class DestinationsScreen(Component):
     self._star = self._child(Button(on_click=lambda: places.toggle("favorite"), style=ButtonStyle.SECONDARY, width=T.px(64),
                                     height=T.px(64), radius=T.px(16), glyph=lambda r, c, s: draw.icon(
                                       r, "star", T.ACCENT if places.saved_as()[0] else T.TEXT, T.px(24))))
-    self._start_button = self._child(Button("Start", self._start, ButtonStyle.PRIMARY, height=T.px(64), font_size=T.font_px(20),
+    self._start_button = self._child(Button(N_("Start"), self._start, ButtonStyle.PRIMARY, height=T.px(64), font_size=T.font_px(20),
                                             radius=T.px(16), weight=T.FONT_EXTRABOLD))
     self._start_button.set_enabled(places.can_start)
 
@@ -452,14 +453,14 @@ class DestinationsScreen(Component):
     header, tiles, panel = column(body, [T.px(60), T.px(86), FILL], T.px(14))
     chip_w = T.px(200) if self._places.maps_ready() else 0
     title, pill, chip = row(header, [T.px(170), FILL, chip_w], T.px(14))
-    draw.text(inset(title, left=T.px(6)), "Where to?", T.font_px(28), T.TEXT, T.FONT_EXTRABOLD)
+    draw.text(inset(title, left=T.px(6)), N_("Where to?"), T.font_px(28), T.TEXT, T.FONT_EXTRABOLD)
     self._search_pill.render(pill)
     if chip_w:
       chip = place(chip, chip.width, T.px(44))
       draw.fill(chip, T.SUCCESS_CARD, T.px(12))
       icon, words = row(inset(chip, x=T.px(14)), [T.px(16), FILL], T.px(8))
       draw.icon(icon, "check", T.SUCCESS_TEXT, T.px(16))
-      draw.text(words, "Offline maps ready", T.font_px(15), T.SUCCESS_TEXT, T.FONT_SEMIBOLD)
+      draw.text(words, N_("Offline maps ready"), T.font_px(15), T.SUCCESS_TEXT, T.FONT_SEMIBOLD)
     for tile, cell in zip(self._tiles, row(tiles, [FILL, FILL, FILL], T.px(12)), strict=True):
       tile.render(cell)
     self._list().render(panel)
@@ -474,14 +475,14 @@ class DestinationsScreen(Component):
     if self._list_panel is None or key != self._list_key:
       items: list[Widget] = []
       if active is not None:
-        items += [SectionHeader("ON A ROUTE"),
-                  SettingRow(f"To {place_name(active)}", place_line(active) or None,
-                             Button("End route", places.end_route, ButtonStyle.DANGER_SOFT), leading=Icon("navigate"), height=ROW)]
+        items += [SectionHeader(N_("ON A ROUTE")),
+                  SettingRow(t_("To {}", place_name(active)), place_line(active) or None,
+                             Button(N_("End route"), places.end_route, ButtonStyle.DANGER_SOFT), leading=Icon("navigate"), height=ROW)]
       if others:
-        items.append(SectionHeader("FAVORITES"))
+        items.append(SectionHeader(N_("FAVORITES")))
         items += [SettingRow(place_name(f), place_line(f) or None, on_click=lambda f=f: self._pick(f), leading=Icon("star"),
                              chevron=False, height=ROW) for f in others]
-      items.append(SectionHeader("RECENT"))
+      items.append(SectionHeader(N_("RECENT")))
       if recents:
         items += [SettingRow(place_name(r), place_line(r) or None,
                              icon_button("star", lambda r=r: places.toggle_saved(r),
@@ -489,7 +490,7 @@ class DestinationsScreen(Component):
                              on_click=lambda r=r: self._pick(r), leading=Icon("recent", color=T.TEXT_MUTED), chevron=False, height=ROW)
                   for r in recents]
       else:
-        items.append(Text("Places you navigate to show up here."))
+        items.append(Text(N_("Places you navigate to show up here.")))
       self._list_panel = self._child(ListPanel(items, header_divider=False))
       self._list_key = key
     return self._list_panel
@@ -518,10 +519,10 @@ class DestinationsScreen(Component):
     self._render_field(field)
     status = self._places.status() if self._searched else None
     if not self._places.can_search():   # no public Mapbox key: search would quietly find nothing
-      draw.text(inset(strip, left=T.px(6)), "Search needs the public Mapbox key · see Settings › Driving › Speed & Steering › Navigation",
+      draw.text(inset(strip, left=T.px(6)), N_("Search needs the public Mapbox key · see Settings › Driving › Speed & Steering › Navigation"),
                 T.font_px(15), T.WARNING)
     elif status is not None or not self._places.results():
-      title, line = status or ("Type a place or address", f"Results show as you type, from {MIN_QUERY} letters")
+      title, line = status or (N_("Type a place or address"), t_("Results show as you type, from {} letters", MIN_QUERY))
       draw.text(inset(strip, left=T.px(6)), f"{title} · {line}", T.font_px(15), T.TEXT_TERTIARY)
     else:
       for card, cell in zip(self._cards, row(strip, [FILL, FILL], T.px(10)), strict=True):
@@ -575,7 +576,7 @@ class DestinationsScreen(Component):
     if line:
       draw.text(rl.Rectangle(head.x, head.y + title_h + T.px(6), head.width, line_h), draw.fit(line, T.font_px(16), T.FONT, head.width),
                 T.font_px(16), T.TEXT_TERTIARY)
-    facts = (("Arrive", arrive_text(plan)), ("Time", time_text(plan)), ("Distance", distance_text(plan, self._places.metric())))
+    facts = ((N_("Arrive"), arrive_text(plan)), (N_("Time"), time_text(plan)), (N_("Distance"), distance_text(plan, self._places.metric())))
     # As the mock's flex row: each tile is as wide as its words, then the spare room is shared
     basis = [max(draw.text_width(label, T.font_px(13)), draw.text_width(value, T.font_px(22), T.FONT_BOLD)) + T.px(28)
              for label, value in facts]
@@ -587,8 +588,8 @@ class DestinationsScreen(Component):
       top, bottom = column(words, [label_h, value_h], T.px(4))
       draw.text(top, label, T.font_px(13), DATA_LABEL)
       draw.text(bottom, draw.fit(value, T.font_px(22), T.FONT_BOLD, bottom.width), T.font_px(22), T.TEXT, T.FONT_BOLD)
-    for cell, words in zip(column(checks, [check_h, check_h], T.px(10)), ("Slows ahead of turns on the route",
-                                                                            "Uses route speed limits when signs are missing"), strict=True):
+    for cell, words in zip(column(checks, [check_h, check_h], T.px(10)), (N_("Slows ahead of turns on the route"),
+                                                                            N_("Uses route speed limits when signs are missing")), strict=True):
       icon, text = row(cell, [T.px(18), FILL], T.px(10))
       draw.icon(icon, "check", T.SUCCESS_TEXT, T.px(18))
       size = next((z for z in (T.font_px(15), T.font_px(14)) if draw.text_width(words, z) <= text.width), T.font_px(14))

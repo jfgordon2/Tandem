@@ -17,6 +17,7 @@ from openpilot.selfdrive.ui.tandem.rows import ListPanel, SettingRow
 from openpilot.selfdrive.ui.tandem.settings.pages import TitledPage
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
 from openpilot.selfdrive.ui.tandem.prefs import WEATHER_CHIME
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
 AUTO = 101          # StarPilot's "Auto": the level follows cabin noise
 SAFETY_FLOOR = 25   # StarPilot never plays take-control warnings below this
@@ -32,21 +33,21 @@ class VolumeGroup:
 
 
 GROUPS = [
-  VolumeGroup("Engage and disengage chimes", "When openpilot turns on or off", ("EngageVolume", "DisengageVolume"), (25, 35, 85)),
-  VolumeGroup("Prompts and reminders", "Gentle nudges, like steering below its minimum speed",
+  VolumeGroup(N_("Engage and disengage chimes"), N_("When openpilot turns on or off"), ("EngageVolume", "DisengageVolume"), (25, 35, 85)),
+  VolumeGroup(N_("Prompts and reminders"), N_("Gentle nudges, like steering below its minimum speed"),
               ("PromptVolume", "RefuseVolume", "BelowSteerSpeedVolume"), (25, 45, 90)),
-  VolumeGroup("Driver attention", "The chime that asks you to look at the road", ("PromptDistractedVolume", "WarningSoftVolume"),
+  VolumeGroup(N_("Driver attention"), N_("The chime that asks you to look at the road"), ("PromptDistractedVolume", "WarningSoftVolume"),
               (25, 60, 100), safety=True),
-  VolumeGroup("Take control warnings", "When you need to steer or brake now", ("WarningImmediateVolume",), (25, 80, 100), safety=True),
+  VolumeGroup(N_("Take control warnings"), N_("When you need to steer or brake now"), ("WarningImmediateVolume",), (25, 80, 100), safety=True),
 ]
-PRESETS = ["Auto", "Quiet", "Normal", "Loud"]
+PRESETS = [N_("Auto"), N_("Quiet"), N_("Normal"), N_("Loud")]
 CUSTOM = -1
 CHIMES = [
-  ("Green Light", "When the light turns green and you are stopped", "GreenLightAlert"),
-  ("Lead Departure", "When the car ahead pulls away", "LeadDepartingAlert"),
-  ("Speed Limit Change", "When the posted limit changes", "SpeedLimitChangedAlert"),
-  ("Loud Blind Spot", "Signalling into an occupied lane, even when paused", "LoudBlindspotAlert"),
-  ("Weather heads-up", "Once, when rain, snow or storms are coming", "WeatherChime"),
+  (N_("Green Light"), N_("When the light turns green and you are stopped"), "GreenLightAlert"),
+  (N_("Lead Departure"), N_("When the car ahead pulls away"), "LeadDepartingAlert"),
+  (N_("Speed Limit Change"), N_("When the posted limit changes"), "SpeedLimitChangedAlert"),
+  (N_("Loud Blind Spot"), N_("Signalling into an occupied lane, even when paused"), "LoudBlindspotAlert"),
+  (N_("Weather heads-up"), N_("Once, when rain, snow or storms are coming"), "WeatherChime"),
 ]
 # Chimes that are Tandem's own, kept as marker files (prefs.py) rather than params the device's prebuilt registry lacks.
 OWN_CHIMES = {"WeatherChime": WEATHER_CHIME}
@@ -89,18 +90,18 @@ class Alerts:
 
   def level_label(self, group: VolumeGroup) -> str:
     level = self.level(group)
-    return "Auto" if level == AUTO else f"{level}%"
+    return N_("Auto") if level == AUTO else f"{level}%"
 
   def play(self, group: VolumeGroup) -> None:
     if self._play is not None:
       self._play(group.keys[0])
 
   def summary(self) -> str:
-    return "Custom volume" if self.preset == CUSTOM else f"{PRESETS[self.preset]} volume"
+    return N_("Custom volume") if self.preset == CUSTOM else t_("{} volume", PRESETS[self.preset])
 
   def chimes_summary(self) -> str:
     on = [name for name, _, key in CHIMES if self.chime(key)]
-    return ", ".join(on).capitalize() if on else "No extra chimes"
+    return ", ".join(on).capitalize() if on else N_("No extra chimes")
 
   def chime(self, key: str) -> bool:
     return OWN_CHIMES[key].get() if key in OWN_CHIMES else self._store.get_bool(key)
@@ -120,14 +121,14 @@ class VolumeEditor(Component):
     super().__init__()
     self._model = model
     self._group = group
-    self._play = self._child(Button("Play sample", lambda: model.play(group), height=T.px(64), font_size=T.font_px(17),
+    self._play = self._child(Button(N_("Play sample"), lambda: model.play(group), height=T.px(64), font_size=T.font_px(17),
                                     radius=T.px(18), weight=T.FONT_BOLD, padding=T.px(22),
                                     glyph=lambda r, c, s: draw.icon(r, "play_filled", T.ACCENT_TEXT, T.px(22))))
     self._slider = self._child(Slider(lambda: self._value(), lambda v: model.set_level(group, v), 0, 100, step=5,
                                       floor=SAFETY_FLOOR if group.safety else None, height=T.px(64),
-                                      floor_label=f"Minimum {SAFETY_FLOOR}% for safety alerts" if group.safety else None,
-                                      marks=[(group.levels[0], "Quiet"), (group.levels[1], "Normal"), (group.levels[2], "Loud")]))
-    self._reset = self._child(Button("Reset to Normal", lambda: model.set_level(group, group.levels[1]), ButtonStyle.GHOST,
+                                      floor_label=t_("Minimum {}% for safety alerts", SAFETY_FLOOR) if group.safety else None,
+                                      marks=[(group.levels[0], N_("Quiet")), (group.levels[1], N_("Normal")), (group.levels[2], N_("Loud"))]))
+    self._reset = self._child(Button(N_("Reset to Normal"), lambda: model.set_level(group, group.levels[1]), ButtonStyle.GHOST,
                                        weight=T.FONT_BOLD))
 
   def _value(self) -> float:
@@ -142,18 +143,18 @@ class VolumeEditor(Component):
     top, slider, notes = column(rect, [T.px(92), self._slider.preferred_height(rect.width), T.px(48)], T.px(16))
     value, play, note = row(top, [T.px(200), self._play.preferred_size(rect.width)[0], FILL], T.px(28))
     level = self._model.level(self._group)
-    number, unit = ("Auto", "") if level == AUTO else (f"{level}", "%")
+    number, unit = (N_("Auto"), "") if level == AUTO else (f"{level}", "%")
     w = draw.text(value, number, T.font_px(72), T.TEXT, T.FONT_EXTRABOLD)
     if unit:
       big, small = draw.line_height(T.font_px(72)), draw.line_height(T.font_px(26))
       unit_rect = rl.Rectangle(value.x + w + T.px(6), value.y + (value.height + big) / 2 - small - T.px(8), T.px(40), small)
       draw.text(unit_rect, unit, T.font_px(26), T.TEXT_SECONDARY, T.FONT_BOLD)
     self._play.render(rl.Rectangle(play.x, play.y + (play.height - T.px(64)) / 2, play.width, T.px(64)))
-    draw.text(note, "Plays through your car speakers if they're connected.", T.font_px(15), T.TEXT_TERTIARY)
+    draw.text(note, N_("Plays through your car speakers if they're connected."), T.font_px(15), T.TEXT_TERTIARY)
     self._slider.render(slider)
     reset_w, _ = self._reset.preferred_size(rect.width)
     text, reset = row(notes, [FILL, reset_w], T.px(10))
-    draw.text(text, "Changing a level sets the Alert Volume preset to Custom.", T.SIZE_SUBTITLE, T.TEXT_MUTED)
+    draw.text(text, N_("Changing a level sets the Alert Volume preset to Custom."), T.SIZE_SUBTITLE, T.TEXT_MUTED)
     self._reset.render(rl.Rectangle(reset.x, reset.y + (reset.height - T.px(44)) / 2, reset.width, T.px(44)))
 
 
@@ -161,15 +162,15 @@ def alerts_page(model: Alerts, window) -> Widget:
   """Volume on the left (presets, then each group's level), chimes on the right."""
   def editor(group: VolumeGroup) -> Callable[[], None]:
     return lambda: window.present(Sheet(group.name, VolumeEditor(model, group), subtitle=group.subtitle,
-                                        actions=[Button("Done", window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss))
+                                        actions=[Button(N_("Done"), window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss))
 
   def note() -> str:
     if model.preset == 0:
-      return "Auto follows cabin noise. Tap a level to set it yourself."
-    return "Custom levels. Pick a preset to reset them." if model.preset == CUSTOM else "Tap a level to fine-tune it."
+      return N_("Auto follows cabin noise. Tap a level to set it yourself.")
+    return N_("Custom levels. Pick a preset to reset them.") if model.preset == CUSTOM else N_("Tap a level to fine-tune it.")
 
   volume = Card([
-    Label("Volume", T.font_px(20)),
+    Label(N_("Volume"), T.font_px(20)),
     Segmented(PRESETS, lambda: model.preset, model.set_preset, height=T.px(64), font_size=T.font_px(18), equal=True),
     # Each group is a finger-sized tile that opens its level editor.
     Stack([ValueLine(g.name, lambda g=g: model.level_label(g), editor(g), T.font_px(17), height=T.px(48)) for g in GROUPS], gap=T.px(6)),
@@ -177,8 +178,8 @@ def alerts_page(model: Alerts, window) -> Widget:
   ], gap=T.px(12))
   chimes = ListPanel([SettingRow(title, subtitle, Switch(lambda k=key: model.chime(k), lambda on, k=key: model.set_chime(k, on)),
                                  height=T.px(66)) for title, subtitle, key in CHIMES],
-                     title="Chimes", title_size=T.font_px(20), header_divider=False)
-  return TitledPage("Alerts", "One volume for everything. Safety warnings never go below 25%.", Columns([volume, chimes]))
+                     title=N_("Chimes"), title_size=T.font_px(20), header_divider=False)
+  return TitledPage(N_("Alerts"), N_("One volume for everything. Safety warnings never go below 25%."), Columns([volume, chimes]))
 
 
 def sound_player() -> Callable[[str], None]:

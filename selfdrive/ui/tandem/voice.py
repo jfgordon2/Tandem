@@ -25,6 +25,7 @@ from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, ProgressBar
 from openpilot.selfdrive.ui.tandem.layout import Align, column, inset, place
+from openpilot.selfdrive.ui.tandem.i18n import N_
 
 WORKER = Path(__file__).resolve().parent / "speech.py"
 BARS = 22                                    # the level meter's bars, newest on the right
@@ -32,11 +33,11 @@ MESSAGE_S = 3.0                              # how long a "didn't catch that" st
 UNSEEN_S = 3.0                               # the panel went off screen (the page closed): stop listening
 
 ERRORS = {
-  "no_speech": "Didn't catch that. Tap the mic to try again.",
-  "no_mic": "The microphone isn't available right now.",
-  "no_audio_driving": "Voice typing can't hear the microphone while driving right now. Try again parked.",
-  "download": "Couldn't download the speech model. Check the connection and try again.",
-  "failed": "Voice typing didn't work this time. Try again or type it.",
+  "no_speech": N_("Didn't catch that. Tap the mic to try again."),
+  "no_mic": N_("The microphone isn't available right now."),
+  "no_audio_driving": N_("Voice typing can't hear the microphone while driving right now. Try again parked."),
+  "download": N_("Couldn't download the speech model. Check the connection and try again."),
+  "failed": N_("Voice typing didn't work this time. Try again or type it."),
 }
 
 
@@ -89,7 +90,7 @@ class VoiceTyping:
     if driving():
       env["TANDEM_SPEECH_DRIVING"] = "1"     # micd's audio, two threads, cores 0-3 (speech.driving_limits)
     if os.path.isfile("/TICI"):
-      env.setdefault("DEV", "QCOM")          # the tinygrad fallback's GPU, free while parked (it's parked-only)
+      env.setdefault("DEV", N_("QCOM"))          # the tinygrad fallback's GPU, free while parked (it's parked-only)
     try:
       log = speech.model_dir() / "worker.log"   # the last run's errors, for a bug report
       log.parent.mkdir(parents=True, exist_ok=True)
@@ -180,11 +181,11 @@ class VoicePanel(Component):
   """The key panel while voice typing: the mic (tap to stop), what's happening, the level meter or download progress,
   and Type instead."""
 
-  def __init__(self, session: VoiceTyping, hint: str = "Speak now. Tap the mic when you're done."):
+  def __init__(self, session: VoiceTyping, hint: str = N_("Speak now. Tap the mic when you're done.")):
     super().__init__()
     self.session = session
     self.hint = hint
-    self._type_instead = Button("Type instead", session.cancel, ButtonStyle.SECONDARY, glyph=_keyboard_glyph, height=T.px(56),
+    self._type_instead = Button(N_("Type instead"), session.cancel, ButtonStyle.SECONDARY, glyph=_keyboard_glyph, height=T.px(56),
                                 font_size=T.font_px(17), radius=T.px(14), weight=T.FONT_BOLD, padding=T.px(22))
     self._progress = ProgressBar(lambda: session.progress)
     self._mic_rect = rl.Rectangle(0, 0, 0, 0)
@@ -192,12 +193,12 @@ class VoicePanel(Component):
   def words(self) -> tuple[str, str]:
     s = self.session
     if s.state == "download":
-      return "Getting voice typing ready", "One-time setup for the speech model and voice engine. Everything stays on this device."
+      return N_("Getting voice typing ready"), N_("One-time setup for the speech model and voice engine. Everything stays on this device.")
     if s.state == "transcribing":
-      return "Writing it down", "This takes a few seconds. You can edit the words after."
+      return N_("Writing it down"), N_("This takes a few seconds. You can edit the words after.")
     if s.state == "message":
-      return "Voice typing", s.message
-    return "Listening", self.hint
+      return N_("Voice typing"), s.message
+    return N_("Listening"), self.hint
 
   def _render(self, rect: rl.Rectangle):
     s = self.session

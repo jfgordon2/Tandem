@@ -17,6 +17,7 @@ from openpilot.system.ui.widgets.inputbox import InputBox
 from openpilot.selfdrive.ui.tandem import draw, tokens as T, voice
 from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, place, row
+from openpilot.selfdrive.ui.tandem.i18n import N_
 
 BACKSPACE, ENTER, SPACE = upstream.BACKSPACE_KEY, upstream.ENTER_KEY, upstream.SPACE_KEY
 SHIFT_OFF, SHIFT_ON, CAPS = upstream.SHIFT_INACTIVE_KEY, upstream.SHIFT_ACTIVE_KEY, upstream.CAPS_LOCK_KEY
@@ -27,7 +28,7 @@ MIC = "tandem-mic"                                # voice typing (voice.py); not
 # action. The number and symbol layers keep upstream's characters in the same shape.
 LAYOUTS = {
   "lowercase": [list("qwertyuiop"), [*"asdfghjkl", BACKSPACE], [SHIFT_OFF, *"zxcvbnm", ",", "."], [NUMBERS, SPACE, ENTER]],
-  "uppercase": [list("QWERTYUIOP"), [*"ASDFGHJKL", BACKSPACE], [SHIFT_ON, *"ZXCVBNM", ",", "."], [NUMBERS, SPACE, ENTER]],
+  "uppercase": [list(N_("QWERTYUIOP")), [*N_("ASDFGHJKL"), BACKSPACE], [SHIFT_ON, *N_("ZXCVBNM"), ",", "."], [NUMBERS, SPACE, ENTER]],
   "numbers": [list("1234567890"), ["-", "/", ":", ";", "(", ")", "$", "&", "@", BACKSPACE],
               [SYMBOLS, "_", "'", "\"", "?", "!", "`", "#", ",", "."], [LETTERS, SPACE, ENTER]],
   "specials": [list("[]{}#%^*+="), ["_", "\\", "|", "~", "<", ">", "€", "£", "¥", BACKSPACE],
@@ -37,7 +38,7 @@ BOTTOM_ROW = [1.4, 6.0, 2.6]                     # 123, space, action, as wide a
 BOTTOM_ROW_MIC = [1.4, 1.2, 4.8, 2.6]            # 123, mic, space, action (design/navsearch.html)
 FUNCTION_KEYS = {BACKSPACE, SHIFT_OFF, SHIFT_ON, CAPS, NUMBERS, SYMBOLS, LETTERS, MIC}
 ICONS = {BACKSPACE: "backspace", SHIFT_OFF: "shift", SHIFT_ON: "shift", CAPS: "shift", MIC: "mic"}
-LABELS = {NUMBERS: "123", SYMBOLS: "#+=", LETTERS: "ABC", SPACE: "space"}
+LABELS = {NUMBERS: "123", SYMBOLS: "#+=", LETTERS: N_("ABC"), SPACE: N_("space")}
 
 KEY_FILL = T._hex("262A31")
 FUNCTION_FILL = T._hex("353A43")
@@ -110,13 +111,13 @@ class EssentialsKeyboard(upstream.Keyboard):
   """Upstream's keyboard drawn as design/keyboard.html. action names what the blue key does (e.g. "Set up", "Save")."""
 
   def __init__(self, max_text_size: int = 255, min_text_size: int = 0, password_mode: bool = False, show_password_toggle: bool = False,
-               callback=None, action: str = "Done", voice_hint: str = "Speak now. Tap the mic when you're done.",
+               callback=None, action: str = N_("Done"), voice_hint: str = N_("Speak now. Tap the mic when you're done."),
                voice_style: str = "text"):
     super().__init__(max_text_size, min_text_size, password_mode, show_password_toggle, callback)
     self.action = action
     self._title_text, self._subtitle_text = "", ""
     self._input_box = _Field(max_text_size)
-    self._cancel = Button("Cancel", self._cancel_button_callback, ButtonStyle.SECONDARY, height=T.px(56), font_size=T.font_px(17),
+    self._cancel = Button(N_("Cancel"), self._cancel_button_callback, ButtonStyle.SECONDARY, height=T.px(56), font_size=T.font_px(17),
                           radius=T.px(14), weight=T.FONT_BOLD, padding=T.px(24))
     keys = {k for rows in LAYOUTS.values() for keys in rows for k in keys} | {CAPS, MIC}
     self._all_keys = {k: _Key(k, partial(self._key_callback, k), self) for k in keys}

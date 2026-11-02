@@ -21,6 +21,7 @@ import pyray as rl
 
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, row
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
 PANEL_W = T.px(256)                 # the mock's sidebar
 WIDTH = PANEL_W + T.px(10)          # with its gap from the road view
@@ -37,15 +38,15 @@ MONO, BOLD = T.FONT_MONO, T.FONT_MONO_BOLD   # the mock sets the panel, strip an
 
 # The strip's choices: key, its label on the strip, and what it is (for the picker), in the order they're drawn.
 STRIP_METRICS: dict[str, tuple[str, str]] = {
-  "accel": ("accel", "Acceleration now"),
-  "want": ("want", "Acceleration openpilot asks for"),
-  "jerk": ("jerk", "Planned jerk"),
-  "lat": ("lat", "Lateral acceleration"),
-  "delay": ("delay", "Steering delay"),
-  "steer": ("steer", "Steering wheel angle"),
-  "torque": ("torque", "Steering torque used"),
-  "danger": ("danger", "Following danger factor"),
-  "ratio": ("ratio", "Steer ratio"),
+  "accel": ("accel", N_("Acceleration now")),
+  "want": ("want", N_("Acceleration openpilot asks for")),
+  "jerk": ("jerk", N_("Planned jerk")),
+  "lat": ("lat", N_("Lateral acceleration")),
+  "delay": ("delay", N_("Steering delay")),
+  "steer": ("steer", N_("Steering wheel angle")),
+  "torque": ("torque", N_("Steering torque used")),
+  "danger": ("danger", N_("Following danger factor")),
+  "ratio": ("ratio", N_("Steer ratio")),
 }
 STRIP_PARAM = "DeveloperStripMetrics"
 STRIP_DEFAULT = ("accel", "want", "jerk", "lat", "delay")
@@ -85,8 +86,8 @@ class DevData:
   accel: str = "+0.00"
   want: str = "+0.00"
   jerk: str = "0.0"
-  lat: str = "0.0 m/s²"
-  delay: str = "0.00 s"
+  lat: str = N_("0.0 m/s²")
+  delay: str = N_("0.00 s")
   steer: str = "0°"
   torque: str = "0%"
   danger: str = "0%"
@@ -135,11 +136,11 @@ def draw_panel(rect: rl.Rectangle, data: DevData) -> None:
   panel = rl.Rectangle(rect.x, rect.y + T.px(10), PANEL_W, rect.height - T.px(20))
   draw.fill(panel, T._hex("13161A"), T.px(18))
   body = inset(panel, T.px(14))
-  y = _section(body, body.y, "Lead")
+  y = _section(body, body.y, N_("Lead"))
   tile_h = T.px(52)
   lead = data.lead
   tiles = [("distance", lead.distance if lead else "—", None), ("gap", lead.gap if lead else "—", None),
-           ("rel speed", lead.rel_speed if lead else "—", T.WARNING if lead and lead.closing else None),
+           (N_("rel speed"), lead.rel_speed if lead else "—", T.WARNING if lead and lead.closing else None),
            ("source", lead.source if lead else "none", None)]
   for i in range(0, 4, 2):
     for (label, value, ink), cell in zip(tiles[i:i + 2], row(rl.Rectangle(body.x, y, body.width, tile_h), [FILL, FILL], T.px(6)), strict=True):
@@ -150,25 +151,25 @@ def draw_panel(rect: rl.Rectangle, data: DevData) -> None:
       draw.text(bottom, draw.fit(value, T.font_px(18), BOLD, bottom.width), T.font_px(18), ink or T.TEXT, BOLD)
     y += tile_h + T.px(6)
   if data.show_cpu or data.show_temp or data.show_gpu or data.show_ram or data.show_fps:
-    y = _section(body, y + T.px(6), "Device")
+    y = _section(body, y + T.px(6), N_("Device"))
     if data.show_cpu or data.show_temp:
       load = f"{round(data.cpu * 100)}%" if data.show_cpu else ""
       temp = data.cpu_temp if data.show_temp else ""
-      y = _pair(body, y, "CPU" if data.show_cpu else "Temp", " · ".join(v for v in (load, temp) if v))
+      y = _pair(body, y, N_("CPU") if data.show_cpu else N_("Temp"), " · ".join(v for v in (load, temp) if v))
       if data.show_cpu:
         y = _meter(body, y, data.cpu)
     if data.show_gpu:
-      y = _meter(body, _pair(body, y, "GPU", f"{round(data.gpu * 100)}%"), data.gpu)
+      y = _meter(body, _pair(body, y, N_("GPU"), f"{round(data.gpu * 100)}%"), data.gpu)
     if data.show_ram:
-      y = _meter(body, _pair(body, y, "RAM", data.ram_text), data.ram)
+      y = _meter(body, _pair(body, y, N_("RAM"), data.ram_text), data.ram)
     if data.show_fps:
-      y = _pair(body, y, "FPS", data.fps)
-  y = _section(body, y + T.px(6), "Controls")
-  y = _pair(body, y, "curve spd", data.curve)
+      y = _pair(body, y, N_("FPS"), data.fps)
+  y = _section(body, y + T.px(6), N_("Controls"))
+  y = _pair(body, y, N_("curve spd"), data.curve)
   if data.show_source:
-    y = _pair(body, y, "limit src", data.limit_source)
+    y = _pair(body, y, N_("limit src"), data.limit_source)
   if data.show_lanes:
-    _pair(body, y, "lanes L/R", data.lanes)
+    _pair(body, y, N_("lanes L/R"), data.lanes)
 
 
 def draw_strip(rect: rl.Rectangle, data: DevData) -> None:
@@ -251,9 +252,9 @@ def lead_of(lead, v_ego: float, metric: bool) -> Lead | None:
   if lead is None or not lead.status:
     return None
   from openpilot.common.constants import CV
-  distance = f"{round(lead.dRel)} m" if metric else f"{round(lead.dRel * CV.METER_TO_FOOT)} ft"
+  distance = t_("{} m", round(lead.dRel)) if metric else t_("{} ft", round(lead.dRel * CV.METER_TO_FOOT))
   rel = lead.vRel * (CV.MS_TO_KPH if metric else CV.MS_TO_MPH)
-  return Lead(distance, f"{lead.dRel / max(v_ego, 1.0):.1f} s", f"{round(rel):+d} {'km/h' if metric else 'mph'}".replace("-", "−"),
+  return Lead(distance, t_("{} s", f"{lead.dRel / max(v_ego, 1.0):.1f}"), f"{round(rel):+d} {'km/h' if metric else 'mph'}".replace("-", "−"),
               rel < -0.5, "radar" if getattr(lead, "radar", False) else "vision")
 
 
@@ -282,11 +283,11 @@ def read(ui_state, params=None) -> DevData:
     data.cpu_temp = f"{round(device.maxTempC)}°C"
     data.gpu = device.gpuUsagePercent / 100.0
     data.ram = device.memoryUsagePercent / 100.0
-    data.ram_text = f"{8.0 * data.ram:.1f} GB"     # as StarPilot reckons it
+    data.ram_text = t_("{} GB", f"{8.0 * data.ram:.1f}")     # as StarPilot reckons it
   data.fps = f"{round(rl.get_fps())}"
   if plan:
     speed = plan.cscSpeed * (CV.MS_TO_KPH if metric else CV.MS_TO_MPH)
-    data.curve = f"active · {round(speed)} {'km/h' if metric else 'mph'}" if plan.cscControllingSpeed else "idle"
+    data.curve = t_("active · {} {}", round(speed), 'km/h' if metric else 'mph') if plan.cscControllingSpeed else "idle"
     data.limit_source = (plan.slcPresentedSpeedLimitSource or plan.slcSpeedLimitSource or "none").lower()
     unit, scale = ("m", 1.0) if metric else ("ft", CV.METER_TO_FOOT)
     data.lanes = f"{plan.laneWidthLeft * scale:.1f} / {plan.laneWidthRight * scale:.1f} {unit}"
@@ -304,9 +305,9 @@ def read(ui_state, params=None) -> DevData:
   if live:
     data.ratio = f"{live.steerRatio:.2f}"
   if controls and car:
-    data.lat = f"{abs(car.vEgo ** 2 * controls.curvature):.1f} m/s²"
+    data.lat = t_("{} m/s²", f"{abs(car.vEgo ** 2 * controls.curvature):.1f}")
   if delay:
-    data.delay = f"{delay.lateralDelay:.2f} s"
+    data.delay = t_("{} s", f"{delay.lateralDelay:.2f}")
   return data
 
 

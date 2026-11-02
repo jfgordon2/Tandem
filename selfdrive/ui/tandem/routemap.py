@@ -19,6 +19,7 @@ import pyray as rl
 
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.layout import Align
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
 MAP_FILL = T._hex("111821")
 GRID = T._hex("1C2733")
@@ -46,7 +47,7 @@ def time_text(plan: RoutePlan | None) -> str:
   if plan is None:
     return EMPTY
   minutes = max(1, round(plan.seconds / 60))
-  return f"{minutes} min" if minutes < 60 else f"{minutes // 60} h {minutes % 60} min"
+  return t_("{} min", minutes) if minutes < 60 else t_("{} h {} min", minutes // 60, minutes % 60)
 
 
 def distance_text(plan: RoutePlan | None, metric: bool) -> str:
@@ -150,10 +151,10 @@ def start_position(live: str, saved: str) -> tuple[float, float, float | None] |
   return (saved_fix[0], saved_fix[1], None) if saved_fix is not None else None
 
 
-FINDING = "Finding a route…"
-NO_FIX = "Needs a GPS fix to plan the route"
-NO_ROUTE = "Couldn't find a route. Check the connection."
-NOT_SET_UP = "Routes need the secret Mapbox key: see Settings › Driving › Speed & Steering › Navigation"
+FINDING = N_("Finding a route…")
+NO_FIX = N_("Needs a GPS fix to plan the route")
+NO_ROUTE = N_("Couldn't find a route. Check the connection.")
+NOT_SET_UP = N_("Routes need the secret Mapbox key: see Settings › Driving › Speed & Steering › Navigation")
 
 
 class RouteFetcher:

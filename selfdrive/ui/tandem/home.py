@@ -14,6 +14,7 @@ from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.controls import Button
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, place, row
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_, tn_
 
 
 @dataclass
@@ -28,15 +29,15 @@ class HomeState:
 def setup_line(speed) -> str:
   """e.g. "Standard style · Matching speed limits · Auto lane change"."""
   from openpilot.selfdrive.ui.tandem.settings.speed_steering import STYLES
-  lanes = "Auto lane change" if speed.lane_changes else "Nudge to change lanes"
-  return f"{STYLES[speed.style]} style · {speed.speed_limit_summary()} · {lanes}"
+  lanes = N_("Auto lane change") if speed.lane_changes else N_("Nudge to change lanes")
+  return t_("{} style · {} · {}", STYLES[speed.style], speed.speed_limit_summary(), lanes)
 
 
 def readiness(state: HomeState) -> tuple[str, str, rl.Color]:
   """Caption, headline and caption color for the hero card."""
   if state.alerts:
-    return "NEEDS ATTENTION", f"Check {state.alerts} alert{'s' if state.alerts != 1 else ''}", T.WARNING
-  return "READY", "Press cruise to engage" if state.ignition else "Start the car to drive", T.SUCCESS_TEXT
+    return N_("NEEDS ATTENTION"), tn_("Check {} alert", "Check {} alerts", state.alerts), T.WARNING
+  return N_("READY"), N_("Press cruise to engage") if state.ignition else N_("Start the car to drive"), T.SUCCESS_TEXT
 
 
 class Hero(Component):
@@ -78,13 +79,13 @@ class Hero(Component):
     ink = T.ACCENT_TEXT if outlook.hazard else T.TEXT_TERTIARY
     icon, words = row(head, [T.px(22), FILL], T.px(10))
     draw.icon(icon, outlook.icon, ink, T.px(22))
-    draw.text(words, outlook.summary, T.font_px(18), T._hex("DCEBFF") if outlook.hazard else T.TEXT, T.FONT_BOLD)
-    draw.text(head, f"Forecast · updated {outlook.updated}", T.font_px(13), T.TEXT_MUTED, T.FONT, Align.END)
+    draw.text(words, outlook.summary, T.font_px(18), T._hex(N_("DCEBFF")) if outlook.hazard else T.TEXT, T.FONT_BOLD)
+    draw.text(head, t_("Forecast · updated {}", outlook.updated), T.font_px(13), T.TEXT_MUTED, T.FONT, Align.END)
     for tile, cell in zip(outlook.tiles, row(tiles, [FILL] * len(outlook.tiles), T.px(6)), strict=True):
       draw.fill(cell, T.ACCENT_SURFACE if tile.hazard else T._hex("1E2227"), T.px(14))
       inner = inset(cell, y=T.px(10))
       when, _, glyph, _, temp = column(inner, [draw.line_height(t_size), T.px(4), glyph_size, T.px(4), draw.line_height(temp_size)])
-      draw.text(when, tile.time, t_size, T._hex("DCEBFF") if tile.hazard else T.TEXT_TERTIARY,
+      draw.text(when, tile.time, t_size, T._hex(N_("DCEBFF")) if tile.hazard else T.TEXT_TERTIARY,
                 T.FONT_BOLD if tile.hazard else T.FONT_MEDIUM, Align.CENTER)
       draw.icon(glyph, tile.icon, T.ACCENT_TEXT if tile.hazard else T.TEXT_SECONDARY, glyph_size)
       draw.text(temp, f"{tile.temp}°", temp_size, T.TEXT, T.FONT_BOLD, Align.CENTER)
@@ -140,12 +141,12 @@ class HomeContent(Component):
     super().__init__()
     self._state = state
     self._hero = self._child(Hero(state, on_alerts, forecast))
-    self._where = self._child(Card("navigate", lambda: "Where to?", lambda: "Home · Work · Recent", on_where_to))
-    notes = Button("Notes", on_notes)
+    self._where = self._child(Card("navigate", lambda: N_("Where to?"), lambda: N_("Home · Work · Recent"), on_where_to))
+    notes = Button(N_("Notes"), on_notes)
     notes.set_visible(lambda: state().update_ready)
-    self._update = self._child(Card("download", lambda: "Update ready" if state().update_ready else "Software",
-                                    lambda: "Installs when you turn off the car" if state().update_ready else
-                                    (f"Up to date · {state().version}" if state().version else "Up to date"),
+    self._update = self._child(Card("download", lambda: N_("Update ready") if state().update_ready else N_("Software"),
+                                    lambda: N_("Installs when you turn off the car") if state().update_ready else
+                                    (t_("Up to date · {}", state().version) if state().version else N_("Up to date")),
                                     lambda: on_notes() if state().update_ready else on_software(), notes))
 
   def _render(self, rect: rl.Rectangle):
@@ -195,14 +196,14 @@ def essentials_home():
       """Upstream's one footer action, when it shows one."""
       alert = self.offroad_alert
       if alert.excessive_actuation_btn.is_visible:
-        return "Acknowledge excessive actuation", alert.excessive_actuation_btn._click_callback
+        return N_("Acknowledge excessive actuation"), alert.excessive_actuation_btn._click_callback
       if alert.snooze_btn.is_visible:
-        return "Snooze update", alert.snooze_btn._click_callback
+        return N_("Snooze update"), alert.snooze_btn._click_callback
       return None
 
     def _new_version(self) -> str:
       description = ui_state.ui_params.get("UpdaterNewDescription") or ""
-      return description.split(" / ")[0] or "A new version"
+      return description.split(" / ")[0] or N_("A new version")
 
     def _render_alerts_view(self):
       self._alerts_view.render(self.content_rect)

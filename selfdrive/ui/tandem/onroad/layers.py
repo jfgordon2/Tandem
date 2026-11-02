@@ -17,6 +17,7 @@ from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, place, row
 from openpilot.selfdrive.ui.tandem.onroad import alerts
 from openpilot.selfdrive.ui.tandem.onroad.status import Chip, ChipTone, turn_icon
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
 BAR_HEIGHT = T.px(74)
 BAR_MARGIN = T.px(16)
@@ -65,7 +66,7 @@ class OnroadBar(Component):
     # Ghost style, so the fill drawn below (green while engaged) shows through.
     self._engage = self._child(Button(on_click=on_engage, style=ButtonStyle.GHOST, height=BAR_HEIGHT, width=BAR_HEIGHT,
                                       radius=T.RADIUS_CARD, glyph=lambda r, c, s: draw.icon(r, "wheel", T.TEXT, T.px(32))))
-    self._end = self._child(Button("End route", on_end_route, ButtonStyle.DANGER_SOFT, height=T.px(52), font_size=T.font_px(17)))
+    self._end = self._child(Button(N_("End route"), on_end_route, ButtonStyle.DANGER_SOFT, height=T.px(52), font_size=T.font_px(17)))
     for b in (self._minus, self._plus):
       b.set_enabled(lambda: self._state().engaged and self._state().set_speed > 0)
 
@@ -96,7 +97,7 @@ class OnroadBar(Component):
     self._minus.render(minus)
     self._plus.render(plus)
     label, number = column(place(value, value.width, T.px(56)), [T.px(18), FILL])
-    draw.text(label, "MAX", T.font_px(13), T.ACCENT_TEXT, T.FONT_BOLD, Align.CENTER)
+    draw.text(label, N_("MAX"), T.font_px(13), T.ACCENT_TEXT, T.FONT_BOLD, Align.CENTER)
     draw.text(number, f"{state.set_speed:.0f}" if state.set_speed else "–", T.font_px(26), T.TEXT, T.FONT_EXTRABOLD, Align.CENTER)
 
     center = r["center"]
@@ -110,7 +111,7 @@ class OnroadBar(Component):
       x = body.x
       if state.heading:   # the compass tag stays first, before the arrival time
         x += heading_tag(rl.Rectangle(x, body.y, body.width, body.height), state.heading) + T.px(20)
-      for caption, text in (("ARRIVE", state.arrive or "–"), ("LEFT", state.left or "–")):
+      for caption, text in ((N_("ARRIVE"), state.arrive or "–"), (N_("LEFT"), state.left or "–")):
         cell_w = max(draw.text_width(caption, T.SIZE_CAPTION, T.FONT_BOLD, tracking=T.CAPTION_TRACKING), draw.text_width(text, T.font_px(22), T.FONT_BOLD))
         top, bottom = column(place(rl.Rectangle(x, body.y, cell_w, body.height), cell_w, T.px(56)), [T.px(18), FILL], T.px(3))
         draw.caption(top, caption)
@@ -328,7 +329,7 @@ class HeadroomArc(Component):
       rl.draw_circle_v(at(0.5), T.px(5), draw.alpha(T.TEXT, 0.8 * alpha))
 
 
-HELP_STEER = ("Help steer", "Steering is at its limit for this curve")
+HELP_STEER = (N_("Help steer"), N_("Steering is at its limit for this curve"))
 
 
 def help_steer_box(rect: rl.Rectangle) -> rl.Rectangle:
@@ -373,9 +374,9 @@ class LimitCard(Component):
     super().__init__()
     self._offer = offer
     self._top = top
-    self._match = self._child(Button("Match", on_match, ButtonStyle.PRIMARY, height=T.px(60), font_size=T.font_px(18),
+    self._match = self._child(Button(N_("Match"), on_match, ButtonStyle.PRIMARY, height=T.px(60), font_size=T.font_px(18),
                                      radius=T.px(16), weight=T.FONT_EXTRABOLD))
-    self._ignore = self._child(Button("Ignore", on_ignore, ButtonStyle.SECONDARY, height=T.px(60), font_size=T.font_px(18),
+    self._ignore = self._child(Button(N_("Ignore"), on_ignore, ButtonStyle.SECONDARY, height=T.px(60), font_size=T.font_px(18),
                                       radius=T.px(16), weight=T.FONT_BOLD))
 
   def box(self, rect: rl.Rectangle) -> rl.Rectangle:
@@ -395,10 +396,10 @@ class LimitCard(Component):
     draw_sign(sign, f"{offer.limit:.0f}", offer.vienna)
     lines = [draw.line_height(T.font_px(22)), draw.line_height(T.font_px(16)), draw.line_height(T.font_px(13))]
     title, question, source = column(place(text, text.width, sum(lines) + T.px(8)), lines, T.px(4))
-    draw.text(title, f"New limit {offer.limit:.0f}", T.font_px(22), T.TEXT, T.FONT_EXTRABOLD)
-    verb = "Slow down" if offer.lower else "Speed up"
-    draw.text(question, f"{verb} to {offer.target:.0f} {offer.unit}?", T.font_px(16), T.TEXT_SECONDARY)
-    draw.text(source, f"From {offer.source.lower() or 'map'} · ignored in {max(0, math.ceil(offer.seconds_left))} s", T.font_px(13),
+    draw.text(title, t_("New limit {}", f"{offer.limit:.0f}"), T.font_px(22), T.TEXT, T.FONT_EXTRABOLD)
+    verb = N_("Slow down") if offer.lower else N_("Speed up")
+    draw.text(question, t_("{} to {} {}?", verb, f"{offer.target:.0f}", offer.unit), T.font_px(16), T.TEXT_SECONDARY)
+    draw.text(source, t_("From {} · ignored in {} s", offer.source.lower() or 'map', max(0, math.ceil(offer.seconds_left))), T.font_px(13),
               T.TEXT_MUTED)
     ignore, match = row(buttons, [FILL, FILL], T.px(10))
     self._ignore.render(ignore)
@@ -492,7 +493,7 @@ def draw_sign(area: rl.Rectangle, limit: str, vienna: bool, note: str = "") -> N
   draw.stroke(inset(sign, T.px(2)), T.BG, T.px(7), T.px(3))
   body = inset(sign, x=T.px(5), y=T.px(9))
   top, middle, number, small = column(body, [T.px(12), T.px(12), FILL, T.px(11) if note else 0])
-  draw.text(top, "SPEED", T.font_px(10), T.BG, T.FONT_EXTRABOLD, Align.CENTER)
+  draw.text(top, "SPEED", T.font_px(10), T.BG, T.FONT_EXTRABOLD, Align.CENTER)   # the US sign's own words: never translated
   draw.text(middle, "LIMIT", T.font_px(10), T.BG, T.FONT_EXTRABOLD, Align.CENTER)
   draw.text(number, limit, T.font_px(28 if note else 32), T.BG, T.FONT_EXTRABOLD, Align.CENTER)
   if note:

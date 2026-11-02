@@ -210,15 +210,21 @@ What these don't do yet:
 
 ## Translations
 
-Tandem's own text is translated where it's drawn. `draw.text`, `fit`, `text_width`, `paragraph` and `caption` take English and look it up in `translations/tandem_<code>.po` for the language picked in Device › General › Language (`i18n.py`). The screens' code doesn't change: there's no `tr()` around each string.
+Tandem's screens are written in English, and the text a driver reads is marked where it's written (`i18n.py`):
 
-- **Templates:** an f-string is one catalog entry with `{}` holes ("Sets {} options"), matched against the text drawn. A translation may number its holes (`{1} {0}`) to reorder them, or leave out one that only carries an English plural "s".
-- **Built text:** summaries joined with " · ", comma lists of names and text the code upper- or lowercases are translated piece by piece. The values in a template are translated too.
-- **Anything else** (street names, Wi-Fi names, numbers, units) is drawn as is.
+| Mark | For | Translated |
+| --- | --- | --- |
+| `N_("Driving Style")` | Text in tables, labels and constants | Where it's drawn, so a language change applies at once |
+| `N_("Set up", context="action")` | English that means two things | The same, with its own entry |
+| `t_("Sets {} options", count)` | Text built at runtime | Now, with the values in its `{}` holes |
+| `tn_("{} alert", "{} alerts", n)` | Counts | Now, in each language's plural forms |
+
+- **Drawing:** `draw.text`, `fit`, `text_width`, `paragraph` and `caption` look up whatever they draw, so `N_` text comes out translated, and so do the pieces of text the code joins (" · " and " › " summaries, comma lists, a name with its value such as "Drives 21.0 GB", case changes). StarPilot's `trn()` text, which arrives formatted ("2 regions"), is matched against its plural entry. Anything not in the catalog (street names, Wi-Fi names, numbers) is drawn as is.
+- **Catalog:** `tools/translations.py update` collects every `N_`, `t_` and `tn_` (with context and plural) into `translations/tandem.pot`, plus the `tr()`/`trn()` strings of the StarPilot screens Tandem's adapters show text from (`UPSTREAM`), and merges it into each `tandem_<code>.po`. A mark needs a string literal; long ones are split with `+`. Translations may number their holes (`{1} {0}`) to reorder the values.
+- **Pseudo-language check:** `scene_pseudo.py` renders every screen with each marked string as "[Text ~~~]" (`TANDEM_PSEUDO=1`) into `tools/out/pseudo/`, and lists in `missed.txt` the drawn text without brackets: text that wasn't marked. The extra 30% shows where a longer language won't fit. What's left on the list is meant to stay English: sample names and addresses, StarPilot's alert text, dates, brand names, Developer View's labels and param keys, and the words on the US speed limit sign.
 - **Fonts:** each string is drawn in Figtree when Figtree has all its letters, otherwise in the Noto fallback (Japanese, Arabic, Cyrillic...).
-- **Tooling:** `tools/translations.py extract` collects the strings into `translations/tandem.pot` (string constants and f-strings in the package, skipping docstrings, logs, param keys, search keywords and type names); `update` merges it into each `tandem_<code>.po`; `status` shows how much is done.
-- **Languages so far:** a pilot in Spanish, German and Japanese. These are machine-drafted and need a native speaker's review; Japanese and German especially should be checked on the device for text that's cut off. Street-type abbreviations, units and Developer View's short labels stay in English. The other languages have no Tandem catalog yet, so Tandem shows English for them.
-- **Not yet translated:** settings search matches English words only.
+- **Languages so far:** a pilot in Spanish, German and Japanese, machine-drafted and needing a native speaker's review. The other languages have no Tandem catalog yet, so Tandem shows English for them. StarPilot's novelty styles (Caveman, Pirate...) aren't in Tandem's language list.
+- **Not yet translated:** settings search matches English words only; dates use English month names.
 
 ## Third-party
 

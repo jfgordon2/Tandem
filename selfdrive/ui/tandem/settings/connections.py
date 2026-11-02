@@ -14,6 +14,7 @@ from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.settings.bluetooth_tab import BluetoothDevices, WheelButtons, devices_panel, wheel_panel
 from openpilot.selfdrive.ui.tandem.settings.network_tab import Network, cellular_panel, wifi_panel
 from openpilot.selfdrive.ui.tandem.settings.pages import Section, SectionPage
+from openpilot.selfdrive.ui.tandem.i18n import N_, tn_
 
 WIFI, CELLULAR, REMOTE, AUDIO = range(4)
 
@@ -42,7 +43,7 @@ class WhileShown(Component):
 
 def buttons_label(count: int) -> str:
   """The remote's button count beside its section, short enough to leave "Bluetooth Remote" whole."""
-  return f"{count} button{'s' if count != 1 else ''}" if count else ""
+  return tn_("{} button", "{} buttons", count) if count else ""
 
 
 def connections_page(network: Network, open_advanced: Callable[[], None], wheel: WheelButtons, bt: BluetoothDevices, window) -> SectionPage:
@@ -55,10 +56,11 @@ def connections_page(network: Network, open_advanced: Callable[[], None], wheel:
     wheel.source.stop_testing()
     bt.set_active(False)
 
-  return SectionPage("CONNECTIONS", [
-    Section("Wi-Fi", lambda: WhileShown(wifi_panel(network), lambda: network.wifi.set_active(True), lambda: network.wifi.set_active(False)),
+  return SectionPage(N_("CONNECTIONS"), [
+    Section(N_("Wi-Fi"), lambda: WhileShown(wifi_panel(network), lambda: network.wifi.set_active(True), lambda: network.wifi.set_active(False)),
             value=network.summary),
-    Section("Cellular", lambda: cellular_panel(network, open_advanced)),
-    Section("Bluetooth Remote", lambda: WhileShown(wheel_panel(wheel, window), bluetooth_on, bluetooth_off), value=lambda: buttons_label(len(wheel.buttons()))),
-    Section("Car Audio & Devices", lambda: WhileShown(devices_panel(bt, window), bluetooth_on, bluetooth_off)),
+    Section(N_("Cellular"), lambda: cellular_panel(network, open_advanced)),
+    Section(N_("Bluetooth Remote"), lambda: WhileShown(wheel_panel(wheel, window), bluetooth_on, bluetooth_off),
+            value=lambda: buttons_label(len(wheel.buttons()))),
+    Section(N_("Car Audio & Devices"), lambda: WhileShown(devices_panel(bt, window), bluetooth_on, bluetooth_off)),
   ])

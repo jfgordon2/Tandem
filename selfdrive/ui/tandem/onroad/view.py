@@ -44,6 +44,7 @@ from openpilot.selfdrive.ui.tandem.onroad.limits import LimitFollower, LimitOffe
 from openpilot.selfdrive.ui.tandem.onroad.lead import GapTracker, detailed_tag_on, lead_anchor, read_lead_sample
 from openpilot.selfdrive.ui.tandem.forecast import Announcer, heads_up, now_conditions, shared_service, wall_clock
 from openpilot.selfdrive.ui.tandem.prefs import LEAD_TAG, MAX_FOLLOWS_LIMIT, WEATHER_CHIME, WEATHER_HEADS_UP
+from openpilot.selfdrive.ui.tandem.i18n import t_
 
 CONFIRM_TIMEOUT = 30.0      # StarPilot rejects an unanswered higher limit after 30 s
 PREVIEW_SECONDS = 2.5
@@ -556,8 +557,8 @@ class EssentialsOnroadView(StarPilotOnroadView):
     nav = self._nav_sm["navInstruction"]
     seconds, meters = float(nav.timeRemaining), float(nav.distanceRemaining)
     arrive = (datetime.datetime.now() + datetime.timedelta(seconds=seconds)).strftime("%-I:%M %p")
-    distance = f"{meters / 1000:.1f} km" if metric else f"{meters / 1609.344:.1f} mi"
-    return arrive, f"{max(1, round(seconds / 60))} min · {distance}"
+    distance = t_("{} km", f"{meters / 1000:.1f}") if metric else t_("{} mi", f"{meters / 1609.344:.1f}")
+    return arrive, t_("{} min · {}", max(1, round(seconds / 60)), distance)
 
   def _preview(self) -> float:
     """Lateral acceleration the planned path needs PREVIEW_SECONDS ahead, as a share of the car's maximum."""

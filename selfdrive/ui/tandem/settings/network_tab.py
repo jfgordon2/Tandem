@@ -15,6 +15,7 @@ from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, Switch, 
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, SettingRow, Text
 from openpilot.selfdrive.ui.tandem.settings.model import Rebuilding
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
 MIN_PASSWORD = 8
 OPEN, UNSUPPORTED = 0, 4      # upstream SecurityType values
@@ -22,7 +23,7 @@ METERED_YES, METERED_NO = 1, 2
 
 
 def ask_text(title: str, subtitle: str, current: str, on_done: Callable[[str], None], min_length: int = 0, password: bool = False,
-             action: str = "Save") -> None:
+             action: str = N_("Save")) -> None:
   """The Essentials keyboard (upstream's, restyled); it closes itself and reports the result."""
   from openpilot.system.ui.lib.application import gui_app
   from openpilot.system.ui.widgets import DialogResult
@@ -50,10 +51,10 @@ class Network:
 
   def status(self, ssid: str) -> str:
     if self.wifi.connected_ssid == ssid:
-      return "Connected"
+      return N_("Connected")
     if self.wifi.connecting_to_ssid == ssid:
-      return "Connecting…"
-    return "Saved" if self.wifi.is_connection_saved(ssid) else ""
+      return N_("Connecting…")
+    return N_("Saved") if self.wifi.is_connection_saved(ssid) else ""
 
   def status_line(self, ssid: str) -> str:
     """The row's line: its status, with the device's local IP address beside Connected (for SSH and the like)."""
@@ -72,8 +73,8 @@ class Network:
       self._need_password(network.ssid, retry=False)
 
   def _need_password(self, ssid: str, retry: bool = True) -> None:
-    self._ask("Wrong password" if retry else "Enter password", f"for \"{ssid}\"", "",
-              lambda password: self.wifi.connect_to_network(ssid, password), MIN_PASSWORD, True, "Connect")
+    self._ask(N_("Wrong password") if retry else N_("Enter password"), t_("for \"{}\"", ssid), "",
+              lambda password: self.wifi.connect_to_network(ssid, password), MIN_PASSWORD, True, N_("Connect"))
 
   def forget(self, ssid: str) -> None:
     self.wifi.forget_connection(ssid)
@@ -81,9 +82,9 @@ class Network:
   def join_hidden(self) -> None:
     def with_name(ssid: str) -> None:
       if ssid:
-        self._ask("Enter password", f"for \"{ssid}\", or leave empty for an open network", "",
-                  lambda password: self.wifi.connect_to_network(ssid, password, hidden=True), 0, True, "Connect")
-    self._ask("Network name", "", "", with_name, 1, False, "Next")
+        self._ask(N_("Enter password"), t_("for \"{}\", or leave empty for an open network", ssid), "",
+                  lambda password: self.wifi.connect_to_network(ssid, password, hidden=True), 0, True, N_("Connect"))
+    self._ask(N_("Network name"), "", "", with_name, 1, False, N_("Next"))
 
   # Hotspot and data
 
@@ -95,7 +96,7 @@ class Network:
     self.wifi.set_tethering_active(on)
 
   def edit_hotspot_password(self) -> None:
-    self._ask("Hotspot password", "", self.wifi.tethering_password, self.wifi.set_tethering_password, MIN_PASSWORD, True)
+    self._ask(N_("Hotspot password"), "", self.wifi.tethering_password, self.wifi.set_tethering_password, MIN_PASSWORD, True)
 
   @property
   def save_data(self) -> bool:
@@ -123,13 +124,13 @@ class Network:
     def done(apn: str) -> None:
       self._store.write({"GsmApn": apn.strip()})
       self._apply_gsm()
-    self._ask("APN", "Leave empty for automatic", self.apn(), done)
+    self._ask(N_("APN"), N_("Leave empty for automatic"), self.apn(), done)
 
   def _apply_gsm(self) -> None:
     self.wifi.update_gsm_settings(self.roaming, self.apn(), self.save_data)
 
   def summary(self) -> str:
-    return self.wifi.connected_ssid or "Not connected"
+    return self.wifi.connected_ssid or N_("Not connected")
 
 
 def _strength_bars(strength: int) -> int:
@@ -161,9 +162,9 @@ class SignalGlyph(Component):
 def wifi_panel(model: Network) -> Component:
   def network_row(network) -> SettingRow:
     secured = network.security_type != OPEN
-    forget = Button("Forget", lambda: model.forget(network.ssid), ButtonStyle.GHOST)
+    forget = Button(N_("Forget"), lambda: model.forget(network.ssid), ButtonStyle.GHOST)
     forget.set_visible(lambda: model.wifi.is_connection_saved(network.ssid))
-    row_ = SettingRow(network.ssid, lambda: model.status_line(network.ssid) or ("Secured" if secured else "Open"), forget,
+    row_ = SettingRow(network.ssid, lambda: model.status_line(network.ssid) or (N_("Secured") if secured else N_("Open")), forget,
                       on_click=lambda: model.choose(network), leading=SignalGlyph(lambda: network.strength, secured), chevron=False,
                       subtitle_color=lambda: T.SUCCESS_TEXT if model.status(network.ssid) == "Connected" else T.TEXT_TERTIARY)
     row_.set_enabled(network.security_type != UNSUPPORTED)
@@ -171,26 +172,26 @@ def wifi_panel(model: Network) -> Component:
 
   def build() -> ListPanel:
     networks = model.networks()
-    rows = [network_row(n) for n in networks] or [Text("Scanning for networks…")]
-    return ListPanel(rows, title="Wi-Fi", bottom=SettingRow("Join a hidden network", None, on_click=model.join_hidden))
+    rows = [network_row(n) for n in networks] or [Text(N_("Scanning for networks…"))]
+    return ListPanel(rows, title=N_("Wi-Fi"), bottom=SettingRow(N_("Join a hidden network"), None, on_click=model.join_hidden))
 
   return Rebuilding(lambda: tuple(n.ssid for n in model.networks()), build, model.tick)
 
 
 def cellular_panel(model: Network, open_advanced: Callable[[], None]) -> ListPanel:
   return ListPanel([
-    SettingRow("Hotspot", "Share this device's connection", Switch(lambda: model.hotspot, model.set_hotspot)),
-    SettingRow("Hotspot Password", "For phones joining this device's hotspot", ValueButton(lambda: "Edit", model.edit_hotspot_password)),
-    SettingRow("Save Data", "No large uploads on cellular or phone hotspots", Switch(lambda: model.save_data, model.set_save_data)),
-  ], title="Cellular", end_divider=True, bottom=SettingRow("Roaming, APN and IP address", None, on_click=open_advanced))
+    SettingRow(N_("Hotspot"), N_("Share this device's connection"), Switch(lambda: model.hotspot, model.set_hotspot)),
+    SettingRow(N_("Hotspot Password"), N_("For phones joining this device's hotspot"), ValueButton(lambda: N_("Edit"), model.edit_hotspot_password)),
+    SettingRow(N_("Save Data"), N_("No large uploads on cellular or phone hotspots"), Switch(lambda: model.save_data, model.set_save_data)),
+  ], title=N_("Cellular"), end_divider=True, bottom=SettingRow(N_("Roaming, APN and IP address"), None, on_click=open_advanced))
 
 
 def advanced_panel(model: Network) -> ListPanel:
   return ListPanel([
-    SettingRow("Roaming", "Use cellular data outside your carrier's network", Switch(lambda: model.roaming, model.set_roaming)),
-    SettingRow("APN", lambda: model.apn() or "Automatic", ValueButton(lambda: "Edit", model.edit_apn)),
-    SettingRow("IP Address", lambda: model.wifi.ipv4_address or "Not connected"),
-  ], title="Roaming, APN and IP address")
+    SettingRow(N_("Roaming"), N_("Use cellular data outside your carrier's network"), Switch(lambda: model.roaming, model.set_roaming)),
+    SettingRow(N_("APN"), lambda: model.apn() or N_("Automatic"), ValueButton(lambda: N_("Edit"), model.edit_apn)),
+    SettingRow(N_("IP Address"), lambda: model.wifi.ipv4_address or N_("Not connected")),
+  ], title=N_("Roaming, APN and IP address"))
 
 
 def upstream_wifi():

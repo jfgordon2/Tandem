@@ -21,8 +21,9 @@ from openpilot.selfdrive.ui.tandem.settings.bundles import DEVELOPER_VIEW, LEAD_
 from openpilot.selfdrive.ui.tandem.settings.editors import NumberSpec, number_sheet
 from openpilot.selfdrive.ui.tandem.settings.speed_steering import STYLE_PARAMS, SpeedSteering
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
-DEFAULT, OVERRIDE, LEARNED, FROM_STYLE = "Default", "Override", "Learned", "From style"
+DEFAULT, OVERRIDE, LEARNED, FROM_STYLE = N_("Default"), N_("Override"), N_("Learned"), N_("From style")
 _TONES = {DEFAULT: Tone.NEUTRAL, OVERRIDE: Tone.WARNING, LEARNED: Tone.SUCCESS, FROM_STYLE: Tone.ACCENT}
 
 
@@ -45,36 +46,36 @@ LATERAL = {"AdvancedLateralTune": True}
 LONGITUDINAL = {"AdvancedLongitudinalTune": True}
 
 STEERING = [
-  Tunable("SteerDelay", "Steering Delay", "Time from command to wheel response", NumberSpec(0.01, 1.0, 0.01, 0.1, _f(2, " s")),
+  Tunable("SteerDelay", N_("Steering Delay"), N_("Time from command to wheel response"), NumberSpec(0.01, 1.0, 0.01, 0.1, _f(2, " s")),
           "SteerDelayStock", learned_key="UseAutoSteerDelay", enable=LATERAL),
-  Tunable("SteerFriction", "Friction", "Extra torque near center", NumberSpec(0.0, 1.0, 0.01, 0.1, _f(2)), "SteerFrictionStock",
+  Tunable("SteerFriction", N_("Friction"), N_("Extra torque near center"), NumberSpec(0.0, 1.0, 0.01, 0.1, _f(2)), "SteerFrictionStock",
           enable=LATERAL),
-  Tunable("SteerLatAccel", "Lateral Acceleration", "Torque to cornering scaling", NumberSpec(0.5, 5.0, 0.05, 2.5, _f(2)),
+  Tunable("SteerLatAccel", N_("Lateral Acceleration"), N_("Torque to cornering scaling"), NumberSpec(0.5, 5.0, 0.05, 2.5, _f(2)),
           "SteerLatAccelStock", enable=LATERAL),
-  Tunable("SteerKP", "Kp Factor", "Correction strength", NumberSpec(0.1, 3.0, 0.05, 1.0, _f(2)), "SteerKPStock", enable=LATERAL),
+  Tunable("SteerKP", N_("Kp Factor"), N_("Correction strength"), NumberSpec(0.1, 3.0, 0.05, 1.0, _f(2)), "SteerKPStock", enable=LATERAL),
 ]
 GAS_BRAKE = [
-  Tunable("MaxDesiredAcceleration", "Maximum Acceleration", "The hardest openpilot will accelerate",
+  Tunable("MaxDesiredAcceleration", N_("Maximum Acceleration"), N_("The hardest openpilot will accelerate"),
           NumberSpec(0.1, 4.0, 0.1, 4.0, _f(1, " m/s²")), enable=LONGITUDINAL),
-  Tunable("StartAccel", "Start Acceleration", "How firmly the car pulls away from a stop", NumberSpec(0.0, 4.0, 0.05, 0.0, _f(2, " m/s²")),
+  Tunable("StartAccel", N_("Start Acceleration"), N_("How firmly the car pulls away from a stop"), NumberSpec(0.0, 4.0, 0.05, 0.0, _f(2, " m/s²")),
           "StartAccelStock", enable=LONGITUDINAL),
-  Tunable("StopAccel", "Stop Acceleration", "Braking held while stopped", NumberSpec(-4.0, 0.0, 0.05, 0.0, _f(2, " m/s²")),
+  Tunable("StopAccel", N_("Stop Acceleration"), N_("Braking held while stopped"), NumberSpec(-4.0, 0.0, 0.05, 0.0, _f(2, " m/s²")),
           "StopAccelStock", enable=LONGITUDINAL),
-  Tunable("StoppingDecelRate", "Stopping Rate", "How quickly braking builds into a stop", NumberSpec(0.01, 1.0, 0.01, 0.8, _f(2)),
+  Tunable("StoppingDecelRate", N_("Stopping Rate"), N_("How quickly braking builds into a stop"), NumberSpec(0.01, 1.0, 0.01, 0.8, _f(2)),
           "StoppingDecelRateStock", enable=LONGITUDINAL),
-  Tunable("LongitudinalActuatorDelay", "Actuator Delay", "Time from command to gas or brake response",
+  Tunable("LongitudinalActuatorDelay", N_("Actuator Delay"), N_("Time from command to gas or brake response"),
           NumberSpec(0.0, 1.0, 0.01, 0.15, _f(2, " s")), "LongitudinalActuatorDelayStock", enable=LONGITUDINAL),
 ]
 FOLLOWING = [
-  Tunable("LeadDetectionThreshold", "Lead Detection Sensitivity", "Lower notices cars ahead sooner",
+  Tunable("LeadDetectionThreshold", N_("Lead Detection Sensitivity"), N_("Lower notices cars ahead sooner"),
           NumberSpec(25, 50, 1, 35, lambda v: f"{v:.0f}%", (25, 35, 50))),
-  Tunable("IncreasedStoppedDistance", "Stopped Distance", "Extra room left behind a stopped car",
+  Tunable("IncreasedStoppedDistance", N_("Stopped Distance"), N_("Extra room left behind a stopped car"),
           NumberSpec(0, 10, 1, 0, lambda v: f"+{v:.0f}", (0, 3, 5, 10)), enable={"QOLLongitudinal": True}),
 ]
 # Following gap per Driving Style, plus Traffic mode. Seconds behind the car ahead.
-GAPS = [("Relaxed", "RelaxedFollow", 1.6), ("Standard", "StandardFollow", 1.45), ("Sport", "AggressiveFollow", 1.25),
-        ("Traffic", "TrafficFollow", 0.75)]
-CONTROLLERS = ["Auto", "NNFF", "Lite", "Torque"]
+GAPS = [(N_("Relaxed"), "RelaxedFollow", 1.6), (N_("Standard"), "StandardFollow", 1.45), (N_("Sport"), "AggressiveFollow", 1.25),
+        (N_("Traffic"), "TrafficFollow", 0.75)]
+CONTROLLERS = [N_("Auto"), N_("NNFF"), N_("Lite"), N_("Torque")]
 DEFAULT_CONTROLLER = 3   # Torque: NNFF and NNFF Lite stay opt-in
 _CONTROLLER_PARAMS = [
   {"NNFF": True, "NNFFLite": True, "ForceTorqueController": False},    # NNFF where the car has a model, otherwise Lite
@@ -82,16 +83,16 @@ _CONTROLLER_PARAMS = [
   {"NNFF": False, "NNFFLite": True, "ForceTorqueController": False},
   {"NNFF": False, "NNFFLite": False, "ForceTorqueController": True},
 ]
-ACCEL_PROFILES = [("Eco", 1), ("Standard", 0), ("Sport", 2), ("Sport+", 3)]
-DECEL_PROFILES = [("Eco", 1), ("Standard", 0), ("Sport", 2)]
+ACCEL_PROFILES = [(N_("Eco"), 1), (N_("Standard"), 0), (N_("Sport"), 2), ("Sport+", 3)]
+DECEL_PROFILES = [(N_("Eco"), 1), (N_("Standard"), 0), (N_("Sport"), 2)]
 CRUISE_STEPS = [1, 5, 10]
 # Bundles listed under Bundle Overrides: name, the keys a driver can override, and the value each has with the bundle on.
 ITEM_NAMES = {
-  "DeveloperSidebar": "Developer sidebar", "FPSCounter": "FPS counter", "ShowCPU": "CPU load", "ShowGPU": "GPU load",
-  "NumericalTemp": "Numeric temperature", "ShowMemoryUsage": "Memory use", "AdjacentPathMetrics": "Adjacent lane widths",
-  "SpeedLimitSources": "Speed limit sources", "LeadInfo": "Lead details on the tag", "RadarTracksUI": "Radar points",
-  "ShowStoppingPoint": "Stopping point", "ShowStoppingPointMetrics": "Stopping point distance", "AdjacentPath": "Adjacent paths",
-  "PedalsOnUI": "Pedals",
+  "DeveloperSidebar": N_("Developer sidebar"), "FPSCounter": N_("FPS counter"), "ShowCPU": N_("CPU load"), "ShowGPU": N_("GPU load"),
+  "NumericalTemp": N_("Numeric temperature"), "ShowMemoryUsage": N_("Memory use"), "AdjacentPathMetrics": N_("Adjacent lane widths"),
+  "SpeedLimitSources": N_("Speed limit sources"), "LeadInfo": N_("Lead details on the tag"), "RadarTracksUI": N_("Radar points"),
+  "ShowStoppingPoint": N_("Stopping point"), "ShowStoppingPointMetrics": N_("Stopping point distance"), "AdjacentPath": N_("Adjacent paths"),
+  "PedalsOnUI": N_("Pedals"),
 }
 OVERRIDE_BUNDLES = [DEVELOPER_VIEW, LEAD_INSIGHTS]
 
@@ -134,7 +135,7 @@ class Tuner:
 
   @property
   def controller(self) -> int:
-    nnff, lite, torque = (self._store.get_bool(k) for k in ("NNFF", "NNFFLite", "ForceTorqueController"))
+    nnff, lite, torque = (self._store.get_bool(k) for k in (N_("NNFF"), "NNFFLite", "ForceTorqueController"))
     if torque:
       return 3
     if nnff:
@@ -255,7 +256,7 @@ class Tuner:
 
 
 def _changed_label(count: int) -> str:
-  return f"{count} changed" if count else ""
+  return t_("{} changed", count) if count else ""
 
 
 def tunable_row(tuner: Tuner, t: Tunable, window) -> SettingRow:
@@ -271,7 +272,7 @@ def tunable_row(tuner: Tuner, t: Tunable, window) -> SettingRow:
       edit()
 
   return SettingRow(t.title, t.subtitle, ValueStatus(lambda: t.spec.fmt(tuner.value(t)), lambda: tuner.status(t),
-                                                     Button(lambda: "Reset" if tuner.status(t) == OVERRIDE else "Override", action,
+                                                     Button(lambda: N_("Reset") if tuner.status(t) == OVERRIDE else N_("Override"), action,
                                                             height=T.px(40)), on_value=edit))
 
 
@@ -307,9 +308,9 @@ class ValueStatus(Component):
 def steering_panel(tuner: Tuner, window) -> ListPanel:
   return ListPanel([
     *[tunable_row(tuner, t, window) for t in STEERING],
-    SettingRow("Steering Controller", "Auto uses NNFF when your car has a model",
+    SettingRow(N_("Steering Controller"), N_("Auto uses NNFF when your car has a model"),
                Segmented(CONTROLLERS, lambda: tuner.controller, tuner.set_controller)),
-  ], title="Steering", subtitle="Learned values work for most cars. An override replaces the learned value until you reset it.")
+  ], title=N_("Steering"), subtitle=N_("Learned values work for most cars. An override replaces the learned value until you reset it."))
 
 
 def gas_brake_panel(tuner: Tuner, window) -> ListPanel:
@@ -322,8 +323,8 @@ def gas_brake_panel(tuner: Tuner, window) -> ListPanel:
         set_(index)
         window.dismiss()
       window.present(Sheet(title, OptionList([name for name, _ in profiles], get, choose),
-                           subtitle="Replaces the profile your Driving Style sets, until you reset it",
-                           actions=[Button("Done", window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss))
+                           subtitle=N_("Replaces the profile your Driving Style sets, until you reset it"),
+                           actions=[Button(N_("Done"), window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss))
 
     def action() -> None:
       if tuner.profile_status(key) == OVERRIDE:
@@ -331,16 +332,16 @@ def gas_brake_panel(tuner: Tuner, window) -> ListPanel:
       else:
         pick()
     return SettingRow(title, subtitle, ValueStatus(lambda: profiles[get()][0], lambda: tuner.profile_status(key),
-                                                   Button(lambda: "Reset" if tuner.profile_status(key) == OVERRIDE else "Override", action,
+                                                   Button(lambda: N_("Reset") if tuner.profile_status(key) == OVERRIDE else N_("Override"), action,
                                                           height=T.px(40)), on_value=pick))
 
   return ListPanel([
-    profile("Acceleration Profile", "How quickly the car speeds up", "AccelerationProfile", ACCEL_PROFILES, lambda: tuner.accel_profile,
+    profile(N_("Acceleration Profile"), N_("How quickly the car speeds up"), "AccelerationProfile", ACCEL_PROFILES, lambda: tuner.accel_profile,
             tuner.set_accel_profile),
-    profile("Braking Profile", "How early and firmly it slows down", "DecelerationProfile", DECEL_PROFILES, lambda: tuner.decel_profile,
+    profile(N_("Braking Profile"), N_("How early and firmly it slows down"), "DecelerationProfile", DECEL_PROFILES, lambda: tuner.decel_profile,
             tuner.set_decel_profile),
     *[tunable_row(tuner, t, window) for t in GAS_BRAKE],
-  ], title="Gas & Brake", subtitle="Driving Style and Vehicle Profile set these. An override replaces their value.")
+  ], title=N_("Gas & Brake"), subtitle=N_("Driving Style and Vehicle Profile set these. An override replaces their value."))
 
 
 class GapCells(Component):
@@ -378,13 +379,13 @@ class GapCells(Component):
   def edit(self, index: int) -> None:
     name, key, default = GAPS[index]
     tuner, window = self._tuner, self._window
-    window.present(number_sheet(window, f"{name} gap", "Seconds behind the car ahead in this Driving Style",
-                                NumberSpec(0.5, 3.0, 0.05, default, lambda v: f"{v:.2f} s"),
+    window.present(number_sheet(window, t_("{} gap", name), N_("Seconds behind the car ahead in this Driving Style"),
+                                NumberSpec(0.5, 3.0, 0.05, default, lambda v: t_("{} s", f"{v:.2f}")),
                                 lambda: tuner.gap(key), lambda v: tuner.set_gap(key, v)))
 
   def _render(self, rect: rl.Rectangle):
     body = inset(rect, x=T.PANEL_HEADER_INSET, y=T.px(14))
-    draw.text(rl.Rectangle(body.x, body.y, body.width, draw.line_height(T.font_px(17))), "Following gap by style", T.font_px(17), T.TEXT,
+    draw.text(rl.Rectangle(body.x, body.y, body.width, draw.line_height(T.font_px(17))), N_("Following gap by style"), T.font_px(17), T.TEXT,
               T.FONT_BOLD)
     for i, ((name, key, default), cell) in enumerate(zip(GAPS, self._cells(rect), strict=True)):
       draw.fill(cell, T.SURFACE_4, T.px(14))
@@ -394,20 +395,20 @@ class GapCells(Component):
       draw.text(top, name, T.font_px(14), T.TEXT_TERTIARY)
       value = self._tuner.gap(key)
       changed = abs(value - default) > 0.01
-      draw.text(bottom, f"{value:.2f} s", T.font_px(22), T.WARNING if changed else T.TEXT, T.FONT_BOLD)
+      draw.text(bottom, t_("{} s", f"{value:.2f}"), T.font_px(22), T.WARNING if changed else T.TEXT, T.FONT_BOLD)
 
 
 def following_panel(tuner: Tuner, window) -> ListPanel:
   return ListPanel([
     GapCells(tuner, window),
     *[tunable_row(tuner, t, window) for t in FOLLOWING],
-    SettingRow("Use Radar for Take-Offs", "Starts moving as soon as the radar sees the car ahead pull away",
+    SettingRow(N_("Use Radar for Take-Offs"), N_("Starts moving as soon as the radar sees the car ahead pull away"),
                Switch(lambda: tuner.switch("RadarTakeoffs"), lambda on: tuner.set_switch("RadarTakeoffs", on))),
-    SettingRow("Force Stops at Lights", "Comes to a full stop for red lights the model detects",
+    SettingRow(N_("Force Stops at Lights"), N_("Comes to a full stop for red lights the model detects"),
                Switch(lambda: tuner.switch("ForceStops"), lambda on: tuner.set_switch("ForceStops", on, {"QOLLongitudinal": True}))),
-    SettingRow("Cruise Button Step", "How far one press of + or − moves the set speed",
+    SettingRow(N_("Cruise Button Step"), N_("How far one press of + or − moves the set speed"),
                Segmented([str(s) for s in CRUISE_STEPS], lambda: tuner.cruise_step, tuner.set_cruise_step)),
-  ], title="Following & Stops")
+  ], title=N_("Following & Stops"))
 
 
 class StripPicker(Component):
@@ -468,9 +469,9 @@ class StripPicker(Component):
 
 def strip_sheet(tuner: Tuner, window) -> Sheet:
   from openpilot.selfdrive.ui.tandem.onroad.developer import STRIP_MAX
-  return Sheet("Bar metrics", StripPicker(tuner),
-               subtitle=lambda: f"{len(tuner.strip())} of {STRIP_MAX} picked. They spread evenly across the bar; pick none to hide it.",
-               actions=[Button("Done", window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss)
+  return Sheet(N_("Bar metrics"), StripPicker(tuner),
+               subtitle=lambda: t_("{} of {} picked. They spread evenly across the bar; pick none to hide it.", len(tuner.strip()), STRIP_MAX),
+               actions=[Button(N_("Done"), window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss)
 
 
 class BundleOverrides(Component):
@@ -484,7 +485,7 @@ class BundleOverrides(Component):
     super().__init__()
     self._tuner = tuner
     self._tab = 0
-    self._choose = self._child(Button("Choose", lambda: window.present(strip_sheet(tuner, window)) if window else None,
+    self._choose = self._child(Button(N_("Choose"), lambda: window.present(strip_sheet(tuner, window)) if window else None,
                                       ButtonStyle.SECONDARY, height=T.px(40), font_size=T.font_px(15), weight=T.FONT_BOLD))
     self._tabs = self._child(Segmented([b.name for b in OVERRIDE_BUNDLES], lambda: self._tab, self._select, height=T.px(48),
                                        font_size=T.font_px(15)))
@@ -492,7 +493,7 @@ class BundleOverrides(Component):
     for bundle in OVERRIDE_BUNDLES:
       rows = []
       for key in tuner.bundle_items(bundle):
-        badge = self._child(Badge("Override", Tone.WARNING))
+        badge = self._child(Badge(N_("Override"), Tone.WARNING))
         switch = self._child(Switch(lambda k=key: tuner.switch(k), lambda on, k=key: tuner.set_switch(k, on), width=T.px(52), height=T.px(30)))
         rows.append((key, badge, switch))
       self._items.append(rows)
@@ -508,7 +509,7 @@ class BundleOverrides(Component):
     w, h = self._tabs.preferred_size(header.width)
     self._tabs.render(place(header, w, h, Align.START))
     on = tuner.bundle_on(bundle)
-    draw.text(header, "Bundle on" if on else "Bundle off", T.SIZE_SUBTITLE, T.SUCCESS_TEXT if on else T.TEXT_MUTED, T.FONT_SEMIBOLD,
+    draw.text(header, N_("Bundle on") if on else N_("Bundle off"), T.SIZE_SUBTITLE, T.SUCCESS_TEXT if on else T.TEXT_MUTED, T.FONT_SEMIBOLD,
               Align.END)
     draw.hline(rect.x, rect.y + self.HEADER, rect.width)
 
@@ -536,16 +537,16 @@ class BundleOverrides(Component):
       body = inset(cell, x=T.px(10))
       bw, bh = self._choose.preferred_size(body.width)
       self._choose.render(place(body, bw, bh, Align.END))
-      title_w = draw.text(body, "Bar metrics", T.font_px(16), T.TEXT, T.FONT_SEMIBOLD)
-      picked = ", ".join(tuner.strip()) or "None: the bar is hidden"
+      title_w = draw.text(body, N_("Bar metrics"), T.font_px(16), T.TEXT, T.FONT_SEMIBOLD)
+      picked = ", ".join(tuner.strip()) or N_("None: the bar is hidden")
       words = inset(body, left=title_w + T.px(14), right=bw + T.px(14))
       draw.text(words, draw.fit(picked, T.SIZE_SUBTITLE, T.FONT, words.width), T.SIZE_SUBTITLE, T.TEXT_TERTIARY)
-    note = f"{tuner.bundle_changes(bundle)} of {len(tuner.bundle_items(bundle))} items differ from the bundle."
+    note = t_("{} of {} items differ from the bundle.", tuner.bundle_changes(bundle), len(tuner.bundle_items(bundle)))
     draw.text(rl.Rectangle(rect.x + T.px(22), rect.y + rect.height - note_h, rect.width - T.px(44), note_h), note, T.SIZE_SUBTITLE,
               T.TEXT_TERTIARY)
 
 
-RESET_TUNING_MESSAGE = "Every Tuner Mode change goes back to its default, in every section and bundle. Your other settings stay as they are."
+RESET_TUNING_MESSAGE = N_("Every Tuner Mode change goes back to its default, in every section and bundle. Your other settings stay as they are.")
 
 
 def tuner_page(tuner: Tuner, window):
@@ -553,14 +554,14 @@ def tuner_page(tuner: Tuner, window):
   from openpilot.selfdrive.ui.tandem.settings.pages import Section, SectionPage
 
   def reset_all() -> None:
-    confirm(window, "Reset all tuning?", RESET_TUNING_MESSAGE, "Reset", tuner.reset_all, icon="restart")
+    confirm(window, N_("Reset all tuning?"), RESET_TUNING_MESSAGE, N_("Reset"), tuner.reset_all, icon="restart")
 
-  return SectionPage("TUNER MODE", [
-    Section("Steering", lambda: steering_panel(tuner, window), lambda: _changed_label(tuner.changed(STEERING)), value_tone=Tone.WARNING),
-    Section("Gas & Brake", lambda: gas_brake_panel(tuner, window), lambda: _changed_label(tuner.gas_brake_changes()),
+  return SectionPage(N_("TUNER MODE"), [
+    Section(N_("Steering"), lambda: steering_panel(tuner, window), lambda: _changed_label(tuner.changed(STEERING)), value_tone=Tone.WARNING),
+    Section(N_("Gas & Brake"), lambda: gas_brake_panel(tuner, window), lambda: _changed_label(tuner.gas_brake_changes()),
             value_tone=Tone.WARNING),
-    Section("Following & Stops", lambda: following_panel(tuner, window), lambda: _changed_label(tuner.following_changes()),
+    Section(N_("Following & Stops"), lambda: following_panel(tuner, window), lambda: _changed_label(tuner.following_changes()),
             value_tone=Tone.WARNING),
-    Section("Bundle Overrides", lambda: BundleOverrides(tuner, window),
+    Section(N_("Bundle Overrides"), lambda: BundleOverrides(tuner, window),
             lambda: _changed_label(sum(tuner.bundle_changes(b) for b in OVERRIDE_BUNDLES)), value_tone=Tone.WARNING),
-  ], tone=Tone.WARNING, footer=[Button("Reset all tuning", reset_all, ButtonStyle.DANGER_SOFT, width=T.SIDEBAR_WIDTH)])
+  ], tone=Tone.WARNING, footer=[Button(N_("Reset all tuning"), reset_all, ButtonStyle.DANGER_SOFT, width=T.SIDEBAR_WIDTH)])

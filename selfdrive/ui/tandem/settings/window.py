@@ -29,6 +29,7 @@ from openpilot.selfdrive.ui.tandem.settings.driving_tab import driving_hub
 from openpilot.selfdrive.ui.tandem.settings.live import Live
 from openpilot.selfdrive.ui.tandem.settings.pages import PanelPage, Section, SectionPage, can_go_back, go_back
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
+from openpilot.selfdrive.ui.tandem.i18n import N_
 
 
 class Tab(IntEnum):
@@ -38,7 +39,7 @@ class Tab(IntEnum):
   SOFTWARE = 3
 
 
-TABS = ["Driving", "Device", "Connections", "Software"]
+TABS = [N_("Driving"), N_("Device"), N_("Connections"), N_("Software")]
 DEVELOPER_SECTION = 5
 SECTIONS = {"NETWORK": connections.WIFI, "BLUETOOTH": connections.REMOTE}   # where upstream's Network and Bluetooth panels went
 
@@ -250,7 +251,7 @@ class SettingsWindow(Widget):
     """A message from StarPilot (e.g. why a model can't download now) in our dialog, where it showed its own alert box."""
     from openpilot.selfdrive.ui.tandem import draw
     from openpilot.selfdrive.ui.tandem.overlays import Dialog
-    self.present(Dialog("Driving model", message, "OK", lambda _: self.dismiss(), cancel_label=None,
+    self.present(Dialog(N_("Driving model"), message, "OK", lambda _: self.dismiss(), cancel_label=None,
                         glyph=lambda r, c, s: draw.icon(r, "model", c, s)))
 
   def back(self) -> None:
@@ -315,13 +316,13 @@ class SettingsWindow(Widget):
     data = self.device_data()
     general = General(self.store, data, self.live)
     report = Report(data, self.store)
-    return SectionPage("DEVICE", [
-      Section("This Device", lambda: self._this_device()),
-      Section("General", lambda: general_panel(general, self)),
-      Section("Backups", lambda: backups_panel(general, self)),
-      Section("Storage & Data", lambda: storage_panel(general, self, Models(self.store, self.model_source()))),
-      Section("Report a Problem", lambda: report_panel(report)),
-      Section("Developer", lambda: DeveloperPage(Developer(self.store, self.developer_source()), self),
+    return SectionPage(N_("DEVICE"), [
+      Section(N_("This Device"), lambda: self._this_device()),
+      Section(N_("General"), lambda: general_panel(general, self)),
+      Section(N_("Backups"), lambda: backups_panel(general, self)),
+      Section(N_("Storage & Data"), lambda: storage_panel(general, self, Models(self.store, self.model_source()))),
+      Section(N_("Report a Problem"), lambda: report_panel(report)),
+      Section(N_("Developer"), lambda: DeveloperPage(Developer(self.store, self.developer_source()), self),
               visible=lambda: TUNER_MODE.is_on(self.store)),
     ])
 

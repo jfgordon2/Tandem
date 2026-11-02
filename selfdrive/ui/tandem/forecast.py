@@ -21,6 +21,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
 OPEN_METEO_URL = "https://api.open-meteo.com/v1/forecast"
 REFRESH_S = 60 * 60                 # at most once an hour in the same area...
@@ -33,21 +34,21 @@ FLASH_S = 30.0                      # the brief heads-up when an event is first 
 
 # WMO weather codes (Open-Meteo) -> what the chip calls it, and its icon. Clear and cloudy codes aren't hazards.
 HAZARDS: dict[int, tuple[str, str]] = {
-  45: ("Fog", "fog"), 48: ("Fog", "fog"),
-  51: ("Light rain", "rain"), 53: ("Drizzle", "rain"), 55: ("Drizzle", "rain"),
-  56: ("Freezing drizzle", "snow"), 57: ("Freezing drizzle", "snow"),
-  61: ("Light rain", "rain"), 63: ("Rain", "rain"), 65: ("Heavy rain", "storm"),
-  66: ("Freezing rain", "snow"), 67: ("Freezing rain", "snow"),
-  71: ("Light snow", "snow"), 73: ("Snow", "snow"), 75: ("Heavy snow", "snow"), 77: ("Fine, icy snow", "snow"),
-  80: ("Light rain", "rain"), 81: ("Rain showers", "rain"), 82: ("Heavy rain", "storm"),
-  85: ("Light snow flurries", "snow"), 86: ("Heavy snow", "snow"),
-  95: ("Thunderstorm", "storm"), 96: ("Storm with hail", "storm"), 99: ("Storm with hail", "storm"),
+  45: (N_("Fog"), "fog"), 48: (N_("Fog"), "fog"),
+  51: (N_("Light rain"), "rain"), 53: (N_("Drizzle"), "rain"), 55: (N_("Drizzle"), "rain"),
+  56: (N_("Freezing drizzle"), "snow"), 57: (N_("Freezing drizzle"), "snow"),
+  61: (N_("Light rain"), "rain"), 63: (N_("Rain"), "rain"), 65: (N_("Heavy rain"), "storm"),
+  66: (N_("Freezing rain"), "snow"), 67: (N_("Freezing rain"), "snow"),
+  71: (N_("Light snow"), "snow"), 73: (N_("Snow"), "snow"), 75: (N_("Heavy snow"), "snow"), 77: (N_("Fine, icy snow"), "snow"),
+  80: (N_("Light rain"), "rain"), 81: (N_("Rain showers"), "rain"), 82: (N_("Heavy rain"), "storm"),
+  85: (N_("Light snow flurries"), "snow"), 86: (N_("Heavy snow"), "snow"),
+  95: (N_("Thunderstorm"), "storm"), 96: (N_("Storm with hail"), "storm"), 99: (N_("Storm with hail"), "storm"),
 }
 
 
 # The sky when nothing's falling (WMO 0-3), by day and by night: the parked screen's outlook line.
-SKY: dict[int, tuple[str, str]] = {0: ("Sunny", "Clear"), 1: ("Mostly sunny", "Mostly clear"), 2: ("Partly cloudy", "Partly cloudy"),
-                                   3: ("Cloudy", "Cloudy")}
+SKY: dict[int, tuple[str, str]] = {0: (N_("Sunny"), N_("Clear")), 1: (N_("Mostly sunny"), N_("Mostly clear")), 2: (N_("Partly cloudy"), N_("Partly cloudy")),
+                                   3: (N_("Cloudy"), N_("Cloudy"))}
 
 
 @dataclass
@@ -131,8 +132,8 @@ class HeadsUp:
   @property
   def text(self) -> str:
     if not self.active:
-      return f"{self.label} in {self.minutes} min"
-    return f"{self.label} until {self.until}" if self.until else self.label
+      return t_("{} in {} min", self.label, self.minutes)
+    return t_("{} until {}", self.label, self.until) if self.until else self.label
 
 
 def heads_up(forecast: Forecast | None, now: float) -> HeadsUp | None:
@@ -318,13 +319,13 @@ def outlook(forecast: Forecast | None, now: float, metric: bool, hours: int = OU
   if event is not None:
     label, icon, start, end = event
     if start <= now:
-      summary = f"{label} until {clock(end, off)}" if end is not None else label
+      summary = t_("{} until {}", label, clock(end, off)) if end is not None else label
     else:
-      summary = f"{label} from {clock(start, off)}" + (f" to {clock(end, off)}" if end is not None else "")
+      summary = t_("{} from {}", label, clock(start, off)) + (t_(" to {}", clock(end, off)) if end is not None else "")
     return Outlook(summary, icon, True, clock(forecast.fetched_at, off), tiles)
   skies = [(code, day) for _, code, _, day in ahead if code in SKY]
   if not skies:
-    return Outlook("No rain or snow ahead", "cloud", False, clock(forecast.fetched_at, off), tiles)
+    return Outlook(N_("No rain or snow ahead"), "cloud", False, clock(forecast.fetched_at, off), tiles)
   codes = [c for c, _ in skies]
   sky = max(set(codes), key=lambda c: (codes.count(c), c))       # the most hours; a tie goes to the cloudier
   day = sum(d for c, d in skies if c == sky) * 2 >= codes.count(sky)

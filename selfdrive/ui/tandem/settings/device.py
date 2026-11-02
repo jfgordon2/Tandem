@@ -18,12 +18,13 @@ from openpilot.selfdrive.ui.tandem.controls import Button, ButtonRow, ButtonStyl
 from openpilot.selfdrive.ui.tandem.layout import Align, inset, place
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, SectionHeader, SettingRow
 from openpilot.selfdrive.ui.tandem.settings.upstream import confirmed
+from openpilot.selfdrive.ui.tandem.i18n import N_
 
 
 class Calibration:
-  CALIBRATED = "Calibrated"
-  CALIBRATING = "Calibrating"
-  UNKNOWN = "Not calibrated yet"
+  CALIBRATED = N_("Calibrated")
+  CALIBRATING = N_("Calibrating")
+  UNKNOWN = N_("Not calibrated yet")
 
 
 class Device(Protocol):
@@ -58,14 +59,15 @@ def driver_monitoring_rows(device: Device, ask: Callable | None = None) -> list[
   """The Driver Camera preview and the driver monitoring reset, for Driving › Assistance. ask(title, message, label, action,
   danger, icon) shows our confirm dialog before the reset."""
   ask = ask or (lambda title, message, label, action, danger, icon: action())
-  preview = Button("Preview", device.driver_camera, ButtonStyle.SECONDARY)
+  preview = Button(N_("Preview"), device.driver_camera, ButtonStyle.SECONDARY)
   preview.set_enabled(device.is_offroad)
-  reset = Button("Reset", lambda: ask("Reset driver monitoring?", "It forgets which side of the car the driver sits on and learns it " +
-                                      "again on the next drive.", "Reset", device.reset_driver_monitoring, False, "restart"),
+  reset = Button(N_("Reset"), lambda: ask(N_("Reset driver monitoring?"),
+                 N_("It forgets which side of the car the driver sits on and learns it again on the next drive."), N_("Reset"),
+                                          device.reset_driver_monitoring, False, "restart"),
                  ButtonStyle.SECONDARY)
   reset.set_enabled(device.is_offroad)
-  return [SettingRow("Driver Camera", "Check that it can see your face. The car must be off.", preview),
-          SettingRow("Driver Monitoring", "Forget which side of the car the driver sits on", reset)]
+  return [SettingRow(N_("Driver Camera"), N_("Check that it can see your face. The car must be off."), preview),
+          SettingRow(N_("Driver Monitoring"), N_("Forget which side of the car the driver sits on"), reset)]
 
 
 class ThisDevicePanel(ListPanel):
@@ -86,32 +88,34 @@ class ThisDevicePanel(ListPanel):
         button.set_enabled(device.is_offroad)
       return button
 
-    pair = action("Pair", open_pairing or device.pair, ButtonStyle.PRIMARY)
+    pair = action(N_("Pair"), open_pairing or device.pair, ButtonStyle.PRIMARY)
     pair.set_visible(lambda: not device.is_paired())
-    power_off = Button("Power Off", asking("Power off?", "The device stays off until the car starts again.", "Power Off", device.power_off,
+    power_off = Button(N_("Power Off"), asking(N_("Power off?"), N_("The device stays off until the car starts again."), N_("Power Off"), device.power_off,
                                            True, "power"), ButtonStyle.DANGER_SOFT, height=T.px(52))
     power_off.set_enabled(device.is_offroad)   # shown while driving, greyed out, like the other car-off actions
-    restart = Button("Restart", asking("Restart the device?", "openpilot shuts down and starts again. This takes about a minute.",
-                                       "Restart", device.restart), height=T.px(52), weight=T.FONT_BOLD)
-    recalibrate = action("Recalibrate", asking("Recalibrate the camera?", "Calibration starts over. openpilot relearns how the device is " +
-                                               "mounted over your next few minutes of driving.", "Recalibrate", device.recalibrate))
+    restart = Button(N_("Restart"), asking(N_("Restart the device?"), N_("openpilot shuts down and starts again. This takes about a minute."),
+                                       N_("Restart"), device.restart), height=T.px(52), weight=T.FONT_BOLD)
+    recalibrate = action(N_("Recalibrate"), asking(N_("Recalibrate the camera?"),
+                         N_("Calibration starts over. openpilot relearns how the device is mounted over your next few minutes of driving."),
+                         N_("Recalibrate"), device.recalibrate))
     recalibrate.set_enabled(lambda: not device.engaged())   # upstream refuses while engaged
 
     super().__init__([
       # The two ways to reach the car from elsewhere sit together, each naming its service.
-      SettingRow("Phone App", lambda: "comma connect · Paired" if device.is_paired() else "comma connect · see drives and change settings on your phone",
+      SettingRow(N_("Phone App"),
+                 lambda: N_("comma connect · Paired") if device.is_paired() else N_("comma connect · see drives and change settings on your phone"),
                  pair, subtitle_color=lambda: T.SUCCESS_TEXT if device.is_paired() else T.TEXT_TERTIARY),
-      SettingRow("Remote Access", lambda: "Galaxy · Set up" if device.remote_access_link() else "Galaxy · reach this device from a web browser",
+      SettingRow(N_("Remote Access"), lambda: N_("Galaxy · Set up") if device.remote_access_link() else N_("Galaxy · reach this device from a web browser"),
                  Button(device.remote_access_label, open_remote_access or device.remote_access),
                  subtitle_color=lambda: T.SUCCESS_TEXT if device.remote_access_link() else T.TEXT_TERTIARY),
-      SettingRow("Camera Calibration", device.calibration, recalibrate,
+      SettingRow(N_("Camera Calibration"), device.calibration, recalibrate,
                  subtitle_color=lambda: T.SUCCESS_TEXT if device.calibration() == Calibration.CALIBRATED else T.TEXT_TERTIARY),
-      SettingRow("How It Works", "Rules, features and limits", action("Review", device.review_guide, offroad_only=True)),
-      SectionHeader("MORE"),
-      regulatory := SettingRow("Regulatory", None, action("View", open_regulatory or device.regulatory, offroad_only=True)),
-      SettingRow("Device ID and Serial", device.ids),
-      SettingRow("IMEI", device.imei),
-    ], title="This Device", footer=ButtonRow([restart, power_off]))
+      SettingRow(N_("How It Works"), N_("Rules, features and limits"), action(N_("Review"), device.review_guide, offroad_only=True)),
+      SectionHeader(N_("MORE")),
+      regulatory := SettingRow(N_("Regulatory"), None, action(N_("View"), open_regulatory or device.regulatory, offroad_only=True)),
+      SettingRow(N_("Device ID and Serial"), device.ids),
+      SettingRow(N_("IMEI"), device.imei),
+    ], title=N_("This Device"), footer=ButtonRow([restart, power_off]))
     regulatory.set_visible(device.show_regulatory)
 
   def show_event(self):
@@ -120,14 +124,14 @@ class ThisDevicePanel(ListPanel):
 
 
 PAIRING_STEPS = [
-  ("Open connect.comma.ai", "Bookmark it to your home screen to use it like an app"),
-  ("Tap Add new device", "Sign in first if it asks"),
-  ("Scan the code", "The Phone App row shows Paired when it's done"),
+  (N_("Open connect.comma.ai"), N_("Bookmark it to your home screen to use it like an app")),
+  (N_("Tap Add new device"), N_("Sign in first if it asks")),
+  (N_("Scan the code"), N_("The Phone App row shows Paired when it's done")),
 ]
 REMOTE_STEPS = [
-  ("Choose a password", "At least 6 characters. Galaxy asks for it when you sign in"),
-  ("Scan the code", "It opens this device's page in Galaxy"),
-  ("Bookmark the page", "The link stays the same until you unpair"),
+  (N_("Choose a password"), N_("At least 6 characters. Galaxy asks for it when you sign in")),
+  (N_("Scan the code"), N_("It opens this device's page in Galaxy")),
+  (N_("Bookmark the page"), N_("The link stays the same until you unpair")),
 ]
 
 
@@ -220,16 +224,16 @@ def regulatory_panel() -> ListPanel:
   """The FCC notice upstream shows, in our panel."""
   import os
   from openpilot.common.basedir import BASEDIR
-  return ListPanel([HtmlBlock(os.path.join(BASEDIR, REGULATORY_FILE))], title="Regulatory", header_divider=True)
+  return ListPanel([HtmlBlock(os.path.join(BASEDIR, REGULATORY_FILE))], title=N_("Regulatory"), header_divider=True)
 
 
 def pairing_page(device: Device):
   """Pair the phone app: the steps on the left, the code on the right (design/pairing.html)."""
   from openpilot.selfdrive.ui.tandem.settings.pages import TitledPage
-  steps = Card([Label("ON YOUR PHONE", color=T.ACCENT_TEXT, caption=True), StepList(PAIRING_STEPS)], gap=T.px(22))
-  caption = lambda: ("Paired", T.SUCCESS_TEXT, T.FONT_BOLD) if device.is_paired() else ("A new code every 5 minutes", T.TEXT_MUTED, T.FONT)  # noqa: E731
-  code = Card([CodeTile(lambda: device.pairing_qr(), caption, "Getting a code…")], grow=0)
-  return TitledPage("Pair the phone app", "Change settings and see drives from your phone", Columns([steps, code], [1.25, 1]))
+  steps = Card([Label(N_("ON YOUR PHONE"), color=T.ACCENT_TEXT, caption=True), StepList(PAIRING_STEPS)], gap=T.px(22))
+  caption = lambda: (N_("Paired"), T.SUCCESS_TEXT, T.FONT_BOLD) if device.is_paired() else (N_("A new code every 5 minutes"), T.TEXT_MUTED, T.FONT)  # noqa: E731
+  code = Card([CodeTile(lambda: device.pairing_qr(), caption, N_("Getting a code…"))], grow=0)
+  return TitledPage(N_("Pair the phone app"), N_("Change settings and see drives from your phone"), Columns([steps, code], [1.25, 1]))
 
 
 def remote_access_page(device: Device, window):
@@ -239,16 +243,16 @@ def remote_access_page(device: Device, window):
   from openpilot.selfdrive.ui.tandem.settings.device_sections import confirm
   from openpilot.selfdrive.ui.tandem.settings.pages import TitledPage
   ready = lambda: bool(device.remote_access_link())  # noqa: E731
-  set_up = Button("Set up", device.set_up_remote_access, ButtonStyle.PRIMARY, height=T.px(58), font_size=T.font_px(18),
+  set_up = Button(N_("Set up", context="action"), device.set_up_remote_access, ButtonStyle.PRIMARY, height=T.px(58), font_size=T.font_px(18),
                   weight=T.FONT_EXTRABOLD)
   set_up.set_visible(lambda: not ready())
-  unpair = Button("Unpair", lambda: confirm(window, "Unpair from Galaxy?", "The link stops working. Setting up again makes a new one.",
-                                            "Unpair", device.unpair_remote_access), ButtonStyle.DANGER_SOFT, height=T.px(52),
+  unpair = Button(N_("Unpair"), lambda: confirm(window, N_("Unpair from Galaxy?"), N_("The link stops working. Setting up again makes a new one."),
+                                            N_("Unpair"), device.unpair_remote_access), ButtonStyle.DANGER_SOFT, height=T.px(52),
                   font_size=T.font_px(17))
   unpair.set_visible(ready)
-  status = Label(lambda: "Set up · protected by your password" if ready() else "Not set up", T.font_px(15),
+  status = Label(lambda: N_("Set up · protected by your password") if ready() else N_("Not set up"), T.font_px(15),
                  lambda: T.SUCCESS_TEXT if ready() else T.TEXT_TERTIARY, T.FONT_SEMIBOLD, h=Align.END)
-  header = Columns([Label("GALAXY", color=T.ACCENT_TEXT, caption=True), status], [1, 3])
+  header = Columns([Label(N_("GALAXY"), color=T.ACCENT_TEXT, caption=True), status], [1, 3])
   steps = Card([header, StepList(REMOTE_STEPS, lambda i: i == 0 and ready()),
                 SPACER, set_up, unpair], gap=T.px(22))
 
@@ -256,9 +260,9 @@ def remote_access_page(device: Device, window):
     link = device.remote_access_link()
     if link:
       return link.split("://", 1)[-1], T.ACCENT_TEXT, T.FONT_SEMIBOLD
-    return "Choosing a password creates this device's link", T.TEXT_MUTED, T.FONT
-  code = Card([CodeTile(lambda: device.remote_access_qr(), caption, "Your code appears here once you choose a password")], grow=0)
-  return TitledPage("Remote Access", "Reach this device from the Galaxy web app", Columns([steps, code], [1.25, 1]))
+    return N_("Choosing a password creates this device's link"), T.TEXT_MUTED, T.FONT
+  code = Card([CodeTile(lambda: device.remote_access_qr(), caption, N_("Your code appears here once you choose a password"))], grow=0)
+  return TitledPage(N_("Remote Access"), N_("Reach this device from the Galaxy web app"), Columns([steps, code], [1.25, 1]))
 
 
 class UpstreamDevice:
@@ -340,13 +344,13 @@ class UpstreamDevice:
     return self._calibration
 
   def remote_access_label(self) -> str:
-    return "Manage" if self._layout._is_galaxy_paired() else "Set Up"
+    return N_("Manage") if self._layout._is_galaxy_paired() else N_("Set Up")
 
   def ids(self) -> str:
     return self._ids
 
   def imei(self) -> str:
-    return self._imei or "Not available"
+    return self._imei or N_("Not available")
 
   def show_regulatory(self) -> bool:
     return self._tici
@@ -403,7 +407,7 @@ class UpstreamDevice:
     from openpilot.system.ui.widgets import DialogResult
     from openpilot.selfdrive.ui.tandem.keyboard import EssentialsKeyboard
     layout = self._layout
-    keyboard = EssentialsKeyboard(min_text_size=6, password_mode=True, show_password_toggle=True, action="Set up")
+    keyboard = EssentialsKeyboard(min_text_size=6, password_mode=True, show_password_toggle=True, action=N_("Set up", context="action"))
 
     def done(result: int) -> None:
       password = keyboard.text.strip()
@@ -416,7 +420,7 @@ class UpstreamDevice:
       layout._galaxy_slug_path.write_text("".join(secrets.choice(upstream.GALAXY_SLUG_CHARS) for _ in range(16)), encoding="utf-8")
 
     keyboard.clear()
-    keyboard.set_title("Choose a Galaxy password", "At least 6 characters. Galaxy asks for it when you sign in.")
+    keyboard.set_title(N_("Choose a Galaxy password"), N_("At least 6 characters. Galaxy asks for it when you sign in."))
     keyboard.set_callback(done)
     gui_app.push_widget(keyboard)
 

@@ -8,6 +8,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
+from openpilot.selfdrive.ui.tandem.i18n import N_
 
 Values = dict[str, bool | int | float]
 
@@ -39,16 +40,16 @@ _DEVELOPER_KEYS = ["DeveloperSidebar", "FPSCounter", "ShowCPU", "ShowGPU", "Nume
 _LEAD_KEYS = ["LeadInfo", "RadarTracksUI", "ShowStoppingPoint", "ShowStoppingPointMetrics", "AdjacentPath", "PedalsOnUI"]
 
 DEVELOPER_VIEW = Bundle(
-  "Developer View", "Sidebar with live metrics, CPU, GPU, memory and temperatures, and where speed limits come from",
+  N_("Developer View"), N_("Sidebar with live metrics, CPU, GPU, memory and temperatures, and where speed limits come from"),
   "DeveloperSidebar", _DEVELOPER_GATES | _switches(_DEVELOPER_KEYS, True), _switches(_DEVELOPER_KEYS, False))
 
 LEAD_INSIGHTS = Bundle(
-  "Lead Insights", "Distance and speed of the car ahead, radar tracks, stopping point, adjacent paths and pedals",
+  N_("Lead Insights"), N_("Distance and speed of the car ahead, radar tracks, stopping point, adjacent paths and pedals"),
   "LeadInfo", _DEVELOPER_GATES | _switches(_LEAD_KEYS, True), _switches(_LEAD_KEYS, False))
 
 # Tuner Mode writes no driving values. It shows the fine-tuning screens, through StarPilot's own tuning level.
 TUNER_MODE = Bundle(
-  "Tuner Mode", "Fine-tuning screens for gas, brake, steering and following",
+  N_("Tuner Mode"), N_("Fine-tuning screens for gas, brake, steering and following"),
   "TuningLevel", {"TuningLevel": 3, "TuningLevelConfirmed": True}, {"TuningLevel": 0})
 
 BUNDLES = [DEVELOPER_VIEW, LEAD_INSIGHTS, TUNER_MODE]

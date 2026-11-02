@@ -6,14 +6,15 @@ A direction that is the name itself stays whole ("North Ave"), and a type that i
 from __future__ import annotations
 
 import re
+from openpilot.selfdrive.ui.tandem.i18n import N_
 
 DIRECTIONS = {"north": "N", "south": "S", "east": "E", "west": "W", "northeast": "NE", "northwest": "NW", "southeast": "SE",
               "southwest": "SW"}
 TYPES = {
-  "street": "St", "avenue": "Ave", "road": "Rd", "boulevard": "Blvd", "drive": "Dr", "lane": "Ln", "court": "Ct", "place": "Pl",
-  "terrace": "Ter", "parkway": "Pkwy", "highway": "Hwy", "expressway": "Expy", "freeway": "Fwy", "circle": "Cir", "trail": "Trl",
-  "square": "Sq", "crossing": "Xing", "turnpike": "Tpke", "heights": "Hts", "center": "Ctr", "plaza": "Plz", "point": "Pt",
-  "mountain": "Mtn", "junction": "Jct", "crescent": "Cres", "alley": "Aly", "causeway": "Cswy", "bypass": "Byp",
+  "street": N_("St"), "avenue": N_("Ave"), "road": N_("Rd"), "boulevard": N_("Blvd"), "drive": N_("Dr"), "lane": N_("Ln"), "court": N_("Ct"), "place": N_("Pl"),
+  "terrace": N_("Ter"), "parkway": N_("Pkwy"), "highway": N_("Hwy"), "expressway": N_("Expy"), "freeway": N_("Fwy"), "circle": N_("Cir"), "trail": N_("Trl"),
+  "square": N_("Sq"), "crossing": N_("Xing"), "turnpike": N_("Tpke"), "heights": N_("Hts"), "center": N_("Ctr"), "plaza": N_("Plz"), "point": N_("Pt"),
+  "mountain": N_("Mtn"), "junction": N_("Jct"), "crescent": N_("Cres"), "alley": N_("Aly"), "causeway": N_("Cswy"), "bypass": N_("Byp"),
 }
 TYPE_WORDS = set(TYPES) | {short.lower() for short in TYPES.values()} | {"way"}   # a type spelled out or already short
 

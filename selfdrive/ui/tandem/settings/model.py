@@ -22,6 +22,7 @@ from openpilot.selfdrive.ui.tandem.rows import ListPanel, SectionHeader, Setting
 from openpilot.selfdrive.ui.tandem.settings.device_sections import STORAGE, StorageBar
 from openpilot.selfdrive.ui.tandem.settings.pages import TitledPage
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
 
 @dataclass(frozen=True)
@@ -60,7 +61,7 @@ class Models:
 
   def current_name(self) -> str:
     model = self.find(self.source.current_key())
-    return model.name if model else "Default model"
+    return model.name if model else N_("Default model")
 
   @property
   def use_recommended(self) -> bool:
@@ -100,12 +101,12 @@ class Models:
       self.source.remove(model.key)
 
   def summary(self) -> str:
-    return "Recommended" if self.use_recommended else self.current_name()
+    return N_("Recommended") if self.use_recommended else self.current_name()
 
   def update_summary(self) -> str:
     if self.source.downloading_key():
-      return "Downloading"
-    return "Updates automatically" if self.use_recommended else "Chosen by you"
+      return N_("Downloading")
+    return N_("Updates automatically") if self.use_recommended else N_("Chosen by you")
 
 
 def model_row(models: Models, model: ModelInfo) -> Widget:
@@ -122,11 +123,11 @@ class ModelRow(Component):
     super().__init__()
     self._models, self._model = models, model
     status = lambda: models.status(model)  # noqa: E731
-    self._badge = self._child(Badge("ACTIVE", solid=True))
-    self._use = self._child(Button("Use", lambda: models.source.use(model.key), ButtonStyle.PRIMARY, height=T.px(42),
+    self._badge = self._child(Badge(N_("ACTIVE"), solid=True))
+    self._use = self._child(Button(N_("Use"), lambda: models.source.use(model.key), ButtonStyle.PRIMARY, height=T.px(42),
                                    font_size=T.font_px(15)))
     self._use.set_visible(lambda: status() == "on_device" and not models.use_recommended)
-    label = {"downloading": "Cancel", "on_device": "Use", "download": "Download", "unavailable": "Not available"}
+    label = {"downloading": N_("Cancel"), "on_device": N_("Use"), "download": N_("Download"), "unavailable": N_("Not available")}
     self._action = self._child(Button(lambda: label.get(status(), ""), self._act, height=T.px(42), font_size=T.font_px(15)))
     self._action.set_visible(lambda: status() != "active" and not self._use.is_visible)
     self._action.set_enabled(lambda: status() in ("downloading", "download"))
@@ -141,11 +142,11 @@ class ModelRow(Component):
   def subtitle(self) -> str:
     status, source = self._models.status(self._model), self._models.source
     return {
-      "active": "Recommended · On device" if self._model.key == source.recommended_key() else "On device",
-      "downloading": f"Downloading · {source.progress() or 'starting'}",
-      "on_device": "On device",
-      "unavailable": "Needs an eGPU",
-      "download": "Community pick" if self._model.community_pick else "Available to download",
+      "active": N_("Recommended · On device") if self._model.key == source.recommended_key() else N_("On device"),
+      "downloading": t_("Downloading · {}", source.progress() or 'starting'),
+      "on_device": N_("On device"),
+      "unavailable": N_("Needs an eGPU"),
+      "download": N_("Community pick") if self._model.community_pick else N_("Available to download"),
     }[status]
 
   def preferred_size(self, max_width: float) -> tuple[float, float]:
@@ -270,24 +271,24 @@ def model_page(models: Models, open_catalog: Callable[[], None]) -> Widget:
     others = sorted((m for m in models.source.models() if m.key != current and (m.installed or m.community_pick)),
                     key=lambda m: not m.installed)[:3]
     active = Card([
-      Inline(Badge("ACTIVE", solid=True)),
+      Inline(Badge(N_("ACTIVE"), solid=True)),
       Label(models.current_name, T.font_px(26), weight=T.FONT_EXTRABOLD),
-      Text(lambda: "Chosen for your car. Swaps to newer recommended models automatically." if models.use_recommended
-           else "Picked by you", T.font_px(16), T.TEXT_TERTIARY, padding=(0, 0)),
+      Text(lambda: N_("Chosen for your car. Swaps to newer recommended models automatically.") if models.use_recommended
+           else N_("Picked by you"), T.font_px(16), T.TEXT_TERTIARY, padding=(0, 0)),
       SPACER,
-      Surface(SettingRow("Use recommended", "Turn off to pick your own", Switch(lambda: models.use_recommended,
+      Surface(SettingRow(N_("Use recommended"), N_("Turn off to pick your own"), Switch(lambda: models.use_recommended,
                                                                               models.set_use_recommended), height=T.px(66)),
               T.ACCENT_INSET, T.px(16)),
     ], padding=(T.px(22), T.px(22)), tone="accent")
-    browse = Button("Browse all", open_catalog, ButtonStyle.GHOST, height=T.px(32))
+    browse = Button(N_("Browse all"), open_catalog, ButtonStyle.GHOST, height=T.px(32))
     other = ListPanel([
-      SectionHeader("OTHER MODELS", trailing=browse),
+      SectionHeader(N_("OTHER MODELS"), trailing=browse),
       *[model_row(models, m) for m in others],
-      Text("Available when Use recommended is off. Model randomizer and blacklist are in Tuner Mode.", T.SIZE_SUBTITLE),
+      Text(N_("Available when Use recommended is off. Model randomizer and blacklist are in Tuner Mode."), T.SIZE_SUBTITLE),
     ])
     return Columns([active, other], [1, 1.2])
 
-  return TitledPage("Driving Model", "The neural network that steers and judges speed",
+  return TitledPage(N_("Driving Model"), N_("The neural network that steers and judges speed"),
                     Rebuilding(lambda: (models.source.current_key(), tuple((m.key, m.installed) for m in models.source.models())), build,
                                models.source.tick, on_show=models.source.refresh))
 
@@ -295,7 +296,7 @@ def model_page(models: Models, open_catalog: Callable[[], None]) -> Widget:
 class CatalogPage(Component):
   """The title and tabs above; the models on the left; storage and notes on two cards at the right."""
   grow_touch_target = False
-  TABS = ["All models", "Community picks", "On device"]   # the mock's "For your car": StarPilot lists every model for every car
+  TABS = [N_("All models"), N_("Community picks"), N_("On device")]   # the mock's "For your car": StarPilot lists every model for every car
 
   def __init__(self, models: Models, sizes: Callable[[], dict[str, float]]):
     super().__init__()
@@ -304,21 +305,21 @@ class CatalogPage(Component):
     self._tabs = self._child(Segmented(self.TABS, lambda: self._tab, self._select, height=T.px(52), font_size=T.font_px(16)))
     self._list = self._child(Rebuilding(
       lambda: (self._tab, tuple((m.key, m.installed) for m in models.tab(self._tab))),
-      lambda: ListPanel([model_row(models, m) for m in models.tab(self._tab)] or [Text("No models here yet.")]),
+      lambda: ListPanel([model_row(models, m) for m in models.tab(self._tab)] or [Text(N_("No models here yet."))]),
       models.source.tick))
-    remove = Button(lambda: f"Remove unused models ({len(models.unused())})" if models.unused() else "Remove unused models",
+    remove = Button(lambda: t_("Remove unused models ({})", len(models.unused())) if models.unused() else N_("Remove unused models"),
                     lambda: (models.remove_unused(), STORAGE.forget()), height=T.px(46), font_size=T.font_px(15))
     remove.set_enabled(lambda: bool(models.unused()) and not models.source.removal_blocked())
     note = lambda text: Text(text, T.SIZE_SUBTITLE, T.TEXT_SECONDARY, padding=(0, 0))  # noqa: E731
     self._side = self._child(Stack([
       Card([
-        StorageBar(sizes, heading="Storage", padding=(0, 0)),
+        StorageBar(sizes, heading=N_("Storage"), padding=(0, 0)),
         remove,
       ], gap=T.px(10), padding=(T.px(18), T.px(16)), background=T.SURFACE_2),
       Card([
-        Label("GOOD TO KNOW", caption=True),
-        note("One download at a time, paused while driving."),
-        note("A new model applies on your next drive."),
+        Label(N_("GOOD TO KNOW"), caption=True),
+        note(N_("One download at a time, paused while driving.")),
+        note(N_("A new model applies on your next drive.")),
         SPACER,
       ], gap=T.px(10), padding=(T.px(18), T.px(16)), background=T.SURFACE_2),
     ], gap=T.px(14), grow=1))
@@ -332,7 +333,7 @@ class CatalogPage(Component):
     header, content = column(body, [T.px(56), FILL], T.px(14))
     w, h = self._tabs.preferred_size(header.width / 2)
     self._tabs.render(place(header, w, h, Align.END))
-    draw.text(inset(header, left=T.px(6), right=w + T.px(14)), "Driving models", T.font_px(26), T.TEXT, T.FONT_EXTRABOLD)
+    draw.text(inset(header, left=T.px(6), right=w + T.px(14)), N_("Driving models"), T.font_px(26), T.TEXT, T.FONT_EXTRABOLD)
     left, right = row(content, [FILL, T.px(280)], T.px(14))
     self._list.render(left)
     self._side.render(right)
@@ -400,7 +401,7 @@ class UpstreamModels:
     """StarPilot's rules for deleting model files: not while driving, not during a download."""
     from openpilot.selfdrive.ui.ui_state import ui_state
     if ui_state.started:
-      return "Park to remove models"
+      return N_("Park to remove models")
     if self._layout._is_download_active():
-      return "Wait for the download to finish"
+      return N_("Wait for the download to finish")
     return ""

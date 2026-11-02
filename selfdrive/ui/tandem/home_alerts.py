@@ -16,26 +16,27 @@ from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, back_glyph
 from openpilot.selfdrive.ui.tandem.layout import FILL, column, inset, place, row
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, Text
+from openpilot.selfdrive.ui.tandem.i18n import N_, tn_
 
 # Upstream's offroad alerts carry only a sentence; these give the ones we know a short title.
 ALERT_TITLES = {
-  "Offroad_TemperatureTooHigh": "Cooling down",
-  "Offroad_ConnectivityNeededPrompt": "Connect soon",
-  "Offroad_ConnectivityNeeded": "Needs a connection",
-  "Offroad_UpdateFailed": "Update failed",
-  "Offroad_ChestnutNotDetected": "Chestnut not found",
-  "Offroad_ChestnutOverheated": "Chestnut too hot",
-  "Offroad_ChestnutPcieUnavailable": "Chestnut unavailable",
-  "Offroad_ChestnutUncompiled": "Chestnut model missing",
-  "Offroad_ChestnutUpdateFailed": "Chestnut update failed",
-  "Offroad_ChestnutUsbSlow": "Chestnut link is slow",
-  "Offroad_IsTakingSnapshot": "Taking snapshots",
-  "Offroad_NeosUpdate": "System update downloading",
-  "Offroad_UnregisteredHardware": "Not registered",
-  "Offroad_CarUnrecognized": "Car not recognized",
-  "Offroad_Recalibration": "Device mount changed",
-  "Offroad_DriverMonitoringUncertain": "Driver camera can't see well",
-  "Offroad_ExcessiveActuation": "Excessive actuation",
+  "Offroad_TemperatureTooHigh": N_("Cooling down"),
+  "Offroad_ConnectivityNeededPrompt": N_("Connect soon"),
+  "Offroad_ConnectivityNeeded": N_("Needs a connection"),
+  "Offroad_UpdateFailed": N_("Update failed"),
+  "Offroad_ChestnutNotDetected": N_("Chestnut not found"),
+  "Offroad_ChestnutOverheated": N_("Chestnut too hot"),
+  "Offroad_ChestnutPcieUnavailable": N_("Chestnut unavailable"),
+  "Offroad_ChestnutUncompiled": N_("Chestnut model missing"),
+  "Offroad_ChestnutUpdateFailed": N_("Chestnut update failed"),
+  "Offroad_ChestnutUsbSlow": N_("Chestnut link is slow"),
+  "Offroad_IsTakingSnapshot": N_("Taking snapshots"),
+  "Offroad_NeosUpdate": N_("System update downloading"),
+  "Offroad_UnregisteredHardware": N_("Not registered"),
+  "Offroad_CarUnrecognized": N_("Car not recognized"),
+  "Offroad_Recalibration": N_("Device mount changed"),
+  "Offroad_DriverMonitoringUncertain": N_("Driver camera can't see well"),
+  "Offroad_ExcessiveActuation": N_("Excessive actuation"),
 }
 
 
@@ -119,8 +120,8 @@ class AlertsView(Component):
     self._alerts = alerts
     self._action_of = action
     count = lambda: len(alerts())  # noqa: E731
-    self._header = self._child(Header(on_back, lambda: f"{count()} alert{'s' if count() != 1 else ''}",
-                                      lambda: "openpilot may not start until these are sorted out"))
+    self._header = self._child(Header(on_back, lambda: tn_("{} alert", "{} alerts", count()),
+                                      lambda: N_("openpilot may not start until these are sorted out")))
     self._action = self._child(Button(lambda: (action() or ("", None))[0], lambda: (action() or ("", lambda: None))[1](),
                                       height=T.px(52), weight=T.FONT_BOLD, padding=T.px(22)))
     self._action.set_visible(lambda: action() is not None)
@@ -154,8 +155,8 @@ class UpdateView(Component):
   def __init__(self, version: Callable[[], str], notes: Callable[[], str], on_back: Callable[[], None], on_restart: Callable[[], None]):
     super().__init__()
     self._notes = notes
-    self._header = self._child(Header(on_back, version, caption=lambda: "Update ready"))
-    self._restart = self._child(Button("Restart and update", on_restart, ButtonStyle.PRIMARY, height=T.px(56), weight=T.FONT_EXTRABOLD,
+    self._header = self._child(Header(on_back, version, caption=lambda: N_("Update ready")))
+    self._restart = self._child(Button(N_("Restart and update"), on_restart, ButtonStyle.PRIMARY, height=T.px(56), weight=T.FONT_EXTRABOLD,
                                        padding=T.px(28)))
     self._list: ListPanel | None = None
     self._key = ""
@@ -176,5 +177,5 @@ class UpdateView(Component):
     self._panel().render(notes)
     w = self._restart.preferred_size(footer.width)[0]
     note, button = row(footer, [FILL, w], T.px(12))
-    draw.text(note, "It also installs on its own when you turn off the car.", T.font_px(15), T.TEXT_MUTED)
+    draw.text(note, N_("It also installs on its own when you turn off the car."), T.font_px(15), T.TEXT_MUTED)
     self._restart.render(button)

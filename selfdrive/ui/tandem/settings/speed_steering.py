@@ -9,11 +9,12 @@ from openpilot.selfdrive.ui.tandem.controls import TILE_CARDS, Button, ChoiceCar
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, Padded, SectionHeader, SettingRow
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
 from openpilot.selfdrive.ui.tandem.prefs import MAX_FOLLOWS_LIMIT, WEATHER_HEADS_UP
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_, translate
 
-STYLES = ["Relaxed", "Standard", "Sport"]
-SPEED_LIMITS = ["Off", "Show", "Match"]
-LIMIT_CHANGES = ["Update automatically", "Tap to confirm"]
-LANE_CHANGES = ["Nudge", "Auto"]
+STYLES = [N_("Relaxed"), N_("Standard"), N_("Sport")]
+SPEED_LIMITS = [N_("Off"), N_("Show"), N_("Match")]
+LIMIT_CHANGES = [N_("Update automatically"), N_("Tap to confirm")]
+LANE_CHANGES = [N_("Nudge"), N_("Auto")]
 
 # Driving Style -> (LongitudinalPersonality, AccelerationProfile, DecelerationProfile). Standard is StarPilot's default.
 STYLE_PARAMS = [
@@ -130,55 +131,55 @@ class SpeedSteering:
     self._store.write({"AlwaysOnLateral": on})
 
   def summary(self) -> str:
-    lanes = "Auto lane change" if self.lane_changes else "Nudge to change lanes"
+    lanes = N_("Auto lane change") if self.lane_changes else N_("Nudge to change lanes")
     return f"{STYLES[self.style]} · {lanes}"
 
   def speed_limit_summary(self) -> str:
-    return ["Speed limits off", "Showing speed limits", "Matching speed limits"][self.speed_limits]
+    return [N_("Speed limits off"), N_("Showing speed limits"), N_("Matching speed limits")][self.speed_limits]
 
 
 def everyday_panel(model: SpeedSteering) -> ListPanel:
-  style = SettingRow("Driving Style", lambda: "Relaxed while Safe Mode is on" if model.safe_mode else
-                     "Sets following gap, acceleration and braking together", Segmented(STYLES, lambda: model.style, model.set_style))
+  style = SettingRow(N_("Driving Style"), lambda: N_("Relaxed while Safe Mode is on") if model.safe_mode else
+                     N_("Sets following gap, acceleration and braking together"), Segmented(STYLES, lambda: model.style, model.set_style))
   style.set_enabled(lambda: not model.safe_mode)
-  offset = SettingRow("Offset", "Added to every matched limit", indent=True,
+  offset = SettingRow(N_("Offset"), N_("Added to every matched limit"), indent=True,
                       control=Stepper(lambda: model.offset, model.set_offset, 0, OFFSET_MAX,
                                       fmt=lambda v: f"+{v:g} {model.unit}", value_width=T.px(104)))
-  higher = SettingRow("Higher limits", "When a posted limit goes up", indent=True,
+  higher = SettingRow(N_("Higher limits"), N_("When a posted limit goes up"), indent=True,
                       control=Segmented(LIMIT_CHANGES, lambda: model.higher_limits, model.set_higher_limits,
                                         height=T.px(42), font_size=T.font_px(15)))
-  lower = SettingRow("Lower limits", "When a posted limit goes down", indent=True,
+  lower = SettingRow(N_("Lower limits"), N_("When a posted limit goes down"), indent=True,
                      control=Segmented(LIMIT_CHANGES, lambda: model.lower_limits, model.set_lower_limits,
                                        height=T.px(42), font_size=T.font_px(15)))
-  follows = SettingRow("MAX follows limits", "Each new limit sets MAX, so it slows promptly for lower ones", indent=True,
+  follows = SettingRow(N_("MAX follows limits"), N_("Each new limit sets MAX, so it slows promptly for lower ones"), indent=True,
                        control=Switch(lambda: model.max_follows, model.set_max_follows))
   for row in (offset, higher, lower, follows):
     row.set_visible(lambda: model.matching)
 
   rows = [
     style,
-    SettingRow("Speed Limits", "Match sets cruise to the posted limit",
+    SettingRow(N_("Speed Limits"), N_("Match sets cruise to the posted limit"),
                Segmented(SPEED_LIMITS, lambda: model.speed_limits, model.set_speed_limits)),
     offset,
     higher,
     lower,
     follows,
-    SettingRow("Lane Changes", lambda: f"Auto starts one change per signal, above {model.lane_change_speed} {model.unit}",
+    SettingRow(N_("Lane Changes"), lambda: t_("Auto starts one change per signal, above {} {}", model.lane_change_speed, model.unit),
                Segmented(LANE_CHANGES, lambda: model.lane_changes, model.set_lane_changes)),
-    SettingRow("Smart Slowdowns", "Slows for curves, stop lights and stopped traffic on its own",
+    SettingRow(N_("Smart Slowdowns"), N_("Slows for curves, stop lights and stopped traffic on its own"),
                Switch(lambda: model.smart_slowdowns, model.set_smart_slowdowns)),
-    SettingRow("Always-On Steering", "Keeps steering with cruise off.",
+    SettingRow(N_("Always-On Steering"), N_("Keeps steering with cruise off."),
                Switch(lambda: model.always_on_steering, model.set_always_on_steering)),
   ]
-  count = Label(lambda: f"{sum(r.is_visible for r in rows)} settings", T.SIZE_CAPTION, T.TEXT_MUTED, T.FONT, fit=True)
-  return ListPanel(rows, title="Everyday", subtitle="Driving style, speed limits, lane changes and steering", header_control=count)
+  count = Label(lambda: t_("{} settings", sum(r.is_visible for r in rows)), T.SIZE_CAPTION, T.TEXT_MUTED, T.FONT, fit=True)
+  return ListPanel(rows, title=N_("Everyday"), subtitle=N_("Driving style, speed limits, lane changes and steering"), header_control=count)
 
 
 # ── Vehicle Profile ──
 
-PROFILES = [("Car", "Standard tuning for most cars and SUVs"), ("EV", "Smoother take-off and regen-aware braking"),
-            ("Truck", "Gentler acceleration for heavier vehicles"), ("Towing", "Truck tuning plus room for a trailer")]
-TRAILER_LOADS = ["Light", "Medium", "Heavy"]
+PROFILES = [(N_("Car"), N_("Standard tuning for most cars and SUVs")), ("EV", N_("Smoother take-off and regen-aware braking")),
+            (N_("Truck"), N_("Gentler acceleration for heavier vehicles")), (N_("Towing"), N_("Truck tuning plus room for a trailer"))]
+TRAILER_LOADS = [N_("Light"), N_("Medium"), N_("Heavy")]
 TRAILER_POUNDS = [2000, 5000, 8000]   # StarPilot's TrailerLoad is in pounds
 
 
@@ -215,13 +216,13 @@ class VehicleProfile:
 
 def vehicle_profile_panel(model: VehicleProfile) -> Widget:
   """The profiles as tiles filling the panel, then Trailer Load. No line under the title, as in the mock."""
-  load = SettingRow("Trailer Load", lambda: "Weight of a loaded trailer" if model.towing else "Available with Towing",
+  load = SettingRow(N_("Trailer Load"), lambda: N_("Weight of a loaded trailer") if model.towing else N_("Available with Towing"),
                     Segmented(TRAILER_LOADS, lambda: model.trailer_load, model.set_trailer_load, height=T.px(44),
                               font_size=T.font_px(15)), height=T.px(64))
   load.set_enabled(lambda: model.towing)
   return Card([
-    Padded(Stack([Label("Vehicle Profile", T.SIZE_PANEL_TITLE),
-                  Label("Adjusts acceleration and braking for what you drive", T.SIZE_SUBTITLE, T.TEXT_TERTIARY, T.FONT)], gap=T.px(3)),
+    Padded(Stack([Label(N_("Vehicle Profile"), T.SIZE_PANEL_TITLE),
+                  Label(N_("Adjusts acceleration and braking for what you drive"), T.SIZE_SUBTITLE, T.TEXT_TERTIARY, T.FONT)], gap=T.px(3)),
            x=T.px(22), y=0),
     Padded(ChoiceCards(PROFILES, lambda: model.profile, model.set_profile, large=TILE_CARDS), x=T.px(18), y=0),
     Rule(dim=lambda: not model.towing),
@@ -231,13 +232,13 @@ def vehicle_profile_panel(model: VehicleProfile) -> Widget:
 
 # ── Weather ──
 
-WEATHER = ["Auto", "Off"]
+WEATHER = [N_("Auto"), N_("Off")]
 # Condition -> (param suffix, extra following seconds, % less acceleration, % less curve speed). Placeholders to tune on real drives.
 WEATHER_PRESETS = [
   ("LowVisibility", 0.5, 0, 0),
-  ("Rain", 0.5, 10, 10),
+  (N_("Rain"), 0.5, 10, 10),
   ("RainStorm", 1.0, 20, 20),
-  ("Snow", 1.5, 30, 25),
+  (N_("Snow"), 1.5, 30, 25),
 ]
 
 
@@ -269,18 +270,18 @@ class Weather:
 
 
 def weather_panel(model: Weather) -> ListPanel:
-  conditions = [("Fog or low visibility", "Longer following gap", "fog"), ("Rain", "Longer gap, earlier braking", "rain"),
-                ("Heavy rain or storms", "More gap, softer acceleration", "storm"),
-                ("Snow or ice", "Most gap, gentlest starts and stops", "snow")]
+  conditions = [(N_("Fog or low visibility"), N_("Longer following gap"), "fog"), (N_("Rain"), N_("Longer gap, earlier braking"), "rain"),
+                (N_("Heavy rain or storms"), N_("More gap, softer acceleration"), "storm"),
+                (N_("Snow or ice"), N_("Most gap, gentlest starts and stops"), "snow")]
   cards = [InfoCard(title, line, icon) for title, line, icon in conditions]
   for card in cards:
     card.set_enabled(lambda: model.mode == 0)
-  heads_up = SettingRow("Weather heads-up", "Warns before rain, snow or storms start, and says when they should stop",
+  heads_up = SettingRow(N_("Weather heads-up"), N_("Warns before rain, snow or storms start, and says when they should stop"),
                         Switch(lambda: model.heads_up, model.set_heads_up))
-  return ListPanel([SectionHeader("WHAT CHANGES"), Padded(Grid(cards), x=T.px(16), y=T.px(6)), heads_up], title="Weather",
-                   subtitle="Drives more cautiously in bad conditions, using local weather",
+  return ListPanel([SectionHeader(N_("WHAT CHANGES")), Padded(Grid(cards), x=T.px(16), y=T.px(6)), heads_up], title=N_("Weather"),
+                   subtitle=N_("Drives more cautiously in bad conditions, using local weather"),
                    header_control=Segmented(WEATHER, lambda: model.mode, model.set_mode),
-                   footnote="Needs an internet connection. Chips show it ahead and while it lasts.", footnote_divider=True)
+                   footnote=N_("Needs an internet connection. Chips show it ahead and while it lasts."), footnote_divider=True)
 
 
 # ── Assistance: openpilot's own switches ──
@@ -307,37 +308,37 @@ class Assistance:
     return not self._live.engaged()
 
   def summary(self) -> str:
-    return "Gas pedal disengages" if self.get("DisengageOnAccelerator") else "Gas pedal doesn't disengage"
+    return N_("Gas pedal disengages") if self.get("DisengageOnAccelerator") else N_("Gas pedal doesn't disengage")
 
   def monitoring_summary(self) -> str:
-    return "Driver monitoring always on" if self.get("AlwaysOnDM") else "Driver monitoring while engaged"
+    return N_("Driver monitoring always on") if self.get("AlwaysOnDM") else N_("Driver monitoring while engaged")
 
 
 def assistance_panel(model: Assistance) -> ListPanel:
   def switch(title: str, subtitle: str, key: str, on_change=None, restarts: bool = False) -> SettingRow:
-    row = SettingRow(title, subtitle + (" Restarts openpilot if the car is on." if restarts else ""),
+    row = SettingRow(title, translate(subtitle) + (translate(N_(" Restarts openpilot if the car is on.")) if restarts else ""),
                      Switch(lambda: model.get(key), on_change or model.setter(key)))
     if restarts:
       row.set_enabled(model.parked_or_disengaged)
     return row
 
   return ListPanel([
-    switch("openpilot", "Adaptive cruise and lane keeping. Your attention is required at all times.", "OpenpilotEnabledToggle",
+    switch("openpilot", N_("Adaptive cruise and lane keeping. Your attention is required at all times."), "OpenpilotEnabledToggle",
            restarts=True),
-    switch("Disengage on Gas Pedal", "Pressing the accelerator turns openpilot off", "DisengageOnAccelerator"),
-    switch("Lane Departure Warnings", "Alerts when you drift over a lane line without signaling, above 31 mph (50 km/h)", "IsLdwEnabled"),
-    switch("Safe Mode", "Uses stock tuning, the default model and Relaxed until turned off.", "SafeMode", model.set_safe_mode,
+    switch(N_("Disengage on Gas Pedal"), N_("Pressing the accelerator turns openpilot off"), "DisengageOnAccelerator"),
+    switch(N_("Lane Departure Warnings"), N_("Alerts when you drift over a lane line without signaling, above 31 mph (50 km/h)"), "IsLdwEnabled"),
+    switch(N_("Safe Mode"), N_("Uses stock tuning, the default model and Relaxed until turned off."), "SafeMode", model.set_safe_mode,
            restarts=True),
-  ], title="Assistance", subtitle="openpilot's core switches")
+  ], title=N_("Assistance"), subtitle=N_("openpilot's core switches"))
 
 
 def driver_monitoring_panel(model: Assistance, rows: list) -> ListPanel:
   """Driver monitoring in one place: Always-On, then the camera preview and reset (settings.device.driver_monitoring_rows)."""
   return ListPanel([
-    SettingRow("Always-On Driver Monitoring", "Watches for distraction even when openpilot is off",
+    SettingRow(N_("Always-On Driver Monitoring"), N_("Watches for distraction even when openpilot is off"),
                Switch(lambda: model.get("AlwaysOnDM"), model.setter("AlwaysOnDM"))),
     *rows,
-  ], title="Driver Monitoring", subtitle="Watches that you're paying attention")
+  ], title=N_("Driver Monitoring"), subtitle=N_("Watches that you're paying attention"))
 
 
 # ── Navigation ──
@@ -354,7 +355,7 @@ class Navigation:
 
   def _place(self, flag: str) -> str | None:
     place = next((f for f in self._favorites() if f.get(flag)), None)
-    return str(place.get("name") or "Saved place") if place else None
+    return str(place.get("name") or N_("Saved place")) if place else None
 
   def home(self) -> str | None:
     return self._place("is_home")
@@ -381,17 +382,17 @@ class Navigation:
 def navigation_panel(model: Navigation, open_destinations, open_offline_maps, open_mapbox_help=lambda: None) -> ListPanel:
 
   def place(title: str, icon: str, get) -> SettingRow:
-    return SettingRow(title, lambda: get() or "Not set", Button(lambda: "Change" if get() else "Set", open_destinations),
+    return SettingRow(title, lambda: get() or N_("Not set"), Button(lambda: N_("Change") if get() else N_("Set"), open_destinations),
                       leading=Icon(icon))
 
   return ListPanel([
-    place("Home", "home", model.home),
-    place("Work", "work", model.work),
-    SettingRow("Other favorites", lambda: f"{model.others()} saved", on_click=open_destinations, leading=Icon("star")),
-    SettingRow("End Route When Parked", "Clears the destination when you turn off the car",
+    place(N_("Home"), "home", model.home),
+    place(N_("Work"), "work", model.work),
+    SettingRow(N_("Other favorites"), lambda: t_("{} saved", model.others()), on_click=open_destinations, leading=Icon("star")),
+    SettingRow(N_("End Route When Parked"), N_("Clears the destination when you turn off the car"),
                Switch(lambda: model.end_when_parked, model.set_end_when_parked)),
-    SettingRow("Mapbox Keys", lambda: model.mapbox_status()[0],
-               Button(lambda: "How to change" if model.mapbox_status()[1] else "How to add", open_mapbox_help),
+    SettingRow(N_("Mapbox Keys"), lambda: model.mapbox_status()[0],
+               Button(lambda: N_("How to change") if model.mapbox_status()[1] else N_("How to add"), open_mapbox_help),
                subtitle_color=lambda: T.SUCCESS_TEXT if model.mapbox_status()[1] else T.WARNING),
-    SettingRow("Offline Maps", "Speed limits and routing without a connection", on_click=open_offline_maps),
-  ], title="Navigation", subtitle="While a route is active, the car slows for turns and uses route speed limits")
+    SettingRow(N_("Offline Maps"), N_("Speed limits and routing without a connection"), on_click=open_offline_maps),
+  ], title=N_("Navigation"), subtitle=N_("While a route is active, the car slows for turns and uses route speed limits"))

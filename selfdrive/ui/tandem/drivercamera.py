@@ -12,9 +12,10 @@ from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.controls import back_glyph
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, inset, place, row
 from openpilot.selfdrive.ui.tandem.onroad.layers import dm_tile, draw_driver_monitor
+from openpilot.selfdrive.ui.tandem.i18n import N_
 
 FACE_FOUND = 0.7            # upstream's face probability for drawing the box
-HINT = "Sit as you do to drive. The box should follow your face."
+HINT = N_("Sit as you do to drive. The box should follow your face.")
 
 
 def face_box(face_x: float, face_y: float, rect: rl.Rectangle) -> rl.Rectangle:
@@ -29,7 +30,7 @@ def face_box(face_x: float, face_y: float, rect: rl.Rectangle) -> rl.Rectangle:
 def draw_overlay(rect: rl.Rectangle, starting: bool, face: rl.Rectangle | None, face_alpha: float, watching: bool, attentive: float) -> None:
   if starting:
     draw.fill(rect, T.BG)
-    draw.text(rect, "Starting the camera…", T.font_px(24), T.TEXT_SECONDARY, T.FONT_SEMIBOLD, Align.CENTER)
+    draw.text(rect, N_("Starting the camera…"), T.font_px(24), T.TEXT_SECONDARY, T.FONT_SEMIBOLD, Align.CENTER)
   elif face is not None:
     draw.stroke(face, draw.alpha(T.SUCCESS_BRIGHT, face_alpha), T.px(34), T.px(4))
 
@@ -38,7 +39,7 @@ def draw_overlay(rect: rl.Rectangle, starting: bool, face: rl.Rectangle | None, 
   back_glyph(back, T.TEXT, T.px(28))
 
   found = face is not None and not starting
-  text = "Face found · driver monitoring can see you" if found else "Looking for your face"
+  text = N_("Face found · driver monitoring can see you") if found else N_("Looking for your face")
   width = T.px(20) * 2 + T.px(22) + draw.text_width(text, T.font_px(18), T.FONT_SEMIBOLD)
   pill = rl.Rectangle(rect.x + (rect.width - width) / 2, rect.y + T.px(18), width, T.px(52))
   draw.fill(pill, draw.alpha(T.SUCCESS_SURFACE if found else T.WARNING_SURFACE, 0.9), T.px(16))

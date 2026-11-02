@@ -11,6 +11,7 @@ from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Bindable, Component, resolve, size_of
 from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, Glyph, Tone
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, place, row
+from openpilot.selfdrive.ui.tandem.i18n import N_
 
 
 def _ease_out(t: float) -> float:
@@ -159,7 +160,7 @@ class Dialog(Component):
   grow_touch_target = False
 
   def __init__(self, title: str, message: Bindable[str], confirm_label: str, on_result: Callable[[DialogResult], None] | None = None,
-               cancel_label: str | None = "Cancel", tone: Tone = Tone.ACCENT, glyph: Glyph | None = None):
+               cancel_label: str | None = N_("Cancel"), tone: Tone = Tone.ACCENT, glyph: Glyph | None = None):
     super().__init__()
     self._title = title
     self._message = message

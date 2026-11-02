@@ -11,6 +11,7 @@ from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, Chip, Slider, Stepper, Tone
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, place, row
 from openpilot.selfdrive.ui.tandem.overlays import Sheet
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
 
 @dataclass(frozen=True)
@@ -85,14 +86,14 @@ class NumberEditor(Component):
     self._picks = [self._child(Chip(s.fmt(p), Tone.NEUTRAL, height=T.px(40), font_size=T.font_px(16))) for p in s.picks]
     for chip, pick in zip(self._picks, s.picks, strict=True):
       chip.set_click_callback(lambda p=pick: on_change(p))
-    self._reset = self._child(Button("Reset to default", lambda: on_change(s.default), ButtonStyle.GHOST, weight=T.FONT_BOLD))
+    self._reset = self._child(Button(N_("Reset to default"), lambda: on_change(s.default), ButtonStyle.GHOST, weight=T.FONT_BOLD))
 
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, T.px(120) + self._slider.preferred_height(max_width) + T.px(120)
 
   def step_note(self) -> str:
     unit = split_unit(self._spec.fmt(self._spec.default))[1]
-    return f"Steps of {self._spec.step:g}{' ' + unit if unit else ''}. Hold − or + to move faster."
+    return t_("Steps of {}{}. Hold − or + to move faster.", f"{self._spec.step:g}", ' ' + unit if unit else '')
 
   def _render(self, rect: rl.Rectangle):
     top, slider, bottom = column(rect, [T.px(120), self._slider.preferred_height(rect.width), FILL], T.px(18))
@@ -102,7 +103,7 @@ class NumberEditor(Component):
     picks, reset = row(column(bottom, [T.BUTTON_HEIGHT, FILL])[0], [FILL, self._reset.preferred_size(rect.width)[0]])
     x = picks.x
     if self._picks:
-      label_w = draw.text(picks, "Quick picks", T.SIZE_SUBTITLE, T.TEXT_MUTED)
+      label_w = draw.text(picks, N_("Quick picks"), T.SIZE_SUBTITLE, T.TEXT_MUTED)
       x += label_w + T.px(14)
     for chip in self._picks:
       cw, ch = chip.preferred_size(picks.width)
@@ -116,4 +117,4 @@ class NumberEditor(Component):
 def number_sheet(window, title: str, subtitle: str, spec: NumberSpec, value: Callable[[], float],
                  on_change: Callable[[float], None]) -> Sheet:
   return Sheet(title, NumberEditor(spec, value, on_change), subtitle=subtitle,
-               actions=[Button("Done", window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss)
+               actions=[Button(N_("Done"), window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss)

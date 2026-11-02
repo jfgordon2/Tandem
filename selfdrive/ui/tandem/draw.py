@@ -147,7 +147,11 @@ def _fit(value: str, size: int, weight: Face, max_width: float, tracking: float 
 
 def _lines(value: str, size: int, weight: Face, width: float) -> list[str]:
   with _own_font:
-    return wrap_text(_face(value, weight), value, size, int(width))
+    lines = wrap_text(_face(value, weight), value, size, int(width))
+  if DRAWN is not None:   # the pseudo check: the text is recorded whole, not line by line
+    DRAWN.add(value)
+    _WRAPPED.update(lines)
+  return lines
 
 
 # The public functions take Tandem's English and measure and draw it in the driver's language (i18n.translate).
@@ -165,10 +169,16 @@ def fit(text: str, size: int, weight: Face, max_width: float, tracking: float = 
   return _fit(translate(text), size, weight, max_width, tracking)
 
 
+DRAWN: set[str] | None = None   # the pseudo-language check (tools/render/scene_pseudo.py) collects drawn text here
+_WRAPPED: set[str] = set()
+
+
 def text(rect: rl.Rectangle, value: str, size: int, color: rl.Color, weight: Face = T.FONT,
          h: Align = Align.START, v: Align = Align.CENTER, tracking: float = 0, elide: bool = True) -> float:
   """Draw one line inside rect. Returns the drawn width."""
   value = translate(value)
+  if DRAWN is not None and value not in _WRAPPED:
+    DRAWN.add(value)
   if elide:
     value = _fit(value, size, weight, rect.width, tracking)
   width = _width(value, size, weight, tracking)
@@ -197,6 +207,8 @@ def paragraph(rect: rl.Rectangle, value: str, size: int, color: rl.Color, weight
   when the text would run longer."""
   y = rect.y
   step = line_height(size) * spacing
+  if DRAWN is not None:
+    DRAWN.add(translate(value))
   lines = paragraph_lines(value, size, weight, rect.width)
   if max_lines is not None and len(lines) > max_lines:
     lines = lines[:max_lines - 1] + [_fit(" ".join(lines[max_lines - 1:]) + ELLIPSIS, size, weight, rect.width)]

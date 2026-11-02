@@ -13,9 +13,11 @@ from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, Switch, Tone
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, SettingRow
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
-ALPHA_WARNING = ("openpilot longitudinal control is in alpha for this car and turns off Automatic Emergency Braking (AEB). The car's own " +
-                 "cruise control is the default. Experimental mode is recommended with it. openpilot restarts if the car is on.")
+ALPHA_WARNING = N_("openpilot longitudinal control is in alpha for this car and turns off Automatic Emergency Braking (AEB). " +
+                   "The car's own cruise control is the default. Experimental mode is recommended with it. " +
+                   "openpilot restarts if the car is on.")
 
 
 class DeveloperSource(Protocol):
@@ -90,8 +92,8 @@ def developer_panel(dev: Developer, window) -> ListPanel:
     from openpilot.system.ui.lib.application import gui_app
     from openpilot.system.ui.widgets import DialogResult
     from openpilot.selfdrive.ui.tandem.keyboard import EssentialsKeyboard
-    keyboard = EssentialsKeyboard(max_text_size=39, min_text_size=1, action="Add")
-    keyboard.set_title("GitHub username", "Your own account only: every public key in it gets SSH access")
+    keyboard = EssentialsKeyboard(max_text_size=39, min_text_size=1, action=N_("Add"))
+    keyboard.set_title(N_("GitHub username"), N_("Your own account only: every public key in it gets SSH access"))
     keyboard.set_callback(lambda result: dev.add_keys(keyboard.text.strip()) if result == DialogResult.CONFIRM else None)
     gui_app.push_widget(keyboard)
 
@@ -103,11 +105,11 @@ def developer_panel(dev: Developer, window) -> ListPanel:
 
   def keys_line() -> str:
     if dev.fetching:
-      return "Getting keys from GitHub…"
+      return N_("Getting keys from GitHub…")
     if dev.error:
       return dev.error
     user = dev.github_user()
-    return f"Keys from GitHub user {user}" if user else "Adds every public key in a GitHub account. Never use someone else's."
+    return t_("Keys from GitHub user {}", user) if user else N_("Adds every public key in a GitHub account. Never use someone else's.")
 
   def set_alpha(on: bool) -> None:
     if not on:
@@ -120,7 +122,7 @@ def developer_panel(dev: Developer, window) -> ListPanel:
       window.dismiss()
       if result == DialogResult.CONFIRM:
         dev.set_alpha(True)
-    window.present(Dialog("Turn on alpha longitudinal?", ALPHA_WARNING, "Turn On", done, tone=Tone.DANGER,
+    window.present(Dialog(N_("Turn on alpha longitudinal?"), ALPHA_WARNING, N_("Turn On"), done, tone=Tone.DANGER,
                           glyph=lambda r, c, s: draw.icon(r, "warning", c, s)))
 
   adb = Switch(lambda: dev.flag("AdbEnabled"), lambda on: dev.set_flag("AdbEnabled", on))
@@ -129,17 +131,17 @@ def developer_panel(dev: Developer, window) -> ListPanel:
   joystick.set_enabled(dev.source.offroad)
   alpha = Switch(lambda: dev.flag("AlphaLongitudinalEnabled"), set_alpha)
   alpha.set_enabled(lambda: not dev.source.engaged())
-  keys = Button(lambda: "Remove" if dev.github_user() else ("Adding…" if dev.fetching else "Add"), keys_action, ButtonStyle.SECONDARY)
-  alpha_row = SettingRow("openpilot Longitudinal (Alpha)", "Turns off the car's emergency braking. Off while engaged.", alpha)
+  keys = Button(lambda: N_("Remove") if dev.github_user() else (N_("Adding…") if dev.fetching else N_("Add")), keys_action, ButtonStyle.SECONDARY)
+  alpha_row = SettingRow(N_("openpilot Longitudinal (Alpha)"), N_("Turns off the car's emergency braking. Off while engaged."), alpha)
   alpha_row.set_visible(dev.source.alpha_available)
   return ListPanel([
-    SettingRow("ADB", "Connect over USB or the network (docs.comma.ai). Change it with the car off.", adb),
-    SettingRow("SSH", "Remote shell access with the keys below", Switch(lambda: dev.flag("SshEnabled"), lambda on: dev.set_flag("SshEnabled", on))),
-    SettingRow("SSH Keys", keys_line, keys, subtitle_color=lambda: T.DANGER_TEXT if dev.error else T.TEXT_TERTIARY),
-    SettingRow("Joystick Debug Mode", "Drive openpilot's controls from a joystick. Change it with the car off.", joystick),
+    SettingRow(N_("ADB"), N_("Connect over USB or the network (docs.comma.ai). Change it with the car off."), adb),
+    SettingRow(N_("SSH"), N_("Remote shell access with the keys below"), Switch(lambda: dev.flag("SshEnabled"), lambda on: dev.set_flag("SshEnabled", on))),
+    SettingRow(N_("SSH Keys"), keys_line, keys, subtitle_color=lambda: T.DANGER_TEXT if dev.error else T.TEXT_TERTIARY),
+    SettingRow(N_("Joystick Debug Mode"), N_("Drive openpilot's controls from a joystick. Change it with the car off."), joystick),
     alpha_row,
-    SettingRow("UI Debug Mode", "Shows touches and the frame rate", Switch(lambda: dev.flag("ShowDebugInfo"), dev.set_ui_debug)),
-  ], title="Developer", footnote="openpilot's developer options. They're only here with Tuner Mode on.")
+    SettingRow(N_("UI Debug Mode"), N_("Shows touches and the frame rate"), Switch(lambda: dev.flag("ShowDebugInfo"), dev.set_ui_debug)),
+  ], title=N_("Developer"), footnote=N_("openpilot's developer options. They're only here with Tuner Mode on."))
 
 
 class UpstreamDeveloper:

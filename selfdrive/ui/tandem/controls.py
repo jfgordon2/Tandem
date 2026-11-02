@@ -12,6 +12,7 @@ from openpilot.system.ui.lib.application import MousePos
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Bindable, Component, resolve
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, grid, inset, place, row
+from openpilot.selfdrive.ui.tandem.i18n import N_
 
 
 class Tone(Enum):
@@ -170,10 +171,10 @@ class ToggleButton(Component):
     self.set_click_callback(lambda: on_change(not resolve(value)))
 
   def _state(self) -> str:
-    return "On" if resolve(self._value) else "Off"
+    return N_("On") if resolve(self._value) else N_("Off")
 
   def preferred_size(self, max_width: float) -> tuple[float, float]:
-    width = draw.text_width(self._label, T.font_px(16), T.FONT_SEMIBOLD) + T.px(10) + draw.text_width("Off", T.font_px(14), T.FONT_MEDIUM)
+    width = draw.text_width(self._label, T.font_px(16), T.FONT_SEMIBOLD) + T.px(10) + draw.text_width(N_("Off"), T.font_px(14), T.FONT_MEDIUM)
     return min(max_width, width + T.px(32)), self._height
 
   def _render(self, rect: rl.Rectangle):
@@ -267,7 +268,7 @@ class ChoiceCards(Component):
     title_rect = rl.Rectangle(body.x, body.y, body.width, draw.line_height(size))
     w = draw.text(title_rect, name, size, T.TEXT, T.FONT_EXTRABOLD)
     if recommended:
-      label = "RECOMMENDED"
+      label = N_("RECOMMENDED")
       badge = place(inset(title_rect, left=w + T.px(10)), draw.text_width(label, T.SIZE_BADGE, T.FONT_BOLD) + T.px(16), T.px(26), Align.START)
       draw.fill(badge, T.ACCENT, T.RADIUS_BADGE)
       draw.text(badge, label, T.SIZE_BADGE, T.ACCENT_INK, T.FONT_BOLD, Align.CENTER)
@@ -538,7 +539,7 @@ class Slider(Component):
     if self._floor_label and self._floor is not None:
       draw.text(rl.Rectangle(track.x, rect.y, rect.width, T.px(18)), self._floor_label, T.SIZE_CAPTION, T.DANGER_TEXT, T.FONT_SEMIBOLD)
     elif self._default is not None:
-      draw.caption(rl.Rectangle(self.x_for(self._default) - T.px(60), rect.y, T.px(120), T.px(14)), "Default", h=Align.CENTER)
+      draw.caption(rl.Rectangle(self.x_for(self._default) - T.px(60), rect.y, T.px(120), T.px(14)), N_("Default"), h=Align.CENTER)
     for value, label in self.merged_marks():
       x = self.x_for(value)
       rl.draw_rectangle_rec(rl.Rectangle(x - 1, track.y + track.height + T.px(6), 2, T.px(8)), T.TEXT_MUTED)

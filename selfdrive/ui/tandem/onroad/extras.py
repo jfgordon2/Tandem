@@ -20,6 +20,7 @@ import pyray as rl
 
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.layout import FILL, inset, place, row
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
 BRAKE_FILL, BRAKE_INK = T._hex("3A1F24"), T._hex("FF8A8A")
 GAS_FILL, GAS_INK = T._hex("173A2A"), T.SUCCESS_TEXT
@@ -38,7 +39,7 @@ RADAR_TEXTURE_CENTER = 11.0   # StarPilot's marker texture is 22 px square
 # ── Turn signal ──
 
 # StarPilot's signal animations Essentials offers as Whimsy, by SignalAnimation slug. Its renderer draws them (view.py).
-WHIMSY_SIGNALS = {"frog": "Jumping frog", "pouncing_cat": "Pouncing cat", "bouncing_ball": "Bouncing ball"}
+WHIMSY_SIGNALS = {"frog": N_("Jumping frog"), "pouncing_cat": N_("Pouncing cat"), "bouncing_ball": N_("Bouncing ball")}
 SIGNAL_GAP = T.px(12)   # between an animation and the bar
 
 
@@ -144,10 +145,10 @@ def draw_pedals(top: rl.Rectangle, levels: tuple[float, float]) -> float:
 # ── Model source ──
 
 MODEL_LABELS = {   # StarPilot's ModelSourceStatus value: label and chip tone
-  "loading": ("Loading model", "accent"),
-  "active": ("Big model", "success"),
-  "failed": ("Big model failed", "warning"),
-  "fallback_engaged": ("Small model in use", "warning"),
+  "loading": (N_("Loading model"), "accent"),
+  "active": (N_("Big model"), "success"),
+  "failed": (N_("Big model failed"), "warning"),
+  "fallback_engaged": (N_("Small model in use"), "warning"),
 }
 _TONES = {"accent": (T.ACCENT_SURFACE, T.ACCENT_CHIP_TEXT, T.ACCENT_TEXT), "success": (T.SUCCESS_SURFACE, T.SUCCESS_CHIP_TEXT, T.SUCCESS_TEXT),
           "warning": (T.WARNING_SURFACE, T.WARNING_CHIP_TEXT, T.WARNING)}
@@ -211,7 +212,7 @@ def path_end(projected: np.ndarray) -> tuple[rl.Vector2, rl.Vector2] | None:
 
 
 def stop_text(distance_m: float, metric: bool) -> str:
-  return f"{round(distance_m)} m" if metric else f"{round(distance_m * 3.28084)} ft"
+  return t_("{} m", round(distance_m)) if metric else t_("{} ft", round(distance_m * 3.28084))
 
 
 def draw_stopping_point(ends: tuple[rl.Vector2, rl.Vector2], distance: str | None) -> None:

@@ -22,12 +22,13 @@ from openpilot.selfdrive.ui.tandem.rows import ListPanel, OptionList, SettingRow
 from openpilot.selfdrive.ui.tandem.settings.pages import FillPage, PanelPage
 from openpilot.selfdrive.ui.tandem.settings.favorites import favorite_action_names
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
 
 # StarPilot's button action ids, named for what they do.
-ACTION_NAMES = {0: "Car default", 1: "Change driving style", 2: "Coast", 3: "Pause steering", 4: "Pause gas and brake",
-                5: "Switch experimental mode", 6: "Traffic mode", 7: "Switchback mode", 8: "Save a clip", 9: "Always-on steering",
-                10: "Match the speed limit", 11: "Favorite 1", 12: "Favorite 2", 13: "Favorite 3"}
+ACTION_NAMES = {0: N_("Car default"), 1: N_("Change driving style"), 2: N_("Coast"), 3: N_("Pause steering"), 4: N_("Pause gas and brake"),
+                5: N_("Switch experimental mode"), 6: N_("Traffic mode"), 7: N_("Switchback mode"), 8: N_("Save a clip"), 9: N_("Always-on steering"),
+                10: N_("Match the speed limit"), 11: N_("Favorite 1"), 12: N_("Favorite 2"), 13: N_("Favorite 3")}
 
 
 @dataclass(frozen=True)
@@ -58,7 +59,7 @@ class Vehicle:
     self.catalog = catalog
 
   def car(self) -> str:
-    return self._store.get_str("CarModelName") or "Detected on the first drive"
+    return self._store.get_str("CarModelName") or N_("Detected on the first drive")
 
   def make(self) -> str:
     return self._store.get_str("CarMake")
@@ -92,7 +93,7 @@ class Vehicle:
     self._store.write({button.key: action})
 
   def buttons_summary(self) -> str:
-    return "Buttons customized" if any(self.action(b) for b in self.catalog.buttons()) else "Car default buttons"
+    return N_("Buttons customized") if any(self.action(b) for b in self.catalog.buttons()) else N_("Car default buttons")
 
 
 class CarPicker(Component):
@@ -139,7 +140,7 @@ class CarPicker(Component):
       self._built_for = self._make
       self._model_list = OptionList([o.label for o in self._options()], lambda: self._model, self._pick_model)
     left, right = row(rect, [T.px(260), FILL], T.px(18))
-    for title, area, widget in (("MAKE", left, self._make_list), ("MODEL", right, self._model_list)):
+    for title, area, widget in ((N_("MAKE"), left, self._make_list), (N_("MODEL"), right, self._model_list)):
       caption, body = column(area, [T.px(28), FILL], T.px(6))
       draw.caption(caption, title)
       draw.fill(body, T.SURFACE_1, T.RADIUS_CARD)
@@ -153,9 +154,9 @@ def vehicle_page(vehicle: Vehicle, window, open_more: Callable[[], None]) -> Wid
     def save():
       if picker.save():
         window.dismiss()
-    window.present(Sheet("Choose your car", picker,
-                         subtitle="Only needed if detection picked the wrong car. Choosing turns off automatic detection.",
-                         actions=[Button("Cancel", window.dismiss), Button("Save", save, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss))
+    window.present(Sheet(N_("Choose your car"), picker,
+                         subtitle=N_("Only needed if detection picked the wrong car. Choosing turns off automatic detection."),
+                         actions=[Button(N_("Cancel"), window.dismiss), Button(N_("Save"), save, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss))
 
   def pick_action(button: WheelButton) -> Callable[[], None]:
     def show():
@@ -168,20 +169,20 @@ def vehicle_page(vehicle: Vehicle, window, open_more: Callable[[], None]) -> Wid
       window.present(Sheet(f"{button.name} · {button.press}", OptionList([name for _, name in actions],
                                                                          lambda: ids.index(vehicle.action(button)) if vehicle.action(button) in ids else 0,
                                                                          select),
-                           subtitle="What this button does while driving", on_dismiss=window.dismiss))
+                           subtitle=N_("What this button does while driving"), on_dismiss=window.dismiss))
     return show
 
   car = Card([
-    Label("YOUR CAR", color=T.ACCENT_TEXT, caption=True),
+    Label(N_("YOUR CAR"), color=T.ACCENT_TEXT, caption=True),
     Label(vehicle.car, T.font_px(26), weight=T.FONT_EXTRABOLD),
-    Label(lambda: "Chosen manually" if vehicle.manual else "Detected automatically", T.font_px(15),
+    Label(lambda: N_("Chosen manually") if vehicle.manual else N_("Detected automatically"), T.font_px(15),
           lambda: T.TEXT_TERTIARY if vehicle.manual else T.SUCCESS_TEXT, T.FONT, icon=lambda: None if vehicle.manual else "check"),
     SPACER,
-    Inline(Button(lambda: "Use detection instead" if vehicle.manual else "Wrong car? Choose it manually",
+    Inline(Button(lambda: N_("Use detection instead") if vehicle.manual else N_("Wrong car? Choose it manually"),
                   lambda: vehicle.use_detection() if vehicle.manual else choose_car(), ButtonStyle.GHOST, height=T.px(40),
                   font_size=T.font_px(16))),
   ], gap=T.px(10), padding=(T.px(22), T.px(22)))
-  lock = Sized(ListPanel([SettingRow("Auto-Lock Doors", "Locks when you shift out of park", Switch(lambda: vehicle.auto_lock,
+  lock = Sized(ListPanel([SettingRow(N_("Auto-Lock Doors"), N_("Locks when you shift out of park"), Switch(lambda: vehicle.auto_lock,
                                                                                                    vehicle.set_auto_lock), height=T.px(76))]),
                T.px(76))
   lock.set_visible(vehicle.catalog.has_auto_lock)
@@ -189,8 +190,8 @@ def vehicle_page(vehicle: Vehicle, window, open_more: Callable[[], None]) -> Wid
              for b in vehicle.catalog.buttons()]
   wheel = ListPanel([
     *buttons,
-    SettingRow("More for your car", "Features specific to your make and model", on_click=open_more, height=T.px(64)),
-  ], title="Steering Wheel Buttons", subtitle="Preset for your car. Tap a button to change what it does.", title_size=T.font_px(20))
+    SettingRow(N_("More for your car"), N_("Features specific to your make and model"), on_click=open_more, height=T.px(64)),
+  ], title=N_("Steering Wheel Buttons"), subtitle=N_("Preset for your car. Tap a button to change what it does."), title_size=T.font_px(20))
   return FillPage(Columns([Stack([car, lock], gap=T.px(14), grow=0), wheel], [1, 1.35]))
 
 
@@ -224,15 +225,15 @@ class UpstreamCars:
 
   def buttons(self) -> list[WheelButton]:
     cs = self._state.car_state
-    buttons = [WheelButton("Distance", "Press", "DistanceButtonControl"),
-               WheelButton("Distance", "Long press", "LongDistanceButtonControl")]
+    buttons = [WheelButton(N_("Distance"), N_("Press"), "DistanceButtonControl"),
+               WheelButton(N_("Distance"), N_("Long press"), "LongDistanceButtonControl")]
     if not cs.isSubaru:
-      buttons.append(WheelButton("LKAS", "Press", "LKASButtonControl"))
-    buttons.append(WheelButton("Cruise main", "Press", "MainCruiseButtonControl", cruise_main=True))
+      buttons.append(WheelButton(N_("LKAS"), N_("Press"), "LKASButtonControl"))
+    buttons.append(WheelButton(N_("Cruise main"), N_("Press"), "MainCruiseButtonControl", cruise_main=True))
     if cs.isBolt and cs.hasPedal and self._state.params.get_bool("RemapCancelToDistance"):
-      buttons.append(WheelButton("Cancel", "Press", "CancelButtonControl"))   # "Use Cancel as a button" in More for your car
+      buttons.append(WheelButton(N_("Cancel"), N_("Press"), "CancelButtonControl"))   # "Use Cancel as a button" in More for your car
     if cs.hasModeStarButtons:
-      buttons += [WheelButton("Mode", "Press", "ModeButtonControl"), WheelButton("Star", "Press", "StarButtonControl")]
+      buttons += [WheelButton(N_("Mode"), N_("Press"), "ModeButtonControl"), WheelButton(N_("Star"), N_("Press"), "StarButtonControl")]
     return buttons
 
   def has_auto_lock(self) -> bool:
@@ -250,7 +251,7 @@ class CarExtra:
   warn: str = ""           # turning it on asks first with this message
 
 
-LOCK_TIMES = [(0, "Never"), (10, "10 s"), (30, "30 s"), (60, "1 min"), (120, "2 min"), (300, "5 min")]
+LOCK_TIMES = [(0, N_("Never")), (10, N_("10 s")), (30, N_("30 s")), (60, N_("1 min")), (120, N_("2 min")), (300, N_("5 min"))]
 
 
 class CarExtras(Protocol):
@@ -281,12 +282,12 @@ def extras_page(extras: CarExtras, window) -> Widget:
       if extra.kind == "flash":
         def flash() -> None:
           extras.flash(extra.key)
-          window.present(Dialog("Updating the panda", "The device restarts when it's done. Keep the car on until then.", "OK",
+          window.present(Dialog(N_("Updating the panda"), N_("The device restarts when it's done. Keep the car on until then."), "OK",
                                 lambda r: window.dismiss(), cancel_label=None))
-        ask(f"{'Turn on' if on else 'Turn off'} {extra.title.lower()}?",
-            "This needs a panda firmware update, and the device restarts when it's done.", "Update and restart", flash)
+        ask(f"{N_('Turn on') if on else N_('Turn off')} {extra.title.lower()}?",
+            N_("This needs a panda firmware update, and the device restarts when it's done."), N_("Update and restart"), flash)
       elif on and extra.warn:
-        ask(f"{extra.title}?", extra.warn, "Turn On", lambda: extras.toggle(extra.key), danger=True)
+        ask(f"{extra.title}?", extra.warn, N_("Turn On"), lambda: extras.toggle(extra.key), danger=True)
       else:
         extras.toggle(extra.key)
     return change
@@ -294,17 +295,17 @@ def extras_page(extras: CarExtras, window) -> Widget:
   def timer_sheet() -> None:
     times = list(LOCK_TIMES)
     if extras.timer() not in [s for s, _ in times]:
-      times.append((extras.timer(), f"{extras.timer()} s"))
+      times.append((extras.timer(), t_("{} s", extras.timer())))
 
     def pick(index: int) -> None:
       extras.set_timer(times[index][0])
       window.dismiss()
-    window.present(Sheet("Lock doors after", OptionList([label for _, label in times],
+    window.present(Sheet(N_("Lock doors after"), OptionList([label for _, label in times],
                                                          lambda: next((i for i, (s, _) in enumerate(times) if s == extras.timer()), 0), pick),
-                         subtitle="How long after you turn off the car", on_dismiss=window.dismiss))
+                         subtitle=N_("How long after you turn off the car"), on_dismiss=window.dismiss))
 
   def timer_label() -> str:
-    return next((label for s, label in LOCK_TIMES if s == extras.timer()), f"{extras.timer()} s")
+    return next((label for s, label in LOCK_TIMES if s == extras.timer()), t_("{} s", extras.timer()))
 
   rows: list[Widget] = []
   for extra in extras.extras():
@@ -313,8 +314,8 @@ def extras_page(extras: CarExtras, window) -> Widget:
     else:
       rows.append(SettingRow(extra.title, extra.line, Switch(lambda k=extra.key: extras.value(k), flipped(extra))))
   if not rows:
-    rows.append(Text("Nothing extra for this car. Everything it supports is on the Vehicle page."))
-  return PanelPage(ListPanel(rows, title="More for your car", subtitle="Options only some makes and models have"))
+    rows.append(Text(N_("Nothing extra for this car. Everything it supports is on the Vehicle page.")))
+  return PanelPage(ListPanel(rows, title=N_("More for your car"), subtitle=N_("Options only some makes and models have")))
 
 
 class UpstreamCarExtras:
@@ -328,33 +329,33 @@ class UpstreamCarExtras:
 
   def extras(self) -> list[CarExtra]:
     cs, params = self._state.car_state, self._layout._params
-    out = [CarExtra("DisableOpenpilotLongitudinal", "Use the car's own cruise control",
-                    "Turns off openpilot's gas and brake control. openpilot restarts if the car is on.",
-                    warn="openpilot stops controlling gas and brakes; the car's adaptive cruise takes over. openpilot restarts if the car is on.")]
+    out = [CarExtra("DisableOpenpilotLongitudinal", N_("Use the car's own cruise control"),
+                    N_("Turns off openpilot's gas and brake control. openpilot restarts if the car is on."),
+                    warn=N_("openpilot stops controlling gas and brakes; the car's adaptive cruise takes over. openpilot restarts if the car is on."))]
     if cs.isGM and (cs.hasPedal or cs.canUsePedal):
-      out += [CarExtra("GMPedalLongitudinal", "Pedal for gas and brake", "Use the comma pedal for openpilot's speed control"),
-              CarExtra("GMDashSpoofOffsets", "Offsets on the dash", "Show set-speed offsets on the dashboard")]
+      out += [CarExtra("GMPedalLongitudinal", N_("Pedal for gas and brake"), N_("Use the comma pedal for openpilot's speed control")),
+              CarExtra("GMDashSpoofOffsets", N_("Offsets on the dash"), N_("Show set-speed offsets on the dashboard"))]
     if cs.isGM and cs.hasOpenpilotLongitudinal:
-      out += [CarExtra("IgnoreIgnitionLine", "CAN ignition only", "Start only from the car's CAN ignition, not the ignition wire", "flash"),
-              CarExtra("RemoteStartBootsComma", "Remote start wakes the device", "Starting the car remotely starts openpilot too", "flash")]
+      out += [CarExtra("IgnoreIgnitionLine", N_("CAN ignition only"), N_("Start only from the car's CAN ignition, not the ignition wire"), "flash"),
+              CarExtra("RemoteStartBootsComma", N_("Remote start wakes the device"), N_("Starting the car remotely starts openpilot too"), "flash")]
     if cs.isGM and cs.isVolt and not cs.hasSNG:
-      out.append(CarExtra("VoltSNG", "Stop and go", "Keep going after a stop on Volts that don't do it themselves"))
+      out.append(CarExtra("VoltSNG", N_("Stop and go"), N_("Keep going after a stop on Volts that don't do it themselves")))
     if cs.isJeep:
-      out.append(CarExtra("JeepBrakeHold", "Brake hold", "Hold after cruise times out at a stop, and go again when traffic moves"))
+      out.append(CarExtra("JeepBrakeHold", N_("Brake hold"), N_("Hold after cruise times out at a stop, and go again when traffic moves")))
     if cs.isSubaru:
-      out.append(CarExtra("SubaruSNG", "Stop and go", "Keep going after a stop"))
+      out.append(CarExtra("SubaruSNG", N_("Stop and go"), N_("Keep going after a stop")))
       if params.get_bool("SubaruSNG"):
-        out.append(CarExtra("SubaruSNGManualParkingBrake", "Stop and go with a manual parking brake", "For cars with a hand brake"))
+        out.append(CarExtra("SubaruSNGManualParkingBrake", N_("Stop and go with a manual parking brake"), N_("For cars with a hand brake")))
     if cs.isToyota:
-      out += [CarExtra("UnlockDoors", "Auto-unlock doors", "Unlocks when you shift into park"),
-              CarExtra("LockDoorsTimer", "Lock doors after", "Locks the doors a while after you turn off the car", "timer")]
+      out += [CarExtra("UnlockDoors", N_("Auto-unlock doors"), N_("Unlocks when you shift into park")),
+              CarExtra("LockDoorsTimer", N_("Lock doors after"), N_("Locks the doors a while after you turn off the car"), "timer")]
     if cs.isToyota and not cs.hasSNG:
-      out.append(CarExtra("SNGHack", "Stop and go", "Keep going after a stop on Toyotas that don't do it themselves"))
+      out.append(CarExtra("SNGHack", N_("Stop and go"), N_("Keep going after a stop on Toyotas that don't do it themselves")))
     if cs.isBolt and cs.hasPedal:
-      out.append(CarExtra("RemapCancelToDistance", "Use Cancel as a button", "Map the Cancel button like the other steering wheel buttons"))
+      out.append(CarExtra("RemapCancelToDistance", N_("Use Cancel as a button"), N_("Map the Cancel button like the other steering wheel buttons")))
     if cs.isHKGCanFd and cs.hasOpenpilotLongitudinal:
-      out += [CarExtra("HKGRemoteStartBootsComma", "EV remote climate wakes the device", "Remote climate starts openpilot too", "flash"),
-              CarExtra("NostalgiaMode", "Nostalgia mode", "The left paddle pauses openpilot's gas and brake control")]
+      out += [CarExtra("HKGRemoteStartBootsComma", N_("EV remote climate wakes the device"), N_("Remote climate starts openpilot too"), "flash"),
+              CarExtra("NostalgiaMode", N_("Nostalgia mode"), N_("The left paddle pauses openpilot's gas and brake control"))]
     return out
 
   def value(self, key: str) -> bool:
