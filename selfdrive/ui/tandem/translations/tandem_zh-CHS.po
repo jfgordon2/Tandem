@@ -1,0 +1,7418 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: zh-CHS\n"
+"Plural-Forms: nplurals=1;\n"
+"X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\n"
+
+#: controls.py:174
+msgid "On"
+msgstr "开启"
+
+#: controls.py:174
+#: controls.py:177
+#: settings/device_sections.py:50
+msgid "Off"
+msgstr "关闭"
+
+#: controls.py:271
+msgid "RECOMMENDED"
+msgstr "推荐"
+
+#: controls.py:542
+#: settings/display.py:168
+#: settings/display.py:315
+msgid "Default"
+msgstr "默认"
+
+#: destinations.py:345
+#: settings/search.py:269
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:695
+msgid "Search"
+msgstr "搜索"
+
+#: destinations.py:358
+msgid "Offline maps"
+msgstr "离线地图"
+
+#: destinations.py:479
+#: home.py:144
+msgid "Where to?"
+msgstr "去哪里？"
+
+#: destinations.py:145
+msgid "Searching…"
+msgstr "正在搜索…"
+
+#: destinations.py:145
+msgid "Looking up places"
+msgstr "正在查找地点"
+
+#: destinations.py:147
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:680
+msgid "Search unavailable"
+msgstr "搜索不可用"
+
+#: destinations.py:149
+msgid "Nothing found"
+msgstr "未找到结果"
+
+#: destinations.py:149
+msgid "Try a different place or address"
+msgstr "请尝试其他地点或地址"
+
+#: destinations.py:346
+msgid "Say a place or an address. Tap the mic when you're done."
+msgstr "请说出地点或地址，结束后点击麦克风。"
+
+#: destinations.py:381
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:635
+msgid "Start"
+msgstr "开始"
+
+#: destinations.py:486
+msgid "Offline maps ready"
+msgstr "离线地图已就绪"
+
+#: destinations.py:545
+msgid "Search needs the public Mapbox key · see Settings › Driving › Speed & Steering › Navigation"
+msgstr "搜索需要 Mapbox 公共密钥 · 请前往设置 › 驾驶 › 速度与转向 › 导航"
+
+#: destinations.py:602
+msgid "Arrive"
+msgstr "到达"
+
+#: destinations.py:602
+msgid "Time"
+msgstr "时间"
+
+#: destinations.py:602
+#: settings/vehicle.py:228
+#: settings/vehicle.py:229
+msgid "Distance"
+msgstr "距离"
+
+#: destinations.py:614
+msgid "Slows ahead of turns on the route"
+msgstr "在路线弯道前减速"
+
+#: destinations.py:615
+msgid "Uses route speed limits when signs are missing"
+msgstr "缺少标志时使用路线限速"
+
+#: destinations.py:294
+msgid "Search for a place or address"
+msgstr "搜索地点或地址"
+
+#: destinations.py:361
+msgid "Turns and speed follow the route automatically while navigating"
+msgstr "导航时自动按路线调整转向和速度"
+
+#: destinations.py:508
+msgid "RECENT"
+msgstr "最近"
+
+#: destinations.py:356
+msgid "Add favorite"
+msgstr "添加收藏"
+
+#: destinations.py:356
+msgid "Search for a place"
+msgstr "搜索地点"
+
+#: destinations.py:501
+msgid "ON A ROUTE"
+msgstr "正在导航"
+
+#: destinations.py:502
+#, python-brace-format
+msgid "To {}"
+msgstr "前往{}"
+
+#: destinations.py:505
+msgid "FAVORITES"
+msgstr "收藏"
+
+#: destinations.py:516
+msgid "Places you navigate to show up here."
+msgstr "导航过的地点会显示在这里。"
+
+#: destinations.py:548
+msgid "Type a place or address"
+msgstr "输入地点或地址"
+
+#: destinations.py:548
+#, python-brace-format
+msgid "Results show as you type, from {} letters"
+msgstr "输入至少{}个字符后实时显示结果"
+
+#: destinations.py:350
+#: settings/speed_steering.py:416
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:663
+msgid "Home"
+msgstr "家"
+
+#: destinations.py:350
+msgid "Set Home"
+msgstr "设置家庭地址"
+
+#: destinations.py:351
+msgid "Search for your home address"
+msgstr "搜索家庭地址"
+
+#: destinations.py:353
+#: settings/speed_steering.py:417
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:663
+msgid "Work"
+msgstr "公司"
+
+#: destinations.py:353
+msgid "Set Work"
+msgstr "设置公司地址"
+
+#: destinations.py:354
+msgid "Search for your work address"
+msgstr "搜索公司地址"
+
+#: destinations.py:503
+#: onroad/layers.py:69
+msgid "End route"
+msgstr "结束路线"
+
+#: drivercamera.py:18
+msgid "Sit as you do to drive. The box should follow your face."
+msgstr "请按驾驶时的姿势坐好，方框应跟随您的脸部。"
+
+#: drivercamera.py:42
+msgid "Face found · driver monitoring can see you"
+msgstr "已检测到脸部 · 驾驶员监控可看清您"
+
+#: drivercamera.py:42
+msgid "Looking for your face"
+msgstr "正在查找您的脸部"
+
+#: drivercamera.py:33
+msgid "Starting the camera…"
+msgstr "正在启动摄像头…"
+
+#: forecast.py:37
+#: forecast.py:37
+#: onroad/status.py:219
+msgid "Fog"
+msgstr "雾"
+
+#: forecast.py:38
+#: forecast.py:40
+#: forecast.py:43
+msgid "Light rain"
+msgstr "小雨"
+
+#: forecast.py:38
+#: forecast.py:38
+msgid "Drizzle"
+msgstr "毛毛雨"
+
+#: forecast.py:39
+#: forecast.py:39
+msgid "Freezing drizzle"
+msgstr "冻毛毛雨"
+
+#: forecast.py:40
+#: onroad/status.py:216
+#: settings/speed_steering.py:239
+msgid "Rain"
+msgstr "雨"
+
+#: forecast.py:40
+#: forecast.py:43
+#: onroad/status.py:217
+msgid "Heavy rain"
+msgstr "大雨"
+
+#: forecast.py:41
+#: forecast.py:41
+msgid "Freezing rain"
+msgstr "冻雨"
+
+#: forecast.py:42
+msgid "Light snow"
+msgstr "小雪"
+
+#: forecast.py:42
+#: onroad/status.py:218
+#: settings/speed_steering.py:241
+msgid "Snow"
+msgstr "雪"
+
+#: forecast.py:42
+#: forecast.py:44
+msgid "Heavy snow"
+msgstr "大雪"
+
+#: forecast.py:42
+msgid "Fine, icy snow"
+msgstr "细冰雪"
+
+#: forecast.py:43
+msgid "Rain showers"
+msgstr "阵雨"
+
+#: forecast.py:44
+msgid "Light snow flurries"
+msgstr "小阵雪"
+
+#: forecast.py:45
+msgid "Thunderstorm"
+msgstr "雷暴"
+
+#: forecast.py:45
+#: forecast.py:45
+msgid "Storm with hail"
+msgstr "伴有冰雹的风暴"
+
+#: forecast.py:50
+msgid "Sunny"
+msgstr "晴"
+
+#: forecast.py:50
+msgid "Clear"
+msgstr "晴朗"
+
+#: forecast.py:50
+msgid "Mostly sunny"
+msgstr "大部晴朗"
+
+#: forecast.py:50
+msgid "Mostly clear"
+msgstr "大部无云"
+
+#: forecast.py:50
+#: forecast.py:50
+msgid "Partly cloudy"
+msgstr "局部多云"
+
+#: forecast.py:51
+#: forecast.py:51
+msgid "Cloudy"
+msgstr "阴"
+
+#: forecast.py:135
+#, python-brace-format
+msgid "{} in {} min"
+msgstr "{1}分钟后{0}"
+
+#: forecast.py:136
+#: forecast.py:322
+#, python-brace-format
+msgid "{} until {}"
+msgstr "{}，持续至{}"
+
+#: forecast.py:328
+msgid "No rain or snow ahead"
+msgstr "暂无雨雪预报"
+
+#: forecast.py:324
+#, python-brace-format
+msgid "{} from {}"
+msgstr "{1}起{0}"
+
+#: forecast.py:324
+#, python-brace-format
+msgid " to {}"
+msgstr "至{}"
+
+#: home.py:33
+#, python-brace-format
+msgid "{} style · {} · {}"
+msgstr "{}风格 · {} · {}"
+
+#: home.py:32
+#: settings/speed_steering.py:134
+msgid "Auto lane change"
+msgstr "自动变道"
+
+#: home.py:32
+#: settings/speed_steering.py:134
+msgid "Nudge to change lanes"
+msgstr "轻推方向盘变道"
+
+#: home.py:40
+msgid "READY"
+msgstr "就绪"
+
+#: home.py:39
+msgid "NEEDS ATTENTION"
+msgstr "需要处理"
+
+#: home.py:39
+#, python-brace-format
+msgid "Check {} alert"
+msgid_plural "Check {} alerts"
+msgstr[0] "查看{}条警报"
+
+#: home.py:40
+msgid "Press cruise to engage"
+msgstr "按巡航按钮启用"
+
+#: home.py:40
+msgid "Start the car to drive"
+msgstr "启动车辆后即可驾驶"
+
+#: home.py:83
+#, python-brace-format
+msgid "Forecast · updated {}"
+msgstr "预报 · 更新于{}"
+
+#: home.py:145
+msgid "Notes"
+msgstr "说明"
+
+#: home.py:206
+msgid "A new version"
+msgstr "新版本"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: home.py:82
+#: home.py:88
+#: tokens.py:62
+msgid "DCEBFF"
+msgstr "DCEBFF"
+
+#: home.py:144
+msgid "Home · Work · Recent"
+msgstr "家 · 公司 · 最近"
+
+#: home.py:199
+msgid "Acknowledge excessive actuation"
+msgstr "确认过度控制警报"
+
+#: home.py:201
+msgid "Snooze update"
+msgstr "推迟更新"
+
+#: home.py:147
+#: home_alerts.py:158
+msgid "Update ready"
+msgstr "更新已就绪"
+
+#: home.py:147
+#: settings/search.py:24
+#: settings/search.py:203
+msgid "Software"
+msgstr "软件"
+
+#: home.py:148
+msgid "Installs when you turn off the car"
+msgstr "关闭车辆时安装"
+
+#: home.py:149
+#, python-brace-format
+msgid "Up to date · {}"
+msgstr "已是最新 · {}"
+
+#: home.py:149
+#: settings/software_tab.py:66
+#: sidebar.py:136
+msgid "Up to date"
+msgstr "已是最新"
+
+#: home_alerts.py:23
+msgid "Cooling down"
+msgstr "正在冷却"
+
+#: home_alerts.py:24
+msgid "Connect soon"
+msgstr "请尽快联网"
+
+#: home_alerts.py:25
+msgid "Needs a connection"
+msgstr "需要联网"
+
+#: home_alerts.py:26
+msgid "Update failed"
+msgstr "更新失败"
+
+#: home_alerts.py:27
+msgid "Chestnut not found"
+msgstr "未找到 Chestnut"
+
+#: home_alerts.py:28
+msgid "Chestnut too hot"
+msgstr "Chestnut 温度过高"
+
+#: home_alerts.py:29
+msgid "Chestnut unavailable"
+msgstr "Chestnut 不可用"
+
+#: home_alerts.py:30
+msgid "Chestnut model missing"
+msgstr "缺少 Chestnut 模型"
+
+#: home_alerts.py:31
+msgid "Chestnut update failed"
+msgstr "Chestnut 更新失败"
+
+#: home_alerts.py:32
+msgid "Chestnut link is slow"
+msgstr "Chestnut 连接速度慢"
+
+#: home_alerts.py:33
+msgid "Taking snapshots"
+msgstr "正在拍摄快照"
+
+#: home_alerts.py:34
+msgid "System update downloading"
+msgstr "正在下载系统更新"
+
+#: home_alerts.py:35
+msgid "Not registered"
+msgstr "未注册"
+
+#: home_alerts.py:36
+msgid "Car not recognized"
+msgstr "未识别车辆"
+
+#: home_alerts.py:37
+msgid "Device mount changed"
+msgstr "设备安装位置已变化"
+
+#: home_alerts.py:38
+msgid "Driver camera can't see well"
+msgstr "驾驶员摄像头视野不佳"
+
+#: home_alerts.py:39
+msgid "Excessive actuation"
+msgstr "过度控制"
+
+#: home_alerts.py:180
+msgid "It also installs on its own when you turn off the car."
+msgstr "关闭车辆时也会自动安装。"
+
+#: home_alerts.py:159
+msgid "Restart and update"
+msgstr "重启并更新"
+
+#: home_alerts.py:123
+#, python-brace-format
+msgid "{} alert"
+msgid_plural "{} alerts"
+msgstr[0] "{}条警报"
+
+#: home_alerts.py:124
+msgid "openpilot may not start until these are sorted out"
+msgstr "解决这些问题后 openpilot 才可能启动"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: keyboard.py:41
+msgid "ABC"
+msgstr "ABC"
+
+#: keyboard.py:41
+msgid "space"
+msgstr "空格"
+
+#: keyboard.py:114
+#: mapbox_help.py:84
+#: settings/alerts.py:165
+msgid "Done"
+msgstr "完成"
+
+#: keyboard.py:114
+#: voice.py:185
+msgid "Speak now. Tap the mic when you're done."
+msgstr "请开始说话，结束后点击麦克风。"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: keyboard.py:31
+msgid "QWERTYUIOP"
+msgstr "QWERTYUIOP"
+
+#: keyboard.py:120
+#: overlays.py:163
+#: settings/bluetooth_tab.py:248
+msgid "Cancel"
+msgstr "取消"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: keyboard.py:31
+msgid "ASDFGHJKL"
+msgstr "ASDFGHJKL"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: keyboard.py:31
+msgid "ZXCVBNM"
+msgstr "ZXCVBNM"
+
+#: mapbox_help.py:20
+msgid "Settings › Driving › Speed & Steering › Navigation"
+msgstr "设置 › 驾驶 › 速度与转向 › 导航"
+
+#: mapbox_help.py:57
+msgid "The keys stay on this device. Search and routes work as soon as they're saved."
+msgstr "密钥仅保存在此设备上。保存后即可搜索和规划路线。"
+
+#: mapbox_help.py:23
+msgid "Make a Mapbox account"
+msgstr "创建 Mapbox 账号"
+
+#: mapbox_help.py:23
+msgid "At account.mapbox.com. The free tier covers personal driving."
+msgstr "前往 account.mapbox.com。免费套餐可满足个人驾驶需求。"
+
+#: mapbox_help.py:24
+msgid "Get two keys"
+msgstr "获取两个密钥"
+
+#: mapbox_help.py:24
+msgid "Your default public token (pk.) is there already. Create a token, keep its public scopes, and also check DOWNLOADS:READ so it starts with sk."
+msgstr "默认公共令牌（pk.）已存在。新建令牌，保留公共权限，并勾选 DOWNLOADS:READ，使其以 sk. 开头。"
+
+#: mapbox_help.py:26
+msgid "Open Galaxy"
+msgstr "打开 Galaxy"
+
+#: mapbox_help.py:26
+msgid "On this device: Device › This Device › Remote Access › Set Up, then open its link on your phone."
+msgstr "在此设备上前往设备 › 本设备 › 远程访问 › 设置，然后在手机上打开链接。"
+
+#: mapbox_help.py:27
+msgid "Paste both keys"
+msgstr "粘贴两个密钥"
+
+#: mapbox_help.py:27
+msgid "In Galaxy: Navigation & Maps › App Keys. The public key is for search, the secret one for routes."
+msgstr "在 Galaxy 中前往 Navigation & Maps › App Keys。公共密钥用于搜索，私密密钥用于路线。"
+
+#: mapbox_help.py:51
+msgid "Not added · needed for place search and routes"
+msgstr "未添加 · 搜索地点和规划路线需要密钥"
+
+#: mapbox_help.py:83
+msgid "Add Mapbox keys"
+msgstr "添加 Mapbox 密钥"
+
+#: mapbox_help.py:46
+msgid "Added"
+msgstr "已添加"
+
+#: mapbox_help.py:48
+msgid "Public key only · routes need the secret key too"
+msgstr "只有公共密钥 · 路线还需要私密密钥"
+
+#: mapbox_help.py:50
+msgid "Secret key only · search needs the public key too"
+msgstr "只有私密密钥 · 搜索还需要公共密钥"
+
+#: mapbox_help.py:83
+msgid "For place search, routes, and speed limits the maps don't have"
+msgstr "用于搜索地点、规划路线及获取地图缺失的限速"
+
+#. Unit notation; keep as written.
+#: onroad/developer.py:89
+msgid "0.0 m/s²"
+msgstr "0.0 m/s²"
+
+#. Unit notation; keep as written.
+#: onroad/developer.py:90
+msgid "0.00 s"
+msgstr "0.00 s"
+
+#: onroad/developer.py:41
+msgid "Acceleration now"
+msgstr "当前加速度"
+
+#: onroad/developer.py:42
+msgid "Acceleration openpilot asks for"
+msgstr "openpilot 请求的加速度"
+
+#: onroad/developer.py:43
+msgid "Planned jerk"
+msgstr "计划加加速度"
+
+#: onroad/developer.py:44
+msgid "Lateral acceleration"
+msgstr "横向加速度"
+
+#: onroad/developer.py:45
+msgid "Steering delay"
+msgstr "转向延迟"
+
+#: onroad/developer.py:46
+msgid "Steering wheel angle"
+msgstr "方向盘角度"
+
+#: onroad/developer.py:47
+msgid "Steering torque used"
+msgstr "使用的转向扭矩"
+
+#: onroad/developer.py:48
+msgid "Following danger factor"
+msgstr "跟车风险系数"
+
+#: onroad/developer.py:49
+msgid "Steer ratio"
+msgstr "转向传动比"
+
+#: onroad/developer.py:139
+msgid "Lead"
+msgstr "前车"
+
+#: onroad/developer.py:167
+msgid "Controls"
+msgstr "控制"
+
+#: onroad/developer.py:168
+msgid "curve spd"
+msgstr "弯道速度"
+
+#. Unit notation; keep as written.
+#: onroad/developer.py:255
+#: onroad/extras.py:215
+#: onroad/lead.py:97
+#, python-brace-format
+msgid "{} m"
+msgstr "{} m"
+
+#. Unit notation; keep as written.
+#: onroad/developer.py:255
+#: onroad/extras.py:215
+#: onroad/lead.py:97
+#, python-brace-format
+msgid "{} ft"
+msgstr "{} ft"
+
+#. Unit notation; keep as written.
+#: onroad/developer.py:257
+#: onroad/developer.py:310
+#: onroad/lead.py:108
+#, python-brace-format
+msgid "{} s"
+msgstr "{} s"
+
+#. Unit notation; keep as written.
+#: onroad/developer.py:286
+#: settings/device_sections.py:301
+#, python-brace-format
+msgid "{} GB"
+msgstr "{} GB"
+
+#. Unit notation; keep as written.
+#: onroad/developer.py:308
+#, python-brace-format
+msgid "{} m/s²"
+msgstr "{} m/s²"
+
+#: onroad/developer.py:143
+msgid "rel speed"
+msgstr "相对速度"
+
+#: onroad/developer.py:154
+#: settings/search.py:24
+#: settings/window.py:42
+msgid "Device"
+msgstr "设备"
+
+#: onroad/developer.py:170
+msgid "limit src"
+msgstr "限速来源"
+
+#: onroad/developer.py:172
+msgid "lanes L/R"
+msgstr "左/右车道"
+
+#: onroad/developer.py:290
+#, python-brace-format
+msgid "active · {} {}"
+msgstr "运行中 · {} {}"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: onroad/developer.py:166
+msgid "FPS"
+msgstr "FPS"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: onroad/developer.py:158
+msgid "CPU"
+msgstr "CPU"
+
+#: onroad/developer.py:158
+msgid "Temp"
+msgstr "温度"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: onroad/developer.py:162
+msgid "GPU"
+msgstr "GPU"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: onroad/developer.py:164
+msgid "RAM"
+msgstr "RAM"
+
+#: onroad/extras.py:42
+msgid "Jumping frog"
+msgstr "跳跃青蛙"
+
+#: onroad/extras.py:42
+msgid "Pouncing cat"
+msgstr "扑跳小猫"
+
+#: onroad/extras.py:42
+msgid "Bouncing ball"
+msgstr "弹跳小球"
+
+#: onroad/extras.py:148
+msgid "Loading model"
+msgstr "正在加载模型"
+
+#: onroad/extras.py:149
+msgid "Big model"
+msgstr "大型模型"
+
+#: onroad/extras.py:150
+msgid "Big model failed"
+msgstr "大型模型失败"
+
+#: onroad/extras.py:151
+msgid "Small model in use"
+msgstr "正在使用小型模型"
+
+#: onroad/layers.py:332
+msgid "Help steer"
+msgstr "请协助转向"
+
+#: onroad/layers.py:332
+msgid "Steering is at its limit for this curve"
+msgstr "转向已达到此弯道的极限"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: onroad/layers.py:100
+msgid "MAX"
+msgstr "MAX"
+
+#: onroad/layers.py:399
+#, python-brace-format
+msgid "New limit {}"
+msgstr "新限速{}"
+
+#: onroad/layers.py:400
+msgid "Slow down"
+msgstr "减速"
+
+#: onroad/layers.py:400
+msgid "Speed up"
+msgstr "加速"
+
+#: onroad/layers.py:401
+#, python-brace-format
+msgid "{} to {} {}?"
+msgstr "{}至{} {}？"
+
+#: onroad/layers.py:402
+#, python-brace-format
+msgid "From {} · ignored in {} s"
+msgstr "来源：{} · {}秒后忽略"
+
+#: onroad/layers.py:377
+#: settings/speed_steering.py:15
+msgid "Match"
+msgstr "跟随限速"
+
+#: onroad/layers.py:379
+msgid "Ignore"
+msgstr "忽略"
+
+#: onroad/layers.py:114
+msgid "ARRIVE"
+msgstr "到达"
+
+#: onroad/layers.py:114
+msgid "LEFT"
+msgstr "剩余"
+
+#: onroad/limits.py:6
+msgid "Dashboard"
+msgstr "仪表盘"
+
+#: onroad/limits.py:6
+msgid "Map Data"
+msgstr "地图数据"
+
+#: onroad/limits.py:6
+msgid "Vision"
+msgstr "视觉识别"
+
+#: onroad/limits.py:6
+msgid "Mapbox"
+msgstr "Mapbox"
+
+#: onroad/status.py:118
+#: onroad/status.py:123
+msgid "Stopped"
+msgstr "已停车"
+
+#: onroad/status.py:118
+msgid "Stopping"
+msgstr "正在停车"
+
+#: onroad/status.py:92
+#: onroad/status.py:104
+msgid "Steering paused"
+msgstr "转向已暂停"
+
+#: onroad/status.py:106
+msgid "Speed control paused"
+msgstr "速度控制已暂停"
+
+#: onroad/status.py:111
+msgid "Lane change blocked"
+msgstr "无法变道"
+
+#: onroad/status.py:116
+#: onroad/status.py:146
+msgid "Light is green"
+msgstr "绿灯已亮"
+
+#: onroad/status.py:125
+msgid "Slowing for curve"
+msgstr "正为弯道减速"
+
+#: onroad/status.py:127
+msgid "Slowing for turn"
+msgstr "正为转弯减速"
+
+#: onroad/status.py:130
+msgid "Turning left"
+msgstr "正在左转"
+
+#: onroad/status.py:134
+msgid "Slowing for traffic"
+msgstr "正因车流减速"
+
+#: onroad/status.py:136
+#, python-brace-format
+msgid "Matching limit {}"
+msgstr "正跟随限速{}"
+
+#: onroad/status.py:138
+msgid "Coasting"
+msgstr "正在滑行"
+
+#: onroad/status.py:144
+#, python-brace-format
+msgid "{} · longer gap"
+msgstr "{} · 增大车距"
+
+#: onroad/status.py:148
+msgid "Car ahead moved"
+msgstr "前车已起步"
+
+#: onroad/status.py:150
+msgid "Ready · tap resume"
+msgstr "就绪 · 按恢复按钮"
+
+#: onroad/status.py:152
+msgid "Steering only"
+msgstr "仅控制转向"
+
+#: onroad/status.py:113
+#, python-brace-format
+msgid "Changing lanes {}"
+msgstr "正在向{}变道"
+
+#: onroad/status.py:120
+#, python-brace-format
+msgid "{} for stop sign"
+msgstr "{}，前方为停车标志"
+
+#: onroad/status.py:132
+msgid "Turning right"
+msgstr "正在右转"
+
+#: onroad/status.py:140
+msgid "Pulse & glide · gliding"
+msgstr "加速与滑行 · 正在滑行"
+
+#: onroad/status.py:140
+msgid "Pulse & glide"
+msgstr "加速与滑行"
+
+#: onroad/status.py:98
+msgid "Steering paused for signal"
+msgstr "转向因转向灯暂停"
+
+#: onroad/status.py:100
+msgid "Steering paused after turn"
+msgstr "转弯后转向暂停"
+
+#: onroad/status.py:123
+msgid "Stopping ahead"
+msgstr "前方即将停车"
+
+#: onroad/status.py:102
+#, python-brace-format
+msgid "Steering paused · under {} {}"
+msgstr "转向暂停 · 低于{} {}"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:14
+msgid "St"
+msgstr "St"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:14
+msgid "Ave"
+msgstr "Ave"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:14
+msgid "Rd"
+msgstr "Rd"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:14
+msgid "Blvd"
+msgstr "Blvd"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:14
+msgid "Dr"
+msgstr "Dr"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:14
+msgid "Ln"
+msgstr "Ln"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:14
+msgid "Ct"
+msgstr "Ct"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:14
+msgid "Pl"
+msgstr "Pl"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:15
+msgid "Ter"
+msgstr "Ter"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:15
+msgid "Pkwy"
+msgstr "Pkwy"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:15
+msgid "Hwy"
+msgstr "Hwy"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:15
+msgid "Expy"
+msgstr "Expy"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:15
+msgid "Fwy"
+msgstr "Fwy"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:15
+msgid "Cir"
+msgstr "Cir"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:15
+msgid "Trl"
+msgstr "Trl"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:16
+msgid "Sq"
+msgstr "Sq"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:16
+msgid "Xing"
+msgstr "Xing"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:16
+msgid "Tpke"
+msgstr "Tpke"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:16
+msgid "Hts"
+msgstr "Hts"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:16
+msgid "Ctr"
+msgstr "Ctr"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:16
+msgid "Plz"
+msgstr "Plz"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:16
+msgid "Pt"
+msgstr "Pt"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:17
+msgid "Mtn"
+msgstr "Mtn"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:17
+msgid "Jct"
+msgstr "Jct"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:17
+msgid "Cres"
+msgstr "Cres"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:17
+msgid "Aly"
+msgstr "Aly"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:17
+msgid "Cswy"
+msgstr "Cswy"
+
+#. US street-name abbreviation; keep as written.
+#: onroad/streets.py:17
+msgid "Byp"
+msgstr "Byp"
+
+#. Unit notation; keep as written.
+#: onroad/view.py:560
+#, python-brace-format
+msgid "{} km"
+msgstr "{} km"
+
+#. Unit notation; keep as written.
+#: onroad/view.py:560
+#, python-brace-format
+msgid "{} mi"
+msgstr "{} mi"
+
+#: onroad/view.py:561
+#, python-brace-format
+msgid "{} min · {}"
+msgstr "{}分钟 · {}"
+
+#: routemap.py:154
+msgid "Finding a route…"
+msgstr "正在查找路线…"
+
+#: routemap.py:155
+msgid "Needs a GPS fix to plan the route"
+msgstr "规划路线需要 GPS 定位"
+
+#: routemap.py:156
+msgid "Couldn't find a route. Check the connection."
+msgstr "无法找到路线，请检查连接。"
+
+#: routemap.py:157
+msgid "Routes need the secret Mapbox key: see Settings › Driving › Speed & Steering › Navigation"
+msgstr "路线需要 Mapbox 私密密钥：请前往设置 › 驾驶 › 速度与转向 › 导航"
+
+#: routemap.py:50
+#, python-brace-format
+msgid "{} min"
+msgstr "{}分钟"
+
+#: routemap.py:50
+#, python-brace-format
+msgid "{} h {} min"
+msgstr "{}小时{}分钟"
+
+#: settings/alerts.py:43
+#: settings/alerts.py:93
+#: settings/alerts.py:146
+msgid "Auto"
+msgstr "自动"
+
+#: settings/alerts.py:43
+#: settings/alerts.py:130
+msgid "Quiet"
+msgstr "低音量"
+
+#: settings/alerts.py:43
+#: settings/alerts.py:130
+msgid "Normal"
+msgstr "正常"
+
+#: settings/alerts.py:43
+#: settings/alerts.py:130
+msgid "Loud"
+msgstr "高音量"
+
+#: settings/alerts.py:36
+msgid "Engage and disengage chimes"
+msgstr "启用和退出提示音"
+
+#: settings/alerts.py:36
+msgid "When openpilot turns on or off"
+msgstr "openpilot 开启或关闭时"
+
+#: settings/alerts.py:37
+msgid "Prompts and reminders"
+msgstr "提示与提醒"
+
+#: settings/alerts.py:37
+msgid "Gentle nudges, like steering below its minimum speed"
+msgstr "轻柔提醒，例如低于最低转向速度时"
+
+#: settings/alerts.py:39
+msgid "Driver attention"
+msgstr "驾驶员注意力"
+
+#: settings/alerts.py:39
+msgid "The chime that asks you to look at the road"
+msgstr "提醒您看路的提示音"
+
+#: settings/alerts.py:41
+msgid "Take control warnings"
+msgstr "接管警告"
+
+#: settings/alerts.py:41
+msgid "When you need to steer or brake now"
+msgstr "需要立即转向或制动时"
+
+#: settings/alerts.py:46
+#: settings/search.py:110
+msgid "Green Light"
+msgstr "绿灯"
+
+#: settings/alerts.py:46
+#: settings/search.py:110
+msgid "When the light turns green and you are stopped"
+msgstr "停车时信号灯变绿"
+
+#: settings/alerts.py:47
+#: settings/search.py:111
+msgid "Lead Departure"
+msgstr "前车起步"
+
+#: settings/alerts.py:47
+#: settings/search.py:111
+msgid "When the car ahead pulls away"
+msgstr "前车驶离时"
+
+#: settings/alerts.py:48
+#: settings/search.py:112
+msgid "Speed Limit Change"
+msgstr "限速变化"
+
+#: settings/alerts.py:48
+#: settings/search.py:112
+msgid "When the posted limit changes"
+msgstr "标示限速变化时"
+
+#: settings/alerts.py:49
+#: settings/search.py:113
+msgid "Loud Blind Spot"
+msgstr "响亮盲区警报"
+
+#: settings/alerts.py:49
+#: settings/search.py:113
+msgid "Signalling into an occupied lane, even when paused"
+msgstr "向有车的车道打转向灯时，即使已暂停"
+
+#: settings/alerts.py:50
+#: settings/search.py:83
+#: settings/search.py:114
+msgid "Weather heads-up"
+msgstr "天气预警"
+
+#: settings/alerts.py:50
+#: settings/search.py:114
+msgid "Once, when rain, snow or storms are coming"
+msgstr "雨雪或风暴来临前提醒一次"
+
+#: settings/alerts.py:182
+#: settings/driving_tab.py:132
+#: settings/search.py:25
+msgid "Alerts"
+msgstr "警报"
+
+#: settings/alerts.py:182
+msgid "One volume for everything. Safety warnings never go below 25%."
+msgstr "所有声音使用同一音量。安全警告音量不会低于 25%。"
+
+#: settings/alerts.py:100
+msgid "Custom volume"
+msgstr "自定义音量"
+
+#: settings/alerts.py:100
+#, python-brace-format
+msgid "{} volume"
+msgstr "{}音量"
+
+#: settings/alerts.py:104
+msgid "No extra chimes"
+msgstr "无额外提示音"
+
+#: settings/alerts.py:153
+msgid "Plays through your car speakers if they're connected."
+msgstr "若已连接车辆扬声器，将通过它播放。"
+
+#: settings/alerts.py:157
+msgid "Changing a level sets the Alert Volume preset to Custom."
+msgstr "调整任一音量会将警报音量预设改为自定义。"
+
+#: settings/alerts.py:169
+msgid "Auto follows cabin noise. Tap a level to set it yourself."
+msgstr "自动模式跟随车内噪声。点击音量可手动设置。"
+
+#: settings/alerts.py:170
+msgid "Custom levels. Pick a preset to reset them."
+msgstr "已自定义音量。选择预设可重置。"
+
+#: settings/alerts.py:170
+msgid "Tap a level to fine-tune it."
+msgstr "点击音量可微调。"
+
+#: settings/alerts.py:181
+msgid "Chimes"
+msgstr "提示音"
+
+#: settings/alerts.py:124
+msgid "Play sample"
+msgstr "播放示例"
+
+#: settings/alerts.py:131
+msgid "Reset to Normal"
+msgstr "重置为正常"
+
+#: settings/alerts.py:173
+#: settings/search.py:109
+msgid "Volume"
+msgstr "音量"
+
+#: settings/alerts.py:129
+#, python-brace-format
+msgid "Minimum {}% for safety alerts"
+msgstr "安全警报最低音量为{}%"
+
+#: settings/bluetooth_tab.py:468
+msgid "Engage"
+msgstr "启用"
+
+#: settings/bluetooth_tab.py:468
+msgid "Disengage"
+msgstr "退出"
+
+#: settings/bluetooth_tab.py:468
+#: settings/vehicle.py:29
+msgid "Change driving style"
+msgstr "更改驾驶风格"
+
+#: settings/bluetooth_tab.py:469
+msgid "Screen off / on"
+msgstr "关闭/开启屏幕"
+
+#: settings/bluetooth_tab.py:469
+#: settings/vehicle.py:30
+#: sidebar.py:61
+msgid "Save a clip"
+msgstr "保存片段"
+
+#: settings/bluetooth_tab.py:469
+#: settings/vehicle.py:30
+msgid "Always-on steering"
+msgstr "持续转向"
+
+#: settings/bluetooth_tab.py:469
+#: settings/vehicle.py:29
+msgid "Coast"
+msgstr "滑行"
+
+#: settings/bluetooth_tab.py:276
+msgid "Press any button to find it"
+msgstr "按任意按钮以识别"
+
+#: settings/bluetooth_tab.py:310
+#, python-brace-format
+msgid "Button {}"
+msgstr "按钮{}"
+
+#: settings/bluetooth_tab.py:412
+#: settings/bluetooth_tab.py:417
+#: settings/bluetooth_tab.py:412
+msgid "Forget"
+msgstr "忘记"
+
+#: settings/bluetooth_tab.py:654
+#, python-brace-format
+msgid "A sound plays in {}…"
+msgstr "{}后播放声音…"
+
+#: settings/bluetooth_tab.py:54
+#: settings/speed_steering.py:412
+msgid "Not set"
+msgstr "未设置"
+
+#: settings/bluetooth_tab.py:72
+msgid "No remote connected"
+msgstr "未连接遥控器"
+
+#: settings/bluetooth_tab.py:79
+#, python-brace-format
+msgid "{} wheel button"
+msgid_plural "{} wheel buttons"
+msgstr[0] "{}个方向盘按钮"
+
+#: settings/bluetooth_tab.py:79
+msgid "No wheel buttons"
+msgstr "无方向盘按钮"
+
+#: settings/bluetooth_tab.py:168
+msgid "Remove another button to free an action slot, then try again."
+msgstr "移除其他按钮以空出操作槽位，然后重试。"
+
+#: settings/bluetooth_tab.py:184
+#, python-brace-format
+msgid "{} detected"
+msgstr "已检测到{}"
+
+#: settings/bluetooth_tab.py:184
+msgid "Press a different button on the remote to change it."
+msgstr "按遥控器上的其他按钮来更改。"
+
+#: settings/bluetooth_tab.py:199
+msgid "STEP 1 · PRESS IT"
+msgstr "第 1 步 · 按下按钮"
+
+#: settings/bluetooth_tab.py:205
+#, python-brace-format
+msgid "Listening stops after {} s."
+msgstr "{}秒后停止监听。"
+
+#: settings/bluetooth_tab.py:208
+msgid "STEP 2 · CHOOSE WHAT IT DOES"
+msgstr "第 2 步 · 选择操作"
+
+#: settings/bluetooth_tab.py:210
+msgid "Pulse and glide and driver selfie are in Tuner Mode."
+msgstr "加速与滑行及驾驶员自拍位于调校模式。"
+
+#: settings/bluetooth_tab.py:287
+#: settings/connections.py:67
+#: settings/search.py:31
+msgid "Bluetooth Remote"
+msgstr "蓝牙遥控器"
+
+#: settings/bluetooth_tab.py:343
+msgid "That button isn't assigned yet. Tap to add it."
+msgstr "此按钮尚未分配操作。点击可添加。"
+
+#: settings/bluetooth_tab.py:343
+msgid "Add a button"
+msgstr "添加按钮"
+
+#: settings/bluetooth_tab.py:376
+msgid "Bluetooth device"
+msgstr "蓝牙设备"
+
+#: settings/bluetooth_tab.py:408
+msgid "Test"
+msgstr "测试"
+
+#: settings/bluetooth_tab.py:415
+#: settings/bluetooth_tab.py:415
+msgid "Disconnect"
+msgstr "断开连接"
+
+#: settings/bluetooth_tab.py:415
+msgid "It reconnects the next time you choose it"
+msgstr "下次选择时会重新连接"
+
+#: settings/bluetooth_tab.py:417
+msgid "Removes the pairing. Change it with the car off."
+msgstr "移除配对。请在车辆关闭时更改。"
+
+#: settings/bluetooth_tab.py:418
+#: settings/bluetooth_tab.py:429
+#: settings/network_tab.py:54
+msgid "Connected"
+msgstr "已连接"
+
+#: settings/bluetooth_tab.py:646
+#, python-brace-format
+msgid "The test didn't play: {}"
+msgstr "测试未播放：{}"
+
+#: settings/bluetooth_tab.py:649
+msgid "Playing now. You should hear it through the car."
+msgstr "正在播放，您应该能从车辆听到声音。"
+
+#: settings/bluetooth_tab.py:651
+msgid "Done. If you didn't hear it, check the car's volume and audio source."
+msgstr "已完成。若未听到声音，请检查车辆音量和音源。"
+
+#: settings/bluetooth_tab.py:653
+msgid "Getting ready…"
+msgstr "正在准备…"
+
+#: settings/bluetooth_tab.py:178
+msgid "Couldn't assign this button"
+msgstr "无法分配此按钮"
+
+#: settings/bluetooth_tab.py:180
+msgid "All button slots are in use"
+msgstr "所有按钮槽位均已使用"
+
+#: settings/bluetooth_tab.py:180
+msgid "Remove a button to add another."
+msgstr "移除一个按钮后才能添加另一个。"
+
+#: settings/bluetooth_tab.py:183
+msgid "Press the button on your remote"
+msgstr "按下遥控器上的按钮"
+
+#: settings/bluetooth_tab.py:183
+#, python-brace-format
+msgid "Listening{}."
+msgstr "正在监听{}。"
+
+#: settings/bluetooth_tab.py:248
+msgid "Assign a button"
+msgstr "分配按钮"
+
+#: settings/bluetooth_tab.py:254
+msgid "Buttons don't run their actions while this screen is open."
+msgstr "此屏幕打开时，按钮不会执行其操作。"
+
+#: settings/bluetooth_tab.py:318
+msgid "PRESSED"
+msgstr "已按下"
+
+#: settings/bluetooth_tab.py:366
+msgid "Sound test"
+msgstr "声音测试"
+
+#: settings/bluetooth_tab.py:380
+#, python-brace-format
+msgid "Pairing with {}"
+msgstr "正在与{}配对"
+
+#: settings/bluetooth_tab.py:386
+#, python-brace-format
+msgid "Enter the {} for {}"
+msgstr "输入{1}的{0}"
+
+#: settings/bluetooth_tab.py:386
+msgid "It's shown on the device, or in its manual"
+msgstr "显示在设备上或其说明书中"
+
+#: settings/bluetooth_tab.py:394
+#, python-brace-format
+msgid "Check that the device shows {}."
+msgstr "请确认设备显示{}。"
+
+#: settings/bluetooth_tab.py:394
+msgid "The device is asking to pair."
+msgstr "设备正在请求配对。"
+
+#: settings/bluetooth_tab.py:410
+msgid "Alerts and Chimes"
+msgstr "警报与提示音"
+
+#: settings/bluetooth_tab.py:410
+msgid "Play openpilot's sounds through this device. Change it with the car off."
+msgstr "通过此设备播放 openpilot 的声音。请在车辆关闭时更改。"
+
+#: settings/bluetooth_tab.py:411
+msgid "Sound Test"
+msgstr "声音测试"
+
+#: settings/bluetooth_tab.py:411
+msgid "Plays a sound through the car after a short countdown"
+msgstr "短暂倒计时后通过车辆播放声音"
+
+#: settings/bluetooth_tab.py:412
+#, python-brace-format
+msgid "Forget {}?"
+msgstr "忘记{}？"
+
+#: settings/bluetooth_tab.py:412
+msgid "You'll need to pair it again to use it."
+msgstr "需要重新配对才能使用。"
+
+#: settings/bluetooth_tab.py:430
+msgid "Test sound"
+msgstr "测试声音"
+
+#: settings/bluetooth_tab.py:224
+msgid "All action slots are in use. Remove another button first."
+msgstr "所有操作槽位均已使用。请先移除其他按钮。"
+
+#: settings/bluetooth_tab.py:380
+msgid "Follow the steps on the device."
+msgstr "请按设备上的步骤操作。"
+
+#: settings/bluetooth_tab.py:385
+#: settings/bluetooth_tab.py:395
+#: settings/bluetooth_tab.py:434
+msgid "Pair"
+msgstr "配对"
+
+#: settings/bluetooth_tab.py:395
+#, python-brace-format
+msgid "Pair with {}?"
+msgstr "与{}配对？"
+
+#: settings/bluetooth_tab.py:429
+msgid "Plays alerts and chimes"
+msgstr "播放警报和提示音"
+
+#: settings/bluetooth_tab.py:434
+#: settings/network_tab.py:77
+#: settings/network_tab.py:86
+msgid "Connect"
+msgstr "连接"
+
+#: settings/bluetooth_tab.py:436
+#: settings/bluetooth_tab.py:429
+#: settings/device.py:234
+msgid "Paired"
+msgstr "已配对"
+
+#: settings/bluetooth_tab.py:443
+msgid "Scanning…"
+msgstr "正在扫描…"
+
+#: settings/bluetooth_tab.py:183
+#, python-brace-format
+msgid " · {} s left"
+msgstr " · 剩余{}秒"
+
+#: settings/bluetooth_tab.py:230
+msgid "Button"
+msgstr "按钮"
+
+#: settings/bluetooth_tab.py:448
+msgid "Pairing waits until you're parked."
+msgstr "停车后才能配对。"
+
+#: settings/bluetooth_tab.py:248
+#: settings/device_sections.py:389
+#: settings/display.py:352
+msgid "Save"
+msgstr "保存"
+
+#: settings/bluetooth_tab.py:445
+msgid "CAR AUDIO"
+msgstr "车辆音响"
+
+#: settings/bluetooth_tab.py:446
+msgid "NEARBY"
+msgstr "附近"
+
+#: settings/bluetooth_tab.py:233
+#: settings/vehicle.py:172
+msgid "What this button does while driving"
+msgstr "此按钮在驾驶时的操作"
+
+#: settings/bluetooth_tab.py:234
+#: settings/developer.py:144
+#: settings/device_sections.py:335
+msgid "Remove"
+msgstr "移除"
+
+#: settings/bluetooth_tab.py:445
+msgid "No car audio paired."
+msgstr "未配对车辆音响。"
+
+#: settings/bluetooth_tab.py:447
+msgid "No devices found yet."
+msgstr "尚未找到设备。"
+
+#: settings/bundles.py:43
+#: settings/search.py:98
+msgid "Developer View"
+msgstr "开发者视图"
+
+#: settings/bundles.py:43
+msgid "Sidebar with live metrics, CPU, GPU, memory and temperatures, and where speed limits come from"
+msgstr "显示实时指标、CPU、GPU、内存、温度和限速来源的侧栏"
+
+#: settings/bundles.py:47
+#: settings/search.py:99
+msgid "Lead Insights"
+msgstr "前车详情"
+
+#: settings/bundles.py:47
+msgid "Distance and speed of the car ahead, radar tracks, stopping point, adjacent paths and pedals"
+msgstr "前车距离与速度、雷达轨迹、停车点、相邻路径及踏板"
+
+#: settings/bundles.py:52
+#: settings/driving_tab.py:91
+#: settings/search.py:25
+msgid "Tuner Mode"
+msgstr "调校模式"
+
+#: settings/bundles.py:52
+#: settings/search.py:131
+msgid "Fine-tuning screens for gas, brake, steering and following"
+msgstr "微调油门、制动、转向和跟车的界面"
+
+#: settings/can_recorder.py:13
+#: settings/maps.py:405
+msgid "Ready"
+msgstr "就绪"
+
+#: settings/can_recorder.py:13
+msgid "Starting…"
+msgstr "正在启动…"
+
+#: settings/can_recorder.py:13
+msgid "Recording"
+msgstr "正在录制"
+
+#: settings/can_recorder.py:14
+#: settings/network_tab.py:207
+msgid "Saving…"
+msgstr "正在保存…"
+
+#: settings/can_recorder.py:14
+#: settings/network_tab.py:57
+msgid "Saved"
+msgstr "已保存"
+
+#: settings/can_recorder.py:14
+#: sidebar.py:94
+msgid "Error"
+msgstr "错误"
+
+#: settings/can_recorder.py:15
+msgid "Discarding…"
+msgstr "正在丢弃…"
+
+#: settings/can_recorder.py:15
+msgid "Discarded"
+msgstr "已丢弃"
+
+#: settings/can_recorder.py:40
+msgid "Start logging"
+msgstr "开始记录"
+
+#: settings/can_recorder.py:42
+msgid "Stop logging"
+msgstr "停止记录"
+
+#: settings/can_recorder.py:44
+msgid "Abort"
+msgstr "中止"
+
+#: settings/can_recorder.py:47
+msgid "Mark lock"
+msgstr "标记上锁"
+
+#: settings/can_recorder.py:48
+msgid "Mark unlock"
+msgstr "标记解锁"
+
+#: settings/can_recorder.py:57
+msgid "OBD frames"
+msgstr "OBD 帧"
+
+#: settings/can_recorder.py:93
+msgid "Test discarded. Start a new test."
+msgstr "测试已丢弃。请开始新测试。"
+
+#: settings/can_recorder.py:103
+msgid "Couldn't save the log. Check storage and try again."
+msgstr "无法保存日志。请检查存储空间后重试。"
+
+#: settings/can_recorder.py:105
+msgid "Saved: the car is no longer parked."
+msgstr "已保存：车辆不再处于停车状态。"
+
+#: settings/can_recorder.py:107
+msgid "Saved: storage is running low."
+msgstr "已保存：存储空间不足。"
+
+#: settings/can_recorder.py:109
+msgid "Saved: the recording limit was reached."
+msgstr "已保存：已达到录制上限。"
+
+#: settings/can_recorder.py:111
+msgid "Saved: OBD test ended and normal input restored."
+msgstr "已保存：OBD 测试结束，正常输入已恢复。"
+
+#: settings/can_recorder.py:114
+#, python-brace-format
+msgid "Last marker: {} at {}"
+msgstr "最后标记：{}，时间{}"
+
+#: settings/can_recorder.py:116
+msgid "Waiting for OBD traffic. Check the RJ45 cable."
+msgstr "正在等待 OBD 通信。请检查 RJ45 线缆。"
+
+#: settings/can_recorder.py:118
+msgid "Waiting for CAN traffic. Some channels sleep with the car off."
+msgstr "正在等待 CAN 通信。车辆关闭时部分通道会休眠。"
+
+#: settings/can_recorder.py:119
+msgid "No markers yet."
+msgstr "尚无标记。"
+
+#: settings/can_recorder.py:119
+#: settings/can_recorder.py:102
+msgid "Park the car to start a test."
+msgstr "停车后才能开始测试。"
+
+#: settings/can_recorder.py:38
+msgid "Camera"
+msgstr "摄像头"
+
+#: settings/can_recorder.py:38
+msgid "OBD"
+msgstr "OBD"
+
+#: settings/can_recorder.py:56
+msgid "Test controls"
+msgstr "测试控制"
+
+#: settings/can_recorder.py:69
+msgid "Test status"
+msgstr "测试状态"
+
+#: settings/can_recorder.py:71
+#: settings/developer.py:154
+#: settings/search.py:183
+msgid "CAN test recorder"
+msgstr "CAN 测试记录器"
+
+#: settings/can_recorder.py:71
+msgid "Device › Developer"
+msgstr "设备 › 开发者"
+
+#: settings/can_recorder.py:96
+msgid "Couldn't delete the log. Try Abort again."
+msgstr "无法删除日志。请再次选择中止。"
+
+#: settings/can_recorder.py:98
+msgid "Couldn't restore the input. Restart the device before another test."
+msgstr "无法恢复输入。下次测试前请重启设备。"
+
+#: settings/can_recorder.py:100
+#: settings/can_recorder.py:102
+msgid "OBD needs the RJ45 cable and this Bolt on, in Park."
+msgstr "OBD 需要 RJ45 线缆，并将此 Bolt 启动后挂入 P 挡。"
+
+#: settings/can_recorder.py:113
+msgid "Lock"
+msgstr "上锁"
+
+#: settings/can_recorder.py:113
+msgid "Unlock"
+msgstr "解锁"
+
+#: settings/can_recorder.py:50
+msgid "Tap a marker, then press the car's lock control."
+msgstr "点击标记，然后按车辆的锁车按钮。"
+
+#: settings/can_recorder.py:60
+msgid "Elapsed"
+msgstr "已用时间"
+
+#: settings/can_recorder.py:61
+msgid "CAN frames"
+msgstr "CAN 帧"
+
+#: settings/can_recorder.py:63
+msgid "Lock markers"
+msgstr "上锁标记"
+
+#: settings/can_recorder.py:64
+msgid "Unlock markers"
+msgstr "解锁标记"
+
+#: settings/can_recorder.py:68
+msgid "Full and focused logs stay on this device."
+msgstr "完整日志和筛选日志保存在此设备上。"
+
+#: settings/can_recorder.py:51
+msgid "Input"
+msgstr "输入"
+
+#: settings/can_recorder.py:54
+msgid "Abort deletes this test. OBD stops after 2 minutes."
+msgstr "中止会删除此测试。OBD 在 2 分钟后停止。"
+
+#: settings/can_recorder.py:55
+msgid "Stops after 10 minutes. Abort deletes this test."
+msgstr "10 分钟后停止。中止会删除此测试。"
+
+#: settings/can_recorder.py:66
+#, python-brace-format
+msgid "Log: {}"
+msgstr "日志：{}"
+
+#: settings/can_recorder.py:66
+msgid "Start logging to create a new test log."
+msgstr "开始记录以创建新测试日志。"
+
+#: settings/connections.py:50
+#, python-brace-format
+msgid "{} button"
+msgid_plural "{} buttons"
+msgstr[0] "{}个按钮"
+
+#: settings/connections.py:63
+msgid "CONNECTIONS"
+msgstr "连接"
+
+#: settings/connections.py:64
+#: settings/network_tab.py:199
+#: settings/search.py:31
+msgid "Wi-Fi"
+msgstr "Wi-Fi"
+
+#: settings/connections.py:66
+#: settings/network_tab.py:217
+#: settings/search.py:31
+msgid "Cellular"
+msgstr "移动网络"
+
+#: settings/connections.py:69
+#: settings/search.py:31
+#: settings/search.py:201
+msgid "Car Audio & Devices"
+msgstr "车辆音响与设备"
+
+#: settings/developer.py:18
+msgid "openpilot longitudinal control is in alpha for this car and turns off Automatic Emergency Braking (AEB). The car's own cruise control is the default. Experimental mode is recommended with it. openpilot restarts if the car is on."
+msgstr "此车的 openpilot 纵向控制处于 Alpha 阶段，会关闭自动紧急制动（AEB）。默认使用车辆自带的巡航控制。建议配合实验模式使用。车辆开启时 openpilot 会重启。"
+
+#: settings/developer.py:145
+#: settings/search.py:188
+msgid "openpilot Longitudinal (Alpha)"
+msgstr "openpilot 纵向控制（Alpha）"
+
+#: settings/developer.py:145
+msgid "Turns off the car's emergency braking. Off while engaged."
+msgstr "关闭车辆紧急制动。启用驾驶辅助时不可更改。"
+
+#: settings/developer.py:106
+msgid "GitHub username"
+msgstr "GitHub 用户名"
+
+#: settings/developer.py:106
+msgid "Your own account only: every public key in it gets SSH access"
+msgstr "仅限您自己的账号：其中所有公共密钥都会获得 SSH 访问权限"
+
+#: settings/developer.py:118
+msgid "Getting keys from GitHub…"
+msgstr "正在从 GitHub 获取密钥…"
+
+#: settings/developer.py:122
+#, python-brace-format
+msgid "Keys from GitHub user {}"
+msgstr "GitHub 用户{}的密钥"
+
+#: settings/developer.py:122
+msgid "Adds every public key in a GitHub account. Never use someone else's."
+msgstr "添加 GitHub 账号中的所有公共密钥。切勿使用他人的账号。"
+
+#: settings/developer.py:155
+#: settings/search.py:30
+#: settings/search.py:182
+msgid "Developer"
+msgstr "开发者"
+
+#: settings/developer.py:155
+msgid "openpilot's developer options. They're only here with Tuner Mode on."
+msgstr "openpilot 开发者选项，仅在调校模式开启时显示。"
+
+#: settings/developer.py:105
+#: settings/developer.py:144
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:558
+msgid "Add"
+msgstr "添加"
+
+#: settings/developer.py:135
+msgid "Turn on alpha longitudinal?"
+msgstr "开启 Alpha 纵向控制？"
+
+#: settings/developer.py:135
+#: settings/vehicle.py:290
+msgid "Turn On"
+msgstr "开启"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: settings/developer.py:148
+#: settings/search.py:184
+msgid "ADB"
+msgstr "ADB"
+
+#: settings/developer.py:148
+msgid "Connect over USB or the network (docs.comma.ai). Change it with the car off."
+msgstr "通过 USB 或网络连接（docs.comma.ai）。请在车辆关闭时更改。"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: settings/developer.py:149
+#: settings/search.py:185
+msgid "SSH"
+msgstr "SSH"
+
+#: settings/developer.py:149
+msgid "Remote shell access with the keys below"
+msgstr "使用以下密钥远程访问终端"
+
+#: settings/developer.py:150
+#: settings/search.py:186
+#: selfdrive/ui/layouts/settings/developer.py:53
+msgid "SSH Keys"
+msgstr "SSH 密钥"
+
+#: settings/developer.py:151
+#: settings/search.py:187
+#: selfdrive/ui/layouts/settings/developer.py:56
+msgid "Joystick Debug Mode"
+msgstr "摇杆调试模式"
+
+#: settings/developer.py:151
+msgid "Drive openpilot's controls from a joystick. Change it with the car off."
+msgstr "通过摇杆控制 openpilot。请在车辆关闭时更改。"
+
+#: settings/developer.py:153
+#: settings/search.py:189
+#: selfdrive/ui/layouts/settings/developer.py:72
+msgid "UI Debug Mode"
+msgstr "界面调试模式"
+
+#: settings/developer.py:153
+#: settings/search.py:189
+msgid "Shows touches and the frame rate"
+msgstr "显示触摸和帧率"
+
+#: settings/developer.py:154
+#: settings/search.py:183
+msgid "Record traffic and mark manual lock/unlock actions"
+msgstr "记录通信并标记手动上锁/解锁操作"
+
+#: settings/developer.py:144
+msgid "Adding…"
+msgstr "正在添加…"
+
+#: settings/device.py:25
+msgid "Calibrated"
+msgstr "已校准"
+
+#: settings/device.py:26
+#: selfdrive/selfdrived/events.py:1496
+msgid "Calibrating"
+msgstr "正在校准"
+
+#: settings/device.py:27
+msgid "Not calibrated yet"
+msgstr "尚未校准"
+
+#: settings/device.py:62
+msgid "Preview"
+msgstr "预览"
+
+#: settings/device.py:64
+#: settings/device.py:65
+#: settings/software_tab.py:196
+msgid "Reset"
+msgstr "重置"
+
+#: settings/device.py:127
+msgid "Open connect.comma.ai"
+msgstr "打开 connect.comma.ai"
+
+#: settings/device.py:127
+msgid "Bookmark it to your home screen to use it like an app"
+msgstr "添加到主屏幕即可像应用一样使用"
+
+#: settings/device.py:128
+msgid "Tap Add new device"
+msgstr "点击 Add new device"
+
+#: settings/device.py:128
+msgid "Sign in first if it asks"
+msgstr "如提示登录，请先登录"
+
+#: settings/device.py:129
+#: settings/device.py:133
+msgid "Scan the code"
+msgstr "扫描二维码"
+
+#: settings/device.py:129
+msgid "The Phone App row shows Paired when it's done"
+msgstr "完成后，手机应用一栏会显示已配对"
+
+#: settings/device.py:132
+msgid "Choose a password"
+msgstr "选择密码"
+
+#: settings/device.py:132
+msgid "At least 6 characters. Galaxy asks for it when you sign in"
+msgstr "至少 6 个字符，登录 Galaxy 时需要输入"
+
+#: settings/device.py:133
+msgid "It opens this device's page in Galaxy"
+msgstr "在 Galaxy 中打开此设备的页面"
+
+#: settings/device.py:134
+msgid "Bookmark the page"
+msgstr "收藏此页面"
+
+#: settings/device.py:134
+msgid "The link stays the same until you unpair"
+msgstr "取消配对前链接保持不变"
+
+#: settings/device.py:236
+msgid "Pair the phone app"
+msgstr "配对手机应用"
+
+#: settings/device.py:236
+msgid "Change settings and see drives from your phone"
+msgstr "通过手机更改设置和查看行程"
+
+#: settings/device.py:246
+#: settings/device.py:410
+msgctxt "action"
+msgid "Set up"
+msgstr "设置"
+
+#: settings/device.py:249
+#: settings/device.py:250
+#: selfdrive/ui/layouts/settings/device.py:334
+msgid "Unpair"
+msgstr "取消配对"
+
+#: settings/device.py:265
+#: settings/device.py:108
+#: settings/search.py:159
+msgid "Remote Access"
+msgstr "远程访问"
+
+#: settings/device.py:265
+msgid "Reach this device from the Galaxy web app"
+msgstr "通过 Galaxy 网页应用访问此设备"
+
+#: settings/device.py:69
+#: settings/search.py:127
+#: selfdrive/ui/layouts/settings/device.py:152
+msgid "Driver Camera"
+msgstr "驾驶员摄像头"
+
+#: settings/device.py:69
+msgid "Check that it can see your face. The car must be off."
+msgstr "检查能否看清您的脸部。车辆必须关闭。"
+
+#: settings/device.py:70
+#: settings/search.py:128
+#: settings/speed_steering.py:368
+msgid "Driver Monitoring"
+msgstr "驾驶员监控"
+
+#: settings/device.py:70
+#: settings/search.py:128
+msgid "Forget which side of the car the driver sits on"
+msgstr "清除驾驶员位于车辆哪一侧的记录"
+
+#: settings/device.py:93
+#: settings/device.py:93
+#: settings/search.py:166
+msgid "Power Off"
+msgstr "关机"
+
+#: settings/device.py:96
+#: settings/device.py:97
+#: settings/search.py:165
+msgid "Restart"
+msgstr "重启"
+
+#: settings/device.py:98
+#: settings/device.py:100
+msgid "Recalibrate"
+msgstr "重新校准"
+
+#: settings/device.py:227
+#: settings/device.py:115
+#: settings/search.py:162
+msgid "Regulatory"
+msgstr "法规信息"
+
+#: settings/device.py:263
+msgid "Choosing a password creates this device's link"
+msgstr "选择密码后会创建此设备的链接"
+
+#: settings/device.py:347
+msgid "Manage"
+msgstr "管理"
+
+#: settings/device.py:347
+msgid "Set Up"
+msgstr "设置"
+
+#: settings/device.py:353
+#: settings/model.py:130
+msgid "Not available"
+msgstr "不可用"
+
+#: settings/device.py:423
+msgid "Choose a Galaxy password"
+msgstr "选择 Galaxy 密码"
+
+#: settings/device.py:423
+msgid "At least 6 characters. Galaxy asks for it when you sign in."
+msgstr "至少 6 个字符，登录 Galaxy 时需要输入。"
+
+#: settings/device.py:64
+msgid "Reset driver monitoring?"
+msgstr "重置驾驶员监控？"
+
+#: settings/device.py:65
+msgid "It forgets which side of the car the driver sits on and learns it again on the next drive."
+msgstr "将清除驾驶员所在侧的记录，并在下次驾驶时重新学习。"
+
+#: settings/device.py:93
+msgid "Power off?"
+msgstr "关机？"
+
+#: settings/device.py:93
+msgid "The device stays off until the car starts again."
+msgstr "车辆再次启动前设备会保持关闭。"
+
+#: settings/device.py:96
+msgid "Restart the device?"
+msgstr "重启设备？"
+
+#: settings/device.py:96
+msgid "openpilot shuts down and starts again. This takes about a minute."
+msgstr "openpilot 将关闭后重新启动，约需一分钟。"
+
+#: settings/device.py:98
+msgid "Recalibrate the camera?"
+msgstr "重新校准摄像头？"
+
+#: settings/device.py:99
+msgid "Calibration starts over. openpilot relearns how the device is mounted over your next few minutes of driving."
+msgstr "校准会重新开始，openpilot 将在随后几分钟的驾驶中重新学习设备安装位置。"
+
+#: settings/device.py:118
+#: settings/search.py:30
+#: settings/search.py:157
+msgid "This Device"
+msgstr "本设备"
+
+#: settings/device.py:233
+msgid "ON YOUR PHONE"
+msgstr "在手机上"
+
+#: settings/device.py:234
+msgid "A new code every 5 minutes"
+msgstr "每 5 分钟生成新代码"
+
+#: settings/device.py:235
+msgid "Getting a code…"
+msgstr "正在获取代码…"
+
+#: settings/device.py:249
+msgid "Unpair from Galaxy?"
+msgstr "取消与 Galaxy 的配对？"
+
+#: settings/device.py:249
+msgid "The link stops working. Setting up again makes a new one."
+msgstr "链接将失效，重新设置会生成新链接。"
+
+#: settings/device.py:253
+msgid "Set up · protected by your password"
+msgstr "已设置 · 受密码保护"
+
+#: settings/device.py:253
+msgid "Not set up"
+msgstr "未设置"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: settings/device.py:255
+msgid "GALAXY"
+msgstr "GALAXY"
+
+#: settings/device.py:264
+msgid "Your code appears here once you choose a password"
+msgstr "选择密码后，代码会显示在这里"
+
+#: settings/device.py:105
+#: settings/search.py:158
+msgid "Phone App"
+msgstr "手机应用"
+
+#: settings/device.py:111
+#: settings/search.py:160
+msgid "Camera Calibration"
+msgstr "摄像头校准"
+
+#: settings/device.py:113
+#: settings/search.py:161
+msgid "How It Works"
+msgstr "工作原理"
+
+#: settings/device.py:113
+#: settings/search.py:161
+msgid "Rules, features and limits"
+msgstr "规则、功能和限制"
+
+#: settings/device.py:114
+msgid "MORE"
+msgstr "更多"
+
+#: settings/device.py:116
+#: settings/search.py:163
+msgid "Device ID and Serial"
+msgstr "设备 ID 与序列号"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: settings/device.py:117
+#: settings/search.py:164
+msgid "IMEI"
+msgstr "IMEI"
+
+#: settings/device.py:113
+msgid "Review"
+msgstr "查看"
+
+#: settings/device.py:106
+msgid "comma connect · Paired"
+msgstr "comma connect · 已配对"
+
+#: settings/device.py:106
+msgid "comma connect · see drives and change settings on your phone"
+msgstr "comma connect · 在手机上查看行程并更改设置"
+
+#: settings/device.py:108
+msgid "Galaxy · Set up"
+msgstr "Galaxy · 已设置"
+
+#: settings/device.py:108
+msgid "Galaxy · reach this device from a web browser"
+msgstr "Galaxy · 通过浏览器访问此设备"
+
+#: settings/device.py:115
+msgid "View"
+msgstr "查看"
+
+#: settings/device_sections.py:304
+msgid "Every recorded drive and its video is removed. This can't be undone."
+msgstr "所有行程记录及其视频都将删除。此操作无法撤销。"
+
+#: settings/device_sections.py:305
+#, python-brace-format, drawn
+msgid "Backup {}"
+msgstr "备份{}"
+
+#: settings/device_sections.py:306
+msgid "Speed limits and curves will need a connection until maps download again. Your regions stay chosen, so a scheduled update downloads them again."
+msgstr "重新下载地图前，限速和弯道功能需要联网。已选地区会保留，定时更新时会重新下载。"
+
+#: settings/device_sections.py:50
+#: settings/maps.py:345
+msgid "Parked"
+msgstr "已停车"
+
+#: settings/device_sections.py:50
+msgid "Always"
+msgstr "始终"
+
+#: settings/device_sections.py:51
+msgid "Acceleration felt harsh or jerky"
+msgstr "加速生硬或顿挫"
+
+#: settings/device_sections.py:51
+msgid "Braking was too sudden"
+msgstr "制动过于突然"
+
+#: settings/device_sections.py:51
+msgid "It disengaged when I didn't expect it"
+msgstr "意外退出"
+
+#: settings/device_sections.py:52
+msgid "It felt slow to respond"
+msgstr "反应迟缓"
+
+#: settings/device_sections.py:52
+msgid "An alert was unclear"
+msgstr "警报不清楚"
+
+#: settings/device_sections.py:52
+msgid "My steering wheel buttons aren't working"
+msgstr "方向盘按钮无法使用"
+
+#: settings/device_sections.py:52
+msgid "Something else"
+msgstr "其他问题"
+
+#: settings/device_sections.py:49
+msgid "Dimmer"
+msgstr "调暗"
+
+#: settings/device_sections.py:49
+msgid "Brighter"
+msgstr "调亮"
+
+#: settings/device_sections.py:301
+#, python-brace-format
+msgid "{} MB"
+msgstr "{} MB"
+
+#: settings/device_sections.py:314
+#: settings/device_sections.py:185
+#: settings/device_sections.py:314
+msgid "Delete"
+msgstr "删除"
+
+#: settings/device_sections.py:317
+#: settings/display.py:325
+#: settings/maps.py:209
+msgid "Offline Maps"
+msgstr "离线地图"
+
+#: settings/device_sections.py:337
+#: settings/search.py:177
+msgid "Unused Models"
+msgstr "未使用的模型"
+
+#: settings/device_sections.py:341
+#: settings/search.py:178
+msgid "Record Driver Camera"
+msgstr "录制驾驶员摄像头"
+
+#: settings/device_sections.py:341
+msgid "Saved and uploaded with your drives. Restarts openpilot if the car is on."
+msgstr "随行程保存并上传。车辆开启时会重启 openpilot。"
+
+#: settings/device_sections.py:343
+#: settings/search.py:179
+msgid "Record Microphone"
+msgstr "录制麦克风"
+
+#: settings/device_sections.py:343
+msgid "Cabin audio in your drive recordings. Restarts openpilot if the car is on."
+msgstr "在行程记录中录制车内声音。车辆开启时会重启 openpilot。"
+
+#: settings/device_sections.py:158
+#: settings/device_sections.py:171
+#: settings/search.py:170
+msgid "Language"
+msgstr "语言"
+
+#: settings/device_sections.py:175
+#: settings/search.py:30
+#: settings/search.py:167
+msgid "General"
+msgstr "通用"
+
+#: settings/device_sections.py:182
+#: settings/device_sections.py:183
+msgid "Restore"
+msgstr "恢复"
+
+#: settings/device_sections.py:226
+msgid "Drives"
+msgstr "行程"
+
+#: settings/device_sections.py:226
+#: sidebar.py:113
+#: sidebar.py:134
+msgid "Maps"
+msgstr "地图"
+
+#: settings/device_sections.py:226
+msgid "Models"
+msgstr "模型"
+
+#: settings/device_sections.py:313
+#: settings/maps.py:209
+msgid "Speed limits and curves work without a connection"
+msgstr "限速和弯道功能无需联网"
+
+#: settings/device_sections.py:327
+#, python-brace-format
+msgid "{} downloaded model not in use"
+msgid_plural "{} downloaded models not in use"
+msgstr[0] "{}个已下载但未使用的模型"
+
+#: settings/device_sections.py:327
+msgid "Only the models you use are downloaded"
+msgstr "仅下载了您使用的模型"
+
+#: settings/device_sections.py:331
+msgid "Remove unused models?"
+msgstr "移除未使用的模型？"
+
+#: settings/device_sections.py:332
+#, python-brace-format
+msgid "{} model you aren't using is removed. You can download it again from the model catalog."
+msgid_plural "{} models you aren't using are removed. You can download them again from the model catalog."
+msgstr[0] "将移除{}个未使用的模型。您可从模型目录重新下载。"
+
+#: settings/device_sections.py:358
+#: settings/search.py:30
+#: settings/search.py:174
+msgid "Storage & Data"
+msgstr "存储与数据"
+
+#: settings/device_sections.py:359
+msgid "High-quality recording, logging and error logs are in Tuner Mode."
+msgstr "高质量录制、日志及错误日志位于调校模式。"
+
+#: settings/device_sections.py:161
+msgid "For menus and alerts"
+msgstr "用于菜单和警报"
+
+#: settings/device_sections.py:169
+#: settings/search.py:168
+msgid "Units"
+msgstr "单位"
+
+#: settings/device_sections.py:169
+#: settings/search.py:168
+msgid "Speed and distance everywhere"
+msgstr "所有位置的速度与距离单位"
+
+#: settings/device_sections.py:170
+#: settings/search.py:169
+#: sidebar.py:148
+msgid "Temperature"
+msgstr "温度"
+
+#: settings/device_sections.py:170
+#: settings/search.py:169
+msgid "For the weather forecast"
+msgstr "用于天气预报"
+
+#: settings/device_sections.py:172
+#: settings/search.py:171
+msgid "Screen Brightness"
+msgstr "屏幕亮度"
+
+#: settings/device_sections.py:172
+#: settings/search.py:171
+msgid "Auto follows ambient light, day and night"
+msgstr "自动模式昼夜跟随环境亮度"
+
+#: settings/device_sections.py:174
+#: settings/search.py:172
+msgid "Standby"
+msgstr "待机"
+
+#: settings/device_sections.py:174
+#: settings/search.py:172
+msgid "Screen sleeps while driving, wakes for alerts"
+msgstr "驾驶时屏幕休眠，出现警报时唤醒"
+
+#: settings/device_sections.py:194
+#: settings/search.py:30
+#: settings/search.py:173
+msgid "Backups"
+msgstr "备份"
+
+#: settings/device_sections.py:194
+msgid "Snapshots of your settings. Drives aren't included."
+msgstr "设置快照，不包含行程。"
+
+#: settings/device_sections.py:266
+#, python-brace-format
+msgid "{} of {}"
+msgstr "{} / {}"
+
+#: settings/device_sections.py:268
+#, python-brace-format
+msgid "{} of {} used"
+msgstr "已使用{} / {}"
+
+#: settings/device_sections.py:314
+msgid "Delete offline maps?"
+msgstr "删除离线地图？"
+
+#: settings/device_sections.py:349
+#: settings/search.py:175
+msgid "Recorded Drives"
+msgstr "已录制的行程"
+
+#: settings/device_sections.py:349
+#: settings/search.py:175
+msgid "Oldest drives are removed when space runs low"
+msgstr "空间不足时删除最早的行程"
+
+#: settings/device_sections.py:354
+msgid "RECORDING & UPLOADS"
+msgstr "录制与上传"
+
+#: settings/device_sections.py:357
+#: settings/search.py:180
+msgid "Uploads"
+msgstr "上传"
+
+#: settings/device_sections.py:357
+#: settings/search.py:180
+msgid "Drive logs and video for debugging"
+msgstr "用于调试的行程日志和视频"
+
+#: settings/device_sections.py:390
+msgid "Optional"
+msgstr "可选"
+
+#: settings/device_sections.py:400
+msgid "Sent. Thank you!"
+msgstr "已发送，谢谢！"
+
+#: settings/device_sections.py:400
+msgid "Send report"
+msgstr "发送报告"
+
+#: settings/device_sections.py:408
+msgid "Details (optional)"
+msgstr "详细信息（可选）"
+
+#: settings/device_sections.py:408
+msgid "Where and when it happened"
+msgstr "发生地点和时间"
+
+#: settings/device_sections.py:410
+msgid "Discord name (optional)"
+msgstr "Discord 名称（可选）"
+
+#: settings/device_sections.py:410
+msgid "So we can follow up"
+msgstr "便于后续联系"
+
+#: settings/device_sections.py:182
+msgid "Restore this backup?"
+msgstr "恢复此备份？"
+
+#: settings/device_sections.py:182
+#, python-brace-format
+msgid "Your current settings are replaced with {}."
+msgstr "当前设置将被{}替换。"
+
+#: settings/device_sections.py:185
+msgid "Delete this backup?"
+msgstr "删除此备份？"
+
+#: settings/device_sections.py:185
+#, python-brace-format
+msgid "{} can't be recovered."
+msgstr "{}将无法恢复。"
+
+#: settings/device_sections.py:192
+msgid "SAVED"
+msgstr "已保存"
+
+#: settings/device_sections.py:195
+msgid "Back up now"
+msgstr "立即备份"
+
+#: settings/device_sections.py:350
+msgid "Delete all"
+msgstr "全部删除"
+
+#: settings/device_sections.py:404
+msgid "What happened?"
+msgstr "发生了什么？"
+
+#: settings/device_sections.py:409
+msgid "Details"
+msgstr "详细信息"
+
+#: settings/device_sections.py:411
+msgid "Discord name"
+msgstr "Discord 名称"
+
+#: settings/device_sections.py:350
+msgid "Delete all drives?"
+msgstr "删除所有行程？"
+
+#: settings/device_sections.py:193
+msgid "No backups yet."
+msgstr "尚无备份。"
+
+#: settings/display.py:35
+#: settings/display.py:28
+#: settings/display.py:39
+msgid "Standard"
+msgstr "标准"
+
+#: settings/display.py:55
+#: selfdrive/selfdrived/events.py:551
+msgid "Be ready to take over at any time"
+msgstr "随时准备接管车辆"
+
+#: settings/display.py:55
+#: selfdrive/selfdrived/events.py:211
+msgid "Always keep hands on wheel and eyes on road"
+msgstr "始终双手握住方向盘，眼睛注视道路"
+
+#: settings/display.py:209
+msgid "Developer UI"
+msgstr "开发者界面"
+
+#: settings/display.py:209
+msgid "Controls metrics bar"
+msgstr "控制指标栏"
+
+#: settings/display.py:209
+msgid "Developer widgets"
+msgstr "开发者组件"
+
+#: settings/display.py:210
+msgid "Side panel with system and controls data."
+msgstr "显示系统与控制数据的侧面板。"
+
+#: settings/display.py:211
+msgid "Distance, gap and speed of the car ahead, plus radar points."
+msgstr "前车距离、时距、速度及雷达点。"
+
+#: settings/display.py:28
+msgid "The usual path and lane lines"
+msgstr "常规路径和车道线"
+
+#: settings/display.py:29
+msgid "Thin"
+msgstr "纤细"
+
+#: settings/display.py:29
+msgid "A narrower path and lighter lines"
+msgstr "更窄的路径和更细的线条"
+
+#: settings/display.py:30
+msgid "Rainbow"
+msgstr "彩虹"
+
+#: settings/display.py:30
+msgid "A rainbow path"
+msgstr "彩虹路径"
+
+#: settings/display.py:31
+msgid "Acceleration"
+msgstr "加速度"
+
+#: settings/display.py:31
+msgid "Green when speeding up, amber when slowing"
+msgstr "加速时绿色，减速时琥珀色"
+
+#: settings/display.py:39
+msgid "Wide"
+msgstr "广角"
+
+#: settings/display.py:42
+msgid "Tandem"
+msgstr "Tandem"
+
+#: settings/display.py:206
+#, python-brace-format
+msgid "{} path"
+msgstr "{}路径"
+
+#: settings/display.py:358
+msgid "Startup Message: first line"
+msgstr "启动消息：第一行"
+
+#: settings/display.py:203
+msgid "Style banner shown"
+msgstr "显示风格横幅"
+
+#: settings/display.py:203
+msgid "Style banner hidden"
+msgstr "隐藏风格横幅"
+
+#: settings/display.py:249
+msgid "Switching off turns these back off. To change one on its own, turn on Tuner Mode."
+msgstr "关闭后这些选项也会关闭。要单独更改，请开启调校模式。"
+
+#: settings/display.py:258
+#, python-brace-format
+msgid "{} sets"
+msgstr "{}设置的选项"
+
+#: settings/display.py:259
+msgid "One switch for the details most drivers never need"
+msgstr "一个开关控制多数驾驶员无需关注的细节"
+
+#: settings/display.py:282
+#: settings/driving_tab.py:109
+#: settings/search.py:28
+msgid "Driving Screen"
+msgstr "驾驶屏幕"
+
+#: settings/display.py:293
+#: settings/display.py:313
+#: settings/search.py:102
+msgid "Boot Logo"
+msgstr "开机标志"
+
+#: settings/display.py:316
+#: settings/driving_tab.py:110
+#: settings/search.py:28
+msgid "Theme & Startup"
+msgstr "主题与启动"
+
+#: settings/display.py:326
+#: settings/driving_tab.py:111
+#: settings/search.py:28
+msgid "Map"
+msgstr "地图"
+
+#: settings/display.py:327
+msgid "The street name is always shown in the onroad bar. Speed limit sources and their order are in Tuner Mode."
+msgstr "道路名称始终显示在驾驶栏中。限速来源及其优先级位于调校模式。"
+
+#: settings/display.py:336
+#: settings/network_tab.py:87
+#: setup.py:99
+msgid "Next"
+msgstr "下一步"
+
+#: settings/display.py:342
+msgid "Leave empty for the default"
+msgstr "留空使用默认值"
+
+#: settings/display.py:498
+msgid "Acceleration tints the path green when speeding up and amber when slowing. Each value can be changed in Tuner Mode."
+msgstr "加速度样式在加速时将路径染成绿色，减速时染成琥珀色。各项数值可在调校模式更改。"
+
+#: settings/display.py:615
+msgid "Whimsy animations cross the road above the bar while you signal; the chevrons by the speed stay."
+msgstr "打转向灯时，趣味动画会穿过栏位上方的道路，速度旁的箭头仍保留。"
+
+#: settings/display.py:267
+#: settings/search.py:92
+msgid "Camera View"
+msgstr "摄像头视角"
+
+#: settings/display.py:267
+#: settings/search.py:92
+msgid "Wide shows more of the road at low speed"
+msgstr "广角在低速时显示更多路面"
+
+#: settings/display.py:269
+#: settings/search.py:93
+msgid "Driver Camera in Reverse"
+msgstr "倒车时显示驾驶员摄像头"
+
+#: settings/display.py:269
+#: settings/search.py:93
+msgid "Shows the inside camera while backing up"
+msgstr "倒车时显示车内摄像头"
+
+#: settings/display.py:271
+#: settings/search.py:94
+msgid "Driving Style Banner"
+msgstr "驾驶风格横幅"
+
+#: settings/display.py:271
+#: settings/search.py:94
+msgid "Shows the current style when it changes"
+msgstr "风格变化时显示当前风格"
+
+#: settings/display.py:273
+#: settings/search.py:95
+msgid "Compass"
+msgstr "指南针"
+
+#: settings/display.py:273
+#: settings/search.py:95
+msgid "Heading beside the street name, like NE"
+msgstr "在道路名称旁显示方位，如 NE"
+
+#: settings/display.py:274
+#: settings/search.py:96
+msgid "Blind Spot Highlights"
+msgstr "盲区高亮"
+
+#: settings/display.py:274
+#: settings/search.py:96
+msgid "Colors the screen edge and lane when a car is beside you"
+msgstr "旁边有车时为屏幕边缘和车道着色"
+
+#: settings/display.py:276
+#: settings/search.py:97
+msgid "Lead Car Tag"
+msgstr "前车标签"
+
+#: settings/display.py:276
+#: settings/search.py:97
+msgid "Numbers above the car ahead. Off keeps only the bar under it"
+msgstr "前车上方的数值。关闭后仅保留其下方的条形标记"
+
+#: settings/display.py:277
+#: settings/driving_tab.py:117
+msgid "POWER USER"
+msgstr "高级用户"
+
+#: settings/display.py:294
+#: settings/display.py:313
+#: settings/search.py:102
+msgid "Shown while the device starts up"
+msgstr "设备启动时显示"
+
+#: settings/display.py:301
+#: settings/display.py:311
+#: settings/search.py:100
+msgid "Path Style"
+msgstr "路径样式"
+
+#: settings/display.py:306
+#: settings/display.py:312
+#: settings/search.py:101
+msgid "Turn Signal"
+msgstr "转向灯"
+
+#: settings/display.py:311
+#: settings/search.py:100
+msgid "Color, width and edges as one preset"
+msgstr "一个预设同时设置颜色、宽度和边缘"
+
+#: settings/display.py:312
+#: settings/search.py:101
+msgid "Chevrons by the speed, or a whimsical animation"
+msgstr "速度旁的箭头或趣味动画"
+
+#: settings/display.py:314
+#: settings/search.py:103
+msgid "Startup Message"
+msgstr "启动消息"
+
+#: settings/display.py:321
+#: settings/search.py:104
+msgid "Turn-by-Turn on Screen"
+msgstr "屏幕逐向导航"
+
+#: settings/display.py:321
+#: settings/search.py:104
+msgid "Next turn, arrival time and distance while navigating"
+msgstr "导航时显示下一次转弯、到达时间和距离"
+
+#: settings/display.py:323
+#: settings/search.py:105
+msgid "Speed Limit Sign"
+msgstr "限速标志"
+
+#: settings/display.py:323
+#: settings/search.py:105
+msgid "US style, or the round Vienna style used in most other countries"
+msgstr "美式，或多数其他国家使用的维也纳圆形样式"
+
+#: settings/display.py:325
+#: settings/search.py:89
+#: settings/search.py:106
+msgid "Speed limits and routing without a connection"
+msgstr "无需联网即可使用限速和路线"
+
+#: settings/display.py:353
+msgid "Startup Message: second line"
+msgstr "启动消息：第二行"
+
+#: settings/display.py:533
+#: settings/display.py:644
+msgid "No preview"
+msgstr "无预览"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: settings/display.py:595
+msgid "ESSENTIALS"
+msgstr "ESSENTIALS"
+
+#: settings/display.py:595
+msgid "WHIMSY"
+msgstr "趣味"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: settings/display.py:675
+msgid "RGB"
+msgstr "RGB"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: settings/display.py:680
+msgid "PNG"
+msgstr "PNG"
+
+#: settings/display.py:302
+msgid "Sets path color, width, edges and lane lines together"
+msgstr "同时设置路径颜色、宽度、边缘和车道线"
+
+#: settings/display.py:307
+msgid "Plays beside the speed while a blinker is on"
+msgstr "转向灯开启时在速度旁播放"
+
+#: settings/display.py:279
+#: settings/display.py:281
+#, python-brace-format
+msgid "Sets {} options"
+msgstr "设置{}个选项"
+
+#: settings/display.py:314
+#: settings/search.py:103
+msgid "The banner when you start the car"
+msgstr "启动车辆时的横幅"
+
+#: settings/display.py:315
+msgid "Custom"
+msgstr "自定义"
+
+#: settings/driving_tab.py:117
+msgid "Extra detail and fine tuning, each behind one switch"
+msgstr "额外细节和微调功能，各由一个开关控制"
+
+#: settings/driving_tab.py:129
+#: settings/search.py:24
+#: settings/window.py:42
+msgid "Driving"
+msgstr "驾驶"
+
+#: settings/driving_tab.py:129
+msgid "Good defaults are on. Change only what matters to you."
+msgstr "良好的默认设置已开启，只需更改您关心的选项。"
+
+#: settings/driving_tab.py:93
+msgid "SPEED & STEERING"
+msgstr "速度与转向"
+
+#: settings/driving_tab.py:108
+msgid "DISPLAY"
+msgstr "显示"
+
+#: settings/driving_tab.py:115
+#: settings/vehicle.py:62
+msgid "Detected on the first drive"
+msgstr "首次驾驶时检测"
+
+#: settings/driving_tab.py:130
+#: settings/search.py:25
+#: settings/search.py:69
+msgid "Speed & Steering"
+msgstr "速度与转向"
+
+#: settings/driving_tab.py:131
+#: settings/search.py:25
+#: settings/search.py:91
+msgid "Display"
+msgstr "显示"
+
+#: settings/driving_tab.py:134
+#: settings/model.py:291
+#: settings/search.py:25
+msgid "Driving Model"
+msgstr "驾驶模型"
+
+#: settings/driving_tab.py:136
+#: settings/search.py:26
+#: settings/search.py:117
+msgid "Vehicle"
+msgstr "车辆"
+
+#: settings/driving_tab.py:138
+#: settings/search.py:26
+#: settings/search.py:121
+msgid "Assistance"
+msgstr "驾驶辅助"
+
+#: settings/driving_tab.py:94
+#: settings/search.py:27
+#: settings/speed_steering.py:175
+msgid "Everyday"
+msgstr "日常"
+
+#: settings/driving_tab.py:95
+#: settings/search.py:27
+#: settings/search.py:80
+msgid "Vehicle Profile"
+msgstr "车辆配置"
+
+#: settings/driving_tab.py:96
+#: settings/search.py:27
+#: settings/search.py:82
+msgid "Weather"
+msgstr "天气"
+
+#: settings/driving_tab.py:97
+#: settings/search.py:27
+#: settings/search.py:85
+msgid "Navigation"
+msgstr "导航"
+
+#: settings/driving_tab.py:136
+#, python-brace-format
+msgid "{} profile · {}"
+msgstr "{}配置 · {}"
+
+#: settings/editors.py:96
+#, python-brace-format
+msgid "Steps of {}{}. Hold − or + to move faster."
+msgstr "每次调整{}{}。长按 − 或 + 可加快调整。"
+
+#: settings/editors.py:89
+msgid "Reset to default"
+msgstr "重置为默认值"
+
+#: settings/editors.py:106
+msgid "Quick picks"
+msgstr "快捷选择"
+
+#: settings/favorites.py:9
+#, python-brace-format
+msgid "Favorite {}"
+msgstr "收藏{}"
+
+#: settings/favorites.py:11
+msgid " · Not set"
+msgstr " · 未设置"
+
+#: settings/maps.py:406
+msgid "Pauses if you start driving or lose Wi-Fi, and picks up where it stopped. Keep the device powered."
+msgstr "开始驾驶或 Wi-Fi 断开时暂停，之后从中断处继续。请保持设备供电。"
+
+#: settings/maps.py:28
+msgid "Weekly"
+msgstr "每周"
+
+#: settings/maps.py:28
+msgid "Monthly"
+msgstr "每月"
+
+#: settings/maps.py:405
+msgid "Prepare"
+msgstr "准备"
+
+#: settings/maps.py:405
+#: settings/maps.py:177
+#: settings/maps.py:265
+msgid "Download"
+msgstr "下载"
+
+#: settings/maps.py:405
+msgid "Install"
+msgstr "安装"
+
+#: settings/maps.py:249
+msgid "U.S. regions"
+msgstr "美国区域"
+
+#: settings/maps.py:249
+msgid "U.S. states"
+msgstr "美国各州"
+
+#: settings/maps.py:249
+msgid "Other countries"
+msgstr "其他国家"
+
+#: settings/maps.py:371
+msgid "Park to delete offline maps"
+msgstr "停车后才能删除离线地图"
+
+#: settings/maps.py:376
+#: settings/model.py:406
+msgid "Wait for the download to finish"
+msgstr "请等待下载完成"
+
+#: settings/maps.py:123
+msgid "Choose at least one region"
+msgstr "请至少选择一个地区"
+
+#: settings/maps.py:129
+msgid "Cancelling…"
+msgstr "正在取消…"
+
+#: settings/maps.py:131
+#, python-brace-format
+msgid "Downloading {} · {}%"
+msgstr "正在下载{} · {}%"
+
+#: settings/maps.py:132
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:239
+msgid "Downloaded"
+msgstr "已下载"
+
+#: settings/maps.py:132
+msgid "Not downloaded yet"
+msgstr "尚未下载"
+
+#: settings/maps.py:165
+#, python-brace-format
+msgid "{} of {} files · {}. Pauses if you drive or lose the connection."
+msgstr "{} / {}个文件 · {}。驾驶或断网时暂停。"
+
+#: settings/maps.py:177
+msgid "Update now"
+msgstr "立即更新"
+
+#: settings/maps.py:461
+#, python-brace-format
+msgid "Downloading {}"
+msgstr "正在下载{}"
+
+#: settings/maps.py:462
+msgid "You can leave this screen. It keeps going in the background."
+msgstr "可离开此屏幕，下载会在后台继续。"
+
+#: settings/maps.py:470
+#, python-brace-format
+msgid "{} of {} files"
+msgstr "{} / {}个文件"
+
+#: settings/maps.py:470
+msgid "Getting ready"
+msgstr "正在准备"
+
+#: settings/maps.py:472
+#, python-brace-format
+msgid " · about {} min left"
+msgstr " · 约剩{}分钟"
+
+#: settings/maps.py:124
+#, python-brace-format
+msgid "Waiting: {}"
+msgstr "正在等待：{}"
+
+#: settings/maps.py:147
+#: settings/maps.py:439
+msgid "Cancel download"
+msgstr "取消下载"
+
+#: settings/maps.py:182
+msgid "Park to remove maps"
+msgstr "停车后才能移除地图"
+
+#: settings/maps.py:182
+msgid "Remove maps"
+msgstr "移除地图"
+
+#: settings/maps.py:183
+msgid "Remove offline maps?"
+msgstr "移除离线地图？"
+
+#: settings/maps.py:188
+msgid "YOUR REGIONS"
+msgstr "您的地区"
+
+#: settings/maps.py:189
+msgid "Change them in Choose regions"
+msgstr "在选择地区中更改"
+
+#: settings/maps.py:199
+msgid "Keep up to date"
+msgstr "保持最新"
+
+#: settings/maps.py:201
+msgid "Updates download only while parked and online"
+msgstr "仅在停车并联网时下载更新"
+
+#: settings/maps.py:205
+msgid "Without maps, speed limits need a connection."
+msgstr "没有地图时，限速功能需要联网。"
+
+#: settings/maps.py:255
+msgid "Add map regions"
+msgstr "添加地图地区"
+
+#: settings/maps.py:255
+msgid "Pick a region, or switch to states for less storage"
+msgstr "选择区域，或改选各州以节省空间"
+
+#: settings/maps.py:256
+#: settings/maps.py:492
+msgid "REGIONS"
+msgstr "地区"
+
+#: settings/maps.py:345
+#: sidebar.py:94
+msgid "Online"
+msgstr "在线"
+
+#: settings/maps.py:492
+#, python-brace-format
+msgid "REGIONS · {} OF {} DONE"
+msgstr "地区 · 已完成{} / {}"
+
+#: settings/maps.py:502
+#, python-brace-format
+msgid "+{} more"
+msgstr "另有{}项"
+
+#: settings/maps.py:195
+msgid "Choose regions"
+msgstr "选择地区"
+
+#: settings/maps.py:195
+msgid "Add or remove states, regions and countries"
+msgstr "添加或移除州、区域和国家"
+
+#: settings/maps.py:204
+#: settings/model.py:316
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:276
+msgid "Storage"
+msgstr "存储空间"
+
+#: settings/maps.py:312
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:479
+msgid "Whole U.S."
+msgstr "全美"
+
+#: settings/maps.py:312
+msgid "Every state and territory"
+msgstr "所有州和属地"
+
+#: settings/maps.py:270
+#, python-brace-format
+msgid "{}: not yet"
+msgstr "{}：尚未完成"
+
+#: settings/maps.py:274
+msgid "SELECTED"
+msgstr "已选择"
+
+#: settings/maps.py:261
+msgid "No regions available."
+msgstr "没有可用地区。"
+
+#: settings/model.py:291
+msgid "The neural network that steers and judges speed"
+msgstr "负责转向和判断速度的神经网络"
+
+#: settings/model.py:299
+msgid "All models"
+msgstr "所有模型"
+
+#: settings/model.py:299
+msgid "Community picks"
+msgstr "社区推荐"
+
+#: settings/model.py:299
+#: settings/model.py:147
+#: settings/model.py:145
+msgid "On device"
+msgstr "设备上"
+
+#: settings/model.py:64
+msgid "Default model"
+msgstr "默认模型"
+
+#: settings/model.py:104
+msgid "Recommended"
+msgstr "推荐"
+
+#: settings/model.py:108
+#: sidebar.py:134
+msgid "Downloading"
+msgstr "正在下载"
+
+#: settings/model.py:109
+msgid "Updates automatically"
+msgstr "自动更新"
+
+#: settings/model.py:109
+msgid "Chosen by you"
+msgstr "由您选择"
+
+#: settings/model.py:130
+#: settings/model.py:127
+msgid "Use"
+msgstr "使用"
+
+#: settings/model.py:283
+msgid "Browse all"
+msgstr "浏览全部"
+
+#: settings/model.py:336
+msgid "Driving models"
+msgstr "驾驶模型"
+
+#: settings/model.py:404
+msgid "Park to remove models"
+msgstr "停车后才能移除模型"
+
+#: settings/model.py:126
+#: settings/model.py:274
+msgid "ACTIVE"
+msgstr "正在使用"
+
+#: settings/model.py:146
+#, python-brace-format
+msgid "Downloading · {}"
+msgstr "正在下载 · {}"
+
+#: settings/model.py:148
+msgid "Needs an eGPU"
+msgstr "需要 eGPU"
+
+#: settings/model.py:145
+msgid "Recommended · On device"
+msgstr "推荐 · 设备上"
+
+#: settings/model.py:149
+msgid "Community pick"
+msgstr "社区推荐"
+
+#: settings/model.py:149
+msgid "Available to download"
+msgstr "可供下载"
+
+#: settings/model.py:285
+msgid "OTHER MODELS"
+msgstr "其他模型"
+
+#: settings/model.py:287
+msgid "Available when Use recommended is off. Model randomizer and blacklist are in Tuner Mode."
+msgstr "关闭使用推荐模型后可选。模型随机选择和黑名单位于调校模式。"
+
+#: settings/model.py:310
+#, python-brace-format
+msgid "Remove unused models ({})"
+msgstr "移除未使用的模型（{}）"
+
+#: settings/model.py:310
+msgid "Remove unused models"
+msgstr "移除未使用的模型"
+
+#: settings/model.py:279
+#: settings/search.py:116
+msgid "Use recommended"
+msgstr "使用推荐模型"
+
+#: settings/model.py:279
+msgid "Turn off to pick your own"
+msgstr "关闭后自行选择"
+
+#: settings/model.py:276
+msgid "Chosen for your car. Swaps to newer recommended models automatically."
+msgstr "为您的车辆选择，自动切换到更新的推荐模型。"
+
+#: settings/model.py:277
+msgid "Picked by you"
+msgstr "由您选择"
+
+#: settings/model.py:320
+msgid "GOOD TO KNOW"
+msgstr "温馨提示"
+
+#: settings/model.py:321
+msgid "One download at a time, paused while driving."
+msgstr "一次下载一个，驾驶时暂停。"
+
+#: settings/model.py:322
+msgid "A new model applies on your next drive."
+msgstr "新模型将在下次驾驶时生效。"
+
+#: settings/model.py:308
+msgid "No models here yet."
+msgstr "暂无模型。"
+
+#: settings/network_tab.py:56
+msgid "Connecting…"
+msgstr "正在连接…"
+
+#: settings/network_tab.py:76
+#, python-brace-format
+msgid "for \"{}\""
+msgstr "用于“{}”"
+
+#: settings/network_tab.py:87
+msgid "Network name"
+msgstr "网络名称"
+
+#: settings/network_tab.py:100
+#, python-brace-format
+msgid "{} · Couldn't save"
+msgstr "{} · 无法保存"
+
+#: settings/network_tab.py:119
+msgid "Connected devices will need to reconnect."
+msgstr "已连接的设备需要重新连接。"
+
+#: settings/network_tab.py:122
+msgid "Hotspot password"
+msgstr "热点密码"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: settings/network_tab.py:150
+#: settings/network_tab.py:223
+msgid "APN"
+msgstr "APN"
+
+#: settings/network_tab.py:150
+msgid "Leave empty for automatic"
+msgstr "留空自动设置"
+
+#: settings/network_tab.py:156
+#: settings/network_tab.py:224
+#: sidebar.py:149
+msgid "Not connected"
+msgstr "未连接"
+
+#: settings/network_tab.py:209
+#: settings/network_tab.py:207
+#: settings/network_tab.py:223
+msgid "Edit"
+msgstr "编辑"
+
+#: settings/network_tab.py:225
+#: settings/network_tab.py:217
+#: settings/search.py:199
+msgid "Roaming, APN and IP address"
+msgstr "漫游、APN 和 IP 地址"
+
+#: settings/network_tab.py:76
+msgid "Wrong password"
+msgstr "密码错误"
+
+#: settings/network_tab.py:76
+#: settings/network_tab.py:85
+msgid "Enter password"
+msgstr "输入密码"
+
+#: settings/network_tab.py:106
+#: settings/network_tab.py:213
+#: settings/search.py:196
+msgid "Hotspot name"
+msgstr "热点名称"
+
+#: settings/network_tab.py:113
+msgid "A saved network already uses this name"
+msgstr "已保存的网络已使用此名称"
+
+#: settings/network_tab.py:212
+#: settings/search.py:195
+msgid "Hotspot"
+msgstr "热点"
+
+#: settings/network_tab.py:212
+#: settings/search.py:195
+msgid "Share this device's connection"
+msgstr "共享此设备的连接"
+
+#: settings/network_tab.py:215
+#: settings/search.py:197
+msgid "Hotspot Password"
+msgstr "热点密码"
+
+#: settings/network_tab.py:215
+#: settings/search.py:197
+msgid "For phones joining this device's hotspot"
+msgstr "供连接此设备热点的手机使用"
+
+#: settings/network_tab.py:216
+#: settings/search.py:198
+msgid "Save Data"
+msgstr "节省流量"
+
+#: settings/network_tab.py:216
+#: settings/search.py:198
+msgid "No large uploads on cellular or phone hotspots"
+msgstr "移动网络或手机热点不上传大文件"
+
+#: settings/network_tab.py:222
+msgid "Roaming"
+msgstr "漫游"
+
+#: settings/network_tab.py:222
+msgid "Use cellular data outside your carrier's network"
+msgstr "在运营商网络之外使用移动数据"
+
+#: settings/network_tab.py:224
+#: settings/search.py:192
+msgid "IP Address"
+msgstr "IP 地址"
+
+#: settings/network_tab.py:85
+#, python-brace-format
+msgid "for \"{}\", or leave empty for an open network"
+msgstr "用于“{}”，开放网络可留空"
+
+#: settings/network_tab.py:198
+msgid "Scanning for networks…"
+msgstr "正在扫描网络…"
+
+#: settings/network_tab.py:199
+#: settings/search.py:193
+msgid "Join a hidden network"
+msgstr "加入隐藏网络"
+
+#: settings/network_tab.py:110
+msgid "Enter a hotspot name"
+msgstr "输入热点名称"
+
+#: settings/network_tab.py:110
+msgid "Name is too long. Use a shorter name."
+msgstr "名称过长，请缩短。"
+
+#: settings/network_tab.py:111
+msgid "Use letters, numbers, spaces or punctuation"
+msgstr "使用字母、数字、空格或标点"
+
+#: settings/network_tab.py:190
+msgid "Secured"
+msgstr "加密"
+
+#: settings/network_tab.py:190
+msgid "Open"
+msgstr "开放"
+
+#: settings/network_tab.py:223
+msgid "Automatic"
+msgstr "自动"
+
+#: settings/search.py:24
+#: settings/window.py:42
+msgid "Connections"
+msgstr "连接"
+
+#: settings/search.py:29
+#: settings/search.py:133
+#: settings/tuner.py:313
+msgid "Steering"
+msgstr "转向"
+
+#: settings/search.py:29
+#: settings/search.py:139
+#: settings/tuner.py:344
+msgid "Gas & Brake"
+msgstr "油门与制动"
+
+#: settings/search.py:29
+#: settings/search.py:147
+#: settings/tuner.py:411
+msgid "Following & Stops"
+msgstr "跟车与停车"
+
+#: settings/search.py:29
+#: settings/search.py:154
+#: settings/tuner.py:565
+msgid "Bundle Overrides"
+msgstr "组合设置覆盖"
+
+#: settings/search.py:30
+#: settings/search.py:181
+#: settings/window.py:324
+msgid "Report a Problem"
+msgstr "报告问题"
+
+#: settings/search.py:69
+#: settings/speed_steering.py:175
+msgid "Driving style, speed limits, lane changes and steering"
+msgstr "驾驶风格、限速、变道和转向"
+
+#: settings/search.py:70
+#: settings/speed_steering.py:142
+msgid "Driving Style"
+msgstr "驾驶风格"
+
+#: settings/search.py:70
+#: settings/speed_steering.py:143
+msgid "Sets following gap, acceleration and braking together"
+msgstr "同时设置跟车距离、加速和制动"
+
+#: settings/search.py:71
+#: settings/speed_steering.py:161
+msgid "Speed Limits"
+msgstr "限速"
+
+#: settings/search.py:71
+#: settings/speed_steering.py:161
+msgid "Match sets cruise to the posted limit"
+msgstr "跟随限速将巡航速度设为标示限速"
+
+#: settings/search.py:72
+#: settings/speed_steering.py:145
+msgid "Offset"
+msgstr "偏移量"
+
+#: settings/search.py:72
+#: settings/speed_steering.py:145
+msgid "Added to every matched limit"
+msgstr "加到每个跟随的限速上"
+
+#: settings/search.py:73
+#: settings/speed_steering.py:148
+msgid "Higher limits"
+msgstr "限速提高"
+
+#: settings/search.py:73
+#: settings/speed_steering.py:148
+msgid "When a posted limit goes up"
+msgstr "标示限速提高时"
+
+#: settings/search.py:74
+#: settings/speed_steering.py:151
+msgid "Lower limits"
+msgstr "限速降低"
+
+#: settings/search.py:74
+#: settings/speed_steering.py:151
+msgid "When a posted limit goes down"
+msgstr "标示限速降低时"
+
+#: settings/search.py:75
+#: settings/speed_steering.py:154
+msgid "MAX follows limits"
+msgstr "MAX 跟随限速"
+
+#: settings/search.py:75
+#: settings/speed_steering.py:154
+msgid "Each new limit sets MAX, so it slows promptly for lower ones"
+msgstr "每个新限速都设置 MAX，限速降低时会及时减速"
+
+#: settings/search.py:77
+#: settings/speed_steering.py:167
+msgid "Lane Changes"
+msgstr "变道"
+
+#: settings/search.py:77
+msgid "Nudge or Auto"
+msgstr "轻推或自动"
+
+#: settings/search.py:78
+#: settings/speed_steering.py:169
+msgid "Smart Slowdowns"
+msgstr "智能减速"
+
+#: settings/search.py:78
+#: settings/speed_steering.py:169
+msgid "Slows for curves, stop lights and stopped traffic on its own"
+msgstr "自动为弯道、信号灯和停止的车流减速"
+
+#: settings/search.py:79
+#: settings/speed_steering.py:171
+msgid "Always-On Steering"
+msgstr "持续转向"
+
+#: settings/search.py:79
+msgid "Keeps steering with cruise off"
+msgstr "巡航关闭后仍保持转向"
+
+#: settings/search.py:80
+msgid "Car, SUV, truck or towing"
+msgstr "轿车、SUV、卡车或拖挂"
+
+#: settings/search.py:81
+#: settings/speed_steering.py:219
+msgid "Trailer Load"
+msgstr "拖车载重"
+
+#: settings/search.py:81
+#: settings/speed_steering.py:219
+msgid "Weight of a loaded trailer"
+msgstr "满载拖车的重量"
+
+#: settings/search.py:82
+#: settings/speed_steering.py:282
+msgid "Drives more cautiously in bad conditions, using local weather"
+msgstr "根据当地天气，在恶劣条件下更谨慎驾驶"
+
+#: settings/search.py:83
+#: settings/speed_steering.py:279
+msgid "Warns before rain, snow or storms start, and says when they should stop"
+msgstr "雨雪或风暴开始前提醒，并告知预计结束时间"
+
+#: settings/search.py:85
+msgid "Home, Work and favorites; slows for turns on a route"
+msgstr "家、公司和收藏；为路线转弯减速"
+
+#: settings/search.py:86
+#: settings/speed_steering.py:418
+msgid "Other favorites"
+msgstr "其他收藏"
+
+#: settings/search.py:86
+msgid "Saved places for Where to?"
+msgstr "供“去哪里？”使用的已保存地点"
+
+#: settings/search.py:87
+#: settings/speed_steering.py:419
+msgid "End Route When Parked"
+msgstr "停车后结束路线"
+
+#: settings/search.py:87
+#: settings/speed_steering.py:419
+msgid "Clears the destination when you turn off the car"
+msgstr "关闭车辆时清除目的地"
+
+#: settings/search.py:88
+#: settings/speed_steering.py:421
+msgid "Mapbox Keys"
+msgstr "Mapbox 密钥"
+
+#: settings/search.py:88
+msgid "Needed for place search and routes"
+msgstr "搜索地点和规划路线所需"
+
+#: settings/search.py:91
+msgid "The driving screen, theme and startup, and the map"
+msgstr "驾驶屏幕、主题、启动和地图"
+
+#: settings/search.py:98
+msgid "Side panel with system and controls data"
+msgstr "显示系统和控制数据的侧面板"
+
+#: settings/search.py:99
+msgid "Distance, gap and speed of the car ahead, plus radar points"
+msgstr "前车距离、时距、速度及雷达点"
+
+#: settings/search.py:108
+msgid "Volume and the optional chimes"
+msgstr "音量和可选提示音"
+
+#: settings/search.py:109
+msgid "One volume for everything, or each group on its own"
+msgstr "所有声音共用音量，或按组分别设置"
+
+#: settings/search.py:115
+msgid "The model that drives, and downloading others"
+msgstr "用于驾驶的模型及下载其他模型"
+
+#: settings/search.py:116
+msgid "The recommended driving model"
+msgstr "推荐的驾驶模型"
+
+#: settings/search.py:117
+msgid "Your car, its steering wheel buttons and car-specific options"
+msgstr "您的车辆、方向盘按钮和车型专属选项"
+
+#: settings/search.py:118
+#: settings/vehicle.py:194
+msgid "Steering Wheel Buttons"
+msgstr "方向盘按钮"
+
+#: settings/search.py:118
+msgid "What the car's own buttons do while driving"
+msgstr "车辆原有按钮在驾驶时的操作"
+
+#: settings/search.py:119
+#: settings/vehicle.py:185
+msgid "Auto-Lock Doors"
+msgstr "自动锁车门"
+
+#: settings/search.py:119
+#: settings/vehicle.py:185
+msgid "Locks when you shift out of park"
+msgstr "离开 P 挡时上锁"
+
+#: settings/search.py:120
+#: settings/vehicle.py:193
+#: settings/vehicle.py:318
+msgid "More for your car"
+msgstr "更多车辆功能"
+
+#: settings/search.py:120
+#: settings/vehicle.py:193
+msgid "Features specific to your make and model"
+msgstr "品牌和车型专属功能"
+
+#: settings/search.py:121
+msgid "openpilot's core switches and driver monitoring"
+msgstr "openpilot 核心开关及驾驶员监控"
+
+#: settings/search.py:122
+msgid "Adaptive cruise and lane keeping"
+msgstr "自适应巡航和车道保持"
+
+#: settings/search.py:123
+#: settings/speed_steering.py:349
+msgid "Disengage on Gas Pedal"
+msgstr "踩油门时退出"
+
+#: settings/search.py:123
+#: settings/speed_steering.py:349
+msgid "Pressing the accelerator turns openpilot off"
+msgstr "踩下加速踏板会关闭 openpilot"
+
+#: settings/search.py:124
+#: settings/speed_steering.py:350
+msgid "Lane Departure Warnings"
+msgstr "车道偏离警告"
+
+#: settings/search.py:124
+msgid "Alerts when you drift over a lane line without signaling"
+msgstr "未打转向灯越过车道线时警告"
+
+#: settings/search.py:125
+#: settings/speed_steering.py:351
+msgid "Safe Mode"
+msgstr "安全模式"
+
+#: settings/search.py:125
+msgid "Stock tuning, the default model and Relaxed"
+msgstr "原厂调校、默认模型和舒适风格"
+
+#: settings/search.py:126
+#: settings/speed_steering.py:359
+msgid "Always-On Driver Monitoring"
+msgstr "持续驾驶员监控"
+
+#: settings/search.py:126
+#: settings/speed_steering.py:359
+msgid "Watches for distraction even when openpilot is off"
+msgstr "openpilot 关闭时也监控分心情况"
+
+#: settings/search.py:127
+msgid "Check that it can see your face"
+msgstr "检查能否看清您的脸部"
+
+#: settings/search.py:129
+#: settings/speed_steering.py:363
+msgid "Sentry Mode"
+msgstr "哨兵模式"
+
+#: settings/search.py:129
+#: settings/speed_steering.py:363
+msgid "Pictures in Galaxy if the parked car is bumped"
+msgstr "停放车辆受到碰撞时可在 Galaxy 查看照片"
+
+#: settings/search.py:130
+#: settings/speed_steering.py:365
+msgid "Sensitivity"
+msgstr "灵敏度"
+
+#: settings/search.py:130
+#: settings/speed_steering.py:365
+msgid "High notices smaller bumps"
+msgstr "高灵敏度可检测更轻微的碰撞"
+
+#: settings/search.py:133
+msgid "Learned steering values and the controller"
+msgstr "已学习的转向参数和控制器"
+
+#: settings/search.py:134
+#: settings/tuner.py:49
+msgid "Steering Delay"
+msgstr "转向延迟"
+
+#: settings/search.py:134
+#: settings/tuner.py:49
+msgid "Time from command to wheel response"
+msgstr "从指令到方向盘响应的时间"
+
+#: settings/search.py:135
+#: settings/tuner.py:51
+msgid "Friction"
+msgstr "摩擦"
+
+#: settings/search.py:135
+#: settings/tuner.py:51
+msgid "Extra torque near center"
+msgstr "接近中位时的额外扭矩"
+
+#: settings/search.py:136
+#: settings/tuner.py:53
+msgid "Lateral Acceleration"
+msgstr "横向加速度"
+
+#: settings/search.py:136
+#: settings/tuner.py:53
+msgid "Torque to cornering scaling"
+msgstr "扭矩与过弯加速度的比例"
+
+#: settings/search.py:137
+#: settings/tuner.py:55
+msgid "Kp Factor"
+msgstr "Kp 系数"
+
+#: settings/search.py:137
+#: settings/tuner.py:55
+msgid "Correction strength"
+msgstr "修正强度"
+
+#: settings/search.py:138
+#: settings/tuner.py:311
+msgid "Steering Controller"
+msgstr "转向控制器"
+
+#: settings/search.py:138
+msgid "Torque, or NNFF when your car has a model"
+msgstr "使用扭矩控制，车型有模型时可用 NNFF"
+
+#: settings/search.py:139
+msgid "Acceleration and braking profiles and values"
+msgstr "加速和制动配置及数值"
+
+#: settings/search.py:140
+#: settings/tuner.py:339
+msgid "Acceleration Profile"
+msgstr "加速配置"
+
+#: settings/search.py:140
+#: settings/tuner.py:339
+msgid "How quickly the car speeds up"
+msgstr "车辆加速的快慢"
+
+#: settings/search.py:141
+#: settings/tuner.py:341
+msgid "Braking Profile"
+msgstr "制动配置"
+
+#: settings/search.py:141
+#: settings/tuner.py:341
+msgid "How early and firmly it slows down"
+msgstr "减速开始时间及强度"
+
+#: settings/search.py:142
+#: settings/tuner.py:58
+msgid "Maximum Acceleration"
+msgstr "最大加速度"
+
+#: settings/search.py:142
+#: settings/tuner.py:58
+msgid "The hardest openpilot will accelerate"
+msgstr "openpilot 允许的最强加速"
+
+#: settings/search.py:143
+#: settings/tuner.py:60
+msgid "Start Acceleration"
+msgstr "起步加速度"
+
+#: settings/search.py:143
+#: settings/tuner.py:60
+msgid "How firmly the car pulls away from a stop"
+msgstr "从静止起步时的加速强度"
+
+#: settings/search.py:144
+#: settings/tuner.py:62
+msgid "Stop Acceleration"
+msgstr "停车加速度"
+
+#: settings/search.py:144
+#: settings/tuner.py:62
+msgid "Braking held while stopped"
+msgstr "停车时保持的制动力"
+
+#: settings/search.py:145
+#: settings/tuner.py:64
+msgid "Stopping Rate"
+msgstr "停车制动增长率"
+
+#: settings/search.py:145
+#: settings/tuner.py:64
+msgid "How quickly braking builds into a stop"
+msgstr "直至停车时制动力增加的快慢"
+
+#: settings/search.py:146
+#: settings/tuner.py:66
+msgid "Actuator Delay"
+msgstr "执行器延迟"
+
+#: settings/search.py:146
+#: settings/tuner.py:66
+msgid "Time from command to gas or brake response"
+msgstr "从指令到油门或制动响应的时间"
+
+#: settings/search.py:147
+msgid "Following gaps and how the car stops"
+msgstr "跟车距离和停车方式"
+
+#: settings/search.py:148
+msgid "Following Gaps"
+msgstr "跟车距离"
+
+#: settings/search.py:148
+msgid "Relaxed, Standard, Aggressive and Traffic"
+msgstr "舒适、标准、激进和拥堵"
+
+#: settings/search.py:149
+#: settings/tuner.py:70
+msgid "Lead Detection Sensitivity"
+msgstr "前车检测灵敏度"
+
+#: settings/search.py:149
+#: settings/tuner.py:70
+msgid "Lower notices cars ahead sooner"
+msgstr "越低越早检测到前车"
+
+#: settings/search.py:150
+#: settings/tuner.py:72
+msgid "Stopped Distance"
+msgstr "停车距离"
+
+#: settings/search.py:150
+#: settings/tuner.py:72
+msgid "Extra room left behind a stopped car"
+msgstr "停车时与前车保留的额外空间"
+
+#: settings/search.py:151
+#: settings/tuner.py:405
+msgid "Use Radar for Take-Offs"
+msgstr "起步时使用雷达"
+
+#: settings/search.py:151
+msgid "Starts moving as soon as the car ahead pulls away"
+msgstr "前车起步后立即跟随"
+
+#: settings/search.py:152
+#: settings/tuner.py:407
+msgid "Force Stops at Lights"
+msgstr "红灯强制停车"
+
+#: settings/search.py:152
+#: settings/tuner.py:407
+msgid "Comes to a full stop for red lights the model detects"
+msgstr "在模型检测到的红灯前完全停车"
+
+#: settings/search.py:153
+#: settings/tuner.py:409
+msgid "Cruise Button Step"
+msgstr "巡航按钮步长"
+
+#: settings/search.py:153
+#: settings/tuner.py:409
+msgid "How far one press of + or − moves the set speed"
+msgstr "每次按 + 或 − 时设定速度的变化量"
+
+#: settings/search.py:154
+msgid "Change one option that Developer View or Lead Insights sets"
+msgstr "单独更改开发者视图或前车详情设置的选项"
+
+#: settings/search.py:155
+msgid "Bar Metrics"
+msgstr "栏位指标"
+
+#: settings/search.py:155
+msgid "Up to five values in Developer View's strip"
+msgstr "开发者视图栏中最多五项数值"
+
+#: settings/search.py:157
+msgid "Pairing, remote access, calibration, restart and power"
+msgstr "配对、远程访问、校准、重启和电源"
+
+#: settings/search.py:158
+msgid "comma connect: see drives and change settings on your phone"
+msgstr "comma connect：在手机上查看行程和更改设置"
+
+#: settings/search.py:159
+msgid "Galaxy: reach this device from a web browser"
+msgstr "Galaxy：通过浏览器访问此设备"
+
+#: settings/search.py:160
+msgid "How the device is mounted"
+msgstr "设备安装方式"
+
+#: settings/search.py:162
+msgid "Regulatory information"
+msgstr "法规信息"
+
+#: settings/search.py:163
+msgid "This device's IDs"
+msgstr "此设备的标识符"
+
+#: settings/search.py:164
+msgid "The cellular modem's ID"
+msgstr "移动网络调制解调器标识符"
+
+#: settings/search.py:165
+msgid "Restart the device"
+msgstr "重启设备"
+
+#: settings/search.py:166
+msgid "Turn the device off until the car starts"
+msgstr "关闭设备，直至车辆启动"
+
+#: settings/search.py:167
+msgid "Units, language, brightness and standby"
+msgstr "单位、语言、亮度和待机"
+
+#: settings/search.py:170
+msgid "Menus and alerts"
+msgstr "菜单和警报"
+
+#: settings/search.py:173
+msgid "Snapshots of your settings"
+msgstr "设置快照"
+
+#: settings/search.py:174
+msgid "What's using space, and recording and uploads"
+msgstr "空间使用、录制和上传"
+
+#: settings/search.py:176
+msgid "Delete downloaded map data"
+msgstr "删除已下载的地图数据"
+
+#: settings/search.py:177
+msgid "Downloaded models that aren't in use"
+msgstr "已下载但未使用的模型"
+
+#: settings/search.py:178
+msgid "Saved and uploaded with your drives"
+msgstr "随行程保存并上传"
+
+#: settings/search.py:179
+msgid "Cabin audio in your drive recordings"
+msgstr "行程记录中的车内声音"
+
+#: settings/search.py:181
+msgid "Send what happened to the developers"
+msgstr "向开发者发送问题经过"
+
+#: settings/search.py:182
+msgid "ADB, SSH and debug modes"
+msgstr "ADB、SSH 和调试模式"
+
+#: settings/search.py:184
+msgid "Connect over USB or the network"
+msgstr "通过 USB 或网络连接"
+
+#: settings/search.py:185
+msgid "Remote shell access"
+msgstr "远程终端访问"
+
+#: settings/search.py:186
+msgid "Adds every public key in a GitHub account"
+msgstr "添加 GitHub 账号中的所有公共密钥"
+
+#: settings/search.py:187
+msgid "Drive openpilot's controls from a joystick"
+msgstr "通过摇杆控制 openpilot"
+
+#: settings/search.py:188
+msgid "Turns off the car's emergency braking"
+msgstr "关闭车辆紧急制动"
+
+#: settings/search.py:191
+msgid "Networks nearby, and joining one"
+msgstr "附近网络及连接"
+
+#: settings/search.py:192
+msgid "This device's local address, beside the connected network"
+msgstr "此设备的本地地址，显示在已连接网络旁"
+
+#: settings/search.py:193
+msgid "Enter its name and password"
+msgstr "输入其名称和密码"
+
+#: settings/search.py:194
+msgid "Hotspot, data use, roaming and APN"
+msgstr "热点、流量使用、漫游和 APN"
+
+#: settings/search.py:196
+msgid "The name phones see when joining this device"
+msgstr "手机连接此设备时显示的名称"
+
+#: settings/search.py:199
+msgid "Roaming, APN and the device's IP address"
+msgstr "漫游、APN 和设备 IP 地址"
+
+#: settings/search.py:200
+msgid "A wheel remote's buttons and what they do"
+msgstr "方向盘遥控器的按钮及其操作"
+
+#: settings/search.py:201
+msgid "Car audio for alerts, and pairing devices"
+msgstr "警报用车辆音响及设备配对"
+
+#: settings/search.py:203
+msgid "Updates and the release notes"
+msgstr "更新和发行说明"
+
+#: settings/search.py:204
+#: settings/software_tab.py:192
+msgid "Automatic Updates"
+msgstr "自动更新"
+
+#: settings/search.py:204
+#: settings/software_tab.py:192
+msgid "Download while parked, install when you turn off the car"
+msgstr "停车时下载，关闭车辆时安装"
+
+#: settings/search.py:205
+#: settings/software_tab.py:188
+#: settings/software_tab.py:140
+msgid "Release Channel"
+msgstr "更新通道"
+
+#: settings/search.py:205
+#: settings/software_tab.py:140
+msgid "The branch to download updates from"
+msgstr "下载更新所用的分支"
+
+#: settings/search.py:206
+#: settings/software_tab.py:195
+msgid "Reset Settings"
+msgstr "重置设置"
+
+#: settings/search.py:206
+msgid "Back to the Essentials defaults"
+msgstr "恢复 Essentials 默认值"
+
+#: settings/search.py:207
+#: settings/software_tab.py:169
+#: settings/software_tab.py:198
+msgid "Uninstall"
+msgstr "卸载"
+
+#: settings/search.py:207
+msgid "Remove this software from the device"
+msgstr "从设备中移除此软件"
+
+#: settings/search.py:381
+#: settings/search.py:372
+msgid "Search settings"
+msgstr "搜索设置"
+
+#: settings/search.py:270
+msgid "Say a setting, like speed limit. Tap the mic when you're done."
+msgstr "说出设置名称，例如限速。结束后点击麦克风。"
+
+#: settings/search.py:352
+#: settings/search.py:311
+#, python-brace-format
+msgid "No settings match “{}”"
+msgstr "没有匹配“{}”的设置"
+
+#: settings/search.py:353
+msgid "Type a setting's name or what it does, like brightness or lane changes"
+msgstr "输入设置名称或功能，例如亮度或变道"
+
+#: settings/software_tab.py:37
+msgid "Checking for an update"
+msgstr "正在检查更新"
+
+#: settings/software_tab.py:37
+msgid "Downloading the update"
+msgstr "正在下载更新"
+
+#: settings/software_tab.py:37
+msgid "Getting the update ready"
+msgstr "正在准备更新"
+
+#: settings/software_tab.py:78
+msgid "You have the latest version"
+msgstr "已是最新版本"
+
+#: settings/software_tab.py:119
+msgid "No release notes for this version."
+msgstr "此版本暂无发行说明。"
+
+#: settings/software_tab.py:47
+msgid "Unknown version"
+msgstr "未知版本"
+
+#: settings/software_tab.py:73
+#, python-brace-format
+msgid "{} installs when you turn off the car or restart"
+msgstr "关闭车辆或重启时安装{}"
+
+#: settings/software_tab.py:75
+msgid "Couldn't check for updates. Check the connection and try again."
+msgstr "无法检查更新。请检查连接后重试。"
+
+#: settings/software_tab.py:77
+msgid "A new version is available to download"
+msgstr "有新版本可供下载"
+
+#: settings/software_tab.py:81
+msgid "Working…"
+msgstr "正在处理…"
+
+#: settings/software_tab.py:81
+msgid "Restart to install"
+msgstr "重启以安装"
+
+#: settings/software_tab.py:81
+msgid "Try again"
+msgstr "重试"
+
+#: settings/software_tab.py:82
+msgid "Check now"
+msgstr "立即检查"
+
+#: settings/software_tab.py:125
+#, python-brace-format
+msgid "What's new in {}"
+msgstr "{}的新功能"
+
+#: settings/software_tab.py:169
+msgid "Uninstall openpilot?"
+msgstr "卸载 openpilot？"
+
+#: settings/software_tab.py:169
+msgid "The device removes openpilot and starts its setup again."
+msgstr "设备将移除 openpilot 并重新开始设置。"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: settings/software_tab.py:253
+msgid "pkill -SIGUSR1 -f system.updated.updated"
+msgstr "pkill -SIGUSR1 -f system.updated.updated"
+
+#: settings/software_tab.py:71
+#: settings/software_tab.py:65
+msgid "Updating"
+msgstr "正在更新"
+
+#: settings/software_tab.py:99
+#: settings/software_tab.py:99
+#: settings/software_tab.py:99
+msgid "Stable"
+msgstr "稳定版"
+
+#: settings/software_tab.py:188
+msgid "Choose another branch"
+msgstr "选择其他分支"
+
+#: settings/software_tab.py:188
+msgid "Other branches are in Tuner Mode"
+msgstr "其他分支位于调校模式"
+
+#: settings/software_tab.py:195
+msgid "Back to the Essentials defaults. Backups are kept."
+msgstr "恢复 Essentials 默认值，备份会保留。"
+
+#: settings/software_tab.py:65
+msgid "Ready to install"
+msgstr "可供安装"
+
+#: settings/software_tab.py:65
+msgid "Check failed"
+msgstr "检查失败"
+
+#: settings/software_tab.py:66
+msgid "Update available"
+msgstr "有可用更新"
+
+#: settings/software_tab.py:99
+msgid "Beta"
+msgstr "测试版"
+
+#: settings/software_tab.py:158
+msgid "Erase everything?"
+msgstr "清除所有数据？"
+
+#: settings/software_tab.py:158
+msgid "Every setting, drive and download is deleted. This can't be undone."
+msgstr "所有设置、行程和下载都会被删除。此操作无法撤销。"
+
+#: settings/software_tab.py:158
+msgid "Erase"
+msgstr "清除"
+
+#: settings/software_tab.py:166
+msgid "Factory reset too?"
+msgstr "也恢复出厂设置？"
+
+#: settings/software_tab.py:166
+msgid "A factory reset also deletes every setting, drive and download. Skip keeps them."
+msgstr "恢复出厂设置还会删除所有设置、行程和下载。跳过则保留。"
+
+#: settings/software_tab.py:167
+#: selfdrive/ui/layouts/settings/software.py:350
+msgid "Factory Reset"
+msgstr "恢复出厂设置"
+
+#: settings/software_tab.py:180
+#, python-brace-format
+msgid "Version {}"
+msgstr "版本{}"
+
+#: settings/software_tab.py:167
+#: selfdrive/ui/layouts/settings/software.py:350
+msgid "Skip"
+msgstr "跳过"
+
+#: settings/software_tab.py:184
+msgid "What's new"
+msgstr "新功能"
+
+#: settings/software_tab.py:196
+msgid "Reset settings?"
+msgstr "重置设置？"
+
+#: settings/software_tab.py:196
+msgid "Every setting goes back to the Essentials default. Your backups are kept."
+msgstr "所有设置恢复为 Essentials 默认值。备份会保留。"
+
+#: settings/speed_steering.py:14
+#: settings/tuner.py:76
+#: setup.py:34
+msgid "Relaxed"
+msgstr "舒适"
+
+#: settings/speed_steering.py:14
+#: settings/tuner.py:76
+#: settings/tuner.py:86
+msgid "Sport"
+msgstr "运动"
+
+#: settings/speed_steering.py:15
+#: setup.py:40
+msgid "Show"
+msgstr "显示"
+
+#: settings/speed_steering.py:16
+msgid "Update automatically"
+msgstr "自动更新"
+
+#: settings/speed_steering.py:16
+msgid "Tap to confirm"
+msgstr "点击确认"
+
+#: settings/speed_steering.py:17
+msgid "Nudge"
+msgstr "轻推"
+
+#: settings/speed_steering.py:182
+msgid "Light"
+msgstr "轻"
+
+#: settings/speed_steering.py:182
+msgid "Medium"
+msgstr "中"
+
+#: settings/speed_steering.py:182
+msgid "Heavy"
+msgstr "重"
+
+#: settings/speed_steering.py:180
+msgid "Car"
+msgstr "轿车"
+
+#: settings/speed_steering.py:180
+msgid "Standard tuning for most cars and SUVs"
+msgstr "适合多数轿车和 SUV 的标准调校"
+
+#: settings/speed_steering.py:180
+msgid "Smoother take-off and regen-aware braking"
+msgstr "更平顺的起步及考虑能量回收的制动"
+
+#: settings/speed_steering.py:181
+msgid "Truck"
+msgstr "卡车"
+
+#: settings/speed_steering.py:181
+msgid "Gentler acceleration for heavier vehicles"
+msgstr "为较重车辆提供更柔和的加速"
+
+#: settings/speed_steering.py:181
+msgid "Towing"
+msgstr "拖挂"
+
+#: settings/speed_steering.py:181
+msgid "Truck tuning plus room for a trailer"
+msgstr "卡车调校并为拖车预留空间"
+
+#: settings/speed_steering.py:290
+msgid "Low"
+msgstr "低"
+
+#: settings/speed_steering.py:290
+msgid "High"
+msgstr "高"
+
+#: settings/speed_steering.py:171
+msgid "Keeps steering with cruise off."
+msgstr "巡航关闭后仍保持转向。"
+
+#: settings/speed_steering.py:174
+#, python-brace-format
+msgid "{} settings"
+msgstr "{}项设置"
+
+#: settings/speed_steering.py:273
+msgid "Fog or low visibility"
+msgstr "雾或能见度低"
+
+#: settings/speed_steering.py:273
+msgid "Longer following gap"
+msgstr "增大跟车距离"
+
+#: settings/speed_steering.py:273
+msgid "Longer gap, earlier braking"
+msgstr "增大车距，提前制动"
+
+#: settings/speed_steering.py:274
+msgid "Heavy rain or storms"
+msgstr "大雨或风暴"
+
+#: settings/speed_steering.py:274
+msgid "More gap, softer acceleration"
+msgstr "增大车距，柔和加速"
+
+#: settings/speed_steering.py:275
+msgid "Snow or ice"
+msgstr "雪或冰"
+
+#: settings/speed_steering.py:275
+msgid "Most gap, gentlest starts and stops"
+msgstr "最大车距，最柔和的起步和停车"
+
+#: settings/speed_steering.py:284
+msgid "Needs an internet connection. Chips show it ahead and while it lasts."
+msgstr "需要联网。状态标签会提前及在天气持续期间显示。"
+
+#: settings/speed_steering.py:314
+msgid "Gas pedal disengages"
+msgstr "踩油门会退出"
+
+#: settings/speed_steering.py:314
+msgid "Gas pedal doesn't disengage"
+msgstr "踩油门不会退出"
+
+#: settings/speed_steering.py:335
+msgid "Driver monitoring always on"
+msgstr "驾驶员监控始终开启"
+
+#: settings/speed_steering.py:335
+msgid "Driver monitoring while engaged"
+msgstr "启用时监控驾驶员"
+
+#: settings/speed_steering.py:353
+msgid "openpilot's core switches"
+msgstr "openpilot 核心开关"
+
+#: settings/speed_steering.py:368
+msgid "Watches that you're paying attention"
+msgstr "监控您是否专心驾驶"
+
+#: settings/speed_steering.py:425
+msgid "While a route is active, the car slows for turns and uses route speed limits"
+msgstr "路线启用时，为转弯减速并使用路线限速"
+
+#: settings/speed_steering.py:138
+msgid "Speed limits off"
+msgstr "限速已关闭"
+
+#: settings/speed_steering.py:138
+msgid "Showing speed limits"
+msgstr "正在显示限速"
+
+#: settings/speed_steering.py:138
+msgid "Matching speed limits"
+msgstr "正在跟随限速"
+
+#: settings/speed_steering.py:142
+msgid "Relaxed while Safe Mode is on"
+msgstr "安全模式开启时使用舒适风格"
+
+#: settings/speed_steering.py:167
+#, python-brace-format
+msgid "Auto starts one change per signal, above {} {}"
+msgstr "自动模式在高于{} {}时，每次打转向灯变道一次"
+
+#: settings/speed_steering.py:219
+msgid "Available with Towing"
+msgstr "使用拖挂时可用"
+
+#: settings/speed_steering.py:281
+msgid "WHAT CHANGES"
+msgstr "更改内容"
+
+#: settings/speed_steering.py:347
+msgid "Adaptive cruise and lane keeping. Your attention is required at all times."
+msgstr "自适应巡航和车道保持。您必须始终保持注意力。"
+
+#: settings/speed_steering.py:350
+msgid "Alerts when you drift over a lane line without signaling, above 31 mph (50 km/h)"
+msgstr "高于 31 mph（50 km/h）时，未打转向灯越线会警告"
+
+#: settings/speed_steering.py:351
+msgid "Uses stock tuning, the default model and Relaxed until turned off."
+msgstr "关闭前会使用原厂调校、默认模型和舒适风格。"
+
+#: settings/speed_steering.py:362
+msgid "WHILE PARKED"
+msgstr "停车时"
+
+#: settings/speed_steering.py:385
+msgid "Saved place"
+msgstr "已保存地点"
+
+#: settings/speed_steering.py:418
+#, python-brace-format
+msgid "{} saved"
+msgstr "已保存{}"
+
+#: settings/speed_steering.py:340
+msgid " Restarts openpilot if the car is on."
+msgstr " 车辆开启时会重启 openpilot。"
+
+#: settings/speed_steering.py:412
+msgid "Change"
+msgstr "更改"
+
+#: settings/speed_steering.py:412
+msgid "Set"
+msgstr "设置"
+
+#: settings/speed_steering.py:225
+msgid "Adjusts acceleration and braking for what you drive"
+msgstr "根据车辆类型调整加速和制动"
+
+#: settings/speed_steering.py:422
+msgid "How to change"
+msgstr "如何更改"
+
+#: settings/speed_steering.py:422
+msgid "How to add"
+msgstr "如何添加"
+
+#: settings/tuner.py:549
+msgid "Every Tuner Mode change goes back to its default, in every section and bundle. Your other settings stay as they are."
+msgstr "所有分区和组合中的调校模式更改均恢复默认值，其他设置保持不变。"
+
+#: settings/tuner.py:26
+#: settings/tuner.py:275
+#: settings/tuner.py:496
+msgid "Override"
+msgstr "覆盖"
+
+#: settings/tuner.py:26
+msgid "Learned"
+msgstr "已学习"
+
+#: settings/tuner.py:26
+msgid "From style"
+msgstr "来自风格"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: settings/tuner.py:78
+#: settings/tuner.py:138
+msgid "NNFF"
+msgstr "NNFF"
+
+#: settings/tuner.py:78
+msgid "Lite"
+msgstr "Lite"
+
+#: settings/tuner.py:78
+msgid "Torque"
+msgstr "扭矩"
+
+#: settings/tuner.py:91
+msgid "Developer sidebar"
+msgstr "开发者侧栏"
+
+#: settings/tuner.py:91
+msgid "FPS counter"
+msgstr "FPS 计数器"
+
+#: settings/tuner.py:91
+msgid "CPU load"
+msgstr "CPU 负载"
+
+#: settings/tuner.py:91
+msgid "GPU load"
+msgstr "GPU 负载"
+
+#: settings/tuner.py:92
+msgid "Numeric temperature"
+msgstr "数值温度"
+
+#: settings/tuner.py:92
+msgid "Memory use"
+msgstr "内存使用量"
+
+#: settings/tuner.py:92
+msgid "Adjacent lane widths"
+msgstr "相邻车道宽度"
+
+#: settings/tuner.py:93
+msgid "Speed limit sources"
+msgstr "限速来源"
+
+#: settings/tuner.py:93
+msgid "Lead details on the tag"
+msgstr "标签中的前车详情"
+
+#: settings/tuner.py:93
+msgid "Radar points"
+msgstr "雷达点"
+
+#: settings/tuner.py:94
+msgid "Stopping point"
+msgstr "停车点"
+
+#: settings/tuner.py:94
+msgid "Stopping point distance"
+msgstr "距停车点的距离"
+
+#: settings/tuner.py:94
+msgid "Adjacent paths"
+msgstr "相邻路径"
+
+#: settings/tuner.py:95
+msgid "Pedals"
+msgstr "踏板"
+
+#: settings/tuner.py:77
+msgid "Traffic"
+msgstr "拥堵"
+
+#: settings/tuner.py:86
+#: settings/tuner.py:87
+msgid "Eco"
+msgstr "节能"
+
+#: settings/tuner.py:259
+#, python-brace-format
+msgid "{} changed"
+msgstr "已更改{}项"
+
+#: settings/tuner.py:472
+#: settings/tuner.py:540
+msgid "Bar metrics"
+msgstr "栏位指标"
+
+#: settings/tuner.py:544
+#, python-brace-format
+msgid "{} of {} items differ from the bundle."
+msgstr "{} / {}项与组合设置不同。"
+
+#: settings/tuner.py:559
+msgid "TUNER MODE"
+msgstr "调校模式"
+
+#: settings/tuner.py:313
+msgid "Learned values work for most cars. An override replaces the learned value until you reset it."
+msgstr "学习值适用于多数车辆。覆盖值会替代学习值，直到您重置。"
+
+#: settings/tuner.py:344
+msgid "Driving Style and Vehicle Profile set these. An override replaces their value."
+msgstr "由驾驶风格和车辆配置设置，覆盖值会替代其数值。"
+
+#: settings/tuner.py:388
+msgid "Following gap by style"
+msgstr "各风格跟车距离"
+
+#: settings/tuner.py:557
+msgid "Reset all tuning?"
+msgstr "重置所有调校？"
+
+#: settings/tuner.py:311
+msgid "Auto uses NNFF when your car has a model"
+msgstr "自动模式在车型有模型时使用 NNFF"
+
+#: settings/tuner.py:382
+#, python-brace-format
+msgid "{} gap"
+msgstr "{}车距"
+
+#: settings/tuner.py:382
+msgid "Seconds behind the car ahead in this Driving Style"
+msgstr "此驾驶风格下与前车的时间间隔（秒）"
+
+#: settings/tuner.py:405
+msgid "Starts moving as soon as the radar sees the car ahead pull away"
+msgstr "雷达检测到前车起步后立即跟随"
+
+#: settings/tuner.py:473
+#, python-brace-format
+msgid "{} of {} picked. They spread evenly across the bar; pick none to hide it."
+msgstr "已选{} / {}项，均匀分布在栏中；不选则隐藏。"
+
+#: settings/tuner.py:488
+msgid "Choose"
+msgstr "选择"
+
+#: settings/tuner.py:512
+msgid "Bundle on"
+msgstr "组合已开启"
+
+#: settings/tuner.py:512
+msgid "Bundle off"
+msgstr "组合已关闭"
+
+#: settings/tuner.py:541
+msgid "None: the bar is hidden"
+msgstr "无：栏位隐藏"
+
+#: settings/tuner.py:567
+msgid "Reset all tuning"
+msgstr "重置所有调校"
+
+#: settings/tuner.py:326
+msgid "Replaces the profile your Driving Style sets, until you reset it"
+msgstr "替代驾驶风格设置的配置，直到重置"
+
+#: settings/vehicle.py:29
+msgid "Car default"
+msgstr "车辆默认值"
+
+#: settings/vehicle.py:29
+msgid "Pause steering"
+msgstr "暂停转向"
+
+#: settings/vehicle.py:29
+msgid "Pause gas and brake"
+msgstr "暂停油门和制动"
+
+#: settings/vehicle.py:30
+msgid "Switch experimental mode"
+msgstr "切换实验模式"
+
+#: settings/vehicle.py:30
+msgid "Traffic mode"
+msgstr "拥堵模式"
+
+#: settings/vehicle.py:30
+msgid "Switchback mode"
+msgstr "连续急弯模式"
+
+#: settings/vehicle.py:31
+msgid "Match the speed limit"
+msgstr "跟随限速"
+
+#: settings/vehicle.py:31
+msgid "Favorite 1"
+msgstr "收藏 1"
+
+#: settings/vehicle.py:31
+msgid "Favorite 2"
+msgstr "收藏 2"
+
+#: settings/vehicle.py:31
+msgid "Favorite 3"
+msgstr "收藏 3"
+
+#: settings/vehicle.py:254
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:780
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:68
+msgid "Never"
+msgstr "从不"
+
+#. Unit notation; keep as written.
+#: settings/vehicle.py:254
+msgid "10 s"
+msgstr "10 s"
+
+#. Unit notation; keep as written.
+#: settings/vehicle.py:254
+msgid "30 s"
+msgstr "30 s"
+
+#: settings/vehicle.py:254
+msgid "1 min"
+msgstr "1分钟"
+
+#: settings/vehicle.py:254
+msgid "2 min"
+msgstr "2分钟"
+
+#: settings/vehicle.py:254
+msgid "5 min"
+msgstr "5分钟"
+
+#: settings/vehicle.py:96
+msgid "Buttons customized"
+msgstr "已自定义按钮"
+
+#: settings/vehicle.py:96
+msgid "Car default buttons"
+msgstr "车辆默认按钮"
+
+#: settings/vehicle.py:194
+msgid "Preset for your car. Tap a button to change what it does."
+msgstr "已为您的车辆预设。点击按钮可更改其操作。"
+
+#: settings/vehicle.py:143
+msgid "MAKE"
+msgstr "品牌"
+
+#: settings/vehicle.py:143
+msgid "MODEL"
+msgstr "车型"
+
+#: settings/vehicle.py:157
+msgid "Choose your car"
+msgstr "选择车辆"
+
+#: settings/vehicle.py:176
+msgid "YOUR CAR"
+msgstr "您的车辆"
+
+#: settings/vehicle.py:228
+#: settings/vehicle.py:232
+#: settings/vehicle.py:231
+msgid "Press"
+msgstr "短按"
+
+#: settings/vehicle.py:229
+msgid "Long press"
+msgstr "长按"
+
+#: settings/vehicle.py:232
+msgid "Cruise main"
+msgstr "巡航主按钮"
+
+#: settings/vehicle.py:303
+#: settings/vehicle.py:351
+msgid "Lock doors after"
+msgstr "延时锁门"
+
+#: settings/vehicle.py:317
+msgid "Nothing extra for this car. Everything it supports is on the Vehicle page."
+msgstr "此车没有额外选项，所有支持的功能均在车辆页面。"
+
+#: settings/vehicle.py:318
+msgid "Options only some makes and models have"
+msgstr "仅部分品牌和车型支持的选项"
+
+#: settings/vehicle.py:332
+msgid "Use the car's own cruise control"
+msgstr "使用车辆自带巡航控制"
+
+#: settings/vehicle.py:333
+msgid "Turns off openpilot's gas and brake control. openpilot restarts if the car is on."
+msgstr "关闭 openpilot 的油门和制动控制。车辆开启时会重启 openpilot。"
+
+#: settings/vehicle.py:158
+msgid "Only needed if detection picked the wrong car. Choosing turns off automatic detection."
+msgstr "仅在车辆识别错误时需要。手动选择会关闭自动检测。"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: settings/vehicle.py:231
+msgid "LKAS"
+msgstr "LKAS"
+
+#: settings/vehicle.py:236
+msgid "Mode"
+msgstr "模式"
+
+#: settings/vehicle.py:236
+msgid "Star"
+msgstr "星标"
+
+#: settings/vehicle.py:288
+msgid "This needs a panda firmware update, and the device restarts when it's done."
+msgstr "需要更新 panda 固件，完成后设备会重启。"
+
+#: settings/vehicle.py:288
+msgid "Update and restart"
+msgstr "更新并重启"
+
+#: settings/vehicle.py:305
+msgid "How long after you turn off the car"
+msgstr "关闭车辆后的等待时间"
+
+#: settings/vehicle.py:334
+msgid "openpilot stops controlling gas and brakes; the car's adaptive cruise takes over. openpilot restarts if the car is on."
+msgstr "openpilot 停止控制油门和制动，由车辆自适应巡航接管。车辆开启时会重启 openpilot。"
+
+#: settings/vehicle.py:336
+msgid "Pedal for gas and brake"
+msgstr "使用 pedal 控制油门和制动"
+
+#: settings/vehicle.py:336
+msgid "Use the comma pedal for openpilot's speed control"
+msgstr "使用 comma pedal 进行 openpilot 速度控制"
+
+#: settings/vehicle.py:337
+msgid "Offsets on the dash"
+msgstr "仪表盘偏移量"
+
+#: settings/vehicle.py:337
+msgid "Show set-speed offsets on the dashboard"
+msgstr "在仪表盘显示设定速度偏移量"
+
+#: settings/vehicle.py:339
+msgid "CAN ignition only"
+msgstr "仅 CAN 点火"
+
+#: settings/vehicle.py:339
+msgid "Start only from the car's CAN ignition, not the ignition wire"
+msgstr "仅根据车辆 CAN 点火信号启动，忽略点火线"
+
+#: settings/vehicle.py:340
+msgid "Remote start wakes the device"
+msgstr "远程启动车辆时唤醒设备"
+
+#: settings/vehicle.py:340
+msgid "Starting the car remotely starts openpilot too"
+msgstr "远程启动车辆时也启动 openpilot"
+
+#: settings/vehicle.py:342
+#: settings/vehicle.py:346
+#: settings/vehicle.py:353
+msgid "Stop and go"
+msgstr "停走跟车"
+
+#: settings/vehicle.py:342
+msgid "Keep going after a stop on Volts that don't do it themselves"
+msgstr "让无法自行恢复的 Volt 在停车后继续行驶"
+
+#: settings/vehicle.py:344
+msgid "Brake hold"
+msgstr "制动保持"
+
+#: settings/vehicle.py:344
+msgid "Hold after cruise times out at a stop, and go again when traffic moves"
+msgstr "停车时巡航超时后保持制动，车流移动时继续行驶"
+
+#: settings/vehicle.py:346
+msgid "Keep going after a stop"
+msgstr "停车后继续行驶"
+
+#: settings/vehicle.py:350
+msgid "Auto-unlock doors"
+msgstr "自动解锁车门"
+
+#: settings/vehicle.py:350
+msgid "Unlocks when you shift into park"
+msgstr "挂入 P 挡时解锁"
+
+#: settings/vehicle.py:351
+msgid "Locks the doors a while after you turn off the car"
+msgstr "关闭车辆一段时间后锁门"
+
+#: settings/vehicle.py:353
+msgid "Keep going after a stop on Toyotas that don't do it themselves"
+msgstr "让无法自行恢复的 Toyota 在停车后继续行驶"
+
+#: settings/vehicle.py:355
+msgid "Use Cancel as a button"
+msgstr "将 Cancel 用作可分配按钮"
+
+#: settings/vehicle.py:355
+msgid "Map the Cancel button like the other steering wheel buttons"
+msgstr "像其他方向盘按钮一样分配 Cancel 按钮"
+
+#: settings/vehicle.py:357
+msgid "EV remote climate wakes the device"
+msgstr "电动车远程空调唤醒设备"
+
+#: settings/vehicle.py:357
+msgid "Remote climate starts openpilot too"
+msgstr "远程空调也会启动 openpilot"
+
+#: settings/vehicle.py:358
+msgid "Nostalgia mode"
+msgstr "怀旧模式"
+
+#: settings/vehicle.py:358
+msgid "The left paddle pauses openpilot's gas and brake control"
+msgstr "左拨片暂停 openpilot 油门和制动控制"
+
+#: settings/vehicle.py:178
+msgid "Chosen manually"
+msgstr "已手动选择"
+
+#: settings/vehicle.py:178
+msgid "Detected automatically"
+msgstr "已自动检测"
+
+#: settings/vehicle.py:348
+msgid "Stop and go with a manual parking brake"
+msgstr "手动驻车制动车辆的停走跟车"
+
+#: settings/vehicle.py:348
+msgid "For cars with a hand brake"
+msgstr "适用于手刹车辆"
+
+#: settings/vehicle.py:181
+msgid "Use detection instead"
+msgstr "改用自动检测"
+
+#: settings/vehicle.py:181
+msgid "Wrong car? Choose it manually"
+msgstr "车辆不正确？请手动选择"
+
+#: settings/vehicle.py:285
+msgid "Updating the panda"
+msgstr "正在更新 panda"
+
+#: settings/vehicle.py:285
+msgid "The device restarts when it's done. Keep the car on until then."
+msgstr "完成后设备会重启。请保持车辆开启直至完成。"
+
+#: settings/vehicle.py:287
+msgid "Turn on"
+msgstr "开启"
+
+#: settings/vehicle.py:287
+msgid "Turn off"
+msgstr "关闭"
+
+#: settings/window.py:319
+msgid "DEVICE"
+msgstr "设备"
+
+#: settings/window.py:254
+msgid "Driving model"
+msgstr "驾驶模型"
+
+#: setup.py:33
+msgid "driving style"
+msgstr "驾驶风格"
+
+#: setup.py:33
+msgid "How should your car drive?"
+msgstr "希望车辆如何驾驶？"
+
+#: setup.py:38
+msgid "speed limits"
+msgstr "限速"
+
+#: setup.py:38
+msgid "What should it do with speed limits?"
+msgstr "如何处理限速？"
+
+#: setup.py:43
+msgid "lane changes"
+msgstr "变道"
+
+#: setup.py:43
+msgid "How should lane changes start?"
+msgstr "如何开始变道？"
+
+#: setup.py:117
+msgid "You can change all of these later in Settings › Driving."
+msgstr "之后可在设置 › 驾驶中更改这些选项。"
+
+#: setup.py:108
+#, python-brace-format
+msgid "STEP {} OF {}"
+msgstr "第{}步，共{}步"
+
+#: setup.py:118
+#, python-brace-format
+msgid "Next: {}. You can change all of these later."
+msgstr "下一项：{}。之后均可更改。"
+
+#: setup.py:34
+msgid "Longer following gap, gentle starts and early, soft braking."
+msgstr "较大跟车距离，柔和起步，提前轻柔制动。"
+
+#: setup.py:35
+msgid "Standard · recommended"
+msgstr "标准 · 推荐"
+
+#: setup.py:35
+msgid "Keeps pace with traffic. A good fit for most drivers and roads."
+msgstr "跟随车流，适合多数驾驶员和道路。"
+
+#: setup.py:36
+msgid "Shorter gap, quicker acceleration and later braking."
+msgstr "较短车距、更快加速、更晚制动。"
+
+#: setup.py:39
+msgid "Speed limits aren't shown or used."
+msgstr "不显示也不使用限速。"
+
+#: setup.py:40
+msgid "Shows the limit next to your speed. You set the speed."
+msgstr "在车速旁显示限速，由您设置速度。"
+
+#: setup.py:41
+msgid "Match · recommended"
+msgstr "跟随限速 · 推荐"
+
+#: setup.py:41
+msgid "Sets cruise to the limit plus 3. Asks before speeding up."
+msgstr "将巡航设为限速加 3，加速前会询问。"
+
+#: setup.py:44
+msgid "Nudge · recommended"
+msgstr "轻推 · 推荐"
+
+#: setup.py:44
+msgid "Signal, then nudge the wheel toward the lane."
+msgstr "打转向灯，然后朝目标车道轻推方向盘。"
+
+#: setup.py:45
+msgid "Signal and the car changes lanes when it's clear."
+msgstr "打转向灯，车道安全时车辆会变道。"
+
+#: setup.py:96
+msgid "Use defaults"
+msgstr "使用默认值"
+
+#: setup.py:97
+msgid "Back"
+msgstr "返回"
+
+#: setup.py:99
+msgid "Start driving"
+msgstr "开始驾驶"
+
+#: setup.py:118
+msgid ", then "
+msgstr "，然后"
+
+#: sidebar.py:94
+msgid "comma connect"
+msgstr "comma connect"
+
+#: sidebar.py:100
+#: sidebar.py:99
+msgid "Network"
+msgstr "网络"
+
+#: sidebar.py:94
+#: sidebar.py:99
+#: sidebar.py:94
+msgid "Offline"
+msgstr "离线"
+
+#: sidebar.py:59
+msgid "Settings"
+msgstr "设置"
+
+#: sidebar.py:63
+msgid "Recording audio"
+msgstr "正在录音"
+
+#: sidebar.py:113
+msgid "Checking"
+msgstr "正在检查"
+
+#: sidebar.py:143
+msgid "Good"
+msgstr "良好"
+
+#: sidebar.py:143
+msgid "Warm"
+msgstr "偏暖"
+
+#: sidebar.py:143
+msgid "Hot"
+msgstr "高温"
+
+#: sidebar.py:138
+msgid "Not downloaded"
+msgstr "未下载"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: tokens.py:102
+#: tokens.py:103
+#: tokens.py:166
+msgid "FFFFFF"
+msgstr "FFFFFF"
+
+#: voice.py:36
+msgid "Didn't catch that. Tap the mic to try again."
+msgstr "未能听清。点击麦克风重试。"
+
+#: voice.py:37
+msgid "The microphone isn't available right now."
+msgstr "目前无法使用麦克风。"
+
+#: voice.py:38
+msgid "Voice typing can't hear the microphone while driving right now. Try again parked."
+msgstr "目前驾驶时语音输入无法听到麦克风。请停车后重试。"
+
+#: voice.py:39
+msgid "Couldn't download the speech model. Check the connection and try again."
+msgstr "无法下载语音模型。请检查连接后重试。"
+
+#: voice.py:40
+msgid "Voice typing didn't work this time. Try again or type it."
+msgstr "本次语音输入失败。请重试或手动输入。"
+
+#: voice.py:189
+msgid "Type instead"
+msgstr "改为键盘输入"
+
+#: voice.py:202
+msgid "Listening"
+msgstr "正在聆听"
+
+#. Name, identifier, keyboard keys or command; keep as written.
+#: voice.py:93
+msgid "QCOM"
+msgstr "QCOM"
+
+#: voice.py:197
+msgid "Getting voice typing ready"
+msgstr "正在准备语音输入"
+
+#: voice.py:197
+msgid "One-time setup for the speech model and voice engine. Everything stays on this device."
+msgstr "一次性设置语音模型和引擎。所有数据保留在此设备上。"
+
+#: voice.py:199
+msgid "Writing it down"
+msgstr "正在转写"
+
+#: voice.py:199
+msgid "This takes a few seconds. You can edit the words after."
+msgstr "需要几秒钟，之后可编辑文字。"
+
+#: voice.py:201
+msgid "Voice typing"
+msgstr "语音输入"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:72
+msgid "U.S. Midwest Region (12 States)"
+msgstr "美国中西部（12 州）"
+
+#. US state and territory codes; keep as written.
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:73
+msgid "IL, IN, IA, KS, MI, MN, MO, NE, ND, OH, SD, WI"
+msgstr "IL, IN, IA, KS, MI, MN, MO, NE, ND, OH, SD, WI"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:77
+msgid "U.S. Northeast Region (9 States)"
+msgstr "美国东北部（9 州）"
+
+#. US state and territory codes; keep as written.
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:78
+msgid "CT, ME, MA, NH, NJ, NY, PA, RI, VT"
+msgstr "CT, ME, MA, NH, NJ, NY, PA, RI, VT"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:82
+msgid "U.S. South Region (17 States)"
+msgstr "美国南部（17 州）"
+
+#. US state and territory codes; keep as written.
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:83
+msgid "AL, AR, DE, DC, FL, GA, KY, LA, MD, MS, NC, OK, SC, TN, TX, VA, WV"
+msgstr "AL, AR, DE, DC, FL, GA, KY, LA, MD, MS, NC, OK, SC, TN, TX, VA, WV"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:87
+msgid "U.S. West Region (13 States)"
+msgstr "美国西部（13 州）"
+
+#. US state and territory codes; keep as written.
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:88
+msgid "AK, AZ, CA, CO, HI, ID, MT, NV, NM, OR, UT, WA, WY"
+msgstr "AK, AZ, CA, CO, HI, ID, MT, NV, NM, OR, UT, WA, WY"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:92
+msgid "U.S. Territories (5 Territories)"
+msgstr "美国属地（5 个属地）"
+
+#. US state and territory codes; keep as written.
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:93
+msgid "AS, GU, MP, PR, VI"
+msgstr "AS, GU, MP, PR, VI"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:120
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:132
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:138
+msgid "Calculating..."
+msgstr "正在计算…"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:135
+msgid "Almost done"
+msgstr "即将完成"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:553
+msgid "Tap to select state"
+msgstr "点击选择州"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:678
+msgid "Download Offline Maps"
+msgstr "下载离线地图"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:795
+msgid "Download Readiness"
+msgstr "下载准备状态"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:463
+msgid "No regions selected"
+msgstr "未选择地区"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:465
+msgid "Whole U.S. (56 states)"
+msgstr "全美（56 州）"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:485
+msgid "No regions selected yet"
+msgstr "尚未选择地区"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:487
+msgid "Whole U.S. package"
+msgstr "全美地图包"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:548
+msgid "Master Package - Full country map data"
+msgstr "完整地图包 - 全国地图数据"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:552
+msgid "Selected for download"
+msgstr "已选择下载"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:557
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:275
+msgid "Selected"
+msgstr "已选择"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:561
+msgid "No regions available"
+msgstr "无可用地区"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:561
+msgid "Switch sources to keep browsing maps."
+msgstr "切换来源以继续浏览地图。"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:673
+msgid "Cancelling..."
+msgstr "正在取消…"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:675
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:749
+msgid "Cancel Download"
+msgstr "取消下载"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:677
+msgid "Select Regions Below"
+msgstr "在下方选择地区"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:707
+msgid "Auto Update Schedule"
+msgstr "自动更新计划"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:784
+msgid "Cancelling Download"
+msgstr "正在取消下载"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:786
+msgid "Downloading Maps"
+msgstr "正在下载地图"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:788
+msgid "Starting Download"
+msgstr "正在开始下载"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:792
+msgid "Checking Offline Maps"
+msgstr "正在检查离线地图"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:794
+msgid "Select Map Data"
+msgstr "选择地图数据"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:813
+msgid "Stop request sent. The current transfer will wind down safely."
+msgstr "已发送停止请求，当前传输将安全结束。"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:816
+msgid "Preparing the selected regions for download."
+msgstr "正在准备下载所选地区。"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:819
+msgid "No regions selected yet. Tap 'Whole U.S.' or pick specific states below to get started."
+msgstr "尚未选择地区。点击“全美”或在下方选择各州以开始。"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:190
+msgid "Available for Download"
+msgstr "可供下载"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:190
+msgid "Map Packages & Regions"
+msgstr "地图包与地区"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:239
+msgid "Downloaded on device"
+msgstr "已下载到设备"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:277
+msgid "Last Updated"
+msgstr "上次更新"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:466
+#, python-brace-format, drawn
+msgid "{} region selected"
+msgid_plural "{} regions selected"
+msgstr[0] "已选择{}个地区"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:491
+#, python-brace-format, drawn
+msgid "{} + {} more"
+msgstr "{}，另有{}项"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:516
+msgid "Whole U.S. (All 50 States & Territories)"
+msgstr "全美（全部 50 州及属地）"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:531
+msgid "Whole U.S. Selected"
+msgstr "已选择全美"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:535
+#, python-brace-format, drawn
+msgid "{} selected | {} available"
+msgstr "已选{}项 · 可选{}项"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:657
+msgid "Download in progress"
+msgstr "正在下载"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:659
+msgid "Connect to the internet"
+msgstr "请连接互联网"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:661
+msgid "Park the vehicle to download"
+msgstr "停车后才能下载"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:690
+msgid "Auto: Off"
+msgstr "自动：关闭"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:691
+msgid "Auto: Weekly"
+msgstr "自动：每周"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:692
+msgid "Auto: Monthly"
+msgstr "自动：每月"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:708
+msgid "Choose how often to update downloaded offline maps."
+msgstr "选择已下载离线地图的更新频率。"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:735
+msgid "Start downloading offline maps for the selected regions?"
+msgstr "开始下载所选地区的离线地图？"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:749
+msgid "Cancel the current map download?"
+msgstr "取消当前地图下载？"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:776
+msgid "Delete all downloaded offline map data?"
+msgstr "删除所有已下载的离线地图数据？"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:776
+msgid "Remove Maps"
+msgstr "移除地图"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:825
+#, python-brace-format, drawn
+msgid "Ready to download {}."
+msgstr "已准备下载{}。"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:173
+msgid "U.S. States & Regions"
+msgstr "美国各州与区域"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:173
+msgid "Other Countries"
+msgstr "其他国家"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:188
+msgid "On This Device"
+msgstr "此设备上"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:425
+#, python-brace-format, drawn
+msgid "{} / {} ({}%)"
+msgstr "{} / {}（{}%）"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:534
+#, python-brace-format, drawn
+msgid "{} available - Tap to select"
+msgstr "{}可用 - 点击选择"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:722
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:684
+msgid "Please select 'Whole U.S.' or pick individual states from the list below."
+msgstr "请选择“全美”，或从下方列表选择各州。"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:804
+#, python-brace-format, drawn
+msgid "{} / {} ({}%)\nElapsed {} | ETA {}"
+msgstr "{} / {}（{}%）\n已用{} · 预计剩余{}"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:754
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:761
+msgid "Park to remove downloaded maps."
+msgstr "停车后才能移除已下载的地图。"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:774
+msgid "Removing offline maps..."
+msgstr "正在移除离线地图…"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:803
+#, python-brace-format, drawn
+msgid "{}\nElapsed {} | ETA {}"
+msgstr "{}\n已用{} · 预计剩余{}"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:188
+#, python-brace-format, drawn
+msgid "{} region"
+msgid_plural "{} regions"
+msgstr[0] "{}个地区"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:47
+msgid "No Action"
+msgstr "无操作"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:48
+msgid "Change Personality"
+msgstr "更改驾驶风格"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:49
+msgid "Force Coast"
+msgstr "强制滑行"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:50
+msgid "Pulse and Glide"
+msgstr "加速与滑行"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:51
+msgid "Pause Steering"
+msgstr "暂停转向"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:52
+msgid "Pause Accel/Brake"
+msgstr "暂停加速/制动"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:53
+msgid "Toggle Experimental"
+msgstr "切换实验模式"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:54
+msgid "Toggle Traffic"
+msgstr "切换拥堵模式"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:55
+msgid "Toggle Switchback"
+msgstr "切换连续急弯模式"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:56
+msgid "Create Bookmark"
+msgstr "创建标记"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:57
+msgid "Toggle Always On Lateral"
+msgstr "切换持续转向"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:58
+msgid "Adopt Current Speed Limit"
+msgstr "采用当前限速"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:59
+msgid "Favorite #1"
+msgstr "收藏 #1"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:60
+msgid "Favorite #2"
+msgstr "收藏 #2"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:61
+msgid "Favorite #3"
+msgstr "收藏 #3"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:407
+msgid "Choose an action for each press type, then tap Apply."
+msgstr "为各按压方式选择操作，然后点击应用。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:573
+msgid "Select Make"
+msgstr "选择品牌"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:602
+msgid "Select Model"
+msgstr "选择车型"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:656
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:671
+msgid "None"
+msgstr "无"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:103
+msgid "Disable Fingerprinting"
+msgstr "禁用车辆自动识别"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:107
+msgid "Car Make"
+msgstr "车辆品牌"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:111
+msgid "Car Model"
+msgstr "车辆型号"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:137
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:527
+msgid "Distance Button"
+msgstr "车距按钮"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:155
+msgid "CC Main Button"
+msgstr "巡航主按钮"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:238
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:253
+msgid "Features"
+msgstr "功能"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:281
+msgid "Disable openpilot Long"
+msgstr "禁用 openpilot 纵向控制"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:282
+msgid "Revert to stock longitudinal control."
+msgstr "恢复原厂纵向控制。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:507
+msgid "Flash"
+msgstr "刷写固件"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:532
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:145
+msgid "Cancel Button"
+msgstr "Cancel 按钮"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:537
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:163
+msgid "Mode Button"
+msgstr "Mode 按钮"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:542
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:168
+msgid "Star Button"
+msgstr "星标按钮"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:574
+msgid "Choose your vehicle manufacturer."
+msgstr "选择车辆制造商。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:603
+msgid "Choose the model that matches your vehicle."
+msgstr "选择与您车辆匹配的车型。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:636
+msgid "Choose the action this button press will trigger."
+msgstr "选择按下此按钮时执行的操作。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:644
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:117
+msgid "Lock Doors Timer"
+msgstr "锁门定时器"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:104
+msgid "Manually select vehicle instead of auto-detecting."
+msgstr "手动选择车辆，不使用自动检测。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:151
+msgid "LKAS Button"
+msgstr "LKAS 按钮"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:289
+msgid "Pedal for Long"
+msgstr "使用 pedal 进行纵向控制"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:294
+msgid "Offsets on Dash Spoof"
+msgstr "模拟仪表盘偏移量"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:300
+msgid "CAN Ignition Only"
+msgstr "仅 CAN 点火"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:301
+msgid "Use Panda firmware that ignores the physical ignition line and starts only from CAN ignition."
+msgstr "使用忽略物理点火线、仅根据 CAN 点火启动的 Panda 固件。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:306
+msgid "Remote Start Panda"
+msgstr "Panda 远程启动"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:312
+msgid "Volt SNG Hack"
+msgstr "Volt 停走跟车补丁"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:318
+msgid "Jeep Brake Hold"
+msgstr "Jeep 制动保持"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:319
+msgid "Hold after ACC times out at a stop and resume when traffic moves."
+msgstr "停车时 ACC 超时后保持制动，车流移动时继续行驶。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:326
+msgid "Stop and Go"
+msgstr "停走跟车"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:339
+msgid "Auto Lock Doors"
+msgstr "自动锁车门"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:344
+msgid "Auto Unlock Doors"
+msgstr "自动解锁车门"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:350
+msgid "Stop-and-Go Hack"
+msgstr "停走跟车补丁"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:356
+msgid "Remap Cancel Button"
+msgstr "重新分配 Cancel 按钮"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:357
+msgid "Treat the Cancel button as an extra mappable steering-wheel button."
+msgstr "将 Cancel 按钮作为额外可分配的方向盘按钮。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:364
+msgid "EV Remote Climate"
+msgstr "电动车远程空调"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:369
+msgid "Nostalgia Mode"
+msgstr "怀旧模式"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:370
+msgid "Use the left paddle to pause openpilot acceleration and braking."
+msgstr "使用左拨片暂停 openpilot 加速和制动。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:505
+msgid "Panda flashing started. Device will reboot when finished."
+msgstr "Panda 固件刷写已开始，完成后设备将重启。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:529
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:534
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:539
+msgid "Long Press"
+msgstr "长按"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:529
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:534
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:539
+msgid "Very Long"
+msgstr "超长按"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:558
+msgid "No fingerprint list available."
+msgstr "无可用车辆识别列表。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:558
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:580
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:584
+msgid "OK"
+msgstr "确定"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:580
+msgid "Please select a Car Make first!"
+msgstr "请先选择车辆品牌！"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:584
+msgid "No models available for this make."
+msgstr "此品牌暂无可用车型。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:647
+msgid "How long to wait before locking the doors."
+msgstr "锁门前的等待时间。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:332
+msgid "Manual Parking Brake SNG"
+msgstr "手动驻车制动停走跟车"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:468
+msgid "Disable openpilot longitudinal control?"
+msgstr "禁用 openpilot 纵向控制？"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:468
+msgid "Disable"
+msgstr "禁用"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:303
+msgid "CAN Ignition Only requires a Panda firmware update."
+msgstr "仅 CAN 点火需要更新 Panda 固件。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:308
+msgid "Remote Start requires a Panda firmware update."
+msgstr "远程启动需要更新 Panda 固件。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:366
+msgid "EV Remote Climate requires a Panda firmware update."
+msgstr "电动车远程空调需要更新 Panda 固件。"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:380
+msgid "Search destination"
+msgstr "搜索目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:380
+msgid "Enter a place or address"
+msgstr "输入地点或地址"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:398
+msgid "Enter at least 3 characters to search."
+msgstr "请输入至少 3 个字符进行搜索。"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:403
+msgid "Mapbox search is not configured on this device."
+msgstr "此设备尚未设置 Mapbox 搜索。"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:433
+msgid "That result did not include a usable location."
+msgstr "该结果未包含可用位置。"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:460
+msgid "That destination is missing a valid location."
+msgstr "该目的地缺少有效位置。"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:503
+msgid "Rename favorite"
+msgstr "重命名收藏"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:503
+msgid "Choose a short name"
+msgstr "选择简短名称"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:539
+msgid "That destination is not valid."
+msgstr "该目的地无效。"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:632
+msgid "Ready to navigate"
+msgstr "导航已就绪"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:638
+msgid "Navigation active"
+msgstr "导航中"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:635
+msgid "Unavailable"
+msgstr "不可用"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:678
+msgid "Searching..."
+msgstr "正在搜索…"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:678
+msgid "Looking up destinations"
+msgstr "正在查找目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:684
+msgid "No destinations yet"
+msgstr "暂无目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:684
+msgid "Search for a place or address to begin."
+msgstr "搜索地点或地址以开始。"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:692
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:656
+msgid "Destination"
+msgstr "目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:336
+msgid "Search is unavailable. Check your connection and try again."
+msgstr "搜索不可用。请检查连接后重试。"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:655
+msgid "Search results"
+msgstr "搜索结果"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:666
+msgid "Favorite destinations"
+msgstr "收藏的目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:668
+msgid "Recent destinations"
+msgstr "最近目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:683
+msgid "No matching destinations"
+msgstr "没有匹配的目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:683
+msgid "Try a different place or address."
+msgstr "请尝试其他地点或地址。"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:695
+msgid "Use the on-device keyboard to search Mapbox locations"
+msgstr "使用设备键盘搜索 Mapbox 地点"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:703
+msgid "Route"
+msgstr "路线"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:714
+msgid "Destinations"
+msgstr "目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:342
+msgid "Could not determine that location. Try another result."
+msgstr "无法确定该位置，请尝试其他结果。"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:529
+#, python-brace-format, drawn
+msgid "Remove {} from favorites?"
+msgstr "从收藏中移除{}？"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:529
+msgid "this destination"
+msgstr "此目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:603
+msgid "Rename"
+msgstr "重命名"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:694
+msgid "Search for a destination"
+msgstr "搜索目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:665
+msgid "Favorite destination"
+msgstr "收藏的目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:670
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:669
+msgid "Recent destination"
+msgstr "最近目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:664
+msgid "Unnamed favorite"
+msgstr "未命名收藏"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:727
+msgid "Select"
+msgstr "选择"
+
+#: selfdrive/ui/layouts/settings/software.py:26
+msgid "checking..."
+msgstr "正在检查…"
+
+#: selfdrive/ui/layouts/settings/software.py:27
+msgid "downloading..."
+msgstr "正在下载…"
+
+#: selfdrive/ui/layouts/settings/software.py:28
+msgid "finalizing update..."
+msgstr "正在完成更新…"
+
+#: selfdrive/ui/layouts/settings/software.py:80
+msgid "never"
+msgstr "从未"
+
+#: selfdrive/ui/layouts/settings/software.py:91
+msgid "now"
+msgstr "现在"
+
+#: selfdrive/ui/layouts/settings/software.py:245
+#: selfdrive/ui/layouts/settings/software.py:117
+#: selfdrive/ui/layouts/settings/software.py:201
+msgid "CHECK"
+msgstr "检查"
+
+#: selfdrive/ui/layouts/settings/software.py:274
+#: selfdrive/ui/layouts/settings/software.py:183
+msgid "FAST UPDATE"
+msgstr "快速更新"
+
+#: selfdrive/ui/layouts/settings/software.py:275
+#: selfdrive/ui/layouts/settings/software.py:272
+msgid "Starting fast update..."
+msgstr "正在开始快速更新…"
+
+#: selfdrive/ui/layouts/settings/software.py:354
+msgid "Are you sure you want to uninstall?"
+msgstr "确定要卸载吗？"
+
+#: selfdrive/ui/layouts/settings/software.py:391
+msgid "Select a branch"
+msgstr "选择分支"
+
+#: selfdrive/ui/layouts/settings/software.py:94
+#, python-brace-format, drawn
+msgid "{} minute ago"
+msgid_plural "{} minutes ago"
+msgstr[0] "{}分钟前"
+
+#: selfdrive/ui/layouts/settings/software.py:97
+#, python-brace-format, drawn
+msgid "{} hour ago"
+msgid_plural "{} hours ago"
+msgstr[0] "{}小时前"
+
+#: selfdrive/ui/layouts/settings/software.py:100
+#, python-brace-format, drawn
+msgid "{} day ago"
+msgid_plural "{} days ago"
+msgstr[0] "{}天前"
+
+#: selfdrive/ui/layouts/settings/software.py:108
+msgid "Updates are only downloaded while the car is off."
+msgstr "仅在车辆关闭时下载更新。"
+
+#: selfdrive/ui/layouts/settings/software.py:109
+msgid "Current Version"
+msgstr "当前版本"
+
+#: selfdrive/ui/layouts/settings/software.py:111
+msgid "Automatically Install Updates"
+msgstr "自动安装更新"
+
+#: selfdrive/ui/layouts/settings/software.py:112
+msgid "Automatically install updates when parked with an active internet connection."
+msgstr "停车且连接互联网时自动安装更新。"
+
+#: selfdrive/ui/layouts/settings/software.py:123
+msgid "Install Update"
+msgstr "安装更新"
+
+#: selfdrive/ui/layouts/settings/software.py:123
+#: selfdrive/ui/layouts/settings/software.py:230
+msgid "INSTALL"
+msgstr "安装"
+
+#: selfdrive/ui/layouts/settings/software.py:131
+msgid "Target Branch"
+msgstr "目标分支"
+
+#: selfdrive/ui/layouts/settings/software.py:131
+msgid "SELECT"
+msgstr "选择"
+
+#: selfdrive/ui/layouts/settings/software.py:175
+msgid "REBOOTING"
+msgstr "正在重启"
+
+#: selfdrive/ui/layouts/settings/software.py:176
+#: selfdrive/ui/layouts/settings/software.py:317
+msgid "Update applied, rebooting..."
+msgstr "已应用更新，正在重启…"
+
+#: selfdrive/ui/layouts/settings/software.py:262
+msgid "Fast update will replace the current installation without backup and reboot the device. Continue?"
+msgstr "快速更新会在不备份的情况下替换当前安装并重启设备。继续？"
+
+#: selfdrive/ui/layouts/settings/software.py:263
+msgid "Fast Update"
+msgstr "快速更新"
+
+#: selfdrive/ui/layouts/settings/software.py:268
+msgid "Cannot update while driving"
+msgstr "驾驶时无法更新"
+
+#: selfdrive/ui/layouts/settings/software.py:361
+msgid "No error log found."
+msgstr "未找到错误日志。"
+
+#: selfdrive/ui/layouts/settings/software.py:392
+msgid "Choose the software branch to install."
+msgstr "选择要安装的软件分支。"
+
+#: selfdrive/ui/layouts/settings/software.py:179
+msgid "RETRY"
+msgstr "重试"
+
+#: selfdrive/ui/layouts/settings/software.py:350
+msgid "Do you want to perform a full factory reset? All saved assets and settings will be permanently deleted!"
+msgstr "执行完整恢复出厂设置？所有已保存的资源和设置将永久删除！"
+
+#: selfdrive/ui/layouts/settings/software.py:144
+msgid "UNINSTALL"
+msgstr "卸载"
+
+#: selfdrive/ui/layouts/settings/software.py:145
+msgid "Error Log"
+msgstr "错误日志"
+
+#: selfdrive/ui/layouts/settings/software.py:145
+#: selfdrive/ui/layouts/settings/device.py:159
+msgid "VIEW"
+msgstr "查看"
+
+#: selfdrive/ui/layouts/settings/software.py:200
+msgid "failed to check for update"
+msgstr "检查更新失败"
+
+#: selfdrive/ui/layouts/settings/software.py:294
+msgid "Fetching latest commit..."
+msgstr "正在获取最新提交…"
+
+#: selfdrive/ui/layouts/settings/software.py:302
+msgid "Applying update..."
+msgstr "正在应用更新…"
+
+#: selfdrive/ui/layouts/settings/software.py:180
+#, python-brace-format, drawn
+msgid "Failed: {}"
+msgstr "失败：{}"
+
+#: selfdrive/ui/layouts/settings/software.py:184
+msgid "Starting..."
+msgstr "正在启动…"
+
+#: selfdrive/ui/layouts/settings/software.py:203
+msgid "update available"
+msgstr "有可用更新"
+
+#: selfdrive/ui/layouts/settings/software.py:204
+msgid "DOWNLOAD"
+msgstr "下载"
+
+#: selfdrive/ui/layouts/settings/software.py:310
+msgid "Updating submodules..."
+msgstr "正在更新子模块…"
+
+#: selfdrive/ui/layouts/settings/software.py:344
+msgid "This is a complete factory reset and cannot be undone. Are you absolutely sure?"
+msgstr "这是完整恢复出厂设置，无法撤销。确定继续吗？"
+
+#: selfdrive/ui/layouts/settings/software.py:211
+msgid "up to date, last checked never"
+msgstr "已是最新，从未检查"
+
+#: selfdrive/ui/layouts/settings/software.py:209
+#, python-brace-format, drawn
+msgid "up to date, last checked {}"
+msgstr "已是最新，上次检查{}"
+
+#: selfdrive/ui/layouts/settings/device.py:34
+msgid "Pair your device with comma connect (connect.comma.ai) and claim your comma prime offer."
+msgstr "将设备与 comma connect（connect.comma.ai）配对并领取 comma prime 优惠。"
+
+#: selfdrive/ui/layouts/settings/device.py:35
+msgid "Pair your device with Galaxy for remote access to The Galaxy."
+msgstr "将设备与 Galaxy 配对，以远程访问 The Galaxy。"
+
+#: selfdrive/ui/layouts/settings/device.py:36
+msgid "Preview the driver facing camera to ensure that driver monitoring has good visibility. (vehicle must be off)"
+msgstr "预览驾驶员摄像头，确保驾驶员监控视野清晰。（车辆必须关闭）"
+
+#: selfdrive/ui/layouts/settings/device.py:37
+msgid "Clears the saved driver monitoring wheel-side calibration and any manual right-hand-driving override."
+msgstr "清除已保存的驾驶员座位侧校准，以及手动设置的右舵覆盖。"
+
+#: selfdrive/ui/layouts/settings/device.py:38
+msgid "openpilot requires the device to be mounted within 4° left or right and within 5° up or 9° down."
+msgstr "openpilot 要求设备左右偏角不超过 4°，向上不超过 5°，向下不超过 9°。"
+
+#: selfdrive/ui/layouts/settings/device.py:39
+msgid "Review the rules, features, and limitations of openpilot"
+msgstr "查看 openpilot 的规则、功能与限制"
+
+#: selfdrive/ui/layouts/settings/device.py:275
+msgid "openpilot is continuously calibrating, resetting is rarely required. Resetting calibration will restart openpilot if the car is powered on."
+msgstr "openpilot 会持续校准，通常无需重置。车辆开启时重置校准会重启 openpilot。"
+
+#: selfdrive/ui/layouts/settings/device.py:91
+msgid "Scan to open Galaxy"
+msgstr "扫描以打开 Galaxy"
+
+#: selfdrive/ui/layouts/settings/device.py:104
+msgid "Tap anywhere to dismiss"
+msgstr "点击任意位置关闭"
+
+#: selfdrive/ui/layouts/settings/device.py:183
+msgid "Select a language"
+msgstr "选择语言"
+
+#: selfdrive/ui/layouts/settings/device.py:212
+msgid "Are you sure you want to reset calibration?"
+msgstr "确定要重置校准吗？"
+
+#: selfdrive/ui/layouts/settings/device.py:229
+msgid "Are you sure you want to reset driver monitoring calibration?"
+msgstr "确定要重置驾驶员监控校准吗？"
+
+#: selfdrive/ui/layouts/settings/device.py:258
+msgid "<br><br>Steering lag calibration is complete."
+msgstr "<br><br>转向延迟校准已完成。"
+
+#: selfdrive/ui/layouts/settings/device.py:281
+msgid "Are you sure you want to reboot?"
+msgstr "确定要重启吗？"
+
+#: selfdrive/ui/layouts/settings/device.py:281
+#: selfdrive/ui/layouts/settings/device.py:144
+msgid "Reboot"
+msgstr "重启"
+
+#: selfdrive/ui/layouts/settings/device.py:297
+msgid "Are you sure you want to power off?"
+msgstr "确定要关机吗？"
+
+#: selfdrive/ui/layouts/settings/device.py:316
+msgid "MANAGE"
+msgstr "管理"
+
+#: selfdrive/ui/layouts/settings/device.py:316
+#: selfdrive/ui/layouts/settings/device.py:135
+msgid "PAIR"
+msgstr "配对"
+
+#: selfdrive/ui/layouts/settings/device.py:333
+msgid "Show QR"
+msgstr "显示二维码"
+
+#: selfdrive/ui/layouts/settings/device.py:351
+msgid "Set Galaxy Password"
+msgstr "设置 Galaxy 密码"
+
+#: selfdrive/ui/layouts/settings/device.py:351
+msgid "Set a password to secure your Galaxy access. Min 6 characters."
+msgstr "设置密码保护 Galaxy 访问，至少 6 个字符。"
+
+#: selfdrive/ui/layouts/settings/device.py:94
+msgid "QR Code Error"
+msgstr "二维码错误"
+
+#: selfdrive/ui/layouts/settings/device.py:135
+msgid "Pair Device"
+msgstr "配对设备"
+
+#: selfdrive/ui/layouts/settings/device.py:137
+msgid "Pair with Galaxy"
+msgstr "与 Galaxy 配对"
+
+#: selfdrive/ui/layouts/settings/device.py:140
+msgid "Reset Calibration"
+msgstr "重置校准"
+
+#: selfdrive/ui/layouts/settings/device.py:140
+#: selfdrive/ui/layouts/settings/device.py:154
+msgid "RESET"
+msgstr "重置"
+
+#: selfdrive/ui/layouts/settings/device.py:185
+msgid "Choose the language used for menus and alerts."
+msgstr "选择菜单和警报使用的语言。"
+
+#: selfdrive/ui/layouts/settings/device.py:345
+msgid "Galaxy"
+msgstr "Galaxy"
+
+#: selfdrive/ui/layouts/settings/device.py:148
+msgid "Dongle ID"
+msgstr "Dongle ID"
+
+#: selfdrive/ui/layouts/settings/device.py:149
+msgid "Serial"
+msgstr "序列号"
+
+#: selfdrive/ui/layouts/settings/device.py:152
+msgid "PREVIEW"
+msgstr "预览"
+
+#: selfdrive/ui/layouts/settings/device.py:154
+msgid "Reset Driver Monitoring"
+msgstr "重置驾驶员监控"
+
+#: selfdrive/ui/layouts/settings/device.py:157
+msgid "Review Training Guide"
+msgstr "查看培训指南"
+
+#: selfdrive/ui/layouts/settings/device.py:157
+msgid "REVIEW"
+msgstr "查看"
+
+#: selfdrive/ui/layouts/settings/device.py:160
+msgid "Change Language"
+msgstr "更改语言"
+
+#: selfdrive/ui/layouts/settings/device.py:160
+msgid "CHANGE"
+msgstr "更改"
+
+#: selfdrive/ui/layouts/settings/device.py:196
+msgid "Disengage to Reset Calibration"
+msgstr "退出驾驶辅助后才能重置校准"
+
+#: selfdrive/ui/layouts/settings/device.py:217
+msgid "Disengage to Reset Driver Monitoring"
+msgstr "退出驾驶辅助后才能重置驾驶员监控"
+
+#: selfdrive/ui/layouts/settings/device.py:256
+#, python-brace-format, drawn
+msgid "<br><br>Steering lag calibration is {}% complete."
+msgstr "<br><br>转向延迟校准已完成{}%。"
+
+#: selfdrive/ui/layouts/settings/device.py:294
+msgid "Disengage to Power Off"
+msgstr "退出驾驶辅助后才能关机"
+
+#: selfdrive/ui/layouts/settings/device.py:327
+msgid "Galaxy is not paired yet."
+msgstr "尚未与 Galaxy 配对。"
+
+#: selfdrive/ui/layouts/settings/device.py:346
+msgid "View pairing information or unlink your Galaxy account."
+msgstr "查看配对信息或解除 Galaxy 账号关联。"
+
+#: selfdrive/ui/layouts/settings/device.py:362
+msgid "Password must be at least 6 characters."
+msgstr "密码至少需要 6 个字符。"
+
+#: selfdrive/ui/layouts/settings/device.py:148
+#: selfdrive/ui/layouts/settings/device.py:149
+msgid "N/A"
+msgstr "不适用"
+
+#: selfdrive/ui/layouts/settings/device.py:270
+msgid " Steering torque response calibration is complete."
+msgstr " 转向扭矩响应校准已完成。"
+
+#: selfdrive/ui/layouts/settings/device.py:373
+msgid "Failed to pair with Galaxy."
+msgstr "与 Galaxy 配对失败。"
+
+#: selfdrive/ui/layouts/settings/device.py:243
+#, python-brace-format, drawn
+msgid " Your device is pointed {}° {} and {}° {}."
+msgstr " 设备朝{1}偏转{0}°，朝{3}偏转{2}°。"
+
+#: selfdrive/ui/layouts/settings/device.py:243
+msgid "down"
+msgstr "下方"
+
+#: selfdrive/ui/layouts/settings/device.py:243
+msgid "up"
+msgstr "上方"
+
+#: selfdrive/ui/layouts/settings/device.py:244
+msgid "left"
+msgstr "左侧"
+
+#: selfdrive/ui/layouts/settings/device.py:244
+msgid "right"
+msgstr "右侧"
+
+#: selfdrive/ui/layouts/settings/device.py:268
+#, python-brace-format, drawn
+msgid " Steering torque response calibration is {}% complete."
+msgstr " 转向扭矩响应校准已完成{}%。"
+
+#: selfdrive/ui/layouts/settings/device.py:343
+msgid "Are you sure you want to unpair from Galaxy?"
+msgstr "确定要取消与 Galaxy 的配对吗？"
+
+#: selfdrive/ui/layouts/settings/developer.py:14
+msgid "ADB (Android Debug Bridge) allows connecting to your device over USB or over the network. See https://docs.comma.ai/how-to/connect-to-comma for more info."
+msgstr "ADB（Android Debug Bridge）可通过 USB 或网络连接设备。更多信息请参阅 https://docs.comma.ai/how-to/connect-to-comma。"
+
+#: selfdrive/ui/layouts/settings/developer.py:18
+msgid "Warning: This grants SSH access to all public keys in your GitHub settings. Never enter a GitHub username other than your own. A comma employee will NEVER ask you to add their GitHub username."
+msgstr "警告：此操作会向 GitHub 设置中的所有公共密钥授予 SSH 访问权限。切勿输入您本人以外的 GitHub 用户名。comma 员工绝不会要求您添加他们的 GitHub 用户名。"
+
+#: selfdrive/ui/layouts/settings/developer.py:22
+msgid "<b>WARNING: openpilot longitudinal control is in alpha for this car and will disable Automatic Emergency Braking (AEB).</b><br><br>On this car, openpilot defaults to the car's built-in ACC instead of openpilot's longitudinal control. Enable this to switch to openpilot longitudinal control. Enabling Experimental mode is recommended when enabling openpilot longitudinal control alpha. Changing this setting will restart openpilot if the car is powered on."
+msgstr "<b>警告：此车的 openpilot 纵向控制处于 Alpha 阶段，会禁用自动紧急制动（AEB）。</b><br><br>此车默认使用车辆内置的 ACC，而非 openpilot 纵向控制。启用此项可切换到 openpilot 纵向控制。启用 Alpha 纵向控制时，建议同时启用实验模式。车辆开启时更改此设置会重启 openpilot。"
+
+#: selfdrive/ui/layouts/settings/developer.py:39
+msgid "Enable ADB"
+msgstr "启用 ADB"
+
+#: selfdrive/ui/layouts/settings/developer.py:48
+msgid "Enable SSH"
+msgstr "启用 SSH"
+
+#: selfdrive/ui/layouts/settings/developer.py:64
+msgid "openpilot Longitudinal Control (Alpha)"
+msgstr "openpilot 纵向控制（Alpha）"
+
+#: selfdrive/ui/layouts/settings/developer.py:153
+msgid "Enable"
+msgstr "启用"
+
+#: selfdrive/ui/onroad/alert_renderer.py:60
+#: selfdrive/selfdrived/events.py:162
+msgid "openpilot Unavailable"
+msgstr "openpilot 不可用"
+
+#: selfdrive/ui/onroad/alert_renderer.py:61
+msgid "Waiting to start"
+msgstr "等待启动"
+
+#: selfdrive/ui/onroad/alert_renderer.py:67
+#: selfdrive/selfdrived/events.py:174
+#: selfdrive/selfdrived/events.py:189
+msgid "TAKE CONTROL IMMEDIATELY"
+msgstr "请立即接管"
+
+#: selfdrive/ui/onroad/alert_renderer.py:68
+#: selfdrive/ui/onroad/alert_renderer.py:74
+msgid "System Unresponsive"
+msgstr "系统无响应"
+
+#: selfdrive/ui/onroad/alert_renderer.py:75
+msgid "Reboot Device"
+msgstr "请重启设备"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_TemperatureTooHigh
+#, python-brace-format, drawn
+msgid "Device temperature too high. System cooling down before starting. Current internal component temperature: {}"
+msgstr "设备温度过高。系统正在冷却，冷却后才会启动。当前内部组件温度：{}"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ConnectivityNeededPrompt
+#, python-brace-format, drawn
+msgid "Immediately connect to the internet to check for updates. If you do not connect to the internet, openpilot won't engage in {}"
+msgstr "请立即联网检查更新。若不联网，openpilot 将在{}后无法启用"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ConnectivityNeeded
+msgid "Connect to internet to check for updates. openpilot won't automatically start until it connects to internet to check for updates."
+msgstr "请联网检查更新。连接互联网并检查更新前，openpilot 不会自动启动。"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_UpdateFailed
+#, python-brace-format, drawn
+msgid "Unable to download updates\n{}"
+msgstr "无法下载更新\n{}"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ChestnutNotDetected
+msgid "Chestnut not detected. Check USB and 12V connections."
+msgstr "未检测到 Chestnut，请检查 USB 和 12V 连接。"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ChestnutOverheated
+#, python-brace-format, drawn
+msgid "Chestnut overheated. Ensure good airflow. Current GPU temperature is {}."
+msgstr "Chestnut 过热，请保持良好通风。当前 GPU 温度为{}。"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ChestnutUncompiled
+msgid "The active Chestnut model is not installed. Download it in Model Manager."
+msgstr "未安装当前 Chestnut 模型，请在模型管理器中下载。"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ChestnutUpdateFailed
+msgid "Chestnut update failed. Check the USB cable."
+msgstr "Chestnut 更新失败，请检查 USB 线缆。"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ChestnutUsbSlow
+#, python-brace-format, drawn
+msgid "Chestnut USB link is slow. Check the USB cable. The current speed is {}."
+msgstr "Chestnut USB 连接速度慢，请检查 USB 线缆。当前速度为{}。"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_IsTakingSnapshot
+msgid "Taking camera snapshots. System won't start until finished."
+msgstr "正在拍摄摄像头快照，完成前系统不会启动。"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_NeosUpdate
+msgid "An update to your device's operating system is downloading in the background. You will be prompted to update when it's ready to install."
+msgstr "正在后台下载设备操作系统更新。准备好安装时会提示您。"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_UnregisteredHardware
+msgid "Failed to register with comma.ai backend. It will not connect or upload to comma.ai servers, and receives no support from comma.ai. If this is a device purchased at comma.ai/shop, open a ticket at https://comma.ai/support."
+msgstr "向 comma.ai 后端注册失败。设备将无法连接或上传到 comma.ai 服务器，也无法获得 comma.ai 支持。若设备购自 comma.ai/shop，请在 https://comma.ai/support 提交工单。"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_CarUnrecognized
+msgid "openpilot was unable to identify your car. Your car is either unsupported or its ECUs are not recognized. Please submit a pull request to add the firmware versions to the proper vehicle. Need help? Join discord.comma.ai."
+msgstr "openpilot 无法识别您的车辆。可能不支持此车型，或其 ECU 未被识别。请提交拉取请求，为对应车辆添加固件版本。需要帮助？请加入 discord.comma.ai。"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_Recalibration
+msgid "openpilot detected a change in the device's mounting position. Ensure the device is fully seated in the mount and the mount is firmly secured to the windshield."
+msgstr "openpilot 检测到设备安装位置变化。请确认设备完全装入支架，且支架牢固固定在挡风玻璃上。"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_DriverMonitoringUncertain
+msgid "Poor visibility detected for driver monitoring. Ensure the device has a clear view of the driver. This can be checked in the device settings. Extreme lighting conditions and/or unconventional mounting positions may also trigger this alert."
+msgstr "驾驶员监控视野不佳。请确保设备能清楚看到驾驶员，可在设备设置中检查。极端光照或非常规安装位置也可能触发此警报。"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ExcessiveActuation
+#, python-brace-format, drawn
+msgid "Excessive {} actuation detected on your last drive. Please contact support at https://comma.ai/support and share your device's Dongle ID for troubleshooting."
+msgstr "上次行程检测到过度的{}控制。请通过 https://comma.ai/support 联系支持，并提供设备的 Dongle ID 以便排查。"
+
+#: selfdrive/selfdrived/events.py:184
+msgid "openpilot will disengage"
+msgstr "openpilot 即将退出"
+
+#: selfdrive/selfdrived/events.py:254
+msgid "WARNING: This branch is not tested"
+msgstr "警告：此分支未经测试"
+
+#: selfdrive/selfdrived/events.py:257
+#, python-brace-format, drawn
+msgid "Drive above {} to engage"
+msgstr "车速超过 {} 后才能启用"
+
+#: selfdrive/selfdrived/events.py:262
+#, python-brace-format, drawn
+msgid "Steer Unavailable Under {}"
+msgstr "低于 {} 时转向不可用"
+
+#: selfdrive/selfdrived/events.py:271
+msgid "Car in Auto Hold mode"
+msgstr "车辆处于自动驻车模式"
+
+#: selfdrive/selfdrived/events.py:271
+msgid "Press Resume to Exit Brake Hold"
+msgstr "按 Resume 解除制动保持"
+
+#: selfdrive/selfdrived/events.py:279
+msgid "Speed limit changed"
+msgstr "限速已变化"
+
+#: selfdrive/selfdrived/events.py:288
+#, python-brace-format, drawn
+msgid "Calibrating: {}%"
+msgstr "正在校准：{}%"
+
+#: selfdrive/selfdrived/events.py:288
+#, python-brace-format, drawn
+msgid "Recalibrating: {}%"
+msgstr "正在重新校准：{}%"
+
+#: selfdrive/selfdrived/events.py:289
+#, python-brace-format, drawn
+msgid "Drive Above {}"
+msgstr "请以超过 {} 的速度行驶"
+
+#: selfdrive/selfdrived/events.py:297
+msgid "Too Distracted"
+msgstr "注意力过于分散"
+
+#: selfdrive/selfdrived/events.py:297
+#, python-brace-format, drawn
+msgid "{} minute Left"
+msgid_plural "{} minutes Left"
+msgstr[0] "剩余 {} 分钟"
+
+#: selfdrive/selfdrived/events.py:298
+msgid "Pay Attention to Engage"
+msgstr "请集中注意力以启用"
+
+#: selfdrive/selfdrived/events.py:304
+msgid "Recording Audio Feedback"
+msgstr "正在录制语音反馈"
+
+#: selfdrive/selfdrived/events.py:305
+#, python-brace-format, drawn
+msgid "{} second remaining. Press again to save early."
+msgid_plural "{} seconds remaining. Press again to save early."
+msgstr[0] "剩余 {} 秒。再次按下可提前保存。"
+
+#: selfdrive/selfdrived/events.py:313
+#: selfdrive/selfdrived/events.py:883
+msgid "Out of Storage"
+msgstr "存储空间已满"
+
+#: selfdrive/selfdrived/events.py:313
+#, python-brace-format, drawn
+msgid "{}% full"
+msgstr "已占用 {}%"
+
+#: selfdrive/selfdrived/events.py:320
+#, python-brace-format, drawn
+msgid "Speed Error: {} m/s"
+msgstr "速度误差：{} m/s"
+
+#: selfdrive/selfdrived/events.py:320
+#: selfdrive/selfdrived/events.py:1021
+msgid "Posenet Speed Invalid"
+msgstr "Posenet 速度无效"
+
+#: selfdrive/selfdrived/events.py:326
+#: selfdrive/selfdrived/events.py:993
+msgid "Process Not Running"
+msgstr "进程未运行"
+
+#: selfdrive/selfdrived/events.py:332
+#: selfdrive/selfdrived/events.py:971
+#: selfdrive/selfdrived/events.py:972
+msgid "Communication Issue Between Processes"
+msgstr "进程间通信异常"
+
+#: selfdrive/selfdrived/events.py:338
+#: selfdrive/selfdrived/events.py:752
+msgid "Camera Malfunction"
+msgstr "摄像头故障"
+
+#: selfdrive/selfdrived/events.py:346
+msgid "Calibration Invalid"
+msgstr "校准无效"
+
+#: selfdrive/selfdrived/events.py:346
+#, python-brace-format, drawn
+msgid "Remount Device (Pitch: {}°, Yaw: {}°)"
+msgstr "请重新安装设备（俯仰：{}°，偏航：{}°）"
+
+#: selfdrive/selfdrived/events.py:363
+#: selfdrive/selfdrived/events.py:785
+msgid "paramsd Temporary Error"
+msgstr "paramsd 临时错误"
+
+#: selfdrive/selfdrived/events.py:365
+msgid "Steer ratio mismatch"
+msgstr "转向传动比不匹配"
+
+#: selfdrive/selfdrived/events.py:365
+msgid "Abnormal tire stiffness"
+msgstr "轮胎刚度异常"
+
+#: selfdrive/selfdrived/events.py:365
+msgid "Steering misalignment detected"
+msgstr "检测到转向偏移"
+
+#: selfdrive/selfdrived/events.py:365
+#, python-brace-format, drawn
+msgid "Angle offset too high (Offset: {}°)"
+msgstr "转角偏移过大（偏移：{}°）"
+
+#: selfdrive/selfdrived/events.py:365
+#, python-brace-format, drawn
+msgid "Steering rack geometry may be off (Ratio: {})"
+msgstr "转向齿条几何参数可能有误（传动比：{}）"
+
+#: selfdrive/selfdrived/events.py:365
+#, python-brace-format, drawn
+msgid "Check tires, pressure, or alignment (Factor: {})"
+msgstr "请检查轮胎、胎压或定位（系数：{}）"
+
+#: selfdrive/selfdrived/events.py:371
+#: selfdrive/selfdrived/events.py:914
+#: selfdrive/selfdrived/events.py:915
+msgid "System Overheated"
+msgstr "系统过热"
+
+#. Preserve the standard unit and numeric value.
+#: selfdrive/selfdrived/events.py:371
+#, python-brace-format, drawn
+msgid "{} °C"
+msgstr "{} °C"
+
+#: selfdrive/selfdrived/events.py:375
+msgid "Low Memory"
+msgstr "内存不足"
+
+#: selfdrive/selfdrived/events.py:375
+#: selfdrive/selfdrived/events.py:380
+#, python-brace-format, drawn
+msgid "{}% used"
+msgstr "已使用 {}%"
+
+#: selfdrive/selfdrived/events.py:380
+msgid "High CPU Usage"
+msgstr "CPU 使用率过高"
+
+#: selfdrive/selfdrived/events.py:384
+#: selfdrive/selfdrived/events.py:1010
+#: selfdrive/selfdrived/events.py:1011
+msgid "Driving Model Lagging"
+msgstr "驾驶模型延迟"
+
+#: selfdrive/selfdrived/events.py:384
+#, python-brace-format, drawn
+msgid "{}% frames dropped"
+msgstr "已丢弃 {}% 的帧"
+
+#: selfdrive/selfdrived/events.py:394
+msgid "Enable Main Switch to Engage"
+msgstr "请打开主开关以启用"
+
+#: selfdrive/selfdrived/events.py:394
+msgid "Enable Cruise Control to Engage"
+msgstr "请打开定速巡航以启用"
+
+#: selfdrive/selfdrived/events.py:394
+msgid "Enable Adaptive Cruise to Engage"
+msgstr "请打开自适应巡航以启用"
+
+#: selfdrive/selfdrived/events.py:401
+#: selfdrive/selfdrived/events.py:526
+msgid "Joystick Mode"
+msgstr "操纵杆模式"
+
+#: selfdrive/selfdrived/events.py:401
+#, python-brace-format, drawn
+msgid "Gas: {}%, Steer: {}%"
+msgstr "油门：{}%，转向：{}%"
+
+#: selfdrive/selfdrived/events.py:418
+#, python-brace-format, drawn
+msgid "Turning {}"
+msgstr "正在向{}转弯"
+
+#: selfdrive/selfdrived/events.py:425
+msgid "Changing Lanes"
+msgstr "正在变道"
+
+#: selfdrive/selfdrived/events.py:432
+#, python-brace-format, drawn
+msgid "Driving Personality: {}"
+msgstr "驾驶风格：{}"
+
+#: selfdrive/selfdrived/events.py:443
+#: selfdrive/selfdrived/events.py:580
+msgid "Invalid LKAS setting"
+msgstr "LKAS 设置无效"
+
+#: selfdrive/selfdrived/events.py:443
+msgid "Enable your car's LKAS to engage"
+msgstr "请开启车辆的 LKAS 以启用"
+
+#: selfdrive/selfdrived/events.py:443
+msgid "Toggle stock LKAS on or off to engage"
+msgstr "请切换原厂 LKAS 的开关状态以启用"
+
+#: selfdrive/selfdrived/events.py:443
+msgid "Disable your car's stock LKAS to engage"
+msgstr "请关闭车辆的原厂 LKAS 以启用"
+
+#: selfdrive/selfdrived/events.py:443
+msgid "Switch to Traffic-Aware Cruise Control to engage"
+msgstr "请切换至主动巡航控制以启用"
+
+#: selfdrive/selfdrived/events.py:453
+msgid "Holding the car at a stop"
+msgstr "正在保持车辆静止"
+
+#: selfdrive/selfdrived/events.py:454
+msgid "Press the gas pedal or 'Resume' button to override"
+msgstr "踩油门或按 'Resume' 按钮以解除保持"
+
+#: selfdrive/selfdrived/events.py:492
+msgid "NNFF Torque Controller not available"
+msgstr "NNFF 扭矩控制器不可用"
+
+#: selfdrive/selfdrived/events.py:493
+msgid "Donate logs to Twilsonco to get your car supported!"
+msgstr "请向 Twilsonco 提供日志以支持您的车型！"
+
+#: selfdrive/selfdrived/events.py:498
+msgid "NNFF Torque Controller loaded with:"
+msgstr "NNFF 扭矩控制器已加载以下模型："
+
+#: selfdrive/selfdrived/events.py:509
+msgid "No Lane Available"
+msgstr "无可用车道"
+
+#: selfdrive/selfdrived/events.py:510
+#, python-brace-format, drawn
+msgid "Detected Lane Width Is Only {} Feet"
+msgstr "检测到的车道宽度仅为 {} 英尺"
+
+#: selfdrive/selfdrived/events.py:510
+#, python-brace-format, drawn
+msgid "Detected Lane Width Is Only {} Meters"
+msgstr "检测到的车道宽度仅为 {} 米"
+
+#: selfdrive/selfdrived/events.py:531
+msgid "Longitudinal Maneuver Mode"
+msgstr "纵向机动模式"
+
+#: selfdrive/selfdrived/events.py:532
+#: selfdrive/selfdrived/events.py:1171
+msgid "Ensure road ahead is clear"
+msgstr "请确保前方道路畅通"
+
+#: selfdrive/selfdrived/events.py:536
+msgid "Big Model Loading"
+msgstr "正在加载大模型"
+
+#: selfdrive/selfdrived/events.py:540
+#: selfdrive/selfdrived/events.py:541
+msgid "Big Model Failed"
+msgstr "大模型故障"
+
+#: selfdrive/selfdrived/events.py:542
+msgid "Restart the car to retry,\nsmall model is still available"
+msgstr "重启车辆后重试，\n小模型仍可使用"
+
+#: selfdrive/selfdrived/events.py:547
+msgid "System Initializing"
+msgstr "系统正在初始化"
+
+#: selfdrive/selfdrived/events.py:559
+#: selfdrive/selfdrived/events.py:560
+msgid "Dashcam mode"
+msgstr "行车记录仪模式"
+
+#: selfdrive/selfdrived/events.py:564
+msgid "Dashcam mode for unsupported car"
+msgstr "不支持车型的行车记录仪模式"
+
+#: selfdrive/selfdrived/events.py:568
+#: selfdrive/selfdrived/events.py:574
+#: selfdrive/selfdrived/events.py:591
+msgid "Dashcam Mode"
+msgstr "行车记录仪模式"
+
+#: selfdrive/selfdrived/events.py:569
+msgid "Security Key Not Available"
+msgstr "安全密钥不可用"
+
+#: selfdrive/selfdrived/events.py:592
+msgid "Car Unrecognized"
+msgstr "无法识别车辆"
+
+#: selfdrive/selfdrived/events.py:598
+#: selfdrive/selfdrived/events.py:607
+#: selfdrive/selfdrived/events.py:616
+msgid "BRAKE!"
+msgstr "刹车！"
+
+#: selfdrive/selfdrived/events.py:599
+msgid "Emergency Braking: Risk of Collision"
+msgstr "紧急制动：碰撞风险"
+
+#: selfdrive/selfdrived/events.py:602
+msgid "AEB: Risk of Collision"
+msgstr "AEB：碰撞风险"
+
+#: selfdrive/selfdrived/events.py:608
+#: selfdrive/selfdrived/events.py:611
+msgid "Stock AEB: Risk of Collision"
+msgstr "原厂 AEB：碰撞风险"
+
+#: selfdrive/selfdrived/events.py:617
+msgid "Risk of Collision"
+msgstr "碰撞风险"
+
+#: selfdrive/selfdrived/events.py:624
+msgid "Lane Departure Detected"
+msgstr "检测到车道偏离"
+
+#: selfdrive/selfdrived/events.py:634
+#: selfdrive/selfdrived/events.py:872
+msgid "Steering Assist Temporarily Unavailable"
+msgstr "转向辅助暂时不可用"
+
+#: selfdrive/selfdrived/events.py:642
+#: selfdrive/selfdrived/events.py:650
+#: selfdrive/selfdrived/events.py:1446
+msgid "Pay Attention"
+msgstr "请注意路况"
+
+#: selfdrive/selfdrived/events.py:651
+#: selfdrive/selfdrived/events.py:659
+#: selfdrive/selfdrived/events.py:1454
+msgid "Driver Distracted"
+msgstr "驾驶员注意力分散"
+
+#: selfdrive/selfdrived/events.py:658
+#: selfdrive/selfdrived/events.py:682
+msgid "DISENGAGE IMMEDIATELY"
+msgstr "请立即停用系统"
+
+#: selfdrive/selfdrived/events.py:666
+msgid "Touch Steering Wheel: No Face Detected"
+msgstr "请触碰方向盘：未检测到人脸"
+
+#: selfdrive/selfdrived/events.py:674
+msgid "Touch Steering Wheel"
+msgstr "请触碰方向盘"
+
+#: selfdrive/selfdrived/events.py:675
+#: selfdrive/selfdrived/events.py:683
+msgid "Driver Unresponsive"
+msgstr "驾驶员无响应"
+
+#: selfdrive/selfdrived/events.py:690
+msgid "TAKE CONTROL"
+msgstr "请接管"
+
+#: selfdrive/selfdrived/events.py:691
+msgid "Resume Driving Manually"
+msgstr "请恢复手动驾驶"
+
+#: selfdrive/selfdrived/events.py:698
+msgid "Press Resume to Exit Standstill"
+msgstr "按 Resume 从静止状态起步"
+
+#: selfdrive/selfdrived/events.py:710
+msgid "Steer Left to Start Lane Change Once Safe"
+msgstr "确认安全后向左转动方向盘以开始变道"
+
+#: selfdrive/selfdrived/events.py:718
+msgid "Steer Right to Start Lane Change Once Safe"
+msgstr "确认安全后向右转动方向盘以开始变道"
+
+#: selfdrive/selfdrived/events.py:726
+#: selfdrive/selfdrived/events.py:1200
+msgid "Car Detected in Blindspot"
+msgstr "检测到盲区有车辆"
+
+#: selfdrive/selfdrived/events.py:738
+msgid "Take Control"
+msgstr "请接管"
+
+#: selfdrive/selfdrived/events.py:739
+msgid "Turn Exceeds Steering Limit"
+msgstr "弯道超出转向能力"
+
+#: selfdrive/selfdrived/events.py:746
+msgid "Fan Malfunction"
+msgstr "风扇故障"
+
+#: selfdrive/selfdrived/events.py:746
+msgid "Likely Hardware Issue"
+msgstr "可能存在硬件故障"
+
+#: selfdrive/selfdrived/events.py:753
+msgid "Camera Malfunction: Reboot Your Device"
+msgstr "摄像头故障：请重启设备"
+
+#: selfdrive/selfdrived/events.py:757
+#: selfdrive/selfdrived/events.py:758
+msgid "Camera Frame Rate Low"
+msgstr "摄像头帧率过低"
+
+#: selfdrive/selfdrived/events.py:757
+msgid "Reboot your Device"
+msgstr "请重启设备"
+
+#: selfdrive/selfdrived/events.py:759
+msgid "Camera Frame Rate Low: Reboot Your Device"
+msgstr "摄像头帧率过低：请重启设备"
+
+#: selfdrive/selfdrived/events.py:765
+#: selfdrive/selfdrived/events.py:766
+msgid "locationd Temporary Error"
+msgstr "locationd 临时错误"
+
+#: selfdrive/selfdrived/events.py:770
+#: selfdrive/selfdrived/events.py:771
+#: selfdrive/selfdrived/events.py:772
+msgid "locationd Permanent Error"
+msgstr "locationd 永久错误"
+
+#: selfdrive/selfdrived/events.py:789
+#: selfdrive/selfdrived/events.py:790
+#: selfdrive/selfdrived/events.py:791
+msgid "paramsd Permanent Error"
+msgstr "paramsd 永久错误"
+
+#: selfdrive/selfdrived/events.py:810
+msgid "Cancel Pressed"
+msgstr "已按下取消按钮"
+
+#: selfdrive/selfdrived/events.py:819
+msgid "Parking Brake Engaged"
+msgstr "驻车制动已启用"
+
+#: selfdrive/selfdrived/events.py:824
+msgid "Pedal Pressed"
+msgstr "已踩下踏板"
+
+#: selfdrive/selfdrived/events.py:830
+msgid "Steering Pressed"
+msgstr "驾驶员已操作方向盘"
+
+#: selfdrive/selfdrived/events.py:835
+msgid "Release Brake to Engage"
+msgstr "松开刹车以启用"
+
+#: selfdrive/selfdrived/events.py:863
+msgid "Press Set to Engage"
+msgstr "按 Set 以启用"
+
+#: selfdrive/selfdrived/events.py:868
+msgid "Adaptive Cruise Disabled"
+msgstr "自适应巡航已停用"
+
+#: selfdrive/selfdrived/events.py:873
+msgid "Steering Temporarily Unavailable"
+msgstr "转向暂时不可用"
+
+#: selfdrive/selfdrived/events.py:877
+#: selfdrive/selfdrived/events.py:878
+msgid "Vehicle Steering Time Limit"
+msgstr "达到车辆转向时长限制"
+
+#: selfdrive/selfdrived/events.py:892
+#: selfdrive/selfdrived/events.py:896
+#: selfdrive/selfdrived/events.py:897
+msgid "Sensor Data Invalid"
+msgstr "传感器数据无效"
+
+#: selfdrive/selfdrived/events.py:893
+msgid "Possible Hardware Issue"
+msgstr "可能存在硬件问题"
+
+#: selfdrive/selfdrived/events.py:908
+#: selfdrive/selfdrived/events.py:909
+msgid "Excessive Actuation"
+msgstr "控制输出过大"
+
+#: selfdrive/selfdrived/events.py:919
+#: selfdrive/selfdrived/events.py:920
+msgid "Gear not D"
+msgstr "挡位不在 D 挡"
+
+#: selfdrive/selfdrived/events.py:930
+#: selfdrive/selfdrived/events.py:931
+msgid "Calibration Invalid: Remount Device & Recalibrate"
+msgstr "校准无效：请重新安装设备并校准"
+
+#: selfdrive/selfdrived/events.py:936
+#: selfdrive/selfdrived/events.py:1495
+msgid "Calibration Incomplete"
+msgstr "校准未完成"
+
+#: selfdrive/selfdrived/events.py:937
+msgid "Calibration in Progress"
+msgstr "正在进行校准"
+
+#: selfdrive/selfdrived/events.py:942
+msgid "Device Remount Detected: Recalibrating"
+msgstr "检测到设备重新安装：正在重新校准"
+
+#: selfdrive/selfdrived/events.py:943
+msgid "Remount Detected: Recalibrating"
+msgstr "检测到重新安装：正在重新校准"
+
+#: selfdrive/selfdrived/events.py:947
+#: selfdrive/selfdrived/events.py:948
+msgid "Door Open"
+msgstr "车门未关"
+
+#: selfdrive/selfdrived/events.py:952
+#: selfdrive/selfdrived/events.py:953
+msgid "Seatbelt Unlatched"
+msgstr "安全带未系"
+
+#: selfdrive/selfdrived/events.py:957
+#: selfdrive/selfdrived/events.py:958
+msgid "Electronic Stability Control Disabled"
+msgstr "电子稳定控制已关闭"
+
+#: selfdrive/selfdrived/events.py:962
+#: selfdrive/selfdrived/events.py:963
+msgid "Low Battery"
+msgstr "电池电量低"
+
+#: selfdrive/selfdrived/events.py:978
+#: selfdrive/selfdrived/events.py:979
+#: selfdrive/selfdrived/events.py:982
+msgid "Low Communication Rate Between Processes"
+msgstr "进程间通信频率过低"
+
+#: selfdrive/selfdrived/events.py:986
+msgid "System Lagging"
+msgstr "系统延迟"
+
+#: selfdrive/selfdrived/events.py:987
+msgid "Selfdrive Process Lagging: Reboot Your Device"
+msgstr "Selfdrive 进程延迟：请重启设备"
+
+#: selfdrive/selfdrived/events.py:997
+#: selfdrive/selfdrived/events.py:998
+msgid "Radar Error: Restart the Car"
+msgstr "雷达错误：请重启车辆"
+
+#: selfdrive/selfdrived/events.py:1002
+#: selfdrive/selfdrived/events.py:1003
+msgid "Radar Temporarily Unavailable"
+msgstr "雷达暂时不可用"
+
+#: selfdrive/selfdrived/events.py:1028
+#: selfdrive/selfdrived/events.py:1029
+msgid "Device Fell Off Mount"
+msgstr "设备已从支架脱落"
+
+#: selfdrive/selfdrived/events.py:1033
+#: selfdrive/selfdrived/events.py:1035
+msgid "Low Memory: Reboot Your Device"
+msgstr "内存不足：请重启设备"
+
+#: selfdrive/selfdrived/events.py:1039
+#: selfdrive/selfdrived/events.py:1041
+msgid "Cruise Fault: Restart the Car"
+msgstr "巡航故障：请重启车辆"
+
+#: selfdrive/selfdrived/events.py:1040
+msgid "Cruise Fault: Restart the car to engage"
+msgstr "巡航故障：重启车辆后才能启用"
+
+#: selfdrive/selfdrived/events.py:1045
+#: selfdrive/selfdrived/events.py:1046
+msgid "Electronic Stability Control Active"
+msgstr "电子稳定控制正在介入"
+
+#: selfdrive/selfdrived/events.py:1050
+#: selfdrive/selfdrived/events.py:1051
+msgid "Controls Mismatch"
+msgstr "控制信号不匹配"
+
+#: selfdrive/selfdrived/events.py:1057
+#: selfdrive/selfdrived/events.py:1058
+#: selfdrive/selfdrived/events.py:1059
+msgid "USB Error: Reboot Your Device"
+msgstr "USB 错误：请重启设备"
+
+#: selfdrive/selfdrived/events.py:1067
+#: selfdrive/selfdrived/events.py:1069
+#: selfdrive/selfdrived/events.py:1073
+msgid "Unknown Vehicle Variant"
+msgstr "未知车辆版本"
+
+#: selfdrive/selfdrived/events.py:1077
+msgid "CAN Bus Disconnected"
+msgstr "CAN 总线断开"
+
+#: selfdrive/selfdrived/events.py:1079
+msgid "CAN Bus Disconnected: Likely Faulty Cable"
+msgstr "CAN 总线断开：可能是线缆故障"
+
+#: selfdrive/selfdrived/events.py:1083
+msgid "CAN Bus Disconnected: Check Connections"
+msgstr "CAN 总线断开：请检查连接"
+
+#: selfdrive/selfdrived/events.py:1087
+#: selfdrive/selfdrived/events.py:1089
+msgid "LKAS Fault: Restart the Car"
+msgstr "LKAS 故障：请重启车辆"
+
+#: selfdrive/selfdrived/events.py:1088
+msgid "LKAS Fault: Restart the car to engage"
+msgstr "LKAS 故障：重启车辆后才能启用"
+
+#: selfdrive/selfdrived/events.py:1094
+msgid "Reverse\nGear"
+msgstr "倒车\n挡位"
+
+#: selfdrive/selfdrived/events.py:1099
+msgid "Reverse Gear"
+msgstr "倒车挡位"
+
+#: selfdrive/selfdrived/events.py:1105
+msgid "Cruise Is Off"
+msgstr "巡航已关闭"
+
+#: selfdrive/selfdrived/events.py:1113
+#: selfdrive/selfdrived/events.py:1114
+#: selfdrive/selfdrived/events.py:1115
+msgid "Harness Relay Malfunction"
+msgstr "线束继电器故障"
+
+#: selfdrive/selfdrived/events.py:1114
+msgid "Check Hardware"
+msgstr "请检查硬件"
+
+#: selfdrive/selfdrived/events.py:1120
+msgid "openpilot Canceled"
+msgstr "openpilot 已取消"
+
+#: selfdrive/selfdrived/events.py:1121
+msgid "Speed too low"
+msgstr "速度过低"
+
+#: selfdrive/selfdrived/events.py:1129
+msgid "Speed Too High"
+msgstr "速度过高"
+
+#: selfdrive/selfdrived/events.py:1130
+msgid "Model uncertain at this speed"
+msgstr "模型在此速度下不确定"
+
+#: selfdrive/selfdrived/events.py:1133
+msgid "Slow down to engage"
+msgstr "请减速后启用"
+
+#: selfdrive/selfdrived/events.py:1137
+msgid "Vehicle Sensors Invalid"
+msgstr "车辆传感器无效"
+
+#: selfdrive/selfdrived/events.py:1138
+#: selfdrive/selfdrived/events.py:1139
+msgid "Vehicle Sensors Calibrating"
+msgstr "车辆传感器正在校准"
+
+#: selfdrive/selfdrived/events.py:1138
+msgid "Drive to Calibrate"
+msgstr "请行驶以校准"
+
+#: selfdrive/selfdrived/events.py:1147
+msgid "Bookmark Saved"
+msgstr "标记已保存"
+
+#: selfdrive/selfdrived/events.py:1158
+msgid "Don't use the 'Development' branch!"
+msgstr "请勿使用 'Development' 分支！"
+
+#: selfdrive/selfdrived/events.py:1159
+msgid "Forcing you into 'Dashcam Mode' for your safety..."
+msgstr "为了您的安全，强制进入行车记录仪模式..."
+
+#: selfdrive/selfdrived/events.py:1170
+msgid "Lateral Maneuver Mode"
+msgstr "横向机动模式"
+
+#: selfdrive/selfdrived/events.py:1188
+msgid "Light Turned Green"
+msgstr "信号灯已变绿"
+
+#: selfdrive/selfdrived/events.py:1208
+msgid "Lead Departed"
+msgstr "前车已起步"
+
+#: selfdrive/selfdrived/events.py:1224
+#: selfdrive/selfdrived/events.py:1230
+msgid "openpilot crashed"
+msgstr "openpilot 已崩溃"
+
+#: selfdrive/selfdrived/events.py:1225
+#: selfdrive/selfdrived/events.py:1231
+msgid "Please post the 'Error Log' in the StarPilot Discord!"
+msgstr "请将 '错误日志' 发布到 StarPilot Discord！"
+
+#: selfdrive/selfdrived/events.py:1242
+msgid "Traffic Mode enabled"
+msgstr "拥堵模式已启用"
+
+#: selfdrive/selfdrived/events.py:1250
+msgid "Traffic Mode Disabled"
+msgstr "拥堵模式已停用"
+
+#: selfdrive/selfdrived/events.py:1258
+msgid "Switchback Mode"
+msgstr "Switchback 模式"
+
+#: selfdrive/selfdrived/events.py:1266
+msgid "Switchback Mode Disabled"
+msgstr "Switchback 模式已停用"
+
+#: selfdrive/selfdrived/events.py:1281
+msgid "Pedal Not Calibrated"
+msgstr "踏板未校准"
+
+#: selfdrive/selfdrived/events.py:1281
+msgid "Check Calibration"
+msgstr "请检查校准"
+
+#: selfdrive/selfdrived/events.py:1282
+msgid "Pedal Not Calibrated: Check Calibration"
+msgstr "踏板未校准：请检查校准"
+
+#: selfdrive/selfdrived/events.py:1287
+msgid "Pedal Cruise Engaged"
+msgstr "踏板巡航已启用"
+
+#: selfdrive/selfdrived/events.py:1295
+msgid "Pedal Cruise Disengaged"
+msgstr "踏板巡航已停用"
+
+#: selfdrive/selfdrived/events.py:1303
+msgid "Max Regen Being Used"
+msgstr "正在使用最大动能回收"
+
+#: selfdrive/selfdrived/events.py:1311
+msgid "Tesla Cruise Engaged"
+msgstr "Tesla 巡航已启用"
+
+#: selfdrive/selfdrived/events.py:1319
+msgid "Tesla Cruise Disengaged"
+msgstr "Tesla 巡航已停用"
+
+#: selfdrive/selfdrived/events.py:1326
+msgid "Arm Stock Cruise to Enable Speed Control"
+msgstr "请先准备好原厂巡航以启用速度控制"
+
+#: selfdrive/selfdrived/events.py:1460
+msgid "Press Resume"
+msgstr "请按 Resume"
+
+#: selfdrive/selfdrived/events.py:1467
+msgid "Steer Left"
+msgstr "请向左转向"
+
+#: selfdrive/selfdrived/events.py:1468
+#: selfdrive/selfdrived/events.py:1475
+msgid "Confirm Lane Change"
+msgstr "请确认变道"
+
+#: selfdrive/selfdrived/events.py:1474
+msgid "Steer Right"
+msgstr "请向右转向"
+
+#: selfdrive/selfdrived/events.py:1481
+msgid "Car in Blindspot"
+msgstr "盲区有车辆"
+
+#: selfdrive/selfdrived/events.py:1488
+msgid "take control"
+msgstr "请接管"
+
+#: selfdrive/selfdrived/events.py:1489
+msgid "turn exceeds limit"
+msgstr "弯道超出转向能力"
+
+#: selfdrive/selfdrived/events.py:1500
+#: selfdrive/selfdrived/events.py:1505
+msgid "Reverse"
+msgstr "倒车"

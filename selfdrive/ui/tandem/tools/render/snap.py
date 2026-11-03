@@ -19,6 +19,8 @@ def open_window():
   rl.init_window(W, H, "snap")
   gui_app._load_fonts()
   gui_app._patch_text_functions()
+  from openpilot.selfdrive.ui.tandem.fonts import prepare_fallback
+  prepare_fallback()
 
 
 def frame(draw, events=()):

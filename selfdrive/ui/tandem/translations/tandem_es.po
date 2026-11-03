@@ -372,11 +372,12 @@ msgstr "Notas"
 msgid "A new version"
 msgstr "Una nueva versión"
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: home.py:82
 #: home.py:88
 #: tokens.py:62
 msgid "DCEBFF"
-msgstr ""
+msgstr "DCEBFF"
 
 #: home.py:144
 msgid "Home · Work · Recent"
@@ -503,9 +504,10 @@ msgstr[1] "{} alertas"
 msgid "openpilot may not start until these are sorted out"
 msgstr "Puede que openpilot no arranque hasta resolverlas"
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: keyboard.py:41
 msgid "ABC"
-msgstr ""
+msgstr "ABC"
 
 #: keyboard.py:41
 msgid "space"
@@ -522,9 +524,10 @@ msgstr "Listo"
 msgid "Speak now. Tap the mic when you're done."
 msgstr "Habla ahora. Toca el micrófono cuando termines."
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: keyboard.py:31
 msgid "QWERTYUIOP"
-msgstr ""
+msgstr "QWERTYUIOP"
 
 #: keyboard.py:120
 #: overlays.py:163
@@ -532,13 +535,15 @@ msgstr ""
 msgid "Cancel"
 msgstr "Cancelar"
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: keyboard.py:31
 msgid "ASDFGHJKL"
-msgstr ""
+msgstr "ASDFGHJKL"
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: keyboard.py:31
 msgid "ZXCVBNM"
-msgstr ""
+msgstr "ZXCVBNM"
 
 #: mapbox_help.py:20
 msgid "Settings › Driving › Speed & Steering › Navigation"
@@ -604,13 +609,15 @@ msgstr "Solo clave secreta · la búsqueda también necesita la pública"
 msgid "For place search, routes, and speed limits the maps don't have"
 msgstr "Para buscar lugares, rutas y los límites de velocidad que faltan en los mapas"
 
+#. Unit notation; keep as written.
 #: onroad/developer.py:89
 msgid "0.0 m/s²"
-msgstr ""
+msgstr "0.0 m/s²"
 
+#. Unit notation; keep as written.
 #: onroad/developer.py:90
 msgid "0.00 s"
-msgstr ""
+msgstr "0.00 s"
 
 #: onroad/developer.py:41
 msgid "Acceleration now"
@@ -658,43 +665,48 @@ msgstr "Controles"
 
 #: onroad/developer.py:168
 msgid "curve spd"
-msgstr ""
+msgstr "vel. curva"
 
+#. Unit notation; keep as written.
 #: onroad/developer.py:255
 #: onroad/extras.py:215
 #: onroad/lead.py:97
 #, python-brace-format
 msgid "{} m"
-msgstr ""
+msgstr "{} m"
 
+#. Unit notation; keep as written.
 #: onroad/developer.py:255
 #: onroad/extras.py:215
 #: onroad/lead.py:97
 #, python-brace-format
 msgid "{} ft"
-msgstr ""
+msgstr "{} ft"
 
+#. Unit notation; keep as written.
 #: onroad/developer.py:257
 #: onroad/developer.py:310
 #: onroad/lead.py:108
 #, python-brace-format
 msgid "{} s"
-msgstr ""
+msgstr "{} s"
 
+#. Unit notation; keep as written.
 #: onroad/developer.py:286
 #: settings/device_sections.py:301
 #, python-brace-format
 msgid "{} GB"
-msgstr ""
+msgstr "{} GB"
 
+#. Unit notation; keep as written.
 #: onroad/developer.py:308
 #, python-brace-format
 msgid "{} m/s²"
-msgstr ""
+msgstr "{} m/s²"
 
 #: onroad/developer.py:143
 msgid "rel speed"
-msgstr ""
+msgstr "vel. relativa"
 
 #: onroad/developer.py:154
 #: settings/search.py:24
@@ -704,36 +716,40 @@ msgstr "Dispositivo"
 
 #: onroad/developer.py:170
 msgid "limit src"
-msgstr ""
+msgstr "fuente límite"
 
 #: onroad/developer.py:172
 msgid "lanes L/R"
-msgstr ""
+msgstr "carriles I/D"
 
 #: onroad/developer.py:290
 #, python-brace-format
 msgid "active · {} {}"
-msgstr ""
+msgstr "activo · {} {}"
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: onroad/developer.py:166
 msgid "FPS"
-msgstr ""
+msgstr "FPS"
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: onroad/developer.py:158
 msgid "CPU"
-msgstr ""
+msgstr "CPU"
 
 #: onroad/developer.py:158
 msgid "Temp"
 msgstr "Temp."
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: onroad/developer.py:162
 msgid "GPU"
-msgstr ""
+msgstr "GPU"
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: onroad/developer.py:164
 msgid "RAM"
-msgstr ""
+msgstr "RAM"
 
 #: onroad/extras.py:42
 msgid "Jumping frog"
@@ -771,9 +787,10 @@ msgstr "Ayuda a girar"
 msgid "Steering is at its limit for this curve"
 msgstr "La dirección está al límite en esta curva"
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: onroad/layers.py:100
 msgid "MAX"
-msgstr ""
+msgstr "MAX"
 
 #: onroad/layers.py:399
 #, python-brace-format
@@ -939,127 +956,157 @@ msgstr "Parada más adelante"
 msgid "Steering paused · under {} {}"
 msgstr "Dirección en pausa · por debajo de {} {}"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:14
 msgid "St"
-msgstr ""
+msgstr "St"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:14
 msgid "Ave"
-msgstr ""
+msgstr "Ave"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:14
 msgid "Rd"
-msgstr ""
+msgstr "Rd"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:14
 msgid "Blvd"
-msgstr ""
+msgstr "Blvd"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:14
 msgid "Dr"
-msgstr ""
+msgstr "Dr"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:14
 msgid "Ln"
-msgstr ""
+msgstr "Ln"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:14
 msgid "Ct"
-msgstr ""
+msgstr "Ct"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:14
 msgid "Pl"
-msgstr ""
+msgstr "Pl"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:15
 msgid "Ter"
-msgstr ""
+msgstr "Ter"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:15
 msgid "Pkwy"
-msgstr ""
+msgstr "Pkwy"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:15
 msgid "Hwy"
-msgstr ""
+msgstr "Hwy"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:15
 msgid "Expy"
-msgstr ""
+msgstr "Expy"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:15
 msgid "Fwy"
-msgstr ""
+msgstr "Fwy"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:15
 msgid "Cir"
-msgstr ""
+msgstr "Cir"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:15
 msgid "Trl"
-msgstr ""
+msgstr "Trl"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:16
 msgid "Sq"
-msgstr ""
+msgstr "Sq"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:16
 msgid "Xing"
-msgstr ""
+msgstr "Xing"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:16
 msgid "Tpke"
-msgstr ""
+msgstr "Tpke"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:16
 msgid "Hts"
-msgstr ""
+msgstr "Hts"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:16
 msgid "Ctr"
-msgstr ""
+msgstr "Ctr"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:16
 msgid "Plz"
-msgstr ""
+msgstr "Plz"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:16
 msgid "Pt"
-msgstr ""
+msgstr "Pt"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:17
 msgid "Mtn"
-msgstr ""
+msgstr "Mtn"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:17
 msgid "Jct"
-msgstr ""
+msgstr "Jct"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:17
 msgid "Cres"
-msgstr ""
+msgstr "Cres"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:17
 msgid "Aly"
-msgstr ""
+msgstr "Aly"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:17
 msgid "Cswy"
-msgstr ""
+msgstr "Cswy"
 
+#. US street-name abbreviation; keep as written.
 #: onroad/streets.py:17
 msgid "Byp"
-msgstr ""
+msgstr "Byp"
 
+#. Unit notation; keep as written.
 #: onroad/view.py:560
 #, python-brace-format
 msgid "{} km"
-msgstr ""
+msgstr "{} km"
 
+#. Unit notation; keep as written.
 #: onroad/view.py:560
 #, python-brace-format
 msgid "{} mi"
-msgstr ""
+msgstr "{} mi"
 
 #: onroad/view.py:561
 #, python-brace-format
@@ -1453,7 +1500,7 @@ msgstr "Los botones no hacen sus acciones mientras esta pantalla está abierta."
 
 #: settings/bluetooth_tab.py:318
 msgid "PRESSED"
-msgstr ""
+msgstr "PULSADO"
 
 #: settings/bluetooth_tab.py:366
 msgid "Sound test"
@@ -1911,19 +1958,21 @@ msgstr "¿Activar el longitudinal alfa?"
 msgid "Turn On"
 msgstr "Activar"
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: settings/developer.py:148
 #: settings/search.py:184
 msgid "ADB"
-msgstr ""
+msgstr "ADB"
 
 #: settings/developer.py:148
 msgid "Connect over USB or the network (docs.comma.ai). Change it with the car off."
 msgstr "Conéctate por USB o por la red (docs.comma.ai). Cámbialo con el coche apagado."
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: settings/developer.py:149
 #: settings/search.py:185
 msgid "SSH"
-msgstr ""
+msgstr "SSH"
 
 #: settings/developer.py:149
 msgid "Remote shell access with the keys below"
@@ -1970,6 +2019,7 @@ msgid "Calibrated"
 msgstr "Calibrado"
 
 #: settings/device.py:26
+#: selfdrive/selfdrived/events.py:1496
 msgid "Calibrating"
 msgstr "Calibrando"
 
@@ -2197,9 +2247,10 @@ msgstr "Configurado · protegido con tu contraseña"
 msgid "Not set up"
 msgstr "Sin configurar"
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: settings/device.py:255
 msgid "GALAXY"
-msgstr ""
+msgstr "GALAXY"
 
 #: settings/device.py:264
 msgid "Your code appears here once you choose a password"
@@ -2234,10 +2285,11 @@ msgstr "MÁS"
 msgid "Device ID and Serial"
 msgstr "ID y número de serie del dispositivo"
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: settings/device.py:117
 #: settings/search.py:164
 msgid "IMEI"
-msgstr ""
+msgstr "IMEI"
 
 #: settings/device.py:113
 msgid "Review"
@@ -2607,10 +2659,12 @@ msgid "Standard"
 msgstr "Estándar"
 
 #: settings/display.py:55
+#: selfdrive/selfdrived/events.py:551
 msgid "Be ready to take over at any time"
 msgstr "Prepárate para tomar el control en cualquier momento"
 
 #: settings/display.py:55
+#: selfdrive/selfdrived/events.py:211
 msgid "Always keep hands on wheel and eyes on road"
 msgstr "Mantén siempre las manos en el volante y la vista en la carretera"
 
@@ -2879,21 +2933,24 @@ msgstr "Mensaje de inicio: segunda línea"
 msgid "No preview"
 msgstr "Sin vista previa"
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: settings/display.py:595
 msgid "ESSENTIALS"
-msgstr ""
+msgstr "ESSENTIALS"
 
 #: settings/display.py:595
 msgid "WHIMSY"
 msgstr "DIVERTIDAS"
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: settings/display.py:675
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: settings/display.py:680
 msgid "PNG"
-msgstr ""
+msgstr "PNG"
 
 #: settings/display.py:302
 msgid "Sets path color, width, edges and lane lines together"
@@ -3391,10 +3448,11 @@ msgstr "Los dispositivos conectados tendrán que volver a conectarse."
 msgid "Hotspot password"
 msgstr "Contraseña del punto de acceso"
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: settings/network_tab.py:150
 #: settings/network_tab.py:223
 msgid "APN"
-msgstr ""
+msgstr "APN"
 
 #: settings/network_tab.py:150
 msgid "Leave empty for automatic"
@@ -4291,9 +4349,10 @@ msgstr "¿Desinstalar openpilot?"
 msgid "The device removes openpilot and starts its setup again."
 msgstr "El dispositivo quita openpilot y vuelve a empezar la configuración."
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: settings/software_tab.py:253
 msgid "pkill -SIGUSR1 -f system.updated.updated"
-msgstr ""
+msgstr "pkill -SIGUSR1 -f system.updated.updated"
 
 #: settings/software_tab.py:71
 #: settings/software_tab.py:65
@@ -4623,10 +4682,11 @@ msgstr "Aprendido"
 msgid "From style"
 msgstr "Del estilo"
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: settings/tuner.py:78
 #: settings/tuner.py:138
 msgid "NNFF"
-msgstr ""
+msgstr "NNFF"
 
 #: settings/tuner.py:78
 msgid "Lite"
@@ -4828,13 +4888,15 @@ msgstr "Favorito 3"
 msgid "Never"
 msgstr "Nunca"
 
+#. Unit notation; keep as written.
 #: settings/vehicle.py:254
 msgid "10 s"
-msgstr ""
+msgstr "10 s"
 
+#. Unit notation; keep as written.
 #: settings/vehicle.py:254
 msgid "30 s"
-msgstr ""
+msgstr "30 s"
 
 #: settings/vehicle.py:254
 msgid "1 min"
@@ -4915,9 +4977,10 @@ msgstr "Desactiva el control de acelerador y freno de openpilot. openpilot se re
 msgid "Only needed if detection picked the wrong car. Choosing turns off automatic detection."
 msgstr "Solo hace falta si la detección eligió el coche equivocado. Elegirlo desactiva la detección automática."
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: settings/vehicle.py:231
 msgid "LKAS"
-msgstr ""
+msgstr "LKAS"
 
 #: settings/vehicle.py:236
 msgid "Mode"
@@ -5181,7 +5244,7 @@ msgstr "Empezar a conducir"
 
 #: setup.py:118
 msgid ", then "
-msgstr ""
+msgstr ", después "
 
 #: sidebar.py:94
 msgid "comma connect"
@@ -5226,11 +5289,12 @@ msgstr "Caliente"
 msgid "Not downloaded"
 msgstr "Sin descargar"
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: tokens.py:102
 #: tokens.py:103
 #: tokens.py:166
 msgid "FFFFFF"
-msgstr ""
+msgstr "FFFFFF"
 
 #: voice.py:36
 msgid "Didn't catch that. Tap the mic to try again."
@@ -5260,9 +5324,10 @@ msgstr "Escribir"
 msgid "Listening"
 msgstr "Escuchando"
 
+#. Name, identifier, keyboard keys or command; keep as written.
 #: voice.py:93
 msgid "QCOM"
-msgstr ""
+msgstr "QCOM"
 
 #: voice.py:197
 msgid "Getting voice typing ready"
@@ -5288,41 +5353,46 @@ msgstr "Dictado"
 msgid "U.S. Midwest Region (12 States)"
 msgstr "Región del Medio Oeste de EE. UU. (12 estados)"
 
+#. US state and territory codes; keep as written.
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:73
 msgid "IL, IN, IA, KS, MI, MN, MO, NE, ND, OH, SD, WI"
-msgstr ""
+msgstr "IL, IN, IA, KS, MI, MN, MO, NE, ND, OH, SD, WI"
 
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:77
 msgid "U.S. Northeast Region (9 States)"
 msgstr "Región Noreste de EE. UU. (9 estados)"
 
+#. US state and territory codes; keep as written.
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:78
 msgid "CT, ME, MA, NH, NJ, NY, PA, RI, VT"
-msgstr ""
+msgstr "CT, ME, MA, NH, NJ, NY, PA, RI, VT"
 
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:82
 msgid "U.S. South Region (17 States)"
 msgstr "Región Sur de EE. UU. (17 estados)"
 
+#. US state and territory codes; keep as written.
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:83
 msgid "AL, AR, DE, DC, FL, GA, KY, LA, MD, MS, NC, OK, SC, TN, TX, VA, WV"
-msgstr ""
+msgstr "AL, AR, DE, DC, FL, GA, KY, LA, MD, MS, NC, OK, SC, TN, TX, VA, WV"
 
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:87
 msgid "U.S. West Region (13 States)"
 msgstr "Región Oeste de EE. UU. (13 estados)"
 
+#. US state and territory codes; keep as written.
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:88
 msgid "AK, AZ, CA, CO, HI, ID, MT, NV, NM, OR, UT, WA, WY"
-msgstr ""
+msgstr "AK, AZ, CA, CO, HI, ID, MT, NV, NM, OR, UT, WA, WY"
 
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:92
 msgid "U.S. Territories (5 Territories)"
 msgstr "Territorios de EE. UU. (5 territorios)"
 
+#. US state and territory codes; keep as written.
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:93
 msgid "AS, GU, MP, PR, VI"
-msgstr ""
+msgstr "AS, GU, MP, PR, VI"
 
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:120
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:132
@@ -6223,7 +6293,7 @@ msgstr "Revisa las reglas, funciones y limitaciones de openpilot"
 
 #: selfdrive/ui/layouts/settings/device.py:275
 msgid "openpilot is continuously calibrating, resetting is rarely required. Resetting calibration will restart openpilot if the car is powered on."
-msgstr ""
+msgstr "openpilot se calibra continuamente; rara vez es necesario reiniciar la calibración. Si el coche está encendido, reiniciar la calibración reiniciará openpilot."
 
 #: selfdrive/ui/layouts/settings/device.py:91
 msgid "Scan to open Galaxy"
@@ -6247,7 +6317,7 @@ msgstr "¿Seguro que quieres restablecer la calibración de la supervisión del 
 
 #: selfdrive/ui/layouts/settings/device.py:258
 msgid "<br><br>Steering lag calibration is complete."
-msgstr ""
+msgstr "<br><br>La calibración del retraso de dirección se ha completado."
 
 #: selfdrive/ui/layouts/settings/device.py:281
 msgid "Are you sure you want to reboot?"
@@ -6355,7 +6425,7 @@ msgstr "Desactiva para restablecer la supervisión"
 #: selfdrive/ui/layouts/settings/device.py:256
 #, python-brace-format, drawn
 msgid "<br><br>Steering lag calibration is {}% complete."
-msgstr ""
+msgstr "<br><br>La calibración del retraso de dirección está al {}%."
 
 #: selfdrive/ui/layouts/settings/device.py:294
 msgid "Disengage to Power Off"
@@ -6418,15 +6488,15 @@ msgstr "¿Seguro que quieres desemparejar de Galaxy?"
 
 #: selfdrive/ui/layouts/settings/developer.py:14
 msgid "ADB (Android Debug Bridge) allows connecting to your device over USB or over the network. See https://docs.comma.ai/how-to/connect-to-comma for more info."
-msgstr ""
+msgstr "ADB (Android Debug Bridge) permite conectarte al dispositivo por USB o por la red. Más información en https://docs.comma.ai/how-to/connect-to-comma."
 
 #: selfdrive/ui/layouts/settings/developer.py:18
 msgid "Warning: This grants SSH access to all public keys in your GitHub settings. Never enter a GitHub username other than your own. A comma employee will NEVER ask you to add their GitHub username."
-msgstr ""
+msgstr "Advertencia: esto concede acceso SSH a todas las claves públicas de tus ajustes de GitHub. Nunca introduzcas un nombre de usuario de GitHub que no sea el tuyo. Un empleado de comma NUNCA te pedirá que añadas su nombre de usuario de GitHub."
 
 #: selfdrive/ui/layouts/settings/developer.py:22
 msgid "<b>WARNING: openpilot longitudinal control is in alpha for this car and will disable Automatic Emergency Braking (AEB).</b><br><br>On this car, openpilot defaults to the car's built-in ACC instead of openpilot's longitudinal control. Enable this to switch to openpilot longitudinal control. Enabling Experimental mode is recommended when enabling openpilot longitudinal control alpha. Changing this setting will restart openpilot if the car is powered on."
-msgstr ""
+msgstr "<b>ADVERTENCIA: el control longitudinal de openpilot está en fase alfa para este coche y desactivará el frenado automático de emergencia (AEB).</b><br><br>En este coche, openpilot usa por defecto el control de crucero adaptativo (ACC) del coche en lugar de su propio control longitudinal. Activa esta opción para usar el control longitudinal de openpilot. Se recomienda activar el modo experimental al usar el control longitudinal de openpilot en fase alfa. Cambiar este ajuste reiniciará openpilot si el coche está encendido."
 
 #: selfdrive/ui/layouts/settings/developer.py:39
 msgid "Enable ADB"
@@ -6443,6 +6513,30 @@ msgstr "Control longitudinal de openpilot (Alpha)"
 #: selfdrive/ui/layouts/settings/developer.py:153
 msgid "Enable"
 msgstr "Activar"
+
+#: selfdrive/ui/onroad/alert_renderer.py:60
+#: selfdrive/selfdrived/events.py:162
+msgid "openpilot Unavailable"
+msgstr "openpilot no disponible"
+
+#: selfdrive/ui/onroad/alert_renderer.py:61
+msgid "Waiting to start"
+msgstr "Esperando para iniciar"
+
+#: selfdrive/ui/onroad/alert_renderer.py:67
+#: selfdrive/selfdrived/events.py:174
+#: selfdrive/selfdrived/events.py:189
+msgid "TAKE CONTROL IMMEDIATELY"
+msgstr "TOME EL CONTROL INMEDIATAMENTE"
+
+#: selfdrive/ui/onroad/alert_renderer.py:68
+#: selfdrive/ui/onroad/alert_renderer.py:74
+msgid "System Unresponsive"
+msgstr "El sistema no responde"
+
+#: selfdrive/ui/onroad/alert_renderer.py:75
+msgid "Reboot Device"
+msgstr "Reinicie el dispositivo"
 
 #: selfdrive/selfdrived/alerts_offroad.json:Offroad_TemperatureTooHigh
 #, python-brace-format, drawn
@@ -6513,3 +6607,825 @@ msgstr "La supervisión del conductor ve mal. Asegúrate de que el dispositivo v
 #, python-brace-format, drawn
 msgid "Excessive {} actuation detected on your last drive. Please contact support at https://comma.ai/support and share your device's Dongle ID for troubleshooting."
 msgstr "Se detectó una actuación excesiva de {} en tu último viaje. Contacta con soporte en https://comma.ai/support y comparte el Dongle ID de tu dispositivo."
+
+#: selfdrive/selfdrived/events.py:184
+msgid "openpilot will disengage"
+msgstr "openpilot se desactivará"
+
+#: selfdrive/selfdrived/events.py:254
+msgid "WARNING: This branch is not tested"
+msgstr "ADVERTENCIA: Esta rama no está probada"
+
+#: selfdrive/selfdrived/events.py:257
+#, python-brace-format, drawn
+msgid "Drive above {} to engage"
+msgstr "Circule a más de {} para activar"
+
+#: selfdrive/selfdrived/events.py:262
+#, python-brace-format, drawn
+msgid "Steer Unavailable Under {}"
+msgstr "Dirección no disponible por debajo de {}"
+
+#: selfdrive/selfdrived/events.py:271
+msgid "Car in Auto Hold mode"
+msgstr "Coche en modo Auto Hold"
+
+#: selfdrive/selfdrived/events.py:271
+msgid "Press Resume to Exit Brake Hold"
+msgstr "Pulse Resume para liberar la retención del freno"
+
+#: selfdrive/selfdrived/events.py:279
+msgid "Speed limit changed"
+msgstr "El límite de velocidad ha cambiado"
+
+#: selfdrive/selfdrived/events.py:288
+#, python-brace-format, drawn
+msgid "Calibrating: {}%"
+msgstr "Calibrando: {}%"
+
+#: selfdrive/selfdrived/events.py:288
+#, python-brace-format, drawn
+msgid "Recalibrating: {}%"
+msgstr "Recalibrando: {}%"
+
+#: selfdrive/selfdrived/events.py:289
+#, python-brace-format, drawn
+msgid "Drive Above {}"
+msgstr "Circule a más de {}"
+
+#: selfdrive/selfdrived/events.py:297
+msgid "Too Distracted"
+msgstr "Demasiada distracción"
+
+#: selfdrive/selfdrived/events.py:297
+#, python-brace-format, drawn
+msgid "{} minute Left"
+msgid_plural "{} minutes Left"
+msgstr[0] "Queda {} minuto"
+msgstr[1] "Quedan {} minutos"
+
+#: selfdrive/selfdrived/events.py:298
+msgid "Pay Attention to Engage"
+msgstr "Preste atención para activar"
+
+#: selfdrive/selfdrived/events.py:304
+msgid "Recording Audio Feedback"
+msgstr "Grabando comentario de audio"
+
+#: selfdrive/selfdrived/events.py:305
+#, python-brace-format, drawn
+msgid "{} second remaining. Press again to save early."
+msgid_plural "{} seconds remaining. Press again to save early."
+msgstr[0] "Queda {} segundo. Pulse de nuevo para guardar antes."
+msgstr[1] "Quedan {} segundos. Pulse de nuevo para guardar antes."
+
+#: selfdrive/selfdrived/events.py:313
+#: selfdrive/selfdrived/events.py:883
+msgid "Out of Storage"
+msgstr "Almacenamiento lleno"
+
+#: selfdrive/selfdrived/events.py:313
+#, python-brace-format, drawn
+msgid "{}% full"
+msgstr "{}% lleno"
+
+#: selfdrive/selfdrived/events.py:320
+#, python-brace-format, drawn
+msgid "Speed Error: {} m/s"
+msgstr "Error de velocidad: {} m/s"
+
+#: selfdrive/selfdrived/events.py:320
+#: selfdrive/selfdrived/events.py:1021
+msgid "Posenet Speed Invalid"
+msgstr "Velocidad de Posenet no válida"
+
+#: selfdrive/selfdrived/events.py:326
+#: selfdrive/selfdrived/events.py:993
+msgid "Process Not Running"
+msgstr "El proceso no está en ejecución"
+
+#: selfdrive/selfdrived/events.py:332
+#: selfdrive/selfdrived/events.py:971
+#: selfdrive/selfdrived/events.py:972
+msgid "Communication Issue Between Processes"
+msgstr "Problema de comunicación entre procesos"
+
+#: selfdrive/selfdrived/events.py:338
+#: selfdrive/selfdrived/events.py:752
+msgid "Camera Malfunction"
+msgstr "Fallo de cámara"
+
+#: selfdrive/selfdrived/events.py:346
+msgid "Calibration Invalid"
+msgstr "Calibración no válida"
+
+#: selfdrive/selfdrived/events.py:346
+#, python-brace-format, drawn
+msgid "Remount Device (Pitch: {}°, Yaw: {}°)"
+msgstr "Vuelva a montar el dispositivo (Inclinación: {}°, Guiñada: {}°)"
+
+#: selfdrive/selfdrived/events.py:363
+#: selfdrive/selfdrived/events.py:785
+msgid "paramsd Temporary Error"
+msgstr "Error temporal de paramsd"
+
+#: selfdrive/selfdrived/events.py:365
+msgid "Steer ratio mismatch"
+msgstr "Relación de dirección incorrecta"
+
+#: selfdrive/selfdrived/events.py:365
+msgid "Abnormal tire stiffness"
+msgstr "Rigidez anormal de los neumáticos"
+
+#: selfdrive/selfdrived/events.py:365
+msgid "Steering misalignment detected"
+msgstr "Desalineación de dirección detectada"
+
+#: selfdrive/selfdrived/events.py:365
+#, python-brace-format, drawn
+msgid "Angle offset too high (Offset: {}°)"
+msgstr "Desviación angular demasiado alta (Desviación: {}°)"
+
+#: selfdrive/selfdrived/events.py:365
+#, python-brace-format, drawn
+msgid "Steering rack geometry may be off (Ratio: {})"
+msgstr "La geometría de la cremallera puede ser incorrecta (Relación: {})"
+
+#: selfdrive/selfdrived/events.py:365
+#, python-brace-format, drawn
+msgid "Check tires, pressure, or alignment (Factor: {})"
+msgstr "Revise neumáticos, presión o alineación (Factor: {})"
+
+#: selfdrive/selfdrived/events.py:371
+#: selfdrive/selfdrived/events.py:914
+#: selfdrive/selfdrived/events.py:915
+msgid "System Overheated"
+msgstr "Sistema sobrecalentado"
+
+#. Preserve the standard unit and numeric value.
+#: selfdrive/selfdrived/events.py:371
+#, python-brace-format, drawn
+msgid "{} °C"
+msgstr "{} °C"
+
+#: selfdrive/selfdrived/events.py:375
+msgid "Low Memory"
+msgstr "Poca memoria"
+
+#: selfdrive/selfdrived/events.py:375
+#: selfdrive/selfdrived/events.py:380
+#, python-brace-format, drawn
+msgid "{}% used"
+msgstr "{}% en uso"
+
+#: selfdrive/selfdrived/events.py:380
+msgid "High CPU Usage"
+msgstr "Uso de CPU elevado"
+
+#: selfdrive/selfdrived/events.py:384
+#: selfdrive/selfdrived/events.py:1010
+#: selfdrive/selfdrived/events.py:1011
+msgid "Driving Model Lagging"
+msgstr "Modelo de conducción retrasado"
+
+#: selfdrive/selfdrived/events.py:384
+#, python-brace-format, drawn
+msgid "{}% frames dropped"
+msgstr "{}% de fotogramas perdidos"
+
+#: selfdrive/selfdrived/events.py:394
+msgid "Enable Main Switch to Engage"
+msgstr "Encienda el interruptor principal para activar"
+
+#: selfdrive/selfdrived/events.py:394
+msgid "Enable Cruise Control to Engage"
+msgstr "Encienda el control de crucero para activar"
+
+#: selfdrive/selfdrived/events.py:394
+msgid "Enable Adaptive Cruise to Engage"
+msgstr "Encienda el control de crucero adaptativo para activar"
+
+#: selfdrive/selfdrived/events.py:401
+#: selfdrive/selfdrived/events.py:526
+msgid "Joystick Mode"
+msgstr "Modo joystick"
+
+#: selfdrive/selfdrived/events.py:401
+#, python-brace-format, drawn
+msgid "Gas: {}%, Steer: {}%"
+msgstr "Acelerador: {}%, Dirección: {}%"
+
+#: selfdrive/selfdrived/events.py:418
+#, python-brace-format, drawn
+msgid "Turning {}"
+msgstr "Girando: {}"
+
+#: selfdrive/selfdrived/events.py:425
+msgid "Changing Lanes"
+msgstr "Cambiando de carril"
+
+#: selfdrive/selfdrived/events.py:432
+#, python-brace-format, drawn
+msgid "Driving Personality: {}"
+msgstr "Estilo de conducción: {}"
+
+#: selfdrive/selfdrived/events.py:443
+#: selfdrive/selfdrived/events.py:580
+msgid "Invalid LKAS setting"
+msgstr "Configuración de LKAS no válida"
+
+#: selfdrive/selfdrived/events.py:443
+msgid "Enable your car's LKAS to engage"
+msgstr "Active el LKAS del coche para activar"
+
+#: selfdrive/selfdrived/events.py:443
+msgid "Toggle stock LKAS on or off to engage"
+msgstr "Cambie el estado del LKAS de fábrica para activar"
+
+#: selfdrive/selfdrived/events.py:443
+msgid "Disable your car's stock LKAS to engage"
+msgstr "Desactive el LKAS de fábrica del coche para activar"
+
+#: selfdrive/selfdrived/events.py:443
+msgid "Switch to Traffic-Aware Cruise Control to engage"
+msgstr "Cambie al control de crucero según el tráfico para activar"
+
+#: selfdrive/selfdrived/events.py:453
+msgid "Holding the car at a stop"
+msgstr "Manteniendo el coche detenido"
+
+#: selfdrive/selfdrived/events.py:454
+msgid "Press the gas pedal or 'Resume' button to override"
+msgstr "Pise el acelerador o pulse 'Resume' para anular"
+
+#: selfdrive/selfdrived/events.py:492
+msgid "NNFF Torque Controller not available"
+msgstr "Controlador de par NNFF no disponible"
+
+#: selfdrive/selfdrived/events.py:493
+msgid "Donate logs to Twilsonco to get your car supported!"
+msgstr "¡Envíe registros a Twilsonco para añadir compatibilidad con su coche!"
+
+#: selfdrive/selfdrived/events.py:498
+msgid "NNFF Torque Controller loaded with:"
+msgstr "Controlador de par NNFF cargado con:"
+
+#: selfdrive/selfdrived/events.py:509
+msgid "No Lane Available"
+msgstr "No hay carril disponible"
+
+#: selfdrive/selfdrived/events.py:510
+#, python-brace-format, drawn
+msgid "Detected Lane Width Is Only {} Feet"
+msgstr "El ancho de carril detectado es de solo {} pies"
+
+#: selfdrive/selfdrived/events.py:510
+#, python-brace-format, drawn
+msgid "Detected Lane Width Is Only {} Meters"
+msgstr "El ancho de carril detectado es de solo {} metros"
+
+#: selfdrive/selfdrived/events.py:531
+msgid "Longitudinal Maneuver Mode"
+msgstr "Modo de maniobra longitudinal"
+
+#: selfdrive/selfdrived/events.py:532
+#: selfdrive/selfdrived/events.py:1171
+msgid "Ensure road ahead is clear"
+msgstr "Asegúrese de que la vía está despejada"
+
+#: selfdrive/selfdrived/events.py:536
+msgid "Big Model Loading"
+msgstr "Cargando modelo grande"
+
+#: selfdrive/selfdrived/events.py:540
+#: selfdrive/selfdrived/events.py:541
+msgid "Big Model Failed"
+msgstr "Fallo del modelo grande"
+
+#: selfdrive/selfdrived/events.py:542
+msgid "Restart the car to retry,\nsmall model is still available"
+msgstr "Reinicie el coche para reintentar,\nel modelo pequeño sigue disponible"
+
+#: selfdrive/selfdrived/events.py:547
+msgid "System Initializing"
+msgstr "Inicializando el sistema"
+
+#: selfdrive/selfdrived/events.py:559
+#: selfdrive/selfdrived/events.py:560
+msgid "Dashcam mode"
+msgstr "Modo cámara de salpicadero"
+
+#: selfdrive/selfdrived/events.py:564
+msgid "Dashcam mode for unsupported car"
+msgstr "Modo cámara para coche no compatible"
+
+#: selfdrive/selfdrived/events.py:568
+#: selfdrive/selfdrived/events.py:574
+#: selfdrive/selfdrived/events.py:591
+msgid "Dashcam Mode"
+msgstr "Modo cámara de salpicadero"
+
+#: selfdrive/selfdrived/events.py:569
+msgid "Security Key Not Available"
+msgstr "Clave de seguridad no disponible"
+
+#: selfdrive/selfdrived/events.py:592
+msgid "Car Unrecognized"
+msgstr "Coche no reconocido"
+
+#: selfdrive/selfdrived/events.py:598
+#: selfdrive/selfdrived/events.py:607
+#: selfdrive/selfdrived/events.py:616
+msgid "BRAKE!"
+msgstr "¡FRENE!"
+
+#: selfdrive/selfdrived/events.py:599
+msgid "Emergency Braking: Risk of Collision"
+msgstr "Frenado de emergencia: Riesgo de colisión"
+
+#: selfdrive/selfdrived/events.py:602
+msgid "AEB: Risk of Collision"
+msgstr "AEB: Riesgo de colisión"
+
+#: selfdrive/selfdrived/events.py:608
+#: selfdrive/selfdrived/events.py:611
+msgid "Stock AEB: Risk of Collision"
+msgstr "AEB de fábrica: Riesgo de colisión"
+
+#: selfdrive/selfdrived/events.py:617
+msgid "Risk of Collision"
+msgstr "Riesgo de colisión"
+
+#: selfdrive/selfdrived/events.py:624
+msgid "Lane Departure Detected"
+msgstr "Salida de carril detectada"
+
+#: selfdrive/selfdrived/events.py:634
+#: selfdrive/selfdrived/events.py:872
+msgid "Steering Assist Temporarily Unavailable"
+msgstr "Asistencia de dirección temporalmente no disponible"
+
+#: selfdrive/selfdrived/events.py:642
+#: selfdrive/selfdrived/events.py:650
+#: selfdrive/selfdrived/events.py:1446
+msgid "Pay Attention"
+msgstr "Preste atención"
+
+#: selfdrive/selfdrived/events.py:651
+#: selfdrive/selfdrived/events.py:659
+#: selfdrive/selfdrived/events.py:1454
+msgid "Driver Distracted"
+msgstr "Conductor distraído"
+
+#: selfdrive/selfdrived/events.py:658
+#: selfdrive/selfdrived/events.py:682
+msgid "DISENGAGE IMMEDIATELY"
+msgstr "DESACTIVE INMEDIATAMENTE"
+
+#: selfdrive/selfdrived/events.py:666
+msgid "Touch Steering Wheel: No Face Detected"
+msgstr "Toque el volante: No se detecta ninguna cara"
+
+#: selfdrive/selfdrived/events.py:674
+msgid "Touch Steering Wheel"
+msgstr "Toque el volante"
+
+#: selfdrive/selfdrived/events.py:675
+#: selfdrive/selfdrived/events.py:683
+msgid "Driver Unresponsive"
+msgstr "El conductor no responde"
+
+#: selfdrive/selfdrived/events.py:690
+msgid "TAKE CONTROL"
+msgstr "Tome el control"
+
+#: selfdrive/selfdrived/events.py:691
+msgid "Resume Driving Manually"
+msgstr "Continúe conduciendo manualmente"
+
+#: selfdrive/selfdrived/events.py:698
+msgid "Press Resume to Exit Standstill"
+msgstr "Pulse Resume para salir de la parada"
+
+#: selfdrive/selfdrived/events.py:710
+msgid "Steer Left to Start Lane Change Once Safe"
+msgstr "Cuando sea seguro, gire a la izquierda para cambiar de carril"
+
+#: selfdrive/selfdrived/events.py:718
+msgid "Steer Right to Start Lane Change Once Safe"
+msgstr "Cuando sea seguro, gire a la derecha para cambiar de carril"
+
+#: selfdrive/selfdrived/events.py:726
+#: selfdrive/selfdrived/events.py:1200
+msgid "Car Detected in Blindspot"
+msgstr "Coche detectado en el ángulo muerto"
+
+#: selfdrive/selfdrived/events.py:738
+msgid "Take Control"
+msgstr "Tome el control"
+
+#: selfdrive/selfdrived/events.py:739
+msgid "Turn Exceeds Steering Limit"
+msgstr "La curva supera el límite de dirección"
+
+#: selfdrive/selfdrived/events.py:746
+msgid "Fan Malfunction"
+msgstr "Fallo del ventilador"
+
+#: selfdrive/selfdrived/events.py:746
+msgid "Likely Hardware Issue"
+msgstr "Probable problema de hardware"
+
+#: selfdrive/selfdrived/events.py:753
+msgid "Camera Malfunction: Reboot Your Device"
+msgstr "Fallo de cámara: Reinicie el dispositivo"
+
+#: selfdrive/selfdrived/events.py:757
+#: selfdrive/selfdrived/events.py:758
+msgid "Camera Frame Rate Low"
+msgstr "Baja frecuencia de fotogramas de cámara"
+
+#: selfdrive/selfdrived/events.py:757
+msgid "Reboot your Device"
+msgstr "Reinicie el dispositivo"
+
+#: selfdrive/selfdrived/events.py:759
+msgid "Camera Frame Rate Low: Reboot Your Device"
+msgstr "Baja frecuencia de fotogramas de cámara: Reinicie el dispositivo"
+
+#: selfdrive/selfdrived/events.py:765
+#: selfdrive/selfdrived/events.py:766
+msgid "locationd Temporary Error"
+msgstr "Error temporal de locationd"
+
+#: selfdrive/selfdrived/events.py:770
+#: selfdrive/selfdrived/events.py:771
+#: selfdrive/selfdrived/events.py:772
+msgid "locationd Permanent Error"
+msgstr "Error permanente de locationd"
+
+#: selfdrive/selfdrived/events.py:789
+#: selfdrive/selfdrived/events.py:790
+#: selfdrive/selfdrived/events.py:791
+msgid "paramsd Permanent Error"
+msgstr "Error permanente de paramsd"
+
+#: selfdrive/selfdrived/events.py:810
+msgid "Cancel Pressed"
+msgstr "Botón de cancelar pulsado"
+
+#: selfdrive/selfdrived/events.py:819
+msgid "Parking Brake Engaged"
+msgstr "Freno de estacionamiento activado"
+
+#: selfdrive/selfdrived/events.py:824
+msgid "Pedal Pressed"
+msgstr "Pedal pisado"
+
+#: selfdrive/selfdrived/events.py:830
+msgid "Steering Pressed"
+msgstr "Intervención en el volante"
+
+#: selfdrive/selfdrived/events.py:835
+msgid "Release Brake to Engage"
+msgstr "Suelte el freno para activar"
+
+#: selfdrive/selfdrived/events.py:863
+msgid "Press Set to Engage"
+msgstr "Pulse Set para activar"
+
+#: selfdrive/selfdrived/events.py:868
+msgid "Adaptive Cruise Disabled"
+msgstr "Control de crucero adaptativo desactivado"
+
+#: selfdrive/selfdrived/events.py:873
+msgid "Steering Temporarily Unavailable"
+msgstr "Dirección temporalmente no disponible"
+
+#: selfdrive/selfdrived/events.py:877
+#: selfdrive/selfdrived/events.py:878
+msgid "Vehicle Steering Time Limit"
+msgstr "Límite de tiempo de dirección del vehículo"
+
+#: selfdrive/selfdrived/events.py:892
+#: selfdrive/selfdrived/events.py:896
+#: selfdrive/selfdrived/events.py:897
+msgid "Sensor Data Invalid"
+msgstr "Datos de sensores no válidos"
+
+#: selfdrive/selfdrived/events.py:893
+msgid "Possible Hardware Issue"
+msgstr "Posible problema de hardware"
+
+#: selfdrive/selfdrived/events.py:908
+#: selfdrive/selfdrived/events.py:909
+msgid "Excessive Actuation"
+msgstr "Actuación excesiva"
+
+#: selfdrive/selfdrived/events.py:919
+#: selfdrive/selfdrived/events.py:920
+msgid "Gear not D"
+msgstr "Marcha distinta de D"
+
+#: selfdrive/selfdrived/events.py:930
+#: selfdrive/selfdrived/events.py:931
+msgid "Calibration Invalid: Remount Device & Recalibrate"
+msgstr "Calibración no válida: Vuelva a montar y calibrar el dispositivo"
+
+#: selfdrive/selfdrived/events.py:936
+#: selfdrive/selfdrived/events.py:1495
+msgid "Calibration Incomplete"
+msgstr "Calibración incompleta"
+
+#: selfdrive/selfdrived/events.py:937
+msgid "Calibration in Progress"
+msgstr "Calibración en curso"
+
+#: selfdrive/selfdrived/events.py:942
+msgid "Device Remount Detected: Recalibrating"
+msgstr "Nuevo montaje del dispositivo detectado: Recalibrando"
+
+#: selfdrive/selfdrived/events.py:943
+msgid "Remount Detected: Recalibrating"
+msgstr "Nuevo montaje detectado: Recalibrando"
+
+#: selfdrive/selfdrived/events.py:947
+#: selfdrive/selfdrived/events.py:948
+msgid "Door Open"
+msgstr "Puerta abierta"
+
+#: selfdrive/selfdrived/events.py:952
+#: selfdrive/selfdrived/events.py:953
+msgid "Seatbelt Unlatched"
+msgstr "Cinturón desabrochado"
+
+#: selfdrive/selfdrived/events.py:957
+#: selfdrive/selfdrived/events.py:958
+msgid "Electronic Stability Control Disabled"
+msgstr "Control electrónico de estabilidad desactivado"
+
+#: selfdrive/selfdrived/events.py:962
+#: selfdrive/selfdrived/events.py:963
+msgid "Low Battery"
+msgstr "Batería baja"
+
+#: selfdrive/selfdrived/events.py:978
+#: selfdrive/selfdrived/events.py:979
+#: selfdrive/selfdrived/events.py:982
+msgid "Low Communication Rate Between Processes"
+msgstr "Baja frecuencia de comunicación entre procesos"
+
+#: selfdrive/selfdrived/events.py:986
+msgid "System Lagging"
+msgstr "Sistema retrasado"
+
+#: selfdrive/selfdrived/events.py:987
+msgid "Selfdrive Process Lagging: Reboot Your Device"
+msgstr "Proceso Selfdrive retrasado: Reinicie el dispositivo"
+
+#: selfdrive/selfdrived/events.py:997
+#: selfdrive/selfdrived/events.py:998
+msgid "Radar Error: Restart the Car"
+msgstr "Error de radar: Reinicie el coche"
+
+#: selfdrive/selfdrived/events.py:1002
+#: selfdrive/selfdrived/events.py:1003
+msgid "Radar Temporarily Unavailable"
+msgstr "Radar temporalmente no disponible"
+
+#: selfdrive/selfdrived/events.py:1028
+#: selfdrive/selfdrived/events.py:1029
+msgid "Device Fell Off Mount"
+msgstr "El dispositivo se cayó del soporte"
+
+#: selfdrive/selfdrived/events.py:1033
+#: selfdrive/selfdrived/events.py:1035
+msgid "Low Memory: Reboot Your Device"
+msgstr "Poca memoria: Reinicie el dispositivo"
+
+#: selfdrive/selfdrived/events.py:1039
+#: selfdrive/selfdrived/events.py:1041
+msgid "Cruise Fault: Restart the Car"
+msgstr "Fallo de crucero: Reinicie el coche"
+
+#: selfdrive/selfdrived/events.py:1040
+msgid "Cruise Fault: Restart the car to engage"
+msgstr "Fallo de crucero: Reinicie el coche para activar"
+
+#: selfdrive/selfdrived/events.py:1045
+#: selfdrive/selfdrived/events.py:1046
+msgid "Electronic Stability Control Active"
+msgstr "Control electrónico de estabilidad activo"
+
+#: selfdrive/selfdrived/events.py:1050
+#: selfdrive/selfdrived/events.py:1051
+msgid "Controls Mismatch"
+msgstr "Controles no coinciden"
+
+#: selfdrive/selfdrived/events.py:1057
+#: selfdrive/selfdrived/events.py:1058
+#: selfdrive/selfdrived/events.py:1059
+msgid "USB Error: Reboot Your Device"
+msgstr "Error USB: Reinicie el dispositivo"
+
+#: selfdrive/selfdrived/events.py:1067
+#: selfdrive/selfdrived/events.py:1069
+#: selfdrive/selfdrived/events.py:1073
+msgid "Unknown Vehicle Variant"
+msgstr "Variante de vehículo desconocida"
+
+#: selfdrive/selfdrived/events.py:1077
+msgid "CAN Bus Disconnected"
+msgstr "Bus CAN desconectado"
+
+#: selfdrive/selfdrived/events.py:1079
+msgid "CAN Bus Disconnected: Likely Faulty Cable"
+msgstr "Bus CAN desconectado: Probable cable defectuoso"
+
+#: selfdrive/selfdrived/events.py:1083
+msgid "CAN Bus Disconnected: Check Connections"
+msgstr "Bus CAN desconectado: Revise las conexiones"
+
+#: selfdrive/selfdrived/events.py:1087
+#: selfdrive/selfdrived/events.py:1089
+msgid "LKAS Fault: Restart the Car"
+msgstr "Fallo de LKAS: Reinicie el coche"
+
+#: selfdrive/selfdrived/events.py:1088
+msgid "LKAS Fault: Restart the car to engage"
+msgstr "Fallo de LKAS: Reinicie el coche para activar"
+
+#: selfdrive/selfdrived/events.py:1094
+msgid "Reverse\nGear"
+msgstr "Marcha\natrás"
+
+#: selfdrive/selfdrived/events.py:1099
+msgid "Reverse Gear"
+msgstr "Marcha atrás"
+
+#: selfdrive/selfdrived/events.py:1105
+msgid "Cruise Is Off"
+msgstr "Control de crucero apagado"
+
+#: selfdrive/selfdrived/events.py:1113
+#: selfdrive/selfdrived/events.py:1114
+#: selfdrive/selfdrived/events.py:1115
+msgid "Harness Relay Malfunction"
+msgstr "Fallo del relé del cableado"
+
+#: selfdrive/selfdrived/events.py:1114
+msgid "Check Hardware"
+msgstr "Revise el hardware"
+
+#: selfdrive/selfdrived/events.py:1120
+msgid "openpilot Canceled"
+msgstr "openpilot cancelado"
+
+#: selfdrive/selfdrived/events.py:1121
+msgid "Speed too low"
+msgstr "Velocidad demasiado baja"
+
+#: selfdrive/selfdrived/events.py:1129
+msgid "Speed Too High"
+msgstr "Velocidad demasiado alta"
+
+#: selfdrive/selfdrived/events.py:1130
+msgid "Model uncertain at this speed"
+msgstr "Modelo incierto a esta velocidad"
+
+#: selfdrive/selfdrived/events.py:1133
+msgid "Slow down to engage"
+msgstr "Reduzca la velocidad para activar"
+
+#: selfdrive/selfdrived/events.py:1137
+msgid "Vehicle Sensors Invalid"
+msgstr "Sensores del vehículo no válidos"
+
+#: selfdrive/selfdrived/events.py:1138
+#: selfdrive/selfdrived/events.py:1139
+msgid "Vehicle Sensors Calibrating"
+msgstr "Sensores del vehículo calibrando"
+
+#: selfdrive/selfdrived/events.py:1138
+msgid "Drive to Calibrate"
+msgstr "Circule para calibrar"
+
+#: selfdrive/selfdrived/events.py:1147
+msgid "Bookmark Saved"
+msgstr "Marcador guardado"
+
+#: selfdrive/selfdrived/events.py:1158
+msgid "Don't use the 'Development' branch!"
+msgstr "¡No use la rama 'Development'!"
+
+#: selfdrive/selfdrived/events.py:1159
+msgid "Forcing you into 'Dashcam Mode' for your safety..."
+msgstr "Activando el modo cámara de salpicadero por su seguridad..."
+
+#: selfdrive/selfdrived/events.py:1170
+msgid "Lateral Maneuver Mode"
+msgstr "Modo de maniobra lateral"
+
+#: selfdrive/selfdrived/events.py:1188
+msgid "Light Turned Green"
+msgstr "El semáforo se puso verde"
+
+#: selfdrive/selfdrived/events.py:1208
+msgid "Lead Departed"
+msgstr "El vehículo de delante arrancó"
+
+#: selfdrive/selfdrived/events.py:1224
+#: selfdrive/selfdrived/events.py:1230
+msgid "openpilot crashed"
+msgstr "openpilot falló"
+
+#: selfdrive/selfdrived/events.py:1225
+#: selfdrive/selfdrived/events.py:1231
+msgid "Please post the 'Error Log' in the StarPilot Discord!"
+msgstr "¡Publique el 'Registro de errores' en el Discord de StarPilot!"
+
+#: selfdrive/selfdrived/events.py:1242
+msgid "Traffic Mode enabled"
+msgstr "Modo tráfico activado"
+
+#: selfdrive/selfdrived/events.py:1250
+msgid "Traffic Mode Disabled"
+msgstr "Modo tráfico desactivado"
+
+#: selfdrive/selfdrived/events.py:1258
+msgid "Switchback Mode"
+msgstr "Modo Switchback"
+
+#: selfdrive/selfdrived/events.py:1266
+msgid "Switchback Mode Disabled"
+msgstr "Modo Switchback desactivado"
+
+#: selfdrive/selfdrived/events.py:1281
+msgid "Pedal Not Calibrated"
+msgstr "Pedal no calibrado"
+
+#: selfdrive/selfdrived/events.py:1281
+msgid "Check Calibration"
+msgstr "Revise la calibración"
+
+#: selfdrive/selfdrived/events.py:1282
+msgid "Pedal Not Calibrated: Check Calibration"
+msgstr "Pedal no calibrado: Revise la calibración"
+
+#: selfdrive/selfdrived/events.py:1287
+msgid "Pedal Cruise Engaged"
+msgstr "Control de crucero por pedal activado"
+
+#: selfdrive/selfdrived/events.py:1295
+msgid "Pedal Cruise Disengaged"
+msgstr "Control de crucero por pedal desactivado"
+
+#: selfdrive/selfdrived/events.py:1303
+msgid "Max Regen Being Used"
+msgstr "Regeneración máxima en uso"
+
+#: selfdrive/selfdrived/events.py:1311
+msgid "Tesla Cruise Engaged"
+msgstr "Control de crucero Tesla activado"
+
+#: selfdrive/selfdrived/events.py:1319
+msgid "Tesla Cruise Disengaged"
+msgstr "Control de crucero Tesla desactivado"
+
+#: selfdrive/selfdrived/events.py:1326
+msgid "Arm Stock Cruise to Enable Speed Control"
+msgstr "Prepare el control de crucero de fábrica para controlar la velocidad"
+
+#: selfdrive/selfdrived/events.py:1460
+msgid "Press Resume"
+msgstr "Pulse Resume"
+
+#: selfdrive/selfdrived/events.py:1467
+msgid "Steer Left"
+msgstr "Gire a la izquierda"
+
+#: selfdrive/selfdrived/events.py:1468
+#: selfdrive/selfdrived/events.py:1475
+msgid "Confirm Lane Change"
+msgstr "Confirme el cambio de carril"
+
+#: selfdrive/selfdrived/events.py:1474
+msgid "Steer Right"
+msgstr "Gire a la derecha"
+
+#: selfdrive/selfdrived/events.py:1481
+msgid "Car in Blindspot"
+msgstr "Coche en el ángulo muerto"
+
+#: selfdrive/selfdrived/events.py:1488
+msgid "take control"
+msgstr "Tome el control"
+
+#: selfdrive/selfdrived/events.py:1489
+msgid "turn exceeds limit"
+msgstr "La curva supera el límite de dirección"
+
+#: selfdrive/selfdrived/events.py:1500
+#: selfdrive/selfdrived/events.py:1505
+msgid "Reverse"
+msgstr "Reversa"

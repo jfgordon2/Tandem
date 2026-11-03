@@ -3,7 +3,7 @@
 
   extract          Collects the marked text into translations/tandem.pot: every N_(), t_() and tn_() in the package
                    (with its context and plural), and the tr() / tr_noop() / trn() strings of the StarPilot screens
-                   Tandem's adapters show text from (UPSTREAM).
+                   Tandem's adapters show text from (UPSTREAM), plus operational onroad and offroad alert text.
   update [codes]   Merges tandem.pot into translations/tandem_<code>.po for each code given and each that exists:
                    new strings come in untranslated, translations are kept, strings the code no longer has are dropped.
   status           How much of each language is translated.
@@ -29,9 +29,10 @@ MARKERS = {"N_": 1, "t_": 1, "tn_": 2}   # how many leading string arguments are
 UPSTREAM = ["selfdrive/ui/layouts/settings/starpilot/maps.py", "selfdrive/ui/layouts/settings/starpilot/model.py",
             "selfdrive/ui/layouts/settings/starpilot/vehicle.py", "selfdrive/ui/layouts/settings/starpilot/navigation.py",
             "selfdrive/ui/layouts/settings/software.py", "selfdrive/ui/layouts/settings/device.py",
-            "selfdrive/ui/layouts/settings/developer.py"]
+            "selfdrive/ui/layouts/settings/developer.py", "selfdrive/ui/onroad/alert_renderer.py"]
 UPSTREAM_CALLS = {"tr": 1, "tr_noop": 1, "trn": 2}
 UPSTREAM_ALERTS = "selfdrive/selfdrived/alerts_offroad.json"   # the home screen's alert sentences ("%1" is filled in)
+ONROAD_ALERTS = "selfdrive/selfdrived/events.py"
 PLURAL_FORMS = {"ja": 1, "ko": 1, "zh-CHS": 1, "zh-CHT": 1, "th": 1, "uk": 3, "ar": 6}   # others: 2
 
 
@@ -110,6 +111,18 @@ def strings() -> dict[str, Entry]:
         entry = found.setdefault(text, Entry(text))
         entry.where.append(f"{UPSTREAM_ALERTS}:{alert_key}")
         entry.drawn = True
+  if (ROOT / ONROAD_ALERTS).is_file():
+    spec = importlib.util.spec_from_file_location("tandem_alert_strings", Path(__file__).with_name("alert_strings.py"))
+    alerts = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(alerts)
+
+    def add_alert(text: str, plural: str | None, line: int) -> None:
+      if any(c.isalpha() for c in text.replace("{}", "")):
+        entry = found.setdefault(text, Entry(text, plural=plural))
+        entry.where.append(f"{ONROAD_ALERTS}:{line}")
+        entry.drawn = True
+
+    alerts.collect(ROOT / ONROAD_ALERTS, add_alert)
   return found
 
 

@@ -11,8 +11,9 @@ from openpilot.system.ui.lib.application import FONT_SCALE, gui_app
 from openpilot.system.ui.lib.text_measure import measure_text_cached
 from openpilot.system.ui.lib.wrap_text import wrap_text
 from openpilot.selfdrive.ui.tandem import tokens as T
+from openpilot.selfdrive.ui.tandem import arabic, thai
 from openpilot.selfdrive.ui.tandem.fonts import Face, face_for, font
-from openpilot.selfdrive.ui.tandem.i18n import translate
+from openpilot.selfdrive.ui.tandem.i18n import translate, uppercase
 from openpilot.selfdrive.ui.tandem.layout import Align, place
 
 SEGMENTS = 16
@@ -141,13 +142,14 @@ def _fit(value: str, size: int, weight: Face, max_width: float, tracking: float 
   if _width(value, size, weight, tracking) <= max_width:
     return value
   while value and _width(value + ELLIPSIS, size, weight, tracking) > max_width:
-    value = value[:-1]
+    value = thai.trim_last(value)
   return value.rstrip() + ELLIPSIS if value else ""
 
 
 def _lines(value: str, size: int, weight: Face, width: float) -> list[str]:
   with _own_font:
-    lines = wrap_text(_face(value, weight), value, size, int(width))
+    shaped = thai.shape(value)   # a Thai consonant and its marks must never wrap onto separate lines
+    lines = wrap_text(_face(shaped, weight), shaped, size, int(width))
   if DRAWN is not None:   # the pseudo check: the text is recorded whole, not line by line
     DRAWN.add(value)
     _WRAPPED.update(lines)
@@ -190,7 +192,9 @@ def text(rect: rl.Rectangle, value: str, size: int, color: rl.Color, weight: Fac
 
 def caption(rect: rl.Rectangle, value: str, color: rl.Color = T.TEXT_MUTED, h: Align = Align.START, v: Align = Align.CENTER) -> float:
   """Section labels: small bold capitals with tracking."""
-  return text(rect, translate(value).upper(), T.SIZE_CAPTION, color, T.FONT_BOLD, h, v, tracking=T.CAPTION_TRACKING)
+  value = uppercase(translate(value))
+  tracking = 0 if arabic.ARABIC.search(value) or any(thai.is_thai(c) for c in value) else T.CAPTION_TRACKING
+  return text(rect, value, T.SIZE_CAPTION, color, T.FONT_BOLD, h, v, tracking=tracking)
 
 
 def paragraph_lines(value: str, size: int, weight: Face, width: float) -> list[str]:

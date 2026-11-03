@@ -104,7 +104,7 @@ class EssentialsAlertRenderer(AlertRenderer):
 
   def _draw_text(self, alert) -> None:
     if alerts.level(alert.size, alert.status, alert.alert_type) == alerts.REVERSE:
-      super()._draw_text(alert)   # drawn with the background above otherwise
+      alerts.draw_reverse(alert, self._alert_text1_label, self._alert_text2_label, super()._draw_text)
 
 
 class _NoFavorites:

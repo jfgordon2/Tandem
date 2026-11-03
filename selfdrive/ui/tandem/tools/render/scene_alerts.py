@@ -52,6 +52,14 @@ ALERTS = {
   "alert_unavailable": (ar.Alert("openpilot Unavailable", "Cancel Pressed", SIZE.mid, STATUS.normal), DISENGAGED),
   "alert_soft_disable": (ar.Alert("TAKE CONTROL IMMEDIATELY", "Steering Assist Temporarily Unavailable", SIZE.full, STATUS.userPrompt), ENGAGED),
   "alert_fcw": (ar.Alert("BRAKE!", "Risk of Collision", SIZE.full, STATUS.critical), ENGAGED),
+  "alert_driver_distracted": (ar.Alert("DISENGAGE IMMEDIATELY", "Driver Distracted", SIZE.full, STATUS.critical), ENGAGED),
+  "alert_driver_unresponsive": (ar.Alert("DISENGAGE IMMEDIATELY", "Driver Unresponsive", SIZE.full, STATUS.critical), ENGAGED),
+  "alert_system_unresponsive": (ar.Alert("TAKE CONTROL IMMEDIATELY", "System Unresponsive", SIZE.full, STATUS.critical), ENGAGED),
+  "alert_calibration": (ar.Alert("Calibrating: 42%", "Drive Above 25 km/h", SIZE.mid, STATUS.normal), DISENGAGED),
+  "alert_sensor_fault": (ar.Alert("TAKE CONTROL IMMEDIATELY", "Sensor Data Invalid", SIZE.full, STATUS.critical), ENGAGED),
+  "alert_model_restart": (ar.Alert("Big Model Failed", "Restart the car to retry,\nsmall model is still available", SIZE.mid,
+                                  STATUS.normal), DISENGAGED),
+  "alert_reverse": (ar.Alert("Reverse\nGear", "", SIZE.full, STATUS.normal, "reverseGear/permanent"), DISENGAGED),
 }
 
 

@@ -60,14 +60,16 @@ _prepared: list[bool] = []
 
 def prepare_fallback() -> None:
   """Once, after gui_app loads its fonts: smooth scaling for the Noto fallback (upstream loads it unfiltered, as it did
-  pixel unifont), and Arabic shaping for every line drawn (arabic.shape; a no-op for text without Arabic)."""
+  pixel unifont), and Arabic/Thai shaping for every line drawn (no-ops for text without those scripts)."""
   if _prepared:
     return
   _prepared.append(True)
   from openpilot.system.ui.lib import application
-  from openpilot.selfdrive.ui.tandem.arabic import shape
-  if shape not in application.TEXT_SHAPERS:
-    application.TEXT_SHAPERS.append(shape)
+  from openpilot.selfdrive.ui.tandem.arabic import shape as arabic_shape
+  from openpilot.selfdrive.ui.tandem.thai import shape as thai_shape
+  for shape in (arabic_shape, thai_shape):
+    if shape not in application.TEXT_SHAPERS:
+      application.TEXT_SHAPERS.append(shape)
   try:
     fallback = gui_app.font(FontWeight.UNIFONT)
   except KeyError:      # fonts not loaded (tests)

@@ -29,6 +29,7 @@ CONTEXT = "\x04"   # gettext's separator between a context and its msgid in a ca
 _HOLE = re.compile(r"\{\}")
 _MEASURED = re.compile(r"^(.*[^\d\s]) (\d[\d.,:]*\s?[^\s\d]{0,4})$")
 _OUT_HOLE = re.compile(r"\{(\d*)\}")   # a translation may number its holes ({1} {0}) to put the values in its own order
+_TURKISH_UPPER = {ord("i"): 0x0130, 0x0131: ord("I")}   # Unicode casing: i → İ, ı → I
 
 
 class Msg(str):
@@ -306,3 +307,10 @@ def translate(text: str) -> str:
     return text
   catalog = _catalog()
   return text if catalog is None else catalog.translate(text)
+
+
+def uppercase(text: str) -> str:
+  """Capital captions in the selected language: Turkish i and ı have different uppercase forms."""
+  if _language().removeprefix("main_") == "tr":
+    text = text.translate(_TURKISH_UPPER)
+  return text.upper()

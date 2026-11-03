@@ -11,10 +11,14 @@ Speed limit changed is left to the new-limit card while it asks.
 """
 from __future__ import annotations
 
+from dataclasses import replace
+
 import pyray as rl
 
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.layout import Align, inset, place
+from openpilot.selfdrive.ui.tandem.i18n import translate
+from openpilot.selfdrive.ui.tandem.fonts import face_for
 
 INFO, WARNING, CRITICAL, REVERSE = "info", "warning", "critical", "reverse"
 
@@ -78,7 +82,20 @@ def border(alert_level: str | None) -> rl.Color | None:
 
 
 def _clean(text: str) -> str:
-  return " ".join((text or "").split())   # StarPilot breaks some alerts over lines ("Reverse\nGear")
+  return " ".join(translate(text or "").split())   # translate before folding StarPilot's line breaks
+
+
+def translated(alert):
+  """A translated display copy for the upstream reverse-gear layout; never change the live alert."""
+  return replace(alert, text1=translate(alert.text1), text2=translate(alert.text2))
+
+
+def draw_reverse(alert, title_label, line_label, render) -> None:
+  """Keep upstream's text layout, using a face that covers the translated letters in each label."""
+  display = translated(alert)
+  for label, text, face in ((title_label, display.text1, T.FONT_BOLD), (line_label, display.text2, T.FONT)):
+    label.set_font_weight(face_for("".join(text.splitlines()), face))
+  render(display)
 
 
 def box(rect: rl.Rectangle, alert_level: str, text1: str, text2: str) -> rl.Rectangle:

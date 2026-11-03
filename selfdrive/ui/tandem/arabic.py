@@ -75,6 +75,11 @@ def join(text: str) -> str:
 
 
 _SEPARATORS = " .,:/-%"
+_UNITS = {"mph", "km/h", "m/s", "m/s²", "km", "mi", "m", "ft", "s", "ms", "GB", "MB", "Hz", "V", "A", "°C", "°F", "°", "%", "٪"}
+_UNIT_PATTERN = "|".join(re.escape(unit) for unit in sorted(_UNITS, key=lambda s: (-len(s), s)))
+_MEASUREMENT = rf"[+\-−]?\d+(?:[.,]\d+)*\s*(?:{_UNIT_PATTERN})(?!\w)"
+_ATOMS = re.compile(rf"(?P<measurement>\({_MEASUREMENT}\)|\[{_MEASUREMENT}\]|{_MEASUREMENT})"
+                    + r"|(?P<signed>[+\-−]\d+(?:[.,]\d+)*)|\s+|\S+")
 
 
 def _kind(c: str) -> str:
@@ -90,15 +95,20 @@ def _runs(text: str) -> list[tuple[str, str]]:
   """The line as runs of one kind. A word or number keeps the spaces and separators inside it ("0.10.1", "Wi Fi"),
   not the ones after it; numbers and words stay separate runs, as the Unicode bidi algorithm orders them."""
   runs: list[tuple[str, str]] = []
-  for c in text:
-    kind = _kind(c)
-    if runs and (runs[-1][0] == kind or (runs[-1][0] != "R" and kind == "R" and c in _SEPARATORS)):
-      runs[-1] = (runs[-1][0], runs[-1][1] + c)
-    else:
-      runs.append((kind, c))
+  for match in _ATOMS.finditer(text):
+    atom = match[0]
+    latin = bool(match["measurement"] or match["signed"]) \
+      or (any(c.isascii() and c.isalpha() for c in atom) and all(ord(c) < 128 or c in "°²" for c in atom))
+    for c in atom:
+      kind = "L" if latin else _kind(c)   # keep URLs, SSIDs and units like 12V intact
+      if runs and (runs[-1][0] == kind or (runs[-1][0] != "R" and kind == "R" and c in _SEPARATORS)):
+        runs[-1] = (runs[-1][0], runs[-1][1] + c)
+      else:
+        runs.append((kind, c))
   fixed: list[tuple[str, str]] = []
   for kind, run in runs:
-    core = run.rstrip(_SEPARATORS) if kind != "R" else run
+    separators = _SEPARATORS.replace("%", "") if kind == "L" else _SEPARATORS
+    core = run.rstrip(separators) if kind != "R" else run
     if kind != "R" and core != run:
       fixed += [(kind, core), ("R", run[len(core):])]
     else:
@@ -106,7 +116,7 @@ def _runs(text: str) -> list[tuple[str, str]]:
   merged: list[tuple[str, str]] = []
   for i, (kind, run) in enumerate(fixed):   # spaces between two words ("Wi Fi") or two numbers belong to them
     between = kind == "R" and not run.strip(_SEPARATORS) and 0 < i < len(fixed) - 1 and fixed[i - 1][0] == fixed[i + 1][0] != "R"
-    if between or (merged and merged[-1][0] == kind and kind != "R"):
+    if between or (merged and merged[-1][0] == kind):
       merged[-1] = (merged[-1][0], merged[-1][1] + run)
     else:
       merged.append((kind, run))
