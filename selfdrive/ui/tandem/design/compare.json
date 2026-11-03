@@ -386,7 +386,7 @@
   {
    "mock": "onroaddev",
    "title": "Onroad, Developer View",
-   "note": "Matches the developer panel, strip and tag typography. The approved gaptag.html supersedes this older mock's lead triangle: the same distance/gap/relative-speed tag now has an anchor, connector and acquisition transition. Page ground uses true black (#000000).",
+   "note": "Matches the developer panel, strip and tag typography. Developer labels follow the selected language; a measured gap separates each strip label from its value, including Arabic. English follows the mock. The approved gaptag.html supersedes this older mock's lead triangle: the same distance/gap/relative-speed tag now has an anchor, connector and acquisition transition. Page ground uses true black (#000000).",
    "match": false
   },
   {

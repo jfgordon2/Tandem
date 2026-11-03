@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language: pt-BR\n"
-"Plural-Forms: nplurals=2;\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\n"
 
 #: controls.py:174
@@ -373,12 +373,6 @@ msgstr "Notas"
 msgid "A new version"
 msgstr "Uma nova versão"
 
-#: home.py:82
-#: home.py:88
-#: tokens.py:62
-msgid "DCEBFF"
-msgstr "DCEBFF"
-
 #: home.py:144
 msgid "Home · Work · Recent"
 msgstr "Casa · Trabalho · Recentes"
@@ -523,23 +517,11 @@ msgstr "Concluído"
 msgid "Speak now. Tap the mic when you're done."
 msgstr "Fale agora. Toque no microfone ao terminar."
 
-#: keyboard.py:31
-msgid "QWERTYUIOP"
-msgstr "QWERTYUIOP"
-
 #: keyboard.py:132
 #: overlays.py:163
 #: settings/bluetooth_tab.py:248
 msgid "Cancel"
 msgstr "Cancelar"
-
-#: keyboard.py:31
-msgid "ASDFGHJKL"
-msgstr "ASDFGHJKL"
-
-#: keyboard.py:31
-msgid "ZXCVBNM"
-msgstr "ZXCVBNM"
 
 #: mapbox_help.py:20
 msgid "Settings › Driving › Speed & Steering › Navigation"
@@ -605,6 +587,17 @@ msgstr "Só a chave secreta · a busca também precisa da chave pública"
 msgid "For place search, routes, and speed limits the maps don't have"
 msgstr "Para buscar lugares, calcular rotas e obter limites de velocidade ausentes dos mapas"
 
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:84
+#: onroad/developer.py:295
+msgid "idle"
+msgstr "inativo"
+
+#: onroad/developer.py:85
+#: onroad/developer.py:145
+msgid "none"
+msgstr "Nenhum"
+
 #: onroad/developer.py:90
 msgid "0.0 m/s²"
 msgstr "0.0 m/s²"
@@ -613,37 +606,81 @@ msgstr "0.0 m/s²"
 msgid "0.00 s"
 msgstr "0.00 s"
 
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:42
+msgid "accel"
+msgstr "acel."
+
 #: onroad/developer.py:42
 msgid "Acceleration now"
 msgstr "Aceleração atual"
+
+#. Requested acceleration, not a desire; short label in Developer View. Machine draft, needs native review.
+#: onroad/developer.py:43
+msgid "want"
+msgstr "pedida"
 
 #: onroad/developer.py:43
 msgid "Acceleration openpilot asks for"
 msgstr "Aceleração solicitada pelo openpilot"
 
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:44
+msgid "jerk"
+msgstr "solav."
+
 #: onroad/developer.py:44
 msgid "Planned jerk"
 msgstr "Variação de aceleração planejada"
+
+#. Lateral acceleration, not latitude; short label in Developer View. Machine draft, needs native review.
+#: onroad/developer.py:45
+msgid "lat"
+msgstr "lat."
 
 #: onroad/developer.py:45
 msgid "Lateral acceleration"
 msgstr "Aceleração lateral"
 
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:46
+msgid "delay"
+msgstr "atraso"
+
 #: onroad/developer.py:46
 msgid "Steering delay"
 msgstr "Atraso da direção"
+
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:47
+msgid "steer"
+msgstr "direção"
 
 #: onroad/developer.py:47
 msgid "Steering wheel angle"
 msgstr "Ângulo do volante"
 
 #: onroad/developer.py:48
+msgid "torque"
+msgstr "Torque"
+
+#: onroad/developer.py:48
 msgid "Steering torque used"
 msgstr "Torque de direção utilizado"
+
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:49
+msgid "danger"
+msgstr "risco"
 
 #: onroad/developer.py:49
 msgid "Following danger factor"
 msgstr "Fator de risco ao seguir"
+
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:50
+msgid "ratio"
+msgstr "relação"
 
 #: onroad/developer.py:50
 msgid "Steer ratio"
@@ -661,41 +698,55 @@ msgstr "Controles"
 msgid "curve spd"
 msgstr "vel. curva"
 
-#: onroad/developer.py:256
+#: onroad/developer.py:260
 #: onroad/extras.py:215
 #: onroad/lead.py:97
 #, python-brace-format
 msgid "{} m"
 msgstr "{} m"
 
-#: onroad/developer.py:256
+#: onroad/developer.py:260
 #: onroad/extras.py:215
 #: onroad/lead.py:97
 #, python-brace-format
 msgid "{} ft"
 msgstr "{} ft"
 
-#: onroad/developer.py:258
-#: onroad/developer.py:311
+#: onroad/developer.py:262
+#: onroad/developer.py:315
 #: onroad/lead.py:108
 #, python-brace-format
 msgid "{} s"
 msgstr "{} s"
 
-#: onroad/developer.py:287
+#: onroad/developer.py:291
 #: settings/device_sections.py:301
 #, python-brace-format
 msgid "{} GB"
 msgstr "{} GB"
 
-#: onroad/developer.py:309
+#: onroad/developer.py:313
 #, python-brace-format
 msgid "{} m/s²"
 msgstr "{} m/s²"
 
+#: onroad/developer.py:143
+msgid "distance"
+msgstr "Distância"
+
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:143
+msgid "gap"
+msgstr "intervalo"
+
 #: onroad/developer.py:144
 msgid "rel speed"
 msgstr "vel. relativa"
+
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:145
+msgid "source"
+msgstr "fonte"
 
 #: onroad/developer.py:155
 #: settings/search.py:24
@@ -711,7 +762,16 @@ msgstr "fonte limite"
 msgid "lanes L/R"
 msgstr "faixas E/D"
 
-#: onroad/developer.py:291
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:263
+msgid "radar"
+msgstr "radar"
+
+#: onroad/developer.py:263
+msgid "vision"
+msgstr "Câmera"
+
+#: onroad/developer.py:295
 #, python-brace-format
 msgid "active · {} {}"
 msgstr "ativo · {} {}"
@@ -4295,10 +4355,6 @@ msgstr "Desinstalar o openpilot?"
 msgid "The device removes openpilot and starts its setup again."
 msgstr "O aparelho remove o openpilot e inicia a configuração novamente."
 
-#: settings/software_tab.py:253
-msgid "pkill -SIGUSR1 -f system.updated.updated"
-msgstr "pkill -SIGUSR1 -f system.updated.updated"
-
 #: settings/software_tab.py:71
 #: settings/software_tab.py:65
 msgid "Updating"
@@ -5253,12 +5309,6 @@ msgstr "Quente"
 msgid "Not downloaded"
 msgstr "Não baixado"
 
-#: tokens.py:102
-#: tokens.py:103
-#: tokens.py:166
-msgid "FFFFFF"
-msgstr "FFFFFF"
-
 #: voice.py:36
 msgid "Didn't catch that. Tap the mic to try again."
 msgstr "Não entendi. Toque no microfone para tentar de novo."
@@ -5286,10 +5336,6 @@ msgstr "Digitar"
 #: voice.py:202
 msgid "Listening"
 msgstr "Escutando"
-
-#: voice.py:93
-msgid "QCOM"
-msgstr "QCOM"
 
 #: voice.py:197
 msgid "Getting voice typing ready"

@@ -170,44 +170,42 @@ def _unquote(text: str) -> str:
 
 def english_plurals(text: str) -> dict[str, str]:
   """Catalog key -> its English plural (msgid_plural), for the plural entries in a .po file."""
-  out, msgid, context = {}, None, None
-  for line in text.splitlines():
-    m = _QUOTED.match(line.strip())
-    if not m or not m.group(1):
-      continue
-    if m.group(1) == "msgctxt":
-      context = _unquote(m.group(2))
-    elif m.group(1) == "msgid":
-      msgid = _unquote(m.group(2))
-    elif m.group(1) == "msgid_plural" and msgid:
-      out[key(msgid, context)] = _unquote(m.group(2))
-      context = None
-  return out
+  return {key(fields["msgid"], fields.get("msgctxt")): fields["msgid_plural"]
+          for fields, _ in _po_entries(text) if fields.get("msgid") and "msgid_plural" in fields}
 
 
 def drawn_templates(text: str) -> set[str]:
   """Catalog keys flagged "drawn" in a .po file (tools/translations.py marks StarPilot's formatted strings)."""
-  out, flagged, context = set(), False, None
-  for line in text.splitlines():
+  return {key(fields["msgid"], fields.get("msgctxt"))
+          for fields, flags in _po_entries(text) if fields.get("msgid") and "drawn" in flags}
+
+
+def _po_entries(text: str):
+  """Read complete PO entries, including continued lines and their flags, without leaking a previous entry's context."""
+  fields: dict[str, str] = {}
+  flags: set[str] = set()
+  last = ""
+  for line in text.splitlines() + [""]:
     line = line.strip()
+    m = _QUOTED.match(line)
+    complete = "msgstr" in fields or any(f.startswith("msgstr[") for f in fields)
+    if fields and (not line or (complete and (line.startswith("#") or (m and m.group(1) in ("msgctxt", "msgid"))))):
+      yield fields, flags
+      fields, flags, last = {}, set(), ""
     if line.startswith("#,"):
-      flagged = "drawn" in [f.strip() for f in line[2:].split(",")]
-    elif line.startswith('msgctxt "'):
-      context = _unquote(line[9:-1])
-    elif line.startswith('msgid "'):
-      if flagged:
-        out.add(key(_unquote(line[7:-1]), context))
-      flagged, context = False, None
-  return out
+      flags.update(f.strip() for f in line[2:].split(","))
+    if m and (m.group(1) or last):
+      field = m.group(1) or last
+      fields[field] = (fields.get(field, "") if not m.group(1) else "") + _unquote(m.group(2))
+      last = field
+    elif not line:
+      fields, flags, last = {}, set(), ""
 
 
 def parse_po(text: str) -> dict[str, str | list[str]]:
   """Catalog key (see key()) -> msgstr, or the list of plural forms, from a .po file."""
   entries: dict[str, str | list[str]] = {}
-  fields: dict[str, str] = {}
-  last = ""
-
-  def finish():
+  for fields, _ in _po_entries(text):
     if fields.get("msgid"):
       k = key(fields["msgid"], fields.get("msgctxt"))
       if "msgid_plural" in fields:
@@ -215,21 +213,6 @@ def parse_po(text: str) -> dict[str, str | list[str]]:
         entries[k] = [v for _, v in forms]
       elif "msgstr" in fields:
         entries[k] = fields["msgstr"]
-    fields.clear()
-
-  for line in text.splitlines() + [""]:
-    line = line.strip()
-    m = _QUOTED.match(line)
-    if m and (m.group(1) or last):
-      field = m.group(1) or last
-      if m.group(1) and field in ("msgctxt", "msgid") and ("msgstr" in fields or any(f.startswith("msgstr[") for f in fields)):
-        finish()
-      fields[field] = (fields.get(field, "") if not m.group(1) else "") + _unquote(m.group(2))
-      last = field
-    elif not line:
-      finish()
-      last = ""
-  finish()
   return entries
 
 

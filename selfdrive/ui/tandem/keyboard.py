@@ -28,7 +28,7 @@ MIC = "tandem-mic"                                # voice typing (voice.py); not
 # action. The number and symbol layers keep upstream's characters in the same shape.
 LAYOUTS = {
   "lowercase": [list("qwertyuiop"), [*"asdfghjkl", BACKSPACE], [SHIFT_OFF, *"zxcvbnm", ",", "."], [NUMBERS, SPACE, ENTER]],
-  "uppercase": [list(N_("QWERTYUIOP")), [*N_("ASDFGHJKL"), BACKSPACE], [SHIFT_ON, *N_("ZXCVBNM"), ",", "."], [NUMBERS, SPACE, ENTER]],
+  "uppercase": [list("QWERTYUIOP"), [*"ASDFGHJKL", BACKSPACE], [SHIFT_ON, *"ZXCVBNM", ",", "."], [NUMBERS, SPACE, ENTER]],
   "numbers": [list("1234567890"), ["-", "/", ":", ";", "(", ")", "$", "&", "@", BACKSPACE],
               [SYMBOLS, "_", "'", "\"", "?", "!", "`", "#", ",", "."], [LETTERS, SPACE, ENTER]],
   "specials": [list("[]{}#%^*+="), ["_", "\\", "|", "~", "<", ">", "€", "£", "¥", BACKSPACE],

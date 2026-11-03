@@ -45,7 +45,8 @@ def main(frame, save, out, tap, gui_app):
   recorder.state = saved
   original = i18n._language
   try:
-    for code in ("de", "es", "ja", "pseudo"):
+    codes = ("pseudo",) if os.environ.get("TANDEM_PSEUDO") == "1" else ("de", "es", "ja", "pseudo")
+    for code in codes:
       i18n._language = lambda c=code: c
       shot(f"canrecorder_{code}")
   finally:

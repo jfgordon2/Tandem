@@ -11,7 +11,6 @@ import pyray as rl
 
 from openpilot.system.ui.lib.application import FontWeight
 from openpilot.selfdrive.ui.tandem.fonts import ExtraFont
-from openpilot.selfdrive.ui.tandem.i18n import N_
 
 SCALE = 2160 / 1125
 
@@ -59,7 +58,7 @@ ACCENT_SURFACE = _hex("1F2E45")         # icon wells, selected sidebar item, spe
 ACCENT_SELECTED = _hex("182434")        # selected card fill, with a 2 mock px ACCENT edge
 ACCENT_EDGE = _hex("2D4A6E")             # edge of the active card (the current model)
 ACCENT_INSET = _hex("13202E")            # boxes inside the active card
-ACCENT_CHIP_TEXT = _hex(N_("DCEBFF"))
+ACCENT_CHIP_TEXT = _hex("DCEBFF")
 
 # ── Status ──
 SUCCESS = _hex("1F9A55")                # engaged border, engage button
@@ -99,8 +98,8 @@ ONROAD_CONTROL = _hex("1F2328", 204)
 ONROAD_CARD = _hex("0B0D10", 230)                # speed, status chips, road name
 ONROAD_METRICS_STRIP = _hex("0B0D10", 153)
 LEAD_MARKER = _hex("E9B44C")
-STEER_ARC_TRACK = _hex(N_("FFFFFF"), 46)
-STEER_ARC_COMFORT = _hex(N_("FFFFFF"), 230)          # under 60%
+STEER_ARC_TRACK = _hex("FFFFFF", 46)
+STEER_ARC_COMFORT = _hex("FFFFFF", 230)          # under 60%
 STEER_ARC_WORKING = WARNING                      # 60-85%
 STEER_ARC_LIMIT = _hex("FF6A3D")                 # over 85% for STEER_LIMIT_HOLD_MS
 STEER_ARC_LANE_TINT = _hex("FF8A4D")
@@ -163,7 +162,7 @@ STATUS_CHIP_HEIGHT = px(44)
 MIN_TOUCH = 112                         # mock controls under 58 px grow to this
 
 # ── States ──
-PRESSED_OVERLAY = _hex(N_("FFFFFF"), 20)    # drawn over any control while touched
+PRESSED_OVERLAY = _hex("FFFFFF", 20)    # drawn over any control while touched
 DISABLED_ALPHA = 0.5                    # whole row or control, label stays readable
 
 # ── Motion ──

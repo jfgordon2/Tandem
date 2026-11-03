@@ -21,7 +21,7 @@ import pyray as rl
 
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, row
-from openpilot.selfdrive.ui.tandem.i18n import N_, t_
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_, translate
 from openpilot.selfdrive.ui.tandem.prefs import DEVELOPER_STRIP
 
 PANEL_W = T.px(256)                 # the mock's sidebar
@@ -39,15 +39,15 @@ MONO, BOLD = T.FONT_MONO, T.FONT_MONO_BOLD   # the mock sets the panel, strip an
 
 # The strip's choices: key, its label on the strip, and what it is (for the picker), in the order they're drawn.
 STRIP_METRICS: dict[str, tuple[str, str]] = {
-  "accel": ("accel", N_("Acceleration now")),
-  "want": ("want", N_("Acceleration openpilot asks for")),
-  "jerk": ("jerk", N_("Planned jerk")),
-  "lat": ("lat", N_("Lateral acceleration")),
-  "delay": ("delay", N_("Steering delay")),
-  "steer": ("steer", N_("Steering wheel angle")),
-  "torque": ("torque", N_("Steering torque used")),
-  "danger": ("danger", N_("Following danger factor")),
-  "ratio": ("ratio", N_("Steer ratio")),
+  "accel": (N_("accel"), N_("Acceleration now")),
+  "want": (N_("want"), N_("Acceleration openpilot asks for")),
+  "jerk": (N_("jerk"), N_("Planned jerk")),
+  "lat": (N_("lat"), N_("Lateral acceleration")),
+  "delay": (N_("delay"), N_("Steering delay")),
+  "steer": (N_("steer"), N_("Steering wheel angle")),
+  "torque": (N_("torque"), N_("Steering torque used")),
+  "danger": (N_("danger"), N_("Following danger factor")),
+  "ratio": (N_("ratio"), N_("Steer ratio")),
 }
 STRIP_PARAM = "DeveloperStripMetrics"
 STRIP_DEFAULT = ("accel", "want", "jerk", "lat", "delay")
@@ -81,8 +81,8 @@ class DevData:
   ram: float = 0.0
   ram_text: str = ""        # "3.1 GB"
   fps: str = ""
-  curve: str = "idle"
-  limit_source: str = "none"
+  curve: str = N_("idle")
+  limit_source: str = N_("none")
   lanes: str = "—"
   accel: str = "+0.00"
   want: str = "+0.00"
@@ -140,9 +140,9 @@ def draw_panel(rect: rl.Rectangle, data: DevData) -> None:
   y = _section(body, body.y, N_("Lead"))
   tile_h = T.px(52)
   lead = data.lead
-  tiles = [("distance", lead.distance if lead else "—", None), ("gap", lead.gap if lead else "—", None),
+  tiles = [(N_("distance"), lead.distance if lead else "—", None), (N_("gap"), lead.gap if lead else "—", None),
            (N_("rel speed"), lead.rel_speed if lead else "—", T.WARNING if lead and lead.closing else None),
-           ("source", lead.source if lead else "none", None)]
+           (N_("source"), lead.source if lead else N_("none"), None)]
   for i in range(0, 4, 2):
     for (label, value, ink), cell in zip(tiles[i:i + 2], row(rl.Rectangle(body.x, y, body.width, tile_h), [FILL, FILL], T.px(6)), strict=True):
       draw.fill(cell, TILE_FILL, T.px(10))
@@ -180,11 +180,15 @@ def draw_strip(rect: rl.Rectangle, data: DevData) -> None:
     return
   draw.fill(rect, STRIP_FILL)
   for (label, value), cell in zip(parts, row(inset(rect, x=T.px(20)), [FILL] * len(parts), T.px(12)), strict=True):
-    lw = draw.text_width(label + " ", STRIP_TEXT, MONO)
+    label = translate(label)
+    gap = draw.text_width(" ", STRIP_TEXT, MONO)   # a layout gap stays between the label and value in right-to-left scripts too
     vw = draw.text_width(value, STRIP_TEXT, BOLD)
-    x = cell.x + (cell.width - lw - vw) / 2
-    draw.text(rl.Rectangle(x, cell.y, lw, cell.height), label + " ", STRIP_TEXT, T.TEXT_SECONDARY, MONO)
-    draw.text(rl.Rectangle(x + lw, cell.y, vw, cell.height), value, STRIP_TEXT, T.TEXT, BOLD)
+    label = draw.fit(label, STRIP_TEXT, MONO, max(0, cell.width - gap - vw))
+    lw = draw.text_width(label, STRIP_TEXT, MONO)
+    gap = gap if label else 0
+    x = cell.x + (cell.width - lw - gap - vw) / 2
+    draw.text(rl.Rectangle(x, cell.y, lw, cell.height), label, STRIP_TEXT, T.TEXT_SECONDARY, MONO)
+    draw.text(rl.Rectangle(x + lw + gap, cell.y, vw, cell.height), value, STRIP_TEXT, T.TEXT, BOLD)
 
 
 def lead_tag_motion(progress: float) -> tuple[float, float, float]:
@@ -256,7 +260,7 @@ def lead_of(lead, v_ego: float, metric: bool) -> Lead | None:
   distance = t_("{} m", round(lead.dRel)) if metric else t_("{} ft", round(lead.dRel * CV.METER_TO_FOOT))
   rel = lead.vRel * (CV.MS_TO_KPH if metric else CV.MS_TO_MPH)
   return Lead(distance, t_("{} s", f"{lead.dRel / max(v_ego, 1.0):.1f}"), f"{round(rel):+d} {'km/h' if metric else 'mph'}".replace("-", "−"),
-              rel < -0.5, "radar" if getattr(lead, "radar", False) else "vision")
+              rel < -0.5, N_("radar") if getattr(lead, "radar", False) else N_("vision"))
 
 
 def read(ui_state, params=None) -> DevData:
@@ -288,7 +292,7 @@ def read(ui_state, params=None) -> DevData:
   data.fps = f"{round(rl.get_fps())}"
   if plan:
     speed = plan.cscSpeed * (CV.MS_TO_KPH if metric else CV.MS_TO_MPH)
-    data.curve = t_("active · {} {}", round(speed), 'km/h' if metric else 'mph') if plan.cscControllingSpeed else "idle"
+    data.curve = t_("active · {} {}", round(speed), 'km/h' if metric else 'mph') if plan.cscControllingSpeed else N_("idle")
     data.limit_source = (plan.slcPresentedSpeedLimitSource or plan.slcSpeedLimitSource or "none").lower()
     unit, scale = ("m", 1.0) if metric else ("ft", CV.METER_TO_FOOT)
     data.lanes = f"{plan.laneWidthLeft * scale:.1f} / {plan.laneWidthRight * scale:.1f} {unit}"

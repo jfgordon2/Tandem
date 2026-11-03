@@ -17,7 +17,7 @@ def _stub_cereal():
   cereal.log = log
   cereal.custom = custom
   cereal.messaging = types.SimpleNamespace(SubMaster=object)
-  sys.modules.setdefault("cereal", cereal)
+  sys.modules["cereal"] = cereal   # earlier scenes may have imported the real package, whose messaging needs native libraries
   if "openpilot.selfdrive.ui.ui_state" not in sys.modules:
     m = types.ModuleType("openpilot.selfdrive.ui.ui_state")
     m.ui_state = types.SimpleNamespace(sm=None, starpilot_toggles={}, started_time=0, started_frame=0)

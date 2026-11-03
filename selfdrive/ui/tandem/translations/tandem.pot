@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language: \n"
-"Plural-Forms: nplurals=2;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\n"
 
 #: controls.py:174
@@ -373,12 +373,6 @@ msgstr ""
 msgid "A new version"
 msgstr ""
 
-#: home.py:82
-#: home.py:88
-#: tokens.py:62
-msgid "DCEBFF"
-msgstr ""
-
 #: home.py:144
 msgid "Home · Work · Recent"
 msgstr ""
@@ -523,22 +517,10 @@ msgstr ""
 msgid "Speak now. Tap the mic when you're done."
 msgstr ""
 
-#: keyboard.py:31
-msgid "QWERTYUIOP"
-msgstr ""
-
 #: keyboard.py:132
 #: overlays.py:163
 #: settings/bluetooth_tab.py:248
 msgid "Cancel"
-msgstr ""
-
-#: keyboard.py:31
-msgid "ASDFGHJKL"
-msgstr ""
-
-#: keyboard.py:31
-msgid "ZXCVBNM"
 msgstr ""
 
 #: mapbox_help.py:20
@@ -605,6 +587,16 @@ msgstr ""
 msgid "For place search, routes, and speed limits the maps don't have"
 msgstr ""
 
+#: onroad/developer.py:84
+#: onroad/developer.py:295
+msgid "idle"
+msgstr ""
+
+#: onroad/developer.py:85
+#: onroad/developer.py:145
+msgid "none"
+msgstr ""
+
 #: onroad/developer.py:90
 msgid "0.0 m/s²"
 msgstr ""
@@ -614,7 +606,15 @@ msgid "0.00 s"
 msgstr ""
 
 #: onroad/developer.py:42
+msgid "accel"
+msgstr ""
+
+#: onroad/developer.py:42
 msgid "Acceleration now"
+msgstr ""
+
+#: onroad/developer.py:43
+msgid "want"
 msgstr ""
 
 #: onroad/developer.py:43
@@ -622,7 +622,15 @@ msgid "Acceleration openpilot asks for"
 msgstr ""
 
 #: onroad/developer.py:44
+msgid "jerk"
+msgstr ""
+
+#: onroad/developer.py:44
 msgid "Planned jerk"
+msgstr ""
+
+#: onroad/developer.py:45
+msgid "lat"
 msgstr ""
 
 #: onroad/developer.py:45
@@ -630,7 +638,15 @@ msgid "Lateral acceleration"
 msgstr ""
 
 #: onroad/developer.py:46
+msgid "delay"
+msgstr ""
+
+#: onroad/developer.py:46
 msgid "Steering delay"
+msgstr ""
+
+#: onroad/developer.py:47
+msgid "steer"
 msgstr ""
 
 #: onroad/developer.py:47
@@ -638,11 +654,23 @@ msgid "Steering wheel angle"
 msgstr ""
 
 #: onroad/developer.py:48
+msgid "torque"
+msgstr ""
+
+#: onroad/developer.py:48
 msgid "Steering torque used"
 msgstr ""
 
 #: onroad/developer.py:49
+msgid "danger"
+msgstr ""
+
+#: onroad/developer.py:49
 msgid "Following danger factor"
+msgstr ""
+
+#: onroad/developer.py:50
+msgid "ratio"
 msgstr ""
 
 #: onroad/developer.py:50
@@ -661,40 +689,52 @@ msgstr ""
 msgid "curve spd"
 msgstr ""
 
-#: onroad/developer.py:256
+#: onroad/developer.py:260
 #: onroad/extras.py:215
 #: onroad/lead.py:97
 #, python-brace-format
 msgid "{} m"
 msgstr ""
 
-#: onroad/developer.py:256
+#: onroad/developer.py:260
 #: onroad/extras.py:215
 #: onroad/lead.py:97
 #, python-brace-format
 msgid "{} ft"
 msgstr ""
 
-#: onroad/developer.py:258
-#: onroad/developer.py:311
+#: onroad/developer.py:262
+#: onroad/developer.py:315
 #: onroad/lead.py:108
 #, python-brace-format
 msgid "{} s"
 msgstr ""
 
-#: onroad/developer.py:287
+#: onroad/developer.py:291
 #: settings/device_sections.py:301
 #, python-brace-format
 msgid "{} GB"
 msgstr ""
 
-#: onroad/developer.py:309
+#: onroad/developer.py:313
 #, python-brace-format
 msgid "{} m/s²"
 msgstr ""
 
+#: onroad/developer.py:143
+msgid "distance"
+msgstr ""
+
+#: onroad/developer.py:143
+msgid "gap"
+msgstr ""
+
 #: onroad/developer.py:144
 msgid "rel speed"
+msgstr ""
+
+#: onroad/developer.py:145
+msgid "source"
 msgstr ""
 
 #: onroad/developer.py:155
@@ -711,7 +751,15 @@ msgstr ""
 msgid "lanes L/R"
 msgstr ""
 
-#: onroad/developer.py:291
+#: onroad/developer.py:263
+msgid "radar"
+msgstr ""
+
+#: onroad/developer.py:263
+msgid "vision"
+msgstr ""
+
+#: onroad/developer.py:295
 #, python-brace-format
 msgid "active · {} {}"
 msgstr ""
@@ -4295,10 +4343,6 @@ msgstr ""
 msgid "The device removes openpilot and starts its setup again."
 msgstr ""
 
-#: settings/software_tab.py:253
-msgid "pkill -SIGUSR1 -f system.updated.updated"
-msgstr ""
-
 #: settings/software_tab.py:71
 #: settings/software_tab.py:65
 msgid "Updating"
@@ -5253,12 +5297,6 @@ msgstr ""
 msgid "Not downloaded"
 msgstr ""
 
-#: tokens.py:102
-#: tokens.py:103
-#: tokens.py:166
-msgid "FFFFFF"
-msgstr ""
-
 #: voice.py:36
 msgid "Didn't catch that. Tap the mic to try again."
 msgstr ""
@@ -5285,10 +5323,6 @@ msgstr ""
 
 #: voice.py:202
 msgid "Listening"
-msgstr ""
-
-#: voice.py:93
-msgid "QCOM"
 msgstr ""
 
 #: voice.py:197

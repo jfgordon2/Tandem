@@ -12,11 +12,13 @@ from openpilot.selfdrive.ui.tandem.settings.window import Tab
 
 def main(frame, save, out, tap, gui_app):
   original_language = i18n._language
+  original_drawn = draw.DRAWN
   original_push = gui_app.push_widget
   keyboards = []
   gui_app.push_widget = keyboards.append
   try:
-    for code in ("en", "de", "es", "ja", "pseudo"):
+    codes = ("pseudo",) if os.environ.get("TANDEM_PSEUDO") == "1" else ("en", "de", "es", "ja", "pseudo")
+    for code in codes:
       i18n._language = lambda c=code: c
       draw.DRAWN = set()
       win = _search_window()
@@ -36,6 +38,8 @@ def main(frame, save, out, tap, gui_app):
         frame(lambda k=kb, r=rect: k.render(r))
       save(f"{out}/hotspotname_{code}.png")
       if code == "pseudo":
+        if original_drawn is not None:
+          original_drawn.update(draw.DRAWN)
         missed = sorted(t for t in draw.DRAWN if any(c.isalpha() for c in t) and "[" not in t and t != "weedle-c488")
         with open(f"{out}/hotspot_missed.txt", "w", encoding="utf-8") as f:
           f.write("\n".join(missed) + "\n")
@@ -43,3 +47,4 @@ def main(frame, save, out, tap, gui_app):
   finally:
     gui_app.push_widget = original_push
     i18n._language = original_language
+    draw.DRAWN = original_drawn

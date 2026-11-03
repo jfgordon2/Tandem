@@ -79,13 +79,13 @@ class Hero(Component):
     ink = T.ACCENT_TEXT if outlook.hazard else T.TEXT_TERTIARY
     icon, words = row(head, [T.px(22), FILL], T.px(10))
     draw.icon(icon, outlook.icon, ink, T.px(22))
-    draw.text(words, outlook.summary, T.font_px(18), T._hex(N_("DCEBFF")) if outlook.hazard else T.TEXT, T.FONT_BOLD)
+    draw.text(words, outlook.summary, T.font_px(18), T._hex("DCEBFF") if outlook.hazard else T.TEXT, T.FONT_BOLD)
     draw.text(head, t_("Forecast · updated {}", outlook.updated), T.font_px(13), T.TEXT_MUTED, T.FONT, Align.END)
     for tile, cell in zip(outlook.tiles, row(tiles, [FILL] * len(outlook.tiles), T.px(6)), strict=True):
       draw.fill(cell, T.ACCENT_SURFACE if tile.hazard else T._hex("1E2227"), T.px(14))
       inner = inset(cell, y=T.px(10))
       when, _, glyph, _, temp = column(inner, [draw.line_height(t_size), T.px(4), glyph_size, T.px(4), draw.line_height(temp_size)])
-      draw.text(when, tile.time, t_size, T._hex(N_("DCEBFF")) if tile.hazard else T.TEXT_TERTIARY,
+      draw.text(when, tile.time, t_size, T._hex("DCEBFF") if tile.hazard else T.TEXT_TERTIARY,
                 T.FONT_BOLD if tile.hazard else T.FONT_MEDIUM, Align.CENTER)
       draw.icon(glyph, tile.icon, T.ACCENT_TEXT if tile.hazard else T.TEXT_SECONDARY, glyph_size)
       draw.text(temp, f"{tile.temp}°", temp_size, T.TEXT, T.FONT_BOLD, Align.CENTER)

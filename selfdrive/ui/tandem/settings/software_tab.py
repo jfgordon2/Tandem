@@ -250,7 +250,7 @@ class UpstreamUpdates:
     import os
     from openpilot.selfdrive.ui.ui_state import ui_state
     ui_state.ui_params.put("UpdaterTargetBranch", branch)
-    os.system(N_("pkill -SIGUSR1 -f system.updated.updated"))
+    os.system("pkill -SIGUSR1 -f system.updated.updated")
 
   def uninstall(self, erase: bool) -> None:
     """What upstream's last uninstall step does: a factory reset clears every param first."""

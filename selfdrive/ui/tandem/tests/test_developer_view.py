@@ -1,5 +1,8 @@
 from types import SimpleNamespace
 
+import pyray as rl
+
+from openpilot.selfdrive.ui.tandem import draw, i18n
 from openpilot.selfdrive.ui.tandem.onroad import developer as D
 
 
@@ -46,3 +49,34 @@ def test_strip_follows_the_developer_view_switch_not_developer_ui_alone():
   assert not D.developer_view_on(_ui({"developer_ui": True, "developer_sidebar": False}), params)
   assert not D.developer_view_on(_ui({"developer_ui": False, "developer_sidebar": True}), params)
   assert D.developer_view_on(_ui({"developer_ui": True, "developer_sidebar": True}), _Params({}))
+
+
+def test_strip_translates_labels_and_keeps_a_gap_before_values(monkeypatch):
+  labels = []
+  monkeypatch.setattr(draw, "fill", lambda *args: None)
+  monkeypatch.setattr(draw, "text_width", lambda *args: 20)
+  monkeypatch.setattr(draw, "fit", lambda value, *args: value)
+  monkeypatch.setattr(draw, "text", lambda rect, value, *args: labels.append((rect, value)))
+  for code, expected in (("es", ["acel.", "objetivo", "dirección"]), ("ar", ["تسارع", "مطلوب", "توجيه"])):
+    monkeypatch.setattr(i18n, "_language", lambda c=code: c)
+    labels.clear()
+    D.draw_strip(rl.Rectangle(0, 0, 1200, D.STRIP_H), D.DevData(strip=("accel", "want", "steer")))
+    assert [value for _, value in labels[::2]] == expected
+    for (label, _), (value, _) in zip(labels[::2], labels[1::2], strict=True):
+      assert value.x > label.x + label.width
+
+
+def test_long_translated_strip_labels_fit_without_shortening_the_numbers(monkeypatch):
+  monkeypatch.setattr(D, "translate", lambda value: "long translated metric label" * 20)
+  monkeypatch.setattr(draw, "fill", lambda *args: None)
+  monkeypatch.setattr(draw, "text_width", lambda value, *args: len(value))
+  monkeypatch.setattr(draw, "fit", lambda value, size, weight, width: value[:int(width)])
+  drawn = []
+  monkeypatch.setattr(draw, "text", lambda rect, value, *args: drawn.append((rect, value)))
+  rect = rl.Rectangle(0, 0, 1200, D.STRIP_H)
+  data = D.DevData()
+  D.draw_strip(rect, data)
+  cells = D.row(D.inset(rect, x=D.T.px(20)), [D.FILL] * len(data.strip), D.T.px(12))
+  for (label, _), (value, text), cell, (_, expected) in zip(drawn[::2], drawn[1::2], cells, data.strip_values(), strict=True):
+    assert label.x >= cell.x and value.x + value.width <= cell.x + cell.width
+    assert text == expected

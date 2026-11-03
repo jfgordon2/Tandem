@@ -1,5 +1,6 @@
 """Tandem's translation catalog (i18n.py, tools/translations.py, translations/)."""
 import importlib.util
+import gettext
 import re
 import sys
 from pathlib import Path
@@ -22,6 +23,23 @@ def test_the_template_lists_every_string_tandem_draws():
   code = tool.strings()
   assert sorted(set(code) - set(pot))[:20] == [], "new strings: run tools/translations.py update"
   assert sorted(set(pot) - set(code))[:20] == [], "removed strings: run tools/translations.py update"
+
+
+@pytest.mark.parametrize("code", ["", *LANGUAGES])
+def test_catalog_metadata_matches_the_source_and_plural_rules(code):
+  path = i18n.CATALOG_DIR / (f"tandem_{code}.po" if code else "tandem.pot")
+  text = path.read_text(encoding="utf-8")
+  entries = tool.strings()
+  assert i18n.english_plurals(text) == {k: e.plural for k, e in entries.items() if e.plural is not None}
+  assert i18n.drawn_templates(text) == {k for k, e in entries.items() if e.drawn and "{}" in e.msgid}
+  keys = [i18n.key(fields["msgid"], fields.get("msgctxt")) for fields, _ in i18n._po_entries(text) if fields.get("msgid")]
+  assert len(keys) == len(set(keys)), "duplicate catalog entries"
+  header = next(fields["msgstr"] for fields, _ in i18n._po_entries(text) if fields.get("msgid") == "")
+  rule = re.search(r"Plural-Forms: nplurals=(\d+); plural=(.*);", header)
+  assert rule is not None, "PO files need a complete gettext plural expression"
+  assert int(rule[1]) == tool.PLURAL_FORMS.get(code, 2)
+  plural = gettext.c2py(rule[2])
+  assert all(plural(n) == i18n.plural_index(code, n) for n in (*range(201), 1000, 1001, 1011, 1022))
 
 
 @pytest.mark.parametrize("code", LANGUAGES)
@@ -208,6 +226,44 @@ def test_keys_icons_and_states_stay_out_of_the_catalog():
   pot = i18n.parse_po((i18n.CATALOG_DIR / "tandem.pot").read_text(encoding="utf-8"))
   for key in ("Total", "Free", "trash", "busy", "roundabout turn"):
     assert key not in pot, key
+
+
+def test_internal_colors_commands_and_keyboard_rows_are_not_translation_messages():
+  entries = tool.strings()
+  for value in ("DCEBFF", "FFFFFF", "QCOM", "QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM", "pkill -SIGUSR1 -f system.updated.updated"):
+    assert value not in entries
+
+
+def test_developer_view_labels_are_marked_for_translation():
+  entries = tool.strings()
+  for label in ("accel", "want", "jerk", "lat", "delay", "steer", "torque", "danger", "ratio", "gap", "source", "idle", "radar"):
+    assert label in entries
+
+
+def test_po_metadata_keeps_multiline_messages_and_contexts_together():
+  text = '''msgctxt "action"
+msgid "Set up"
+msgstr "Configurar"
+
+#, python-brace-format,
+#, drawn
+msgid ""
+"{} region"
+msgid_plural ""
+"{} regions"
+msgstr[0] "{} región"
+msgstr[1] "{} regiones"
+
+msgctxt "count"
+msgid "{} file"
+msgid_plural "{} files"
+msgstr[0] "{} archivo"
+msgstr[1] "{} archivos"
+'''
+  assert i18n.english_plurals(text) == {"{} region": "{} regions", i18n.key("{} file", "count"): "{} files"}
+  assert i18n.drawn_templates(text) == {"{} region"}
+  catalog = i18n.Catalog(i18n.parse_po(text), "es", i18n.english_plurals(text), i18n.drawn_templates(text))
+  assert catalog.translate("2 regions") == "2 regiones"
 
 
 def test_a_name_with_its_value_keeps_the_value():

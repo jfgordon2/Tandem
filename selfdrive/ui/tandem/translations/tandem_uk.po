@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language: uk\n"
-"Plural-Forms: nplurals=3;\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\n"
 
 #: controls.py:174
@@ -374,13 +374,6 @@ msgstr "Примітки"
 msgid "A new version"
 msgstr "Нова версія"
 
-#. Name, identifier, keyboard keys or command; keep as written.
-#: home.py:82
-#: home.py:88
-#: tokens.py:62
-msgid "DCEBFF"
-msgstr "DCEBFF"
-
 #: home.py:144
 msgid "Home · Work · Recent"
 msgstr "Дім · Робота · Нещодавні"
@@ -527,26 +520,11 @@ msgstr "Готово"
 msgid "Speak now. Tap the mic when you're done."
 msgstr "Говоріть зараз. Завершивши, торкніться мікрофона."
 
-#. Name, identifier, keyboard keys or command; keep as written.
-#: keyboard.py:31
-msgid "QWERTYUIOP"
-msgstr "QWERTYUIOP"
-
 #: keyboard.py:132
 #: overlays.py:163
 #: settings/bluetooth_tab.py:248
 msgid "Cancel"
 msgstr "Скасувати"
-
-#. Name, identifier, keyboard keys or command; keep as written.
-#: keyboard.py:31
-msgid "ASDFGHJKL"
-msgstr "ASDFGHJKL"
-
-#. Name, identifier, keyboard keys or command; keep as written.
-#: keyboard.py:31
-msgid "ZXCVBNM"
-msgstr "ZXCVBNM"
 
 #: mapbox_help.py:20
 msgid "Settings › Driving › Speed & Steering › Navigation"
@@ -612,6 +590,17 @@ msgstr "Лише секретний ключ · для пошуку потріб
 msgid "For place search, routes, and speed limits the maps don't have"
 msgstr "Для пошуку місць, маршрутів та обмежень, яких немає на картах"
 
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:84
+#: onroad/developer.py:295
+msgid "idle"
+msgstr "неактивно"
+
+#: onroad/developer.py:85
+#: onroad/developer.py:145
+msgid "none"
+msgstr "Немає"
+
 #. Unit notation; keep as written.
 #: onroad/developer.py:90
 msgid "0.0 m/s²"
@@ -622,37 +611,81 @@ msgstr "0.0 m/s²"
 msgid "0.00 s"
 msgstr "0.00 s"
 
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:42
+msgid "accel"
+msgstr "приск."
+
 #: onroad/developer.py:42
 msgid "Acceleration now"
 msgstr "Поточне прискорення"
+
+#. Requested acceleration, not a desire; short label in Developer View. Machine draft, needs native review.
+#: onroad/developer.py:43
+msgid "want"
+msgstr "задано"
 
 #: onroad/developer.py:43
 msgid "Acceleration openpilot asks for"
 msgstr "Прискорення, яке запитує openpilot"
 
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:44
+msgid "jerk"
+msgstr "ривок"
+
 #: onroad/developer.py:44
 msgid "Planned jerk"
 msgstr "Запланована зміна прискорення"
+
+#. Lateral acceleration, not latitude; short label in Developer View. Machine draft, needs native review.
+#: onroad/developer.py:45
+msgid "lat"
+msgstr "бічне"
 
 #: onroad/developer.py:45
 msgid "Lateral acceleration"
 msgstr "Поперечне прискорення"
 
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:46
+msgid "delay"
+msgstr "затримка"
+
 #: onroad/developer.py:46
 msgid "Steering delay"
 msgstr "Затримка кермування"
+
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:47
+msgid "steer"
+msgstr "кермо"
 
 #: onroad/developer.py:47
 msgid "Steering wheel angle"
 msgstr "Кут керма"
 
 #: onroad/developer.py:48
+msgid "torque"
+msgstr "Крутний момент"
+
+#: onroad/developer.py:48
 msgid "Steering torque used"
 msgstr "Використаний крутний момент керма"
+
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:49
+msgid "danger"
+msgstr "ризик"
 
 #: onroad/developer.py:49
 msgid "Following danger factor"
 msgstr "Коефіцієнт ризику зближення"
+
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:50
+msgid "ratio"
+msgstr "передат."
 
 #: onroad/developer.py:50
 msgid "Steer ratio"
@@ -671,7 +704,7 @@ msgid "curve spd"
 msgstr "швидк. у повороті"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:256
+#: onroad/developer.py:260
 #: onroad/extras.py:215
 #: onroad/lead.py:97
 #, python-brace-format
@@ -679,7 +712,7 @@ msgid "{} m"
 msgstr "{} m"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:256
+#: onroad/developer.py:260
 #: onroad/extras.py:215
 #: onroad/lead.py:97
 #, python-brace-format
@@ -687,29 +720,43 @@ msgid "{} ft"
 msgstr "{} ft"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:258
-#: onroad/developer.py:311
+#: onroad/developer.py:262
+#: onroad/developer.py:315
 #: onroad/lead.py:108
 #, python-brace-format
 msgid "{} s"
 msgstr "{} s"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:287
+#: onroad/developer.py:291
 #: settings/device_sections.py:301
 #, python-brace-format
 msgid "{} GB"
 msgstr "{} GB"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:309
+#: onroad/developer.py:313
 #, python-brace-format
 msgid "{} m/s²"
 msgstr "{} m/s²"
 
+#: onroad/developer.py:143
+msgid "distance"
+msgstr "Відстань"
+
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:143
+msgid "gap"
+msgstr "інтервал"
+
 #: onroad/developer.py:144
 msgid "rel speed"
 msgstr "відносна швидк."
+
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:145
+msgid "source"
+msgstr "джерело"
 
 #: onroad/developer.py:155
 #: settings/search.py:24
@@ -725,7 +772,16 @@ msgstr "джерело обмеж."
 msgid "lanes L/R"
 msgstr "смуги Л/П"
 
-#: onroad/developer.py:291
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:263
+msgid "radar"
+msgstr "радар"
+
+#: onroad/developer.py:263
+msgid "vision"
+msgstr "Камера"
+
+#: onroad/developer.py:295
 #, python-brace-format
 msgid "active · {} {}"
 msgstr "активно · {} {}"
@@ -4356,11 +4412,6 @@ msgstr "Видалити openpilot?"
 msgid "The device removes openpilot and starts its setup again."
 msgstr "Пристрій видалить openpilot і почне його налаштування заново."
 
-#. Name, identifier, keyboard keys or command; keep as written.
-#: settings/software_tab.py:253
-msgid "pkill -SIGUSR1 -f system.updated.updated"
-msgstr "pkill -SIGUSR1 -f system.updated.updated"
-
 #: settings/software_tab.py:71
 #: settings/software_tab.py:65
 msgid "Updating"
@@ -5319,13 +5370,6 @@ msgstr "Гарячий"
 msgid "Not downloaded"
 msgstr "Не завантажено"
 
-#. Name, identifier, keyboard keys or command; keep as written.
-#: tokens.py:102
-#: tokens.py:103
-#: tokens.py:166
-msgid "FFFFFF"
-msgstr "FFFFFF"
-
 #: voice.py:36
 msgid "Didn't catch that. Tap the mic to try again."
 msgstr "Не вдалося розчути. Торкніться мікрофона й повторіть."
@@ -5353,11 +5397,6 @@ msgstr "Ввести текстом"
 #: voice.py:202
 msgid "Listening"
 msgstr "Слухаю"
-
-#. Name, identifier, keyboard keys or command; keep as written.
-#: voice.py:93
-msgid "QCOM"
-msgstr "QCOM"
 
 #: voice.py:197
 msgid "Getting voice typing ready"

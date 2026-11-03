@@ -90,7 +90,7 @@ class VoiceTyping:
     if driving():
       env["TANDEM_SPEECH_DRIVING"] = "1"     # micd's audio, two threads, cores 0-3 (speech.driving_limits)
     if os.path.isfile("/TICI"):
-      env.setdefault("DEV", N_("QCOM"))          # the tinygrad fallback's GPU, free while parked (it's parked-only)
+      env.setdefault("DEV", "QCOM")          # the tinygrad fallback's GPU, free while parked (it's parked-only)
     try:
       log = speech.model_dir() / "worker.log"   # the last run's errors, for a bug report
       log.parent.mkdir(parents=True, exist_ok=True)

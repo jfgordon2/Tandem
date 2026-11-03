@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language: zh-CHS\n"
-"Plural-Forms: nplurals=1;\n"
+"Plural-Forms: nplurals=1; plural=(0);\n"
 "X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\n"
 
 #: controls.py:174
@@ -372,13 +372,6 @@ msgstr "说明"
 msgid "A new version"
 msgstr "新版本"
 
-#. Name, identifier, keyboard keys or command; keep as written.
-#: home.py:82
-#: home.py:88
-#: tokens.py:62
-msgid "DCEBFF"
-msgstr "DCEBFF"
-
 #: home.py:144
 msgid "Home · Work · Recent"
 msgstr "家 · 公司 · 最近"
@@ -523,26 +516,11 @@ msgstr "完成"
 msgid "Speak now. Tap the mic when you're done."
 msgstr "请开始说话，结束后点击麦克风。"
 
-#. Name, identifier, keyboard keys or command; keep as written.
-#: keyboard.py:31
-msgid "QWERTYUIOP"
-msgstr "QWERTYUIOP"
-
 #: keyboard.py:132
 #: overlays.py:163
 #: settings/bluetooth_tab.py:248
 msgid "Cancel"
 msgstr "取消"
-
-#. Name, identifier, keyboard keys or command; keep as written.
-#: keyboard.py:31
-msgid "ASDFGHJKL"
-msgstr "ASDFGHJKL"
-
-#. Name, identifier, keyboard keys or command; keep as written.
-#: keyboard.py:31
-msgid "ZXCVBNM"
-msgstr "ZXCVBNM"
 
 #: mapbox_help.py:20
 msgid "Settings › Driving › Speed & Steering › Navigation"
@@ -608,6 +586,17 @@ msgstr "只有私密密钥 · 搜索还需要公共密钥"
 msgid "For place search, routes, and speed limits the maps don't have"
 msgstr "用于搜索地点、规划路线及获取地图缺失的限速"
 
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:84
+#: onroad/developer.py:295
+msgid "idle"
+msgstr "空闲"
+
+#: onroad/developer.py:85
+#: onroad/developer.py:145
+msgid "none"
+msgstr "无"
+
 #. Unit notation; keep as written.
 #: onroad/developer.py:90
 msgid "0.0 m/s²"
@@ -618,37 +607,81 @@ msgstr "0.0 m/s²"
 msgid "0.00 s"
 msgstr "0.00 s"
 
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:42
+msgid "accel"
+msgstr "加速度"
+
 #: onroad/developer.py:42
 msgid "Acceleration now"
 msgstr "当前加速度"
+
+#. Requested acceleration, not a desire; short label in Developer View. Machine draft, needs native review.
+#: onroad/developer.py:43
+msgid "want"
+msgstr "目标"
 
 #: onroad/developer.py:43
 msgid "Acceleration openpilot asks for"
 msgstr "openpilot 请求的加速度"
 
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:44
+msgid "jerk"
+msgstr "加加速度"
+
 #: onroad/developer.py:44
 msgid "Planned jerk"
 msgstr "计划加加速度"
+
+#. Lateral acceleration, not latitude; short label in Developer View. Machine draft, needs native review.
+#: onroad/developer.py:45
+msgid "lat"
+msgstr "横向"
 
 #: onroad/developer.py:45
 msgid "Lateral acceleration"
 msgstr "横向加速度"
 
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:46
+msgid "delay"
+msgstr "延迟"
+
 #: onroad/developer.py:46
 msgid "Steering delay"
 msgstr "转向延迟"
+
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:47
+msgid "steer"
+msgstr "转向"
 
 #: onroad/developer.py:47
 msgid "Steering wheel angle"
 msgstr "方向盘角度"
 
 #: onroad/developer.py:48
+msgid "torque"
+msgstr "扭矩"
+
+#: onroad/developer.py:48
 msgid "Steering torque used"
 msgstr "使用的转向扭矩"
+
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:49
+msgid "danger"
+msgstr "风险"
 
 #: onroad/developer.py:49
 msgid "Following danger factor"
 msgstr "跟车风险系数"
+
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:50
+msgid "ratio"
+msgstr "传动比"
 
 #: onroad/developer.py:50
 msgid "Steer ratio"
@@ -667,7 +700,7 @@ msgid "curve spd"
 msgstr "弯道速度"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:256
+#: onroad/developer.py:260
 #: onroad/extras.py:215
 #: onroad/lead.py:97
 #, python-brace-format
@@ -675,7 +708,7 @@ msgid "{} m"
 msgstr "{} m"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:256
+#: onroad/developer.py:260
 #: onroad/extras.py:215
 #: onroad/lead.py:97
 #, python-brace-format
@@ -683,29 +716,43 @@ msgid "{} ft"
 msgstr "{} ft"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:258
-#: onroad/developer.py:311
+#: onroad/developer.py:262
+#: onroad/developer.py:315
 #: onroad/lead.py:108
 #, python-brace-format
 msgid "{} s"
 msgstr "{} s"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:287
+#: onroad/developer.py:291
 #: settings/device_sections.py:301
 #, python-brace-format
 msgid "{} GB"
 msgstr "{} GB"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:309
+#: onroad/developer.py:313
 #, python-brace-format
 msgid "{} m/s²"
 msgstr "{} m/s²"
 
+#: onroad/developer.py:143
+msgid "distance"
+msgstr "距离"
+
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:143
+msgid "gap"
+msgstr "时距"
+
 #: onroad/developer.py:144
 msgid "rel speed"
 msgstr "相对速度"
+
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:145
+msgid "source"
+msgstr "来源"
 
 #: onroad/developer.py:155
 #: settings/search.py:24
@@ -721,7 +768,16 @@ msgstr "限速来源"
 msgid "lanes L/R"
 msgstr "左/右车道"
 
-#: onroad/developer.py:291
+#. Short automotive label in Developer View; machine draft, needs native review.
+#: onroad/developer.py:263
+msgid "radar"
+msgstr "雷达"
+
+#: onroad/developer.py:263
+msgid "vision"
+msgstr "视觉识别"
+
+#: onroad/developer.py:295
 #, python-brace-format
 msgid "active · {} {}"
 msgstr "运行中 · {} {}"
@@ -4344,11 +4400,6 @@ msgstr "卸载 openpilot？"
 msgid "The device removes openpilot and starts its setup again."
 msgstr "设备将移除 openpilot 并重新开始设置。"
 
-#. Name, identifier, keyboard keys or command; keep as written.
-#: settings/software_tab.py:253
-msgid "pkill -SIGUSR1 -f system.updated.updated"
-msgstr "pkill -SIGUSR1 -f system.updated.updated"
-
 #: settings/software_tab.py:71
 #: settings/software_tab.py:65
 msgid "Updating"
@@ -5307,13 +5358,6 @@ msgstr "高温"
 msgid "Not downloaded"
 msgstr "未下载"
 
-#. Name, identifier, keyboard keys or command; keep as written.
-#: tokens.py:102
-#: tokens.py:103
-#: tokens.py:166
-msgid "FFFFFF"
-msgstr "FFFFFF"
-
 #: voice.py:36
 msgid "Didn't catch that. Tap the mic to try again."
 msgstr "未能听清。点击麦克风重试。"
@@ -5341,11 +5385,6 @@ msgstr "改为键盘输入"
 #: voice.py:202
 msgid "Listening"
 msgstr "正在聆听"
-
-#. Name, identifier, keyboard keys or command; keep as written.
-#: voice.py:93
-msgid "QCOM"
-msgstr "QCOM"
 
 #: voice.py:197
 msgid "Getting voice typing ready"

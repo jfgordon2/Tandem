@@ -34,6 +34,11 @@ UPSTREAM_CALLS = {"tr": 1, "tr_noop": 1, "trn": 2}
 UPSTREAM_ALERTS = "selfdrive/selfdrived/alerts_offroad.json"   # the home screen's alert sentences ("%1" is filled in)
 ONROAD_ALERTS = "selfdrive/selfdrived/events.py"
 PLURAL_FORMS = {"ja": 1, "ko": 1, "zh-CHS": 1, "zh-CHT": 1, "th": 1, "uk": 3, "ar": 6}   # others: 2
+PLURAL_EXPRESSIONS = {
+  "fr": "n > 1", "pt-BR": "n > 1",
+  "uk": "n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2",
+  "ar": "n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5",
+}
 
 
 def _i18n():
@@ -138,8 +143,9 @@ def _quote(text: str) -> str:
 
 def _header(code: str) -> str:
   forms = PLURAL_FORMS.get(code, 2)
+  expression = PLURAL_EXPRESSIONS.get(code, "0" if forms == 1 else "n != 1")
   return ('msgid ""\nmsgstr ""\n"Content-Type: text/plain; charset=UTF-8\\n"\n'
-          + f'"Language: {code}\\n"\n"Plural-Forms: nplurals={forms};\\n"\n'
+          + f'"Language: {code}\\n"\n"Plural-Forms: nplurals={forms}; plural=({expression});\\n"\n'
           + '"X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\\n"\n')
 
 
