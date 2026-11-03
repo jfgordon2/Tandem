@@ -1,4 +1,4 @@
-"""Receive-only CAN test logs and tap markers. No transmitter or panda configuration APIs live here."""
+"""Receive-only CAN test logs and tap markers, with an optional guarded OBD input adapter."""
 from __future__ import annotations
 
 from collections.abc import Callable
@@ -15,6 +15,7 @@ import time
 
 ACTIVE = {"starting", "recording", "saving", "aborting"}
 MAX_SECONDS = 600
+OBD_MAX_SECONDS = 120
 MIN_FREE_BYTES = 64 * 1024 * 1024
 CLOCK_ID = getattr(time, "CLOCK_BOOTTIME", time.CLOCK_MONOTONIC)
 CLOCK_NAME = "CLOCK_BOOTTIME" if hasattr(time, "CLOCK_BOOTTIME") else "CLOCK_MONOTONIC"
@@ -43,6 +44,14 @@ class RecorderState:
   last_marker_ns: int = 0
   reason: str = ""
   power_save: bool | None = None
+  input: str = "camera"
+  obd_frames: int = 0
+
+
+class RecorderError(Exception):
+  def __init__(self, reason):
+    super().__init__(reason)
+    self.reason = reason
 
 
 def default_folder() -> Path:
@@ -70,8 +79,13 @@ class CanSource:
     return self._params.get_bool("IsOffroad") or self._park.allowed()
 
   def info(self) -> dict:
+    return self.info_from_params()
+
+  @staticmethod
+  def info_from_params() -> dict:
     from cereal import car
-    raw = self._params.get("CarParamsPersistent")
+    from openpilot.common.params import Params
+    raw = Params().get("CarParamsPersistent")
     if raw:
       with car.CarParams.from_bytes(raw) as cp:
         return {"fingerprint": cp.carFingerprint, "brand": getattr(cp, "brand", ""), "network_location": str(cp.networkLocation)}
@@ -83,7 +97,8 @@ class CanSource:
     if health is not None:
       state = {"time_ns": health.logMonoTime, "pandas": [
         {"power_save": p.powerSaveEnabled, "safety": str(p.safetyModel), "rx_overflow": p.rxBufferOverflow,
-         "buses": [{"speed": c.canSpeed, "rx_lost": c.totalRxLostCnt} for c in (p.canState0, p.canState1, p.canState2)]}
+         "spi_errors": p.spiErrorCount, "faults": [str(f) for f in p.faults],
+         "buses": [{"speed": c.canSpeed, "rx_lost": c.totalRxLostCnt, "tx": c.totalTxCnt} for c in (p.canState0, p.canState1, p.canState2)]}
         for p in health.pandaStates]}
     msg = self._messaging.recv_one(self._can)
     frames = [(msg.logMonoTime, f.src, f.address, bytes(f.dat)) for f in msg.can if f.src < 128] if msg is not None else []
@@ -92,9 +107,10 @@ class CanSource:
 
 class CanRecorder:
   def __init__(self, folder: Path | None = None, source: Callable = CanSource, clock_ns: Callable[[], int] = boot_time_ns,
-               max_seconds: float = MAX_SECONDS):
+               max_seconds: float = MAX_SECONDS, obd_source: Callable | None = None):
     self._folder = folder
     self._source = source
+    self._obd_source = obd_source
     self._clock_ns = clock_ns
     self._max_seconds = max_seconds
     self._lock = threading.Lock()
@@ -116,12 +132,12 @@ class CanRecorder:
         values["phase"] = "aborting"
       self._state = replace(self._state, **values)
 
-  def start(self) -> bool:
+  def start(self, obd: bool = False) -> bool:
     with self._lock:
-      if self._state.phase in ACTIVE or self._state.reason == "delete" or (self._thread is not None and self._thread.is_alive()):
+      if self._state.phase in ACTIVE or self._state.reason in {"delete", "obd_restore"} or (self._thread is not None and self._thread.is_alive()):
         return False
       session = datetime.datetime.now(datetime.UTC).strftime("%Y%m%dT%H%M%SZ-") + secrets.token_hex(3)
-      self._state = RecorderState(phase="starting", session=session, started_ns=self._clock_ns())
+      self._state = RecorderState(phase="starting", session=session, started_ns=self._clock_ns(), input="obd" if obd else "camera")
       self._markers = queue.SimpleQueue()
       self._stop.clear()
       self._abort_requested.clear()
@@ -169,7 +185,8 @@ class CanRecorder:
       if self._directory is not None and self._directory.exists():
         shutil.rmtree(self._directory)
       with self._lock:
-        self._state = RecorderState(phase="discarded")
+        self._state = (RecorderState(phase="error", reason="obd_restore") if self._state.reason == "obd_restore"
+                       else RecorderState(phase="discarded"))
     except OSError:
       with self._lock:
         self._state = replace(self._state, phase="error", reason="delete", ended_ns=self._clock_ns())
@@ -179,7 +196,14 @@ class CanRecorder:
     directory = None
     source = None
     metadata = {"version": 1, "clock": CLOCK_NAME, "started_ns": state.started_ns, "session": state.session,
-                "passive": True, "status": "starting"}
+                "passive": True, "status": "starting", "input": state.input}
+
+    def close_source():
+      nonlocal source
+      closing, source = source, None
+      close = getattr(closing, "close", None)
+      if close is not None:
+        close()
 
     def save_metadata():
       temporary = directory / "metadata.tmp"
@@ -192,7 +216,11 @@ class CanRecorder:
       if shutil.disk_usage(root).free < MIN_FREE_BYTES:
         self._update(phase="error", reason="storage", ended_ns=self._clock_ns())
         return
-      source = self._source()
+      if state.input == "obd":
+        from openpilot.starpilot.tandem.obd import ObdSource
+        source = (self._obd_source or ObdSource)()
+      else:
+        source = self._source()
       if not source.allowed():
         self._update(phase="error", reason="parked", ended_ns=self._clock_ns())
         return
@@ -200,6 +228,9 @@ class CanRecorder:
       candidate.mkdir()
       directory = self._directory = candidate
       vehicle = source.info()
+      start_source = getattr(source, "open", None)
+      if start_source is not None and not self._stop.is_set():
+        start_source()
       excluded = GM_FOCUS_EXCLUDED if vehicle.get("brand") == "gm" else {}
       metadata.update(vehicle=vehicle, status="recording", ready_ns=self._clock_ns(),
                       focus_excluded_bus=0, focus_excluded={hex(k): v for k, v in excluded.items()})
@@ -210,7 +241,7 @@ class CanRecorder:
         with self._lock:
           if not self._stop.is_set():
             self._state = replace(self._state, phase="recording")
-        frame_count = lock_count = unlock_count = 0
+        frame_count = obd_count = lock_count = unlock_count = 0
         last_check = last_flush = self._clock_ns()
         last_kind, last_marker = "", 0
         power_save = None
@@ -230,6 +261,10 @@ class CanRecorder:
         while not self._stop.is_set():
           drain_markers()
           batch, health = source.poll()
+          source_reason = getattr(source, "ended_reason", None)
+          if source_reason:
+            reason = source_reason
+            break
           if batch:
             for t, bus, address, data in batch:
               line = json.dumps([t, bus, address, data.hex()], separators=(",", ":")) + "\n"
@@ -237,17 +272,19 @@ class CanRecorder:
               if bus != 0 or address not in excluded:
                 focus_file.write(line)
             frame_count += len(batch)
+            obd_count += sum(bus == 1 for _, bus, _, _ in batch)
           if health is not None:
             health_file.write(json.dumps(health, separators=(",", ":")) + "\n")
             power_save = any(p["power_save"] for p in health.get("pandas", []))
           now = self._clock_ns()
-          self._update(frames=frame_count, power_save=power_save)
+          self._update(frames=frame_count, obd_frames=obd_count, power_save=power_save)
           if now-last_flush >= 1_000_000_000:
             frames_file.flush()
             focus_file.flush()
             health_file.flush()
             last_flush = now
-          if now-state.started_ns >= self._max_seconds*1e9:
+          limit = min(self._max_seconds, OBD_MAX_SECONDS) if state.input == "obd" else self._max_seconds
+          if now-state.started_ns >= limit*1e9:
             reason = "time_limit"
             break
           if frame_count >= 1_000_000:
@@ -267,21 +304,24 @@ class CanRecorder:
             reason = self._stop_reason
         drain_markers()   # preserve every tap accepted before Stop, including taps queued during a CAN read
       ended = self._clock_ns()
+      close_source()  # normal input must be restored before Saved is shown or another test can start
       final = self.snapshot()
       metadata.update(status="saved", ended_ns=ended, reason=reason, frames=frame_count,
-                      lock_markers=final.lock_markers, unlock_markers=final.unlock_markers)
+                      obd_frames=obd_count, lock_markers=final.lock_markers, unlock_markers=final.unlock_markers)
       save_metadata()
       self._update(phase="saved", reason=reason, ended_ns=ended)
-    except Exception:
+    except Exception as error:
       ended = self._clock_ns()
+      reason = error.reason if isinstance(error, RecorderError) else "write"
       if directory is not None:
-        metadata.update(status="error", ended_ns=ended)
+        metadata.update(status="error", reason=reason, ended_ns=ended)
         try:
           save_metadata()
         except OSError:
           pass
-      self._update(phase="error", reason="write", ended_ns=ended)
+      self._update(phase="error", reason=reason, ended_ns=ended)
     finally:
-      close = getattr(source, "close", None)
-      if close is not None:
-        close()
+      try:
+        close_source()
+      except Exception:
+        self._update(phase="error", reason="obd_restore", ended_ns=self._clock_ns())

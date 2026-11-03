@@ -25,156 +25,156 @@ msgstr "RECOMENDADO"
 msgid "Default"
 msgstr "Predeterminado"
 
-#: destinations.py:322
+#: destinations.py:345
 #: settings/search.py:269
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:695
 msgid "Search"
 msgstr "Buscar"
 
-#: destinations.py:335
+#: destinations.py:358
 msgid "Offline maps"
 msgstr "Mapas sin conexión"
 
-#: destinations.py:456
+#: destinations.py:479
 #: home.py:144
 msgid "Where to?"
 msgstr "¿Adónde?"
 
-#: destinations.py:122
+#: destinations.py:145
 msgid "Searching…"
 msgstr "Buscando…"
 
-#: destinations.py:122
+#: destinations.py:145
 msgid "Looking up places"
 msgstr "Buscando lugares"
 
-#: destinations.py:124
+#: destinations.py:147
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:680
 msgid "Search unavailable"
 msgstr "Búsqueda no disponible"
 
-#: destinations.py:126
+#: destinations.py:149
 msgid "Nothing found"
 msgstr "No se encontró nada"
 
-#: destinations.py:126
+#: destinations.py:149
 msgid "Try a different place or address"
 msgstr "Prueba con otro lugar o dirección"
 
-#: destinations.py:323
+#: destinations.py:346
 msgid "Say a place or an address. Tap the mic when you're done."
 msgstr "Di un lugar o una dirección. Toca el micrófono cuando termines."
 
-#: destinations.py:358
+#: destinations.py:381
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:635
 msgid "Start"
 msgstr "Iniciar"
 
-#: destinations.py:463
+#: destinations.py:486
 msgid "Offline maps ready"
 msgstr "Mapas sin conexión listos"
 
-#: destinations.py:522
+#: destinations.py:545
 msgid "Search needs the public Mapbox key · see Settings › Driving › Speed & Steering › Navigation"
 msgstr "La búsqueda necesita la clave pública de Mapbox · consulta Ajustes › Conducción › Velocidad y dirección › Navegación"
 
-#: destinations.py:579
+#: destinations.py:602
 msgid "Arrive"
 msgstr "Llegada"
 
-#: destinations.py:579
+#: destinations.py:602
 msgid "Time"
 msgstr "Tiempo"
 
-#: destinations.py:579
+#: destinations.py:602
 #: settings/vehicle.py:228
 #: settings/vehicle.py:229
 msgid "Distance"
 msgstr "Distancia"
 
-#: destinations.py:591
+#: destinations.py:614
 msgid "Slows ahead of turns on the route"
 msgstr "Reduce la velocidad antes de los giros de la ruta"
 
-#: destinations.py:592
+#: destinations.py:615
 msgid "Uses route speed limits when signs are missing"
 msgstr "Usa los límites de velocidad de la ruta cuando faltan señales"
 
-#: destinations.py:271
+#: destinations.py:294
 msgid "Search for a place or address"
 msgstr "Busca un lugar o una dirección"
 
-#: destinations.py:338
+#: destinations.py:361
 msgid "Turns and speed follow the route automatically while navigating"
 msgstr "Los giros y la velocidad siguen la ruta automáticamente al navegar"
 
-#: destinations.py:485
+#: destinations.py:508
 msgid "RECENT"
 msgstr "RECIENTES"
 
-#: destinations.py:333
+#: destinations.py:356
 msgid "Add favorite"
 msgstr "Añadir favorito"
 
-#: destinations.py:333
+#: destinations.py:356
 msgid "Search for a place"
 msgstr "Busca un lugar"
 
-#: destinations.py:478
+#: destinations.py:501
 msgid "ON A ROUTE"
 msgstr "EN UNA RUTA"
 
-#: destinations.py:479
+#: destinations.py:502
 #, python-brace-format
 msgid "To {}"
 msgstr "A {}"
 
-#: destinations.py:482
+#: destinations.py:505
 msgid "FAVORITES"
 msgstr "FAVORITOS"
 
-#: destinations.py:493
+#: destinations.py:516
 msgid "Places you navigate to show up here."
 msgstr "Aquí aparecen los lugares a los que navegas."
 
-#: destinations.py:525
+#: destinations.py:548
 msgid "Type a place or address"
 msgstr "Escribe un lugar o una dirección"
 
-#: destinations.py:525
+#: destinations.py:548
 #, python-brace-format
 msgid "Results show as you type, from {} letters"
 msgstr "Los resultados aparecen mientras escribes, desde {} letras"
 
-#: destinations.py:327
+#: destinations.py:350
 #: settings/speed_steering.py:416
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:663
 msgid "Home"
 msgstr "Casa"
 
-#: destinations.py:327
+#: destinations.py:350
 msgid "Set Home"
 msgstr "Fijar casa"
 
-#: destinations.py:328
+#: destinations.py:351
 msgid "Search for your home address"
 msgstr "Busca la dirección de tu casa"
 
-#: destinations.py:330
+#: destinations.py:353
 #: settings/speed_steering.py:417
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:663
 msgid "Work"
 msgstr "Trabajo"
 
-#: destinations.py:330
+#: destinations.py:353
 msgid "Set Work"
 msgstr "Fijar trabajo"
 
-#: destinations.py:331
+#: destinations.py:354
 msgid "Search for your work address"
 msgstr "Busca la dirección de tu trabajo"
 
-#: destinations.py:480
+#: destinations.py:503
 #: onroad/layers.py:69
 msgid "End route"
 msgstr "Terminar ruta"
@@ -518,7 +518,7 @@ msgid "Done"
 msgstr "Listo"
 
 #: keyboard.py:114
-#: voice.py:184
+#: voice.py:185
 msgid "Speak now. Tap the mic when you're done."
 msgstr "Habla ahora. Toca el micrófono cuando termines."
 
@@ -1661,132 +1661,165 @@ msgstr "Eliminando…"
 msgid "Discarded"
 msgstr "Descartado"
 
-#: settings/can_recorder.py:37
+#: settings/can_recorder.py:40
 msgid "Start logging"
 msgstr "Iniciar registro"
 
-#: settings/can_recorder.py:39
+#: settings/can_recorder.py:42
 msgid "Stop logging"
 msgstr "Detener registro"
 
-#: settings/can_recorder.py:41
+#: settings/can_recorder.py:44
 msgid "Abort"
 msgstr "Abortar"
 
-#: settings/can_recorder.py:44
+#: settings/can_recorder.py:47
 msgid "Mark lock"
 msgstr "Marcar bloqueo"
 
-#: settings/can_recorder.py:45
+#: settings/can_recorder.py:48
 msgid "Mark unlock"
 msgstr "Marcar desbloqueo"
 
-#: settings/can_recorder.py:82
+#: settings/can_recorder.py:57
+msgid "OBD frames"
+msgstr "Tramas OBD"
+
+#: settings/can_recorder.py:93
 msgid "Test discarded. Start a new test."
 msgstr "Prueba descartada. Inicia una nueva prueba."
 
-#: settings/can_recorder.py:88
+#: settings/can_recorder.py:103
+msgid "Couldn't save the log. Check storage and try again."
+msgstr "No se pudo guardar el registro. Revisa el espacio disponible e inténtalo de nuevo."
+
+#: settings/can_recorder.py:105
 msgid "Saved: the car is no longer parked."
 msgstr "Guardado: el coche ya no está estacionado."
 
-#: settings/can_recorder.py:90
+#: settings/can_recorder.py:107
 msgid "Saved: storage is running low."
 msgstr "Guardado: queda poco espacio."
 
-#: settings/can_recorder.py:92
+#: settings/can_recorder.py:109
 msgid "Saved: the recording limit was reached."
 msgstr "Guardado: se alcanzó el límite de registro."
 
-#: settings/can_recorder.py:95
+#: settings/can_recorder.py:111
+msgid "Saved: OBD test ended and normal input restored."
+msgstr "Guardado: prueba OBD finalizada y entrada normal restaurada."
+
+#: settings/can_recorder.py:114
 #, python-brace-format
 msgid "Last marker: {} at {}"
 msgstr "Última marca: {} a las {}"
 
-#: settings/can_recorder.py:97
+#: settings/can_recorder.py:116
+msgid "Waiting for OBD traffic. Check the RJ45 cable."
+msgstr "Esperando datos OBD. Comprueba el cable RJ45."
+
+#: settings/can_recorder.py:118
 msgid "Waiting for CAN traffic. Some channels sleep with the car off."
 msgstr "Esperando datos CAN. Algunos canales se desactivan con el coche apagado."
 
-#: settings/can_recorder.py:98
+#: settings/can_recorder.py:119
 msgid "No markers yet."
 msgstr "Aún no hay marcas."
 
-#: settings/can_recorder.py:98
-#: settings/can_recorder.py:86
+#: settings/can_recorder.py:119
+#: settings/can_recorder.py:102
 msgid "Park the car to start a test."
 msgstr "Estaciona el coche para iniciar una prueba."
 
-#: settings/can_recorder.py:52
+#: settings/can_recorder.py:38
+msgid "Camera"
+msgstr "Cámara"
+
+#: settings/can_recorder.py:38
+msgid "OBD"
+msgstr "OBD"
+
+#: settings/can_recorder.py:56
 msgid "Test controls"
 msgstr "Controles de prueba"
 
-#: settings/can_recorder.py:62
+#: settings/can_recorder.py:69
 msgid "Test status"
 msgstr "Estado de la prueba"
 
-#: settings/can_recorder.py:64
+#: settings/can_recorder.py:71
 #: settings/developer.py:154
 #: settings/search.py:183
 msgid "CAN test recorder"
 msgstr "Registro de pruebas CAN"
 
-#: settings/can_recorder.py:64
+#: settings/can_recorder.py:71
 msgid "Device › Developer"
 msgstr "Dispositivo › Desarrollador"
 
-#: settings/can_recorder.py:85
+#: settings/can_recorder.py:96
 msgid "Couldn't delete the log. Try Abort again."
 msgstr "No se pudo eliminar el registro. Toca Abortar de nuevo."
 
-#: settings/can_recorder.py:86
-msgid "Couldn't save the log. Check storage and try again."
-msgstr "No se pudo guardar el registro. Revisa el espacio disponible e inténtalo de nuevo."
+#: settings/can_recorder.py:98
+msgid "Couldn't restore the input. Restart the device before another test."
+msgstr "No se pudo restaurar la entrada. Reinicia el dispositivo antes de otra prueba."
 
-#: settings/can_recorder.py:94
+#: settings/can_recorder.py:100
+#: settings/can_recorder.py:102
+msgid "OBD needs the RJ45 cable and this Bolt on, in Park."
+msgstr "OBD requiere el cable RJ45 y este Bolt encendido y en P."
+
+#: settings/can_recorder.py:113
 msgid "Lock"
 msgstr "Bloqueo"
 
-#: settings/can_recorder.py:94
+#: settings/can_recorder.py:113
 msgid "Unlock"
 msgstr "Desbloqueo"
 
-#: settings/can_recorder.py:47
-msgid "Tap a marker as you press the car's lock control."
-msgstr "Toca una marca al pulsar el control de cierre del coche."
-
 #: settings/can_recorder.py:50
-msgid "Abort deletes this test. Markers only timestamp your taps."
-msgstr "Abortar elimina esta prueba. Las marcas solo registran cuándo tocas la pantalla."
+msgid "Tap a marker, then press the car's lock control."
+msgstr "Toca una marca y después pulsa el control de cierre del coche."
 
-#: settings/can_recorder.py:51
-msgid "Stops after 10 minutes or when you leave this screen."
-msgstr "Se detiene a los 10 minutos o al salir de esta pantalla."
-
-#: settings/can_recorder.py:54
+#: settings/can_recorder.py:60
 msgid "Elapsed"
 msgstr "Tiempo"
 
-#: settings/can_recorder.py:55
+#: settings/can_recorder.py:61
 msgid "CAN frames"
 msgstr "Tramas CAN"
 
-#: settings/can_recorder.py:56
+#: settings/can_recorder.py:63
 msgid "Lock markers"
 msgstr "Marcas de bloqueo"
 
-#: settings/can_recorder.py:57
+#: settings/can_recorder.py:64
 msgid "Unlock markers"
 msgstr "Marcas de desbloqueo"
 
-#: settings/can_recorder.py:61
+#: settings/can_recorder.py:68
 msgid "Full and focused logs stay on this device."
 msgstr "Los registros completos y filtrados se guardan en este dispositivo."
 
-#: settings/can_recorder.py:59
+#: settings/can_recorder.py:51
+msgid "Input"
+msgstr "Entrada"
+
+#: settings/can_recorder.py:54
+msgid "Abort deletes this test. OBD stops after 2 minutes."
+msgstr "Abortar elimina esta prueba. OBD se detiene a los 2 minutos."
+
+#: settings/can_recorder.py:55
+msgid "Stops after 10 minutes. Abort deletes this test."
+msgstr "Se detiene a los 10 minutos. Abortar elimina esta prueba."
+
+#: settings/can_recorder.py:66
 #, python-brace-format
 msgid "Log: {}"
 msgstr "Registro: {}"
 
-#: settings/can_recorder.py:59
+#: settings/can_recorder.py:66
 msgid "Start logging to create a new test log."
 msgstr "Inicia el registro para crear una nueva prueba."
 
@@ -5219,11 +5252,11 @@ msgstr "No se pudo descargar el modelo de voz. Revisa la conexión y vuelve a in
 msgid "Voice typing didn't work this time. Try again or type it."
 msgstr "El dictado no funcionó esta vez. Vuelve a intentarlo o escríbelo."
 
-#: voice.py:188
+#: voice.py:189
 msgid "Type instead"
 msgstr "Escribir"
 
-#: voice.py:201
+#: voice.py:202
 msgid "Listening"
 msgstr "Escuchando"
 
@@ -5231,23 +5264,23 @@ msgstr "Escuchando"
 msgid "QCOM"
 msgstr ""
 
-#: voice.py:196
+#: voice.py:197
 msgid "Getting voice typing ready"
 msgstr "Preparando el dictado"
 
-#: voice.py:196
+#: voice.py:197
 msgid "One-time setup for the speech model and voice engine. Everything stays on this device."
 msgstr "Configuración única del modelo de voz y del motor de voz. Todo se queda en este dispositivo."
 
-#: voice.py:198
+#: voice.py:199
 msgid "Writing it down"
 msgstr "Escribiéndolo"
 
-#: voice.py:198
+#: voice.py:199
 msgid "This takes a few seconds. You can edit the words after."
 msgstr "Tarda unos segundos. Después puedes editar el texto."
 
-#: voice.py:200
+#: voice.py:201
 msgid "Voice typing"
 msgstr "Dictado"
 

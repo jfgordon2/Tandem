@@ -25,156 +25,156 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: destinations.py:322
+#: destinations.py:345
 #: settings/search.py:269
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:695
 msgid "Search"
 msgstr ""
 
-#: destinations.py:335
+#: destinations.py:358
 msgid "Offline maps"
 msgstr ""
 
-#: destinations.py:456
+#: destinations.py:479
 #: home.py:144
 msgid "Where to?"
 msgstr ""
 
-#: destinations.py:122
+#: destinations.py:145
 msgid "Searching…"
 msgstr ""
 
-#: destinations.py:122
+#: destinations.py:145
 msgid "Looking up places"
 msgstr ""
 
-#: destinations.py:124
+#: destinations.py:147
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:680
 msgid "Search unavailable"
 msgstr ""
 
-#: destinations.py:126
+#: destinations.py:149
 msgid "Nothing found"
 msgstr ""
 
-#: destinations.py:126
+#: destinations.py:149
 msgid "Try a different place or address"
 msgstr ""
 
-#: destinations.py:323
+#: destinations.py:346
 msgid "Say a place or an address. Tap the mic when you're done."
 msgstr ""
 
-#: destinations.py:358
+#: destinations.py:381
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:635
 msgid "Start"
 msgstr ""
 
-#: destinations.py:463
+#: destinations.py:486
 msgid "Offline maps ready"
 msgstr ""
 
-#: destinations.py:522
+#: destinations.py:545
 msgid "Search needs the public Mapbox key · see Settings › Driving › Speed & Steering › Navigation"
 msgstr ""
 
-#: destinations.py:579
+#: destinations.py:602
 msgid "Arrive"
 msgstr ""
 
-#: destinations.py:579
+#: destinations.py:602
 msgid "Time"
 msgstr ""
 
-#: destinations.py:579
+#: destinations.py:602
 #: settings/vehicle.py:228
 #: settings/vehicle.py:229
 msgid "Distance"
 msgstr ""
 
-#: destinations.py:591
+#: destinations.py:614
 msgid "Slows ahead of turns on the route"
 msgstr ""
 
-#: destinations.py:592
+#: destinations.py:615
 msgid "Uses route speed limits when signs are missing"
 msgstr ""
 
-#: destinations.py:271
+#: destinations.py:294
 msgid "Search for a place or address"
 msgstr ""
 
-#: destinations.py:338
+#: destinations.py:361
 msgid "Turns and speed follow the route automatically while navigating"
 msgstr ""
 
-#: destinations.py:485
+#: destinations.py:508
 msgid "RECENT"
 msgstr ""
 
-#: destinations.py:333
+#: destinations.py:356
 msgid "Add favorite"
 msgstr ""
 
-#: destinations.py:333
+#: destinations.py:356
 msgid "Search for a place"
 msgstr ""
 
-#: destinations.py:478
+#: destinations.py:501
 msgid "ON A ROUTE"
 msgstr ""
 
-#: destinations.py:479
+#: destinations.py:502
 #, python-brace-format
 msgid "To {}"
 msgstr ""
 
-#: destinations.py:482
+#: destinations.py:505
 msgid "FAVORITES"
 msgstr ""
 
-#: destinations.py:493
+#: destinations.py:516
 msgid "Places you navigate to show up here."
 msgstr ""
 
-#: destinations.py:525
+#: destinations.py:548
 msgid "Type a place or address"
 msgstr ""
 
-#: destinations.py:525
+#: destinations.py:548
 #, python-brace-format
 msgid "Results show as you type, from {} letters"
 msgstr ""
 
-#: destinations.py:327
+#: destinations.py:350
 #: settings/speed_steering.py:416
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:663
 msgid "Home"
 msgstr ""
 
-#: destinations.py:327
+#: destinations.py:350
 msgid "Set Home"
 msgstr ""
 
-#: destinations.py:328
+#: destinations.py:351
 msgid "Search for your home address"
 msgstr ""
 
-#: destinations.py:330
+#: destinations.py:353
 #: settings/speed_steering.py:417
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:663
 msgid "Work"
 msgstr ""
 
-#: destinations.py:330
+#: destinations.py:353
 msgid "Set Work"
 msgstr ""
 
-#: destinations.py:331
+#: destinations.py:354
 msgid "Search for your work address"
 msgstr ""
 
-#: destinations.py:480
+#: destinations.py:503
 #: onroad/layers.py:69
 msgid "End route"
 msgstr ""
@@ -518,7 +518,7 @@ msgid "Done"
 msgstr ""
 
 #: keyboard.py:114
-#: voice.py:184
+#: voice.py:185
 msgid "Speak now. Tap the mic when you're done."
 msgstr ""
 
@@ -1661,132 +1661,165 @@ msgstr ""
 msgid "Discarded"
 msgstr ""
 
-#: settings/can_recorder.py:37
+#: settings/can_recorder.py:40
 msgid "Start logging"
 msgstr ""
 
-#: settings/can_recorder.py:39
+#: settings/can_recorder.py:42
 msgid "Stop logging"
 msgstr ""
 
-#: settings/can_recorder.py:41
+#: settings/can_recorder.py:44
 msgid "Abort"
 msgstr ""
 
-#: settings/can_recorder.py:44
+#: settings/can_recorder.py:47
 msgid "Mark lock"
 msgstr ""
 
-#: settings/can_recorder.py:45
+#: settings/can_recorder.py:48
 msgid "Mark unlock"
 msgstr ""
 
-#: settings/can_recorder.py:82
+#: settings/can_recorder.py:57
+msgid "OBD frames"
+msgstr ""
+
+#: settings/can_recorder.py:93
 msgid "Test discarded. Start a new test."
 msgstr ""
 
-#: settings/can_recorder.py:88
+#: settings/can_recorder.py:103
+msgid "Couldn't save the log. Check storage and try again."
+msgstr ""
+
+#: settings/can_recorder.py:105
 msgid "Saved: the car is no longer parked."
 msgstr ""
 
-#: settings/can_recorder.py:90
+#: settings/can_recorder.py:107
 msgid "Saved: storage is running low."
 msgstr ""
 
-#: settings/can_recorder.py:92
+#: settings/can_recorder.py:109
 msgid "Saved: the recording limit was reached."
 msgstr ""
 
-#: settings/can_recorder.py:95
+#: settings/can_recorder.py:111
+msgid "Saved: OBD test ended and normal input restored."
+msgstr ""
+
+#: settings/can_recorder.py:114
 #, python-brace-format
 msgid "Last marker: {} at {}"
 msgstr ""
 
-#: settings/can_recorder.py:97
+#: settings/can_recorder.py:116
+msgid "Waiting for OBD traffic. Check the RJ45 cable."
+msgstr ""
+
+#: settings/can_recorder.py:118
 msgid "Waiting for CAN traffic. Some channels sleep with the car off."
 msgstr ""
 
-#: settings/can_recorder.py:98
+#: settings/can_recorder.py:119
 msgid "No markers yet."
 msgstr ""
 
-#: settings/can_recorder.py:98
-#: settings/can_recorder.py:86
+#: settings/can_recorder.py:119
+#: settings/can_recorder.py:102
 msgid "Park the car to start a test."
 msgstr ""
 
-#: settings/can_recorder.py:52
+#: settings/can_recorder.py:38
+msgid "Camera"
+msgstr ""
+
+#: settings/can_recorder.py:38
+msgid "OBD"
+msgstr ""
+
+#: settings/can_recorder.py:56
 msgid "Test controls"
 msgstr ""
 
-#: settings/can_recorder.py:62
+#: settings/can_recorder.py:69
 msgid "Test status"
 msgstr ""
 
-#: settings/can_recorder.py:64
+#: settings/can_recorder.py:71
 #: settings/developer.py:154
 #: settings/search.py:183
 msgid "CAN test recorder"
 msgstr ""
 
-#: settings/can_recorder.py:64
+#: settings/can_recorder.py:71
 msgid "Device › Developer"
 msgstr ""
 
-#: settings/can_recorder.py:85
+#: settings/can_recorder.py:96
 msgid "Couldn't delete the log. Try Abort again."
 msgstr ""
 
-#: settings/can_recorder.py:86
-msgid "Couldn't save the log. Check storage and try again."
+#: settings/can_recorder.py:98
+msgid "Couldn't restore the input. Restart the device before another test."
 msgstr ""
 
-#: settings/can_recorder.py:94
+#: settings/can_recorder.py:100
+#: settings/can_recorder.py:102
+msgid "OBD needs the RJ45 cable and this Bolt on, in Park."
+msgstr ""
+
+#: settings/can_recorder.py:113
 msgid "Lock"
 msgstr ""
 
-#: settings/can_recorder.py:94
+#: settings/can_recorder.py:113
 msgid "Unlock"
 msgstr ""
 
-#: settings/can_recorder.py:47
-msgid "Tap a marker as you press the car's lock control."
-msgstr ""
-
 #: settings/can_recorder.py:50
-msgid "Abort deletes this test. Markers only timestamp your taps."
+msgid "Tap a marker, then press the car's lock control."
 msgstr ""
 
-#: settings/can_recorder.py:51
-msgid "Stops after 10 minutes or when you leave this screen."
-msgstr ""
-
-#: settings/can_recorder.py:54
+#: settings/can_recorder.py:60
 msgid "Elapsed"
 msgstr ""
 
-#: settings/can_recorder.py:55
+#: settings/can_recorder.py:61
 msgid "CAN frames"
 msgstr ""
 
-#: settings/can_recorder.py:56
+#: settings/can_recorder.py:63
 msgid "Lock markers"
 msgstr ""
 
-#: settings/can_recorder.py:57
+#: settings/can_recorder.py:64
 msgid "Unlock markers"
 msgstr ""
 
-#: settings/can_recorder.py:61
+#: settings/can_recorder.py:68
 msgid "Full and focused logs stay on this device."
 msgstr ""
 
-#: settings/can_recorder.py:59
+#: settings/can_recorder.py:51
+msgid "Input"
+msgstr ""
+
+#: settings/can_recorder.py:54
+msgid "Abort deletes this test. OBD stops after 2 minutes."
+msgstr ""
+
+#: settings/can_recorder.py:55
+msgid "Stops after 10 minutes. Abort deletes this test."
+msgstr ""
+
+#: settings/can_recorder.py:66
 #, python-brace-format
 msgid "Log: {}"
 msgstr ""
 
-#: settings/can_recorder.py:59
+#: settings/can_recorder.py:66
 msgid "Start logging to create a new test log."
 msgstr ""
 
@@ -5219,11 +5252,11 @@ msgstr ""
 msgid "Voice typing didn't work this time. Try again or type it."
 msgstr ""
 
-#: voice.py:188
+#: voice.py:189
 msgid "Type instead"
 msgstr ""
 
-#: voice.py:201
+#: voice.py:202
 msgid "Listening"
 msgstr ""
 
@@ -5231,23 +5264,23 @@ msgstr ""
 msgid "QCOM"
 msgstr ""
 
-#: voice.py:196
+#: voice.py:197
 msgid "Getting voice typing ready"
 msgstr ""
 
-#: voice.py:196
+#: voice.py:197
 msgid "One-time setup for the speech model and voice engine. Everything stays on this device."
 msgstr ""
 
-#: voice.py:198
+#: voice.py:199
 msgid "Writing it down"
 msgstr ""
 
-#: voice.py:198
+#: voice.py:199
 msgid "This takes a few seconds. You can edit the words after."
 msgstr ""
 
-#: voice.py:200
+#: voice.py:201
 msgid "Voice typing"
 msgstr ""
 

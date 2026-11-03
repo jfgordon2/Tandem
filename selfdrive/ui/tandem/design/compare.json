@@ -183,11 +183,12 @@
   {
    "mock": "canrecorder",
    "title": "Device › Developer › CAN test recorder",
-   "note": "Matches: shared panels, large manual-action markers, Start/Stop and a pinned Abort button that discards the current test in one tap. Ready, Recording, Discarding and Discarded renders check button states and counter reset; translated renders check German, Spanish, Japanese and longer pseudo text. Both panels scroll independently. This is a passive recording, not a door control. Page ground uses true black (#000000).",
+   "note": "Matches: shared panels and Camera/OBD segmented control, an OBD frame count, large manual-action markers, Start/Stop and a pinned Abort button. Ready (Camera and OBD), Recording, Discarding and Discarded renders check selection locking, button states and counter reset; translated renders check German, Spanish, Japanese and longer pseudo text. Both panels scroll independently. OBD stops after two minutes and restores normal input before Saved. This is a passive recording, not a door control. Page ground uses true black (#000000).",
    "match": true,
    "built": [
     "canrecorder",
     "canrecorder_ready",
+    "canrecorder_obd_ready",
     "canrecorder_aborting",
     "canrecorder_discarded",
     "canrecorder_saved"

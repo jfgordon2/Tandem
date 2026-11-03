@@ -338,9 +338,9 @@ class FakeRecorder:
   def snapshot(self):
     return self.state
 
-  def start(self):
-    self.calls.append("start")
-    self.state = replace(self.state, phase="recording", session="test", started_ns=1_000_000_000)
+  def start(self, obd=False):
+    self.calls.append(("start", "obd") if obd else "start")
+    self.state = replace(self.state, phase="recording", session="test", started_ns=1_000_000_000, input="obd" if obd else "camera")
 
   def mark(self, kind):
     self.calls.append(kind)

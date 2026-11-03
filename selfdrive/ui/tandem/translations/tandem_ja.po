@@ -25,156 +25,156 @@ msgstr "おすすめ"
 msgid "Default"
 msgstr "デフォルト"
 
-#: destinations.py:322
+#: destinations.py:345
 #: settings/search.py:269
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:695
 msgid "Search"
 msgstr "検索"
 
-#: destinations.py:335
+#: destinations.py:358
 msgid "Offline maps"
 msgstr "オフラインマップ"
 
-#: destinations.py:456
+#: destinations.py:479
 #: home.py:144
 msgid "Where to?"
 msgstr "どこへ？"
 
-#: destinations.py:122
+#: destinations.py:145
 msgid "Searching…"
 msgstr "検索中…"
 
-#: destinations.py:122
+#: destinations.py:145
 msgid "Looking up places"
 msgstr "場所を検索中"
 
-#: destinations.py:124
+#: destinations.py:147
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:680
 msgid "Search unavailable"
 msgstr "検索できません"
 
-#: destinations.py:126
+#: destinations.py:149
 msgid "Nothing found"
 msgstr "見つかりませんでした"
 
-#: destinations.py:126
+#: destinations.py:149
 msgid "Try a different place or address"
 msgstr "別の場所や住所をお試しください"
 
-#: destinations.py:323
+#: destinations.py:346
 msgid "Say a place or an address. Tap the mic when you're done."
 msgstr "場所か住所を話してください。終わったらマイクをタップします。"
 
-#: destinations.py:358
+#: destinations.py:381
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:635
 msgid "Start"
 msgstr "開始"
 
-#: destinations.py:463
+#: destinations.py:486
 msgid "Offline maps ready"
 msgstr "オフラインマップの準備完了"
 
-#: destinations.py:522
+#: destinations.py:545
 msgid "Search needs the public Mapbox key · see Settings › Driving › Speed & Steering › Navigation"
 msgstr "検索には Mapbox の公開キーが必要です · 設定 › 運転 › 速度とステアリング › ナビゲーション"
 
-#: destinations.py:579
+#: destinations.py:602
 msgid "Arrive"
 msgstr "到着"
 
-#: destinations.py:579
+#: destinations.py:602
 msgid "Time"
 msgstr "時間"
 
-#: destinations.py:579
+#: destinations.py:602
 #: settings/vehicle.py:228
 #: settings/vehicle.py:229
 msgid "Distance"
 msgstr "距離"
 
-#: destinations.py:591
+#: destinations.py:614
 msgid "Slows ahead of turns on the route"
 msgstr "ルート上の曲がり角の手前で減速します"
 
-#: destinations.py:592
+#: destinations.py:615
 msgid "Uses route speed limits when signs are missing"
 msgstr "標識がないときはルートの制限速度を使います"
 
-#: destinations.py:271
+#: destinations.py:294
 msgid "Search for a place or address"
 msgstr "場所や住所を検索"
 
-#: destinations.py:338
+#: destinations.py:361
 msgid "Turns and speed follow the route automatically while navigating"
 msgstr "ナビ中は曲がる場所と速度が自動でルートに従います"
 
-#: destinations.py:485
+#: destinations.py:508
 msgid "RECENT"
 msgstr "最近"
 
-#: destinations.py:333
+#: destinations.py:356
 msgid "Add favorite"
 msgstr "お気に入りに追加"
 
-#: destinations.py:333
+#: destinations.py:356
 msgid "Search for a place"
 msgstr "場所を検索"
 
-#: destinations.py:478
+#: destinations.py:501
 msgid "ON A ROUTE"
 msgstr "ルート案内中"
 
-#: destinations.py:479
+#: destinations.py:502
 #, python-brace-format
 msgid "To {}"
 msgstr "{}へ"
 
-#: destinations.py:482
+#: destinations.py:505
 msgid "FAVORITES"
 msgstr "お気に入り"
 
-#: destinations.py:493
+#: destinations.py:516
 msgid "Places you navigate to show up here."
 msgstr "ナビした場所がここに表示されます。"
 
-#: destinations.py:525
+#: destinations.py:548
 msgid "Type a place or address"
 msgstr "場所か住所を入力"
 
-#: destinations.py:525
+#: destinations.py:548
 #, python-brace-format
 msgid "Results show as you type, from {} letters"
 msgstr "{} 文字から入力中に結果が表示されます"
 
-#: destinations.py:327
+#: destinations.py:350
 #: settings/speed_steering.py:416
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:663
 msgid "Home"
 msgstr "自宅"
 
-#: destinations.py:327
+#: destinations.py:350
 msgid "Set Home"
 msgstr "自宅を設定"
 
-#: destinations.py:328
+#: destinations.py:351
 msgid "Search for your home address"
 msgstr "自宅の住所を検索"
 
-#: destinations.py:330
+#: destinations.py:353
 #: settings/speed_steering.py:417
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:663
 msgid "Work"
 msgstr "職場"
 
-#: destinations.py:330
+#: destinations.py:353
 msgid "Set Work"
 msgstr "職場を設定"
 
-#: destinations.py:331
+#: destinations.py:354
 msgid "Search for your work address"
 msgstr "職場の住所を検索"
 
-#: destinations.py:480
+#: destinations.py:503
 #: onroad/layers.py:69
 msgid "End route"
 msgstr "ルート終了"
@@ -516,7 +516,7 @@ msgid "Done"
 msgstr "完了"
 
 #: keyboard.py:114
-#: voice.py:184
+#: voice.py:185
 msgid "Speak now. Tap the mic when you're done."
 msgstr "話してください。終わったらマイクをタップします。"
 
@@ -1658,132 +1658,165 @@ msgstr "削除中…"
 msgid "Discarded"
 msgstr "削除済み"
 
-#: settings/can_recorder.py:37
+#: settings/can_recorder.py:40
 msgid "Start logging"
 msgstr "記録を開始"
 
-#: settings/can_recorder.py:39
+#: settings/can_recorder.py:42
 msgid "Stop logging"
 msgstr "記録を停止"
 
-#: settings/can_recorder.py:41
+#: settings/can_recorder.py:44
 msgid "Abort"
 msgstr "中止"
 
-#: settings/can_recorder.py:44
+#: settings/can_recorder.py:47
 msgid "Mark lock"
 msgstr "ロックをマーク"
 
-#: settings/can_recorder.py:45
+#: settings/can_recorder.py:48
 msgid "Mark unlock"
 msgstr "ロック解除をマーク"
 
-#: settings/can_recorder.py:82
+#: settings/can_recorder.py:57
+msgid "OBD frames"
+msgstr "OBDフレーム"
+
+#: settings/can_recorder.py:93
 msgid "Test discarded. Start a new test."
 msgstr "テストを削除しました。新しいテストを開始してください。"
 
-#: settings/can_recorder.py:88
+#: settings/can_recorder.py:103
+msgid "Couldn't save the log. Check storage and try again."
+msgstr "ログを保存できませんでした。空き容量を確認して、もう一度お試しください。"
+
+#: settings/can_recorder.py:105
 msgid "Saved: the car is no longer parked."
 msgstr "保存済み：車が駐車状態ではなくなりました。"
 
-#: settings/can_recorder.py:90
+#: settings/can_recorder.py:107
 msgid "Saved: storage is running low."
 msgstr "保存済み：空き容量が少なくなりました。"
 
-#: settings/can_recorder.py:92
+#: settings/can_recorder.py:109
 msgid "Saved: the recording limit was reached."
 msgstr "保存済み：記録の上限で停止しました。"
 
-#: settings/can_recorder.py:95
+#: settings/can_recorder.py:111
+msgid "Saved: OBD test ended and normal input restored."
+msgstr "保存済み：OBDテストを終了し、通常の入力に戻しました。"
+
+#: settings/can_recorder.py:114
 #, python-brace-format
 msgid "Last marker: {} at {}"
 msgstr "最後のマーク：{}、{}"
 
-#: settings/can_recorder.py:97
+#: settings/can_recorder.py:116
+msgid "Waiting for OBD traffic. Check the RJ45 cable."
+msgstr "OBDデータを待っています。RJ45ケーブルを確認してください。"
+
+#: settings/can_recorder.py:118
 msgid "Waiting for CAN traffic. Some channels sleep with the car off."
 msgstr "CANデータを待っています。車の電源が切れていると一部の通信は休止します。"
 
-#: settings/can_recorder.py:98
+#: settings/can_recorder.py:119
 msgid "No markers yet."
 msgstr "まだマークがありません。"
 
-#: settings/can_recorder.py:98
-#: settings/can_recorder.py:86
+#: settings/can_recorder.py:119
+#: settings/can_recorder.py:102
 msgid "Park the car to start a test."
 msgstr "テストを始めるには車を駐車してください。"
 
-#: settings/can_recorder.py:52
+#: settings/can_recorder.py:38
+msgid "Camera"
+msgstr "カメラ"
+
+#: settings/can_recorder.py:38
+msgid "OBD"
+msgstr "OBD"
+
+#: settings/can_recorder.py:56
 msgid "Test controls"
 msgstr "テスト操作"
 
-#: settings/can_recorder.py:62
+#: settings/can_recorder.py:69
 msgid "Test status"
 msgstr "テスト状態"
 
-#: settings/can_recorder.py:64
+#: settings/can_recorder.py:71
 #: settings/developer.py:154
 #: settings/search.py:183
 msgid "CAN test recorder"
 msgstr "CANテスト記録"
 
-#: settings/can_recorder.py:64
+#: settings/can_recorder.py:71
 msgid "Device › Developer"
 msgstr "デバイス › 開発者"
 
-#: settings/can_recorder.py:85
+#: settings/can_recorder.py:96
 msgid "Couldn't delete the log. Try Abort again."
 msgstr "ログを削除できませんでした。もう一度「中止」をタップしてください。"
 
-#: settings/can_recorder.py:86
-msgid "Couldn't save the log. Check storage and try again."
-msgstr "ログを保存できませんでした。空き容量を確認して、もう一度お試しください。"
+#: settings/can_recorder.py:98
+msgid "Couldn't restore the input. Restart the device before another test."
+msgstr "入力を元に戻せませんでした。次のテストの前にデバイスを再起動してください。"
 
-#: settings/can_recorder.py:94
+#: settings/can_recorder.py:100
+#: settings/can_recorder.py:102
+msgid "OBD needs the RJ45 cable and this Bolt on, in Park."
+msgstr "OBDにはRJ45ケーブル接続と、このBoltの電源がオンでPに入っていることが必要です。"
+
+#: settings/can_recorder.py:113
 msgid "Lock"
 msgstr "ロック"
 
-#: settings/can_recorder.py:94
+#: settings/can_recorder.py:113
 msgid "Unlock"
 msgstr "ロック解除"
 
-#: settings/can_recorder.py:47
-msgid "Tap a marker as you press the car's lock control."
-msgstr "車のロック操作と同時にマークをタップしてください。"
-
 #: settings/can_recorder.py:50
-msgid "Abort deletes this test. Markers only timestamp your taps."
-msgstr "中止するとこのテストを削除します。マークはタップした時刻だけを記録します。"
+msgid "Tap a marker, then press the car's lock control."
+msgstr "マークをタップしてから車のロック操作をしてください。"
 
-#: settings/can_recorder.py:51
-msgid "Stops after 10 minutes or when you leave this screen."
-msgstr "10分後、またはこの画面を閉じると停止します。"
-
-#: settings/can_recorder.py:54
+#: settings/can_recorder.py:60
 msgid "Elapsed"
 msgstr "経過時間"
 
-#: settings/can_recorder.py:55
+#: settings/can_recorder.py:61
 msgid "CAN frames"
 msgstr "CANフレーム"
 
-#: settings/can_recorder.py:56
+#: settings/can_recorder.py:63
 msgid "Lock markers"
 msgstr "ロックのマーク"
 
-#: settings/can_recorder.py:57
+#: settings/can_recorder.py:64
 msgid "Unlock markers"
 msgstr "ロック解除のマーク"
 
-#: settings/can_recorder.py:61
+#: settings/can_recorder.py:68
 msgid "Full and focused logs stay on this device."
 msgstr "完全ログとフィルタ済みログはこのデバイスに保存されます。"
 
-#: settings/can_recorder.py:59
+#: settings/can_recorder.py:51
+msgid "Input"
+msgstr "入力"
+
+#: settings/can_recorder.py:54
+msgid "Abort deletes this test. OBD stops after 2 minutes."
+msgstr "中止するとこのテストを削除します。OBDは2分後に停止します。"
+
+#: settings/can_recorder.py:55
+msgid "Stops after 10 minutes. Abort deletes this test."
+msgstr "10分後に停止します。中止するとこのテストを削除します。"
+
+#: settings/can_recorder.py:66
 #, python-brace-format
 msgid "Log: {}"
 msgstr "ログ：{}"
 
-#: settings/can_recorder.py:59
+#: settings/can_recorder.py:66
 msgid "Start logging to create a new test log."
 msgstr "記録を開始すると新しいテストログが作成されます。"
 
@@ -5213,11 +5246,11 @@ msgstr "音声モデルをダウンロードできませんでした。接続を
 msgid "Voice typing didn't work this time. Try again or type it."
 msgstr "今回は音声入力がうまくいきませんでした。もう一度試すか、入力してください。"
 
-#: voice.py:188
+#: voice.py:189
 msgid "Type instead"
 msgstr "キーボードで入力"
 
-#: voice.py:201
+#: voice.py:202
 msgid "Listening"
 msgstr "聞いています"
 
@@ -5225,23 +5258,23 @@ msgstr "聞いています"
 msgid "QCOM"
 msgstr ""
 
-#: voice.py:196
+#: voice.py:197
 msgid "Getting voice typing ready"
 msgstr "音声入力を準備中"
 
-#: voice.py:196
+#: voice.py:197
 msgid "One-time setup for the speech model and voice engine. Everything stays on this device."
 msgstr "音声モデルと音声エンジンの初回セットアップです。すべてこのデバイス内で処理されます。"
 
-#: voice.py:198
+#: voice.py:199
 msgid "Writing it down"
 msgstr "文字にしています"
 
-#: voice.py:198
+#: voice.py:199
 msgid "This takes a few seconds. You can edit the words after."
 msgstr "数秒かかります。あとで文字を編集できます。"
 
-#: voice.py:200
+#: voice.py:201
 msgid "Voice typing"
 msgstr "音声入力"
 

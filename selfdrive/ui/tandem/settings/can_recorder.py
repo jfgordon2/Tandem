@@ -3,8 +3,8 @@ from __future__ import annotations
 
 from openpilot.selfdrive.ui.tandem import tokens as T
 from openpilot.selfdrive.ui.tandem.base import Component
-from openpilot.selfdrive.ui.tandem.blocks import Columns, Stack, ValueLine
-from openpilot.selfdrive.ui.tandem.controls import Badge, Button, ButtonRow, ButtonStyle, Tone
+from openpilot.selfdrive.ui.tandem.blocks import Columns, Label, Stack, ValueLine
+from openpilot.selfdrive.ui.tandem.controls import Badge, Button, ButtonRow, ButtonStyle, Segmented, Tone
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, Padded, Text
 from openpilot.selfdrive.ui.tandem.settings.pages import TitledPage
@@ -34,8 +34,11 @@ class CanRecorderPage(Component):
     self.recorder = recorder if recorder is not None else CanRecorder()
     self._allowed, self._clock_ns = allowed, clock_ns
     self.state = self.recorder.snapshot()
+    self._obd = False
+    self._input = Segmented([N_("Camera"), N_("OBD")], lambda: int(self._obd), self.set_input, equal=True)
+    self._input.set_enabled(lambda: self.state.phase not in ACTIVE)
     self._start = Button(N_("Start logging"), self.start, ButtonStyle.PRIMARY, height=T.px(56), font_size=T.font_px(19), radius=T.px(14))
-    self._start.set_enabled(lambda: self.state.phase not in ACTIVE and self.state.reason != "delete" and self._allowed())
+    self._start.set_enabled(lambda: self.state.phase not in ACTIVE and self.state.reason not in {"delete", "obd_restore"} and self._allowed())
     self._stop = Button(N_("Stop logging"), self.recorder.stop, height=T.px(56), font_size=T.font_px(19), radius=T.px(14))
     self._stop.set_enabled(lambda: self.state.phase in {"starting", "recording"})
     self._abort = Button(N_("Abort"), self.recorder.abort, ButtonStyle.DANGER_SOFT,
@@ -44,15 +47,19 @@ class CanRecorderPage(Component):
     self._mark_lock = self._marker(N_("Mark lock"), "lock")
     self._mark_unlock = self._marker(N_("Mark unlock"), "unlock")
     controls = ListPanel([Padded(Stack([
-      Text(N_("Tap a marker as you press the car's lock control."), size=T.font_px(15), padding=(0, 0)),
+      Text(N_("Tap a marker, then press the car's lock control."), size=T.font_px(15), padding=(0, 0)),
+      Columns([Label(N_("Input"), size=T.font_px(16), color=T.TEXT_MUTED, weight=T.FONT), self._input], [1, 6]),
       ButtonRow([self._start, self._stop], height=T.px(56), gap=T.px(12)),
       ButtonRow([self._mark_lock, self._mark_unlock], height=T.px(88), gap=T.px(12)),
-      Text(N_("Abort deletes this test. Markers only timestamp your taps."), padding=(0, 0)),
-      Text(N_("Stops after 10 minutes or when you leave this screen."), padding=(0, 0)),
+      Text(lambda: N_("Abort deletes this test. OBD stops after 2 minutes.") if self._obd
+           else N_("Stops after 10 minutes. Abort deletes this test."), padding=(0, 0)),
     ], gap=T.px(14)), x=T.px(22), y=T.px(20))], title=N_("Test controls"), dividers=False, header_divider=False, header_control=self._abort)
+    self._obd_count = ValueLine(N_("OBD frames"), lambda: f"{self.state.obd_frames:,}")
+    self._obd_count.set_visible(lambda: self._obd or self.state.input == "obd")
     status = ListPanel([Padded(Stack([
       ValueLine(N_("Elapsed"), self.elapsed, size=T.font_px(22)),
       ValueLine(N_("CAN frames"), lambda: f"{self.state.frames:,}"),
+      self._obd_count,
       ValueLine(N_("Lock markers"), lambda: str(self.state.lock_markers)),
       ValueLine(N_("Unlock markers"), lambda: str(self.state.unlock_markers)),
       Text(self.detail, padding=(0, 0)),
@@ -71,7 +78,11 @@ class CanRecorderPage(Component):
 
   def start(self):
     if self._allowed():
-      self.recorder.start()
+      self.recorder.start(obd=self._obd)
+
+  def set_input(self, index):
+    if self.state.phase not in ACTIVE:
+      self._obd = bool(index)
 
   def elapsed(self):
     end = self.state.ended_ns or self._clock_ns()
@@ -83,16 +94,26 @@ class CanRecorderPage(Component):
     if self.state.phase == "error":
       if self.state.reason == "delete":
         return N_("Couldn't delete the log. Try Abort again.")
-      return N_("Park the car to start a test.") if self.state.reason == "parked" else N_("Couldn't save the log. Check storage and try again.")
+      if self.state.reason == "obd_restore":
+        return N_("Couldn't restore the input. Restart the device before another test.")
+      if self.state.reason == "obd":
+        return N_("OBD needs the RJ45 cable and this Bolt on, in Park.")
+      if self.state.reason == "parked":
+        return N_("OBD needs the RJ45 cable and this Bolt on, in Park.") if self.state.input == "obd" else N_("Park the car to start a test.")
+      return N_("Couldn't save the log. Check storage and try again.")
     if self.state.phase == "saved" and self.state.reason == "parked":
       return N_("Saved: the car is no longer parked.")
     if self.state.phase == "saved" and self.state.reason == "storage":
       return N_("Saved: storage is running low.")
     if self.state.phase == "saved" and self.state.reason in {"time_limit", "frame_limit"}:
       return N_("Saved: the recording limit was reached.")
+    if self.state.phase == "saved" and self.state.reason == "obd_guard":
+      return N_("Saved: OBD test ended and normal input restored.")
     if self.state.last_kind:
       kind = N_("Lock") if self.state.last_kind == "lock" else N_("Unlock")
       return t_("Last marker: {} at {}", kind, duration(self.state.last_marker_ns-self.state.started_ns))
+    if self.state.phase == "recording" and self.state.input == "obd" and self.state.obd_frames == 0:
+      return N_("Waiting for OBD traffic. Check the RJ45 cable.")
     if self.state.phase == "recording" and self.state.frames == 0:
       return N_("Waiting for CAN traffic. Some channels sleep with the car off.")
     return N_("No markers yet.") if self._allowed() else N_("Park the car to start a test.")

@@ -29,8 +29,11 @@ def main(frame, save, out, tap, gui_app):
     save(f"{out}/{name}.png")
 
   shot("canrecorder_ready")
+  page.set_input(1)
+  shot("canrecorder_obd_ready")
   recorder.state = replace(recorder.state, phase="recording", session="20261102T213000Z-a1b2c3", started_ns=1_000_000_000,
-                           frames=21504, lock_markers=1, unlock_markers=1, last_kind="unlock", last_marker_ns=11_418_000_000)
+                           frames=21504, obd_frames=12150, input="obd", lock_markers=1, unlock_markers=1,
+                           last_kind="unlock", last_marker_ns=11_418_000_000)
   shot("canrecorder")
   recorder.state = replace(recorder.state, phase="aborting")
   shot("canrecorder_aborting")

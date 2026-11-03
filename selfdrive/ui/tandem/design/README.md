@@ -75,6 +75,8 @@ Open any `.html` file in this folder in a browser. Each screen is 1125×563, the
 
 ## Settings structure
 
+The CAN recorder uses the shared Camera/OBD segmented control, locked while a test runs. The OBD frame count confirms the selected input is receiving before manual markers are recorded. Abort stays in the panel header; each column scrolls independently. OBD tests stop after two minutes and restore the normal input before Saved.
+
 - **Assistance** is a hub tile ([assistance.html](assistance.html)): openpilot's core switches beside Driver Monitoring, which gathers Always-On Driver Monitoring, the Driver Camera preview and the driver monitoring reset.
 - **Search settings** sits at the top right of the hub ([search.html](search.html)). It searches every setting's name, what it does and where it lives, with the Essentials keyboard; the best four show above the keyboard and Search lists them all. Picking one opens its page and section. Settings behind Tuner Mode are found only while it's on.
 - **Connections** replaces the Network and Bluetooth tabs ([connections.html](connections.html) and its sections).
