@@ -113,6 +113,49 @@ def test_picking_a_result_previews_and_start_closes():
   assert closed and D.place_name(places.active()) == "Hardware Store"
 
 
+def test_typing_shows_two_rows_with_the_same_keyboard_height_as_settings(monkeypatch):
+  from openpilot.selfdrive.ui.tandem.settings.search import SettingsSearch
+
+  screen, places, _ = _screen()
+  screen._go(D.SEARCH)
+  places.found = [(f"Place {i}", f"{i} Main St") for i in range(6)]
+  keys = []
+  monkeypatch.setattr(screen, "_render_field", lambda _: None)
+  monkeypatch.setattr(screen._keys, "render_keys", keys.append)
+  monkeypatch.setattr(D.ResultCard, "_render", lambda *args: None)
+  rect = K.rl.Rectangle(20, 30, 2160, 1080)
+  screen._render_search(rect)
+  cards = [card.rect for card in screen._cards]
+  assert len(cards) == 4 and cards[0].y == cards[1].y and cards[2].y == cards[3].y
+  assert cards[0].x == cards[2].x < cards[1].x == cards[3].x
+  assert cards[2].y > cards[0].y + cards[0].height
+  assert cards[2].y + cards[2].height < keys[0].y
+
+  settings = SettingsSearch(lambda: True, lambda _: None, lambda: None)
+  monkeypatch.setattr(settings, "_render_field", lambda _: None)
+  monkeypatch.setattr(settings._keys, "render_keys", keys.append)
+  monkeypatch.setattr(D.draw, "fill", lambda *args: None)
+  monkeypatch.setattr(D.draw, "text", lambda *args: None)
+  settings._render(rect)
+  assert (keys[0].y, keys[0].height) == (keys[1].y, keys[1].height)
+
+  screen._cards[3]._click_callback()
+  screen._update_state()
+  assert screen._view == D.PREVIEW and D.place_name(places.draft()) == "Place 3"
+
+
+@pytest.mark.parametrize("count", [0, 1, 2, 3, 4, 6])
+def test_suggestions_hide_empty_cells_and_search_keeps_all_results(count):
+  screen, places, _ = _screen()
+  screen._go(D.SEARCH)
+  places.found = [(f"Place {i}", f"{i} Main St") for i in range(count)]
+  assert [card.is_visible for card in screen._cards] == [i < count for i in range(4)]
+  screen._keys.set_text("place")
+  screen._searched = "place"
+  screen._keys._all_keys[K.ENTER]._click_callback()
+  assert screen._view == D.RESULTS and len(places.results()) == count
+
+
 def test_start_waits_for_routing():
   screen, places, closed = _screen(routing=False)
   screen._pick(places.recents()[0])

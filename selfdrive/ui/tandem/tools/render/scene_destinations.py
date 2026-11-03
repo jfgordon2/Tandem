@@ -21,6 +21,8 @@ def main(frame, save, out, tap, gui_app):
   places.found = [
     ("Hy-Vee", "410 N Ankeny Blvd, Ankeny, IA 50023, United States"),
     ("Hy-Vee", "2510 SW State St, Ankeny, IA 50023, United States"),
+    ("Hy-Vee Fast & Fresh", "410 N Ankeny Blvd, Ankeny, IA 50023, United States"),
+    ("Hy-Vee Pharmacy", "2510 SW State St, Ankeny, IA 50023, United States"),
   ]
   screen._searched = "Hy-Vee"
   screen._typed = "Hy-Vee"

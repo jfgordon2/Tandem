@@ -20,7 +20,7 @@ from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.blocks import Icon
 from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, back_glyph
 from openpilot.selfdrive.ui.tandem.keyboard import KeyPad
-from openpilot.selfdrive.ui.tandem.layout import FILL, column, inset, place, row
+from openpilot.selfdrive.ui.tandem.layout import FILL, column, grid, inset, place, row
 from openpilot.selfdrive.ui.tandem.routemap import NOT_SET_UP, RouteFetcher, RoutePlan, arrive_text, distance_text, draw_route_map, \
   mapbox_route, time_text
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, SectionHeader, SettingRow, Text
@@ -303,6 +303,7 @@ class ResultCard(Component):
     super().__init__()
     self._index, self._places = index, places
     self.set_click_callback(lambda: on_pick(index))
+    self.set_visible(lambda: index < len(places.results()))
 
   def _render(self, rect: rl.Rectangle):
     results = self._places.results()
@@ -366,7 +367,7 @@ class DestinationsScreen(Component):
     self._search_back = self._child(nav_button(self._back, T.px(56), T.px(14)))
     self._clear = self._child(Button(on_click=lambda: self._keys.set_text(""), style=ButtonStyle.SECONDARY, height=T.px(36),
                                      width=T.px(36), radius=T.px(18), glyph=lambda r, c, s: draw.icon(r, "close", T.TEXT_SECONDARY, T.px(16))))
-    self._cards = [self._child(ResultCard(i, places, self._pick_result)) for i in range(2)]
+    self._cards = [self._child(ResultCard(i, places, self._pick_result)) for i in range(4)]
     self._results_back = self._child(nav_button(self._back, T.px(56), T.px(14)))
     self._results_field = self._child(SearchPill(self._reopen_keyboard, lambda: self._searched))
     self._results_panel: ListPanel | None = None
@@ -536,9 +537,9 @@ class DestinationsScreen(Component):
       self._render_field(inset(top, left=T.px(16), right=T.px(16), top=T.px(14), bottom=T.px(10)))
       self._keys.render_keys(panel)
       return
-    top, keys = column(rect, [T.px(146), FILL])
+    top, keys = column(rect, [T.px(206), FILL])
     body = inset(top, left=T.px(16), right=T.px(16), top=T.px(14), bottom=T.px(10))
-    field, strip = column(body, [T.px(56), FILL], T.px(8))
+    field, strip = column(body, [T.px(56), FILL], T.px(10))
     self._render_field(field)
     status = self._places.status() if self._searched else None
     if not self._places.can_search():   # no public Mapbox key: search would quietly find nothing
@@ -548,7 +549,7 @@ class DestinationsScreen(Component):
       title, line = status or (N_("Type a place or address"), t_("Results show as you type, from {} letters", MIN_QUERY))
       draw.text(inset(strip, left=T.px(6)), f"{title} · {line}", T.font_px(15), T.TEXT_TERTIARY)
     else:
-      for card, cell in zip(self._cards, row(strip, [FILL, FILL], T.px(10)), strict=True):
+      for card, cell in zip(self._cards, grid(strip, 2, 2, T.px(8)), strict=True):
         card.render(cell)
     self._keys.render_keys(keys)
 

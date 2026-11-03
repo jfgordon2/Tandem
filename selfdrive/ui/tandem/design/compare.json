@@ -419,7 +419,7 @@
   {
    "mock": "navsearch",
    "title": "Destination search",
-   "note": "Matches: two Hy-Vee branches above the Essentials keyboard, with the street address before city/state/ZIP on the existing detail line. Card height and font sizes are unchanged; long lines end with an ellipsis. The full results list uses the same addresses. Results update as you type; Search lists them all. Page ground uses true black (#000000).",
+   "note": "Matches: four suggestions in two rows, with the same keyboard height as settings search. Each card shows the name and street address before city/state/ZIP; long lines end with an ellipsis. Results update as you type; Search opens the full list. Page ground uses true black (#000000).",
    "match": true
   },
   {
