@@ -141,8 +141,15 @@
   {
    "mock": "tuner",
    "title": "Tuner › Steering",
-   "note": "Matches the mock. Page ground uses true black (#000000).",
+   "note": "Matches the five controller choices and selected-choice explanation. Vehicle default matches StarPilot and is applied by Essentials setup and tuning resets. Settings keep standard row heights, so the controller row can scroll into view.",
    "match": true
+  },
+  {
+   "mock": "steeringcontroller",
+   "title": "Steering controller",
+   "note": "Matches the five controller choices and selected-choice explanation. Vehicle default matches StarPilot and is applied by Essentials setup and tuning resets. Settings keep standard row heights, so the controller row can scroll into view.",
+   "match": true,
+   "built": "steeringcontroller"
   },
   {
    "mock": "tunergas",

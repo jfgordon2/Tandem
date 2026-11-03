@@ -25,17 +25,17 @@ msgstr "RECOMENDADO"
 msgid "Default"
 msgstr "Padrão"
 
-#: destinations.py:345
-#: settings/search.py:269
+#: destinations.py:346
+#: settings/search.py:270
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:688
 msgid "Search"
 msgstr "Buscar"
 
-#: destinations.py:358
+#: destinations.py:359
 msgid "Offline maps"
 msgstr "Mapas offline"
 
-#: destinations.py:479
+#: destinations.py:480
 #: home.py:144
 msgid "Where to?"
 msgstr "Para onde?"
@@ -62,42 +62,42 @@ msgstr "Nenhum resultado"
 msgid "Try a different place or address"
 msgstr "Tente outro lugar ou endereço"
 
-#: destinations.py:346
+#: destinations.py:347
 msgid "Say a place or an address. Tap the mic when you're done."
 msgstr "Diga um lugar ou endereço. Toque no microfone ao terminar."
 
-#: destinations.py:381
+#: destinations.py:382
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:643
 msgid "Start"
 msgstr "Iniciar"
 
-#: destinations.py:486
+#: destinations.py:487
 msgid "Offline maps ready"
 msgstr "Mapas offline prontos"
 
-#: destinations.py:545
+#: destinations.py:546
 msgid "Search needs the public Mapbox key · see Settings › Driving › Speed & Steering › Navigation"
 msgstr "A busca precisa da chave pública do Mapbox · veja Configurações › Condução › Velocidade e direção › Navegação"
 
-#: destinations.py:602
+#: destinations.py:603
 msgid "Arrive"
 msgstr "Chegada"
 
-#: destinations.py:602
+#: destinations.py:603
 msgid "Time"
 msgstr "Tempo"
 
-#: destinations.py:602
+#: destinations.py:603
 #: settings/vehicle.py:228
 #: settings/vehicle.py:229
 msgid "Distance"
 msgstr "Distância"
 
-#: destinations.py:614
+#: destinations.py:615
 msgid "Slows ahead of turns on the route"
 msgstr "Reduz a velocidade antes das curvas da rota"
 
-#: destinations.py:615
+#: destinations.py:616
 msgid "Uses route speed limits when signs are missing"
 msgstr "Usa os limites de velocidade da rota quando não há placas"
 
@@ -105,77 +105,77 @@ msgstr "Usa os limites de velocidade da rota quando não há placas"
 msgid "Search for a place or address"
 msgstr "Buscar um lugar ou endereço"
 
-#: destinations.py:361
+#: destinations.py:362
 msgid "Turns and speed follow the route automatically while navigating"
 msgstr "Ajusta automaticamente a direção e a velocidade à rota durante a navegação"
 
-#: destinations.py:508
+#: destinations.py:509
 msgid "RECENT"
 msgstr "RECENTES"
 
-#: destinations.py:356
+#: destinations.py:357
 msgid "Add favorite"
 msgstr "Adicionar favorito"
 
-#: destinations.py:356
+#: destinations.py:357
 msgid "Search for a place"
 msgstr "Buscar um lugar"
 
-#: destinations.py:501
+#: destinations.py:502
 msgid "ON A ROUTE"
 msgstr "EM UMA ROTA"
 
-#: destinations.py:502
+#: destinations.py:503
 #, python-brace-format
 msgid "To {}"
 msgstr "Para {}"
 
-#: destinations.py:505
+#: destinations.py:506
 msgid "FAVORITES"
 msgstr "FAVORITOS"
 
-#: destinations.py:516
+#: destinations.py:517
 msgid "Places you navigate to show up here."
 msgstr "Seus destinos aparecem aqui."
 
-#: destinations.py:548
+#: destinations.py:549
 msgid "Type a place or address"
 msgstr "Digite um lugar ou endereço"
 
-#: destinations.py:548
+#: destinations.py:549
 #, python-brace-format
 msgid "Results show as you type, from {} letters"
 msgstr "Os resultados aparecem a partir de {} letras"
 
-#: destinations.py:350
+#: destinations.py:351
 #: settings/speed_steering.py:416
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:778
 msgid "Home"
 msgstr "Casa"
 
-#: destinations.py:350
+#: destinations.py:351
 msgid "Set Home"
 msgstr "Definir casa"
 
-#: destinations.py:351
+#: destinations.py:352
 msgid "Search for your home address"
 msgstr "Buscar seu endereço de casa"
 
-#: destinations.py:353
+#: destinations.py:354
 #: settings/speed_steering.py:417
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:780
 msgid "Work"
 msgstr "Trabalho"
 
-#: destinations.py:353
+#: destinations.py:354
 msgid "Set Work"
 msgstr "Definir trabalho"
 
-#: destinations.py:354
+#: destinations.py:355
 msgid "Search for your work address"
 msgstr "Buscar seu endereço de trabalho"
 
-#: destinations.py:503
+#: destinations.py:504
 #: onroad/layers.py:69
 msgid "End route"
 msgstr "Encerrar rota"
@@ -398,7 +398,7 @@ msgstr "Atualização pronta"
 
 #: home.py:147
 #: settings/search.py:24
-#: settings/search.py:203
+#: settings/search.py:204
 msgid "Software"
 msgstr "Software"
 
@@ -1750,7 +1750,7 @@ msgstr "Status do teste"
 
 #: settings/can_recorder.py:71
 #: settings/developer.py:154
-#: settings/search.py:183
+#: settings/search.py:184
 msgid "CAN test recorder"
 msgstr "Gravador de teste CAN"
 
@@ -1849,7 +1849,7 @@ msgstr "Rede móvel"
 
 #: settings/connections.py:69
 #: settings/search.py:31
-#: settings/search.py:201
+#: settings/search.py:202
 msgid "Car Audio & Devices"
 msgstr "Áudio do carro e dispositivos"
 
@@ -1858,7 +1858,7 @@ msgid "openpilot longitudinal control is in alpha for this car and turns off Aut
 msgstr "O controle longitudinal do openpilot está em alfa neste carro e desativa a frenagem automática de emergência (AEB). O controle de cruzeiro do carro é o padrão. O modo experimental é recomendado com esta função. O openpilot reinicia se o carro estiver ligado."
 
 #: settings/developer.py:145
-#: settings/search.py:188
+#: settings/search.py:189
 msgid "openpilot Longitudinal (Alpha)"
 msgstr "Controle longitudinal do openpilot (alfa)"
 
@@ -1889,7 +1889,7 @@ msgstr "Adiciona todas as chaves públicas de uma conta GitHub. Nunca use a cont
 
 #: settings/developer.py:155
 #: settings/search.py:30
-#: settings/search.py:182
+#: settings/search.py:183
 msgid "Developer"
 msgstr "Desenvolvedor"
 
@@ -1913,7 +1913,7 @@ msgid "Turn On"
 msgstr "Ativar"
 
 #: settings/developer.py:148
-#: settings/search.py:184
+#: settings/search.py:185
 msgid "ADB"
 msgstr "ADB"
 
@@ -1922,7 +1922,7 @@ msgid "Connect over USB or the network (docs.comma.ai). Change it with the car o
 msgstr "Conecte por USB ou rede (docs.comma.ai). Altere com o carro desligado."
 
 #: settings/developer.py:149
-#: settings/search.py:185
+#: settings/search.py:186
 msgid "SSH"
 msgstr "SSH"
 
@@ -1931,13 +1931,13 @@ msgid "Remote shell access with the keys below"
 msgstr "Acesso remoto ao terminal com as chaves abaixo"
 
 #: settings/developer.py:150
-#: settings/search.py:186
+#: settings/search.py:187
 #: selfdrive/ui/layouts/settings/developer.py:53
 msgid "SSH Keys"
 msgstr "Chaves SSH"
 
 #: settings/developer.py:151
-#: settings/search.py:187
+#: settings/search.py:188
 #: selfdrive/ui/layouts/settings/developer.py:56
 msgid "Joystick Debug Mode"
 msgstr "Depuração por joystick"
@@ -1947,18 +1947,18 @@ msgid "Drive openpilot's controls from a joystick. Change it with the car off."
 msgstr "Controle o openpilot por joystick. Altere com o carro desligado."
 
 #: settings/developer.py:153
-#: settings/search.py:189
+#: settings/search.py:190
 #: selfdrive/ui/layouts/settings/developer.py:72
 msgid "UI Debug Mode"
 msgstr "Depuração da interface"
 
 #: settings/developer.py:153
-#: settings/search.py:189
+#: settings/search.py:190
 msgid "Shows touches and the frame rate"
 msgstr "Mostra toques e a taxa de quadros"
 
 #: settings/developer.py:154
-#: settings/search.py:183
+#: settings/search.py:184
 msgid "Record traffic and mark manual lock/unlock actions"
 msgstr "Grave o tráfego e marque ações manuais de travar e destravar"
 
@@ -2056,7 +2056,7 @@ msgstr "Desparear"
 
 #: settings/device.py:264
 #: settings/device.py:107
-#: settings/search.py:159
+#: settings/search.py:160
 msgid "Remote Access"
 msgstr "Acesso remoto"
 
@@ -2087,13 +2087,13 @@ msgstr "Esquecer o lado em que o motorista se senta"
 
 #: settings/device.py:92
 #: settings/device.py:92
-#: settings/search.py:166
+#: settings/search.py:167
 msgid "Power Off"
 msgstr "Desligar"
 
 #: settings/device.py:95
 #: settings/device.py:96
-#: settings/search.py:165
+#: settings/search.py:166
 msgid "Restart"
 msgstr "Reiniciar"
 
@@ -2104,7 +2104,7 @@ msgstr "Recalibrar"
 
 #: settings/device.py:226
 #: settings/device.py:114
-#: settings/search.py:162
+#: settings/search.py:163
 msgid "Regulatory"
 msgstr "Regulamentação"
 
@@ -2167,7 +2167,7 @@ msgstr "A calibração recomeça. O openpilot reaprende a posição do aparelho 
 
 #: settings/device.py:117
 #: settings/search.py:30
-#: settings/search.py:157
+#: settings/search.py:158
 msgid "This Device"
 msgstr "Este aparelho"
 
@@ -2208,22 +2208,22 @@ msgid "Your code appears here once you choose a password"
 msgstr "Seu código aparece aqui após escolher uma senha"
 
 #: settings/device.py:104
-#: settings/search.py:158
+#: settings/search.py:159
 msgid "Phone App"
 msgstr "Aplicativo do celular"
 
 #: settings/device.py:110
-#: settings/search.py:160
+#: settings/search.py:161
 msgid "Camera Calibration"
 msgstr "Calibração da câmera"
 
 #: settings/device.py:112
-#: settings/search.py:161
+#: settings/search.py:162
 msgid "How It Works"
 msgstr "Como funciona"
 
 #: settings/device.py:112
-#: settings/search.py:161
+#: settings/search.py:162
 msgid "Rules, features and limits"
 msgstr "Regras, recursos e limites"
 
@@ -2232,12 +2232,12 @@ msgid "MORE"
 msgstr "MAIS"
 
 #: settings/device.py:115
-#: settings/search.py:163
+#: settings/search.py:164
 msgid "Device ID and Serial"
 msgstr "ID e número de série"
 
 #: settings/device.py:116
-#: settings/search.py:164
+#: settings/search.py:165
 msgid "IMEI"
 msgstr "IMEI"
 
@@ -2341,12 +2341,12 @@ msgid "Offline Maps"
 msgstr "Mapas offline"
 
 #: settings/device_sections.py:337
-#: settings/search.py:177
+#: settings/search.py:178
 msgid "Unused Models"
 msgstr "Modelos sem uso"
 
 #: settings/device_sections.py:341
-#: settings/search.py:178
+#: settings/search.py:179
 msgid "Record Driver Camera"
 msgstr "Gravar câmera do motorista"
 
@@ -2355,7 +2355,7 @@ msgid "Saved and uploaded with your drives. Restarts openpilot if the car is on.
 msgstr "Salva e enviada com seus trajetos. Reinicia o openpilot se o carro estiver ligado."
 
 #: settings/device_sections.py:343
-#: settings/search.py:179
+#: settings/search.py:180
 msgid "Record Microphone"
 msgstr "Gravar microfone"
 
@@ -2365,13 +2365,13 @@ msgstr "Áudio da cabine nas gravações dos trajetos. Reinicia o openpilot se o
 
 #: settings/device_sections.py:158
 #: settings/device_sections.py:171
-#: settings/search.py:170
+#: settings/search.py:171
 msgid "Language"
 msgstr "Idioma"
 
 #: settings/device_sections.py:175
 #: settings/search.py:30
-#: settings/search.py:167
+#: settings/search.py:168
 msgid "General"
 msgstr "Geral"
 
@@ -2423,7 +2423,7 @@ msgstr[1] "{} modelos sem uso serão removidos. Você poderá baixá-los novamen
 
 #: settings/device_sections.py:358
 #: settings/search.py:30
-#: settings/search.py:174
+#: settings/search.py:175
 msgid "Storage & Data"
 msgstr "Armazenamento e dados"
 
@@ -2436,49 +2436,49 @@ msgid "For menus and alerts"
 msgstr "Para menus e alertas"
 
 #: settings/device_sections.py:169
-#: settings/search.py:168
+#: settings/search.py:169
 msgid "Units"
 msgstr "Unidades"
 
 #: settings/device_sections.py:169
-#: settings/search.py:168
+#: settings/search.py:169
 msgid "Speed and distance everywhere"
 msgstr "Velocidade e distância em todo o sistema"
 
 #: settings/device_sections.py:170
-#: settings/search.py:169
+#: settings/search.py:170
 #: sidebar.py:148
 msgid "Temperature"
 msgstr "Temperatura"
 
 #: settings/device_sections.py:170
-#: settings/search.py:169
+#: settings/search.py:170
 msgid "For the weather forecast"
 msgstr "Para a previsão do tempo"
 
 #: settings/device_sections.py:172
-#: settings/search.py:171
+#: settings/search.py:172
 msgid "Screen Brightness"
 msgstr "Brilho da tela"
 
 #: settings/device_sections.py:172
-#: settings/search.py:171
+#: settings/search.py:172
 msgid "Auto follows ambient light, day and night"
 msgstr "Auto acompanha a luz ambiente, de dia e de noite"
 
 #: settings/device_sections.py:174
-#: settings/search.py:172
+#: settings/search.py:173
 msgid "Standby"
 msgstr "Espera"
 
 #: settings/device_sections.py:174
-#: settings/search.py:172
+#: settings/search.py:173
 msgid "Screen sleeps while driving, wakes for alerts"
 msgstr "A tela apaga ao dirigir e acende para alertas"
 
 #: settings/device_sections.py:194
 #: settings/search.py:30
-#: settings/search.py:173
+#: settings/search.py:174
 msgid "Backups"
 msgstr "Backups"
 
@@ -2501,12 +2501,12 @@ msgid "Delete offline maps?"
 msgstr "Excluir mapas offline?"
 
 #: settings/device_sections.py:349
-#: settings/search.py:175
+#: settings/search.py:176
 msgid "Recorded Drives"
 msgstr "Trajetos gravados"
 
 #: settings/device_sections.py:349
-#: settings/search.py:175
+#: settings/search.py:176
 msgid "Oldest drives are removed when space runs low"
 msgstr "Os trajetos mais antigos são removidos quando falta espaço"
 
@@ -2515,12 +2515,12 @@ msgid "RECORDING & UPLOADS"
 msgstr "GRAVAÇÃO E ENVIOS"
 
 #: settings/device_sections.py:357
-#: settings/search.py:180
+#: settings/search.py:181
 msgid "Uploads"
 msgstr "Envios"
 
 #: settings/device_sections.py:357
-#: settings/search.py:180
+#: settings/search.py:181
 msgid "Drive logs and video for debugging"
 msgstr "Registros e vídeos dos trajetos para depuração"
 
@@ -3418,7 +3418,7 @@ msgstr "Editar"
 
 #: settings/network_tab.py:225
 #: settings/network_tab.py:217
-#: settings/search.py:199
+#: settings/search.py:200
 msgid "Roaming, APN and IP address"
 msgstr "Roaming, APN e endereço IP"
 
@@ -3433,7 +3433,7 @@ msgstr "Digite a senha"
 
 #: settings/network_tab.py:106
 #: settings/network_tab.py:213
-#: settings/search.py:196
+#: settings/search.py:197
 msgid "Hotspot name"
 msgstr "Nome do ponto de acesso"
 
@@ -3442,32 +3442,32 @@ msgid "A saved network already uses this name"
 msgstr "Uma rede salva já usa este nome"
 
 #: settings/network_tab.py:212
-#: settings/search.py:195
+#: settings/search.py:196
 msgid "Hotspot"
 msgstr "Ponto de acesso"
 
 #: settings/network_tab.py:212
-#: settings/search.py:195
+#: settings/search.py:196
 msgid "Share this device's connection"
 msgstr "Compartilhar a conexão deste aparelho"
 
 #: settings/network_tab.py:215
-#: settings/search.py:197
+#: settings/search.py:198
 msgid "Hotspot Password"
 msgstr "Senha do ponto de acesso"
 
 #: settings/network_tab.py:215
-#: settings/search.py:197
+#: settings/search.py:198
 msgid "For phones joining this device's hotspot"
 msgstr "Para celulares que se conectam ao ponto de acesso deste aparelho"
 
 #: settings/network_tab.py:216
-#: settings/search.py:198
+#: settings/search.py:199
 msgid "Save Data"
 msgstr "Economizar dados"
 
 #: settings/network_tab.py:216
-#: settings/search.py:198
+#: settings/search.py:199
 msgid "No large uploads on cellular or phone hotspots"
 msgstr "Sem envios grandes na rede móvel ou em pontos de acesso de celulares"
 
@@ -3480,7 +3480,7 @@ msgid "Use cellular data outside your carrier's network"
 msgstr "Usar dados móveis fora da rede da sua operadora"
 
 #: settings/network_tab.py:224
-#: settings/search.py:192
+#: settings/search.py:193
 msgid "IP Address"
 msgstr "Endereço IP"
 
@@ -3494,7 +3494,7 @@ msgid "Scanning for networks…"
 msgstr "Buscando redes…"
 
 #: settings/network_tab.py:199
-#: settings/search.py:193
+#: settings/search.py:194
 msgid "Join a hidden network"
 msgstr "Conectar a uma rede oculta"
 
@@ -3529,30 +3529,30 @@ msgstr "Conexões"
 
 #: settings/search.py:29
 #: settings/search.py:133
-#: settings/tuner.py:316
+#: settings/tuner.py:330
 msgid "Steering"
 msgstr "Direção"
 
 #: settings/search.py:29
-#: settings/search.py:139
-#: settings/tuner.py:347
+#: settings/search.py:140
+#: settings/tuner.py:361
 msgid "Gas & Brake"
 msgstr "Acelerador e freio"
 
 #: settings/search.py:29
-#: settings/search.py:147
-#: settings/tuner.py:414
+#: settings/search.py:148
+#: settings/tuner.py:428
 msgid "Following & Stops"
 msgstr "Distância e paradas"
 
 #: settings/search.py:29
-#: settings/search.py:154
-#: settings/tuner.py:568
+#: settings/search.py:155
+#: settings/tuner.py:582
 msgid "Bundle Overrides"
 msgstr "Opções dos grupos"
 
 #: settings/search.py:30
-#: settings/search.py:181
+#: settings/search.py:182
 #: settings/window.py:324
 msgid "Report a Problem"
 msgstr "Relatar um problema"
@@ -3883,349 +3883,349 @@ msgid "Correction strength"
 msgstr "Força de correção"
 
 #: settings/search.py:138
-#: settings/tuner.py:314
-msgid "Steering Controller"
+#: settings/tuner.py:328
+msgid "Steering controller"
 msgstr "Controlador de direção"
 
 #: settings/search.py:138
-msgid "Torque, or NNFF when your car has a model"
-msgstr "Torque ou NNFF quando seu carro tem um modelo"
+msgid "Vehicle default, neural feedforward or torque"
+msgstr "Padrão do veículo, pré-alimentação neural ou torque"
 
-#: settings/search.py:139
+#: settings/search.py:140
 msgid "Acceleration and braking profiles and values"
 msgstr "Perfis e valores de aceleração e frenagem"
 
-#: settings/search.py:140
-#: settings/tuner.py:342
+#: settings/search.py:141
+#: settings/tuner.py:356
 msgid "Acceleration Profile"
 msgstr "Perfil de aceleração"
 
-#: settings/search.py:140
-#: settings/tuner.py:342
+#: settings/search.py:141
+#: settings/tuner.py:356
 msgid "How quickly the car speeds up"
 msgstr "A rapidez com que o carro acelera"
 
-#: settings/search.py:141
-#: settings/tuner.py:344
+#: settings/search.py:142
+#: settings/tuner.py:358
 msgid "Braking Profile"
 msgstr "Perfil de frenagem"
 
-#: settings/search.py:141
-#: settings/tuner.py:344
+#: settings/search.py:142
+#: settings/tuner.py:358
 msgid "How early and firmly it slows down"
 msgstr "Quando e com que intensidade reduz"
 
-#: settings/search.py:142
+#: settings/search.py:143
 #: settings/tuner.py:58
 msgid "Maximum Acceleration"
 msgstr "Aceleração máxima"
 
-#: settings/search.py:142
+#: settings/search.py:143
 #: settings/tuner.py:58
 msgid "The hardest openpilot will accelerate"
 msgstr "A aceleração máxima que o openpilot solicita"
 
-#: settings/search.py:143
+#: settings/search.py:144
 #: settings/tuner.py:60
 msgid "Start Acceleration"
 msgstr "Aceleração na saída"
 
-#: settings/search.py:143
+#: settings/search.py:144
 #: settings/tuner.py:60
 msgid "How firmly the car pulls away from a stop"
 msgstr "A intensidade com que o carro sai da parada"
 
-#: settings/search.py:144
+#: settings/search.py:145
 #: settings/tuner.py:62
 msgid "Stop Acceleration"
 msgstr "Aceleração na parada"
 
-#: settings/search.py:144
+#: settings/search.py:145
 #: settings/tuner.py:62
 msgid "Braking held while stopped"
 msgstr "Frenagem mantida enquanto parado"
 
-#: settings/search.py:145
+#: settings/search.py:146
 #: settings/tuner.py:64
 msgid "Stopping Rate"
 msgstr "Progressão da frenagem"
 
-#: settings/search.py:145
+#: settings/search.py:146
 #: settings/tuner.py:64
 msgid "How quickly braking builds into a stop"
 msgstr "A rapidez com que a frenagem aumenta até parar"
 
-#: settings/search.py:146
+#: settings/search.py:147
 #: settings/tuner.py:66
 msgid "Actuator Delay"
 msgstr "Atraso do atuador"
 
-#: settings/search.py:146
+#: settings/search.py:147
 #: settings/tuner.py:66
 msgid "Time from command to gas or brake response"
 msgstr "Tempo entre o comando e a resposta do acelerador ou freio"
 
-#: settings/search.py:147
+#: settings/search.py:148
 msgid "Following gaps and how the car stops"
 msgstr "Distâncias de seguimento e como o carro para"
 
-#: settings/search.py:148
+#: settings/search.py:149
 msgid "Following Gaps"
 msgstr "Distâncias de seguimento"
 
-#: settings/search.py:148
+#: settings/search.py:149
 msgid "Relaxed, Standard, Aggressive and Traffic"
 msgstr "Tranquilo, Padrão, Agressivo e Trânsito"
 
-#: settings/search.py:149
+#: settings/search.py:150
 #: settings/tuner.py:70
 msgid "Lead Detection Sensitivity"
 msgstr "Sensibilidade de detecção à frente"
 
-#: settings/search.py:149
+#: settings/search.py:150
 #: settings/tuner.py:70
 msgid "Lower notices cars ahead sooner"
 msgstr "Menor detecta carros à frente mais cedo"
 
-#: settings/search.py:150
+#: settings/search.py:151
 #: settings/tuner.py:72
 msgid "Stopped Distance"
 msgstr "Distância na parada"
 
-#: settings/search.py:150
+#: settings/search.py:151
 #: settings/tuner.py:72
 msgid "Extra room left behind a stopped car"
 msgstr "Espaço extra atrás de um carro parado"
 
-#: settings/search.py:151
-#: settings/tuner.py:408
+#: settings/search.py:152
+#: settings/tuner.py:422
 msgid "Use Radar for Take-Offs"
 msgstr "Radar para arrancadas"
 
-#: settings/search.py:151
+#: settings/search.py:152
 msgid "Starts moving as soon as the car ahead pulls away"
 msgstr "Começa a andar assim que o carro à frente sai"
 
-#: settings/search.py:152
-#: settings/tuner.py:410
+#: settings/search.py:153
+#: settings/tuner.py:424
 msgid "Force Stops at Lights"
 msgstr "Forçar paradas em semáforos"
 
-#: settings/search.py:152
-#: settings/tuner.py:410
+#: settings/search.py:153
+#: settings/tuner.py:424
 msgid "Comes to a full stop for red lights the model detects"
 msgstr "Para totalmente nos sinais vermelhos detectados pelo modelo"
 
-#: settings/search.py:153
-#: settings/tuner.py:412
+#: settings/search.py:154
+#: settings/tuner.py:426
 msgid "Cruise Button Step"
 msgstr "Passo do botão de cruzeiro"
 
-#: settings/search.py:153
-#: settings/tuner.py:412
+#: settings/search.py:154
+#: settings/tuner.py:426
 msgid "How far one press of + or − moves the set speed"
 msgstr "Quanto cada toque em + ou − altera a velocidade definida"
 
-#: settings/search.py:154
+#: settings/search.py:155
 msgid "Change one option that Developer View or Lead Insights sets"
 msgstr "Alterar uma opção definida por Visão de desenvolvedor ou Dados do veículo à frente"
 
-#: settings/search.py:155
+#: settings/search.py:156
 msgid "Bar Metrics"
 msgstr "Métricas da barra"
 
-#: settings/search.py:155
+#: settings/search.py:156
 msgid "Up to five values in Developer View's strip"
 msgstr "Até cinco valores na faixa da visão de desenvolvedor"
 
-#: settings/search.py:157
+#: settings/search.py:158
 msgid "Pairing, remote access, calibration, restart and power"
 msgstr "Pareamento, acesso remoto, calibração, reinício e energia"
 
-#: settings/search.py:158
+#: settings/search.py:159
 msgid "comma connect: see drives and change settings on your phone"
 msgstr "comma connect: veja trajetos e altere configurações pelo celular"
 
-#: settings/search.py:159
+#: settings/search.py:160
 msgid "Galaxy: reach this device from a web browser"
 msgstr "Galaxy: acesse este aparelho pelo navegador"
 
-#: settings/search.py:160
+#: settings/search.py:161
 msgid "How the device is mounted"
 msgstr "Como o aparelho está montado"
 
-#: settings/search.py:162
+#: settings/search.py:163
 msgid "Regulatory information"
 msgstr "Informações regulatórias"
 
-#: settings/search.py:163
+#: settings/search.py:164
 msgid "This device's IDs"
 msgstr "Identificadores deste aparelho"
 
-#: settings/search.py:164
+#: settings/search.py:165
 msgid "The cellular modem's ID"
 msgstr "Identificador do modem celular"
 
-#: settings/search.py:165
+#: settings/search.py:166
 msgid "Restart the device"
 msgstr "Reiniciar o aparelho"
 
-#: settings/search.py:166
+#: settings/search.py:167
 msgid "Turn the device off until the car starts"
 msgstr "Desligar o aparelho até ligar o carro"
 
-#: settings/search.py:167
+#: settings/search.py:168
 msgid "Units, language, brightness and standby"
 msgstr "Unidades, idioma, brilho e espera"
 
-#: settings/search.py:170
+#: settings/search.py:171
 msgid "Menus and alerts"
 msgstr "Menus e alertas"
 
-#: settings/search.py:173
+#: settings/search.py:174
 msgid "Snapshots of your settings"
 msgstr "Cópias das suas configurações"
 
-#: settings/search.py:174
+#: settings/search.py:175
 msgid "What's using space, and recording and uploads"
 msgstr "Uso de espaço, gravação e envios"
 
-#: settings/search.py:176
+#: settings/search.py:177
 msgid "Delete downloaded map data"
 msgstr "Excluir dados de mapas baixados"
 
-#: settings/search.py:177
+#: settings/search.py:178
 msgid "Downloaded models that aren't in use"
 msgstr "Modelos baixados sem uso"
 
-#: settings/search.py:178
+#: settings/search.py:179
 msgid "Saved and uploaded with your drives"
 msgstr "Salva e enviada com seus trajetos"
 
-#: settings/search.py:179
+#: settings/search.py:180
 msgid "Cabin audio in your drive recordings"
 msgstr "Áudio da cabine nas gravações dos trajetos"
 
-#: settings/search.py:181
+#: settings/search.py:182
 msgid "Send what happened to the developers"
 msgstr "Envie o que aconteceu aos desenvolvedores"
 
-#: settings/search.py:182
+#: settings/search.py:183
 msgid "ADB, SSH and debug modes"
 msgstr "ADB, SSH e modos de depuração"
 
-#: settings/search.py:184
+#: settings/search.py:185
 msgid "Connect over USB or the network"
 msgstr "Conecte por USB ou rede"
 
-#: settings/search.py:185
+#: settings/search.py:186
 msgid "Remote shell access"
 msgstr "Acesso remoto ao terminal"
 
-#: settings/search.py:186
+#: settings/search.py:187
 msgid "Adds every public key in a GitHub account"
 msgstr "Adiciona todas as chaves públicas de uma conta GitHub"
 
-#: settings/search.py:187
+#: settings/search.py:188
 msgid "Drive openpilot's controls from a joystick"
 msgstr "Controlar o openpilot por joystick"
 
-#: settings/search.py:188
+#: settings/search.py:189
 msgid "Turns off the car's emergency braking"
 msgstr "Desativa a frenagem de emergência do carro"
 
-#: settings/search.py:191
+#: settings/search.py:192
 msgid "Networks nearby, and joining one"
 msgstr "Redes próximas e como conectar"
 
-#: settings/search.py:192
+#: settings/search.py:193
 msgid "This device's local address, beside the connected network"
 msgstr "Endereço local deste aparelho, ao lado da rede conectada"
 
-#: settings/search.py:193
+#: settings/search.py:194
 msgid "Enter its name and password"
 msgstr "Digite o nome e a senha"
 
-#: settings/search.py:194
+#: settings/search.py:195
 msgid "Hotspot, data use, roaming and APN"
 msgstr "Ponto de acesso, uso de dados, roaming e APN"
 
-#: settings/search.py:196
+#: settings/search.py:197
 msgid "The name phones see when joining this device"
 msgstr "O nome que os celulares veem ao conectar a este aparelho"
 
-#: settings/search.py:199
+#: settings/search.py:200
 msgid "Roaming, APN and the device's IP address"
 msgstr "Roaming, APN e endereço IP do aparelho"
 
-#: settings/search.py:200
+#: settings/search.py:201
 msgid "A wheel remote's buttons and what they do"
 msgstr "Botões de um controle remoto do volante e suas ações"
 
-#: settings/search.py:201
+#: settings/search.py:202
 msgid "Car audio for alerts, and pairing devices"
 msgstr "Áudio do carro para alertas e pareamento de dispositivos"
 
-#: settings/search.py:203
+#: settings/search.py:204
 msgid "Updates and the release notes"
 msgstr "Atualizações e notas de versão"
 
-#: settings/search.py:204
+#: settings/search.py:205
 #: settings/software_tab.py:192
 msgid "Automatic Updates"
 msgstr "Atualizações automáticas"
 
-#: settings/search.py:204
+#: settings/search.py:205
 #: settings/software_tab.py:192
 msgid "Download while parked, install when you turn off the car"
 msgstr "Baixa ao estacionar, instala ao desligar o carro"
 
-#: settings/search.py:205
+#: settings/search.py:206
 #: settings/software_tab.py:188
 #: settings/software_tab.py:140
 msgid "Release Channel"
 msgstr "Canal de atualização"
 
-#: settings/search.py:205
+#: settings/search.py:206
 #: settings/software_tab.py:140
 msgid "The branch to download updates from"
 msgstr "A branch de onde baixar atualizações"
 
-#: settings/search.py:206
+#: settings/search.py:207
 #: settings/software_tab.py:195
 msgid "Reset Settings"
 msgstr "Redefinir configurações"
 
-#: settings/search.py:206
+#: settings/search.py:207
 msgid "Back to the Essentials defaults"
 msgstr "Restaurar os padrões Essentials"
 
-#: settings/search.py:207
+#: settings/search.py:208
 #: settings/software_tab.py:169
 #: settings/software_tab.py:198
 msgid "Uninstall"
 msgstr "Desinstalar"
 
-#: settings/search.py:207
+#: settings/search.py:208
 msgid "Remove this software from the device"
 msgstr "Remover este software do aparelho"
 
-#: settings/search.py:381
-#: settings/search.py:372
+#: settings/search.py:382
+#: settings/search.py:373
 msgid "Search settings"
 msgstr "Buscar configurações"
 
-#: settings/search.py:270
+#: settings/search.py:271
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "Diga uma configuração, como limite de velocidade. Toque no microfone ao terminar."
 
-#: settings/search.py:352
-#: settings/search.py:311
+#: settings/search.py:353
+#: settings/search.py:312
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "Nenhuma configuração corresponde a “{}”"
 
-#: settings/search.py:353
+#: settings/search.py:354
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "Digite o nome de uma configuração ou sua função, como brilho ou mudança de faixa"
 
@@ -4393,7 +4393,7 @@ msgstr "Tranquilo"
 
 #: settings/speed_steering.py:14
 #: settings/tuner.py:76
-#: settings/tuner.py:86
+#: settings/tuner.py:94
 msgid "Sport"
 msgstr "Esportivo"
 
@@ -4609,13 +4609,13 @@ msgstr "Como alterar"
 msgid "How to add"
 msgstr "Como adicionar"
 
-#: settings/tuner.py:552
+#: settings/tuner.py:566
 msgid "Every Tuner Mode change goes back to its default, in every section and bundle. Your other settings stay as they are."
 msgstr "Todas as alterações do modo Ajustes voltam ao padrão, em cada seção e grupo. Suas outras configurações permanecem iguais."
 
 #: settings/tuner.py:26
-#: settings/tuner.py:278
-#: settings/tuner.py:499
+#: settings/tuner.py:292
+#: settings/tuner.py:513
 msgid "Override"
 msgstr "Substituição"
 
@@ -4628,7 +4628,14 @@ msgid "From style"
 msgstr "Do estilo"
 
 #: settings/tuner.py:78
-#: settings/tuner.py:138
+msgid "Vehicle default"
+msgstr "Padrão do veículo"
+
+#: settings/tuner.py:78
+msgid "NNFF auto"
+msgstr "NNFF auto"
+
+#: settings/tuner.py:78
 msgid "NNFF"
 msgstr "NNFF"
 
@@ -4640,59 +4647,79 @@ msgstr "Lite"
 msgid "Torque"
 msgstr "Torque"
 
-#: settings/tuner.py:91
+#: settings/tuner.py:81
+msgid "Uses the car's normal controller"
+msgstr "Usa o controlador normal do veículo"
+
+#: settings/tuner.py:82
+msgid "NNFF when available, otherwise Lite"
+msgstr "NNFF quando disponível; senão, Lite"
+
+#: settings/tuner.py:83
+msgid "Uses a neural model for your car"
+msgstr "Usa um modelo neural para seu carro"
+
+#: settings/tuner.py:84
+msgid "Uses lightweight neural feedforward"
+msgstr "Usa pré-alimentação neural leve"
+
+#: settings/tuner.py:85
+msgid "Uses the torque steering controller"
+msgstr "Usa o controlador de torque"
+
+#: settings/tuner.py:99
 msgid "Developer sidebar"
 msgstr "Barra lateral de desenvolvedor"
 
-#: settings/tuner.py:91
+#: settings/tuner.py:99
 msgid "FPS counter"
 msgstr "Contador de FPS"
 
-#: settings/tuner.py:91
+#: settings/tuner.py:99
 msgid "CPU load"
 msgstr "Carga da CPU"
 
-#: settings/tuner.py:91
+#: settings/tuner.py:99
 msgid "GPU load"
 msgstr "Carga da GPU"
 
-#: settings/tuner.py:92
+#: settings/tuner.py:100
 msgid "Numeric temperature"
 msgstr "Temperatura numérica"
 
-#: settings/tuner.py:92
+#: settings/tuner.py:100
 msgid "Memory use"
 msgstr "Uso de memória"
 
-#: settings/tuner.py:92
+#: settings/tuner.py:100
 msgid "Adjacent lane widths"
 msgstr "Larguras das faixas adjacentes"
 
-#: settings/tuner.py:93
+#: settings/tuner.py:101
 msgid "Speed limit sources"
 msgstr "Fontes dos limites de velocidade"
 
-#: settings/tuner.py:93
+#: settings/tuner.py:101
 msgid "Lead details on the tag"
 msgstr "Detalhes do veículo à frente"
 
-#: settings/tuner.py:93
+#: settings/tuner.py:101
 msgid "Radar points"
 msgstr "Pontos do radar"
 
-#: settings/tuner.py:94
+#: settings/tuner.py:102
 msgid "Stopping point"
 msgstr "Ponto de parada"
 
-#: settings/tuner.py:94
+#: settings/tuner.py:102
 msgid "Stopping point distance"
 msgstr "Distância do ponto de parada"
 
-#: settings/tuner.py:94
+#: settings/tuner.py:102
 msgid "Adjacent paths"
 msgstr "Trajetórias adjacentes"
 
-#: settings/tuner.py:95
+#: settings/tuner.py:103
 msgid "Pedals"
 msgstr "Pedais"
 
@@ -4700,89 +4727,85 @@ msgstr "Pedais"
 msgid "Traffic"
 msgstr "Trânsito"
 
-#: settings/tuner.py:86
-#: settings/tuner.py:87
+#: settings/tuner.py:94
+#: settings/tuner.py:95
 msgid "Eco"
 msgstr "Eco"
 
-#: settings/tuner.py:262
+#: settings/tuner.py:276
 #, python-brace-format
 msgid "{} changed"
 msgstr "{} alterados"
 
-#: settings/tuner.py:475
-#: settings/tuner.py:543
+#: settings/tuner.py:489
+#: settings/tuner.py:557
 msgid "Bar metrics"
 msgstr "Métricas da barra"
 
-#: settings/tuner.py:547
+#: settings/tuner.py:561
 #, python-brace-format
 msgid "{} of {} items differ from the bundle."
 msgstr "{} de {} itens diferem do grupo."
 
-#: settings/tuner.py:562
+#: settings/tuner.py:576
 msgid "TUNER MODE"
 msgstr "MODO AJUSTES"
 
-#: settings/tuner.py:316
+#: settings/tuner.py:330
 msgid "Learned values work for most cars. An override replaces the learned value until you reset it."
 msgstr "Os valores aprendidos servem para a maioria dos carros. Uma substituição troca o valor aprendido até você redefinir."
 
-#: settings/tuner.py:347
+#: settings/tuner.py:361
 msgid "Driving Style and Vehicle Profile set these. An override replaces their value."
 msgstr "O estilo de condução e o perfil do veículo definem estes valores. Uma substituição troca o valor deles."
 
-#: settings/tuner.py:391
+#: settings/tuner.py:405
 msgid "Following gap by style"
 msgstr "Distância de seguimento por estilo"
 
-#: settings/tuner.py:560
+#: settings/tuner.py:574
 msgid "Reset all tuning?"
 msgstr "Redefinir todos os ajustes?"
 
-#: settings/tuner.py:314
-msgid "Auto uses NNFF when your car has a model"
-msgstr "Auto usa NNFF quando seu carro tem um modelo"
-
-#: settings/tuner.py:385
+#: settings/tuner.py:399
 #, python-brace-format
 msgid "{} gap"
 msgstr "Distância {}"
 
-#: settings/tuner.py:385
+#: settings/tuner.py:399
 msgid "Seconds behind the car ahead in this Driving Style"
 msgstr "Segundos atrás do carro à frente neste estilo de condução"
 
-#: settings/tuner.py:408
+#: settings/tuner.py:422
 msgid "Starts moving as soon as the radar sees the car ahead pull away"
 msgstr "Começa a andar assim que o radar detecta a saída do carro à frente"
 
-#: settings/tuner.py:476
+#: settings/tuner.py:490
 #, python-brace-format
 msgid "{} of {} picked. They spread evenly across the bar; pick none to hide it."
 msgstr "{} de {} escolhidos. Distribuídos pela barra; nenhum para ocultá-la."
 
-#: settings/tuner.py:491
+#: settings/tuner.py:505
 msgid "Choose"
 msgstr "Escolher"
 
-#: settings/tuner.py:515
+#: settings/tuner.py:529
 msgid "Bundle on"
 msgstr "Grupo ativo"
 
-#: settings/tuner.py:515
+#: settings/tuner.py:529
 msgid "Bundle off"
 msgstr "Grupo desativado"
 
-#: settings/tuner.py:544
+#: settings/tuner.py:558
 msgid "None: the bar is hidden"
 msgstr "Nenhum: barra oculta"
 
-#: settings/tuner.py:570
+#: settings/tuner.py:584
 msgid "Reset all tuning"
 msgstr "Redefinir todos os ajustes"
 
-#: settings/tuner.py:329
+#: settings/tuner.py:343
 msgid "Replaces the profile your Driving Style sets, until you reset it"
 msgstr "Substitui o perfil definido pelo estilo de condução até você redefinir"
 

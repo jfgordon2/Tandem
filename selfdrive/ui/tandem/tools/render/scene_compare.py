@@ -24,7 +24,8 @@ VALUES = {
   "StartupMessageTop": "Be ready to take over at any time", "StartupMessageBottom": "Always keep hands on wheel and eyes on road",
   "AutomaticallyDownloadModels": True, "LockDoors": True, "LKASButtonControl": 9, "DistanceButtonControl": 1,
   "SteerDelay": 0.18, "SteerDelayStock": 0.18, "UseAutoSteerDelay": True, "SteerFriction": 0.14, "SteerFrictionStock": 0.1,
-  "SteerLatAccel": 2.4, "SteerLatAccelStock": 2.4, "SteerKP": 1.0, "SteerKPStock": 1.0, "NNFF": True, "NNFFLite": True,
+  "SteerLatAccel": 2.4, "SteerLatAccelStock": 2.4, "SteerKP": 1.0, "SteerKPStock": 1.0, "NNFF": False, "NNFFLite": False,
+  "ForceTorqueController": False,
   "LongitudinalPersonality": 1, "AccelerationProfile": 0, "DecelerationProfile": 1, "MaxDesiredAcceleration": 3.0,
   "StartAccel": 0.8, "StartAccelStock": 0.8, "StopAccel": -0.5, "StopAccelStock": -0.5, "StoppingDecelRate": 0.8,
   "StoppingDecelRateStock": 0.8, "LongitudinalActuatorDelay": 0.15, "LongitudinalActuatorDelayStock": 0.15,
@@ -80,7 +81,19 @@ def main(frame, save, out, tap, gui_app):
   win.top._sidebar._footer[0]._click_callback()
   for i, name in enumerate(["tuner", "tunergas", "tunerfollowing", "tunerbundles"]):
     win.top.select(i)
+    if i == 0:
+      shot("_", 2)
+      panel = win.top.current
+      controller = panel.items[-1]
+      viewport = controller._parent_rect
+      panel._scroll.set_offset(-max(0, controller.rect.y + controller.rect.height - viewport.y - viewport.height))
     shot(name)
+    if i == 0:
+      shot("steeringcontroller")
+      for index, mode in enumerate(("vehicle", "auto", "nnff", "lite", "torque")):
+        controller._control._on_change(index)
+        shot(f"steeringcontroller_{mode}")
+      controller._control._on_change(0)
   r = win.top.current._tabs.rect        # tap Lead Insights: the tab changes while the panel draws (it once crashed here)
   down, up = tap(r.x + r.width * 0.75, r.y + r.height / 2)
   frame(draw, down)

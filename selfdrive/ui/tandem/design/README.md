@@ -18,6 +18,7 @@ Open any `.html` file in this folder in a browser. Each screen is 1125×563, the
 | Onroad, Developer View + Lead Insights | [onroaddev.html](onroaddev.html) |
 | Alerts | [alerts.html](alerts.html) |
 | Tuner Mode | [tuner.html](tuner.html) |
+| Steering controller | [steeringcontroller.html](steeringcontroller.html) |
 | Defaults map | [defaults.html](defaults.html) |
 | Destinations | [destinations.html](destinations.html) |
 | Search with keyboard | [navsearch.html](navsearch.html) |
@@ -72,6 +73,17 @@ Open any `.html` file in this folder in a browser. Each screen is 1125×563, the
 | Offline maps › Choose regions | [mapregions.html](mapregions.html) |
 | Offline maps › Downloading | [mapdownloading.html](mapdownloading.html) |
 | Driving Model › Browse and download | [modelcatalog.html](modelcatalog.html) |
+
+## Steering controller
+
+[steeringcontroller.html](steeringcontroller.html) is the interactive steering-controller mock,
+with the same choices as [tuner.html](tuner.html). Click a choice for its explanation, or use the
+arrow keys. The choices are **Vehicle default**, NNFF auto, NNFF, Lite and Torque.
+
+Vehicle default clears the NNFF, NNFF Lite and Force Torque overrides, matching StarPilot's
+registry defaults. NNFF auto means NNFF when supported, otherwise Lite. New Essentials setups,
+Reset Settings and Reset all tuning choose Vehicle default. Saved selections are read from the
+existing StarPilot params; no new preference key or startup migration is needed.
 
 ## Settings structure
 

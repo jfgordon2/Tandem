@@ -7,9 +7,19 @@
 <body>
 
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
 <style>
+@font-face{font-family:Figtree;font-style:normal;font-weight:400;src:url('../../../assets/fonts/Figtree-Regular.ttf') format('truetype')}
+@font-face{font-family:Figtree;font-style:normal;font-weight:500;src:url('../../../assets/fonts/Figtree-Medium.ttf') format('truetype')}
+@font-face{font-family:Figtree;font-style:normal;font-weight:600;src:url('../../../assets/fonts/Figtree-SemiBold.ttf') format('truetype')}
+@font-face{font-family:Figtree;font-style:normal;font-weight:700;src:url('../../../assets/fonts/Figtree-Bold.ttf') format('truetype')}
+@font-face{font-family:Figtree;font-style:normal;font-weight:800;src:url('../../../assets/fonts/Figtree-ExtraBold.ttf') format('truetype')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;src:url('../../../assets/fonts/JetBrainsMono-Medium.ttf') format('truetype')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:700;src:url('../../../assets/fonts/JetBrainsMono-Bold.ttf') format('truetype')}
+.controller-options{display:flex;flex-shrink:0;background:#23272E;border-radius:13px;padding:4px}
+.controller-options button{font-family:inherit;border:0;background:transparent;color:#C9D0DA;height:42px;padding:0 14px;border-radius:10px;font-size:16px;font-weight:600;white-space:nowrap;cursor:pointer}
+.controller-options button[aria-checked="true"]{background:#5AAAF8;color:#0B1A2B;font-weight:700}
+.controller-options button:focus-visible{outline:2px solid #8BC9FF;outline-offset:2px}
+
 body{margin:0}
 a{color:#7DBBF9}a:hover{color:#A9D3FB}
 </style>
@@ -54,13 +64,17 @@ a{color:#7DBBF9}a:hover{color:#A9D3FB}
         <span style="font-size: 13px; font-weight: 700; color: #C9D0DA; background: #23272E; border-radius: 8px; padding: 5px 10px;">DEFAULT</span>
         <button type="button" style="font-family: inherit; height: 44px; padding: 0 16px; border: 0; border-radius: 12px; background: #23272E; color: #F2F5F9; font-size: 16px; font-weight: 600;">Override</button>
       </div>
-      <div style="display: flex; align-items: center; gap: 14px; padding: 0 14px 0 22px; height: 62px; flex-grow: 1;">
-        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 19px; font-weight: 600;">Steering Controller</span><span style="font-size: 14px; color: #AEB6C2;">Auto uses NNFF when your car has a model</span></div>
-        <div role="radiogroup" aria-label="Steering controller" style="display: flex; background: #23272E; border-radius: 13px; padding: 4px;">
-          <button type="button" role="radio" aria-checked="false" style="font-family: inherit; border: 0; background: transparent; color: #C9D0DA; height: 42px; padding: 0 14px; border-radius: 10px; font-size: 16px; font-weight: 600;">Auto</button>
-          <button type="button" role="radio" aria-checked="false" style="font-family: inherit; border: 0; background: transparent; color: #C9D0DA; height: 42px; padding: 0 14px; border-radius: 10px; font-size: 16px; font-weight: 600;">NNFF</button>
-          <button type="button" role="radio" aria-checked="false" style="font-family: inherit; border: 0; background: transparent; color: #C9D0DA; height: 42px; padding: 0 14px; border-radius: 10px; font-size: 16px; font-weight: 600;">Lite</button>
-          <button type="button" role="radio" aria-checked="true" style="font-family: inherit; border: 0; background: #5AAAF8; color: #0B1A2B; height: 42px; padding: 0 14px; border-radius: 10px; font-size: 16px; font-weight: 700;">Torque</button>
+      <div style="display:flex;align-items:center;gap:14px;padding:0 14px 0 22px;min-height:62px;flex-grow:1;">
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;">
+          <span style="font-size:19px;font-weight:600;">Steering controller</span>
+          <span id="controller-help" aria-live="polite" style="font-size:14px;line-height:1.3;color:#AEB6C2;">Uses the car's normal controller</span>
+        </div>
+        <div class="controller-options" role="radiogroup" aria-label="Steering controller" aria-describedby="controller-help">
+          <button type="button" role="radio" aria-checked="true" tabindex="0" data-value="vehicle" data-help="Uses the car's normal controller">Vehicle default</button>
+          <button type="button" role="radio" aria-checked="false" tabindex="-1" data-value="auto" data-help="NNFF when available, otherwise Lite">NNFF auto</button>
+          <button type="button" role="radio" aria-checked="false" tabindex="-1" data-value="nnff" data-help="Uses a neural model for your car">NNFF</button>
+          <button type="button" role="radio" aria-checked="false" tabindex="-1" data-value="lite" data-help="Uses lightweight neural feedforward">Lite</button>
+          <button type="button" role="radio" aria-checked="false" tabindex="-1" data-value="torque" data-help="Uses the torque steering controller">Torque</button>
         </div>
       </div>
     </div>
@@ -76,5 +90,29 @@ a{color:#7DBBF9}a:hover{color:#A9D3FB}
   </nav>
 </div>
 
+<script>
+const group = document.querySelector('.controller-options');
+const choices = [...group.querySelectorAll('[role="radio"]')];
+function selectController(choice) {
+  for (const button of choices) {
+    const selected = button === choice;
+    button.setAttribute('aria-checked', String(selected));
+    button.tabIndex = selected ? 0 : -1;
+  }
+  document.querySelector('#controller-help').textContent = choice.dataset.help;
+}
+for (const choice of choices) {
+  choice.addEventListener('click', () => selectController(choice));
+  choice.addEventListener('keydown', event => {
+    const delta = {ArrowLeft:-1, ArrowUp:-1, ArrowRight:1, ArrowDown:1}[event.key];
+    if (delta !== undefined) {
+      event.preventDefault();
+      const next = choices[(choices.indexOf(choice) + delta + choices.length) % choices.length];
+      selectController(next);
+      next.focus();
+    }
+  });
+}
+</script>
 </body>
 </html>

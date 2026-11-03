@@ -663,12 +663,64 @@ def test_profiles_follow_driving_style_until_overridden():
 
 
 def test_steering_controller_choices():
-  from openpilot.selfdrive.ui.tandem.settings.tuner import Tuner
-  store, cache = _store()
+  from openpilot.selfdrive.ui.tandem.settings.tuner import CONTROLLERS, Tuner
+  store, cache = _store({"AdvancedLateralTune": False, "LateralTune": False})
   tuner = Tuner(store)
-  for i in range(4):
+  expected = [(False, False, False), (True, True, False), (True, False, False), (False, True, False), (False, False, True)]
+  assert CONTROLLERS == ["Vehicle default", "NNFF auto", "NNFF", "Lite", "Torque"]
+  for i, flags in enumerate(expected):
     tuner.set_controller(i)
     assert tuner.controller == i
+    assert tuple(cache.values[k] for k in ("NNFF", "NNFFLite", "ForceTorqueController")) == flags
+    assert not cache.values["AdvancedLateralTune"]
+    assert cache.values["LateralTune"] == (i != 0)
+
+
+def test_vehicle_default_preserves_other_lateral_tuning_and_parent_users():
+  from openpilot.selfdrive.ui.tandem.settings.tuner import Tuner
+  store, cache = _store({"NNFF": True, "NNFFLite": True, "ForceTorqueController": True, "LateralTune": True,
+                         "TurnDesires": True, "AdvancedLateralTune": False, "SteerFriction": 0.17})
+  before = dict(cache.values)
+  Tuner(store).set_controller(0)
+  assert cache.values == before | {"NNFF": False, "NNFFLite": False, "ForceTorqueController": False}
+
+
+def test_existing_controller_flags_are_read_without_migrating_saved_choices():
+  from openpilot.selfdrive.ui.tandem.settings.tuner import Tuner
+  cases = [((False, False, False), 0), ((True, True, False), 1), ((True, False, False), 2),
+           ((False, True, False), 3), ((False, False, True), 4), ((True, True, True), 1),
+           ((True, False, True), 2), ((False, True, True), 3)]
+  for flags, selected in cases:
+    store, cache = _store(dict(zip(("NNFF", "NNFFLite", "ForceTorqueController"), flags, strict=True)))
+    before = dict(cache.values)
+    assert Tuner(store).controller == selected
+    assert cache.values == before and cache.invalidations == 0
+
+
+def test_essentials_controller_default_matches_starpilots_registry():
+  import re
+  from pathlib import Path
+  from openpilot.selfdrive.ui.tandem.settings.tuner import DEFAULT_CONTROLLER, Tuner
+  store, cache = _store({"NNFF": True, "NNFFLite": True, "ForceTorqueController": True})
+  tuner = Tuner(store)
+  tuner.reset_all()
+  header = (Path(__file__).resolve().parents[4] / "common/params_keys.h").read_text()
+  assert DEFAULT_CONTROLLER == tuner.controller == 0
+  for key in ("NNFF", "NNFFLite", "ForceTorqueController"):
+    upstream_default = re.search(r'\{"' + key + r'",\s*\{PERSISTENT, BOOL, "([01])"', header).group(1) == "1"
+    assert cache.values[key] == upstream_default
+
+
+def test_controller_description_tracks_the_choice():
+  from openpilot.selfdrive.ui.tandem.settings.tuner import Tuner, steering_panel
+  store, _ = _store()
+  tuner = Tuner(store)
+  row = steering_panel(tuner, None).items[-1]
+  for index, description in enumerate(("Uses the car's normal controller", "NNFF when available, otherwise Lite",
+                                        "Uses a neural model for your car", "Uses lightweight neural feedforward",
+                                        "Uses the torque steering controller")):
+    row._control._on_change(index)
+    assert row._subtitle() == description
 
 
 def test_bundle_overrides_count_items_that_differ():
@@ -691,10 +743,11 @@ def test_reset_all_restores_defaults_and_bundle_values():
   tuner.set_value(STEERING[3], 2.0)
   tuner.set_gap("RelaxedFollow", 2.5)
   tuner.set_switch("ShowGPU", False)
-  tuner.set_controller(0)                          # Auto: NNFF on
+  tuner.set_controller(1)                          # NNFF auto
   tuner.reset_all()
   assert cache.values["SteerKP"] == 1.1 and cache.values["RelaxedFollow"] == GAPS[0][2] and cache.values["ShowGPU"]
-  assert tuner.controller == 3 and not cache.values["NNFF"] and not cache.values["NNFFLite"]   # Torque; NNFF is opt-in
+  assert tuner.controller == 0
+  assert not any(cache.values[k] for k in ("NNFF", "NNFFLite", "ForceTorqueController"))
 
 
 def test_reset_all_tuning_asks_first():
@@ -998,6 +1051,7 @@ def test_reset_settings_applies_essentials_with_one_signal():
   assert not DEVELOPER_VIEW.is_on(store) and cache.values["GreenLightAlert"] and not cache.values["HolidayThemes"]
   assert cache.values["Compass"]   # the heading beside the street name in the bar
   assert speed.max_follows and speed.lower_limits == 0
+  assert not any(cache.values[k] for k in ("NNFF", "NNFFLite", "ForceTorqueController"))
 
 
 def test_maps_download_waits_for_parked_online_and_a_selection():

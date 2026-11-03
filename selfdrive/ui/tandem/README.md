@@ -158,6 +158,17 @@ After a merge, check the interfaces that can change without a source conflict:
 - Check `RELEASE_BRANCHES` still includes `release`.
 - Check `device.add_interactive_timeout_callback`, gui_app's `_nav_stack` and `pop_widgets_to`, which `menu_idle.py` uses to close overlays when the menu times out while driving.
 
+## Steering controller defaults
+
+Tuner Mode offers Vehicle default / NNFF auto / NNFF / Lite / Torque. The row explains the selected
+choice. Vehicle default sets `NNFF`, `NNFFLite` and `ForceTorqueController` to false, matching StarPilot's
+param defaults and leaving controller selection to the vehicle interface. Essentials setup, Reset Settings
+and Reset all tuning apply this default. Saved selections are read from those three existing params;
+there is no startup migration that guesses whether a saved Torque choice was an old default.
+
+An explicit NNFF or Torque selection enables StarPilot's `LateralTune` parent. Vehicle default clears only
+the three controller flags, preserving unrelated tuning and other users of the parent such as Turn Desires.
+
 ## The settings window
 
 `settings/` is the Essentials settings window. `selfdrive/ui/layouts/main.py` creates it through `settings_window()` instead of upstream's `SettingsLayout`. Set `TANDEM_SETTINGS=0` to get the upstream window back.
@@ -201,6 +212,7 @@ These are reached from a row or button, never as a tab:
 `upstream.py` hosts them. `StarPilotPage` opens one StarPilot panel directly, without going through StarPilot's own hub.
 
 ### Where the code differs from the mocks
+
 
 - **Hotspot Edit buttons:** use the shared `ValueButton`, including its chevron, as the other settings editors do.
 - **Lead marker:** the newly approved `design/gaptag.html` supersedes the primary ground bar in `leadmarker.html` and the triangle in the older `onroaddev.html`. The anchor estimates the roof from StarPilot's projected ground point and marker size. A tag too near the top edge keeps only its anchor until there is room for readable text.

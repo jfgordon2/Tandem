@@ -1,5 +1,7 @@
 Tandem 2026.11.03
 ========================
+* Steering controller: Vehicle default uses StarPilot's normal controller for your car
+  * New setups and tuning resets use Vehicle default; Auto is now named NNFF auto
 * Navigation search: four suggestions in two rows above a shorter keyboard
 * Maintenance: cleaner separation from StarPilot for easier future updates
 * GitHub README: a one-minute tour of the Tandem interface

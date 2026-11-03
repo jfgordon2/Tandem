@@ -202,6 +202,7 @@ def test_setup_answers_apply_over_the_defaults():
   assert done == [1] and notified == [1]
   assert (speed.style, speed.speed_limits, speed.lane_changes) == (0, 1, 0)
   assert cache.values["WeatherPresets"]     # defaults the questions don't cover still applied
+  assert not any(cache.values[k] for k in ("NNFF", "NNFFLite", "ForceTorqueController"))
 
 
 def test_setup_use_defaults():
@@ -209,10 +210,12 @@ def test_setup_use_defaults():
   from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
   from openpilot.selfdrive.ui.tandem.setup import Setup
   from openpilot.selfdrive.ui.tandem.tests.test_settings import FakeCache
-  store = SettingsStore(FakeCache({"LongitudinalPersonality": 0}), lambda: None)
+  cache = FakeCache({"LongitudinalPersonality": 0, "NNFF": True, "NNFFLite": True, "ForceTorqueController": True})
+  store = SettingsStore(cache, lambda: None)
   Setup(store, lambda: None).finish(use_answers=False)
   speed = SpeedSteering(store)
   assert (speed.style, speed.matching, speed.lane_changes) == (1, True, 0)
+  assert not any(cache.values[k] for k in ("NNFF", "NNFFLite", "ForceTorqueController"))
 
 
 def test_sidebar_network_status():

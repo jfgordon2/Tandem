@@ -75,9 +75,17 @@ FOLLOWING = [
 # Following gap per Driving Style, plus Traffic mode. Seconds behind the car ahead.
 GAPS = [(N_("Relaxed"), "RelaxedFollow", 1.6), (N_("Standard"), "StandardFollow", 1.45), (N_("Sport"), "AggressiveFollow", 1.25),
         (N_("Traffic"), "TrafficFollow", 0.75)]
-CONTROLLERS = [N_("Auto"), N_("NNFF"), N_("Lite"), N_("Torque")]
-DEFAULT_CONTROLLER = 3   # Torque: NNFF and NNFF Lite stay opt-in
+CONTROLLERS = [N_("Vehicle default"), N_("NNFF auto"), N_("NNFF"), N_("Lite"), N_("Torque")]
+DEFAULT_CONTROLLER = 0   # StarPilot: leave NNFF, NNFF Lite and Force Torque off
+_CONTROLLER_DESCRIPTIONS = [
+  N_("Uses the car's normal controller"),
+  N_("NNFF when available, otherwise Lite"),
+  N_("Uses a neural model for your car"),
+  N_("Uses lightweight neural feedforward"),
+  N_("Uses the torque steering controller"),
+]
 _CONTROLLER_PARAMS = [
+  {"NNFF": False, "NNFFLite": False, "ForceTorqueController": False},
   {"NNFF": True, "NNFFLite": True, "ForceTorqueController": False},    # NNFF where the car has a model, otherwise Lite
   {"NNFF": True, "NNFFLite": False, "ForceTorqueController": False},
   {"NNFF": False, "NNFFLite": True, "ForceTorqueController": False},
@@ -135,15 +143,21 @@ class Tuner:
 
   @property
   def controller(self) -> int:
-    nnff, lite, torque = (self._store.get_bool(k) for k in (N_("NNFF"), "NNFFLite", "ForceTorqueController"))
-    if torque:
-      return 3
+    nnff, lite, torque = (self._store.get_bool(k) for k in ("NNFF", "NNFFLite", "ForceTorqueController"))
+    # Neural feedforward takes precedence over the torque conversion flag in StarPilot's controlsd.
     if nnff:
-      return 0 if lite else 1
-    return 2 if lite else -1
+      return 1 if lite else 2
+    return 3 if lite else 4 if torque else 0
+
+  @property
+  def controller_description(self) -> str:
+    return _CONTROLLER_DESCRIPTIONS[self.controller]
 
   def set_controller(self, index: int) -> None:
-    self._store.write(LATERAL | _CONTROLLER_PARAMS[index])
+    values = dict(_CONTROLLER_PARAMS[index])
+    if index != DEFAULT_CONTROLLER:
+      values["LateralTune"] = True   # StarPilot gates all three overrides on this parent, not AdvancedLateralTune
+    self._store.write(values)
 
   def _profile(self, key: str, profiles: list[tuple[str, int]]) -> int:
     value = self._store.get_int(key)
@@ -311,7 +325,7 @@ class ValueStatus(Component):
 def steering_panel(tuner: Tuner, window) -> ListPanel:
   return ListPanel([
     *[tunable_row(tuner, t, window) for t in STEERING],
-    SettingRow(N_("Steering Controller"), N_("Auto uses NNFF when your car has a model"),
+    SettingRow(N_("Steering controller"), lambda: tuner.controller_description,
                Segmented(CONTROLLERS, lambda: tuner.controller, tuner.set_controller)),
   ], title=N_("Steering"), subtitle=N_("Learned values work for most cars. An override replaces the learned value until you reset it."))
 
