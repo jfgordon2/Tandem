@@ -16,9 +16,13 @@ def atlas_chars() -> set[int]:
   return {int(m) for m in re.findall(r"^char id=(\d+)", (FONTS / "NotoSans-Fallback.fnt").read_text(encoding="utf-8"), re.M)}
 
 
-def test_upstream_names_the_noto_fallback_and_it_is_committed():
+def test_tandem_owns_noto_and_upstream_keeps_its_fonts():
   from openpilot.system.ui.lib.application import FontWeight
-  assert FontWeight.UNIFONT == "NotoSans-Fallback.fnt"
+  from openpilot.selfdrive.ui.tandem.fonts import font_file
+  assert FontWeight.UNIFONT == "unifont.fnt"
+  assert FontWeight.ROMAN == "Inter-Regular.fnt"
+  assert font_file(FontWeight.UNIFONT) == "NotoSans-Fallback.fnt"
+  assert font_file(FontWeight.ROMAN) == "Figtree-Regular.fnt"
   assert (FONTS / "NotoSans-Fallback.png").is_file() and (FONTS / "NotoSans-OFL.txt").is_file()
 
 
@@ -34,9 +38,14 @@ def test_the_atlas_has_every_arabic_form_shape_can_produce():
   assert forms <= atlas_chars()
 
 
-def test_arabic_and_cyrillic_use_the_fallback():
-  from openpilot.system.ui.lib.multilang import UNIFONT_LANGUAGES
-  assert {"ar", "uk", "th", "zh-CHT", "zh-CHS", "ko", "ja"} <= set(UNIFONT_LANGUAGES)
+def test_arabic_and_cyrillic_use_the_owned_fallback(monkeypatch):
+  from openpilot.selfdrive.ui.tandem import fonts, tokens as T
+  latin = {int(cp) for cp in re.findall(r"^char id=(\d+)", (FONTS / "Figtree-Regular.fnt").read_text(), re.M)}
+  monkeypatch.setattr(fonts, "covers", lambda face, text: all(ord(c) in latin for c in text))
+  assert fonts.face_for("العربية", T.FONT) == T.FONT_UNIFONT
+  assert fonts.face_for("Українська", T.FONT) == T.FONT_UNIFONT
+  assert fonts.face_for("English", T.FONT) == T.FONT
+  assert {ord(c) for c in "العربيةУкраїнська"} <= atlas_chars()
 
 
 def test_letters_join_by_position():

@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
+import tempfile
 
 
 def prefs_dir() -> Path:
@@ -65,6 +66,50 @@ class Choice:
         pass
 
 
+class Text:
+  """A small preference with a one-time read of a legacy param file, without querying its compiled key."""
+  def __init__(self, name: str, legacy: str | None = None):
+    self.name, self.legacy = name, legacy
+
+  def _file(self) -> Path:
+    return prefs_dir() / f".tandem_{self.name}"
+
+  def get(self) -> str | None:
+    try:
+      return self._file().read_text()
+    except OSError:
+      if self.legacy:
+        try:
+          if os.getenv("TANDEM_PREFS_DIR"):
+            legacy = prefs_dir() / (os.getenv("OPENPILOT_PREFIX") or "d") / self.legacy
+          else:
+            from openpilot.common.params import Params
+            legacy = Path(Params().get_param_path(self.legacy))
+          value = legacy.read_text()
+          self.set(value)
+          return value
+        except OSError:
+          pass
+    return None
+
+  def set(self, value: str) -> None:
+    path = self._file()
+    temporary = None
+    try:
+      with tempfile.NamedTemporaryFile(mode="w", dir=path.parent, prefix=".tmp_tandem_", delete=False) as stream:
+        temporary = Path(stream.name)
+        stream.write(value)
+      temporary.replace(path)
+    except OSError:
+      pass
+    finally:
+      if temporary is not None:
+        try:
+          temporary.unlink(missing_ok=True)
+        except OSError:
+          pass
+
+
 BACKUP_DIR = ".tandem_prefs"          # inside a settings backup, beside the copied params
 NOT_BACKED_UP = {".tandem_forecast.json"}   # a cache, not a setting
 
@@ -107,6 +152,7 @@ MAX_FOLLOWS_LIMIT = Flag("max_follows_limit", True)   # Speed Limits › MAX fol
 WEATHER_HEADS_UP = Flag("weather_heads_up", True)     # Weather › Weather heads-up (forecast.py)
 LEAD_TAG = Flag("lead_tag", True)                     # Display › Driving Screen › Lead Car Tag (onroad/view.py)
 WEATHER_CHIME = Flag("weather_chime", True)           # Alerts › Chimes › Weather heads-up: its one chime
+DEVELOPER_STRIP = Text("developer_strip_metrics", legacy="DeveloperStripMetrics")
 TEMPERATURE = Choice("temperature", ("F", "C"))       # General › Temperature; until picked, it follows Units (km/h: °C)
 
 

@@ -63,7 +63,7 @@ def _draw_custom_icon_geometry(key: str, x: float, y: float, s: float, color: rl
     rl.draw_triangle(v4a, v4b, v4c, color)
     rl.draw_circle_v(rl.Vector2(cx, cy), r, color)
 
-  if key in ("sound", "sound_muted"):
+  if key == "sound":
     # Sounds & Alerts: Speaker icon on the left, sound waves on the right (proportionate weight & scale)
     x_c = x + 30.0 * s
     y_c = y + 30.0 * s
@@ -87,11 +87,6 @@ def _draw_custom_icon_geometry(key: str, x: float, y: float, s: float, color: rl
     rl.draw_circle_v(rl.Vector2(x_c - 22.0 * s, y_c - 7.0 * s), r_cap, color)
     rl.draw_circle_v(rl.Vector2(x_c - 22.0 * s, y_c + 7.0 * s), r_cap, color)
 
-    if key == "sound_muted":
-      rl.draw_line_ex(rl.Vector2(x_c + 5 * s, y_c - 7 * s), rl.Vector2(x_c + 19 * s, y_c + 7 * s), thick, color)
-      rl.draw_line_ex(rl.Vector2(x_c + 5 * s, y_c + 7 * s), rl.Vector2(x_c + 19 * s, y_c - 7 * s), thick, color)
-      return
-
     # Helper to draw rounded concentric sound wave arcs
     def draw_rounded_arc(cx: float, cy: float, r: float, start_deg: float, end_deg: float):
       draw_ellipse_arc(cx, cy, r, r, 0.0, start_deg, end_deg, thick)
@@ -104,12 +99,6 @@ def _draw_custom_icon_geometry(key: str, x: float, y: float, s: float, color: rl
     draw_rounded_arc(x_c - 3.0 * s, y_c, 8.0 * s, -25.0, 25.0)
     draw_rounded_arc(x_c - 3.0 * s, y_c, 15.0 * s, -37.5, 37.5)
     draw_rounded_arc(x_c - 3.0 * s, y_c, 22.0 * s, -50.0, 50.0)
-
-  elif key == "timer":
-    center = rl.Vector2(x + 30 * s, y + 30 * s)
-    rl.draw_ring(center, 18 * s, 21 * s, 0, 360, 48, color)
-    rl.draw_line_ex(center, rl.Vector2(center.x, center.y - 11 * s), 3 * s, color)
-    rl.draw_line_ex(center, rl.Vector2(center.x + 9 * s, center.y + 5 * s), 3 * s, color)
 
   elif key == "steering":
     # Driving Controls: Minimalist 3-spoke steering wheel

@@ -1382,28 +1382,6 @@ def test_nav_turn_speed_control_slows_for_imminent_turn():
   assert result > 0.0
 
 
-@pytest.mark.parametrize("maneuver, modifier", [("turn", "left"), ("turn", "right"), ("turn", "sharpLeft"),
-                                                ("turn", "sharpRight"), ("turn", "uturn"), ("roundabout", "right")])
-@pytest.mark.parametrize("next_turn", [False, True])
-def test_nav_turn_speed_control_reports_selected_maneuver_and_clears_it(maneuver, modifier, next_turn):
-  nav_state = {"valid": True, "maneuverType": "continue", "maneuverModifier": "straight", "maneuverDistance": 5.0}
-  prefix = "nextManeuver" if next_turn else "maneuver"
-  nav_state.update({f"{prefix}Type": maneuver, f"{prefix}Modifier": modifier, f"{prefix}Distance": 30.0})
-  planner, vcruise = make_vcruise(nav_state=nav_state)
-  toggles = make_toggles()
-  toggles.nav_longitudinal_allowed = True
-  sm = make_sm(standstill=False)
-  result = update_vcruise(vcruise, sm, toggles, now=0.0, v_ego=20.0)
-  assert 0 < result == vcruise.nav_turn_target < 20.0
-  assert (vcruise.nav_turn_maneuver, vcruise.nav_turn_modifier) == (maneuver, modifier)
-
-  # Ending navigation must not leave the last turn's direction behind.
-  planner.params_memory.values["NavInstructionState"] = {"valid": False}
-  update_vcruise(vcruise, sm, toggles, now=0.1, v_ego=20.0)
-  assert vcruise.nav_turn_target == 0.0
-  assert (vcruise.nav_turn_maneuver, vcruise.nav_turn_modifier) == ("", "")
-
-
 def test_nav_turn_speed_control_begins_before_reported_intersection_approach():
   _, vcruise = make_vcruise(nav_state={
     "valid": True,

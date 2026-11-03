@@ -324,7 +324,8 @@ class UpstreamCarExtras:
   def __init__(self):
     from openpilot.selfdrive.ui.layouts.settings.starpilot.vehicle import StarPilotVehicleSettingsLayout
     from openpilot.selfdrive.ui.lib.starpilot_state import starpilot_state
-    self._layout = StarPilotVehicleSettingsLayout()
+    from openpilot.selfdrive.ui.tandem.settings.controllers import confirmed_controller
+    self._layout = confirmed_controller(StarPilotVehicleSettingsLayout)()
     self._state = starpilot_state
 
   def extras(self) -> list[CarExtra]:
@@ -362,12 +363,10 @@ class UpstreamCarExtras:
     return self._layout._params.get_bool(key)
 
   def toggle(self, key: str) -> None:
-    from openpilot.selfdrive.ui.tandem.settings.upstream import confirmed
-    confirmed(lambda: self._layout._on_toggle(key))   # our dialog asked first where upstream would
+    self._layout.run_confirmed("disable_longitudinal", lambda: self._layout._on_toggle(key))
 
   def flash(self, key: str) -> None:
-    from openpilot.selfdrive.ui.tandem.settings.upstream import confirmed
-    confirmed(lambda: self._layout._on_panda_firmware_toggle(key, ""))
+    self._layout.run_confirmed("flash_panda", lambda: self._layout._on_panda_firmware_toggle(key, ""))
 
   def timer(self) -> int:
     return self._layout._params.get_int("LockDoorsTimer")

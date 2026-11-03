@@ -1,11 +1,9 @@
 from openpilot.common.params import Params
 from openpilot.selfdrive.ui.lib.starpilot_visuals import LeadInfoMode, lead_indicator_enabled, lead_info_mode
-from openpilot.selfdrive.ui.lib.ui_param_cache import shared_ui_params
 from openpilot.selfdrive.ui.mici.widgets.button import BigButton, BigParamControl, BigToggle
 from openpilot.selfdrive.ui.mici.widgets.dialog import BigDialog, BigMultiOptionDialog
 from openpilot.system.ui.lib.application import gui_app
 from openpilot.system.ui.widgets.scroller import NavScroller
-from openpilot.starpilot.common.starpilot_variables import update_starpilot_toggles
 
 CAMERA_VIEW_LABELS = ["Auto", "Driver", "Standard", "Wide", "None"]
 LEAD_INFO_LABELS = {
@@ -91,50 +89,6 @@ class LeadInfoBigButton(BigButton):
     gui_app.push_widget(dialog)
 
 
-class StarPilotBigParamControl(BigParamControl):
-  """A param toggle whose change must also refresh StarPilot's toggles."""
-
-  def _handle_mouse_release(self, mouse_pos):
-    super()._handle_mouse_release(mouse_pos)
-    update_starpilot_toggles()
-
-
-class TurnSignalAnimationBigButton(BigButton):
-  def __init__(self):
-    super().__init__("turn signal animation", "", gui_app.texture("icons_mici/onroad/eye_fill.png", 64, 64))
-    self._params = shared_ui_params()
-    self.set_click_callback(self._show_selector)
-    self.refresh()
-
-  def refresh(self):
-    slug = self._params.get("SignalAnimation", encoding="utf-8") or "stock"
-    enabled = self._params.get_bool("CustomThemes") and slug not in ("stock", "none")
-    self.set_value(slug.replace("_", " ") if enabled else "none")
-
-  def _show_selector(self):
-    options = {"None": "stock", "Sequential": "sequential", "Flow": "flow", "Open Flow": "open_flow", "Glide": "glide",
-               "Frog": "frog", "Pouncing Cat": "pouncing_cat", "Shooting Star": "shooting_star",
-               "Bouncing Ball": "bouncing_ball"}
-    slug = self._params.get("SignalAnimation", encoding="utf-8") or "stock"
-    if slug not in ("none", *options.values()):
-      options[slug] = slug
-    current = next((label for label, value in options.items() if value == slug), "None")
-    dialog_holder: dict[str, BigMultiOptionDialog] = {}
-
-    def on_confirm():
-      selected = options[dialog_holder["dialog"].get_selected_option()]
-      self._params.put("SignalAnimation", selected)
-      if selected != "stock":
-        self._params.put_bool("RandomThemes", False)
-        self._params.put_bool("CustomThemes", True)
-      update_starpilot_toggles()
-      self.refresh()
-
-    dialog = BigMultiOptionDialog(options=list(options), default=current, right_btn_callback=on_confirm)
-    dialog_holder["dialog"] = dialog
-    gui_app.push_widget(dialog)
-
-
 class VisualsLayoutMici(NavScroller):
   def __init__(self):
     super().__init__()
@@ -144,8 +98,6 @@ class VisualsLayoutMici(NavScroller):
     self._stock_confidence_ball_btn = BigParamControl("stock confidence ball", "StockConfidenceBallWidget")
     self._torque_bar_btn = BigParamControl("torque bar", "EnableTorqueBarWidget")
     self._rainbow_path_btn = BigParamControl("rainbow road", "RainbowPath")
-    self._turn_signal_animation_btn = TurnSignalAnimationBigButton()
-    self._holiday_themes_btn = StarPilotBigParamControl("holiday themes", "HolidayThemes")
     self._lead_indicator_btn = LeadIndicatorBigButton()
     self._lead_info_btn = LeadInfoBigButton()
     self._speed_limit_signs_btn = BigParamControl("show speed limits", "ShowSpeedLimits")
@@ -160,8 +112,6 @@ class VisualsLayoutMici(NavScroller):
       self._stock_confidence_ball_btn,
       self._torque_bar_btn,
       self._rainbow_path_btn,
-      self._turn_signal_animation_btn,
-      self._holiday_themes_btn,
       self._lead_indicator_btn,
       self._lead_info_btn,
       self._speed_limit_signs_btn,
@@ -180,8 +130,6 @@ class VisualsLayoutMici(NavScroller):
 
   def _refresh(self):
     self._camera_view_btn.refresh()
-    self._turn_signal_animation_btn.refresh()
-    self._holiday_themes_btn.refresh()
     self._lead_indicator_btn.refresh()
     self._lead_info_btn.refresh()
     self._lead_info_btn.set_enabled(lead_indicator_enabled(self._lead_info_btn.params, hide_by_default=True))

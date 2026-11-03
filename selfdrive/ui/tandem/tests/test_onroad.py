@@ -2,6 +2,7 @@ from types import SimpleNamespace
 
 import pytest
 from cereal import car, custom, log
+from openpilot.starpilot.tandem.state import NAV_TURN
 
 from openpilot.selfdrive.ui.tandem.onroad.layers import AT_LIMIT, COMFORTABLE, LIMIT_HOLD, WORKING, Headroom
 from openpilot.selfdrive.ui.tandem.onroad.status import ChipPicker, ChipTone, Snapshot, chip_for, snapshot, weather_name
@@ -64,8 +65,7 @@ def test_snapshot_accepts_live_model_lane_change_enums(lane_state, expected, dir
 @pytest.mark.parametrize("hide_turn_banner", [False, True])
 def test_turn_chip_follows_actual_slowdown_then_turn(direction, hide_turn_banner):
   cs = car.CarState.new_message(vEgo=12.0, aEgo=0.0)
-  plan = custom.StarPilotPlan.new_message(lateralCheck=True, experimentalMode=True, vCruise=8.0,
-                                         navTurnManeuver="turn", navTurnModifier=direction)
+  plan = custom.StarPilotPlan.new_message(lateralCheck=True, experimentalMode=True, vCruise=8.0)
   state = SimpleNamespace(sm=StatusMessages(carState=cs, starpilotPlan=plan), engaged=True, is_metric=False,
                           always_on_lateral_active=False, starpilot_toggles={"hide_turning_banner": hide_turn_banner})
   picker = ChipPicker()
@@ -74,7 +74,7 @@ def test_turn_chip_follows_actual_slowdown_then_turn(direction, hide_turn_banner
   assert picker.update(snapshot(state, nav_active=True), 0.0, False) is None
   cs.aEgo = -0.5
   assert picker.update(snapshot(state, nav_active=True), 0.1, False) is None
-  plan.navTurnControllingSpeed = True
+  NAV_TURN.write({"active": True, "maneuver": "turn", "modifier": direction}, now=0.0)
   slowing = picker.update(snapshot(state, nav_active=True), 0.2, False)
   assert (slowing.label, slowing.icon) == ("Slowing for turn", f"turn_{direction}")
 
@@ -88,11 +88,11 @@ def test_turn_chip_follows_actual_slowdown_then_turn(direction, hide_turn_banner
 
   # Clear after the normal hold when the maneuver has ended.
   plan.starpilotEvents = []
-  plan.navTurnControllingSpeed = False
+  NAV_TURN.write({"active": False, "maneuver": "", "modifier": ""}, now=0.0)
   assert picker.update(snapshot(state, nav_active=True), 2.6, False) is None
 
   # Braking for something else below the turn's target is not a turn slowdown.
-  plan.navTurnControllingSpeed = True
+  NAV_TURN.write({"active": True, "maneuver": "turn", "modifier": direction}, now=0.0)
   cs.vEgo, cs.aEgo = 6.0, -0.5
   assert not snapshot(state, nav_active=True).nav_turn
 
@@ -103,7 +103,7 @@ def test_turn_chip_follows_actual_slowdown_then_turn(direction, hide_turn_banner
 def test_turn_chip_without_slowdown_when_driver_operates_pedals(direction, pedal, acceleration, nav_active):
   cs = car.CarState.new_message(vEgo=8.0, aEgo=acceleration, gasPressed=pedal == "gas", brakePressed=pedal == "brake")
   control = car.CarControl.new_message(enabled=False, latActive=True, longActive=False)
-  plan = custom.StarPilotPlan.new_message(experimentalMode=False, navTurnControllingSpeed=False)
+  plan = custom.StarPilotPlan.new_message(experimentalMode=False)
   state = SimpleNamespace(sm=StatusMessages(carState=cs, carControl=control, starpilotPlan=plan), engaged=False,
                           is_metric=False, always_on_lateral_active=True, starpilot_toggles={"hide_turning_banner": True})
   picker = ChipPicker()
@@ -269,8 +269,8 @@ def test_weather_chip_only_when_its_preset_adds_distance():
 @pytest.mark.parametrize("lateral_check,expected", [(True, "turn"), (False, "pause_held")])
 def test_live_planner_steering_gate_keeps_priority_over_turn_and_weather(lateral_check, expected):
   cs = car.CarState.new_message(vEgo=12.0, aEgo=-0.5)
-  plan = custom.StarPilotPlan.new_message(lateralCheck=lateral_check, vCruise=8.0, navTurnControllingSpeed=True,
-                                         navTurnManeuver="turn", navTurnModifier="left", weatherId=501)
+  plan = custom.StarPilotPlan.new_message(lateralCheck=lateral_check, vCruise=8.0, weatherId=501)
+  NAV_TURN.write({"active": True, "maneuver": "turn", "modifier": "left"}, now=0.0)
   with custom.StarPilotPlan.from_bytes(plan.to_bytes()) as received:
     state = SimpleNamespace(sm=StatusMessages(carState=cs, starpilotPlan=received), engaged=True, is_metric=False,
                             always_on_lateral_active=False,

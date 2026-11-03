@@ -46,3 +46,13 @@ def test_title_and_action_are_ours():
   kb.set_title("Discord username", "Optional")
   kb.set_action("Next")
   assert (kb._title_text, kb._subtitle_text, kb.action) == ("Discord username", "Optional", "Next")
+
+
+def test_field_uses_its_own_face_for_the_text_and_cursor(monkeypatch):
+  from openpilot.system.ui.widgets.inputbox import InputBox
+
+  own_font, upstream_font = object(), object()
+  monkeypatch.setattr(K.draw, "_face", lambda text, face: own_font)
+  monkeypatch.setattr(K.upstream.gui_app, "font", lambda *args: upstream_font)
+  assert K._Field()._get_font() is own_font
+  assert InputBox()._get_font() is upstream_font

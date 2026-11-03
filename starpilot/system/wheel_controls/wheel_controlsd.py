@@ -371,16 +371,15 @@ def start_learning(slot: int, params_memory: Params | None = None, params: Param
 
 def cancel_learning(params_memory: Params | None = None, params: Params | None = None) -> None:
   (params_memory or Params(memory=True)).remove(LEARN_SLOT_PARAM)
-  if params is not None and params.get_bool(ENABLED_PARAM) and not load_mappings(params) and not selected_joystick_device(params):
+  if params is not None and params.get_bool(ENABLED_PARAM) and not load_mappings(params):
     params.put_bool(ENABLED_PARAM, False)
 
 
 def start_testing(params_memory: Params | None = None, params: Params | None = None) -> None:
-  """Capture button presses until stop_testing(), including onroad and before any buttons are mapped.
-
-  Testing is temporary: the manager runs the listener for this request without enabling normal mapped actions.
-  params is retained for callers using the existing API.
-  """
+  params = params or Params(return_defaults=True)
+  if not load_mappings(params):
+    raise ValueError("Map at least one button before testing")
+  params.put_bool(ENABLED_PARAM, True)
   (params_memory or Params(memory=True)).put_bool(TEST_ACTIVE_PARAM, True)
 
 
@@ -577,8 +576,15 @@ class WheelControlsDaemon:
       cancel_learning(self.params_memory, self.params)
       self.learning_slot = None
 
+  def _testing_allowed(self) -> bool:
+    return self.params.get_bool("IsOffroad")
+
   def _update_testing(self) -> None:
     requested = self.params_memory.get_bool(TEST_ACTIVE_PARAM)
+    if not self._testing_allowed():
+      stop_testing(self.params_memory)
+      self.testing = False
+      return
     if requested and not self.testing:
       self.testing = True
       self.last_tested = None
@@ -586,10 +592,6 @@ class WheelControlsDaemon:
       self.testing = False
 
   def _handle_key(self, source: InputSource, code: int) -> None:
-    # The screen can open or close while select() is waiting. Apply its current request before dispatching this press.
-    self._update_testing()
-    if self.learning_slot is not None and self.params_memory.get_int(LEARN_SLOT_PARAM) != self.learning_slot + 1:
-      self.learning_slot = None
     if source.device_id == selected_joystick_device(self.params):
       return
     if self.learning_slot is not None:
@@ -705,7 +707,8 @@ class WheelControlsDaemon:
 
 
 def main() -> None:
-  WheelControlsDaemon().run()
+  from openpilot.starpilot.tandem.wheel import daemon_type
+  daemon_type(WheelControlsDaemon)().run()
 
 
 if __name__ == "__main__":

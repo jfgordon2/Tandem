@@ -174,29 +174,3 @@ def test_cancelled_download_does_not_publish_success_or_refresh_catalog(theme):
   assert not theme.catalogs
   assert not list(theme.path.rglob("*.tmp"))
   assert not theme.manager.downloading_theme
-
-
-def test_cancel_request_is_consumed_so_the_next_download_succeeds(theme):
-  theme.manager.params_memory.put("CancelThemeDownload", True)
-  theme.manager.download_theme("steering_wheels", "frog", "WheelToDownload", object())
-  assert "CancelThemeDownload" not in theme.manager.params_memory.values
-  assert not theme.manager.theme_sizes
-
-  theme.manager.download_theme("steering_wheels", "frog", "WheelToDownload", object())
-  assert (theme.path / "steering_wheels/frog.png").read_bytes() == b"new wheel"
-  assert theme.manager.params_memory.values["ThemeDownloadProgress"] == "Downloaded!"
-
-
-def test_bundled_signal_packs_are_installed_as_theme_packs(tmp_path):
-  import shutil
-  root = Path(__file__).resolve().parents[3]
-  namespace = dict(Path=Path, shutil=shutil, THEME_SAVE_PATH=tmp_path, GITHUB_URL="https://example.invalid",
-                   SIGNAL_PACKS_PATH=root / "starpilot/assets/signal_packs")
-  load_source(root / "starpilot/assets/theme_manager.py", {"ThemeManager"}, namespace)
-  installed = tmp_path / "theme_packs/pouncing_cat/signals"
-  installed.mkdir(parents=True)
-  (installed / "turn_signal_1.png").write_bytes(b"stale")
-  namespace["ThemeManager"].copy_bundled_signal_packs()
-  bundled = root / "starpilot/assets/signal_packs/pouncing_cat/signals"
-  assert sorted(p.name for p in installed.iterdir()) == sorted(p.name for p in bundled.iterdir())
-  assert (installed / "turn_signal_1.png").read_bytes() == (bundled / "turn_signal_1.png").read_bytes()

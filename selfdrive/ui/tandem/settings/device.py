@@ -17,7 +17,6 @@ from openpilot.selfdrive.ui.tandem.blocks import Card, Columns, Label
 from openpilot.selfdrive.ui.tandem.controls import Button, ButtonRow, ButtonStyle
 from openpilot.selfdrive.ui.tandem.layout import Align, inset, place
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, SectionHeader, SettingRow
-from openpilot.selfdrive.ui.tandem.settings.upstream import confirmed
 from openpilot.selfdrive.ui.tandem.i18n import N_
 
 
@@ -272,7 +271,8 @@ class UpstreamDevice:
     from openpilot.selfdrive.ui.layouts.settings.device import DeviceLayout
     from openpilot.selfdrive.ui.ui_state import ui_state
     from openpilot.system.hardware import TICI
-    self._layout = DeviceLayout()
+    from openpilot.selfdrive.ui.tandem.settings.controllers import confirmed_controller
+    self._layout = confirmed_controller(DeviceLayout)()
     self._ui_state = ui_state
     self._params = ui_state.ui_params
     self._tici = TICI
@@ -375,7 +375,7 @@ class UpstreamDevice:
     gui_app.push_widget(self._camera)
 
   def recalibrate(self) -> None:
-    confirmed(self._layout._reset_calibration_prompt)
+    self._layout.run_confirmed("reset_calibration", self._layout._reset_calibration_prompt)
 
   def review_guide(self) -> None:
     self._layout._on_review_training_guide()
@@ -429,7 +429,7 @@ class UpstreamDevice:
     self._layout._unpair_galaxy(DialogResult.CONFIRM)   # our page has already asked
 
   def reset_driver_monitoring(self) -> None:
-    confirmed(self._layout._reset_driver_monitoring_prompt)
+    self._layout.run_confirmed("reset_driver_monitoring", self._layout._reset_driver_monitoring_prompt)
 
   def regulatory(self) -> None:
     self._layout._on_regulatory()

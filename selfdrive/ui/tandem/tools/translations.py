@@ -103,6 +103,10 @@ def strings() -> dict[str, Entry]:
   for name in UPSTREAM:
     if (ROOT / name).is_file():
       _collect(found, ROOT / name, name, UPSTREAM_CALLS, upstream=True)
+  if "{} region selected" in found:
+    # DownloadView draws the controller's summary without " selected". Preserve its plural forms too.
+    entry = found.setdefault("{} region", Entry("{} region", plural="{} regions", drawn=True))
+    entry.where.append("settings/maps.py:DownloadView (summary without selected)")
   if (ROOT / UPSTREAM_ALERTS).is_file():
     import json
     for alert_key, alert in json.loads((ROOT / UPSTREAM_ALERTS).read_text(encoding="utf-8")).items():

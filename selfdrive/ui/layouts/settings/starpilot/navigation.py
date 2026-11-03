@@ -13,23 +13,15 @@ import pyray as rl
 import requests
 
 from openpilot.common.params import Params
-from openpilot.selfdrive.ui.lib import aether_style as AS
 from openpilot.selfdrive.ui.layouts.settings.starpilot.aethergrid import (
   AETHER_LIST_METRICS,
   AetherListColors,
   PanelManagerView,
   DEFAULT_PANEL_STYLE,
-  GROUP_OVERHEAD,
-  SECTION_GAP,
-  SETTINGS_ROW_VALUE_FONT_SIZE,
-  build_settings_group_frame,
   draw_action_pill,
+  draw_empty_state_card,
   draw_section_header,
-  draw_settings_card_row,
-  draw_settings_empty_state,
-  draw_settings_group,
-  draw_settings_group_heading,
-  settings_empty_state_height,
+  draw_selection_list_row,
   with_alpha,
 )
 from openpilot.selfdrive.ui.layouts.settings.starpilot.panel import FrameCachedParams, _SettingsPage
@@ -230,8 +222,16 @@ class MapboxSearchClient:
 PANEL_STYLE = DEFAULT_PANEL_STYLE
 NAVIGATION_METRICS = replace(AETHER_LIST_METRICS, header_height=0)
 
-NAV_ROW_HEIGHT = 160.0  # same grouped row as Map Data's regions and Driving Model's models
+NAV_INSET = 18.0
+NAV_GAP = 12.0
+NAV_SEARCH_HEIGHT = 110.0
+NAV_SUMMARY_HEIGHT = 124.0
+NAV_ACTION_HEIGHT = 78.0
+NAV_SECTION_HEIGHT = 72.0
+NAV_ROW_HEIGHT = 124.0
+NAV_EMPTY_HEIGHT = 208.0
 NAV_ACTION_COLUMNS = 3
+NAV_ACTION_GAP = 12.0
 
 
 class NavigationManagerView(PanelManagerView):
@@ -605,141 +605,257 @@ class StarPilotNavigationLayout(_SettingsPage):
       ])
     return definitions
 
-  def _action_buttons_height(self) -> float:
-    count = len(self._action_definitions())
-    rows = (count + NAV_ACTION_COLUMNS - 1) // NAV_ACTION_COLUMNS
-    return rows * AS.MIN_TOUCH + max(0, rows - 1) * AS.SETTINGS_TILE_GAP
-
-  def _draw_action_buttons(self, rect: rl.Rectangle, manager: NavigationManagerView) -> None:
-    """Favorite / Home / Work / Rename / Remove as the shared 112 px pills, three to a row."""
-    gap = AS.SETTINGS_TILE_GAP
-    button_width = (rect.width - gap * (NAV_ACTION_COLUMNS - 1)) / NAV_ACTION_COLUMNS
-    for index, (target_id, label, enabled, danger) in enumerate(self._action_definitions()):
-      row, column = divmod(index, NAV_ACTION_COLUMNS)
-      button = rl.Rectangle(rect.x + column * (button_width + gap), rect.y + row * (AS.MIN_TOUCH + gap), button_width, AS.MIN_TOUCH)
-      hovered, pressed = manager._interactive_state(target_id, button)
+  def _draw_action_buttons(self, x: float, y: float, width: float, manager: NavigationManagerView) -> float:
+    definitions = self._action_definitions()
+    if not definitions:
+      return 0.0
+    button_width = (width - NAV_ACTION_GAP * (NAV_ACTION_COLUMNS - 1)) / NAV_ACTION_COLUMNS
+    rows = (len(definitions) + NAV_ACTION_COLUMNS - 1) // NAV_ACTION_COLUMNS
+    for index, (target_id, label, enabled, danger) in enumerate(definitions):
+      row = index // NAV_ACTION_COLUMNS
+      column = index % NAV_ACTION_COLUMNS
+      rect = rl.Rectangle(
+        x + column * (button_width + NAV_ACTION_GAP),
+        y + row * (NAV_ACTION_HEIGHT + NAV_ACTION_GAP),
+        button_width,
+        NAV_ACTION_HEIGHT,
+      )
+      hovered, pressed = manager._interactive_state(target_id, rect, pad_y=4)
       if danger:
-        fill, border = AetherListColors.DANGER_SOFT, with_alpha(AetherListColors.DANGER, 140)
+        fill = with_alpha(AetherListColors.DANGER, 52 if enabled and (hovered or pressed) else 26 if enabled else 10)
+        border = with_alpha(AetherListColors.DANGER, 120 if enabled else 35)
+        text_color = AetherListColors.DANGER if enabled else AetherListColors.MUTED
+      elif target_id == "action:start":
+        fill = with_alpha(AetherListColors.SUCCESS, 64 if enabled and (hovered or pressed) else 34 if enabled else 10)
+        border = with_alpha(AetherListColors.SUCCESS, 130 if enabled else 35)
+        text_color = AetherListColors.SUCCESS if enabled else AetherListColors.MUTED
       else:
-        fill, border = (with_alpha(AS.ACCENT, 110) if pressed else AS.ACCENT_TINT), AS.ACCENT_EDGE
-      if not enabled:
-        fill, border = with_alpha(AS.TRACK_OFF, 120), AS.SETTINGS_TILE_BORDER
-      draw_action_pill(button, label, fill, border, AS.TEXT if enabled else AS.TEXT_DISABLED,
-                       font_size=SETTINGS_ROW_VALUE_FONT_SIZE)
+        fill = with_alpha(AetherListColors.PRIMARY, 54 if enabled and (hovered or pressed) else 24 if enabled else 8)
+        border = with_alpha(AetherListColors.PRIMARY, 110 if enabled else 28)
+        text_color = AetherListColors.HEADER if enabled else AetherListColors.MUTED
+      draw_action_pill(rect, label, fill, border, text_color, font_size=26)
+    return rows * NAV_ACTION_HEIGHT + max(0, rows - 1) * NAV_ACTION_GAP
 
-  def _draw_destination_row(self, rect: rl.Rectangle, manager: NavigationManagerView) -> None:
+  def _draw_summary_row(self, rect: rl.Rectangle, manager: NavigationManagerView) -> None:
     if self._draft_destination is not None:
       title = tr("Ready to navigate")
       subtitle = str(self._draft_destination.get("place_name") or self._draft_destination.get("name") or "")
-      enabled = self._routing_available()
-      action_text = tr("Start") if enabled else tr("Unavailable")
-      target_id, tone, current = "action:start", AetherListColors.SUCCESS, False
+      action_text = tr("Start") if self._routing_available() else tr("Unavailable")
+      target_id = "action:start"
+      current = False
     else:
       title = tr("Navigation active")
       subtitle = str(self._active_destination.get("place_name") or self._active_destination.get("name") or "")
-      enabled, action_text = True, tr("Cancel")
-      target_id, tone, current = "action:cancel", AetherListColors.DANGER, True
-    hovered, pressed = manager._interactive_state(target_id, rect)
-    draw_settings_card_row(
-      rect, title=title, subtitle=subtitle, action_text=action_text, hovered=hovered and enabled, pressed=pressed and enabled,
-      current=current, grouped=True, is_last=True, style=PANEL_STYLE,
-      action_text_size=SETTINGS_ROW_VALUE_FONT_SIZE, action_height=AS.VALUE_PILL_HEIGHT,
-      action_fill=with_alpha(tone, 60 if enabled else 16), action_border=with_alpha(tone, 170 if enabled else 50),
-      action_text_color=AS.TEXT if enabled else AS.TEXT_DISABLED,
+      action_text = tr("Cancel")
+      target_id = "action:cancel"
+      current = True
+
+    action_width = 260
+    action_rect = rl.Rectangle(rect.x + rect.width - action_width, rect.y, action_width, rect.height)
+    enabled = target_id != "action:start" or self._routing_available()
+    hovered, pressed = manager._interactive_state(target_id, action_rect, pad_y=4)
+    draw_selection_list_row(
+      rect,
+      title=title,
+      subtitle=subtitle,
+      action_text=action_text,
+      current=current,
+      hovered=hovered,
+      pressed=pressed,
+      action_width=action_width,
+      action_pill=True,
+      action_pill_height=64,
+      action_pill_width=220,
+      action_fill=with_alpha(AetherListColors.DANGER if target_id == "action:cancel" else AetherListColors.SUCCESS, 38 if enabled else 10),
+      action_border=with_alpha(AetherListColors.DANGER if target_id == "action:cancel" else AetherListColors.SUCCESS, 85 if enabled else 25),
+      action_text_color=AetherListColors.HEADER if enabled else AetherListColors.MUTED,
+      current_bg=AetherListColors.CURRENT_BG,
+      current_border=AetherListColors.CURRENT_BORDER,
+      row_separator=PANEL_STYLE.divider_color,
     )
 
-  def _destination_rows(self) -> list[tuple[str, list[tuple[str, str, str, bool]]]]:
-    """(heading, rows) for results, favorites and recents; each row is (target, title, subtitle, current)."""
-    groups = []
-    if self._search_results:
-      groups.append((tr("Search results"), [
-        (f"result:{index}", result.name, result.subtitle or tr("Destination"),
-         self._same_destination(self._draft_destination, result.to_destination()) if result.has_coordinates else False)
-        for index, result in enumerate(self._search_results)
-      ]))
-    if self._favorites:
-      rows = []
-      for index, favorite in enumerate(ordered_favorite_destinations(self._favorites)):
-        badges = [label for key, label in (("is_home", tr("Home")), ("is_work", tr("Work"))) if favorite.get(key)]
-        rows.append((f"favorite:{favorite.get('id') or index}", str(favorite.get("name") or tr("Unnamed favorite")),
-                     " • ".join(badges) or tr("Favorite destination"), self._same_destination(self._draft_destination, favorite)))
-      groups.append((tr("Favorite destinations"), rows))
-    if self._recent_destinations:
-      groups.append((tr("Recent destinations"), [
-        (f"recent:{index}", str(recent.get("place_name") or recent.get("name") or tr("Recent destination")),
-         tr("Recent destination"), self._same_destination(self._draft_destination, recent))
-        for index, recent in enumerate(self._recent_destinations)
-      ]))
-    return groups
+  def _draw_navigation_content(self, scroll_rect: rl.Rectangle, content_width: float, scroll_offset: float, manager: NavigationManagerView):
+    x = scroll_rect.x + NAV_INSET
+    width = max(1.0, content_width - NAV_INSET * 2)
+    y = scroll_rect.y + scroll_offset + NAV_INSET
 
-  def _status_message(self) -> tuple[str, str] | None:
-    """Loading, error or empty state shown in place of destination lists."""
+    search_rect = rl.Rectangle(x, y, width, NAV_SEARCH_HEIGHT)
+    search_hovered, search_pressed = manager._interactive_state("action:search", search_rect, pad_y=4)
+    draw_selection_list_row(
+      search_rect,
+      title=self._query or tr("Search for a destination"),
+      subtitle=tr("Use the on-device keyboard to search Mapbox locations"),
+      action_text=tr("Search"),
+      hovered=search_hovered,
+      pressed=search_pressed,
+      is_last=False,
+      action_width=220,
+      action_pill=True,
+      action_pill_height=64,
+      action_pill_width=180,
+      row_separator=PANEL_STYLE.divider_color,
+    )
+    y += NAV_SEARCH_HEIGHT + NAV_GAP
+
     if self._search_loading:
-      return tr("Searching..."), tr("Looking up destinations")
-    if self._search_error:
-      return tr("Search unavailable"), self._search_error
-    if not self._search_results and not self._favorites and not self._recent_destinations:
-      if self._query:
-        return tr("No matching destinations"), tr("Try a different place or address.")
-      return tr("No destinations yet"), tr("Search for a place or address to begin.")
-    return None
-
-  def _navigation_blocks(self) -> list[tuple[float, Any]]:
-    """(height, draw(rect, manager)) for each block on the page, top to bottom."""
-    blocks: list[tuple[float, Any]] = []
-
-    def search(rect, manager):
-      body = draw_settings_group(rect, tr("Destination"), style=PANEL_STYLE)
-      hovered, pressed = manager._interactive_state("action:search", body)
-      draw_settings_card_row(body, title=self._query or tr("Search for a destination"),
-                             subtitle=tr("Use the on-device keyboard to search Mapbox locations"), action_text=tr("Search"),
-                             hovered=hovered, pressed=pressed, grouped=True, is_last=True, style=PANEL_STYLE,
-                             action_text_size=SETTINGS_ROW_VALUE_FONT_SIZE, action_height=AS.VALUE_PILL_HEIGHT)
-    blocks.append((GROUP_OVERHEAD + NAV_ROW_HEIGHT, search))
+      draw_empty_state_card(
+        rl.Rectangle(x, y, width, NAV_EMPTY_HEIGHT),
+        tr("Searching…"),
+        tr("Looking up destinations"),
+        title_size=30,
+        border=with_alpha(PANEL_STYLE.surface_border, 14),
+        style=PANEL_STYLE,
+      )
+      y += NAV_EMPTY_HEIGHT + NAV_GAP
+    elif self._search_error:
+      draw_empty_state_card(
+        rl.Rectangle(x, y, width, NAV_EMPTY_HEIGHT),
+        tr("Search unavailable"),
+        self._search_error,
+        title_size=30,
+        border=with_alpha(AetherListColors.WARNING, 45),
+        style=PANEL_STYLE,
+      )
+      y += NAV_EMPTY_HEIGHT + NAV_GAP
 
     if self._draft_destination is not None or self._active_destination is not None:
-      def destination(rect, manager):
-        body = draw_settings_group(rl.Rectangle(rect.x, rect.y, rect.width, GROUP_OVERHEAD + NAV_ROW_HEIGHT),
-                                   tr("Route"), style=PANEL_STYLE)
-        self._draw_destination_row(body, manager)
-        if self._action_definitions():
-          self._draw_action_buttons(rl.Rectangle(rect.x, body.y + body.height + AS.SETTINGS_ROW_GAP, rect.width,
-                                                 self._action_buttons_height()), manager)
-      actions_h = self._action_buttons_height()
-      blocks.append((GROUP_OVERHEAD + NAV_ROW_HEIGHT + (AS.SETTINGS_ROW_GAP + actions_h if actions_h else 0), destination))
+      summary_rect = rl.Rectangle(x, y, width, NAV_SUMMARY_HEIGHT)
+      self._draw_summary_row(summary_rect, manager)
+      y += NAV_SUMMARY_HEIGHT + NAV_GAP
+      action_height = self._draw_action_buttons(x, y, width, manager)
+      if action_height > 0:
+        y += action_height + NAV_GAP
 
-    status = self._status_message()
-    if status is not None:
-      def message(rect, manager, status=status):
-        body = draw_settings_group_heading(rect, tr("Destinations"), style=PANEL_STYLE)
-        draw_settings_empty_state(body, status[0], status[1], style=PANEL_STYLE)
-      blocks.append((GROUP_OVERHEAD + settings_empty_state_height(), message))
+    if self._search_results:
+      draw_section_header(
+        rl.Rectangle(x, y, width, NAV_SECTION_HEIGHT),
+        tr("Search results"),
+        trailing_text=str(len(self._search_results)),
+        title_size=30,
+        trailing_size=24,
+        style=PANEL_STYLE,
+      )
+      y += NAV_SECTION_HEIGHT
+      for index, result in enumerate(self._search_results):
+        row_rect = rl.Rectangle(x, y, width, NAV_ROW_HEIGHT)
+        target_id = f"result:{index}"
+        hovered, pressed = manager._interactive_state(target_id, row_rect)
+        draw_selection_list_row(
+          row_rect,
+          title=result.name,
+          subtitle=result.subtitle or tr("Destination"),
+          action_text=tr("Select"),
+          current=self._same_destination(self._draft_destination, result.to_destination()) if result.has_coordinates else False,
+          hovered=hovered,
+          pressed=pressed,
+          is_last=index == len(self._search_results) - 1,
+          action_width=190,
+          action_pill=True,
+          action_pill_height=58,
+          action_pill_width=150,
+          row_separator=PANEL_STYLE.divider_color,
+        )
+        y += NAV_ROW_HEIGHT
+      y += NAV_GAP
 
-    if not self._search_loading and not self._search_error:
-      for heading, rows in self._destination_rows():
-        def group(rect, manager, heading=heading, rows=rows):
-          body = draw_settings_group(rect, heading, style=PANEL_STYLE)
-          draw_section_header(build_settings_group_frame(rect).heading, "", trailing_text=str(len(rows)),
-                              trailing_size=AS.SETTINGS_GROUP_HEADING_SIZE - 4, style=PANEL_STYLE)
-          for index, (target_id, title, subtitle, current) in enumerate(rows):
-            row = rl.Rectangle(body.x, body.y + index * NAV_ROW_HEIGHT, body.width, NAV_ROW_HEIGHT)
-            hovered, pressed = manager._interactive_state(target_id, row)
-            draw_settings_card_row(row, title=title, subtitle=subtitle, action_text=tr("Select"), hovered=hovered,
-                                   pressed=pressed, current=current, grouped=True, is_last=index == len(rows) - 1,
-                                   style=PANEL_STYLE, action_text_size=SETTINGS_ROW_VALUE_FONT_SIZE,
-                                   action_height=AS.VALUE_PILL_HEIGHT)
-        blocks.append((GROUP_OVERHEAD + len(rows) * NAV_ROW_HEIGHT, group))
-    return blocks
+    if self._favorites:
+      draw_section_header(
+        rl.Rectangle(x, y, width, NAV_SECTION_HEIGHT),
+        tr("Favorite destinations"),
+        trailing_text=str(len(self._favorites)),
+        title_size=30,
+        trailing_size=24,
+        style=PANEL_STYLE,
+      )
+      y += NAV_SECTION_HEIGHT
+      ordered_favorites = ordered_favorite_destinations(self._favorites)
+      for index, favorite in enumerate(ordered_favorites):
+        row_rect = rl.Rectangle(x, y, width, NAV_ROW_HEIGHT)
+        target_id = f"favorite:{favorite.get('id') or index}"
+        hovered, pressed = manager._interactive_state(target_id, row_rect)
+        badges = []
+        if favorite.get("is_home"):
+          badges.append(tr("Home"))
+        if favorite.get("is_work"):
+          badges.append(tr("Work"))
+        draw_selection_list_row(
+          row_rect,
+          title=str(favorite.get("name") or tr("Unnamed favorite")),
+          subtitle=" • ".join(badges) or tr("Favorite destination"),
+          action_text=tr("Select"),
+          current=self._same_destination(self._draft_destination, favorite),
+          hovered=hovered,
+          pressed=pressed,
+          is_last=index == len(ordered_favorites) - 1,
+          action_width=190,
+          action_pill=True,
+          action_pill_height=58,
+          action_pill_width=150,
+          row_separator=PANEL_STYLE.divider_color,
+        )
+        y += NAV_ROW_HEIGHT
+      y += NAV_GAP
 
-  def _draw_navigation_content(self, scroll_rect: rl.Rectangle, content_width: float, scroll_offset: float, manager: NavigationManagerView):
-    y = scroll_rect.y + scroll_offset
-    for index, (height, draw) in enumerate(self._navigation_blocks()):
-      if index:
-        y += SECTION_GAP
-      draw(rl.Rectangle(scroll_rect.x, y, content_width, height), manager)
-      y += height
+    if self._recent_destinations:
+      draw_section_header(
+        rl.Rectangle(x, y, width, NAV_SECTION_HEIGHT),
+        tr("Recent destinations"),
+        trailing_text=str(len(self._recent_destinations)),
+        title_size=30,
+        trailing_size=24,
+        style=PANEL_STYLE,
+      )
+      y += NAV_SECTION_HEIGHT
+      for index, recent in enumerate(self._recent_destinations):
+        row_rect = rl.Rectangle(x, y, width, NAV_ROW_HEIGHT)
+        target_id = f"recent:{index}"
+        hovered, pressed = manager._interactive_state(target_id, row_rect)
+        draw_selection_list_row(
+          row_rect,
+          title=str(recent.get("place_name") or recent.get("name") or tr("Recent destination")),
+          subtitle=tr("Recent destination"),
+          action_text=tr("Select"),
+          current=self._same_destination(self._draft_destination, recent),
+          hovered=hovered,
+          pressed=pressed,
+          is_last=index == len(self._recent_destinations) - 1,
+          action_width=190,
+          action_pill=True,
+          action_pill_height=58,
+          action_pill_width=150,
+          row_separator=PANEL_STYLE.divider_color,
+        )
+        y += NAV_ROW_HEIGHT
+
+    if not self._search_results and not self._favorites and not self._recent_destinations and not self._search_loading and not self._search_error:
+      empty_title = tr("No matching destinations") if self._query else tr("No destinations yet")
+      empty_body = tr("Try a different place or address.") if self._query else tr("Search for a place or address to begin.")
+      draw_empty_state_card(
+        rl.Rectangle(x, y, width, NAV_EMPTY_HEIGHT),
+        empty_title,
+        empty_body,
+        title_size=30,
+        border=with_alpha(PANEL_STYLE.surface_border, 14),
+        style=PANEL_STYLE,
+      )
 
   def _measure_navigation_content_height(self, content_width: float) -> float:
     del content_width
-    blocks = self._navigation_blocks()
-    return sum(height for height, _draw in blocks) + SECTION_GAP * max(0, len(blocks) - 1)
+    height = NAV_INSET + NAV_SEARCH_HEIGHT + NAV_GAP
+    if self._search_loading or self._search_error:
+      height += NAV_EMPTY_HEIGHT + NAV_GAP
+    if self._draft_destination is not None or self._active_destination is not None:
+      height += NAV_SUMMARY_HEIGHT + NAV_GAP
+      action_height = len(self._action_definitions())
+      if action_height:
+        action_rows = (action_height + NAV_ACTION_COLUMNS - 1) // NAV_ACTION_COLUMNS
+        height += action_rows * NAV_ACTION_HEIGHT + max(0, action_rows - 1) * NAV_ACTION_GAP + NAV_GAP
+    if self._search_results:
+      height += NAV_SECTION_HEIGHT + len(self._search_results) * NAV_ROW_HEIGHT + NAV_GAP
+    if self._favorites:
+      height += NAV_SECTION_HEIGHT + len(self._favorites) * NAV_ROW_HEIGHT + NAV_GAP
+    if self._recent_destinations:
+      height += NAV_SECTION_HEIGHT + len(self._recent_destinations) * NAV_ROW_HEIGHT + NAV_GAP
+    if not self._search_results and not self._favorites and not self._recent_destinations and not self._search_loading and not self._search_error:
+      height += NAV_EMPTY_HEIGHT
+    return height + NAV_INSET

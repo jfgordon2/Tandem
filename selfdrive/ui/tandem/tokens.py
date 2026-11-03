@@ -160,7 +160,7 @@ ICON_WELL = px(62)
 ONROAD_BAR_HEIGHT = px(92)
 ONROAD_CONTROL_SIZE = px(74)
 STATUS_CHIP_HEIGHT = px(44)
-MIN_TOUCH = 112                         # matches aether_style; mock controls under 58 px grow to this
+MIN_TOUCH = 112                         # mock controls under 58 px grow to this
 
 # ── States ──
 PRESSED_OVERLAY = _hex(N_("FFFFFF"), 20)    # drawn over any control while touched

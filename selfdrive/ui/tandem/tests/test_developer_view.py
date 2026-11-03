@@ -26,6 +26,7 @@ def _ui(toggles):
 
 
 def test_rows_follow_starpilots_switches_and_the_strip_follows_the_pick():
+  D.DEVELOPER_STRIP.set("steer,accel")
   data = D.read(_ui({"cpu_metrics": False, "numerical_temp": True, "gpu_metrics": False, "memory_metrics": True,
                      "show_fps": False, "adjacent_path_metrics": False, "speed_limit_sources": True}),
                 _Params({D.STRIP_PARAM: "steer,accel"}))
@@ -33,6 +34,7 @@ def test_rows_follow_starpilots_switches_and_the_strip_follows_the_pick():
   assert not data.show_lanes and data.show_source
   assert [label for label, _ in data.strip_values()] == ["accel", "steer"]
   # Before StarPilot's toggles arrive, the params decide
+  D.DEVELOPER_STRIP.set(",".join(D.STRIP_DEFAULT))
   data = D.read(_ui({}), _Params({"ShowGPU": True}))
   assert data.show_gpu and not data.show_cpu and data.strip == D.STRIP_DEFAULT
 

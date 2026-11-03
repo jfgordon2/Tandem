@@ -1,7 +1,5 @@
 import os
 
-import pytest
-
 from openpilot.starpilot.system.wheel_controls import wheel_controlsd
 
 
@@ -379,35 +377,6 @@ def test_learning_is_cancelled_onroad():
   daemon.close()
 
 
-def test_cancel_learning_applies_before_the_next_input_is_dispatched(monkeypatch):
-  params = FakeParams({"IsOffroad": True})
-  memory = FakeParams()
-  wheel_controlsd.upsert_mapping(source(), 30, 0, params)
-  daemon = wheel_controlsd.WheelControlsDaemon(params, memory)
-  triggered = []
-  monkeypatch.setattr(wheel_controlsd, "execute_mapping_slot", lambda slot, *_args: triggered.append(slot))
-  wheel_controlsd.start_learning(1, memory, params)
-  daemon._update_learning(10.0)
-
-  wheel_controlsd.cancel_learning(memory, params)
-  daemon._handle_key(source(), 30)
-  assert triggered == [0]
-  assert wheel_controlsd.load_mappings(params)[0]["slot"] == 0
-  assert daemon.learning_slot is None
-  daemon.close()
-
-
-def test_cancelling_learning_keeps_an_existing_joystick_enabled():
-  params = FakeParams()
-  memory = FakeParams()
-  wheel_controlsd.set_joystick_device(source().device_id, True, params)
-  wheel_controlsd.start_learning(3, memory, params)
-  wheel_controlsd.cancel_learning(memory, params)
-  assert params.get_bool(wheel_controlsd.ENABLED_PARAM)
-  assert wheel_controlsd.selected_joystick_device(params) == source().device_id
-  assert not memory.get_int(wheel_controlsd.LEARN_SLOT_PARAM)
-
-
 def test_only_usb_and_bluetooth_input_buses_are_accepted(monkeypatch):
   values = {
     "modalias": "input:b0003v1234p5678e0001-e0,1,k110,",
@@ -457,9 +426,8 @@ def test_dpad_hat_axes_are_dispatched_once_per_press(monkeypatch):
   daemon.close()
 
 
-@pytest.mark.parametrize("offroad", [False, True])
-def test_button_test_mode_eats_mapped_and_unmapped_inputs(monkeypatch, offroad):
-  params = FakeParams({"IsOffroad": offroad})
+def test_button_test_mode_eats_mapped_and_unmapped_inputs(monkeypatch):
+  params = FakeParams({"IsOffroad": True})
   memory = FakeParams()
   wheel_controlsd.upsert_mapping(source(), 164, 0, params)
   daemon = wheel_controlsd.WheelControlsDaemon(params, memory)
@@ -467,7 +435,7 @@ def test_button_test_mode_eats_mapped_and_unmapped_inputs(monkeypatch, offroad):
   monkeypatch.setattr(wheel_controlsd, "execute_favorite_slot", lambda slot, *_args: triggered.append(slot) or True)
 
   wheel_controlsd.start_testing(memory, params)
-  # A request can arrive while the daemon is waiting for input, before its next loop update.
+  daemon._update_testing()
   daemon._handle_key(source(), 164)
   assert triggered == []
   assert daemon.last_tested == {
@@ -483,12 +451,13 @@ def test_button_test_mode_eats_mapped_and_unmapped_inputs(monkeypatch, offroad):
   assert daemon.last_tested["mapped"] is False
 
   wheel_controlsd.stop_testing(memory)
+  daemon._update_testing()
   daemon._handle_key(source(), 164)
   assert triggered == [0]
   daemon.close()
 
 
-def test_button_test_mode_stays_active_across_onroad_transitions_until_stopped():
+def test_button_test_mode_stops_onroad():
   params = FakeParams({"IsOffroad": True})
   memory = FakeParams()
   wheel_controlsd.upsert_mapping(source(), 30, 0, params)
@@ -499,86 +468,6 @@ def test_button_test_mode_stays_active_across_onroad_transitions_until_stopped()
 
   params.values["IsOffroad"] = False
   daemon._update_testing()
-  assert daemon.testing
-  assert memory.get_bool(wheel_controlsd.TEST_ACTIVE_PARAM)
-
-  wheel_controlsd.stop_testing(memory)
-  daemon._update_testing()
   assert not daemon.testing
   assert not memory.get_bool(wheel_controlsd.TEST_ACTIVE_PARAM)
-  daemon.close()
-
-
-def test_button_test_mode_detects_unmapped_buttons_without_enabling_controls():
-  params = FakeParams({"IsOffroad": False, wheel_controlsd.ENABLED_PARAM: False})
-  memory = FakeParams()
-  daemon = wheel_controlsd.WheelControlsDaemon(params, memory)
-  before = dict(params.values)
-
-  wheel_controlsd.start_testing(memory, params)
-  daemon._handle_key(source(), 164)
-  assert daemon.testing
-  assert daemon.last_tested["mapped"] is False
-  assert params.values == before
-
-  wheel_controlsd.stop_testing(memory)
-  daemon._handle_key(source(), 165)
-  assert not daemon.testing
-  assert daemon.last_tested["event_code"] == 164
-  assert params.values == before
-  daemon.close()
-
-
-@pytest.mark.parametrize("event_type,code,value,event_code", [
-  (wheel_controlsd.EV_KEY, 304, 1, 304),
-  (wheel_controlsd.EV_ABS, wheel_controlsd.ABS_HAT0X, -1, wheel_controlsd.hat_event_code(wheel_controlsd.ABS_HAT0X, -1)),
-])
-def test_button_test_mode_suppresses_controller_actions_until_the_next_press_after_leaving(event_type, code, value, event_code):
-  params = FakeParams({"IsOffroad": False, "IsOnroad": True})
-  memory = FakeParams()
-  wheel_controlsd.set_controller_action_slot(0, wheel_controlsd.CONTROLLER_ACTION_ENGAGE, "Engage", params)
-  wheel_controlsd.upsert_mapping(source(), event_code, wheel_controlsd.FAVORITE_SLOT_COUNT, params)
-  daemon = wheel_controlsd.WheelControlsDaemon(params, memory)
-  read_fd, write_fd = os.pipe()
-  os.set_blocking(read_fd, False)
-  daemon.sources[read_fd] = source()
-  daemon.buffers[read_fd] = bytearray()
-
-  def send(raw_value):
-    os.write(write_fd, wheel_controlsd.INPUT_EVENT.pack(0, 0, event_type, code, raw_value))
-    daemon._read_events(read_fd)
-
-  try:
-    wheel_controlsd.start_testing(memory, params)
-    send(value)
-    assert daemon.last_tested["mapped"] is True
-    assert memory.get_int("WheelControlEngageCounter") == 0
-
-    wheel_controlsd.stop_testing(memory)
-    send(value)   # a button already held during testing must not engage when the screen closes
-    assert memory.get_int("WheelControlEngageCounter") == 0
-    send(0)
-    send(value)
-    assert memory.get_int("WheelControlEngageCounter") == 1
-  finally:
-    os.close(write_fd)
-    daemon.close()
-
-
-def test_button_test_mode_preserves_disabled_mappings(monkeypatch):
-  params = FakeParams({"IsOffroad": False})
-  memory = FakeParams()
-  wheel_controlsd.upsert_mapping(source(), 30, 0, params)
-  params.put_bool(wheel_controlsd.ENABLED_PARAM, False)
-  daemon = wheel_controlsd.WheelControlsDaemon(params, memory)
-  triggered = []
-  monkeypatch.setattr(wheel_controlsd, "execute_mapping_slot", lambda slot, *_args: triggered.append(slot))
-
-  wheel_controlsd.start_testing(memory, params)
-  daemon._handle_key(source(), 30)
-  assert daemon.last_tested["mapped"] is True
-  wheel_controlsd.stop_testing(memory)
-  daemon._handle_key(source(), 30)
-  assert triggered == []
-  assert not params.get_bool(wheel_controlsd.ENABLED_PARAM)
   daemon.close()

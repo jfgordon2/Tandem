@@ -181,8 +181,7 @@ class DeviceLayout(Widget):
       self._select_language_dialog = None
 
     self._select_language_dialog = MultiOptionDialog(tr("Select a language"), multilang.languages, multilang.codes[multilang.language],
-                                                      option_font_weight=FontWeight.UNIFONT, callback=handle_language_selection,
-                                                      subtitle=tr("Choose the language used for menus and alerts."))
+                                                      option_font_weight=FontWeight.UNIFONT, callback=handle_language_selection)
     gui_app.push_widget(self._select_language_dialog)
 
   def _show_driver_camera(self):
@@ -190,6 +189,9 @@ class DeviceLayout(Widget):
       self._driver_camera = DriverCameraDialog()
 
     gui_app.push_widget(self._driver_camera)
+
+  def _request_confirmation(self, action, message, label, callback):
+    gui_app.push_widget(ConfirmDialog(message, label, callback=callback))
 
   def _reset_calibration_prompt(self):
     if ui_state.engaged:
@@ -209,8 +211,7 @@ class DeviceLayout(Widget):
       self._params.put_bool("OnroadCycleRequested", True)
       self._update_calib_description()
 
-    dialog = ConfirmDialog(tr("Are you sure you want to reset calibration?"), tr("Reset"), callback=reset_calibration)
-    gui_app.push_widget(dialog)
+    self._request_confirmation("reset_calibration", tr("Are you sure you want to reset calibration?"), tr("Reset"), reset_calibration)
 
   def _reset_driver_monitoring_prompt(self):
     if ui_state.engaged:
@@ -226,8 +227,8 @@ class DeviceLayout(Widget):
       self._params.remove("IsRHDOverride")
       self._params.put_bool("OnroadCycleRequested", True)
 
-    dialog = ConfirmDialog(tr("Are you sure you want to reset driver monitoring calibration?"), tr("Reset"), callback=reset_driver_monitoring)
-    gui_app.push_widget(dialog)
+    self._request_confirmation("reset_driver_monitoring", tr("Are you sure you want to reset driver monitoring calibration?"),
+                               tr("Reset"), reset_driver_monitoring)
 
   def _update_calib_description(self):
     desc = tr(DESCRIPTIONS['reset_calibration'])
@@ -342,8 +343,7 @@ class DeviceLayout(Widget):
         elif self._galaxy_manage_dialog.selection == unpair:
           gui_app.push_widget(ConfirmDialog(tr("Are you sure you want to unpair from Galaxy?"), tr("Unpair"), callback=self._unpair_galaxy))
 
-      self._galaxy_manage_dialog = MultiOptionDialog(tr("Galaxy"), [show_qr, unpair], show_qr, callback=on_select,
-                                                    subtitle=tr("View pairing information or unlink your Galaxy account."))
+      self._galaxy_manage_dialog = MultiOptionDialog(tr("Galaxy"), [show_qr, unpair], show_qr, callback=on_select)
       gui_app.push_widget(self._galaxy_manage_dialog)
       return
 

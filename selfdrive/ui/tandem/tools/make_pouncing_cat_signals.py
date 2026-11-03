@@ -8,13 +8,12 @@ the screen and mirrors them for right turns; the blind-spot image is an alarmed,
 arched-back red cat.
 
 Dev-only dependency: pip install cairosvg
-Usage: python starpilot/tools/make_pouncing_cat_signals.py [output_dir]
+Usage: python selfdrive/ui/tandem/tools/make_pouncing_cat_signals.py [output_dir]
 """
 import math
 import sys
 from pathlib import Path
 
-import cairosvg
 
 W, H = 350, 500
 DEFAULT_OUT = Path(__file__).resolve().parents[1] / "assets/signal_packs/pouncing_cat/signals"
@@ -43,7 +42,7 @@ def unit(dx, dy):
 def polyline(points, color, width, extra=""):
   d = "M" + " L".join(f"{x:.1f},{y:.1f}" for x, y in points)
   return (f'<path d="{d}" fill="none" stroke="{color}" stroke-width="{width}" '
-          f'stroke-linecap="round" stroke-linejoin="round" {extra}/>')
+          + f'stroke-linecap="round" stroke-linejoin="round" {extra}/>')
 
 
 def front_leg(pts, color, paw):
@@ -190,10 +189,11 @@ def svg_for(pose_name, colors):
   ]
   dx, dy = p.get("offset", (0, 0))  # keeps whiskers/paws/tail clear of the frame edges
   return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">'
-          f'<g transform="translate({dx},{dy})">{"".join(parts)}</g></svg>')
+          + f'<g transform="translate({dx},{dy})">{"".join(parts)}</g></svg>')
 
 
 def main():
+  import cairosvg
   OUT.mkdir(parents=True, exist_ok=True)
   for index, name in enumerate(FRAMES, start=1):
     cairosvg.svg2png(bytestring=svg_for(name, TABBY).encode(), write_to=str(OUT / f"turn_signal_{index}.png"))

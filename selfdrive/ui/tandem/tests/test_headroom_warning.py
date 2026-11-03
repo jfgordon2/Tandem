@@ -6,6 +6,7 @@ import pyray as rl
 from cereal import custom, log
 
 from openpilot.selfdrive.ui import soundd
+from openpilot.starpilot.tandem.headroom import STEERING_HEADROOM_ALERT, sound_type
 from openpilot.selfdrive.ui.onroad.alert_renderer import Alert
 from openpilot.selfdrive.ui.onroad import model_renderer
 from openpilot.selfdrive.ui.tandem.onroad import view as onroad
@@ -18,6 +19,12 @@ class Memory(dict):
   def __init__(self):
     super().__init__()
     self.writes = []
+
+  def write(self, value):
+    self.put_nonblocking("SteeringHeadroomWarning", value)
+
+  def read(self, max_age):
+    return self.get("SteeringHeadroomWarning")
 
   def put_nonblocking(self, key, value):
     self.writes.append((key, value))
@@ -47,6 +54,7 @@ def warning_view(monkeypatch):
   view._headroom, view._arc_state = Headroom(), ArcState()
   view._headroom_warning = view._headroom_chimed = False
   view._memory = Memory()
+  view._headroom_state = view._memory
   view._gap_tracker = onroad.GapTracker()
   view._gap_state = None
   view.model_renderer = SimpleNamespace(lane_line_color_override=None)
@@ -263,14 +271,16 @@ def test_real_lane_renderer_tints_lines_preserves_confidence_and_restores_settin
 
 @pytest.fixture
 def warning_sound(warning_view):
-  sound = soundd.Soundd.__new__(soundd.Soundd)
+  cls = sound_type(soundd.Soundd)
+  sound = cls.__new__(cls)
   sound.params_memory = warning_view.view._memory
-  sound.headroom_warning_seen = 0.0
+  sound.headroom_state = warning_view.view._headroom_state
+  sound.headroom_warning_seen = sound.headroom_warning_since = 0.0
   sound.current_alert = soundd.AudibleAlert.none
   sound.current_alert_type = ""
   sound.current_sound_frame = 0
   sound.current_volume = 1.0
-  sound.loaded_sounds = {soundd.STEERING_HEADROOM_ALERT: np.ones(4, dtype=np.float32)}
+  sound.loaded_sounds = {STEERING_HEADROOM_ALERT: np.ones(4, dtype=np.float32)}
   sound.selfdrive_timeout_alert = False
   return sound
 
@@ -279,7 +289,7 @@ def test_chime_plays_once_and_releases_exact_audio_boundary(warning_view, warnin
   f, sound = warning_view, warning_sound
   enter_limit(f)
   sound.update_headroom_sound(f.sm)
-  assert sound.current_alert == soundd.STEERING_HEADROOM_ALERT
+  assert sound.current_alert == STEERING_HEADROOM_ALERT
   np.testing.assert_array_equal(sound.get_sound_data(4), np.ones(4))
   sound.current_alert_type = ""  # normal selfdrive updates clear the type each soundd tick
   sound.update_headroom_sound(f.sm)
@@ -293,7 +303,7 @@ def test_chime_plays_once_and_releases_exact_audio_boundary(warning_view, warnin
   f.usage[0] = 0.95
   enter_limit(f)
   sound.update_headroom_sound(f.sm)
-  assert sound.current_alert == soundd.STEERING_HEADROOM_ALERT
+  assert sound.current_alert == STEERING_HEADROOM_ALERT
 
 
 @pytest.mark.parametrize("block", ["audible", "timeout", "invalid", "stale", "stock_visual", "custom_visual"])
@@ -313,7 +323,7 @@ def test_chime_cannot_replace_existing_alerts_or_replay_after_them(warning_view,
   else:
     f.sm["starpilotSelfdriveState"].alertSize = custom.StarPilotSelfdriveState.AlertSize.full
   sound.update_headroom_sound(f.sm)
-  assert sound.current_alert != soundd.STEERING_HEADROOM_ALERT
+  assert sound.current_alert != STEERING_HEADROOM_ALERT
   sound.current_alert, sound.selfdrive_timeout_alert = soundd.AudibleAlert.none, False
   f.sm.valid["selfdriveState"] = f.sm.alive["selfdriveState"] = True
   f.sm["selfdriveState"].alertSize = log.SelfdriveState.AlertSize.none
@@ -326,7 +336,7 @@ def test_real_alert_selection_interrupts_a_playing_headroom_chime(warning_view, 
   f, sound = warning_view, warning_sound
   enter_limit(f)
   sound.update_headroom_sound(f.sm)
-  assert sound.current_alert == soundd.STEERING_HEADROOM_ALERT
+  assert sound.current_alert == STEERING_HEADROOM_ALERT
   sound.openpilot_crashed_played = False
   sound.error_log = tmp_path / "no-error.txt"
   sound.starpilot_toggles = SimpleNamespace(goat_scream_critical_alerts=False)
@@ -355,7 +365,7 @@ def test_chime_is_the_prompt_at_prompt_volume_and_retains_steering_limit_mute_ty
   sound = warning_sound
   sound.volume_settings = soundd.read_volume_settings(Params(return_defaults=True))
   sound.volume_settings["PromptVolume"] = 25
-  assert soundd.sound_list[soundd.STEERING_HEADROOM_ALERT][0] == "prompt.wav"   # the prompt, not the take-control warning
+  assert sound._sound_list[STEERING_HEADROOM_ALERT][0] == "prompt.wav"   # the prompt, not the take-control warning
   sound.update_volume_map()
   enter_limit(warning_view)
   sound.update_headroom_sound(warning_view.sm)
@@ -363,7 +373,7 @@ def test_chime_is_the_prompt_at_prompt_volume_and_retains_steering_limit_mute_ty
   sound.update_headroom_sound(warning_view.sm)
   assert sound.get_volume_override() == 0.25
   assert soundd.should_mute_turn_steering_limit_alert(sound.current_alert_type, 1.0, 5.0)
-  assert soundd.sound_list[soundd.STEERING_HEADROOM_ALERT][1] == 1
+  assert sound._sound_list[STEERING_HEADROOM_ALERT][1] == 1
 
 
 def test_help_steer_stands_in_for_steer_saturated_only_while_it_shows(monkeypatch):
@@ -378,7 +388,8 @@ def test_help_steer_stands_in_for_steer_saturated_only_while_it_shows(monkeypatc
 
 
 def test_soundd_mutes_steer_saturated_only_while_the_headroom_warning_is_fresh(monkeypatch):
-  sound = soundd.Soundd.__new__(soundd.Soundd)
+  cls = sound_type(soundd.Soundd)
+  sound = cls.__new__(cls)
   monkeypatch.setattr(soundd.time, "monotonic", lambda: 100.0)
   sound.headroom_warning_since = 0.0
   assert not sound.headroom_warning_active()

@@ -7,27 +7,37 @@ import pyray as rl
 
 from openpilot.common.basedir import BASEDIR
 from openpilot.starpilot.common.starpilot_variables import ACTIVE_THEME_PATH
-from openpilot.system.ui.lib.application import gui_app
+from openpilot.system.ui.lib.application import gui_app, FontWeight, MouseEvent, MousePos
 from openpilot.system.ui.lib.multilang import tr, tr_noop
-from openpilot.system.ui.widgets import DialogResult
+from openpilot.system.ui.widgets import Widget, DialogResult
+from openpilot.system.ui.widgets.confirm_dialog import ConfirmDialog
+from openpilot.system.ui.widgets.label import gui_label
 from openpilot.selfdrive.ui.ui_state import ui_state
 from openpilot.selfdrive.ui.lib.starpilot_state import starpilot_state
 from openpilot.selfdrive.ui.layouts.settings.starpilot.panel import _SettingsPage
 from openpilot.selfdrive.ui.layouts.settings.starpilot.aethergrid import (
+  AETHER_LIST_METRICS,
   COMPACT_PANEL_METRICS,
   AdjustorTogglesPanelView,
   AetherAdjustorRow,
-  AetherButton,
-  RowStatus,
-  SettingsColumn,
+  AetherListColors,
+  PanelManagerView,
   SPACING,
   TileGrid,
   TOGGLE_MIN_HEIGHT,
+  TOGGLE_ROW_HEIGHT,
   DEFAULT_PANEL_STYLE,
-  draw_settings_group,
+  point_hits,
+  draw_list_group_shell,
+  draw_settings_panel_header,
   AetherSliderDialog,
   SECTION_GAP,
-  GROUP_OVERHEAD,
+  GROUP_HEADER_HEIGHT,
+  GROUP_HEADER_GAP,
+  GROUP_HEADER_LINE_GAP,
+  GROUP_HEADER_TOTAL_HEIGHT,
+  GROUP_TOP_INSET,
+  draw_group_header,
 )
 
 PANEL_STYLE = DEFAULT_PANEL_STYLE
@@ -44,11 +54,7 @@ class SoundsManagerView(AdjustorTogglesPanelView):
   def __init__(self, controller: StarPilotSoundsLayout):
     super().__init__()
     self._controller = controller
-    self._reset_button = self._child(AetherButton(
-      tr("Reset All"), self._controller._restore_defaults,
-      confirmation=tr("Reset all sound volumes, cooldown, and custom alerts to their defaults?"),
-      confirm_label=tr("Reset All"),
-    ))
+    self._reset_rect = rl.Rectangle(0, 0, 0, 0)
 
     self._tile_grid_h = 0.0
 
@@ -57,10 +63,10 @@ class SoundsManagerView(AdjustorTogglesPanelView):
 
   def _init_toggles(self):
     if self.PANEL_STYLE.toggle_row_mode:
-      self._toggle_grid = TileGrid(columns=1, padding=SPACING.xl, min_tile_height=TOGGLE_MIN_HEIGHT)
+      self._toggle_grid = TileGrid(columns=1, padding=SPACING.md, min_tile_height=TOGGLE_MIN_HEIGHT)
     else:
       self._toggle_grid = TileGrid(columns=2, padding=12, min_tile_height=130.0)
-    self.register_scroll_grid(self._toggle_grid)
+    self.register_page_grid(self._toggle_grid)
 
     toggle_defs = []
     for key in self._controller.CUSTOM_ALERTS_KEYS:
@@ -74,7 +80,8 @@ class SoundsManagerView(AdjustorTogglesPanelView):
         "disabled_label": tr(info.get("disabled_label", "")) if info.get("disabled_label") else "",
       })
 
-    self.set_toggle_items(toggle_defs)
+    page_size = self._compute_page_size(TOGGLE_ROW_HEIGHT)
+    self._set_toggle_pages([toggle_defs[i:i+page_size] for i in range(0, len(toggle_defs), page_size)])
 
   def _init_adjustors(self):
     for key in self._controller.VOLUME_KEYS:
@@ -94,7 +101,6 @@ class SoundsManagerView(AdjustorTogglesPanelView):
         set_active=lambda active, k=key: self._show_volume_slider(k) if active else None,
         style=PANEL_STYLE,
         color=PANEL_STYLE.accent,
-        status=lambda k=key: self._volume_status(k),
       )
       self._adjustor_rows[key] = adjustor
 
@@ -124,7 +130,6 @@ class SoundsManagerView(AdjustorTogglesPanelView):
           current_val=float(self._controller._params.get_int(cd_key, return_default=True, default=0)),
           on_close=on_cd_close,
           presets=[0.0, 1.0, 5.0, 10.0, 20.0, 30.0],
-          subtitle=tr(cd_info["subtitle"]),
           unit=" " + tr("min"),
           labels={0.0: tr("Off"), 1.0: tr("1 min")},
           color=PANEL_STYLE.accent,
@@ -132,14 +137,8 @@ class SoundsManagerView(AdjustorTogglesPanelView):
       ) if active else None,
       style=PANEL_STYLE,
       color=PANEL_STYLE.accent,
-      status=lambda: RowStatus("timer", tr("Cooldown enabled") if self._controller._params.get_int(cd_key) > 0 else tr("Cooldown off"),
-                               self._controller._params.get_int(cd_key) > 0),
     )
     self._adjustor_rows[cd_key] = cd_adjustor
-
-  def _volume_status(self, key: str) -> RowStatus:
-    volume = self._controller._params.get_int(key, return_default=True, default=101)
-    return RowStatus("sound" if volume > 0 else "sound_muted", tr("Sound enabled") if volume > 0 else tr("Sound muted"), volume > 0)
 
   def _show_volume_slider(self, key: str):
     info = self._controller.VOLUME_INFO[key]
@@ -167,7 +166,6 @@ class SoundsManagerView(AdjustorTogglesPanelView):
     gui_app.push_widget(
       AetherSliderDialog(
         title=dialog_title,
-        subtitle=" ".join(filter(None, (tr(info["subtitle"]), tr("Preview the selected volume. Cancel restores the previous volume.")))),
         min_val=float(min_v),
         max_val=101.0,
         step=1.0,
@@ -181,63 +179,90 @@ class SoundsManagerView(AdjustorTogglesPanelView):
       )
     )
 
-  def use_page_header(self) -> AetherButton:
-    return self._reset_button
+  def _target_at(self, mouse_pos: MousePos) -> str | None:
+    if point_hits(mouse_pos, self._reset_rect, None, pad_x=6, pad_y=0):
+      return "action:restore_defaults"
+    return None
+
+  def _activate_target(self, target: str):
+    if target == "action:restore_defaults":
+      def on_result(result: DialogResult):
+        if result == DialogResult.CONFIRM:
+          self._controller._restore_defaults()
+
+      gui_app.push_widget(ConfirmDialog(
+        tr("Reset all sound volumes, cooldown, and custom alerts to their defaults?"),
+        tr("Reset All"),
+        callback=on_result,
+      ))
 
   def _measure_content_height(self, content_width: float) -> float:
-    col_width = self._column_width(content_width)
+    col_width = (content_width - SECTION_GAP) / 2
 
     for key in self._controller.VOLUME_KEYS:
       self._adjustor_rows[key].custom_row_height = None
     self._adjustor_rows[self._controller.COOLDOWN_KEY].custom_row_height = None
 
-    vol_overhead = GROUP_OVERHEAD
+    vol_overhead = GROUP_TOP_INSET + 28  # top pad + "Reset All" label
 
-    left_content_h = sum(row.measure_height(col_width) for row in self._adjustor_rows.values()) + vol_overhead
-    tiles_needed_h = self.measure_scroll_grid_height(self._toggle_grid, col_width) + GROUP_OVERHEAD
+    available_h = max(72.0, (self._scroll_rect.height if self._scroll_rect else 0.0) - 6.0)
+    rows_available = max(72.0 * (len(self._controller.VOLUME_KEYS) + 1), available_h - vol_overhead)
+    ROW_HEIGHT = rows_available / (len(self._controller.VOLUME_KEYS) + 1)
+    for key in self._controller.VOLUME_KEYS:
+      self._adjustor_rows[key].custom_row_height = ROW_HEIGHT
+    self._adjustor_rows[self._controller.COOLDOWN_KEY].custom_row_height = ROW_HEIGHT
+
+    left_content_h = (len(self._controller.VOLUME_KEYS) + 1) * ROW_HEIGHT + vol_overhead
+    tiles_needed_h = self.measure_page_grid_height(self._toggle_grid, col_width - 24) + 24 + GROUP_TOP_INSET + GROUP_HEADER_TOTAL_HEIGHT
     max_content_h = max(left_content_h, tiles_needed_h)
 
-    self._left_container_h = left_content_h
-    self._tiles_container_h = tiles_needed_h
+    self._left_container_h = max_content_h
+    self._tiles_container_h = max_content_h
 
-    return self._compute_two_column_height(max_content_h) if self._uses_two_columns(content_width) else left_content_h + SECTION_GAP + tiles_needed_h
-
-  def _build_scroll_columns(self, width: float) -> list[SettingsColumn]:
-    if not self._uses_two_columns(width):
-      return []
-    return [SettingsColumn("left", self._left_container_h, lambda rect: self._draw_volume_column(rect.y, rect.x, rect.width)),
-            SettingsColumn("right", self._tiles_container_h, lambda rect: self._draw_utility_column(rect.y, rect.x, rect.width))]
+    return self._compute_two_column_height(max_content_h)
 
   def _draw_header(self, rect: rl.Rectangle):
     pass
 
   def _draw_scroll_content(self, rect: rl.Rectangle, content_width: float):
     y = rect.y + self._scroll_offset
-    col_width = self._column_width(content_width)
+    col_width = (content_width - SECTION_GAP) / 2
 
     self._draw_volume_column(y, rect.x, col_width)
-    if self._uses_two_columns(content_width):
-      self._draw_utility_column(y, rect.x + col_width + SECTION_GAP, col_width)
-    else:
-      self._draw_utility_column(y + self._left_container_h + SECTION_GAP, rect.x, col_width)
+    self._draw_utility_column(y, rect.x + col_width + SECTION_GAP, col_width)
 
   def _draw_volume_column(self, y: float, x: float, width: float):
     all_keys = self._controller.VOLUME_KEYS + [self._controller.COOLDOWN_KEY]
 
-    body = draw_settings_group(rl.Rectangle(x, y, width, self._left_container_h), tr("Volumes"), style=PANEL_STYLE)
-    current_y = body.y
+    draw_list_group_shell(
+      rl.Rectangle(x, y, width, self._left_container_h),
+      style=PANEL_STYLE
+    )
+
+    current_y = y + GROUP_TOP_INSET
+
+    label_rect = rl.Rectangle(x + 24, current_y - 4, width - 48, 28)
+    gui_label(label_rect, tr("Reset All"), 28, AetherListColors.SUBTEXT, FontWeight.MEDIUM,
+              alignment=rl.GuiTextAlignment.TEXT_ALIGN_RIGHT)
+    reset_width = min(240.0, label_rect.width)
+    self._reset_rect = rl.Rectangle(label_rect.x + label_rect.width - reset_width,
+                                    current_y - GROUP_TOP_INSET, reset_width, GROUP_TOP_INSET + label_rect.height)
+    self._interactive_rects["action:restore_defaults"] = self._reset_rect
+    current_y += 28
     for index, key in enumerate(all_keys):
       adjustor = self._adjustor_rows[key]
       row_h = adjustor.measure_height(width)
       row_rect = rl.Rectangle(x, current_y, width, row_h)
       adjustor.set_is_last(index == len(all_keys) - 1)
-      self._bind_scroll_widget(adjustor)
+      adjustor.set_parent_rect(self._scroll_rect)
       adjustor.render(row_rect)
       current_y += row_h
 
   def _draw_utility_column(self, y: float, x: float, width: float):
-    body = draw_settings_group(rl.Rectangle(x, y, width, self._tiles_container_h), tr("Alerts"), style=PANEL_STYLE, kind="tiles")
-    self._render_scroll_grid(self._toggle_grid, body)
+    draw_list_group_shell(rl.Rectangle(x, y, width, self._tiles_container_h), style=PANEL_STYLE)
+    header_y = draw_group_header(x + 24, y + GROUP_TOP_INSET, width - 48, tr("Alerts"))
+    avail_h = self._tiles_container_h - (header_y - y)
+    self._render_page_grid(self._toggle_grid, rl.Rectangle(x + 12, header_y, width - 24, max(0.0, avail_h - 12)))
 
 
 class StarPilotSoundsLayout(_SettingsPage):

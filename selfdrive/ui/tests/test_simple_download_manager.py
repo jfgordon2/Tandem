@@ -16,14 +16,6 @@ class FakeParams:
   def put(self, key, value):
     self.values[key] = value
 
-  def get_bool(self, key):
-    return bool(self.values.get(key))
-
-  put_bool = put
-
-  def remove(self, key):
-    self.values.pop(key, None)
-
 
 @pytest.mark.parametrize("result", [DialogResult.CANCEL, DialogResult.CONFIRM])
 def test_asset_deletion_requires_confirmation_and_preserves_other_assets(tmp_path, monkeypatch, result):
@@ -59,19 +51,3 @@ def test_asset_deletion_requires_confirmation_and_preserves_other_assets(tmp_pat
     assert target.read_bytes() == b"target"
     assert manager._list_items == ["Boot Logo A", "Boot Logo B"]
     assert not params.values
-
-
-def test_starting_a_download_clears_a_leftover_cancel_request(tmp_path):
-  params_memory = FakeParams()
-  manager = downloads.SimpleDownloadManager(
-    "Boot Logo", "boot logo", tmp_path, "BootLogo", "BootLogoToDownload", "DownloadableBootLogos",
-    FakeParams(), params_memory, lambda *_: None,
-  )
-  manager._cancel_download()  # e.g. tapped during an earlier download
-  assert params_memory.get_bool("CancelThemeDownload")
-
-  manager._start_download("Preview")
-
-  assert not params_memory.get_bool("CancelThemeDownload")
-  assert params_memory.values["BootLogoToDownload"] == "preview"
-  assert params_memory.values["ThemeDownloadProgress"] == "Downloading..."

@@ -9,9 +9,7 @@ from openpilot.common.params import Params
 
 
 _BORDER_ROUNDNESS = 0.12
-# Raylib expands the stroke outside the rounded rectangle. Its inner radius
-# must stay below (1 + sqrt(2)) * width to contain the square camera inset.
-_BORDER_RADIUS_MULTIPLE = 2.25
+_BORDER_RADIUS_MULTIPLE = 3.0
 
 
 class LeadInfoMode(IntEnum):

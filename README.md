@@ -9,7 +9,9 @@ I built this for my own preferences, and I do not encourage others to use it.
 
 [What's new](RELEASES.md) · [Development guide](selfdrive/ui/tandem/README.md) · [Report a problem](https://github.com/jfgordon2/Tandem/issues)
 
-![Tandem driving screen asking to match a new 55 mph limit, with status chips for a lane change and light rain ahead, and the compass, street, and temperature in the bar](selfdrive/ui/tandem/assets/screenshots/onroad.png)
+[![Animated tour of Tandem's driving screen, Home, navigation, voice typing, and settings](selfdrive/ui/tandem/assets/screenshots/interface-tour.gif)](selfdrive/ui/tandem/assets/screenshots/interface-tour.gif)
+
+A 63-second tour of the built interface with sample data. Driving views use a schematic road.
 
 ## What makes Tandem different
 
@@ -34,6 +36,8 @@ StarPilot continues to provide the driving logic, vehicle integrations, and unde
   send a report explicitly. Drive-log and video uploads have their own setting.
 
 ## Around the interface
+
+Still screenshots from the tour:
 
 | Parked home | Driving settings |
 | --- | --- |

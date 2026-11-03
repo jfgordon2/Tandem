@@ -16,12 +16,11 @@ shadow tightens as the ball lands. The blind-spot image is a traffic-red ball
 rolling along the ground.
 
 Dev-only dependency: pip install cairosvg
-Usage: python starpilot/tools/make_bouncing_ball_signals.py [output_dir]
+Usage: python selfdrive/ui/tandem/tools/make_bouncing_ball_signals.py [output_dir]
 """
 import sys
 from pathlib import Path
 
-import cairosvg
 
 W, H = 64, 1080
 FRAMES = 40
@@ -79,9 +78,9 @@ def ball_height(frame):
 def ball(cx, cy, palette, uid):
   highlight, body, rim = palette
   return (f'<defs><radialGradient id="b{uid}" cx="38%" cy="32%" r="75%">'
-          f'<stop offset="0" stop-color="{highlight}"/><stop offset="0.6" stop-color="{body}"/>'
-          f'<stop offset="1" stop-color="{rim}"/></radialGradient></defs>'
-          f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{RADIUS}" fill="url(#b{uid})"/>')
+          + f'<stop offset="0" stop-color="{highlight}"/><stop offset="0.6" stop-color="{body}"/>'
+          + f'<stop offset="1" stop-color="{rim}"/></radialGradient></defs>'
+          + f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{RADIUS}" fill="url(#b{uid})"/>')
 
 
 def shadow(cx, height):
@@ -89,8 +88,8 @@ def shadow(cx, height):
   width = RADIUS * (0.7 + 0.5 * closeness)
   opacity = 0.08 + 0.32 * closeness ** 2
   return (f'<defs><radialGradient id="s"><stop offset="0" stop-color="#000" stop-opacity="{opacity:.2f}"/>'
-          f'<stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>'
-          f'<ellipse cx="{cx}" cy="{GROUND + 3}" rx="{width:.1f}" ry="{width * 0.22:.1f}" fill="url(#s)"/>')
+          + '<stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>'
+          + f'<ellipse cx="{cx}" cy="{GROUND + 3}" rx="{width:.1f}" ry="{width * 0.22:.1f}" fill="url(#s)"/>')
 
 
 def svg(body):
@@ -103,13 +102,14 @@ def frame_svg(frame):
 
 
 def blindspot_svg():
-  glow = (f'<defs><radialGradient id="g"><stop offset="0" stop-color="#FF4552" stop-opacity="0.35"/>'
-          f'<stop offset="1" stop-color="#FF4552" stop-opacity="0"/></radialGradient></defs>'
-          f'<circle cx="{W / 2}" cy="{REST_Y}" r="{RADIUS * 1.5}" fill="url(#g)"/>')
+  glow = ('<defs><radialGradient id="g"><stop offset="0" stop-color="#FF4552" stop-opacity="0.35"/>'
+          + '<stop offset="1" stop-color="#FF4552" stop-opacity="0"/></radialGradient></defs>'
+          + f'<circle cx="{W / 2}" cy="{REST_Y}" r="{RADIUS * 1.5}" fill="url(#g)"/>')
   return svg(shadow(W / 2, 0) + glow + ball(W / 2, REST_Y, RED, "alert"))
 
 
 def main():
+  import cairosvg
   out = Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_OUT
   out.mkdir(parents=True, exist_ok=True)
   for frame in range(FRAMES):

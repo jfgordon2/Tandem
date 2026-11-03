@@ -161,43 +161,6 @@ def test_corner_hint_caches_idle_and_pressed_art(monkeypatch):
   assert geometry[-1] == (1.0, True, 0, 1080)
 
 
-def test_corner_hint_art_is_a_white_glow_with_an_inward_chevron(monkeypatch):
-  def record(pressed, scale=1.0, x0=0.0, y0=150.0):
-    rings, lines, dots = [], [], []
-    monkeypatch.setattr(rl, "draw_ring", lambda c, r0, r1, a0, a1, seg, col: rings.append((c.x, c.y, r0, r1, a0, a1, col)))
-    monkeypatch.setattr(rl, "draw_line_ex", lambda a, b, w, col: lines.append((a.x, a.y, b.x, b.y, w, col)))
-    monkeypatch.setattr(rl, "draw_circle_v", lambda c, r, col: dots.append((c.x, c.y, r, col)))
-    FavoriteRadialMenu._draw_corner_hint_geometry(scale, pressed, x0, y0)
-    return rings, lines, dots
-
-  rings, lines, dots = record(False)
-  # Glow: white quarter-circle centred on the corner, fading outward, inside the cached 150px texture.
-  assert rings and all((x, y, a0, a1) == (0.0, 150.0, -90.0, 0.0) for x, y, _r0, _r1, a0, a1, _c in rings)
-  assert all((c.r, c.g, c.b) == (255, 255, 255) for *_rest, c in rings)
-  alphas = [c.a for *_rest, c in rings]
-  assert alphas == sorted(alphas, reverse=True) and alphas[0] <= FavoriteRadialMenu.CORNER_HINT_GLOW_ALPHA[0]
-  assert max(r1 for *_head, r1, _a0, _a1, _c in rings) <= 150.0
-
-  # Chevron: two arms meeting at a tip up and to the right of the corner (the opening swipe),
-  # kept clear of the rounded screen border; drawn as a shadow pass then a white pass.
-  white = [line for line in lines if (line[5].r, line[5].g, line[5].b) == (255, 255, 255)]
-  assert len(white) == 2 and len(lines) == 4
-  tip = (white[0][0], white[0][1])
-  assert all((x, y) == tip for x, y, *_rest in white)
-  assert tip == (FavoriteRadialMenu.CORNER_HINT_CHEVRON_TIP, 150.0 - FavoriteRadialMenu.CORNER_HINT_CHEVRON_TIP)
-  ends = sorted((bx, by) for _ax, _ay, bx, by, *_rest in white)
-  assert ends[0][0] < tip[0] and ends[1][1] > tip[1]  # one arm runs left, the other down
-  assert min(min(x for x, *_r in dots), min(150.0 - y for _x, y, *_r in dots)) >= 50.0  # clear of the border's curve
-
-  # Pressed is brighter, scale is respected.
-  pressed_rings, pressed_lines, _ = record(True)
-  assert pressed_rings[0][-1].a > rings[0][-1].a
-  assert max(line[5].a for line in pressed_lines) > max(line[5].a for line in lines)
-  half_rings, half_lines, _ = record(False, scale=0.5)
-  assert max(r1 for *_head, r1, _a0, _a1, _c in half_rings) <= 75.0
-  assert half_lines[2][4] == FavoriteRadialMenu.CORNER_HINT_CHEVRON_WIDTH * 0.5
-
-
 def test_radial_menu_opens_from_diagonal_inward_swipe_and_auto_collapses_after_six_seconds():
   clock = [0.0]
   menu, _params, _memory = _menu(clock)

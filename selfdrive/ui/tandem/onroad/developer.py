@@ -3,7 +3,7 @@
 - A panel on the right: LEAD (distance, gap, relative speed, radar or vision), DEVICE (CPU and temperature, GPU, RAM with
   bars, FPS) and CONTROLS (curve speed, limit source, lane widths). It replaces StarPilot's developer sidebar, which
   still decides when the panel shows (its DeveloperSidebar setting).
-- A strip above the bar: up to five metrics the driver picks (STRIP_METRICS, kept in DeveloperStripMetrics), spread
+- A strip above the bar: up to five metrics the driver picks (STRIP_METRICS, kept in prefs.DEVELOPER_STRIP), spread
   evenly across it. The mock's five are the default; picking none hides the strip.
 - A tag above the lead car: distance, gap and relative speed.
 
@@ -22,6 +22,7 @@ import pyray as rl
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, row
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_
+from openpilot.selfdrive.ui.tandem.prefs import DEVELOPER_STRIP
 
 PANEL_W = T.px(256)                 # the mock's sidebar
 WIDTH = PANEL_W + T.px(10)          # with its gap from the road view
@@ -271,7 +272,7 @@ def read(ui_state, params=None) -> DevData:
   controls, radar = get("controlsState"), get("radarState")
   metric = bool(ui_state.is_metric)
   v_ego = car.vEgo if car else 0.0
-  data = DevData(strip=tuple(strip_keys(params.get(STRIP_PARAM, return_default=True))),
+  data = DevData(strip=tuple(strip_keys(DEVELOPER_STRIP.get())),
                  show_cpu=shown("cpu_metrics", "ShowCPU"), show_temp=shown("numerical_temp", "NumericalTemp"),
                  show_gpu=shown("gpu_metrics", "ShowGPU"), show_ram=shown("memory_metrics", "ShowMemoryUsage"),
                  show_fps=shown("show_fps", "FPSCounter"), show_lanes=shown("adjacent_path_metrics", "AdjacentPathMetrics"),

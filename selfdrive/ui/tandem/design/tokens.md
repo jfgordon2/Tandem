@@ -59,7 +59,7 @@ The mocks used about 60 hex values. These are merged into the named set below. W
 | Switch | Track on `ACCENT`, knob on `#0E1520`; track off `#343A44`, knob off `TEXT` |
 | Onroad | Bar scrim: a vertical gradient from `#0B0D10` at 0% to 55% · `ONROAD_CONTROL` `#1F2328` at 80% · `ONROAD_CARD` `#0B0D10` at 90% · `LEAD_MARKER #E9B44C` · steering arc track white 18%, comfortable white 90%, working `WARNING`, at limit `#FF6A3D` |
 
-This palette replaces Aether's purple accent (`aether_style.ACCENT*`) with blue. Screens move over one at a time to the Essentials components. Once no screen uses `aether_style.py` and `aethergrid.py`, both are deleted.
+This palette uses blue for the Essentials accent. Tandem screens use the owned component library; StarPilot's original screens and styling remain available through the upstream fallbacks.
 
 ## Shape and layout
 

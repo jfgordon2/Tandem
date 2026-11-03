@@ -18,7 +18,7 @@ import pyray as rl
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.layout import Align, inset, place
 from openpilot.selfdrive.ui.tandem.i18n import translate
-from openpilot.selfdrive.ui.tandem.fonts import face_for
+from openpilot.selfdrive.ui.tandem.fonts import face_for, font
 
 INFO, WARNING, CRITICAL, REVERSE = "info", "warning", "critical", "reverse"
 
@@ -94,8 +94,12 @@ def draw_reverse(alert, title_label, line_label, render) -> None:
   """Keep upstream's text layout, using a face that covers the translated letters in each label."""
   display = translated(alert)
   for label, text, face in ((title_label, display.text1, T.FONT_BOLD), (line_label, display.text2, T.FONT)):
-    label.set_font_weight(face_for("".join(text.splitlines()), face))
-  render(display)
+    loaded = font(face_for("".join(text.splitlines()), face))
+    if label._font != loaded:
+      label._font = loaded
+      label._cached_text = None
+  with draw._own_font:
+    render(display)
 
 
 def box(rect: rl.Rectangle, alert_level: str, text1: str, text2: str) -> rl.Rectangle:

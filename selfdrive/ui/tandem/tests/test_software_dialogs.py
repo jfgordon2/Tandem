@@ -110,13 +110,18 @@ def test_pairing_prompts_use_our_dialog_and_answer_the_device():
 
 def test_model_notices_come_back_as_messages_not_upstream_boxes(monkeypatch):
   from openpilot.system.ui.lib.application import gui_app
-  from openpilot.selfdrive.ui.tandem.settings.upstream import notices
-  pushed = []
+  from openpilot.selfdrive.ui.tandem.settings.controllers import notice_controller
+  pushed, messages = [], []
   monkeypatch.setattr(gui_app, "push_widget", pushed.append)
 
-  class Alert:
-    _text = "Cannot download models while driving."
-  messages = notices(lambda: gui_app.push_widget(Alert()))
-  assert messages == ["Cannot download models while driving."] and not pushed   # caught, not shown
-  gui_app.push_widget("after")
-  assert pushed == ["after"]                                                         # pushing restored
+  class Controller:
+    def _show_notice(self, message):
+      gui_app.push_widget(message)
+
+    def download(self):
+      self._show_notice("Cannot download models while driving.")
+
+  notice_controller(Controller, messages.append)().download()
+  assert messages == ["Cannot download models while driving."] and not pushed
+  Controller().download()
+  assert pushed == ["Cannot download models while driving."]

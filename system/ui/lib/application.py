@@ -151,20 +151,20 @@ FONT_DIR = ASSETS_DIR.joinpath("fonts")
 
 
 class FontWeight(StrEnum):
-  NORMAL = "Figtree-Regular.fnt" if BIG_UI else "Figtree-Medium.fnt"
-  MEDIUM = "Figtree-Medium.fnt"
-  BOLD = "Figtree-Bold.fnt"
-  SEMI_BOLD = "Figtree-SemiBold.fnt"
-  UNIFONT = "NotoSans-Fallback.fnt"   # Tandem: Noto for scripts Figtree lacks (selfdrive/ui/tandem/tools/fallback_font.py)
+  NORMAL = "Inter-Regular.fnt" if BIG_UI else "Inter-Medium.fnt"
+  MEDIUM = "Inter-Medium.fnt"
+  BOLD = "Inter-Bold.fnt"
+  SEMI_BOLD = "Inter-SemiBold.fnt"
+  UNIFONT = "unifont.fnt"
   BRAND = "como-heavy.fnt"
 
   # Small UI fonts
-  DISPLAY_REGULAR = "Figtree-Regular.fnt"
-  ROMAN = "Figtree-Regular.fnt"
-  DISPLAY = "Figtree-Bold.fnt"
+  DISPLAY_REGULAR = "Inter-Regular.fnt"
+  ROMAN = "Inter-Regular.fnt"
+  DISPLAY = "Inter-Bold.fnt"
 
 
-KEEP_FONT = False  # Tandem: True while it draws its own untranslated text, which keeps its font in every language
+KEEP_FONT = False  # Tandem opts out of language-wide fallback only while drawing its own text
 TEXT_SHAPERS: list[Callable[[str], str]] = []  # Tandem: what to draw for a line, e.g. Arabic joined and right to left
 
 

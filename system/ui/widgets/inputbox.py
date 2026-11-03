@@ -44,6 +44,9 @@ class InputBox(Widget):
     self._cursor_position = 0
     self._text_offset = 0
 
+  def _get_font(self):
+    return gui_app.font()
+
   def set_cursor_position(self, position):
     """Set the cursor position and reset the blink counter."""
     if 0 <= position <= len(self._input_text):
@@ -57,7 +60,7 @@ class InputBox(Widget):
     if self._visible_width == 0:
       return
 
-    font = gui_app.font()
+    font = self._get_font()
     display_text = self._get_display_text()
     padding = 10
 
@@ -120,7 +123,7 @@ class InputBox(Widget):
       self._blink_counter = 0
 
     # Display text
-    font = gui_app.font()
+    font = self._get_font()
     display_text = self._get_display_text()
     padding = 10
 
@@ -169,7 +172,7 @@ class InputBox(Widget):
   def _handle_mouse_release(self, mouse_pos: MousePos):
     # Calculate cursor position from click
     if len(self._input_text) > 0:
-      font = gui_app.font()
+      font = self._get_font()
       display_text = self._get_display_text()
 
       # Find the closest character position to the click

@@ -13,25 +13,19 @@ from openpilot.common.basedir import BASEDIR
 ASSETS_PATH = Path(BASEDIR) / "starpilot/assets"
 ACTIVE_SIGNALS_PATH = ASSETS_PATH / "active_theme/signals"
 FROG_SIGNALS_PATH = ASSETS_PATH / "holiday_themes/world_frog_day/signals"
-POUNCING_CAT_SIGNALS_PATH = ASSETS_PATH / "signal_packs/pouncing_cat/signals"
-SHOOTING_STAR_SIGNALS_PATH = ASSETS_PATH / "signal_packs/shooting_star/signals"
-SEQUENTIAL_SIGNALS_PATH = ASSETS_PATH / "signal_packs/sequential/signals"
-FLOW_SIGNALS_PATH = ASSETS_PATH / "signal_packs/flow/signals"
-OPEN_FLOW_SIGNALS_PATH = ASSETS_PATH / "signal_packs/open_flow/signals"
-GLIDE_SIGNALS_PATH = ASSETS_PATH / "signal_packs/glide/signals"
-BOUNCING_BALL_SIGNALS_PATH = ASSETS_PATH / "signal_packs/bouncing_ball/signals"
-# Animations that ship with StarPilot. The theme manager copies each one into
-# theme_packs/<slug>/signals at boot; until it links that copy, render these.
+from openpilot.starpilot.tandem.signals import BUNDLED_SIGNAL_ANIMATIONS, SIGNAL_PACKS_PATH
+
 BUNDLED_SIGNAL_PATHS = {
-  "frog": FROG_SIGNALS_PATH,
-  "pouncing_cat": POUNCING_CAT_SIGNALS_PATH,
-  "shooting_star": SHOOTING_STAR_SIGNALS_PATH,
-  "sequential": SEQUENTIAL_SIGNALS_PATH,
-  "flow": FLOW_SIGNALS_PATH,
-  "open_flow": OPEN_FLOW_SIGNALS_PATH,
-  "glide": GLIDE_SIGNALS_PATH,
-  "bouncing_ball": BOUNCING_BALL_SIGNALS_PATH,
+  slug: FROG_SIGNALS_PATH if slug == "frog" else SIGNAL_PACKS_PATH / slug / "signals"
+  for slug, _ in BUNDLED_SIGNAL_ANIMATIONS
 }
+POUNCING_CAT_SIGNALS_PATH = BUNDLED_SIGNAL_PATHS["pouncing_cat"]
+SHOOTING_STAR_SIGNALS_PATH = BUNDLED_SIGNAL_PATHS["shooting_star"]
+SEQUENTIAL_SIGNALS_PATH = BUNDLED_SIGNAL_PATHS["sequential"]
+FLOW_SIGNALS_PATH = BUNDLED_SIGNAL_PATHS["flow"]
+OPEN_FLOW_SIGNALS_PATH = BUNDLED_SIGNAL_PATHS["open_flow"]
+GLIDE_SIGNALS_PATH = BUNDLED_SIGNAL_PATHS["glide"]
+BOUNCING_BALL_SIGNALS_PATH = BUNDLED_SIGNAL_PATHS["bouncing_ball"]
 FRAME_PATTERN = re.compile(r"turn_signal(?:_(\d+))?\.png", re.IGNORECASE)
 STYLE_PATTERN = re.compile(r"(traditional|static)_(\d+)", re.IGNORECASE)
 

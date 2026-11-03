@@ -206,7 +206,7 @@ class HtmlRenderer(Widget):
 
           if self._center_text:
             text_width = measure_text_cached(font, line, element.font_size).x
-            text_x = rect.x + (rect.width - text_width) / 2 - padding  # centered after the padding added below
+            text_x = rect.x + (rect.width - text_width) / 2
           else:  # left align
             text_x = rect.x + (max(element.indent_level - 1, 0) * LIST_INDENT_PX)
 

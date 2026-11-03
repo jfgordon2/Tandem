@@ -1,3 +1,8 @@
+Tandem 2026.11.03
+========================
+* Maintenance: cleaner separation from StarPilot for easier future updates
+* GitHub README: a one-minute tour of the Tandem interface
+
 Tandem 2026.11.02
 ========================
 * Essentials: a new look for every screen, in Figtree

@@ -5,18 +5,20 @@ from pathlib import Path
 from collections.abc import Callable
 
 import pyray as rl
-from openpilot.system.ui.lib.application import gui_app, FontWeight, MousePos, FONT_SCALE
+from openpilot.system.ui.lib.application import gui_app, FontWeight, MousePos
 from openpilot.system.ui.lib.multilang import tr
 from openpilot.system.ui.lib.scroll_panel2 import GuiScrollPanel2
+from openpilot.system.ui.lib.text_measure import measure_text_cached
 from openpilot.system.ui.widgets import Widget, DialogResult
 from openpilot.system.ui.widgets.confirm_dialog import ConfirmDialog
-from openpilot.system.ui.widgets.label import gui_label
-from openpilot.selfdrive.ui.lib import aether_style as AS
 from openpilot.selfdrive.ui.layouts.settings.starpilot.aethergrid import (
-    AetherButton, AetherListColors, AetherScrollbar, AetherSegmentedControl, DEFAULT_PANEL_STYLE,
-    draw_list_group_shell, draw_list_scroll_fades, draw_settings_card, draw_settings_card_row,
-    draw_settings_empty_state, settings_empty_state_height, with_alpha, snap_rect, point_hits, wrap_text,
-    aether_begin_scissor_mode, aether_end_scissor_mode, SETTINGS_ROW_VALUE_FONT_SIZE,
+    AetherListColors, AetherListMetrics, AetherScrollbar,
+    draw_hud_background, draw_action_pill, draw_selection_list_row,
+    draw_empty_state_card, draw_busy_ring, draw_list_scroll_fades,
+    draw_rounded_fill, draw_rounded_stroke, draw_text_fit_common,
+    draw_download_icon,
+    with_alpha, hex_to_color, snap_rect, point_hits,
+    aether_begin_scissor_mode, aether_end_scissor_mode,
 )
 
 
@@ -109,18 +111,17 @@ def _is_parked() -> bool:
 
 
 class SimpleDownloadManager(Widget):
-  """Fullscreen manager for downloadable assets, in the shared settings dialog shell.
-
-  Same header as the pickers (title, current selection, Close), a segmented Select / Delete /
-  Download control, then a grouped list whose rows carry the shared 112 px action pills.
-  """
+  """Generic fullscreen dialog for managing downloadable assets."""
 
   MODE_SELECT = 0
   MODE_DELETE = 1
   MODE_DOWNLOAD = 2
 
-  MODE_LABELS = ["Select", "Delete", "Download"]
-  ITEM_HEIGHT = 160  # the grouped row used by Map Data, Driving Model and Navigation
+  MODE_LABELS = ["SELECT", "DELETE", "DOWNLOAD"]
+  ITEM_HEIGHT = 144
+  PILL_HEIGHT = 88
+  PILL_GAP = 18
+  OUTER_MARGIN = 40
 
   def __init__(
     self,
@@ -167,24 +168,14 @@ class SimpleDownloadManager(Widget):
     self._list_items: list[str] = []
     self._slug_map: dict[str, str] = {}
     self._item_rects: dict[str, rl.Rectangle] = {}
+    self._pill_rects: list[rl.Rectangle] = []
+    self._close_rect = rl.Rectangle(0, 0, 0, 0)
     self._cancel_rect = rl.Rectangle(0, 0, 0, 0)
-    self._scroll_rect = rl.Rectangle(0, 0, 0, 0)
     self._info_message = ""
     self._info_message_until = 0.0
 
-    self._close_button = self._child(AetherButton(tr("Close"), lambda: self._close(DialogResult.CANCEL), neutral=True))
-    self._mode_control = self._child(AetherSegmentedControl(
-      [tr(label) for label in self.MODE_LABELS], lambda: self._active_mode, self._set_mode, style=DEFAULT_PANEL_STYLE))
-
     self._refresh_list()
     self.set_touch_valid_callback(lambda: self._scroll_panel.is_touch_valid())
-
-  def _set_mode(self, mode: int):
-    if mode != self._active_mode:
-      self._active_mode = mode
-      self._scroll_offset = 0.0
-      self._scroll_panel.set_offset(0.0)
-      self._refresh_list()
 
   # ── List data ──
 
@@ -252,9 +243,6 @@ class SimpleDownloadManager(Widget):
       return
     self._downloading = True
     self._download_progress = "Downloading..."
-    # A cancel left over from an earlier download (e.g. tapped after it had
-    # already finished) must not abort this one.
-    self.params_memory.remove("CancelThemeDownload")
     self.params_memory.put("ThemeDownloadProgress", "Downloading...")
     self.params_memory.put(self.download_param, slug)
 
@@ -271,12 +259,17 @@ class SimpleDownloadManager(Widget):
   # ── Mouse handling ──
 
   def _hit_target(self, pos: MousePos) -> str | None:
-    # Close and the mode control are AetherButton / AetherSegmentedControl children; rows are clipped
-    # to the scrolling list so a row scrolled under the header can't be tapped.
+    if rl.check_collision_point_rec(pos, self._close_rect):
+      return "close"
+    for i, prect in enumerate(self._pill_rects):
+      if rl.check_collision_point_rec(pos, prect):
+        return f"mode:{i}"
     if self._downloading:
-      return "cancel_download" if point_hits(pos, self._cancel_rect, self._scroll_rect, pad_x=0, pad_y=0) else None
+      if rl.check_collision_point_rec(pos, self._cancel_rect):
+        return "cancel_download"
+      return None
     for key, irect in self._item_rects.items():
-      if point_hits(pos, irect, self._scroll_rect, pad_x=0, pad_y=0):
+      if rl.check_collision_point_rec(pos, irect):
         return key
     return None
 
@@ -296,7 +289,11 @@ class SimpleDownloadManager(Widget):
     if target == "close":
       self._close(DialogResult.CANCEL)
     elif target.startswith("mode:"):
-      self._set_mode(int(target.split(":")[1]))
+      mode = int(target.split(":")[1])
+      if mode != self._active_mode:
+        self._active_mode = mode
+        self._scroll_offset = 0.0
+        self._refresh_list()
     elif target.startswith("item:"):
       idx = int(target.split(":")[1])
       if 0 <= idx < len(self._list_items):
@@ -309,7 +306,7 @@ class SimpleDownloadManager(Widget):
               self._delete_asset(item)
 
           gui_app.push_widget(ConfirmDialog(
-            tr("Delete \"{name}\"?").format(name=item), tr("Delete"), callback=on_result,
+            tr("Delete \"{name}\"?").format(name=item), tr("DELETE"), callback=on_result,
           ))
         elif self._active_mode == self.MODE_DOWNLOAD:
           self._start_download(item)
@@ -351,109 +348,247 @@ class SimpleDownloadManager(Widget):
 
   def _render(self, rect: rl.Rectangle) -> bool | int | None:
     self.set_rect(rect)
-    rl.draw_rectangle_rec(rect, AS.SETTINGS_BG)
-    margin_x = min(AS.SETTINGS_DIALOG_MARGIN_X, rect.width * 0.05)
-    margin_y = min(AS.SETTINGS_DIALOG_MARGIN_Y, rect.height * 0.05)
-    shell = snap_rect(rl.Rectangle(rect.x + margin_x, rect.y + margin_y, rect.width - margin_x * 2, rect.height - margin_y * 2))
-    draw_settings_card(shell, fill=AS.SETTINGS_DIALOG_FILL, border=AS.SETTINGS_TILE_BORDER, radius_px=AS.SETTINGS_DIALOG_RADIUS)
-    inset = min(AS.SETTINGS_DIALOG_INSET, shell.width * 0.05)
-    x, y, width = shell.x + inset, shell.y + inset, shell.width - inset * 2
 
-    # Header: title and current selection beside Close, as in the shared pickers.
-    close_w = max(AS.SETTINGS_DIALOG_ACTION_WIDTH, self._close_button.measure_width())
-    close_rect = rl.Rectangle(x + width - close_w, y, close_w, self._close_button.measure_height())
-    text_w = max(1.0, close_rect.x - AS.SETTINGS_CARD_INSET - x)
-    title_size, description_size = AS.SETTINGS_DIALOG_TITLE_SIZE, AS.SETTINGS_DIALOG_DESCRIPTION_SIZE
-    title_h = max(70.0, title_size * FONT_SCALE)
-    description_h = max(36.0, description_size * FONT_SCALE)
-    title_line = (wrap_text(gui_app.font(FontWeight.BOLD), tr(self.title), text_w, title_size, max_lines=1, spacing=0) or [""])[0]
-    gui_label(rl.Rectangle(x, y, text_w, title_h), title_line, title_size, AS.TEXT, FontWeight.BOLD)
+    # Full-screen dark overlay matching AetherSliderDialog
+    rl.draw_rectangle(0, 0, gui_app.width, gui_app.height, rl.Color(0, 0, 0, 160))
+
+    # Dialog card (spacious & thematic bounds)
+    margin_x = self.OUTER_MARGIN
+    margin_y = self.OUTER_MARGIN
+    card_w = min(1800, int(rect.width - margin_x * 2))
+    card_h = min(960, int(rect.height - margin_y * 2))
+    card_x = rect.x + (rect.width - card_w) / 2
+    card_y = rect.y + (rect.height - card_h) / 2
+    card_rect = snap_rect(rl.Rectangle(card_x, card_y, card_w, card_h))
+
+    # Rounded dialog shell with purple top accent stripe (AetherSliderDialog parity)
+    draw_rounded_fill(card_rect, rl.Color(10, 12, 16, 255), radius_px=35)
+    draw_rounded_stroke(card_rect, rl.Color(255, 255, 255, 16), radius_px=35)
+    rl.draw_rectangle_rec(rl.Rectangle(card_rect.x, card_rect.y, card_rect.width, 3), AetherListColors.PRIMARY)
+
+    cx = int(card_x + 48)
+    cw = int(card_w - 96)
+    y = int(card_y + 36)
+
+    # ── Title + close ──
+    title_font = gui_app.font(FontWeight.BOLD)
+    close_size = 56
+    close_x = int(card_x + card_w - 48 - close_size)
+    self._close_rect = rl.Rectangle(close_x, y, close_size, close_size)
+
+    draw_text_fit_common(title_font, tr(self.title), rl.Vector2(float(cx), float(y + 4)),
+                         float(cw - close_size - 32), 48, color=AetherListColors.HEADER)
+
+    close_hovered = self._pressed_target == "close"
+    rl.draw_rectangle_rounded(self._close_rect, 0.35, 12,
+                              with_alpha(rl.Color(255, 255, 255, 28 if close_hovered else 14), 255))
+    rl.draw_rectangle_rounded_lines_ex(self._close_rect, 0.35, 12, 1.5,
+                                       with_alpha(rl.Color(255, 255, 255, 40), 255))
+    cx_c = self._close_rect.x + self._close_rect.width / 2
+    cy_c = self._close_rect.y + self._close_rect.height / 2
+    s = close_size * 0.28
+    clr = AetherListColors.HEADER if close_hovered else AetherListColors.MUTED
+    rl.draw_line_ex(rl.Vector2(cx_c - s, cy_c - s), rl.Vector2(cx_c + s, cy_c + s), 3.0, clr)
+    rl.draw_line_ex(rl.Vector2(cx_c + s, cy_c - s), rl.Vector2(cx_c - s, cy_c + s), 3.0, clr)
+
+    y += 72
+
+    # ── Current selection ──
+    current_val = self._current_value()
+    current_display = _theme_display_name(current_val) if current_val else "Stock"
+    info_font = gui_app.font(FontWeight.NORMAL)
+    current_text = f"{tr('Current')}: {current_display}"
+    rl.draw_text_ex(info_font, current_text,
+                    rl.Vector2(float(cx), float(y)), 28, 0, AetherListColors.SUBTEXT)
+    y += 44
+
+    # ── Info message ──
     if self._info_message and time.monotonic() < self._info_message_until:
-      description, color = self._info_message, AetherListColors.SUCCESS
-    else:
-      current_val = self._current_value()
-      description = f"{tr('Current')}: {_theme_display_name(current_val) if current_val else 'Stock'}"
-      color = AS.TEXT_SECONDARY
-    gui_label(rl.Rectangle(x, y + title_h + 4, text_w, description_h), description, description_size, color)
-    self._close_button.render(close_rect)
-    y += max(close_rect.height, title_h + 4 + description_h) + AS.SETTINGS_TILE_GAP
+      rl.draw_text_ex(info_font, self._info_message,
+                      rl.Vector2(float(cx), float(y)), 26, 0, AetherListColors.SUCCESS)
+      y += 36
 
-    mode_h = self._mode_control.measure_height(width)
-    self._mode_control.render(rl.Rectangle(x, y, width, mode_h))
-    y += mode_h + AS.SETTINGS_ROW_GAP
+    # ── Mode pills ──
+    pill_w = int((cw - self.PILL_GAP * 2) / 3)
+    self._pill_rects = []
+    active_fill = AetherListColors.PRIMARY
+    active_border = with_alpha(AetherListColors.PRIMARY, 180)
+    active_text = AetherListColors.HEADER
+    inactive_fill = with_alpha(rl.Color(255, 255, 255, 8), 255)
+    inactive_border = with_alpha(rl.Color(255, 255, 255, 36), 255)
+    inactive_text = AetherListColors.MUTED
 
-    scroll_rect = rl.Rectangle(x, y, width, max(0.0, shell.y + shell.height - inset - y))
-    self._scroll_rect = scroll_rect
-    if scroll_rect.height < 40:
+    for i, label in enumerate(self.MODE_LABELS):
+      px = cx + i * (pill_w + self.PILL_GAP)
+      prect = snap_rect(rl.Rectangle(float(px), float(y), float(pill_w), float(self.PILL_HEIGHT)))
+      self._pill_rects.append(prect)
+      is_active = i == self._active_mode
+      is_pressed = self._pressed_target == f"mode:{i}"
+      draw_action_pill(
+        prect,
+        tr(label),
+        active_fill if is_active else inactive_fill,
+        active_border if is_active else inactive_border,
+        active_text if is_active else inactive_text,
+        font_size=28,
+        roundness=0.35,
+      )
+      if is_pressed:
+        rl.draw_rectangle_rounded(prect, 0.35, 12, with_alpha(rl.Color(255, 255, 255, 16), 255))
+
+    y += self.PILL_HEIGHT + 24
+
+    # ── Content area ──
+    scroll_y = y
+    scroll_h = int(card_rect.y + card_rect.height - scroll_y - 28)
+    if scroll_h < 40:
       return True
+    scroll_rect = rl.Rectangle(float(cx), float(scroll_y), float(cw), float(scroll_h))
 
+    # Measure content
     n_items = len(self._list_items)
-    progress_h = self.ITEM_HEIGHT if self._downloading else 0.0
-    list_h = n_items * self.ITEM_HEIGHT
-    if n_items == 0 and not self._downloading:
-      content_height = settings_empty_state_height()
-    else:
-      content_height = progress_h + (AS.SETTINGS_ROW_GAP if progress_h and n_items else 0.0) + list_h
+    prog_h = 140
+    progress_space = prog_h + 40 if self._downloading else 0
+    content_height = float(n_items * self.ITEM_HEIGHT + progress_space)
 
     self._scroll_panel.set_enabled(True)
     self._scroll_offset = self._scroll_panel.update(scroll_rect, max(content_height, scroll_rect.height))
-    self._item_rects.clear()
-    self._cancel_rect = rl.Rectangle(0, 0, 0, 0)
 
-    aether_begin_scissor_mode(int(scroll_rect.x), int(scroll_rect.y), int(scroll_rect.width), int(scroll_rect.height))
-    item_y = scroll_rect.y + self._scroll_offset
+    aether_begin_scissor_mode(int(scroll_rect.x), int(scroll_rect.y),
+                              int(scroll_rect.width), int(scroll_rect.height))
+
     if n_items == 0 and not self._downloading:
       empty_msg = self._empty_state_text()
-      draw_settings_empty_state(rl.Rectangle(scroll_rect.x, item_y, scroll_rect.width, content_height),
-                                tr(empty_msg["title"]), tr(empty_msg["body"]))
+      draw_empty_state_card(
+        scroll_rect,
+        tr(empty_msg["title"]),
+        tr(empty_msg["body"]),
+        title_size=38, body_size=26,
+        title_top_padding=50, body_height=80,
+        fill=rl.Color(0, 0, 0, 0), border=rl.Color(0, 0, 0, 0),
+      )
     else:
+      self._item_rects.clear()
+      item_y = scroll_rect.y + self._scroll_offset
+      normal_font = gui_app.font(FontWeight.NORMAL)
+
       if self._downloading:
-        progress_rect = rl.Rectangle(scroll_rect.x, item_y, scroll_rect.width, progress_h)
-        draw_list_group_shell(progress_rect)
-        self._cancel_rect = draw_settings_card_row(
-          progress_rect, title=self._download_progress or tr("Downloading..."),
-          subtitle=tr("Keep the device on until the download finishes."), action_text=tr("Cancel"),
-          pressed=self._pressed_target == "cancel_download", grouped=True, is_last=True,
-          action_text_size=SETTINGS_ROW_VALUE_FONT_SIZE, action_height=AS.VALUE_PILL_HEIGHT,
-          action_fill=AetherListColors.DANGER_SOFT, action_border=with_alpha(AetherListColors.DANGER, 140),
+        # Download progress display
+        prog_rect = rl.Rectangle(scroll_rect.x + 20, scroll_rect.y + self._scroll_offset + 20,
+                                 scroll_rect.width - 40, prog_h)
+        draw_rounded_fill(prog_rect, with_alpha(rl.Color(255, 255, 255, 8), 255), radius_px=16)
+        draw_rounded_stroke(prog_rect, with_alpha(rl.Color(255, 255, 255, 20), 255), radius_px=16)
+
+        # Busy ring
+        ring_center = rl.Vector2(prog_rect.x + 70, prog_rect.y + prog_rect.height / 2)
+        draw_busy_ring(ring_center, rl.get_time() * 4, AetherListColors.PRIMARY,
+                       track_color=with_alpha(rl.Color(255, 255, 255, 18), 255))
+
+        # Progress text
+        progress_text = self._download_progress or "Downloading..."
+        draw_text_fit_common(
+          normal_font, progress_text,
+          rl.Vector2(prog_rect.x + 130, prog_rect.y + 32),
+          prog_rect.width - 340, 32,
+          color=AetherListColors.HEADER,
         )
-        item_y += progress_h + (AS.SETTINGS_ROW_GAP if n_items else 0.0)
-      if n_items:
-        draw_list_group_shell(rl.Rectangle(scroll_rect.x, item_y, scroll_rect.width, list_h))
+
+        # Cancel button
+        cancel_w, cancel_h = 180, 54
+        cancel_y = prog_rect.y + (prog_h - cancel_h) / 2
+        self._cancel_rect = snap_rect(rl.Rectangle(
+          prog_rect.x + prog_rect.width - cancel_w - 24, cancel_y, float(cancel_w), float(cancel_h)))
+        cancel_hovered = self._pressed_target == "cancel_download"
+        draw_action_pill(
+          self._cancel_rect, tr("CANCEL"),
+          with_alpha(AetherListColors.DANGER, 50 if cancel_hovered else 30),
+          with_alpha(AetherListColors.DANGER, 100),
+          AetherListColors.HEADER, font_size=24,
+        )
+
+        item_y += progress_space
+
+      # Draw list items
       for idx, item in enumerate(self._list_items):
-        row = rl.Rectangle(scroll_rect.x, item_y + idx * self.ITEM_HEIGHT, scroll_rect.width, float(self.ITEM_HEIGHT))
+        irec = rl.Rectangle(scroll_rect.x, item_y, scroll_rect.width, float(self.ITEM_HEIGHT))
         key = f"item:{idx}"
-        self._item_rects[key] = row
-        if row.y + row.height < scroll_rect.y or row.y > scroll_rect.y + scroll_rect.height:
-          continue
-        self._draw_item(row, item, key, is_last=idx == n_items - 1)
+        self._item_rects[key] = irec
+
+        is_last = idx == n_items - 1
+        is_current = (
+          self._active_mode == self.MODE_SELECT
+          and _display_to_slug(item) == self._current_value()
+        )
+        is_pressed = self._pressed_target == key
+        is_hovered = is_pressed
+
+        is_deleting = self._active_mode == self.MODE_DELETE
+        is_downloading_mode = self._active_mode == self.MODE_DOWNLOAD
+
+        action_text = ""
+        action_fill = AetherListColors.CURRENT_BG
+        action_border = AetherListColors.CURRENT_BORDER
+        action_text_color = AetherListColors.HEADER
+        row_bg = AetherListColors.ROW_BG
+        row_border = AetherListColors.ROW_BORDER
+
+        if is_current:
+          action_text = tr("Current")
+          action_fill = AetherListColors.CURRENT_BG
+          action_border = AetherListColors.CURRENT_BORDER
+          action_text_color = AetherListColors.HEADER
+
+        if is_deleting:
+          action_text = tr("DELETE")
+          action_fill = with_alpha(AetherListColors.DANGER, 30)
+          action_border = with_alpha(AetherListColors.DANGER, 80)
+          action_text_color = AetherListColors.DANGER
+
+        if is_downloading_mode:
+          action_text = tr("DOWNLOAD")
+          action_fill = with_alpha(AetherListColors.SUCCESS, 30)
+          action_border = with_alpha(AetherListColors.SUCCESS, 80)
+          action_text_color = AetherListColors.SUCCESS
+
+        draw_selection_list_row(
+          irec,
+          title=item,
+          subtitle="",
+          action_text=action_text,
+          current=is_current and self._active_mode == self.MODE_SELECT,
+          hovered=is_hovered,
+          pressed=is_pressed and is_deleting,
+          is_last=is_last,
+          alpha=255,
+          action_pill=True,
+          action_pill_height=54,
+          title_size=36,
+          action_text_size=26,
+          title_color=AetherListColors.HEADER,
+          subtitle_color=AetherListColors.SUBTEXT,
+          action_fill=action_fill,
+          action_border=action_border,
+          action_text_color=action_text_color,
+          row_bg=row_bg,
+          row_border=row_border,
+          row_separator=AetherListColors.ROW_SEPARATOR,
+          row_hover=AetherListColors.ROW_HOVER,
+          current_bg=AetherListColors.CURRENT_BG,
+          current_border=AetherListColors.CURRENT_BORDER,
+        )
+
+        item_y += self.ITEM_HEIGHT
+
     aether_end_scissor_mode()
 
+    # Scrollbar
     if content_height > scroll_rect.height:
       self._scrollbar.render(scroll_rect, content_height, self._scroll_offset)
-    draw_list_scroll_fades(scroll_rect, content_height, self._scroll_offset, AS.SETTINGS_DIALOG_FILL)
-    return True
 
-  def _draw_item(self, row: rl.Rectangle, item: str, key: str, *, is_last: bool):
-    is_current = self._active_mode == self.MODE_SELECT and _display_to_slug(item) == self._current_value()
-    pressed = self._pressed_target == key and not self._downloading
-    kwargs: dict = {}
-    if self._active_mode == self.MODE_SELECT:
-      action_text = tr("Current") if is_current else tr("Select")
-      if is_current:
-        kwargs = {"action_fill": with_alpha(AetherListColors.SUCCESS_SOFT, 60), "action_border": AetherListColors.SUCCESS}
-    elif self._active_mode == self.MODE_DELETE:
-      action_text = tr("Delete")
-      kwargs = {"action_fill": AetherListColors.DANGER_SOFT, "action_border": with_alpha(AetherListColors.DANGER, 140)}
-    else:
-      action_text = tr("Download")
-    if self._downloading:
-      # One download at a time: the other rows wait, pills included.
-      kwargs = {"action_fill": with_alpha(AS.TRACK_OFF, 120), "action_border": AS.SETTINGS_TILE_BORDER,
-                "action_text_color": AS.TEXT_DISABLED}
-    draw_settings_card_row(row, title=item, action_text=action_text, pressed=pressed, current=is_current,
-                           enabled=not self._downloading, grouped=True, is_last=is_last,
-                           action_text_size=SETTINGS_ROW_VALUE_FONT_SIZE, action_height=AS.VALUE_PILL_HEIGHT, **kwargs)
+    # Fades
+    draw_list_scroll_fades(scroll_rect, content_height, self._scroll_offset, rl.Color(14, 13, 18, 255))
+
+    return True
 
   def _empty_state_text(self) -> dict:
     at = self.asset_type

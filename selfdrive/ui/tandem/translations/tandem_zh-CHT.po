@@ -27,7 +27,7 @@ msgstr "預設"
 
 #: destinations.py:345
 #: settings/search.py:269
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:695
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:688
 msgid "Search"
 msgstr "搜尋"
 
@@ -41,6 +41,7 @@ msgid "Where to?"
 msgstr "要去哪裡？"
 
 #: destinations.py:145
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:703
 msgid "Searching…"
 msgstr "正在搜尋…"
 
@@ -49,7 +50,7 @@ msgid "Looking up places"
 msgstr "正在尋找地點"
 
 #: destinations.py:147
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:680
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:713
 msgid "Search unavailable"
 msgstr "無法搜尋"
 
@@ -66,7 +67,7 @@ msgid "Say a place or an address. Tap the mic when you're done."
 msgstr "請說出地點或地址，說完後點選麥克風。"
 
 #: destinations.py:381
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:635
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:643
 msgid "Start"
 msgstr "開始"
 
@@ -148,7 +149,7 @@ msgstr "輸入至少{}個字元後即時顯示結果"
 
 #: destinations.py:350
 #: settings/speed_steering.py:416
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:663
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:778
 msgid "Home"
 msgstr "住家"
 
@@ -162,7 +163,7 @@ msgstr "搜尋住家地址"
 
 #: destinations.py:353
 #: settings/speed_steering.py:417
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:663
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:780
 msgid "Work"
 msgstr "公司"
 
@@ -511,13 +512,13 @@ msgstr "ABC"
 msgid "space"
 msgstr "空白"
 
-#: keyboard.py:114
+#: keyboard.py:126
 #: mapbox_help.py:84
 #: settings/alerts.py:165
 msgid "Done"
 msgstr "完成"
 
-#: keyboard.py:114
+#: keyboard.py:126
 #: voice.py:185
 msgid "Speak now. Tap the mic when you're done."
 msgstr "請開始說話，說完後點選麥克風。"
@@ -527,7 +528,7 @@ msgstr "請開始說話，說完後點選麥克風。"
 msgid "QWERTYUIOP"
 msgstr "QWERTYUIOP"
 
-#: keyboard.py:120
+#: keyboard.py:132
 #: overlays.py:163
 #: settings/bluetooth_tab.py:248
 msgid "Cancel"
@@ -608,65 +609,65 @@ msgid "For place search, routes, and speed limits the maps don't have"
 msgstr "用於搜尋地點、規劃路線及取得地圖缺少的速限"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:89
+#: onroad/developer.py:90
 msgid "0.0 m/s²"
 msgstr "0.0 m/s²"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:90
+#: onroad/developer.py:91
 msgid "0.00 s"
 msgstr "0.00 s"
 
-#: onroad/developer.py:41
+#: onroad/developer.py:42
 msgid "Acceleration now"
 msgstr "目前加速度"
 
-#: onroad/developer.py:42
+#: onroad/developer.py:43
 msgid "Acceleration openpilot asks for"
 msgstr "openpilot 要求的加速度"
 
-#: onroad/developer.py:43
+#: onroad/developer.py:44
 msgid "Planned jerk"
 msgstr "規劃加加速度"
 
-#: onroad/developer.py:44
+#: onroad/developer.py:45
 msgid "Lateral acceleration"
 msgstr "橫向加速度"
 
-#: onroad/developer.py:45
+#: onroad/developer.py:46
 msgid "Steering delay"
 msgstr "轉向延遲"
 
-#: onroad/developer.py:46
+#: onroad/developer.py:47
 msgid "Steering wheel angle"
 msgstr "方向盤角度"
 
-#: onroad/developer.py:47
+#: onroad/developer.py:48
 msgid "Steering torque used"
 msgstr "使用的轉向扭力"
 
-#: onroad/developer.py:48
+#: onroad/developer.py:49
 msgid "Following danger factor"
 msgstr "跟車風險係數"
 
-#: onroad/developer.py:49
+#: onroad/developer.py:50
 msgid "Steer ratio"
 msgstr "轉向比"
 
-#: onroad/developer.py:139
+#: onroad/developer.py:140
 msgid "Lead"
 msgstr "前車"
 
-#: onroad/developer.py:167
+#: onroad/developer.py:168
 msgid "Controls"
 msgstr "控制"
 
-#: onroad/developer.py:168
+#: onroad/developer.py:169
 msgid "curve spd"
 msgstr "彎道速度"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:255
+#: onroad/developer.py:256
 #: onroad/extras.py:215
 #: onroad/lead.py:97
 #, python-brace-format
@@ -674,7 +675,7 @@ msgid "{} m"
 msgstr "{} m"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:255
+#: onroad/developer.py:256
 #: onroad/extras.py:215
 #: onroad/lead.py:97
 #, python-brace-format
@@ -682,70 +683,70 @@ msgid "{} ft"
 msgstr "{} ft"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:257
-#: onroad/developer.py:310
+#: onroad/developer.py:258
+#: onroad/developer.py:311
 #: onroad/lead.py:108
 #, python-brace-format
 msgid "{} s"
 msgstr "{} s"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:286
+#: onroad/developer.py:287
 #: settings/device_sections.py:301
 #, python-brace-format
 msgid "{} GB"
 msgstr "{} GB"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:308
+#: onroad/developer.py:309
 #, python-brace-format
 msgid "{} m/s²"
 msgstr "{} m/s²"
 
-#: onroad/developer.py:143
+#: onroad/developer.py:144
 msgid "rel speed"
 msgstr "相對速度"
 
-#: onroad/developer.py:154
+#: onroad/developer.py:155
 #: settings/search.py:24
 #: settings/window.py:42
 msgid "Device"
 msgstr "裝置"
 
-#: onroad/developer.py:170
+#: onroad/developer.py:171
 msgid "limit src"
 msgstr "速限來源"
 
-#: onroad/developer.py:172
+#: onroad/developer.py:173
 msgid "lanes L/R"
 msgstr "左/右車道"
 
-#: onroad/developer.py:290
+#: onroad/developer.py:291
 #, python-brace-format
 msgid "active · {} {}"
 msgstr "運作中 · {} {}"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: onroad/developer.py:166
+#: onroad/developer.py:167
 msgid "FPS"
 msgstr "FPS"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: onroad/developer.py:158
+#: onroad/developer.py:159
 msgid "CPU"
 msgstr "CPU"
 
-#: onroad/developer.py:158
+#: onroad/developer.py:159
 msgid "Temp"
 msgstr "溫度"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: onroad/developer.py:162
+#: onroad/developer.py:163
 msgid "GPU"
 msgstr "GPU"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: onroad/developer.py:164
+#: onroad/developer.py:165
 msgid "RAM"
 msgstr "RAM"
 
@@ -1095,18 +1096,18 @@ msgid "Byp"
 msgstr "Byp"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:560
+#: onroad/view.py:573
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:560
+#: onroad/view.py:573
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/view.py:561
+#: onroad/view.py:574
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{}分鐘 · {}"
@@ -1354,7 +1355,7 @@ msgstr "按鈕{}"
 msgid "Forget"
 msgstr "忘記"
 
-#: settings/bluetooth_tab.py:654
+#: settings/bluetooth_tab.py:656
 #, python-brace-format
 msgid "A sound plays in {}…"
 msgstr "{}後播放聲音…"
@@ -1449,20 +1450,20 @@ msgstr "移除配對。請在車輛關閉時變更。"
 msgid "Connected"
 msgstr "已連接"
 
-#: settings/bluetooth_tab.py:646
+#: settings/bluetooth_tab.py:648
 #, python-brace-format
 msgid "The test didn't play: {}"
 msgstr "測試未播放：{}"
 
-#: settings/bluetooth_tab.py:649
+#: settings/bluetooth_tab.py:651
 msgid "Playing now. You should hear it through the car."
 msgstr "正在播放，您應該能從車輛聽到聲音。"
 
-#: settings/bluetooth_tab.py:651
+#: settings/bluetooth_tab.py:653
 msgid "Done. If you didn't hear it, check the car's volume and audio source."
 msgstr "已完成。若未聽到聲音，請檢查車輛音量與音源。"
 
-#: settings/bluetooth_tab.py:653
+#: settings/bluetooth_tab.py:655
 msgid "Getting ready…"
 msgstr "正在準備…"
 
@@ -1586,7 +1587,7 @@ msgstr "連接"
 
 #: settings/bluetooth_tab.py:436
 #: settings/bluetooth_tab.py:429
-#: settings/device.py:234
+#: settings/device.py:233
 msgid "Paired"
 msgstr "已配對"
 
@@ -1941,7 +1942,7 @@ msgstr "openpilot 開發者選項，僅在調校模式開啟時顯示。"
 
 #: settings/developer.py:105
 #: settings/developer.py:144
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:558
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:662
 msgid "Add"
 msgstr "新增"
 
@@ -2010,149 +2011,149 @@ msgstr "記錄通訊並標記手動上鎖/解鎖操作"
 msgid "Adding…"
 msgstr "正在新增…"
 
-#: settings/device.py:25
+#: settings/device.py:24
 msgid "Calibrated"
 msgstr "已校正"
 
-#: settings/device.py:26
+#: settings/device.py:25
 #: selfdrive/selfdrived/events.py:1496
 msgid "Calibrating"
 msgstr "正在校正"
 
-#: settings/device.py:27
+#: settings/device.py:26
 msgid "Not calibrated yet"
 msgstr "尚未校正"
 
-#: settings/device.py:62
+#: settings/device.py:61
 msgid "Preview"
 msgstr "預覽"
 
+#: settings/device.py:63
 #: settings/device.py:64
-#: settings/device.py:65
 #: settings/software_tab.py:196
 msgid "Reset"
 msgstr "重設"
 
-#: settings/device.py:127
+#: settings/device.py:126
 msgid "Open connect.comma.ai"
 msgstr "開啟 connect.comma.ai"
 
-#: settings/device.py:127
+#: settings/device.py:126
 msgid "Bookmark it to your home screen to use it like an app"
 msgstr "加入主畫面即可像 App 一樣使用"
 
-#: settings/device.py:128
+#: settings/device.py:127
 msgid "Tap Add new device"
 msgstr "點選 Add new device"
 
-#: settings/device.py:128
+#: settings/device.py:127
 msgid "Sign in first if it asks"
 msgstr "如提示登入，請先登入"
 
-#: settings/device.py:129
-#: settings/device.py:133
+#: settings/device.py:128
+#: settings/device.py:132
 msgid "Scan the code"
 msgstr "掃描 QR 碼"
 
-#: settings/device.py:129
+#: settings/device.py:128
 msgid "The Phone App row shows Paired when it's done"
 msgstr "完成後，手機 App 一欄會顯示已配對"
 
-#: settings/device.py:132
+#: settings/device.py:131
 msgid "Choose a password"
 msgstr "選擇密碼"
 
-#: settings/device.py:132
+#: settings/device.py:131
 msgid "At least 6 characters. Galaxy asks for it when you sign in"
 msgstr "至少 6 個字元，登入 Galaxy 時需要輸入"
 
-#: settings/device.py:133
+#: settings/device.py:132
 msgid "It opens this device's page in Galaxy"
 msgstr "在 Galaxy 中開啟此裝置的頁面"
 
-#: settings/device.py:134
+#: settings/device.py:133
 msgid "Bookmark the page"
 msgstr "將此頁面加入書籤"
 
-#: settings/device.py:134
+#: settings/device.py:133
 msgid "The link stays the same until you unpair"
 msgstr "取消配對前連結保持不變"
 
-#: settings/device.py:236
+#: settings/device.py:235
 msgid "Pair the phone app"
 msgstr "配對手機 App"
 
-#: settings/device.py:236
+#: settings/device.py:235
 msgid "Change settings and see drives from your phone"
 msgstr "透過手機變更設定與查看行程"
 
-#: settings/device.py:246
+#: settings/device.py:245
 #: settings/device.py:410
 msgctxt "action"
 msgid "Set up"
 msgstr "設定"
 
+#: settings/device.py:248
 #: settings/device.py:249
-#: settings/device.py:250
-#: selfdrive/ui/layouts/settings/device.py:334
+#: selfdrive/ui/layouts/settings/device.py:335
 msgid "Unpair"
 msgstr "取消配對"
 
-#: settings/device.py:265
-#: settings/device.py:108
+#: settings/device.py:264
+#: settings/device.py:107
 #: settings/search.py:159
 msgid "Remote Access"
 msgstr "遠端存取"
 
-#: settings/device.py:265
+#: settings/device.py:264
 msgid "Reach this device from the Galaxy web app"
 msgstr "透過 Galaxy 網頁 App 存取此裝置"
 
-#: settings/device.py:69
+#: settings/device.py:68
 #: settings/search.py:127
 #: selfdrive/ui/layouts/settings/device.py:152
 msgid "Driver Camera"
 msgstr "駕駛攝影機"
 
-#: settings/device.py:69
+#: settings/device.py:68
 msgid "Check that it can see your face. The car must be off."
 msgstr "檢查能否看清您的臉部。車輛必須關閉。"
 
-#: settings/device.py:70
+#: settings/device.py:69
 #: settings/search.py:128
 #: settings/speed_steering.py:368
 msgid "Driver Monitoring"
 msgstr "駕駛監控"
 
-#: settings/device.py:70
+#: settings/device.py:69
 #: settings/search.py:128
 msgid "Forget which side of the car the driver sits on"
 msgstr "清除駕駛位於車輛哪一側的記錄"
 
-#: settings/device.py:93
-#: settings/device.py:93
+#: settings/device.py:92
+#: settings/device.py:92
 #: settings/search.py:166
 msgid "Power Off"
 msgstr "關機"
 
+#: settings/device.py:95
 #: settings/device.py:96
-#: settings/device.py:97
 #: settings/search.py:165
 msgid "Restart"
 msgstr "重新啟動"
 
-#: settings/device.py:98
-#: settings/device.py:100
+#: settings/device.py:97
+#: settings/device.py:99
 msgid "Recalibrate"
 msgstr "重新校正"
 
-#: settings/device.py:227
-#: settings/device.py:115
+#: settings/device.py:226
+#: settings/device.py:114
 #: settings/search.py:162
 msgid "Regulatory"
 msgstr "法規資訊"
 
-#: settings/device.py:263
+#: settings/device.py:262
 msgid "Choosing a password creates this device's link"
 msgstr "選擇密碼後會建立此裝置的連結"
 
@@ -2177,137 +2178,137 @@ msgstr "選擇 Galaxy 密碼"
 msgid "At least 6 characters. Galaxy asks for it when you sign in."
 msgstr "至少 6 個字元，登入 Galaxy 時需要輸入。"
 
-#: settings/device.py:64
+#: settings/device.py:63
 msgid "Reset driver monitoring?"
 msgstr "重設駕駛監控？"
 
-#: settings/device.py:65
+#: settings/device.py:64
 msgid "It forgets which side of the car the driver sits on and learns it again on the next drive."
 msgstr "將清除駕駛所在側的記錄，並在下次駕駛時重新學習。"
 
-#: settings/device.py:93
+#: settings/device.py:92
 msgid "Power off?"
 msgstr "關機？"
 
-#: settings/device.py:93
+#: settings/device.py:92
 msgid "The device stays off until the car starts again."
 msgstr "車輛再次啟動前裝置會保持關閉。"
 
-#: settings/device.py:96
+#: settings/device.py:95
 msgid "Restart the device?"
 msgstr "重新啟動裝置？"
 
-#: settings/device.py:96
+#: settings/device.py:95
 msgid "openpilot shuts down and starts again. This takes about a minute."
 msgstr "openpilot 將關閉後重新啟動，約需一分鐘。"
 
-#: settings/device.py:98
+#: settings/device.py:97
 msgid "Recalibrate the camera?"
 msgstr "重新校正攝影機？"
 
-#: settings/device.py:99
+#: settings/device.py:98
 msgid "Calibration starts over. openpilot relearns how the device is mounted over your next few minutes of driving."
 msgstr "校正會重新開始，openpilot 將在接下來幾分鐘的駕駛中重新學習裝置安裝位置。"
 
-#: settings/device.py:118
+#: settings/device.py:117
 #: settings/search.py:30
 #: settings/search.py:157
 msgid "This Device"
 msgstr "此裝置"
 
-#: settings/device.py:233
+#: settings/device.py:232
 msgid "ON YOUR PHONE"
 msgstr "在手機上"
 
-#: settings/device.py:234
+#: settings/device.py:233
 msgid "A new code every 5 minutes"
 msgstr "每 5 分鐘產生新代碼"
 
-#: settings/device.py:235
+#: settings/device.py:234
 msgid "Getting a code…"
 msgstr "正在取得代碼…"
 
-#: settings/device.py:249
+#: settings/device.py:248
 msgid "Unpair from Galaxy?"
 msgstr "取消與 Galaxy 的配對？"
 
-#: settings/device.py:249
+#: settings/device.py:248
 msgid "The link stops working. Setting up again makes a new one."
 msgstr "連結將失效，重新設定會產生新連結。"
 
-#: settings/device.py:253
+#: settings/device.py:252
 msgid "Set up · protected by your password"
 msgstr "已設定 · 受密碼保護"
 
-#: settings/device.py:253
+#: settings/device.py:252
 msgid "Not set up"
 msgstr "未設定"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/device.py:255
+#: settings/device.py:254
 msgid "GALAXY"
 msgstr "GALAXY"
 
-#: settings/device.py:264
+#: settings/device.py:263
 msgid "Your code appears here once you choose a password"
 msgstr "選擇密碼後，代碼會顯示在這裡"
 
-#: settings/device.py:105
+#: settings/device.py:104
 #: settings/search.py:158
 msgid "Phone App"
 msgstr "手機 App"
 
-#: settings/device.py:111
+#: settings/device.py:110
 #: settings/search.py:160
 msgid "Camera Calibration"
 msgstr "攝影機校正"
 
-#: settings/device.py:113
+#: settings/device.py:112
 #: settings/search.py:161
 msgid "How It Works"
 msgstr "運作方式"
 
-#: settings/device.py:113
+#: settings/device.py:112
 #: settings/search.py:161
 msgid "Rules, features and limits"
 msgstr "規則、功能與限制"
 
-#: settings/device.py:114
+#: settings/device.py:113
 msgid "MORE"
 msgstr "更多"
 
-#: settings/device.py:116
+#: settings/device.py:115
 #: settings/search.py:163
 msgid "Device ID and Serial"
 msgstr "裝置 ID 與序號"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/device.py:117
+#: settings/device.py:116
 #: settings/search.py:164
 msgid "IMEI"
 msgstr "IMEI"
 
-#: settings/device.py:113
+#: settings/device.py:112
 msgid "Review"
 msgstr "檢視"
 
-#: settings/device.py:106
+#: settings/device.py:105
 msgid "comma connect · Paired"
 msgstr "comma connect · 已配對"
 
-#: settings/device.py:106
+#: settings/device.py:105
 msgid "comma connect · see drives and change settings on your phone"
 msgstr "comma connect · 在手機上查看行程並變更設定"
 
-#: settings/device.py:108
+#: settings/device.py:107
 msgid "Galaxy · Set up"
 msgstr "Galaxy · 已設定"
 
-#: settings/device.py:108
+#: settings/device.py:107
 msgid "Galaxy · reach this device from a web browser"
 msgstr "Galaxy · 透過瀏覽器存取此裝置"
 
-#: settings/device.py:115
+#: settings/device.py:114
 msgid "View"
 msgstr "檢視"
 
@@ -3120,7 +3121,7 @@ msgid "Park to delete offline maps"
 msgstr "停車後才能刪除離線地圖"
 
 #: settings/maps.py:376
-#: settings/model.py:406
+#: settings/model.py:404
 msgid "Wait for the download to finish"
 msgstr "請等待下載完成"
 
@@ -3138,7 +3139,7 @@ msgid "Downloading {} · {}%"
 msgstr "正在下載{} · {}%"
 
 #: settings/maps.py:132
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:239
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:253
 msgid "Downloaded"
 msgstr "已下載"
 
@@ -3258,12 +3259,12 @@ msgstr "新增或移除州、區域與國家"
 
 #: settings/maps.py:204
 #: settings/model.py:316
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:276
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:363
 msgid "Storage"
 msgstr "儲存空間"
 
 #: settings/maps.py:312
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:479
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:583
 msgid "Whole U.S."
 msgstr "全美"
 
@@ -3336,7 +3337,7 @@ msgstr "瀏覽全部"
 msgid "Driving models"
 msgstr "駕駛模型"
 
-#: settings/model.py:404
+#: settings/model.py:402
 msgid "Park to remove models"
 msgstr "停車後才能移除模型"
 
@@ -3577,25 +3578,25 @@ msgstr "連線"
 
 #: settings/search.py:29
 #: settings/search.py:133
-#: settings/tuner.py:313
+#: settings/tuner.py:316
 msgid "Steering"
 msgstr "轉向"
 
 #: settings/search.py:29
 #: settings/search.py:139
-#: settings/tuner.py:344
+#: settings/tuner.py:347
 msgid "Gas & Brake"
 msgstr "油門與煞車"
 
 #: settings/search.py:29
 #: settings/search.py:147
-#: settings/tuner.py:411
+#: settings/tuner.py:414
 msgid "Following & Stops"
 msgstr "跟車與停車"
 
 #: settings/search.py:29
 #: settings/search.py:154
-#: settings/tuner.py:565
+#: settings/tuner.py:568
 msgid "Bundle Overrides"
 msgstr "組合設定覆寫"
 
@@ -3931,7 +3932,7 @@ msgid "Correction strength"
 msgstr "修正強度"
 
 #: settings/search.py:138
-#: settings/tuner.py:311
+#: settings/tuner.py:314
 msgid "Steering Controller"
 msgstr "轉向控制器"
 
@@ -3944,22 +3945,22 @@ msgid "Acceleration and braking profiles and values"
 msgstr "加速與煞車設定檔及數值"
 
 #: settings/search.py:140
-#: settings/tuner.py:339
+#: settings/tuner.py:342
 msgid "Acceleration Profile"
 msgstr "加速設定檔"
 
 #: settings/search.py:140
-#: settings/tuner.py:339
+#: settings/tuner.py:342
 msgid "How quickly the car speeds up"
 msgstr "車輛加速的快慢"
 
 #: settings/search.py:141
-#: settings/tuner.py:341
+#: settings/tuner.py:344
 msgid "Braking Profile"
 msgstr "煞車設定檔"
 
 #: settings/search.py:141
-#: settings/tuner.py:341
+#: settings/tuner.py:344
 msgid "How early and firmly it slows down"
 msgstr "減速開始時間與強度"
 
@@ -4046,7 +4047,7 @@ msgid "Extra room left behind a stopped car"
 msgstr "停車時與前車保留的額外空間"
 
 #: settings/search.py:151
-#: settings/tuner.py:405
+#: settings/tuner.py:408
 msgid "Use Radar for Take-Offs"
 msgstr "起步時使用雷達"
 
@@ -4055,22 +4056,22 @@ msgid "Starts moving as soon as the car ahead pulls away"
 msgstr "前車起步後立即跟隨"
 
 #: settings/search.py:152
-#: settings/tuner.py:407
+#: settings/tuner.py:410
 msgid "Force Stops at Lights"
 msgstr "紅燈強制停車"
 
 #: settings/search.py:152
-#: settings/tuner.py:407
+#: settings/tuner.py:410
 msgid "Comes to a full stop for red lights the model detects"
 msgstr "在模型偵測到的紅燈前完全停車"
 
 #: settings/search.py:153
-#: settings/tuner.py:409
+#: settings/tuner.py:412
 msgid "Cruise Button Step"
 msgstr "巡航按鈕調整幅度"
 
 #: settings/search.py:153
-#: settings/tuner.py:409
+#: settings/tuner.py:412
 msgid "How far one press of + or − moves the set speed"
 msgstr "每次按 + 或 − 時設定速度的變化量"
 
@@ -4658,13 +4659,13 @@ msgstr "如何變更"
 msgid "How to add"
 msgstr "如何新增"
 
-#: settings/tuner.py:549
+#: settings/tuner.py:552
 msgid "Every Tuner Mode change goes back to its default, in every section and bundle. Your other settings stay as they are."
 msgstr "所有區段與組合中的調校模式變更均還原為預設值，其他設定保持不變。"
 
 #: settings/tuner.py:26
-#: settings/tuner.py:275
-#: settings/tuner.py:496
+#: settings/tuner.py:278
+#: settings/tuner.py:499
 msgid "Override"
 msgstr "覆寫"
 
@@ -4755,84 +4756,84 @@ msgstr "壅塞"
 msgid "Eco"
 msgstr "節能"
 
-#: settings/tuner.py:259
+#: settings/tuner.py:262
 #, python-brace-format
 msgid "{} changed"
 msgstr "已變更{}項"
 
-#: settings/tuner.py:472
-#: settings/tuner.py:540
+#: settings/tuner.py:475
+#: settings/tuner.py:543
 msgid "Bar metrics"
 msgstr "列指標"
 
-#: settings/tuner.py:544
+#: settings/tuner.py:547
 #, python-brace-format
 msgid "{} of {} items differ from the bundle."
 msgstr "{} / {}項與組合設定不同。"
 
-#: settings/tuner.py:559
+#: settings/tuner.py:562
 msgid "TUNER MODE"
 msgstr "調校模式"
 
-#: settings/tuner.py:313
+#: settings/tuner.py:316
 msgid "Learned values work for most cars. An override replaces the learned value until you reset it."
 msgstr "學習值適用於多數車輛。覆寫值會取代學習值，直到您重設。"
 
-#: settings/tuner.py:344
+#: settings/tuner.py:347
 msgid "Driving Style and Vehicle Profile set these. An override replaces their value."
 msgstr "由駕駛風格與車輛設定檔設定，覆寫值會取代其數值。"
 
-#: settings/tuner.py:388
+#: settings/tuner.py:391
 msgid "Following gap by style"
 msgstr "各風格跟車距離"
 
-#: settings/tuner.py:557
+#: settings/tuner.py:560
 msgid "Reset all tuning?"
 msgstr "重設所有調校？"
 
-#: settings/tuner.py:311
+#: settings/tuner.py:314
 msgid "Auto uses NNFF when your car has a model"
 msgstr "自動模式在車型有模型時使用 NNFF"
 
-#: settings/tuner.py:382
+#: settings/tuner.py:385
 #, python-brace-format
 msgid "{} gap"
 msgstr "{}車距"
 
-#: settings/tuner.py:382
+#: settings/tuner.py:385
 msgid "Seconds behind the car ahead in this Driving Style"
 msgstr "此駕駛風格下與前車的時間間隔（秒）"
 
-#: settings/tuner.py:405
+#: settings/tuner.py:408
 msgid "Starts moving as soon as the radar sees the car ahead pull away"
 msgstr "雷達偵測到前車起步後立即跟隨"
 
-#: settings/tuner.py:473
+#: settings/tuner.py:476
 #, python-brace-format
 msgid "{} of {} picked. They spread evenly across the bar; pick none to hide it."
 msgstr "已選{} / {}項，平均分布於列中；不選則隱藏。"
 
-#: settings/tuner.py:488
+#: settings/tuner.py:491
 msgid "Choose"
 msgstr "選擇"
 
-#: settings/tuner.py:512
+#: settings/tuner.py:515
 msgid "Bundle on"
 msgstr "組合已開啟"
 
-#: settings/tuner.py:512
+#: settings/tuner.py:515
 msgid "Bundle off"
 msgstr "組合已關閉"
 
-#: settings/tuner.py:541
+#: settings/tuner.py:544
 msgid "None: the bar is hidden"
 msgstr "無：列隱藏"
 
-#: settings/tuner.py:567
+#: settings/tuner.py:570
 msgid "Reset all tuning"
 msgstr "重設所有調校"
 
-#: settings/tuner.py:326
+#: settings/tuner.py:329
 msgid "Replaces the profile your Driving Style sets, until you reset it"
 msgstr "取代駕駛風格設定的設定檔，直到重設"
 
@@ -4877,8 +4878,8 @@ msgid "Favorite 3"
 msgstr "收藏 3"
 
 #: settings/vehicle.py:254
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:780
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:68
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:883
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:78
 msgid "Never"
 msgstr "永不"
 
@@ -4947,7 +4948,7 @@ msgid "Cruise main"
 msgstr "巡航主按鈕"
 
 #: settings/vehicle.py:303
-#: settings/vehicle.py:351
+#: settings/vehicle.py:352
 msgid "Lock doors after"
 msgstr "延時鎖門"
 
@@ -4959,11 +4960,11 @@ msgstr "此車沒有額外選項，所有支援的功能均在車輛頁面。"
 msgid "Options only some makes and models have"
 msgstr "僅部分廠牌與車型支援的選項"
 
-#: settings/vehicle.py:332
+#: settings/vehicle.py:333
 msgid "Use the car's own cruise control"
 msgstr "使用車輛內建巡航控制"
 
-#: settings/vehicle.py:333
+#: settings/vehicle.py:334
 msgid "Turns off openpilot's gas and brake control. openpilot restarts if the car is on."
 msgstr "關閉 openpilot 的油門與煞車控制。車輛開啟時會重新啟動 openpilot。"
 
@@ -4996,101 +4997,101 @@ msgstr "更新並重新啟動"
 msgid "How long after you turn off the car"
 msgstr "關閉車輛後的等待時間"
 
-#: settings/vehicle.py:334
+#: settings/vehicle.py:335
 msgid "openpilot stops controlling gas and brakes; the car's adaptive cruise takes over. openpilot restarts if the car is on."
 msgstr "openpilot 停止控制油門與煞車，由車輛主動式定速巡航接管。車輛開啟時會重新啟動 openpilot。"
 
-#: settings/vehicle.py:336
+#: settings/vehicle.py:337
 msgid "Pedal for gas and brake"
 msgstr "使用 pedal 控制油門與煞車"
 
-#: settings/vehicle.py:336
+#: settings/vehicle.py:337
 msgid "Use the comma pedal for openpilot's speed control"
 msgstr "使用 comma pedal 進行 openpilot 速度控制"
 
-#: settings/vehicle.py:337
+#: settings/vehicle.py:338
 msgid "Offsets on the dash"
 msgstr "儀表板偏移量"
 
-#: settings/vehicle.py:337
+#: settings/vehicle.py:338
 msgid "Show set-speed offsets on the dashboard"
 msgstr "在儀表板顯示設定速度偏移量"
 
-#: settings/vehicle.py:339
+#: settings/vehicle.py:340
 msgid "CAN ignition only"
 msgstr "僅 CAN 點火"
 
-#: settings/vehicle.py:339
+#: settings/vehicle.py:340
 msgid "Start only from the car's CAN ignition, not the ignition wire"
 msgstr "僅依車輛 CAN 點火訊號啟動，忽略點火線"
 
-#: settings/vehicle.py:340
+#: settings/vehicle.py:341
 msgid "Remote start wakes the device"
 msgstr "遠端啟動車輛時喚醒裝置"
 
-#: settings/vehicle.py:340
+#: settings/vehicle.py:341
 msgid "Starting the car remotely starts openpilot too"
 msgstr "遠端啟動車輛時也啟動 openpilot"
 
-#: settings/vehicle.py:342
-#: settings/vehicle.py:346
-#: settings/vehicle.py:353
+#: settings/vehicle.py:343
+#: settings/vehicle.py:347
+#: settings/vehicle.py:354
 msgid "Stop and go"
 msgstr "走走停停"
 
-#: settings/vehicle.py:342
+#: settings/vehicle.py:343
 msgid "Keep going after a stop on Volts that don't do it themselves"
 msgstr "讓無法自行恢復的 Volt 在停車後繼續行駛"
 
-#: settings/vehicle.py:344
+#: settings/vehicle.py:345
 msgid "Brake hold"
 msgstr "煞車維持"
 
-#: settings/vehicle.py:344
+#: settings/vehicle.py:345
 msgid "Hold after cruise times out at a stop, and go again when traffic moves"
 msgstr "停車時巡航逾時後維持煞車，車流移動時繼續行駛"
 
-#: settings/vehicle.py:346
+#: settings/vehicle.py:347
 msgid "Keep going after a stop"
 msgstr "停車後繼續行駛"
 
-#: settings/vehicle.py:350
+#: settings/vehicle.py:351
 msgid "Auto-unlock doors"
 msgstr "自動解鎖車門"
 
-#: settings/vehicle.py:350
+#: settings/vehicle.py:351
 msgid "Unlocks when you shift into park"
 msgstr "排入 P 檔時解鎖"
 
-#: settings/vehicle.py:351
+#: settings/vehicle.py:352
 msgid "Locks the doors a while after you turn off the car"
 msgstr "關閉車輛一段時間後鎖門"
 
-#: settings/vehicle.py:353
+#: settings/vehicle.py:354
 msgid "Keep going after a stop on Toyotas that don't do it themselves"
 msgstr "讓無法自行恢復的 Toyota 在停車後繼續行駛"
 
-#: settings/vehicle.py:355
+#: settings/vehicle.py:356
 msgid "Use Cancel as a button"
 msgstr "將 Cancel 用作可指派按鈕"
 
-#: settings/vehicle.py:355
+#: settings/vehicle.py:356
 msgid "Map the Cancel button like the other steering wheel buttons"
 msgstr "像其他方向盤按鈕一樣指派 Cancel 按鈕"
 
-#: settings/vehicle.py:357
+#: settings/vehicle.py:358
 msgid "EV remote climate wakes the device"
 msgstr "電動車遠端空調喚醒裝置"
 
-#: settings/vehicle.py:357
+#: settings/vehicle.py:358
 msgid "Remote climate starts openpilot too"
 msgstr "遠端空調也會啟動 openpilot"
 
-#: settings/vehicle.py:358
+#: settings/vehicle.py:359
 msgid "Nostalgia mode"
 msgstr "懷舊模式"
 
-#: settings/vehicle.py:358
+#: settings/vehicle.py:359
 msgid "The left paddle pauses openpilot's gas and brake control"
 msgstr "左撥片暫停 openpilot 油門與煞車控制"
 
@@ -5102,11 +5103,11 @@ msgstr "已手動選擇"
 msgid "Detected automatically"
 msgstr "已自動偵測"
 
-#: settings/vehicle.py:348
+#: settings/vehicle.py:349
 msgid "Stop and go with a manual parking brake"
 msgstr "手動駐車煞車車輛的走走停停"
 
-#: settings/vehicle.py:348
+#: settings/vehicle.py:349
 msgid "For cars with a hand brake"
 msgstr "適用於手煞車車輛"
 
@@ -5343,582 +5344,566 @@ msgstr "需要幾秒鐘，之後可編輯文字。"
 msgid "Voice typing"
 msgstr "語音輸入"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:72
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:67
 msgid "U.S. Midwest Region (12 States)"
 msgstr "美國中西部（12 州）"
 
 #. US state and territory codes; keep as written.
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:73
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:68
 msgid "IL, IN, IA, KS, MI, MN, MO, NE, ND, OH, SD, WI"
 msgstr "IL, IN, IA, KS, MI, MN, MO, NE, ND, OH, SD, WI"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:77
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:72
 msgid "U.S. Northeast Region (9 States)"
 msgstr "美國東北部（9 州）"
 
 #. US state and territory codes; keep as written.
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:78
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:73
 msgid "CT, ME, MA, NH, NJ, NY, PA, RI, VT"
 msgstr "CT, ME, MA, NH, NJ, NY, PA, RI, VT"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:82
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:77
 msgid "U.S. South Region (17 States)"
 msgstr "美國南部（17 州）"
 
 #. US state and territory codes; keep as written.
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:83
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:78
 msgid "AL, AR, DE, DC, FL, GA, KY, LA, MD, MS, NC, OK, SC, TN, TX, VA, WV"
 msgstr "AL, AR, DE, DC, FL, GA, KY, LA, MD, MS, NC, OK, SC, TN, TX, VA, WV"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:87
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:82
 msgid "U.S. West Region (13 States)"
 msgstr "美國西部（13 州）"
 
 #. US state and territory codes; keep as written.
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:88
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:83
 msgid "AK, AZ, CA, CO, HI, ID, MT, NV, NM, OR, UT, WA, WY"
 msgstr "AK, AZ, CA, CO, HI, ID, MT, NV, NM, OR, UT, WA, WY"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:92
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:87
 msgid "U.S. Territories (5 Territories)"
 msgstr "美國屬地（5 個屬地）"
 
 #. US state and territory codes; keep as written.
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:93
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:88
 msgid "AS, GU, MP, PR, VI"
 msgstr "AS, GU, MP, PR, VI"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:120
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:132
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:138
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:116
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:128
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:134
 msgid "Calculating..."
 msgstr "正在計算…"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:135
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:131
 msgid "Almost done"
 msgstr "即將完成"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:553
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:657
 msgid "Tap to select state"
 msgstr "點選選擇州"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:678
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:782
 msgid "Download Offline Maps"
 msgstr "下載離線地圖"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:795
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:898
 msgid "Download Readiness"
 msgstr "下載準備狀態"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:463
-msgid "No regions selected"
-msgstr "未選擇地區"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:465
-msgid "Whole U.S. (56 states)"
-msgstr "全美（56 州）"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:485
-msgid "No regions selected yet"
-msgstr "尚未選擇地區"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:487
-msgid "Whole U.S. package"
-msgstr "全美地圖套件"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:548
-msgid "Master Package - Full country map data"
-msgstr "完整地圖套件 - 全國地圖資料"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:552
-msgid "Selected for download"
-msgstr "已選擇下載"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:557
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:275
-msgid "Selected"
-msgstr "已選取"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:561
-msgid "No regions available"
-msgstr "無可用地區"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:561
-msgid "Switch sources to keep browsing maps."
-msgstr "切換來源以繼續瀏覽地圖。"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:673
-msgid "Cancelling..."
-msgstr "正在取消…"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:675
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:749
-msgid "Cancel Download"
-msgstr "取消下載"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:677
-msgid "Select Regions Below"
-msgstr "在下方選擇地區"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:707
-msgid "Auto Update Schedule"
-msgstr "自動更新排程"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:784
-msgid "Cancelling Download"
-msgstr "正在取消下載"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:786
-msgid "Downloading Maps"
-msgstr "正在下載地圖"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:788
-msgid "Starting Download"
-msgstr "正在開始下載"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:792
-msgid "Checking Offline Maps"
-msgstr "正在檢查離線地圖"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:794
-msgid "Select Map Data"
-msgstr "選擇地圖資料"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:813
-msgid "Stop request sent. The current transfer will wind down safely."
-msgstr "已傳送停止要求，目前傳輸將安全結束。"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:816
-msgid "Preparing the selected regions for download."
-msgstr "正在準備下載所選地區。"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:819
-msgid "No regions selected yet. Tap 'Whole U.S.' or pick specific states below to get started."
-msgstr "尚未選擇地區。點選「全美」或在下方選擇各州以開始。"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:190
-msgid "Available for Download"
-msgstr "可供下載"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:190
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:205
 msgid "Map Packages & Regions"
 msgstr "地圖套件與地區"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:239
-msgid "Downloaded on device"
-msgstr "已下載至裝置"
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:567
+msgid "No regions selected"
+msgstr "未選擇地區"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:277
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:569
+msgid "Whole U.S. (56 states)"
+msgstr "全美（56 州）"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:589
+msgid "No regions selected yet"
+msgstr "尚未選擇地區"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:591
+msgid "Whole U.S. package"
+msgstr "全美地圖套件"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:652
+msgid "Master Package - Full country map data"
+msgstr "完整地圖套件 - 全國地圖資料"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:656
+msgid "Selected for download"
+msgstr "已選擇下載"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:661
+msgid "Selected"
+msgstr "已選取"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:665
+msgid "No regions available"
+msgstr "無可用地區"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:665
+msgid "Switch sources to keep browsing maps."
+msgstr "切換來源以繼續瀏覽地圖。"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:777
+msgid "Cancelling..."
+msgstr "正在取消…"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:779
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:852
+msgid "Cancel Download"
+msgstr "取消下載"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:781
+msgid "Select Regions Below"
+msgstr "在下方選擇地區"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:811
+msgid "Auto Update Schedule"
+msgstr "自動更新排程"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:887
+msgid "Cancelling Download"
+msgstr "正在取消下載"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:889
+msgid "Downloading Maps"
+msgstr "正在下載地圖"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:891
+msgid "Starting Download"
+msgstr "正在開始下載"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:895
+msgid "Checking Offline Maps"
+msgstr "正在檢查離線地圖"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:897
+msgid "Select Map Data"
+msgstr "選擇地圖資料"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:916
+msgid "Stop request sent. The current transfer will wind down safely."
+msgstr "已傳送停止要求，目前傳輸將安全結束。"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:919
+msgid "Preparing the selected regions for download."
+msgstr "正在準備下載所選地區。"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:922
+msgid "No regions selected yet. Tap 'Whole U.S.' or pick specific states below to get started."
+msgstr "尚未選擇地區。點選「全美」或在下方選擇各州以開始。"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:364
 msgid "Last Updated"
 msgstr "上次更新"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:466
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:570
 #, python-brace-format, drawn
 msgid "{} region selected"
 msgid_plural "{} regions selected"
 msgstr[0] "已選擇{}個地區"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:491
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:595
 #, python-brace-format, drawn
 msgid "{} + {} more"
 msgstr "{}，另有{}項"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:516
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:620
 msgid "Whole U.S. (All 50 States & Territories)"
 msgstr "全美（全部 50 州及屬地）"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:531
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:635
 msgid "Whole U.S. Selected"
 msgstr "已選擇全美"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:535
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:639
 #, python-brace-format, drawn
 msgid "{} selected | {} available"
 msgstr "已選{}項 · 可選{}項"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:657
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:761
 msgid "Download in progress"
 msgstr "正在下載"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:659
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:763
 msgid "Connect to the internet"
 msgstr "請連接網際網路"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:661
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:765
 msgid "Park the vehicle to download"
 msgstr "停車後才能下載"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:690
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:794
 msgid "Auto: Off"
 msgstr "自動：關閉"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:691
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:795
 msgid "Auto: Weekly"
 msgstr "自動：每週"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:692
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:796
 msgid "Auto: Monthly"
 msgstr "自動：每月"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:708
-msgid "Choose how often to update downloaded offline maps."
-msgstr "選擇已下載離線地圖的更新頻率。"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:735
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:838
 msgid "Start downloading offline maps for the selected regions?"
 msgstr "開始下載所選地區的離線地圖？"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:749
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:852
 msgid "Cancel the current map download?"
 msgstr "取消目前地圖下載？"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:776
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:879
 msgid "Delete all downloaded offline map data?"
 msgstr "刪除所有已下載的離線地圖資料？"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:776
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:879
 msgid "Remove Maps"
 msgstr "移除地圖"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:825
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:928
 #, python-brace-format, drawn
 msgid "Ready to download {}."
 msgstr "已準備下載{}。"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:173
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:170
 msgid "U.S. States & Regions"
 msgstr "美國各州與區域"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:173
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:170
 msgid "Other Countries"
 msgstr "其他國家"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:188
-msgid "On This Device"
-msgstr "此裝置上"
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:277
+msgid "Available for Download"
+msgstr "可供下載"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:425
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:529
 #, python-brace-format, drawn
 msgid "{} / {} ({}%)"
 msgstr "{} / {}（{}%）"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:534
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:638
 #, python-brace-format, drawn
 msgid "{} available - Tap to select"
 msgstr "{}可用 - 點選選擇"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:722
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:684
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:825
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:788
 msgid "Please select 'Whole U.S.' or pick individual states from the list below."
 msgstr "請選擇「全美」，或從下方清單選擇各州。"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:804
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:907
 #, python-brace-format, drawn
 msgid "{} / {} ({}%)\nElapsed {} | ETA {}"
 msgstr "{} / {}（{}%）\n經過{} · 預計剩餘{}"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:754
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:761
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:252
+msgid "Downloaded on device"
+msgstr "已下載至裝置"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:857
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:864
 msgid "Park to remove downloaded maps."
 msgstr "停車後才能移除已下載的地圖。"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:774
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:877
 msgid "Removing offline maps..."
 msgstr "正在移除離線地圖…"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:803
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:906
 #, python-brace-format, drawn
 msgid "{}\nElapsed {} | ETA {}"
 msgstr "{}\n經過{} · 預計剩餘{}"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:188
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:278
 #, python-brace-format, drawn
-msgid "{} region"
-msgid_plural "{} regions"
-msgstr[0] "{}個地區"
+msgid "{} available"
+msgstr "{}可用"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:47
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:57
 msgid "No Action"
 msgstr "無操作"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:48
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:58
 msgid "Change Personality"
 msgstr "變更駕駛風格"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:49
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:59
 msgid "Force Coast"
 msgstr "強制滑行"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:50
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:60
 msgid "Pulse and Glide"
 msgstr "加速與滑行"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:51
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:61
 msgid "Pause Steering"
 msgstr "暫停轉向"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:52
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:62
 msgid "Pause Accel/Brake"
 msgstr "暫停加速/煞車"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:53
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:63
 msgid "Toggle Experimental"
 msgstr "切換實驗模式"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:54
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:64
 msgid "Toggle Traffic"
 msgstr "切換壅塞模式"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:55
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:65
 msgid "Toggle Switchback"
 msgstr "切換連續急彎模式"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:56
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:66
 msgid "Create Bookmark"
 msgstr "建立標記"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:57
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:67
 msgid "Toggle Always On Lateral"
 msgstr "切換持續轉向"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:58
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:68
 msgid "Adopt Current Speed Limit"
 msgstr "採用目前速限"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:59
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:69
 msgid "Favorite #1"
 msgstr "收藏 #1"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:60
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:70
 msgid "Favorite #2"
 msgstr "收藏 #2"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:61
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:71
 msgid "Favorite #3"
 msgstr "收藏 #3"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:407
-msgid "Choose an action for each press type, then tap Apply."
-msgstr "為各按壓方式選擇操作，再點選套用。"
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:610
+msgid "CANCEL"
+msgstr "取消"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:573
-msgid "Select Make"
-msgstr "選擇廠牌"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:602
-msgid "Select Model"
-msgstr "選擇車型"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:656
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:671
-msgid "None"
-msgstr "無"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:103
-msgid "Disable Fingerprinting"
-msgstr "停用車輛自動辨識"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:107
-msgid "Car Make"
-msgstr "車輛廠牌"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:111
-msgid "Car Model"
-msgstr "車輛型號"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:137
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:527
-msgid "Distance Button"
-msgstr "車距按鈕"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:155
-msgid "CC Main Button"
-msgstr "巡航主按鈕"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:238
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:253
-msgid "Features"
-msgstr "功能"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:281
-msgid "Disable openpilot Long"
-msgstr "停用 openpilot 縱向控制"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:282
-msgid "Revert to stock longitudinal control."
-msgstr "還原原廠縱向控制。"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:507
-msgid "Flash"
-msgstr "寫入韌體"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:532
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:145
-msgid "Cancel Button"
-msgstr "Cancel 按鈕"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:537
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:163
-msgid "Mode Button"
-msgstr "Mode 按鈕"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:542
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:168
-msgid "Star Button"
-msgstr "星號按鈕"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:574
-msgid "Choose your vehicle manufacturer."
-msgstr "選擇車輛製造商。"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:603
-msgid "Choose the model that matches your vehicle."
-msgstr "選擇與您車輛相符的車型。"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:636
-msgid "Choose the action this button press will trigger."
-msgstr "選擇按下此按鈕時執行的操作。"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:644
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:117
-msgid "Lock Doors Timer"
-msgstr "鎖門計時器"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:104
-msgid "Manually select vehicle instead of auto-detecting."
-msgstr "手動選擇車輛，不使用自動偵測。"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:151
-msgid "LKAS Button"
-msgstr "LKAS 按鈕"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:289
-msgid "Pedal for Long"
-msgstr "使用 pedal 進行縱向控制"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:294
-msgid "Offsets on Dash Spoof"
-msgstr "模擬儀表板偏移量"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:300
-msgid "CAN Ignition Only"
-msgstr "僅 CAN 點火"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:301
-msgid "Use Panda firmware that ignores the physical ignition line and starts only from CAN ignition."
-msgstr "使用忽略實體點火線、僅依 CAN 點火啟動的 Panda 韌體。"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:306
-msgid "Remote Start Panda"
-msgstr "Panda 遠端啟動"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:312
-msgid "Volt SNG Hack"
-msgstr "Volt 走走停停補丁"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:318
-msgid "Jeep Brake Hold"
-msgstr "Jeep 煞車維持"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:319
-msgid "Hold after ACC times out at a stop and resume when traffic moves."
-msgstr "停車時 ACC 逾時後維持煞車，車流移動時繼續行駛。"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:326
-msgid "Stop and Go"
-msgstr "走走停停"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:339
-msgid "Auto Lock Doors"
-msgstr "自動鎖車門"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:344
-msgid "Auto Unlock Doors"
-msgstr "自動解鎖車門"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:350
-msgid "Stop-and-Go Hack"
-msgstr "走走停停補丁"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:356
-msgid "Remap Cancel Button"
-msgstr "重新指派 Cancel 按鈕"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:357
-msgid "Treat the Cancel button as an extra mappable steering-wheel button."
-msgstr "將 Cancel 按鈕作為額外可指派的方向盤按鈕。"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:364
-msgid "EV Remote Climate"
-msgstr "電動車遠端空調"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:369
-msgid "Nostalgia Mode"
-msgstr "懷舊模式"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:370
-msgid "Use the left paddle to pause openpilot acceleration and braking."
-msgstr "使用左撥片暫停 openpilot 加速與煞車。"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:505
-msgid "Panda flashing started. Device will reboot when finished."
-msgstr "Panda 韌體寫入已開始，完成後裝置將重新啟動。"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:529
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:534
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:539
-msgid "Long Press"
-msgstr "長按"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:529
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:534
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:539
-msgid "Very Long"
-msgstr "超長按"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:558
-msgid "No fingerprint list available."
-msgstr "無可用車輛辨識清單。"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:558
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:580
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:584
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:622
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:763
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:784
 msgid "OK"
 msgstr "確定"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:580
-msgid "Please select a Car Make first!"
-msgstr "請先選擇車輛廠牌！"
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:712
+msgid "Flash"
+msgstr "寫入韌體"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:584
-msgid "No models available for this make."
-msgstr "此廠牌暫無可用車型。"
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:778
+msgid "Select Make"
+msgstr "選擇廠牌"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:647
-msgid "How long to wait before locking the doors."
-msgstr "鎖門前的等待時間。"
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:806
+msgid "Select Model"
+msgstr "選擇車型"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:332
-msgid "Manual Parking Brake SNG"
-msgstr "手動駐車煞車走走停停"
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:854
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:869
+msgid "None"
+msgstr "無"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:468
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:117
+msgid "Disable Fingerprinting"
+msgstr "停用車輛自動辨識"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:121
+msgid "Car Make"
+msgstr "車輛廠牌"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:125
+msgid "Car Model"
+msgstr "車輛型號"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:151
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:732
+msgid "Distance Button"
+msgstr "車距按鈕"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:169
+msgid "CC Main Button"
+msgstr "巡航主按鈕"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:247
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:268
+msgid "Vehicle Identity"
+msgstr "車輛識別"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:270
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:255
+msgid "Steering Controls"
+msgstr "轉向控制"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:330
+msgid "Disable openpilot Long"
+msgstr "停用 openpilot 縱向控制"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:331
+msgid "Revert to stock longitudinal control."
+msgstr "還原原廠縱向控制。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:737
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:159
+msgid "Cancel Button"
+msgstr "Cancel 按鈕"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:742
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:177
+msgid "Mode Button"
+msgstr "Mode 按鈕"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:747
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:182
+msgid "Star Button"
+msgstr "星號按鈕"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:843
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:131
+msgid "Lock Doors Timer"
+msgstr "鎖門計時器"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:118
+msgid "Manually select vehicle instead of auto-detecting."
+msgstr "手動選擇車輛，不使用自動偵測。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:165
+msgid "LKAS Button"
+msgstr "LKAS 按鈕"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:264
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:281
+msgid "Features"
+msgstr "功能"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:338
+msgid "Pedal for Long"
+msgstr "使用 pedal 進行縱向控制"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:343
+msgid "Offsets on Dash Spoof"
+msgstr "模擬儀表板偏移量"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:349
+msgid "CAN Ignition Only"
+msgstr "僅 CAN 點火"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:350
+msgid "Use Panda firmware that ignores the physical ignition line and starts only from CAN ignition."
+msgstr "使用忽略實體點火線、僅依 CAN 點火啟動的 Panda 韌體。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:355
+msgid "Remote Start Panda"
+msgstr "Panda 遠端啟動"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:361
+msgid "Volt SNG Hack"
+msgstr "Volt 走走停停補丁"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:367
+msgid "Jeep Brake Hold"
+msgstr "Jeep 煞車維持"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:368
+msgid "Hold after ACC times out at a stop and resume when traffic moves."
+msgstr "停車時 ACC 逾時後維持煞車，車流移動時繼續行駛。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:375
+msgid "Stop and Go"
+msgstr "走走停停"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:388
+msgid "Auto Lock Doors"
+msgstr "自動鎖車門"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:393
+msgid "Auto Unlock Doors"
+msgstr "自動解鎖車門"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:399
+msgid "Stop-and-Go Hack"
+msgstr "走走停停補丁"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:405
+msgid "Remap Cancel Button"
+msgstr "重新指派 Cancel 按鈕"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:406
+msgid "Treat the Cancel button as an extra mappable steering-wheel button."
+msgstr "將 Cancel 按鈕作為額外可指派的方向盤按鈕。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:413
+msgid "EV Remote Climate"
+msgstr "電動車遠端空調"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:418
+msgid "Nostalgia Mode"
+msgstr "懷舊模式"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:419
+msgid "Use the left paddle to pause openpilot acceleration and braking."
+msgstr "使用左撥片暫停 openpilot 加速與煞車。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:673
 msgid "Disable openpilot longitudinal control?"
 msgstr "停用 openpilot 縱向控制？"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:468
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:673
 msgid "Disable"
 msgstr "停用"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:303
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:710
+msgid "Panda flashing started. Device will reboot when finished."
+msgstr "Panda 韌體寫入已開始，完成後裝置將重新啟動。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:734
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:739
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:744
+msgid "Long Press"
+msgstr "長按"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:734
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:739
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:744
+msgid "Very Long"
+msgstr "超長按"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:763
+msgid "No fingerprint list available."
+msgstr "無可用車輛辨識清單。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:784
+msgid "Please select a Car Make first!"
+msgstr "請先選擇車輛廠牌！"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:788
+msgid "No models available for this make."
+msgstr "此廠牌暫無可用車型。"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:381
+msgid "Manual Parking Brake SNG"
+msgstr "手動駐車煞車走走停停"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:352
 msgid "CAN Ignition Only requires a Panda firmware update."
 msgstr "僅 CAN 點火需要更新 Panda 韌體。"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:308
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:357
 msgid "Remote Start requires a Panda firmware update."
 msgstr "遠端啟動需要更新 Panda 韌體。"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:366
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:415
 msgid "EV Remote Climate requires a Panda firmware update."
 msgstr "電動車遠端空調需要更新 Panda 韌體。"
 
@@ -5958,74 +5943,61 @@ msgstr "選擇簡短名稱"
 msgid "That destination is not valid."
 msgstr "該目的地無效。"
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:632
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:641
 msgid "Ready to navigate"
 msgstr "導航已就緒"
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:638
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:647
 msgid "Navigation active"
 msgstr "導航中"
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:635
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:643
 msgid "Unavailable"
 msgstr "無法使用"
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:678
-msgid "Searching..."
-msgstr "正在搜尋…"
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:687
+msgid "Use the on-device keyboard to search Mapbox locations"
+msgstr "使用裝置鍵盤搜尋 Mapbox 地點"
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:678
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:704
 msgid "Looking up destinations"
 msgstr "正在尋找目的地"
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:684
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:732
+msgid "Search results"
+msgstr "搜尋結果"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:764
+msgid "Favorite destinations"
+msgstr "收藏的目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:802
+msgid "Recent destinations"
+msgstr "最近目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:831
+msgid "No matching destinations"
+msgstr "沒有符合的目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:831
 msgid "No destinations yet"
 msgstr "暫無目的地"
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:684
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:832
+msgid "Try a different place or address."
+msgstr "請嘗試其他地點或地址。"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:832
 msgid "Search for a place or address to begin."
 msgstr "搜尋地點或地址以開始。"
-
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:692
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:656
-msgid "Destination"
-msgstr "目的地"
 
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:336
 msgid "Search is unavailable. Check your connection and try again."
 msgstr "無法搜尋。請檢查連線後重試。"
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:655
-msgid "Search results"
-msgstr "搜尋結果"
-
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:666
-msgid "Favorite destinations"
-msgstr "收藏的目的地"
-
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:668
-msgid "Recent destinations"
-msgstr "最近目的地"
-
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:683
-msgid "No matching destinations"
-msgstr "沒有符合的目的地"
-
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:683
-msgid "Try a different place or address."
-msgstr "請嘗試其他地點或地址。"
-
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:695
-msgid "Use the on-device keyboard to search Mapbox locations"
-msgstr "使用裝置鍵盤搜尋 Mapbox 地點"
-
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:703
-msgid "Route"
-msgstr "路線"
-
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:714
-msgid "Destinations"
-msgstr "目的地"
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:686
+msgid "Search for a destination"
+msgstr "搜尋目的地"
 
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:342
 msgid "Could not determine that location. Try another result."
@@ -6044,26 +6016,28 @@ msgstr "此目的地"
 msgid "Rename"
 msgstr "重新命名"
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:694
-msgid "Search for a destination"
-msgstr "搜尋目的地"
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:747
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:785
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:817
+msgid "Select"
+msgstr "選擇"
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:665
-msgid "Favorite destination"
-msgstr "收藏的目的地"
-
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:670
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:669
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:816
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:815
 msgid "Recent destination"
 msgstr "最近目的地"
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:664
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:746
+msgid "Destination"
+msgstr "目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:784
+msgid "Favorite destination"
+msgstr "收藏的目的地"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:783
 msgid "Unnamed favorite"
 msgstr "未命名收藏"
-
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:727
-msgid "Select"
-msgstr "選擇"
 
 #: selfdrive/ui/layouts/settings/software.py:26
 msgid "checking..."
@@ -6185,10 +6159,6 @@ msgstr "駕駛時無法更新"
 msgid "No error log found."
 msgstr "找不到錯誤記錄。"
 
-#: selfdrive/ui/layouts/settings/software.py:392
-msgid "Choose the software branch to install."
-msgstr "選擇要安裝的軟體分支。"
-
 #: selfdrive/ui/layouts/settings/software.py:179
 msgid "RETRY"
 msgstr "重試"
@@ -6280,7 +6250,7 @@ msgstr "openpilot 要求裝置左右偏角不超過 4°，向上不超過 5°，
 msgid "Review the rules, features, and limitations of openpilot"
 msgstr "檢視 openpilot 的規則、功能與限制"
 
-#: selfdrive/ui/layouts/settings/device.py:275
+#: selfdrive/ui/layouts/settings/device.py:276
 msgid "openpilot is continuously calibrating, resetting is rarely required. Resetting calibration will restart openpilot if the car is powered on."
 msgstr "openpilot 會持續校正，通常無須重設。車輛開啟時重設校正會重新啟動 openpilot。"
 
@@ -6296,41 +6266,41 @@ msgstr "點選任意位置關閉"
 msgid "Select a language"
 msgstr "選擇語言"
 
-#: selfdrive/ui/layouts/settings/device.py:212
+#: selfdrive/ui/layouts/settings/device.py:214
 msgid "Are you sure you want to reset calibration?"
 msgstr "確定要重設校正嗎？"
 
-#: selfdrive/ui/layouts/settings/device.py:229
+#: selfdrive/ui/layouts/settings/device.py:230
 msgid "Are you sure you want to reset driver monitoring calibration?"
 msgstr "確定要重設駕駛監控校正嗎？"
 
-#: selfdrive/ui/layouts/settings/device.py:258
+#: selfdrive/ui/layouts/settings/device.py:259
 msgid "<br><br>Steering lag calibration is complete."
 msgstr "<br><br>轉向延遲校正已完成。"
 
-#: selfdrive/ui/layouts/settings/device.py:281
+#: selfdrive/ui/layouts/settings/device.py:282
 msgid "Are you sure you want to reboot?"
 msgstr "確定要重新啟動嗎？"
 
-#: selfdrive/ui/layouts/settings/device.py:281
+#: selfdrive/ui/layouts/settings/device.py:282
 #: selfdrive/ui/layouts/settings/device.py:144
 msgid "Reboot"
 msgstr "重新啟動"
 
-#: selfdrive/ui/layouts/settings/device.py:297
+#: selfdrive/ui/layouts/settings/device.py:298
 msgid "Are you sure you want to power off?"
 msgstr "確定要關機嗎？"
 
-#: selfdrive/ui/layouts/settings/device.py:316
+#: selfdrive/ui/layouts/settings/device.py:317
 msgid "MANAGE"
 msgstr "管理"
 
-#: selfdrive/ui/layouts/settings/device.py:316
+#: selfdrive/ui/layouts/settings/device.py:317
 #: selfdrive/ui/layouts/settings/device.py:135
 msgid "PAIR"
 msgstr "配對"
 
-#: selfdrive/ui/layouts/settings/device.py:333
+#: selfdrive/ui/layouts/settings/device.py:334
 msgid "Show QR"
 msgstr "顯示 QR 碼"
 
@@ -6363,11 +6333,7 @@ msgstr "重設校正"
 msgid "RESET"
 msgstr "重設"
 
-#: selfdrive/ui/layouts/settings/device.py:185
-msgid "Choose the language used for menus and alerts."
-msgstr "選擇選單與警報使用的語言。"
-
-#: selfdrive/ui/layouts/settings/device.py:345
+#: selfdrive/ui/layouts/settings/device.py:346
 msgid "Galaxy"
 msgstr "Galaxy"
 
@@ -6403,30 +6369,26 @@ msgstr "變更語言"
 msgid "CHANGE"
 msgstr "變更"
 
-#: selfdrive/ui/layouts/settings/device.py:196
+#: selfdrive/ui/layouts/settings/device.py:198
 msgid "Disengage to Reset Calibration"
 msgstr "退出駕駛輔助後才能重設校正"
 
-#: selfdrive/ui/layouts/settings/device.py:217
+#: selfdrive/ui/layouts/settings/device.py:218
 msgid "Disengage to Reset Driver Monitoring"
 msgstr "退出駕駛輔助後才能重設駕駛監控"
 
-#: selfdrive/ui/layouts/settings/device.py:256
+#: selfdrive/ui/layouts/settings/device.py:257
 #, python-brace-format, drawn
 msgid "<br><br>Steering lag calibration is {}% complete."
 msgstr "<br><br>轉向延遲校正已完成{}%。"
 
-#: selfdrive/ui/layouts/settings/device.py:294
+#: selfdrive/ui/layouts/settings/device.py:295
 msgid "Disengage to Power Off"
 msgstr "退出駕駛輔助後才能關機"
 
-#: selfdrive/ui/layouts/settings/device.py:327
+#: selfdrive/ui/layouts/settings/device.py:328
 msgid "Galaxy is not paired yet."
 msgstr "尚未與 Galaxy 配對。"
-
-#: selfdrive/ui/layouts/settings/device.py:346
-msgid "View pairing information or unlink your Galaxy account."
-msgstr "查看配對資訊或解除 Galaxy 帳號連結。"
 
 #: selfdrive/ui/layouts/settings/device.py:362
 msgid "Password must be at least 6 characters."
@@ -6437,7 +6399,7 @@ msgstr "密碼至少需要 6 個字元。"
 msgid "N/A"
 msgstr "不適用"
 
-#: selfdrive/ui/layouts/settings/device.py:270
+#: selfdrive/ui/layouts/settings/device.py:271
 msgid " Steering torque response calibration is complete."
 msgstr " 轉向扭力反應校正已完成。"
 
@@ -6445,33 +6407,33 @@ msgstr " 轉向扭力反應校正已完成。"
 msgid "Failed to pair with Galaxy."
 msgstr "與 Galaxy 配對失敗。"
 
-#: selfdrive/ui/layouts/settings/device.py:243
+#: selfdrive/ui/layouts/settings/device.py:244
 #, python-brace-format, drawn
 msgid " Your device is pointed {}° {} and {}° {}."
 msgstr " 裝置朝{1}偏轉{0}°，朝{3}偏轉{2}°。"
 
-#: selfdrive/ui/layouts/settings/device.py:243
+#: selfdrive/ui/layouts/settings/device.py:244
 msgid "down"
 msgstr "下方"
 
-#: selfdrive/ui/layouts/settings/device.py:243
+#: selfdrive/ui/layouts/settings/device.py:244
 msgid "up"
 msgstr "上方"
 
-#: selfdrive/ui/layouts/settings/device.py:244
+#: selfdrive/ui/layouts/settings/device.py:245
 msgid "left"
 msgstr "左側"
 
-#: selfdrive/ui/layouts/settings/device.py:244
+#: selfdrive/ui/layouts/settings/device.py:245
 msgid "right"
 msgstr "右側"
 
-#: selfdrive/ui/layouts/settings/device.py:268
+#: selfdrive/ui/layouts/settings/device.py:269
 #, python-brace-format, drawn
 msgid " Steering torque response calibration is {}% complete."
 msgstr " 轉向扭力反應校正已完成{}%。"
 
-#: selfdrive/ui/layouts/settings/device.py:343
+#: selfdrive/ui/layouts/settings/device.py:344
 msgid "Are you sure you want to unpair from Galaxy?"
 msgstr "確定要取消與 Galaxy 的配對嗎？"
 
@@ -6526,6 +6488,12 @@ msgstr "系統沒有回應"
 #: selfdrive/ui/onroad/alert_renderer.py:75
 msgid "Reboot Device"
 msgstr "請重新啟動裝置"
+
+#: settings/maps.py:DownloadView (summary without selected)
+#, python-brace-format, drawn
+msgid "{} region"
+msgid_plural "{} regions"
+msgstr[0] "{}個地區"
 
 #: selfdrive/selfdrived/alerts_offroad.json:Offroad_TemperatureTooHigh
 #, python-brace-format, drawn

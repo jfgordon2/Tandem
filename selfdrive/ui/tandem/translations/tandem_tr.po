@@ -27,7 +27,7 @@ msgstr "Varsayılan"
 
 #: destinations.py:345
 #: settings/search.py:269
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:695
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:688
 msgid "Search"
 msgstr "Ara"
 
@@ -41,6 +41,7 @@ msgid "Where to?"
 msgstr "Nereye?"
 
 #: destinations.py:145
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:703
 msgid "Searching…"
 msgstr "Aranıyor…"
 
@@ -49,7 +50,7 @@ msgid "Looking up places"
 msgstr "Yerler aranıyor"
 
 #: destinations.py:147
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:680
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:713
 msgid "Search unavailable"
 msgstr "Arama kullanılamıyor"
 
@@ -66,7 +67,7 @@ msgid "Say a place or an address. Tap the mic when you're done."
 msgstr "Bir yer veya adres söyleyin. Bitirdiğinizde mikrofona dokunun."
 
 #: destinations.py:381
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:635
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:643
 msgid "Start"
 msgstr "Başlat"
 
@@ -148,7 +149,7 @@ msgstr "{} harften sonra yazdıkça sonuçlar görünür"
 
 #: destinations.py:350
 #: settings/speed_steering.py:416
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:663
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:778
 msgid "Home"
 msgstr "Ev"
 
@@ -162,7 +163,7 @@ msgstr "Ev adresinizi arayın"
 
 #: destinations.py:353
 #: settings/speed_steering.py:417
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:663
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:780
 msgid "Work"
 msgstr "İş"
 
@@ -515,13 +516,13 @@ msgstr "ABC"
 msgid "space"
 msgstr "boşluk"
 
-#: keyboard.py:114
+#: keyboard.py:126
 #: mapbox_help.py:84
 #: settings/alerts.py:165
 msgid "Done"
 msgstr "Bitti"
 
-#: keyboard.py:114
+#: keyboard.py:126
 #: voice.py:185
 msgid "Speak now. Tap the mic when you're done."
 msgstr "Şimdi konuşun. Bitirdiğinizde mikrofona dokunun."
@@ -531,7 +532,7 @@ msgstr "Şimdi konuşun. Bitirdiğinizde mikrofona dokunun."
 msgid "QWERTYUIOP"
 msgstr "QWERTYUIOP"
 
-#: keyboard.py:120
+#: keyboard.py:132
 #: overlays.py:163
 #: settings/bluetooth_tab.py:248
 msgid "Cancel"
@@ -612,65 +613,65 @@ msgid "For place search, routes, and speed limits the maps don't have"
 msgstr "Yer araması, güzergâhlar ve haritalarda olmayan hız sınırları için"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:89
+#: onroad/developer.py:90
 msgid "0.0 m/s²"
 msgstr "0.0 m/s²"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:90
+#: onroad/developer.py:91
 msgid "0.00 s"
 msgstr "0.00 s"
 
-#: onroad/developer.py:41
+#: onroad/developer.py:42
 msgid "Acceleration now"
 msgstr "Anlık ivme"
 
-#: onroad/developer.py:42
+#: onroad/developer.py:43
 msgid "Acceleration openpilot asks for"
 msgstr "openpilot'un istediği ivme"
 
-#: onroad/developer.py:43
+#: onroad/developer.py:44
 msgid "Planned jerk"
 msgstr "Planlanan ivme değişimi"
 
-#: onroad/developer.py:44
+#: onroad/developer.py:45
 msgid "Lateral acceleration"
 msgstr "Yanal ivme"
 
-#: onroad/developer.py:45
+#: onroad/developer.py:46
 msgid "Steering delay"
 msgstr "Direksiyon gecikmesi"
 
-#: onroad/developer.py:46
+#: onroad/developer.py:47
 msgid "Steering wheel angle"
 msgstr "Direksiyon açısı"
 
-#: onroad/developer.py:47
+#: onroad/developer.py:48
 msgid "Steering torque used"
 msgstr "Kullanılan direksiyon torku"
 
-#: onroad/developer.py:48
+#: onroad/developer.py:49
 msgid "Following danger factor"
 msgstr "Takip tehlike katsayısı"
 
-#: onroad/developer.py:49
+#: onroad/developer.py:50
 msgid "Steer ratio"
 msgstr "Direksiyon oranı"
 
-#: onroad/developer.py:139
+#: onroad/developer.py:140
 msgid "Lead"
 msgstr "Öndeki araç"
 
-#: onroad/developer.py:167
+#: onroad/developer.py:168
 msgid "Controls"
 msgstr "Kontroller"
 
-#: onroad/developer.py:168
+#: onroad/developer.py:169
 msgid "curve spd"
 msgstr "viraj hızı"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:255
+#: onroad/developer.py:256
 #: onroad/extras.py:215
 #: onroad/lead.py:97
 #, python-brace-format
@@ -678,7 +679,7 @@ msgid "{} m"
 msgstr "{} m"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:255
+#: onroad/developer.py:256
 #: onroad/extras.py:215
 #: onroad/lead.py:97
 #, python-brace-format
@@ -686,70 +687,70 @@ msgid "{} ft"
 msgstr "{} ft"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:257
-#: onroad/developer.py:310
+#: onroad/developer.py:258
+#: onroad/developer.py:311
 #: onroad/lead.py:108
 #, python-brace-format
 msgid "{} s"
 msgstr "{} s"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:286
+#: onroad/developer.py:287
 #: settings/device_sections.py:301
 #, python-brace-format
 msgid "{} GB"
 msgstr "{} GB"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:308
+#: onroad/developer.py:309
 #, python-brace-format
 msgid "{} m/s²"
 msgstr "{} m/s²"
 
-#: onroad/developer.py:143
+#: onroad/developer.py:144
 msgid "rel speed"
 msgstr "bağıl hız"
 
-#: onroad/developer.py:154
+#: onroad/developer.py:155
 #: settings/search.py:24
 #: settings/window.py:42
 msgid "Device"
 msgstr "Cihaz"
 
-#: onroad/developer.py:170
+#: onroad/developer.py:171
 msgid "limit src"
 msgstr "sınır kaynağı"
 
-#: onroad/developer.py:172
+#: onroad/developer.py:173
 msgid "lanes L/R"
 msgstr "şeritler S/Sa"
 
-#: onroad/developer.py:290
+#: onroad/developer.py:291
 #, python-brace-format
 msgid "active · {} {}"
 msgstr "etkin · {} {}"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: onroad/developer.py:166
+#: onroad/developer.py:167
 msgid "FPS"
 msgstr "FPS"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: onroad/developer.py:158
+#: onroad/developer.py:159
 msgid "CPU"
 msgstr "CPU"
 
-#: onroad/developer.py:158
+#: onroad/developer.py:159
 msgid "Temp"
 msgstr "Sıcaklık"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: onroad/developer.py:162
+#: onroad/developer.py:163
 msgid "GPU"
 msgstr "GPU"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: onroad/developer.py:164
+#: onroad/developer.py:165
 msgid "RAM"
 msgstr "RAM"
 
@@ -1099,18 +1100,18 @@ msgid "Byp"
 msgstr "Byp"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:560
+#: onroad/view.py:573
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:560
+#: onroad/view.py:573
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/view.py:561
+#: onroad/view.py:574
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{} dk · {}"
@@ -1358,7 +1359,7 @@ msgstr "Düğme {}"
 msgid "Forget"
 msgstr "Unut"
 
-#: settings/bluetooth_tab.py:654
+#: settings/bluetooth_tab.py:656
 #, python-brace-format
 msgid "A sound plays in {}…"
 msgstr "{} sonra bir ses çalar…"
@@ -1455,20 +1456,20 @@ msgstr "Eşleştirmeyi kaldırır. Araç kapalıyken değiştirin."
 msgid "Connected"
 msgstr "Bağlı"
 
-#: settings/bluetooth_tab.py:646
+#: settings/bluetooth_tab.py:648
 #, python-brace-format
 msgid "The test didn't play: {}"
 msgstr "Test sesi çalmadı: {}"
 
-#: settings/bluetooth_tab.py:649
+#: settings/bluetooth_tab.py:651
 msgid "Playing now. You should hear it through the car."
 msgstr "Şimdi çalıyor. Sesi araçtan duymalısınız."
 
-#: settings/bluetooth_tab.py:651
+#: settings/bluetooth_tab.py:653
 msgid "Done. If you didn't hear it, check the car's volume and audio source."
 msgstr "Bitti. Duymadıysanız aracın ses düzeyini ve ses kaynağını kontrol edin."
 
-#: settings/bluetooth_tab.py:653
+#: settings/bluetooth_tab.py:655
 msgid "Getting ready…"
 msgstr "Hazırlanıyor…"
 
@@ -1592,7 +1593,7 @@ msgstr "Bağlan"
 
 #: settings/bluetooth_tab.py:436
 #: settings/bluetooth_tab.py:429
-#: settings/device.py:234
+#: settings/device.py:233
 msgid "Paired"
 msgstr "Eşleştirildi"
 
@@ -1949,7 +1950,7 @@ msgstr "openpilot geliştirici seçenekleri. Yalnızca İnce ayar modu açıkken
 
 #: settings/developer.py:105
 #: settings/developer.py:144
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:558
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:662
 msgid "Add"
 msgstr "Ekle"
 
@@ -2018,149 +2019,149 @@ msgstr "Trafiği kaydedin, elle kilitleme ve açma işlemlerini işaretleyin"
 msgid "Adding…"
 msgstr "Ekleniyor…"
 
-#: settings/device.py:25
+#: settings/device.py:24
 msgid "Calibrated"
 msgstr "Kalibre edildi"
 
-#: settings/device.py:26
+#: settings/device.py:25
 #: selfdrive/selfdrived/events.py:1496
 msgid "Calibrating"
 msgstr "Kalibre ediliyor"
 
-#: settings/device.py:27
+#: settings/device.py:26
 msgid "Not calibrated yet"
 msgstr "Henüz kalibre edilmedi"
 
-#: settings/device.py:62
+#: settings/device.py:61
 msgid "Preview"
 msgstr "Önizleme"
 
+#: settings/device.py:63
 #: settings/device.py:64
-#: settings/device.py:65
 #: settings/software_tab.py:196
 msgid "Reset"
 msgstr "Sıfırla"
 
-#: settings/device.py:127
+#: settings/device.py:126
 msgid "Open connect.comma.ai"
 msgstr "connect.comma.ai adresini açın"
 
-#: settings/device.py:127
+#: settings/device.py:126
 msgid "Bookmark it to your home screen to use it like an app"
 msgstr "Uygulama gibi kullanmak için ana ekranınıza ekleyin"
 
-#: settings/device.py:128
+#: settings/device.py:127
 msgid "Tap Add new device"
 msgstr "Add new device seçeneğine dokunun"
 
-#: settings/device.py:128
+#: settings/device.py:127
 msgid "Sign in first if it asks"
 msgstr "İstenirse önce oturum açın"
 
-#: settings/device.py:129
-#: settings/device.py:133
+#: settings/device.py:128
+#: settings/device.py:132
 msgid "Scan the code"
 msgstr "Kodu tarayın"
 
-#: settings/device.py:129
+#: settings/device.py:128
 msgid "The Phone App row shows Paired when it's done"
 msgstr "İşlem bitince Telefon uygulaması satırında Eşleştirildi görünür"
 
-#: settings/device.py:132
+#: settings/device.py:131
 msgid "Choose a password"
 msgstr "Parola seçin"
 
-#: settings/device.py:132
+#: settings/device.py:131
 msgid "At least 6 characters. Galaxy asks for it when you sign in"
 msgstr "En az 6 karakter. Galaxy oturum açarken sorar"
 
-#: settings/device.py:133
+#: settings/device.py:132
 msgid "It opens this device's page in Galaxy"
 msgstr "Bu cihazın Galaxy sayfasını açar"
 
-#: settings/device.py:134
+#: settings/device.py:133
 msgid "Bookmark the page"
 msgstr "Sayfayı yer imlerine ekleyin"
 
-#: settings/device.py:134
+#: settings/device.py:133
 msgid "The link stays the same until you unpair"
 msgstr "Eşleştirmeyi kaldırana kadar bağlantı değişmez"
 
-#: settings/device.py:236
+#: settings/device.py:235
 msgid "Pair the phone app"
 msgstr "Telefon uygulamasını eşleştir"
 
-#: settings/device.py:236
+#: settings/device.py:235
 msgid "Change settings and see drives from your phone"
 msgstr "Telefonunuzdan ayarları değiştirin ve sürüşleri görün"
 
-#: settings/device.py:246
+#: settings/device.py:245
 #: settings/device.py:410
 msgctxt "action"
 msgid "Set up"
 msgstr "Kur"
 
+#: settings/device.py:248
 #: settings/device.py:249
-#: settings/device.py:250
-#: selfdrive/ui/layouts/settings/device.py:334
+#: selfdrive/ui/layouts/settings/device.py:335
 msgid "Unpair"
 msgstr "Eşleştirmeyi kaldır"
 
-#: settings/device.py:265
-#: settings/device.py:108
+#: settings/device.py:264
+#: settings/device.py:107
 #: settings/search.py:159
 msgid "Remote Access"
 msgstr "Uzaktan erişim"
 
-#: settings/device.py:265
+#: settings/device.py:264
 msgid "Reach this device from the Galaxy web app"
 msgstr "Galaxy web uygulamasından bu cihaza erişin"
 
-#: settings/device.py:69
+#: settings/device.py:68
 #: settings/search.py:127
 #: selfdrive/ui/layouts/settings/device.py:152
 msgid "Driver Camera"
 msgstr "Sürücü kamerası"
 
-#: settings/device.py:69
+#: settings/device.py:68
 msgid "Check that it can see your face. The car must be off."
 msgstr "Yüzünüzü görebildiğini kontrol edin. Araç kapalı olmalı."
 
-#: settings/device.py:70
+#: settings/device.py:69
 #: settings/search.py:128
 #: settings/speed_steering.py:368
 msgid "Driver Monitoring"
 msgstr "Sürücü izleme"
 
-#: settings/device.py:70
+#: settings/device.py:69
 #: settings/search.py:128
 msgid "Forget which side of the car the driver sits on"
 msgstr "Sürücünün aracın hangi tarafında oturduğunu unut"
 
-#: settings/device.py:93
-#: settings/device.py:93
+#: settings/device.py:92
+#: settings/device.py:92
 #: settings/search.py:166
 msgid "Power Off"
 msgstr "Kapat"
 
+#: settings/device.py:95
 #: settings/device.py:96
-#: settings/device.py:97
 #: settings/search.py:165
 msgid "Restart"
 msgstr "Yeniden başlat"
 
-#: settings/device.py:98
-#: settings/device.py:100
+#: settings/device.py:97
+#: settings/device.py:99
 msgid "Recalibrate"
 msgstr "Yeniden kalibre et"
 
-#: settings/device.py:227
-#: settings/device.py:115
+#: settings/device.py:226
+#: settings/device.py:114
 #: settings/search.py:162
 msgid "Regulatory"
 msgstr "Yasal bilgiler"
 
-#: settings/device.py:263
+#: settings/device.py:262
 msgid "Choosing a password creates this device's link"
 msgstr "Parola seçmek bu cihazın bağlantısını oluşturur"
 
@@ -2185,137 +2186,137 @@ msgstr "Galaxy parolası seçin"
 msgid "At least 6 characters. Galaxy asks for it when you sign in."
 msgstr "En az 6 karakter. Galaxy oturum açarken sorar."
 
-#: settings/device.py:64
+#: settings/device.py:63
 msgid "Reset driver monitoring?"
 msgstr "Sürücü izleme sıfırlansın mı?"
 
-#: settings/device.py:65
+#: settings/device.py:64
 msgid "It forgets which side of the car the driver sits on and learns it again on the next drive."
 msgstr "Sürücünün hangi tarafta oturduğu unutulur ve sonraki sürüşte yeniden öğrenilir."
 
-#: settings/device.py:93
+#: settings/device.py:92
 msgid "Power off?"
 msgstr "Cihaz kapatılsın mı?"
 
-#: settings/device.py:93
+#: settings/device.py:92
 msgid "The device stays off until the car starts again."
 msgstr "Araç tekrar çalışana kadar cihaz kapalı kalır."
 
-#: settings/device.py:96
+#: settings/device.py:95
 msgid "Restart the device?"
 msgstr "Cihaz yeniden başlatılsın mı?"
 
-#: settings/device.py:96
+#: settings/device.py:95
 msgid "openpilot shuts down and starts again. This takes about a minute."
 msgstr "openpilot kapanıp yeniden açılır. Yaklaşık bir dakika sürer."
 
-#: settings/device.py:98
+#: settings/device.py:97
 msgid "Recalibrate the camera?"
 msgstr "Kamera yeniden kalibre edilsin mi?"
 
-#: settings/device.py:99
+#: settings/device.py:98
 msgid "Calibration starts over. openpilot relearns how the device is mounted over your next few minutes of driving."
 msgstr "Kalibrasyon baştan başlar. openpilot, sonraki birkaç dakikalık sürüşte cihazın montajını yeniden öğrenir."
 
-#: settings/device.py:118
+#: settings/device.py:117
 #: settings/search.py:30
 #: settings/search.py:157
 msgid "This Device"
 msgstr "Bu cihaz"
 
-#: settings/device.py:233
+#: settings/device.py:232
 msgid "ON YOUR PHONE"
 msgstr "TELEFONUNUZDA"
 
-#: settings/device.py:234
+#: settings/device.py:233
 msgid "A new code every 5 minutes"
 msgstr "Her 5 dakikada yeni kod"
 
-#: settings/device.py:235
+#: settings/device.py:234
 msgid "Getting a code…"
 msgstr "Kod alınıyor…"
 
-#: settings/device.py:249
+#: settings/device.py:248
 msgid "Unpair from Galaxy?"
 msgstr "Galaxy eşleştirmesi kaldırılsın mı?"
 
-#: settings/device.py:249
+#: settings/device.py:248
 msgid "The link stops working. Setting up again makes a new one."
 msgstr "Bağlantı çalışmayı durdurur. Yeniden kurulum yeni bir bağlantı oluşturur."
 
-#: settings/device.py:253
+#: settings/device.py:252
 msgid "Set up · protected by your password"
 msgstr "Kuruldu · parolanızla korunuyor"
 
-#: settings/device.py:253
+#: settings/device.py:252
 msgid "Not set up"
 msgstr "Kurulmadı"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/device.py:255
+#: settings/device.py:254
 msgid "GALAXY"
 msgstr "GALAXY"
 
-#: settings/device.py:264
+#: settings/device.py:263
 msgid "Your code appears here once you choose a password"
 msgstr "Parola seçtikten sonra kodunuz burada görünür"
 
-#: settings/device.py:105
+#: settings/device.py:104
 #: settings/search.py:158
 msgid "Phone App"
 msgstr "Telefon uygulaması"
 
-#: settings/device.py:111
+#: settings/device.py:110
 #: settings/search.py:160
 msgid "Camera Calibration"
 msgstr "Kamera kalibrasyonu"
 
-#: settings/device.py:113
+#: settings/device.py:112
 #: settings/search.py:161
 msgid "How It Works"
 msgstr "Nasıl çalışır"
 
-#: settings/device.py:113
+#: settings/device.py:112
 #: settings/search.py:161
 msgid "Rules, features and limits"
 msgstr "Kurallar, özellikler ve sınırlar"
 
-#: settings/device.py:114
+#: settings/device.py:113
 msgid "MORE"
 msgstr "DAHA FAZLA"
 
-#: settings/device.py:116
+#: settings/device.py:115
 #: settings/search.py:163
 msgid "Device ID and Serial"
 msgstr "Cihaz kimliği ve seri numarası"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/device.py:117
+#: settings/device.py:116
 #: settings/search.py:164
 msgid "IMEI"
 msgstr "IMEI"
 
-#: settings/device.py:113
+#: settings/device.py:112
 msgid "Review"
 msgstr "İncele"
 
-#: settings/device.py:106
+#: settings/device.py:105
 msgid "comma connect · Paired"
 msgstr "comma connect · Eşleştirildi"
 
-#: settings/device.py:106
+#: settings/device.py:105
 msgid "comma connect · see drives and change settings on your phone"
 msgstr "comma connect · telefonunuzdan sürüşleri görün ve ayarları değiştirin"
 
-#: settings/device.py:108
+#: settings/device.py:107
 msgid "Galaxy · Set up"
 msgstr "Galaxy · Kuruldu"
 
-#: settings/device.py:108
+#: settings/device.py:107
 msgid "Galaxy · reach this device from a web browser"
 msgstr "Galaxy · web tarayıcısından bu cihaza erişin"
 
-#: settings/device.py:115
+#: settings/device.py:114
 msgid "View"
 msgstr "Görüntüle"
 
@@ -3132,7 +3133,7 @@ msgid "Park to delete offline maps"
 msgstr "Çevrimdışı haritaları silmek için park edin"
 
 #: settings/maps.py:376
-#: settings/model.py:406
+#: settings/model.py:404
 msgid "Wait for the download to finish"
 msgstr "İndirmenin bitmesini bekleyin"
 
@@ -3150,7 +3151,7 @@ msgid "Downloading {} · {}%"
 msgstr "{} indiriliyor · %{}"
 
 #: settings/maps.py:132
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:239
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:253
 msgid "Downloaded"
 msgstr "İndirildi"
 
@@ -3270,12 +3271,12 @@ msgstr "Eyalet, bölge ve ülke ekleyin veya kaldırın"
 
 #: settings/maps.py:204
 #: settings/model.py:316
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:276
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:363
 msgid "Storage"
 msgstr "Depolama"
 
 #: settings/maps.py:312
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:479
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:583
 msgid "Whole U.S."
 msgstr "Tüm ABD"
 
@@ -3348,7 +3349,7 @@ msgstr "Tümüne göz at"
 msgid "Driving models"
 msgstr "Sürüş modelleri"
 
-#: settings/model.py:404
+#: settings/model.py:402
 msgid "Park to remove models"
 msgstr "Modelleri kaldırmak için park edin"
 
@@ -3589,25 +3590,25 @@ msgstr "Bağlantılar"
 
 #: settings/search.py:29
 #: settings/search.py:133
-#: settings/tuner.py:313
+#: settings/tuner.py:316
 msgid "Steering"
 msgstr "Direksiyon"
 
 #: settings/search.py:29
 #: settings/search.py:139
-#: settings/tuner.py:344
+#: settings/tuner.py:347
 msgid "Gas & Brake"
 msgstr "Gaz ve fren"
 
 #: settings/search.py:29
 #: settings/search.py:147
-#: settings/tuner.py:411
+#: settings/tuner.py:414
 msgid "Following & Stops"
 msgstr "Takip ve duruşlar"
 
 #: settings/search.py:29
 #: settings/search.py:154
-#: settings/tuner.py:565
+#: settings/tuner.py:568
 msgid "Bundle Overrides"
 msgstr "Paket ayarlarını geçersiz kıl"
 
@@ -3943,7 +3944,7 @@ msgid "Correction strength"
 msgstr "Düzeltme gücü"
 
 #: settings/search.py:138
-#: settings/tuner.py:311
+#: settings/tuner.py:314
 msgid "Steering Controller"
 msgstr "Direksiyon kontrolcüsü"
 
@@ -3956,22 +3957,22 @@ msgid "Acceleration and braking profiles and values"
 msgstr "Hızlanma ve frenleme profilleri ile değerleri"
 
 #: settings/search.py:140
-#: settings/tuner.py:339
+#: settings/tuner.py:342
 msgid "Acceleration Profile"
 msgstr "Hızlanma profili"
 
 #: settings/search.py:140
-#: settings/tuner.py:339
+#: settings/tuner.py:342
 msgid "How quickly the car speeds up"
 msgstr "Aracın ne kadar hızlı hızlandığı"
 
 #: settings/search.py:141
-#: settings/tuner.py:341
+#: settings/tuner.py:344
 msgid "Braking Profile"
 msgstr "Frenleme profili"
 
 #: settings/search.py:141
-#: settings/tuner.py:341
+#: settings/tuner.py:344
 msgid "How early and firmly it slows down"
 msgstr "Ne kadar erken ve güçlü yavaşladığı"
 
@@ -4058,7 +4059,7 @@ msgid "Extra room left behind a stopped car"
 msgstr "Duran aracın arkasında bırakılan ek boşluk"
 
 #: settings/search.py:151
-#: settings/tuner.py:405
+#: settings/tuner.py:408
 msgid "Use Radar for Take-Offs"
 msgstr "Kalkış için radar kullan"
 
@@ -4067,22 +4068,22 @@ msgid "Starts moving as soon as the car ahead pulls away"
 msgstr "Öndeki araç kalkar kalkmaz hareket eder"
 
 #: settings/search.py:152
-#: settings/tuner.py:407
+#: settings/tuner.py:410
 msgid "Force Stops at Lights"
 msgstr "Işıklarda tam dur"
 
 #: settings/search.py:152
-#: settings/tuner.py:407
+#: settings/tuner.py:410
 msgid "Comes to a full stop for red lights the model detects"
 msgstr "Modelin algıladığı kırmızı ışıklarda tam durur"
 
 #: settings/search.py:153
-#: settings/tuner.py:409
+#: settings/tuner.py:412
 msgid "Cruise Button Step"
 msgstr "Hız sabitleme düğmesi adımı"
 
 #: settings/search.py:153
-#: settings/tuner.py:409
+#: settings/tuner.py:412
 msgid "How far one press of + or − moves the set speed"
 msgstr "+ veya − düğmesine bir basışta hızın ne kadar değiştiği"
 
@@ -4670,13 +4671,13 @@ msgstr "Nasıl değiştirilir"
 msgid "How to add"
 msgstr "Nasıl eklenir"
 
-#: settings/tuner.py:549
+#: settings/tuner.py:552
 msgid "Every Tuner Mode change goes back to its default, in every section and bundle. Your other settings stay as they are."
 msgstr "Her bölüm ve paketteki tüm İnce ayar modu değişiklikleri varsayılana döner. Diğer ayarlarınız aynı kalır."
 
 #: settings/tuner.py:26
-#: settings/tuner.py:275
-#: settings/tuner.py:496
+#: settings/tuner.py:278
+#: settings/tuner.py:499
 msgid "Override"
 msgstr "Geçersiz kılma"
 
@@ -4767,84 +4768,84 @@ msgstr "Trafik"
 msgid "Eco"
 msgstr "Ekonomik"
 
-#: settings/tuner.py:259
+#: settings/tuner.py:262
 #, python-brace-format
 msgid "{} changed"
 msgstr "{} değişti"
 
-#: settings/tuner.py:472
-#: settings/tuner.py:540
+#: settings/tuner.py:475
+#: settings/tuner.py:543
 msgid "Bar metrics"
 msgstr "Çubuk ölçümleri"
 
-#: settings/tuner.py:544
+#: settings/tuner.py:547
 #, python-brace-format
 msgid "{} of {} items differ from the bundle."
 msgstr "{1} öğenin {0} tanesi paketten farklı."
 
-#: settings/tuner.py:559
+#: settings/tuner.py:562
 msgid "TUNER MODE"
 msgstr "İNCE AYAR MODU"
 
-#: settings/tuner.py:313
+#: settings/tuner.py:316
 msgid "Learned values work for most cars. An override replaces the learned value until you reset it."
 msgstr "Öğrenilen değerler çoğu araçta işe yarar. Geçersiz kılma, siz sıfırlayana kadar öğrenilen değerin yerine geçer."
 
-#: settings/tuner.py:344
+#: settings/tuner.py:347
 msgid "Driving Style and Vehicle Profile set these. An override replaces their value."
 msgstr "Bunları Sürüş tarzı ve Araç profili ayarlar. Geçersiz kılma onların değerinin yerine geçer."
 
-#: settings/tuner.py:388
+#: settings/tuner.py:391
 msgid "Following gap by style"
 msgstr "Tarza göre takip mesafesi"
 
-#: settings/tuner.py:557
+#: settings/tuner.py:560
 msgid "Reset all tuning?"
 msgstr "Tüm ince ayarlar sıfırlansın mı?"
 
-#: settings/tuner.py:311
+#: settings/tuner.py:314
 msgid "Auto uses NNFF when your car has a model"
 msgstr "Otomatik, aracınız için model varsa NNFF kullanır"
 
-#: settings/tuner.py:382
+#: settings/tuner.py:385
 #, python-brace-format
 msgid "{} gap"
 msgstr "{} takip aralığı"
 
-#: settings/tuner.py:382
+#: settings/tuner.py:385
 msgid "Seconds behind the car ahead in this Driving Style"
 msgstr "Bu sürüş tarzında öndeki araçla aradaki saniye"
 
-#: settings/tuner.py:405
+#: settings/tuner.py:408
 msgid "Starts moving as soon as the radar sees the car ahead pull away"
 msgstr "Radar öndeki aracın kalktığını görür görmez hareket eder"
 
-#: settings/tuner.py:473
+#: settings/tuner.py:476
 #, python-brace-format
 msgid "{} of {} picked. They spread evenly across the bar; pick none to hide it."
 msgstr "{1} içinde {0} seçildi. Çubukta eşit dağılırlar; gizlemek için hiçbirini seçmeyin."
 
-#: settings/tuner.py:488
+#: settings/tuner.py:491
 msgid "Choose"
 msgstr "Seç"
 
-#: settings/tuner.py:512
+#: settings/tuner.py:515
 msgid "Bundle on"
 msgstr "Paket açık"
 
-#: settings/tuner.py:512
+#: settings/tuner.py:515
 msgid "Bundle off"
 msgstr "Paket kapalı"
 
-#: settings/tuner.py:541
+#: settings/tuner.py:544
 msgid "None: the bar is hidden"
 msgstr "Yok: çubuk gizli"
 
-#: settings/tuner.py:567
+#: settings/tuner.py:570
 msgid "Reset all tuning"
 msgstr "Tüm ince ayarları sıfırla"
 
-#: settings/tuner.py:326
+#: settings/tuner.py:329
 msgid "Replaces the profile your Driving Style sets, until you reset it"
 msgstr "Siz sıfırlayana kadar Sürüş tarzının seçtiği profilin yerine geçer"
 
@@ -4889,8 +4890,8 @@ msgid "Favorite 3"
 msgstr "Sık kullanılan 3"
 
 #: settings/vehicle.py:254
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:780
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:68
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:883
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:78
 msgid "Never"
 msgstr "Asla"
 
@@ -4959,7 +4960,7 @@ msgid "Cruise main"
 msgstr "Ana hız sabitleme"
 
 #: settings/vehicle.py:303
-#: settings/vehicle.py:351
+#: settings/vehicle.py:352
 msgid "Lock doors after"
 msgstr "Kapıları kilitleme süresi"
 
@@ -4971,11 +4972,11 @@ msgstr "Bu araç için ek seçenek yok. Desteklediklerinin tümü Araç sayfası
 msgid "Options only some makes and models have"
 msgstr "Yalnız bazı marka ve modellerde bulunan seçenekler"
 
-#: settings/vehicle.py:332
+#: settings/vehicle.py:333
 msgid "Use the car's own cruise control"
 msgstr "Aracın kendi hız sabitleyicisini kullan"
 
-#: settings/vehicle.py:333
+#: settings/vehicle.py:334
 msgid "Turns off openpilot's gas and brake control. openpilot restarts if the car is on."
 msgstr "openpilot'un gaz ve fren kontrolünü kapatır. Araç çalışıyorsa openpilot yeniden başlar."
 
@@ -5008,101 +5009,101 @@ msgstr "Güncelle ve yeniden başlat"
 msgid "How long after you turn off the car"
 msgstr "Aracı kapattıktan sonraki bekleme süresi"
 
-#: settings/vehicle.py:334
+#: settings/vehicle.py:335
 msgid "openpilot stops controlling gas and brakes; the car's adaptive cruise takes over. openpilot restarts if the car is on."
 msgstr "openpilot gaz ve frenleri kontrol etmeyi bırakır; aracın adaptif hız sabitleyicisi devralır. Araç çalışıyorsa openpilot yeniden başlar."
 
-#: settings/vehicle.py:336
+#: settings/vehicle.py:337
 msgid "Pedal for gas and brake"
 msgstr "Gaz ve fren için pedal"
 
-#: settings/vehicle.py:336
+#: settings/vehicle.py:337
 msgid "Use the comma pedal for openpilot's speed control"
 msgstr "openpilot hız kontrolü için comma pedal kullan"
 
-#: settings/vehicle.py:337
+#: settings/vehicle.py:338
 msgid "Offsets on the dash"
 msgstr "Gösterge panelinde sapmalar"
 
-#: settings/vehicle.py:337
+#: settings/vehicle.py:338
 msgid "Show set-speed offsets on the dashboard"
 msgstr "Ayarlanan hız sapmalarını gösterge panelinde göster"
 
-#: settings/vehicle.py:339
+#: settings/vehicle.py:340
 msgid "CAN ignition only"
 msgstr "Yalnız CAN kontağı"
 
-#: settings/vehicle.py:339
+#: settings/vehicle.py:340
 msgid "Start only from the car's CAN ignition, not the ignition wire"
 msgstr "Kontak kablosu yerine yalnız aracın CAN kontağından başlat"
 
-#: settings/vehicle.py:340
+#: settings/vehicle.py:341
 msgid "Remote start wakes the device"
 msgstr "Uzaktan çalıştırma cihazı uyandırır"
 
-#: settings/vehicle.py:340
+#: settings/vehicle.py:341
 msgid "Starting the car remotely starts openpilot too"
 msgstr "Aracı uzaktan çalıştırmak openpilot'u da başlatır"
 
-#: settings/vehicle.py:342
-#: settings/vehicle.py:346
-#: settings/vehicle.py:353
+#: settings/vehicle.py:343
+#: settings/vehicle.py:347
+#: settings/vehicle.py:354
 msgid "Stop and go"
 msgstr "Dur ve kalk"
 
-#: settings/vehicle.py:342
+#: settings/vehicle.py:343
 msgid "Keep going after a stop on Volts that don't do it themselves"
 msgstr "Kendi kalkamayan Volt'larda durduktan sonra devam et"
 
-#: settings/vehicle.py:344
+#: settings/vehicle.py:345
 msgid "Brake hold"
 msgstr "Fren tutma"
 
-#: settings/vehicle.py:344
+#: settings/vehicle.py:345
 msgid "Hold after cruise times out at a stop, and go again when traffic moves"
 msgstr "Dururken hız sabitleme zaman aşımına uğrasa da tutar; trafik hareket edince devam eder"
 
-#: settings/vehicle.py:346
+#: settings/vehicle.py:347
 msgid "Keep going after a stop"
 msgstr "Durduktan sonra devam et"
 
-#: settings/vehicle.py:350
+#: settings/vehicle.py:351
 msgid "Auto-unlock doors"
 msgstr "Kapı kilitlerini otomatik aç"
 
-#: settings/vehicle.py:350
+#: settings/vehicle.py:351
 msgid "Unlocks when you shift into park"
 msgstr "Park konumuna geçince kilitleri açar"
 
-#: settings/vehicle.py:351
+#: settings/vehicle.py:352
 msgid "Locks the doors a while after you turn off the car"
 msgstr "Aracı kapattıktan bir süre sonra kapıları kilitler"
 
-#: settings/vehicle.py:353
+#: settings/vehicle.py:354
 msgid "Keep going after a stop on Toyotas that don't do it themselves"
 msgstr "Kendi kalkamayan Toyota'larda durduktan sonra devam et"
 
-#: settings/vehicle.py:355
+#: settings/vehicle.py:356
 msgid "Use Cancel as a button"
 msgstr "Cancel'ı ek düğme olarak kullan"
 
-#: settings/vehicle.py:355
+#: settings/vehicle.py:356
 msgid "Map the Cancel button like the other steering wheel buttons"
 msgstr "Cancel düğmesini diğer direksiyon düğmeleri gibi eşleştir"
 
-#: settings/vehicle.py:357
+#: settings/vehicle.py:358
 msgid "EV remote climate wakes the device"
 msgstr "Elektrikli araç uzaktan kliması cihazı uyandırır"
 
-#: settings/vehicle.py:357
+#: settings/vehicle.py:358
 msgid "Remote climate starts openpilot too"
 msgstr "Uzaktan klima openpilot'u da başlatır"
 
-#: settings/vehicle.py:358
+#: settings/vehicle.py:359
 msgid "Nostalgia mode"
 msgstr "Nostalji modu"
 
-#: settings/vehicle.py:358
+#: settings/vehicle.py:359
 msgid "The left paddle pauses openpilot's gas and brake control"
 msgstr "Sol kulakçık openpilot'un gaz ve fren kontrolünü duraklatır"
 
@@ -5114,11 +5115,11 @@ msgstr "Elle seçildi"
 msgid "Detected automatically"
 msgstr "Otomatik algılandı"
 
-#: settings/vehicle.py:348
+#: settings/vehicle.py:349
 msgid "Stop and go with a manual parking brake"
 msgstr "El frenli araçlarda dur ve kalk"
 
-#: settings/vehicle.py:348
+#: settings/vehicle.py:349
 msgid "For cars with a hand brake"
 msgstr "El frenli araçlar için"
 
@@ -5355,586 +5356,568 @@ msgstr "Birkaç saniye sürer. Sonrasında sözcükleri düzenleyebilirsiniz."
 msgid "Voice typing"
 msgstr "Sesle yazma"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:72
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:67
 msgid "U.S. Midwest Region (12 States)"
 msgstr "ABD Ortabatı bölgesi (12 eyalet)"
 
 #. US state and territory codes; keep as written.
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:73
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:68
 msgid "IL, IN, IA, KS, MI, MN, MO, NE, ND, OH, SD, WI"
 msgstr "IL, IN, IA, KS, MI, MN, MO, NE, ND, OH, SD, WI"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:77
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:72
 msgid "U.S. Northeast Region (9 States)"
 msgstr "ABD Kuzeydoğu bölgesi (9 eyalet)"
 
 #. US state and territory codes; keep as written.
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:78
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:73
 msgid "CT, ME, MA, NH, NJ, NY, PA, RI, VT"
 msgstr "CT, ME, MA, NH, NJ, NY, PA, RI, VT"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:82
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:77
 msgid "U.S. South Region (17 States)"
 msgstr "ABD Güney bölgesi (17 eyalet)"
 
 #. US state and territory codes; keep as written.
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:83
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:78
 msgid "AL, AR, DE, DC, FL, GA, KY, LA, MD, MS, NC, OK, SC, TN, TX, VA, WV"
 msgstr "AL, AR, DE, DC, FL, GA, KY, LA, MD, MS, NC, OK, SC, TN, TX, VA, WV"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:87
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:82
 msgid "U.S. West Region (13 States)"
 msgstr "ABD Batı bölgesi (13 eyalet)"
 
 #. US state and territory codes; keep as written.
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:88
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:83
 msgid "AK, AZ, CA, CO, HI, ID, MT, NV, NM, OR, UT, WA, WY"
 msgstr "AK, AZ, CA, CO, HI, ID, MT, NV, NM, OR, UT, WA, WY"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:92
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:87
 msgid "U.S. Territories (5 Territories)"
 msgstr "ABD toprakları (5 bölge)"
 
 #. US state and territory codes; keep as written.
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:93
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:88
 msgid "AS, GU, MP, PR, VI"
 msgstr "AS, GU, MP, PR, VI"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:120
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:132
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:138
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:116
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:128
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:134
 msgid "Calculating..."
 msgstr "Hesaplanıyor…"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:135
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:131
 msgid "Almost done"
 msgstr "Neredeyse bitti"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:553
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:657
 msgid "Tap to select state"
 msgstr "Eyalet seçmek için dokunun"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:678
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:782
 msgid "Download Offline Maps"
 msgstr "Çevrimdışı haritaları indir"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:795
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:898
 msgid "Download Readiness"
 msgstr "İndirme hazırlığı"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:463
-msgid "No regions selected"
-msgstr "Bölge seçilmedi"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:465
-msgid "Whole U.S. (56 states)"
-msgstr "Tüm ABD (56 eyalet)"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:485
-msgid "No regions selected yet"
-msgstr "Henüz bölge seçilmedi"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:487
-msgid "Whole U.S. package"
-msgstr "Tüm ABD paketi"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:548
-msgid "Master Package - Full country map data"
-msgstr "Ana paket - Tüm ülkenin harita verileri"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:552
-msgid "Selected for download"
-msgstr "İndirmek için seçildi"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:557
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:275
-msgid "Selected"
-msgstr "Seçildi"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:561
-msgid "No regions available"
-msgstr "Kullanılabilir bölge yok"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:561
-msgid "Switch sources to keep browsing maps."
-msgstr "Haritalara bakmaya devam etmek için kaynağı değiştirin."
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:673
-msgid "Cancelling..."
-msgstr "İptal ediliyor…"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:675
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:749
-msgid "Cancel Download"
-msgstr "İndirmeyi iptal et"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:677
-msgid "Select Regions Below"
-msgstr "Aşağıdan bölge seçin"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:707
-msgid "Auto Update Schedule"
-msgstr "Otomatik güncelleme takvimi"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:784
-msgid "Cancelling Download"
-msgstr "İndirme iptal ediliyor"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:786
-msgid "Downloading Maps"
-msgstr "Haritalar indiriliyor"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:788
-msgid "Starting Download"
-msgstr "İndirme başlatılıyor"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:792
-msgid "Checking Offline Maps"
-msgstr "Çevrimdışı haritalar denetleniyor"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:794
-msgid "Select Map Data"
-msgstr "Harita verisi seç"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:813
-msgid "Stop request sent. The current transfer will wind down safely."
-msgstr "Durdurma isteği gönderildi. Geçerli aktarım güvenli biçimde sonlanacak."
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:816
-msgid "Preparing the selected regions for download."
-msgstr "Seçilen bölgeler indirmeye hazırlanıyor."
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:819
-msgid "No regions selected yet. Tap 'Whole U.S.' or pick specific states below to get started."
-msgstr "Henüz bölge seçilmedi. Başlamak için Tüm ABD'ye dokunun veya aşağıdan eyalet seçin."
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:190
-msgid "Available for Download"
-msgstr "İndirilebilir"
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:190
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:205
 msgid "Map Packages & Regions"
 msgstr "Harita paketleri ve bölgeler"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:239
-msgid "Downloaded on device"
-msgstr "Cihaza indirildi"
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:567
+msgid "No regions selected"
+msgstr "Bölge seçilmedi"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:277
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:569
+msgid "Whole U.S. (56 states)"
+msgstr "Tüm ABD (56 eyalet)"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:589
+msgid "No regions selected yet"
+msgstr "Henüz bölge seçilmedi"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:591
+msgid "Whole U.S. package"
+msgstr "Tüm ABD paketi"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:652
+msgid "Master Package - Full country map data"
+msgstr "Ana paket - Tüm ülkenin harita verileri"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:656
+msgid "Selected for download"
+msgstr "İndirmek için seçildi"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:661
+msgid "Selected"
+msgstr "Seçildi"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:665
+msgid "No regions available"
+msgstr "Kullanılabilir bölge yok"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:665
+msgid "Switch sources to keep browsing maps."
+msgstr "Haritalara bakmaya devam etmek için kaynağı değiştirin."
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:777
+msgid "Cancelling..."
+msgstr "İptal ediliyor…"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:779
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:852
+msgid "Cancel Download"
+msgstr "İndirmeyi iptal et"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:781
+msgid "Select Regions Below"
+msgstr "Aşağıdan bölge seçin"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:811
+msgid "Auto Update Schedule"
+msgstr "Otomatik güncelleme takvimi"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:887
+msgid "Cancelling Download"
+msgstr "İndirme iptal ediliyor"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:889
+msgid "Downloading Maps"
+msgstr "Haritalar indiriliyor"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:891
+msgid "Starting Download"
+msgstr "İndirme başlatılıyor"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:895
+msgid "Checking Offline Maps"
+msgstr "Çevrimdışı haritalar denetleniyor"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:897
+msgid "Select Map Data"
+msgstr "Harita verisi seç"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:916
+msgid "Stop request sent. The current transfer will wind down safely."
+msgstr "Durdurma isteği gönderildi. Geçerli aktarım güvenli biçimde sonlanacak."
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:919
+msgid "Preparing the selected regions for download."
+msgstr "Seçilen bölgeler indirmeye hazırlanıyor."
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:922
+msgid "No regions selected yet. Tap 'Whole U.S.' or pick specific states below to get started."
+msgstr "Henüz bölge seçilmedi. Başlamak için Tüm ABD'ye dokunun veya aşağıdan eyalet seçin."
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:364
 msgid "Last Updated"
 msgstr "Son güncelleme"
 
 #. After numerals, Turkish uses the same noun form in both catalog plural slots.
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:466
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:570
 #, python-brace-format, drawn
 msgid "{} region selected"
 msgid_plural "{} regions selected"
 msgstr[0] "{} bölge seçildi"
 msgstr[1] "{} bölge seçildi"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:491
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:595
 #, python-brace-format, drawn
 msgid "{} + {} more"
 msgstr "{} + {} tane daha"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:516
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:620
 msgid "Whole U.S. (All 50 States & Territories)"
 msgstr "Tüm ABD (50 eyalet ve bölgeler)"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:531
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:635
 msgid "Whole U.S. Selected"
 msgstr "Tüm ABD seçildi"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:535
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:639
 #, python-brace-format, drawn
 msgid "{} selected | {} available"
 msgstr "{} seçildi · {} kullanılabilir"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:657
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:761
 msgid "Download in progress"
 msgstr "İndirme sürüyor"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:659
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:763
 msgid "Connect to the internet"
 msgstr "İnternete bağlanın"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:661
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:765
 msgid "Park the vehicle to download"
 msgstr "İndirmek için aracı park edin"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:690
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:794
 msgid "Auto: Off"
 msgstr "Otomatik: Kapalı"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:691
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:795
 msgid "Auto: Weekly"
 msgstr "Otomatik: Haftalık"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:692
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:796
 msgid "Auto: Monthly"
 msgstr "Otomatik: Aylık"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:708
-msgid "Choose how often to update downloaded offline maps."
-msgstr "İndirilen çevrimdışı haritaların güncelleme sıklığını seçin."
-
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:735
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:838
 msgid "Start downloading offline maps for the selected regions?"
 msgstr "Seçilen bölgelerin çevrimdışı haritaları indirilsin mi?"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:749
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:852
 msgid "Cancel the current map download?"
 msgstr "Geçerli harita indirmesi iptal edilsin mi?"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:776
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:879
 msgid "Delete all downloaded offline map data?"
 msgstr "İndirilen tüm çevrimdışı harita verileri silinsin mi?"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:776
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:879
 msgid "Remove Maps"
 msgstr "Haritaları kaldır"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:825
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:928
 #, python-brace-format, drawn
 msgid "Ready to download {}."
 msgstr "{} indirmeye hazır."
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:173
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:170
 msgid "U.S. States & Regions"
 msgstr "ABD eyaletleri ve bölgeleri"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:173
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:170
 msgid "Other Countries"
 msgstr "Diğer ülkeler"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:188
-msgid "On This Device"
-msgstr "Bu cihazda"
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:277
+msgid "Available for Download"
+msgstr "İndirilebilir"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:425
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:529
 #, python-brace-format, drawn
 msgid "{} / {} ({}%)"
 msgstr "{} / {} (%{})"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:534
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:638
 #, python-brace-format, drawn
 msgid "{} available - Tap to select"
 msgstr "{} kullanılabilir - Seçmek için dokunun"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:722
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:684
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:825
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:788
 msgid "Please select 'Whole U.S.' or pick individual states from the list below."
 msgstr "Lütfen Tüm ABD'yi veya aşağıdan tek tek eyaletleri seçin."
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:804
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:907
 #, python-brace-format, drawn
 msgid "{} / {} ({}%)\nElapsed {} | ETA {}"
 msgstr "{} / {} (%{})\nGeçen {} · Kalan {}"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:754
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:761
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:252
+msgid "Downloaded on device"
+msgstr "Cihaza indirildi"
+
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:857
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:864
 msgid "Park to remove downloaded maps."
 msgstr "İndirilen haritaları kaldırmak için park edin."
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:774
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:877
 msgid "Removing offline maps..."
 msgstr "Çevrimdışı haritalar kaldırılıyor…"
 
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:803
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:906
 #, python-brace-format, drawn
 msgid "{}\nElapsed {} | ETA {}"
 msgstr "{}\nGeçen {} · Kalan {}"
 
-#. After numerals, Turkish uses the same noun form in both catalog plural slots.
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:188
+#: selfdrive/ui/layouts/settings/starpilot/maps.py:278
 #, python-brace-format, drawn
-msgid "{} region"
-msgid_plural "{} regions"
-msgstr[0] "{} bölge"
-msgstr[1] "{} bölge"
+msgid "{} available"
+msgstr "{} kullanılabilir"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:47
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:57
 msgid "No Action"
 msgstr "İşlem yok"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:48
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:58
 msgid "Change Personality"
 msgstr "Sürüş tarzını değiştir"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:49
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:59
 msgid "Force Coast"
 msgstr "Süzülmeye zorla"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:50
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:60
 msgid "Pulse and Glide"
 msgstr "Hızlan ve süzül"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:51
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:61
 msgid "Pause Steering"
 msgstr "Direksiyonu duraklat"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:52
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:62
 msgid "Pause Accel/Brake"
 msgstr "Gaz/freni duraklat"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:53
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:63
 msgid "Toggle Experimental"
 msgstr "Deneysel modu aç/kapat"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:54
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:64
 msgid "Toggle Traffic"
 msgstr "Trafik modunu aç/kapat"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:55
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:65
 msgid "Toggle Switchback"
 msgstr "Keskin viraj modunu aç/kapat"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:56
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:66
 msgid "Create Bookmark"
 msgstr "Yer imi oluştur"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:57
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:67
 msgid "Toggle Always On Lateral"
 msgstr "Sürekli direksiyonu aç/kapat"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:58
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:68
 msgid "Adopt Current Speed Limit"
 msgstr "Geçerli hız sınırını uygula"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:59
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:69
 msgid "Favorite #1"
 msgstr "Sık kullanılan #1"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:60
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:70
 msgid "Favorite #2"
 msgstr "Sık kullanılan #2"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:61
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:71
 msgid "Favorite #3"
 msgstr "Sık kullanılan #3"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:407
-msgid "Choose an action for each press type, then tap Apply."
-msgstr "Her basış türü için işlem seçip Uygula'ya dokunun."
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:610
+msgid "CANCEL"
+msgstr "İPTAL"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:573
-msgid "Select Make"
-msgstr "Marka seç"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:602
-msgid "Select Model"
-msgstr "Model seç"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:656
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:671
-msgid "None"
-msgstr "Yok"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:103
-msgid "Disable Fingerprinting"
-msgstr "Araç tanımayı kapat"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:107
-msgid "Car Make"
-msgstr "Araç markası"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:111
-msgid "Car Model"
-msgstr "Araç modeli"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:137
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:527
-msgid "Distance Button"
-msgstr "Mesafe düğmesi"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:155
-msgid "CC Main Button"
-msgstr "Ana hız sabitleme düğmesi"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:238
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:253
-msgid "Features"
-msgstr "Özellikler"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:281
-msgid "Disable openpilot Long"
-msgstr "openpilot boylamsal kontrolünü kapat"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:282
-msgid "Revert to stock longitudinal control."
-msgstr "Fabrika boylamsal kontrolüne dön."
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:507
-msgid "Flash"
-msgstr "Donanım yazılımını yükle"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:532
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:145
-msgid "Cancel Button"
-msgstr "Cancel düğmesi"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:537
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:163
-msgid "Mode Button"
-msgstr "Mode düğmesi"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:542
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:168
-msgid "Star Button"
-msgstr "Yıldız düğmesi"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:574
-msgid "Choose your vehicle manufacturer."
-msgstr "Araç üreticinizi seçin."
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:603
-msgid "Choose the model that matches your vehicle."
-msgstr "Aracınıza uyan modeli seçin."
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:636
-msgid "Choose the action this button press will trigger."
-msgstr "Bu düğme basışının çalıştıracağı işlemi seçin."
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:644
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:117
-msgid "Lock Doors Timer"
-msgstr "Kapı kilitleme zamanlayıcısı"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:104
-msgid "Manually select vehicle instead of auto-detecting."
-msgstr "Otomatik algılama yerine aracı elle seçin."
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:151
-msgid "LKAS Button"
-msgstr "LKAS düğmesi"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:289
-msgid "Pedal for Long"
-msgstr "Boylamsal kontrol için pedal"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:294
-msgid "Offsets on Dash Spoof"
-msgstr "Gösterge sapmalarını taklit et"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:300
-msgid "CAN Ignition Only"
-msgstr "Yalnız CAN kontağı"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:301
-msgid "Use Panda firmware that ignores the physical ignition line and starts only from CAN ignition."
-msgstr "Fiziksel kontak hattını yok sayıp yalnız CAN kontağından başlayan Panda yazılımını kullanın."
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:306
-msgid "Remote Start Panda"
-msgstr "Panda uzaktan çalıştırma"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:312
-msgid "Volt SNG Hack"
-msgstr "Volt dur-kalk desteği"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:318
-msgid "Jeep Brake Hold"
-msgstr "Jeep fren tutma"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:319
-msgid "Hold after ACC times out at a stop and resume when traffic moves."
-msgstr "Dururken ACC zaman aşımından sonra tutar ve trafik hareket edince devam eder."
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:326
-msgid "Stop and Go"
-msgstr "Dur ve kalk"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:339
-msgid "Auto Lock Doors"
-msgstr "Kapıları otomatik kilitle"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:344
-msgid "Auto Unlock Doors"
-msgstr "Kapı kilitlerini otomatik aç"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:350
-msgid "Stop-and-Go Hack"
-msgstr "Dur-kalk desteği"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:356
-msgid "Remap Cancel Button"
-msgstr "Cancel düğmesini yeniden ata"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:357
-msgid "Treat the Cancel button as an extra mappable steering-wheel button."
-msgstr "Cancel düğmesini atanabilir ek direksiyon düğmesi olarak kullanın."
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:364
-msgid "EV Remote Climate"
-msgstr "Elektrikli araç uzaktan kliması"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:369
-msgid "Nostalgia Mode"
-msgstr "Nostalji modu"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:370
-msgid "Use the left paddle to pause openpilot acceleration and braking."
-msgstr "openpilot hızlanma ve frenlemesini duraklatmak için sol kulakçığı kullanın."
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:505
-msgid "Panda flashing started. Device will reboot when finished."
-msgstr "Panda yazılımı yüklenmeye başladı. Bitince cihaz yeniden başlar."
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:529
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:534
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:539
-msgid "Long Press"
-msgstr "Uzun basış"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:529
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:534
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:539
-msgid "Very Long"
-msgstr "Çok uzun"
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:558
-msgid "No fingerprint list available."
-msgstr "Araç tanıma listesi yok."
-
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:558
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:580
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:584
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:622
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:763
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:784
 msgid "OK"
 msgstr "Tamam"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:580
-msgid "Please select a Car Make first!"
-msgstr "Önce araç markası seçin!"
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:712
+msgid "Flash"
+msgstr "Donanım yazılımını yükle"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:584
-msgid "No models available for this make."
-msgstr "Bu marka için model yok."
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:778
+msgid "Select Make"
+msgstr "Marka seç"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:647
-msgid "How long to wait before locking the doors."
-msgstr "Kapıları kilitlemeden önce bekleme süresi."
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:806
+msgid "Select Model"
+msgstr "Model seç"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:332
-msgid "Manual Parking Brake SNG"
-msgstr "El frenli dur-kalk"
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:854
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:869
+msgid "None"
+msgstr "Yok"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:468
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:117
+msgid "Disable Fingerprinting"
+msgstr "Araç tanımayı kapat"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:121
+msgid "Car Make"
+msgstr "Araç markası"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:125
+msgid "Car Model"
+msgstr "Araç modeli"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:151
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:732
+msgid "Distance Button"
+msgstr "Mesafe düğmesi"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:169
+msgid "CC Main Button"
+msgstr "Ana hız sabitleme düğmesi"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:247
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:268
+msgid "Vehicle Identity"
+msgstr "Araç kimliği"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:270
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:255
+msgid "Steering Controls"
+msgstr "Direksiyon kontrolleri"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:330
+msgid "Disable openpilot Long"
+msgstr "openpilot boylamsal kontrolünü kapat"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:331
+msgid "Revert to stock longitudinal control."
+msgstr "Fabrika boylamsal kontrolüne dön."
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:737
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:159
+msgid "Cancel Button"
+msgstr "Cancel düğmesi"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:742
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:177
+msgid "Mode Button"
+msgstr "Mode düğmesi"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:747
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:182
+msgid "Star Button"
+msgstr "Yıldız düğmesi"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:843
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:131
+msgid "Lock Doors Timer"
+msgstr "Kapı kilitleme zamanlayıcısı"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:118
+msgid "Manually select vehicle instead of auto-detecting."
+msgstr "Otomatik algılama yerine aracı elle seçin."
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:165
+msgid "LKAS Button"
+msgstr "LKAS düğmesi"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:264
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:281
+msgid "Features"
+msgstr "Özellikler"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:338
+msgid "Pedal for Long"
+msgstr "Boylamsal kontrol için pedal"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:343
+msgid "Offsets on Dash Spoof"
+msgstr "Gösterge sapmalarını taklit et"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:349
+msgid "CAN Ignition Only"
+msgstr "Yalnız CAN kontağı"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:350
+msgid "Use Panda firmware that ignores the physical ignition line and starts only from CAN ignition."
+msgstr "Fiziksel kontak hattını yok sayıp yalnız CAN kontağından başlayan Panda yazılımını kullanın."
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:355
+msgid "Remote Start Panda"
+msgstr "Panda uzaktan çalıştırma"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:361
+msgid "Volt SNG Hack"
+msgstr "Volt dur-kalk desteği"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:367
+msgid "Jeep Brake Hold"
+msgstr "Jeep fren tutma"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:368
+msgid "Hold after ACC times out at a stop and resume when traffic moves."
+msgstr "Dururken ACC zaman aşımından sonra tutar ve trafik hareket edince devam eder."
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:375
+msgid "Stop and Go"
+msgstr "Dur ve kalk"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:388
+msgid "Auto Lock Doors"
+msgstr "Kapıları otomatik kilitle"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:393
+msgid "Auto Unlock Doors"
+msgstr "Kapı kilitlerini otomatik aç"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:399
+msgid "Stop-and-Go Hack"
+msgstr "Dur-kalk desteği"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:405
+msgid "Remap Cancel Button"
+msgstr "Cancel düğmesini yeniden ata"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:406
+msgid "Treat the Cancel button as an extra mappable steering-wheel button."
+msgstr "Cancel düğmesini atanabilir ek direksiyon düğmesi olarak kullanın."
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:413
+msgid "EV Remote Climate"
+msgstr "Elektrikli araç uzaktan kliması"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:418
+msgid "Nostalgia Mode"
+msgstr "Nostalji modu"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:419
+msgid "Use the left paddle to pause openpilot acceleration and braking."
+msgstr "openpilot hızlanma ve frenlemesini duraklatmak için sol kulakçığı kullanın."
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:673
 msgid "Disable openpilot longitudinal control?"
 msgstr "openpilot boylamsal kontrolü kapatılsın mı?"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:468
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:673
 msgid "Disable"
 msgstr "Devre dışı bırak"
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:303
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:710
+msgid "Panda flashing started. Device will reboot when finished."
+msgstr "Panda yazılımı yüklenmeye başladı. Bitince cihaz yeniden başlar."
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:734
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:739
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:744
+msgid "Long Press"
+msgstr "Uzun basış"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:734
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:739
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:744
+msgid "Very Long"
+msgstr "Çok uzun"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:763
+msgid "No fingerprint list available."
+msgstr "Araç tanıma listesi yok."
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:784
+msgid "Please select a Car Make first!"
+msgstr "Önce araç markası seçin!"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:788
+msgid "No models available for this make."
+msgstr "Bu marka için model yok."
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:381
+msgid "Manual Parking Brake SNG"
+msgstr "El frenli dur-kalk"
+
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:352
 msgid "CAN Ignition Only requires a Panda firmware update."
 msgstr "Yalnız CAN kontağı için Panda yazılımı güncellenmeli."
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:308
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:357
 msgid "Remote Start requires a Panda firmware update."
 msgstr "Uzaktan çalıştırma için Panda yazılımı güncellenmeli."
 
-#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:366
+#: selfdrive/ui/layouts/settings/starpilot/vehicle.py:415
 msgid "EV Remote Climate requires a Panda firmware update."
 msgstr "Elektrikli araç uzaktan kliması için Panda yazılımı güncellenmeli."
 
@@ -5974,74 +5957,61 @@ msgstr "Kısa bir ad seçin"
 msgid "That destination is not valid."
 msgstr "Bu hedef geçersiz."
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:632
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:641
 msgid "Ready to navigate"
 msgstr "Navigasyona hazır"
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:638
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:647
 msgid "Navigation active"
 msgstr "Navigasyon etkin"
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:635
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:643
 msgid "Unavailable"
 msgstr "Kullanılamıyor"
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:678
-msgid "Searching..."
-msgstr "Aranıyor…"
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:687
+msgid "Use the on-device keyboard to search Mapbox locations"
+msgstr "Mapbox konumlarını aramak için cihaz klavyesini kullanın"
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:678
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:704
 msgid "Looking up destinations"
 msgstr "Hedefler aranıyor"
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:684
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:732
+msgid "Search results"
+msgstr "Arama sonuçları"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:764
+msgid "Favorite destinations"
+msgstr "Sık kullanılan hedefler"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:802
+msgid "Recent destinations"
+msgstr "Son hedefler"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:831
+msgid "No matching destinations"
+msgstr "Eşleşen hedef yok"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:831
 msgid "No destinations yet"
 msgstr "Henüz hedef yok"
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:684
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:832
+msgid "Try a different place or address."
+msgstr "Başka bir yer veya adres deneyin."
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:832
 msgid "Search for a place or address to begin."
 msgstr "Başlamak için yer veya adres arayın."
-
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:692
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:656
-msgid "Destination"
-msgstr "Hedef"
 
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:336
 msgid "Search is unavailable. Check your connection and try again."
 msgstr "Arama kullanılamıyor. Bağlantıyı kontrol edip tekrar deneyin."
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:655
-msgid "Search results"
-msgstr "Arama sonuçları"
-
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:666
-msgid "Favorite destinations"
-msgstr "Sık kullanılan hedefler"
-
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:668
-msgid "Recent destinations"
-msgstr "Son hedefler"
-
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:683
-msgid "No matching destinations"
-msgstr "Eşleşen hedef yok"
-
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:683
-msgid "Try a different place or address."
-msgstr "Başka bir yer veya adres deneyin."
-
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:695
-msgid "Use the on-device keyboard to search Mapbox locations"
-msgstr "Mapbox konumlarını aramak için cihaz klavyesini kullanın"
-
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:703
-msgid "Route"
-msgstr "Güzergâh"
-
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:714
-msgid "Destinations"
-msgstr "Hedefler"
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:686
+msgid "Search for a destination"
+msgstr "Hedef ara"
 
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:342
 msgid "Could not determine that location. Try another result."
@@ -6060,26 +6030,28 @@ msgstr "bu hedef"
 msgid "Rename"
 msgstr "Yeniden adlandır"
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:694
-msgid "Search for a destination"
-msgstr "Hedef ara"
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:747
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:785
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:817
+msgid "Select"
+msgstr "Seç"
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:665
-msgid "Favorite destination"
-msgstr "Sık kullanılan hedef"
-
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:670
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:669
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:816
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:815
 msgid "Recent destination"
 msgstr "Son hedef"
 
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:664
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:746
+msgid "Destination"
+msgstr "Hedef"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:784
+msgid "Favorite destination"
+msgstr "Sık kullanılan hedef"
+
+#: selfdrive/ui/layouts/settings/starpilot/navigation.py:783
 msgid "Unnamed favorite"
 msgstr "Adsız sık kullanılan"
-
-#: selfdrive/ui/layouts/settings/starpilot/navigation.py:727
-msgid "Select"
-msgstr "Seç"
 
 #: selfdrive/ui/layouts/settings/software.py:26
 msgid "checking..."
@@ -6207,10 +6179,6 @@ msgstr "Sürüş sırasında güncellenemez"
 msgid "No error log found."
 msgstr "Hata günlüğü bulunamadı."
 
-#: selfdrive/ui/layouts/settings/software.py:392
-msgid "Choose the software branch to install."
-msgstr "Yüklenecek yazılım dalını seçin."
-
 #: selfdrive/ui/layouts/settings/software.py:179
 msgid "RETRY"
 msgstr "TEKRAR DENE"
@@ -6302,7 +6270,7 @@ msgstr "openpilot için cihaz sağa veya sola en fazla 4°, yukarı 5° ya da a�
 msgid "Review the rules, features, and limitations of openpilot"
 msgstr "openpilot kurallarını, özelliklerini ve sınırlarını inceleyin"
 
-#: selfdrive/ui/layouts/settings/device.py:275
+#: selfdrive/ui/layouts/settings/device.py:276
 msgid "openpilot is continuously calibrating, resetting is rarely required. Resetting calibration will restart openpilot if the car is powered on."
 msgstr "openpilot sürekli kalibre olur; sıfırlama nadiren gerekir. Araç çalışıyorsa kalibrasyonu sıfırlamak openpilot'u yeniden başlatır."
 
@@ -6318,41 +6286,41 @@ msgstr "Kapatmak için herhangi bir yere dokunun"
 msgid "Select a language"
 msgstr "Dil seçin"
 
-#: selfdrive/ui/layouts/settings/device.py:212
+#: selfdrive/ui/layouts/settings/device.py:214
 msgid "Are you sure you want to reset calibration?"
 msgstr "Kalibrasyonu sıfırlamak istediğinizden emin misiniz?"
 
-#: selfdrive/ui/layouts/settings/device.py:229
+#: selfdrive/ui/layouts/settings/device.py:230
 msgid "Are you sure you want to reset driver monitoring calibration?"
 msgstr "Sürücü izleme kalibrasyonu sıfırlansın mı?"
 
-#: selfdrive/ui/layouts/settings/device.py:258
+#: selfdrive/ui/layouts/settings/device.py:259
 msgid "<br><br>Steering lag calibration is complete."
 msgstr "<br><br>Direksiyon gecikmesi kalibrasyonu tamamlandı."
 
-#: selfdrive/ui/layouts/settings/device.py:281
+#: selfdrive/ui/layouts/settings/device.py:282
 msgid "Are you sure you want to reboot?"
 msgstr "Yeniden başlatmak istediğinizden emin misiniz?"
 
-#: selfdrive/ui/layouts/settings/device.py:281
+#: selfdrive/ui/layouts/settings/device.py:282
 #: selfdrive/ui/layouts/settings/device.py:144
 msgid "Reboot"
 msgstr "Yeniden başlat"
 
-#: selfdrive/ui/layouts/settings/device.py:297
+#: selfdrive/ui/layouts/settings/device.py:298
 msgid "Are you sure you want to power off?"
 msgstr "Kapatmak istediğinizden emin misiniz?"
 
-#: selfdrive/ui/layouts/settings/device.py:316
+#: selfdrive/ui/layouts/settings/device.py:317
 msgid "MANAGE"
 msgstr "YÖNET"
 
-#: selfdrive/ui/layouts/settings/device.py:316
+#: selfdrive/ui/layouts/settings/device.py:317
 #: selfdrive/ui/layouts/settings/device.py:135
 msgid "PAIR"
 msgstr "EŞLEŞTİR"
 
-#: selfdrive/ui/layouts/settings/device.py:333
+#: selfdrive/ui/layouts/settings/device.py:334
 msgid "Show QR"
 msgstr "QR göster"
 
@@ -6385,11 +6353,7 @@ msgstr "Kalibrasyonu sıfırla"
 msgid "RESET"
 msgstr "SIFIRLA"
 
-#: selfdrive/ui/layouts/settings/device.py:185
-msgid "Choose the language used for menus and alerts."
-msgstr "Menü ve uyarılarda kullanılacak dili seçin."
-
-#: selfdrive/ui/layouts/settings/device.py:345
+#: selfdrive/ui/layouts/settings/device.py:346
 msgid "Galaxy"
 msgstr "Galaxy"
 
@@ -6425,30 +6389,26 @@ msgstr "Dili değiştir"
 msgid "CHANGE"
 msgstr "DEĞİŞTİR"
 
-#: selfdrive/ui/layouts/settings/device.py:196
+#: selfdrive/ui/layouts/settings/device.py:198
 msgid "Disengage to Reset Calibration"
 msgstr "Kalibrasyonu sıfırlamak için devreden çıkarın"
 
-#: selfdrive/ui/layouts/settings/device.py:217
+#: selfdrive/ui/layouts/settings/device.py:218
 msgid "Disengage to Reset Driver Monitoring"
 msgstr "Sürücü izlemeyi sıfırlamak için devreden çıkarın"
 
-#: selfdrive/ui/layouts/settings/device.py:256
+#: selfdrive/ui/layouts/settings/device.py:257
 #, python-brace-format, drawn
 msgid "<br><br>Steering lag calibration is {}% complete."
 msgstr "<br><br>Direksiyon gecikmesi kalibrasyonu %{} tamamlandı."
 
-#: selfdrive/ui/layouts/settings/device.py:294
+#: selfdrive/ui/layouts/settings/device.py:295
 msgid "Disengage to Power Off"
 msgstr "Kapatmak için devreden çıkarın"
 
-#: selfdrive/ui/layouts/settings/device.py:327
+#: selfdrive/ui/layouts/settings/device.py:328
 msgid "Galaxy is not paired yet."
 msgstr "Galaxy henüz eşleştirilmedi."
-
-#: selfdrive/ui/layouts/settings/device.py:346
-msgid "View pairing information or unlink your Galaxy account."
-msgstr "Eşleştirme bilgilerini görün veya Galaxy hesabınızın bağlantısını kaldırın."
 
 #: selfdrive/ui/layouts/settings/device.py:362
 msgid "Password must be at least 6 characters."
@@ -6459,7 +6419,7 @@ msgstr "Parola en az 6 karakter olmalı."
 msgid "N/A"
 msgstr "Yok"
 
-#: selfdrive/ui/layouts/settings/device.py:270
+#: selfdrive/ui/layouts/settings/device.py:271
 msgid " Steering torque response calibration is complete."
 msgstr " Direksiyon tork tepkisi kalibrasyonu tamamlandı."
 
@@ -6467,33 +6427,33 @@ msgstr " Direksiyon tork tepkisi kalibrasyonu tamamlandı."
 msgid "Failed to pair with Galaxy."
 msgstr "Galaxy ile eşleştirilemedi."
 
-#: selfdrive/ui/layouts/settings/device.py:243
+#: selfdrive/ui/layouts/settings/device.py:244
 #, python-brace-format, drawn
 msgid " Your device is pointed {}° {} and {}° {}."
 msgstr " Cihazınız {1} {0}° ve {3} {2}° yönünde."
 
-#: selfdrive/ui/layouts/settings/device.py:243
+#: selfdrive/ui/layouts/settings/device.py:244
 msgid "down"
 msgstr "aşağı"
 
-#: selfdrive/ui/layouts/settings/device.py:243
+#: selfdrive/ui/layouts/settings/device.py:244
 msgid "up"
 msgstr "yukarı"
 
-#: selfdrive/ui/layouts/settings/device.py:244
+#: selfdrive/ui/layouts/settings/device.py:245
 msgid "left"
 msgstr "sol"
 
-#: selfdrive/ui/layouts/settings/device.py:244
+#: selfdrive/ui/layouts/settings/device.py:245
 msgid "right"
 msgstr "sağ"
 
-#: selfdrive/ui/layouts/settings/device.py:268
+#: selfdrive/ui/layouts/settings/device.py:269
 #, python-brace-format, drawn
 msgid " Steering torque response calibration is {}% complete."
 msgstr " Direksiyon tork tepkisi kalibrasyonu %{} tamamlandı."
 
-#: selfdrive/ui/layouts/settings/device.py:343
+#: selfdrive/ui/layouts/settings/device.py:344
 msgid "Are you sure you want to unpair from Galaxy?"
 msgstr "Galaxy eşleştirmesi kaldırılsın mı?"
 
@@ -6548,6 +6508,13 @@ msgstr "Sistem yanıt vermiyor"
 #: selfdrive/ui/onroad/alert_renderer.py:75
 msgid "Reboot Device"
 msgstr "Cihazı yeniden başlatın"
+
+#: settings/maps.py:DownloadView (summary without selected)
+#, python-brace-format, drawn
+msgid "{} region"
+msgid_plural "{} regions"
+msgstr[0] "{} bölge"
+msgstr[1] "{} bölge"
 
 #: selfdrive/selfdrived/alerts_offroad.json:Offroad_TemperatureTooHigh
 #, python-brace-format, drawn

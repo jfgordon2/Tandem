@@ -6,7 +6,7 @@ To run the real UI on a Mac, follow the [desktop setup guide](docs/mac-desktop.m
 
 | Module | Contents |
 | --- | --- |
-| `fonts.py` | `font(face)`: the shared `FontWeight` faces from `gui_app`, plus `ExtraFont.EXTRA_BOLD` and `ExtraFont.MONO`, which load on first use. |
+| `fonts.py` | `font(face)`: maps upstream weight identifiers to our Figtree and Noto files, plus ExtraBold and JetBrains Mono. All load on first use without replacing upstream fonts. |
 | `tokens.py` | Colors, type sizes, radii, layout sizes and timings in device pixels. `px()` converts mock pixels and `font_px()` converts mock font sizes. |
 | `layout.py` | Rectangle math: `row`, `column`, `grid` (fixed sizes plus `FILL`), `inset`, `place`, `grow`. It doesn't draw. |
 | `draw.py` | Rounded fills, single-line text (aligned and elided), captions, wrapped paragraphs, and `icon()`, which draws the mocks' line icons tinted (chevron, cross, plus and check use them too). |
@@ -21,9 +21,9 @@ To run the real UI on a Mac, follow the [desktop setup guide](docs/mac-desktop.m
 | Settings › Device › Developer (`settings/developer.py`) | openpilot's Developer panel in our rows: ADB, SSH, GitHub SSH keys (upstream's fetcher), joystick debug, alpha longitudinal (with our warning, only where offered) and UI debug. |
 | CAN test recorder (`settings/can_recorder.py`) | A passive logger under Device › Developer, built from shared panels, segmented input selection, value lines, badges and buttons. `starpilot/tandem/can_recorder.py` writes CAN frames and timestamped manual lock/unlock markers in a worker. `starpilot/tandem/obd.py` leases the Bolt's OBD input for up to two minutes and restores it independently if the UI dies. See [setup, log format and investigation notes](docs/can-recorder.md). |
 | More for your car (`settings/vehicle.py`) | StarPilot's car-specific options for the detected car, on its params and handlers; restarts and panda flashing ask first in our dialogs. |
-| `overlays.py` dialogs over upstream actions | Restart, Power Off, Recalibrate and the driver monitoring reset ask in our `Dialog`, then run upstream's action (the confirm-only prompts are run with their dialog caught and answered, so upstream's checks still apply). Software's Release Channel and Uninstall (upstream's three steps), What's new and the Bluetooth sound test use our sheets and dialogs too. How It Works stays upstream's training guide: its steps are pre-drawn images. |
+| `overlays.py` dialogs over upstream actions | Restart, Power Off, Recalibrate and the driver monitoring reset ask in our `Dialog`, then run upstream's action (named confirmation hooks run only the action already approved in our dialog, retaining upstream checks). Software's Release Channel and Uninstall (upstream's three steps), What's new and the Bluetooth sound test use our sheets and dialogs too. How It Works stays upstream's training guide: its steps are pre-drawn images. |
 | `keyboard.py` | `EssentialsKeyboard`: upstream's `Keyboard` (typing, shift and caps, the 123 and #+= layers, backspace repeat, password masking, minimum length) drawn as `design/keyboard.html`, with a named action key. Used by every text entry our screens open: Wi-Fi and hotspot passwords, the hotspot name, APN, Report a Problem, the startup message and the Galaxy password. Destination search holds it in the page as a `KeyPad`. |
-| `tools/` | `build_icons.js` (icons), `shoot_mocks.js` (mock screenshots), `render/` (headless renders of every built screen with sample data, and the test stand-ins), and `compare.py` (the mock-beside-build page from `design/compare.json`). How to run them is in the repo's `AGENTS.md`. |
+| `tools/` | `build_icons.js` (icons), `shoot_mocks.js` (mock screenshots), `render/` (headless renders with sample data and test stand-ins), `compare.py` (the mock-beside-build page), and `make_interface_gif.py` (the README tour). See `AGENTS.md` and `assets/screenshots/README.md` for regeneration. |
 
 ## Building a screen
 
@@ -61,27 +61,67 @@ page = SettingsPage(
 
 ## Keeping rebases easy
 
-Automatic crash and performance reporting is disabled by the fork-owned `starpilot/tandem/diagnostics.py`. Exceptions, stall dumps and native crash artifacts remain on the device; unattended Sentry events, remote diagnostic log/stat forwarding and StarPilot statistics uploads are blocked. Sentry only sends explicitly submitted issue reports and tunes, with automatic integrations, sessions and tracing disabled. The drive-log/video Uploads setting is separate and keeps its existing behavior. Base-code integrations are small policy hooks so rebases can keep upstream's capture and upload logic.
+Tandem merges StarPilot. New behavior, presentation, assets, tools and tests live in owned paths:
+`selfdrive/ui/tandem/`, `starpilot/tandem/`, the Figtree, JetBrains Mono and Noto font files and licenses,
+`AGENTS.md`, and the top entry of `RELEASES.md`. The heading above is historical; we do not rebase.
 
-This fork is rebased onto StarPilot, and everything outside this package belongs to StarPilot or to openpilot underneath it. Our work therefore lives in new files and edits upstream files only when there is no other way.
+The legacy settings redesign and shared dialog rewrites have been removed from upstream files. Tandem
+uses the original controllers with the small hooks below. All four `TANDEM_*=0` switches select upstream
+screen classes. Figtree, Noto, text shaping, scroll gesture rejection, border geometry and animation drawing
+are now scoped to Tandem. Upstream retains Inter, unifont, its dialogs, scroll panel and original onroad layout.
 
-- **Ours:** everything in `selfdrive/ui/tandem/`, meaning the code, `design/` (mocks and docs), `tools/` and `tests/`. Also the new font files `selfdrive/assets/fonts/Figtree-*` and `Figtree-OFL.txt`, which have to sit where the app loads fonts from.
-- **Upstream integration:**
-  - Root `README.md`: Tandem's project introduction, release and development links (including the Mac desktop setup guide), and screenshots from `assets/screenshots/`. Reapply this overview after an upstream merge, preserving the upstream credits and third-party notices.
-  - The file names in `FontWeight` (`system/ui/lib/application.py`), which switch the whole UI to Figtree.
-  - `KEEP_FONT` in `system/ui/lib/application.py` (off by default, so upstream's behavior): `font_fallback` skips unifont while it's on. `draw.py` turns it on only while it measures and draws Tandem's own text, which isn't translated, so a language that needs the fallback font leaves Tandem in Figtree; upstream's screens and widgets still fall back.
-  - The fallback font for scripts Figtree lacks is Noto, not unifont: `FontWeight.UNIFONT` names `NotoSans-Fallback.fnt` (`system/ui/lib/application.py`), and `UNIFONT_LANGUAGES` (`system/ui/lib/multilang.py`) adds `ar` and `uk`, which Figtree can't draw (Inter could draw Cyrillic). `tools/fallback_font.py` builds the atlas from the Noto subsets in `tools/fonts/` (rerun `subset`, then `build`, when translations gain characters; `tests/test_fallback_font.py` fails until then). Upstream loads that font unfiltered, as it did pixel unifont; `fonts.prepare_fallback()` (from `screens.py`) gives it mipmaps.
-  - `TEXT_SHAPERS` in `system/ui/lib/application.py` (empty by default), applied in its `draw_text_ex` wrapper and in `measure_text_cached` (`system/ui/lib/text_measure.py`): Tandem adds `arabic.shape`, which joins Arabic letters and orders right-to-left lines for raylib, which draws one glyph per character left to right. Text without Arabic is unchanged.
-  - In `selfdrive/ui/layouts/main.py`: the imports, the calls that create the sidebar, home, settings and onroad screens (`screens.py`), and the left sidebar's width. StarPilot's developer sidebar on the right keeps upstream's width.
-  - In the wheel controls daemon and its manager predicate: temporary button testing runs while the Bluetooth screen is open, including onroad, without changing the saved enable setting. Tests cover the service and screen lifecycle.
-  - `starpilot/system/bluetooth/daemon.py`: `_settings_allowed()` is an overridable gate for settings commands, delayed sound tests and scan maintenance; its default is the original offroad check. `main()` selects Tandem's controller subclass from `starpilot/tandem/bluetooth.py`. That subclass also allows a stationary Park with fresh valid car/control messages and inactive controls. The raw offroad state, reconnect policy and incoming-pairing acceptance remain upstream's; `TANDEM_SETTINGS=0` selects the original controller.
-  - Small hooks: `_show_header()` in `selfdrive/ui/layouts/home.py`, a lane line color override in `selfdrive/ui/onroad/model_renderer.py`, `_get_border_color()` in `selfdrive/ui/onroad/starpilot/starpilot_onroad_view.py`, `draw_gradients` in `selfdrive/ui/onroad/hud_renderer.py` (off in Essentials, so no dark fade from the screen's edges), and the Help steer sound in `selfdrive/ui/soundd.py`.
-  - `common/params_keys.h`: `SteeringHeadroomWarning` and `DeveloperStripMetrics`. The device runs the committed `common/params_pyx.so` and `libcommon.a` (`prebuilt`), so a new key only exists there once those are rebuilt; until then reading or writing it crashes the UI. Tandem's own on/off settings use marker files instead (`prefs.py`). Device › Backups saves those files too, in a `.tandem_prefs` folder inside each backup that restore copies back beside the params folder rather than into it (the stored forecast isn't saved; it's a cache). A backup made before this leaves Tandem's current settings alone. StarPilot's own automatic backups still hold only params.
-  - `system/version.py`: `release` is in `RELEASE_BRANCHES`, so Tandem's release branch boots as a release build (development-only params cleared, friendly update errors).
+The param registry, shipped parameter binaries and `cereal/custom.capnp` match upstream. Developer-strip
+choices use `prefs.DEVELOPER_STRIP`, migrating the old raw param file without querying an unregistered key.
+Backups include that preference. Help steer and selected-turn status use atomic snapshots in shared memory
+(`starpilot/tandem/state.py`), independent of the compiled registry and message schema. Readers reject stale,
+future or malformed snapshots; unavailable storage omits the extra status/chime without affecting driving.
+Navigation still reports the turn StarPilot actually selected through its optional observer callback.
 
-  If a rebase conflicts in these files, keep upstream's version and reapply the integration.
-- **Unchanged:** `Widget`, `process.py`, the installer, the Inter and mono files, `THIRD_PARTY_NOTICES.md`, and the upstream settings panels.
-- **New needs go in this package**, not in shared modules. For example, extra font faces live in `fonts.py` rather than in `FontWeight`.
+**Upstream integration:** every remaining external edit is listed here. Defaults of shared hooks retain upstream behavior.
+
+| File | Integration |
+| --- | --- |
+| `README.md` | Fork introduction, documentation links, screenshots and upstream credits. |
+| `selfdrive/ui/layouts/main.py` | Screen factories and sidebar widths from `screens.py`; each factory has an upstream fallback. |
+| `selfdrive/ui/layouts/home.py` | `_show_header()` override; the default is `True`. |
+| `selfdrive/ui/layouts/settings/device.py` | Named confirmation hook for calibration and driver monitoring; default shows the original dialog and callbacks retain engagement checks. |
+| `selfdrive/ui/layouts/settings/starpilot/driving_model.py` | `_show_notice()` hook; default shows the original alert. Tandem overrides it to deliver model notices directly. |
+| `selfdrive/ui/layouts/settings/starpilot/vehicle.py` | Named confirmation hook for longitudinal changes and panda flashing; default shows the original dialog. |
+| `selfdrive/ui/onroad/hud_renderer.py` | `draw_gradients=True`; Tandem opts out of the edge fade. |
+| `selfdrive/ui/onroad/model_renderer.py` | Optional lane color override, default `None`. |
+| `selfdrive/ui/onroad/starpilot/starpilot_border.py` | Optional curve-glow drawing color; default keeps upstream colors and the shared fade state remains upstream's. |
+| `selfdrive/ui/onroad/starpilot/starpilot_onroad_view.py` | Overridable border color with the original default. |
+| `selfdrive/ui/soundd.py` | Overridable per-class sound catalog, alert filter and extra-sound tick; `main()` selects the owned Help steer subclass, or the original class with `TANDEM_ONROAD=0`. |
+| `starpilot/assets/theme_manager.py` | Installs the owned bundled signal assets as regular theme packs at boot. |
+| `starpilot/controls/lib/starpilot_vcruise.py` | Optional `on_selected` navigation-turn observer; unset preserves the original target and state. |
+| `starpilot/controls/starpilot_planner.py` | Selects the owned cruise subclass and publishes its observed turn to the owned snapshot; disabled with `TANDEM_ONROAD=0`. |
+| `starpilot/system/bluetooth/daemon.py` | Overridable settings gate, default offroad; selects the owned stationary-Park subclass unless `TANDEM_SETTINGS=0`. |
+| `starpilot/system/wheel_controls/wheel_controlsd.py` | Overridable testing gate, default offroad; `main()` selects the owned test-lifecycle subclass unless `TANDEM_SETTINGS=0`. Public upstream testing/learning functions remain original. |
+| `system/manager/process_config.py` | Starts the wheel service for an owned temporary test request; ignored with `TANDEM_SETTINGS=0`. |
+| `starpilot/system/the_galaxy/the_galaxy.py` | Calls the owned signal catalog, validation and effective-selection helpers, retaining the public API routes. Its JSON settings source remains upstream's. |
+| `starpilot/system/starpilot_stats.py` | Fork-wide unattended statistics policy gate. |
+| `system/athena/athenad.py` | Fork-wide unattended diagnostic log/stat forwarding policy gates. |
+| `system/loggerd/uploader.py` | Retains crash artifacts locally; drive log/video upload behavior stays upstream's. |
+| `system/sentry.py` | Fork-wide automatic-report policy; explicit user reports and tunes retain their submission tags. |
+| `system/ui/lib/application.py` | `KEEP_FONT=False` and empty `TEXT_SHAPERS`; Tandem opts in only inside a drawing context, restoring both afterward. Upstream font names remain original. |
+| `system/ui/lib/text_measure.py` | Applies scoped text shapers so measurement matches drawing; empty by default. |
+| `system/ui/widgets/inputbox.py` | Overridable font getter, defaulting to the original app font; Tandem fields supply their own face for drawing and cursor measurement. |
+| `system/version.py` | Includes `release` in `RELEASE_BRANCHES`. |
+
+On an unowned source conflict, start from upstream's version and reapply only the listed integration.
+Do not copy old generated binaries back over a merged registry or schema. The ordinary update workflow
+no longer requires Tandem-specific binary rebuilds. Diagnostics restrictions remain an intentional
+fork-wide policy, independent of the UI switches (`starpilot/tandem/diagnostics.py`).
+
+Run the inventory check after a change or merge:
+
+```sh
+python3 selfdrive/ui/tandem/tools/upstream_audit.py --check
+```
+
+It compares the working tree with the local `upstream/StarPilot` ref, including new unowned files, and fails
+if an external path is absent from this inventory. Fetch upstream first when checking a new upstream release.
+The [separation audit](docs/upstream-separation.md) retains the original baseline and records the cleanup results.
 
 ## Branches and merging upstream
 
@@ -101,17 +141,22 @@ git fetch upstream StarPilot
 git merge upstream/StarPilot
 ```
 
-Conflicts can only come from the upstream files listed under Upstream integration, and from the owner's own changes to StarPilot code (the turn signal animations in `selfdrive/ui/onroad/starpilot/turn_signals.py` and `starpilot/assets/signal_packs/`, the settings it adds, and the diagnostics hooks). Keep upstream's version, then make our edit again. Files in this package never conflict.
+Use the Upstream integration inventory above to review overlapping changes. Owned paths avoid ordinary upstream edits, but an upstream addition at the same path can still conflict. A clean text merge does not prove compatibility: private controller APIs, message schemas, params and generated binaries need the checks below.
 
 **Release notes:** a device's "What's new" is the top entry of `RELEASES.md` at the repo root, up to its first blank line; GitHub tags and releases aren't read. Before pushing a release, add a new top entry: a `Tandem <date>` heading, its `===` underline, then `* ` bullets (two spaces before a nested `* `), with no blank line inside. `tests/test_tandem.py` checks the top entry is Tandem's and whole.
 
-After a merge, check what Tandem reads from StarPilot, which can change without a conflict:
-- run the tests in `tests/` (see the top of this README);
-- the turn signal renderer's `render()` arguments and `BUNDLED_SIGNAL_PATHS` (`onroad/view.py`, `settings/display.py`);
-- the messages and fields the status chips read (`onroad/status.py`) and the alert names in `onroad/alerts.py`;
-- the Bolt OBD recorder's GM camera parameter 3 TX allowlist (buses 0 and 2 only), forwarding between 0 and 2 only, panda packet versions, `0xdb` input selection and shared SPI device flock (`tests/test_obd.py`); this feature adds no upstream hook;
-- `RELEASE_BRANCHES` still lists `release`.
-- `device.add_interactive_timeout_callback` and gui_app's `_nav_stack` and `pop_widgets_to`, which `menu_idle.py` uses to close what's open on top of settings when the menu times out while driving.
+After a merge, check the interfaces that can change without a source conflict:
+
+- Run `tests/` and `starpilot/tandem/tests/`, plus `tools/upstream_audit.py --check`. The Galaxy HTTP tests need `tests/requirements.txt`.
+- Check the upstream model, maps, navigation, vehicle and device controller methods used by the owned adapters. Named confirmations must keep their original engagement checks; new confirmation actions must not be auto-approved.
+- Check the optional navigation observer, publisher placement and source-message validity. The snapshot must reflect the target actually binding cruise, including a selected next turn, and expire when the producer stops.
+- Check the alert filter, audio loop/catalog hooks and owned Help steer volume/muting tests; existing alerts keep priority.
+- Check all four screen switches at `0`, each supported mixed configuration, and the normal Tandem screens. Global fonts and shared widgets must retain upstream defaults.
+- Check the animation renderer's `render()` arguments, shared pack metadata and Galaxy endpoint behavior (`starpilot/tandem/signals.py`).
+- Check the messages and fields the status chips read (`onroad/status.py`) and alert names in `onroad/alerts.py`.
+- Check the Bolt OBD recorder's GM camera parameter 3 TX allowlist (buses 0 and 2 only), forwarding between 0 and 2 only, panda packet versions, `0xdb` input selection and shared SPI device flock (`tests/test_obd.py`); this feature adds no upstream hook.
+- Check `RELEASE_BRANCHES` still includes `release`.
+- Check `device.add_interactive_timeout_callback`, gui_app's `_nav_stack` and `pop_widgets_to`, which `menu_idle.py` uses to close overlays when the menu times out while driving.
 
 ## The settings window
 
@@ -216,7 +261,7 @@ These are reached from a row or button, never as a tab:
 
 What these don't do yet:
 - **Onroad extras** (`onroad/extras.py`, `design/onroadextras.html`): StarPilot's optional visuals, each still under its own switch, drawn in Essentials: pedal tiles (PedalsOnUI) and the external-GPU model chip under the driver monitor tile (StarPilot's widget still decides the state and fade), the compass as a tag at the start of the bar, in the same place with or without a route, a stopping-point line with a distance tag, adjacent-lane and blind-spot washes, light-blue path edges, white radar dots, the curve glow in our blue, and signal (blue, blinking) and blind-spot (red) halves of the border. StarPilot's steering-torque border fill is left out; the steering arc shows the same. The rainbow path stays StarPilot's.
-- **Developer View** (`onroad/developer.py`, `design/onroaddev.html`), in JetBrains Mono as the mock sets it: a panel on the right with LEAD (distance, gap, relative speed, radar or vision), DEVICE (CPU and temperature, GPU, RAM, FPS) and CONTROLS (curve speed, limit source, lane widths); a strip above the bar; Lead Insights' tag above the lead car; and the limit's source and offset under the sign. Values come from openpilot's and StarPilot's messages (`read()`). StarPilot's settings decide what shows: its developer sidebar switch for the panel, Developer UI for the rest, and each row's own switch (ShowCPU, NumericalTemp, ShowGPU, ShowMemoryUsage, FPSCounter, AdjacentPathMetrics, SpeedLimitSources; the last also covers the note under the sign), all in Tuner › Bundle Overrides. The strip shows up to five metrics picked there under Bar metrics (`STRIP_METRICS`, kept in the new `DeveloperStripMetrics` param, default the mock's accel, want, jerk, lat and delay), each given an equal share of the width; picking none hides it. `main.py` takes the panel and its width from `screens.py`.
+- **Developer View** (`onroad/developer.py`, `design/onroaddev.html`), in JetBrains Mono as the mock sets it: a panel on the right with LEAD (distance, gap, relative speed, radar or vision), DEVICE (CPU and temperature, GPU, RAM, FPS) and CONTROLS (curve speed, limit source, lane widths); a strip above the bar; Lead Insights' tag above the lead car; and the limit's source and offset under the sign. Values come from openpilot's and StarPilot's messages (`read()`). StarPilot's settings decide what shows: its developer sidebar switch for the panel, Developer UI for the rest, and each row's own switch (ShowCPU, NumericalTemp, ShowGPU, ShowMemoryUsage, FPSCounter, AdjacentPathMetrics, SpeedLimitSources; the last also covers the note under the sign), all in Tuner › Bundle Overrides. The strip shows up to five metrics picked there under Bar metrics (`STRIP_METRICS`, kept in the owned `prefs.DEVELOPER_STRIP` preference, default the mock's accel, want, jerk, lat and delay), each given an equal share of the width; picking none hides it. `main.py` takes the panel and its width from `screens.py`.
 
 ## Translations
 

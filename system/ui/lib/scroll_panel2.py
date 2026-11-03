@@ -58,7 +58,6 @@ class GuiScrollPanel2:
     self._enabled: bool | Callable[[], bool] = True
     self.snap_interval: float | None = None
     self._snap_target: float | None = None
-    self._touch_scrolled = False
 
   def set_enabled(self, enabled: bool | Callable[[], bool]) -> None:
     self._enabled = enabled
@@ -165,9 +164,6 @@ class GuiScrollPanel2:
                           content_size: float) -> None:
     if mouse_event.left_pressed:
       self._snap_target = None
-      # A new press starts a new gesture, wherever it lands. Clearing only for presses inside the
-      # list left controls outside it (fixed headers, dialog buttons) ignoring taps after a scroll.
-      self._touch_scrolled = False
 
     max_offset, min_offset = self._get_offset_bounds(bounds_size, content_size)
     # simple exponential return if out of bounds
@@ -182,7 +178,6 @@ class GuiScrollPanel2:
       self._state = ScrollState.STEADY
       self._velocity = 0.0
       self._velocity_buffer.clear()
-      self._touch_scrolled = False
 
     elif self._state == ScrollState.STEADY:
       if rl.check_collision_point_rec(mouse_event.pos, bounds):
@@ -283,7 +278,7 @@ class GuiScrollPanel2:
         self.set_offset(current_offset + delta_x)
 
     elif self._state == ScrollState.AUTO_SCROLL:
-      if mouse_event.left_pressed and rl.check_collision_point_rec(mouse_event.pos, bounds):
+      if mouse_event.left_pressed:
         # Decide whether to click or scroll (block click if moving too fast)
         if abs(self._velocity) <= MIN_VELOCITY_FOR_CLICKING:
           # Traveling slow enough, click
@@ -294,11 +289,6 @@ class GuiScrollPanel2:
           self._state = ScrollState.MANUAL_SCROLL
           # Reset velocity for touch down and up events that happen in back-to-back frames
           self._velocity = 0.0
-
-    # Keep rejection through finger-up, including event batches that enter and
-    # leave MANUAL_SCROLL before widgets process their own copy of the batch.
-    if self._state == ScrollState.MANUAL_SCROLL:
-      self._touch_scrolled = True
 
   def _get_mouse_pos(self, mouse_event: MouseEvent) -> float:
     return mouse_event.pos.x if self._horizontal else mouse_event.pos.y
@@ -318,4 +308,4 @@ class GuiScrollPanel2:
 
   def is_touch_valid(self) -> bool:
     # MIN_VELOCITY_FOR_CLICKING is checked in auto-scroll state
-    return bool(self._state != ScrollState.MANUAL_SCROLL and not self._touch_scrolled)
+    return bool(self._state != ScrollState.MANUAL_SCROLL)

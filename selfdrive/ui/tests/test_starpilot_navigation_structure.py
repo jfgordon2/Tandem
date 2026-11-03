@@ -5,7 +5,7 @@ from types import SimpleNamespace
 
 if "cereal.messaging" not in sys.modules:
   try:
-    import cereal.messaging  # noqa: F401
+    import cereal.messaging
   except ImportError:
     msg_mod = types.ModuleType("cereal.messaging")
     msg_mod.SubMaster = MagicMock
@@ -38,7 +38,7 @@ if "openpilot.common.transformations.orientation" not in sys.modules:
 
 if "openpilot.starpilot.common.accel_profile" not in sys.modules:
   try:
-    import openpilot.starpilot.common.accel_profile  # noqa: F401
+    import openpilot.starpilot.common.accel_profile
   except ImportError:
     from collections import defaultdict
     accel_mod = types.ModuleType("openpilot.starpilot.common.accel_profile")
@@ -79,7 +79,7 @@ def test_driving_controls_contains_nested_navigation_folder_and_leaf_routes():
 
   navigation_maps = controls["children"][0]
   assert "panel" not in navigation_maps
-  assert [{key: child[key] for key in ("title", "panel", "icon")} for child in navigation_maps["children"]] == [
+  assert navigation_maps["children"] == [
     {"title": "Map Data", "panel": "MAPS", "icon": "navigate"},
     {"title": "Navigation", "panel": "NAVIGATION", "icon": "road"},
   ]

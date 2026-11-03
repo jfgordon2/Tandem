@@ -73,7 +73,8 @@ class StarPilotPlanner:
     self.starpilot_ccm = ConditionalChillMode(self, self.starpilot_cem)
     self.starpilot_events = StarPilotEvents(self, error_log, ThemeManager)
     self.starpilot_following = StarPilotFollowing(self)
-    self.starpilot_vcruise = StarPilotVCruise(self)
+    from openpilot.starpilot.tandem.navigation import controller_type
+    self.starpilot_vcruise = controller_type(StarPilotVCruise)(self)
     self.starpilot_weather = WeatherChecker(self)
 
     self.driving_in_curve = False
@@ -327,15 +328,11 @@ class StarPilotPlanner:
     starpilotPlan.cscControllingSpeed = self.starpilot_vcruise.csc_controlling_speed
     starpilotPlan.cscSpeed = float(self.starpilot_vcruise.csc_target)
     starpilotPlan.cscTraining = self.starpilot_vcruise.csc.enable_training
+    from openpilot.starpilot.tandem.navigation import publish_turn
+    publish_turn(self, sm)
     starpilotPlan.cscOverridden = self.starpilot_vcruise.csc_override
     starpilotPlan.cscLearnedLatAccel = float(self.starpilot_vcruise.csc.learned_lat_accel(self.road_curvature))
     starpilotPlan.cscBindingDistance = float(self.starpilot_vcruise.csc.binding_distance)
-    starpilotPlan.navTurnControllingSpeed = bool(
-      sm["carControl"].longActive and not self.starpilot_vcruise.forcing_stop
-      and 0.0 < self.starpilot_vcruise.nav_turn_target == self.v_cruise
-    )
-    starpilotPlan.navTurnManeuver = self.starpilot_vcruise.nav_turn_maneuver if starpilotPlan.navTurnControllingSpeed else ""
-    starpilotPlan.navTurnModifier = self.starpilot_vcruise.nav_turn_modifier if starpilotPlan.navTurnControllingSpeed else ""
 
     starpilotPlan.desiredFollowDistance = int(self.starpilot_following.desired_follow_distance)
     starpilotPlan.disableThrottle = (

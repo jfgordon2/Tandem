@@ -6,7 +6,7 @@ from opendbc.car import structs
 from msgq.visionipc import VisionStreamType
 from openpilot.selfdrive.ui import UI_BORDER_SIZE
 from openpilot.selfdrive.ui.ui_state import ui_state, UIStatus
-from openpilot.selfdrive.ui.lib.starpilot_visuals import get_border_roundness, get_border_width
+from openpilot.selfdrive.ui.lib.starpilot_visuals import get_border_width
 from openpilot.selfdrive.ui.onroad.alert_renderer import AlertRenderer
 from openpilot.selfdrive.ui.onroad.driver_state import DriverStateRenderer
 from openpilot.selfdrive.ui.onroad.hud_renderer import HudRenderer
@@ -154,10 +154,10 @@ class AugmentedRoadView(CameraView):
   def _draw_border(self, rect: rl.Rectangle):
     border_width = self._get_border_width()
     rl.draw_rectangle_lines_ex(rect, border_width, rl.BLACK)
+    border_roundness = 0.12
     border_color = get_screen_edge_color(ui_state)
     border_rect = rl.Rectangle(rect.x + border_width, rect.y + border_width,
                                rect.width - 2 * border_width, rect.height - 2 * border_width)
-    border_roundness = get_border_roundness(border_rect, border_width)
     rl.draw_rectangle_rounded_lines_ex(border_rect, border_roundness, 10, border_width, border_color)
 
   @staticmethod

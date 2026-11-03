@@ -22,3 +22,21 @@ published names above. Normalize any Retina captures to 2160 by 1080 pixels and 
 RGB PNGs. Inspect each image before committing it, and keep the root README's captions in sync.
 
 The full render output and comparison pages belong in `tools/out/`, which stays out of Git.
+
+## README animation
+
+`interface-tour.gif` is a looping, 63-second tour of 26 built screens at 1200 × 654 pixels, including
+the caption strip. It starts with the driving view, then visits Home, destinations, voice typing,
+navigation, driving settings, device settings, connections and software. The CAN recorder screens
+and other testing variants are excluded by the generator's explicit screen list.
+
+After refreshing the built-screen renders, regenerate the GIF from the repo root (needs Pillow):
+
+```sh
+python3 selfdrive/ui/tandem/tools/make_interface_gif.py --renders selfdrive/ui/tandem/tools/out/renders
+```
+
+The generator validates every source image, slide and hold time, and checks that the GIF loops.
+Each slide has its own palette so small colored details survive GIF encoding. Cuts hold each screen
+for 2–3 seconds; there are no flashing transitions. Change `SLIDES` in the generator to adjust the
+sequence or timing, then inspect the decoded frames and update the root README's duration if needed.

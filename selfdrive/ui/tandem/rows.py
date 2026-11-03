@@ -5,7 +5,7 @@ from collections.abc import Callable
 
 import pyray as rl
 
-from openpilot.system.ui.lib.scroll_panel2 import GuiScrollPanel2
+from openpilot.selfdrive.ui.tandem.scroll import ScrollPanel as GuiScrollPanel2
 from openpilot.system.ui.widgets import Widget
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Bindable, Component, resolve, size_of

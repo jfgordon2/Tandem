@@ -24,7 +24,7 @@ def _load_augmented_road_view(monkeypatch):
     ui_state=SimpleNamespace(started=True, sm=SimpleNamespace()),
     UIStatus=UIStatus,
   )
-  stub_module("openpilot.selfdrive.ui.lib.starpilot_visuals", get_border_width=lambda *_args: 0, get_border_roundness=lambda *_args: 0)
+  stub_module("openpilot.selfdrive.ui.lib.starpilot_visuals", get_border_width=lambda *_args: 0)
   stub_module("openpilot.selfdrive.ui.lib.starpilot_status", get_screen_edge_color=lambda *_args: None)
   stub_module("openpilot.selfdrive.ui.onroad.alert_renderer", AlertRenderer=object)
   stub_module("openpilot.selfdrive.ui.onroad.driver_state", DriverStateRenderer=object)

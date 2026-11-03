@@ -134,7 +134,8 @@ def soundd_run(started: bool, params: Params, CP: car.CarParams, starpilot_toggl
 
 
 def wheel_controls_enabled(started: bool, params: Params, CP: car.CarParams, starpilot_toggles: SimpleNamespace) -> bool:
-  return params.get_bool("WheelControlsEnabled") or Params(memory=True).get_bool("WheelControlTestActive") or (
+  from openpilot.starpilot.tandem.wheel import testing_requested
+  return params.get_bool("WheelControlsEnabled") or testing_requested() or (
     params.get_bool("ScreenManagement") and params.get_bool("StandbyMode") and params.get_bool("StandbyWakeButton")
   )
 

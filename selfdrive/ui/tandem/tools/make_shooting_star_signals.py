@@ -9,14 +9,13 @@ star along its direction of travel. The blind-spot image is a startled red star
 with warning rays.
 
 Dev-only dependency: pip install cairosvg
-Usage: python starpilot/tools/make_shooting_star_signals.py [output_dir]
+Usage: python selfdrive/ui/tandem/tools/make_shooting_star_signals.py [output_dir]
 """
 import math
 import random
 import sys
 from pathlib import Path
 
-import cairosvg
 
 W, H = 350, 500
 DEFAULT_OUT = Path(__file__).resolve().parents[1] / "assets/signal_packs/shooting_star/signals"
@@ -51,11 +50,11 @@ def sparkle(x, y, size, color, opacity):
 def face(mood):
   if mood == "alarm":
     eyes = ('<ellipse cx="-15" cy="-4" rx="5.5" ry="7.5" fill="#1B1B1B"/><ellipse cx="3" cy="-4" rx="5.5" ry="7.5" fill="#1B1B1B"/>'
-            '<circle cx="-16.5" cy="-7" r="2" fill="#FFFFFF"/><circle cx="1.5" cy="-7" r="2" fill="#FFFFFF"/>')
+            + '<circle cx="-16.5" cy="-7" r="2" fill="#FFFFFF"/><circle cx="1.5" cy="-7" r="2" fill="#FFFFFF"/>')
     mouth = '<ellipse cx="-6" cy="12" rx="5" ry="6" fill="#5A1418"/>'
   else:
     eyes = ('<ellipse cx="-15" cy="-3" rx="4.2" ry="6" fill="#1B1B1B"/><ellipse cx="2" cy="-3" rx="4.2" ry="6" fill="#1B1B1B"/>'
-            '<circle cx="-16.2" cy="-5.5" r="1.6" fill="#FFFFFF"/><circle cx="0.8" cy="-5.5" r="1.6" fill="#FFFFFF"/>')
+            + '<circle cx="-16.2" cy="-5.5" r="1.6" fill="#FFFFFF"/><circle cx="0.8" cy="-5.5" r="1.6" fill="#FFFFFF"/>')
     mouth = '<path d="M-14,9 Q-6,17 2,9" fill="none" stroke="#5A3A12" stroke-width="2.6" stroke-linecap="round"/>'
   return eyes + mouth
 
@@ -85,7 +84,6 @@ def star(cx, cy, tilt, c, uid, mood="eager", scale=1.15):
 
 def trail(cx, cy, dx, dy, length, c, uid):
   """Tapered glowing streak from the star back along (dx, dy)."""
-  ex, ey = cx + dx * length, cy + dy * length
   nx, ny = -dy, dx
 
   def streak(width, offset, length_scale, hot, cool, hot_opacity, gid):
@@ -94,10 +92,10 @@ def trail(cx, cy, dx, dy, length, c, uid):
     poly = [(sx + nx * width, sy + ny * width), (tx, ty), (sx - nx * width, sy - ny * width)]
     d = "M" + " L".join(f"{x:.1f},{y:.1f}" for x, y in poly) + "Z"
     return (f'<linearGradient id="{gid}" gradientUnits="userSpaceOnUse" x1="{sx:.1f}" y1="{sy:.1f}" x2="{tx:.1f}" y2="{ty:.1f}">'
-            f'<stop offset="0" stop-color="{hot}" stop-opacity="{hot_opacity}"/>'
-            f'<stop offset="0.5" stop-color="{cool}" stop-opacity="{hot_opacity * 0.6:.2f}"/>'
-            f'<stop offset="1" stop-color="{cool}" stop-opacity="0"/></linearGradient>'
-            f'<path d="{d}" fill="url(#{gid})"/>')
+            + f'<stop offset="0" stop-color="{hot}" stop-opacity="{hot_opacity}"/>'
+            + f'<stop offset="0.5" stop-color="{cool}" stop-opacity="{hot_opacity * 0.6:.2f}"/>'
+            + f'<stop offset="1" stop-color="{cool}" stop-opacity="0"/></linearGradient>'
+            + f'<path d="{d}" fill="url(#{gid})"/>')
 
   out = streak(34, 0, 1.0, c["trail_hot"], c["trail_cool"], 0.85, f"t{uid}a")
   out += streak(9, 22, 0.62, c["trail_hot"], c["trail_cool"], 0.7, f"t{uid}b")
@@ -123,14 +121,14 @@ def frame_svg(index):
   tilt = math.degrees(math.atan2(vy, -vx)) * 0.35  # lean gently into the arc
   # Keep the end of the trail inside the frame.
   length = 205
-  for limit, comp, pos in ((H - 6, dy, cy), (6, dy, cy)):
+  for _limit, comp, pos in ((H - 6, dy, cy), (6, dy, cy)):
     if comp > 0 and pos + comp * length > H - 6:
       length = (H - 6 - pos) / comp
     if comp < 0 and pos + comp * length < 6:
       length = (6 - pos) / comp
   length = min(length, (W - 6 - STAR_X) / dx)
   return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">'
-          f'{trail(STAR_X, cy, dx, dy, length, GOLD, index)}{star(STAR_X, cy, tilt, GOLD, index)}</svg>')
+          + f'{trail(STAR_X, cy, dx, dy, length, GOLD, index)}{star(STAR_X, cy, tilt, GOLD, index)}</svg>')
 
 
 def blindspot_svg():
@@ -140,13 +138,14 @@ def blindspot_svg():
     a = math.radians(i * 30 + 15)
     r1, r2 = 70 if i % 2 else 64, 98 if i % 2 else 112
     rays += (f'<line x1="{cx + r1 * math.cos(a):.1f}" y1="{cy + r1 * math.sin(a):.1f}" '
-             f'x2="{cx + r2 * math.cos(a):.1f}" y2="{cy + r2 * math.sin(a):.1f}" '
-             f'stroke="{ALARM["ray"]}" stroke-width="9" stroke-linecap="round"/>')
+             + f'x2="{cx + r2 * math.cos(a):.1f}" y2="{cy + r2 * math.sin(a):.1f}" '
+             + f'stroke="{ALARM["ray"]}" stroke-width="9" stroke-linecap="round"/>')
   return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">'
-          f'{rays}{star(cx, cy, 0, ALARM, "alarm", mood="alarm", scale=1.25)}</svg>')
+          + f'{rays}{star(cx, cy, 0, ALARM, "alarm", mood="alarm", scale=1.25)}</svg>')
 
 
 def main():
+  import cairosvg
   OUT.mkdir(parents=True, exist_ok=True)
   for index in range(FRAMES):
     cairosvg.svg2png(bytestring=frame_svg(index).encode(), write_to=str(OUT / f"turn_signal_{index + 1}.png"))

@@ -22,7 +22,6 @@ CANCEL_DOWNLOAD_PARAM = "CancelThemeDownload"
 DOWNLOAD_PROGRESS_PARAM = "ThemeDownloadProgress"
 
 HOLIDAY_THEME_PATH = Path(__file__).parent / "holiday_themes"
-SIGNAL_PACKS_PATH = Path(__file__).parent / "signal_packs"
 STOCKOP_THEME_PATH = Path(__file__).parent / "stock_theme"
 LOCAL_RESOURCES_PATH = Path(os.getenv("STARPILOT_LOCAL_RESOURCES_PATH", "~/StarPilot-Resources")).expanduser()
 
@@ -83,7 +82,8 @@ class ThemeManager:
 
     if boot_run:
       self.copy_default_theme()
-      self.copy_bundled_signal_packs()
+      from openpilot.starpilot.tandem.signals import install_packs
+      install_packs(THEME_SAVE_PATH)
 
   @staticmethod
   def _local_resources_available():
@@ -183,16 +183,6 @@ class ThemeManager:
     return first_thursday + timedelta(days=21)
 
   @staticmethod
-  def copy_bundled_signal_packs():
-    """Install the turn-signal animations that ship with StarPilot (e.g. Pouncing Cat)
-    as regular theme packs, so they are linked and listed like downloaded ones."""
-    if not SIGNAL_PACKS_PATH.is_dir():
-      return
-    for pack in sorted(SIGNAL_PACKS_PATH.iterdir()):
-      if (pack / "signals").is_dir():
-        shutil.copytree(pack / "signals", THEME_SAVE_PATH / "theme_packs" / pack.name / "signals", dirs_exist_ok=True)
-
-  @staticmethod
   def copy_default_theme():
     world_frog_day_theme_path = HOLIDAY_THEME_PATH / "world_frog_day"
 
@@ -279,10 +269,8 @@ class ThemeManager:
         if self.params_memory.get_bool(CANCEL_DOWNLOAD_PARAM):
           delete_file(theme_path)
           handle_error(None, asset_param, "Download cancelled...", "Download cancelled...", self.params_memory, DOWNLOAD_PROGRESS_PARAM)
-          # Consume the cancel request; otherwise it persists until the next
-          # manager start and immediately cancels every later theme download.
-          self.params_memory.remove(CANCEL_DOWNLOAD_PARAM)
 
+          self.params_memory.remove(CANCEL_DOWNLOAD_PARAM)
           self.downloading_theme = False
           return
 

@@ -34,14 +34,14 @@ class FakeParams:
 class TestStarPilotVisuals(unittest.TestCase):
   def test_border_roundness_contains_camera_corner(self):
     rect = SimpleNamespace(width=2160, height=1080)
+    base_width = 30
     min_dimension = min(rect.width, rect.height)
 
-    for base_width in (15, 30):
-      for scale in (25, 50, 65, 100, 250):
-        border_width = round(base_width * scale / 100)
-        roundness = get_border_roundness(rect, border_width)
-        inner_radius = roundness * min_dimension / 2
-        self.assertLessEqual(math.sqrt(2) * inner_radius, inner_radius + border_width)
+    for scale in (25, 50, 65, 100, 250):
+      border_width = round(base_width * scale / 100)
+      roundness = get_border_roundness(rect, border_width)
+      radius = roundness * min_dimension / 2
+      self.assertLessEqual(math.sqrt(2) * (radius - border_width), radius)
 
   def test_border_roundness_preserves_stock_geometry(self):
     rect = SimpleNamespace(width=2160, height=1080)

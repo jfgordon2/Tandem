@@ -91,7 +91,6 @@ class StarPilotLateralLayout(_SettingsPage):
       subtitle=subtitle,
       get_state=lambda k=key: self._params.get_bool(k),
       set_state=lambda s, k=key: self._params.put_bool(k, s),
-      preview_on=lambda k=key: self._params.assume(k, True),
     )
 
   def _build_panels(self):
@@ -341,7 +340,6 @@ class StarPilotLateralLayout(_SettingsPage):
       subtitle="Steering stays active when ACC is off.",
       get_state=lambda: p.get_bool("AlwaysOnLateral"),
       set_state=lambda s: _confirm_reboot_toggle(p, "AlwaysOnLateral", s) if s else p.put_bool("AlwaysOnLateral", False),
-      preview_on=lambda: p.assume("AlwaysOnLateral", True),
     )
     pt_lane_changes = self._make_parent("LaneChanges", "Lane Changes",
       "Allow openpilot to change lanes.")
@@ -383,7 +381,7 @@ class StarPilotLateralLayout(_SettingsPage):
     current = self._params.get_int("PauseLateralSpeed")
     gui_app.push_widget(AetherSliderDialog(
       tr("Pause Lateral Below"), 0, 100, 1, current, on_speed_close,
-      unit=" mph", color=self.SLIDER_COLOR, subtitle=tr("Pause lateral control below this speed.")))
+      unit=" mph", color=self.SLIDER_COLOR))
 
   def _get_resume_delay_display(self) -> str:
     val = self._params.get_float("LateralResumeDelay")
@@ -412,5 +410,4 @@ class StarPilotLateralLayout(_SettingsPage):
         self._params.put_int("LaneChangeSmoothing", int(val))
     current = self._params.get_int("LaneChangeSmoothing") if self._params.get_int("LaneChangeSmoothing") > 0 else 5
     gui_app.push_widget(AetherSliderDialog(tr("Lane Change Smoothing"), 1, 10, 1, current, on_close,
-                                            color=self.SLIDER_COLOR,
-                                            subtitle=tr("Adjust how gradually steering changes during a lane change.")))
+                                            color=self.SLIDER_COLOR))

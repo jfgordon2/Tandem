@@ -98,21 +98,9 @@ def test_wheel_controls_process_runs_on_supported_devices_at_background_priority
 
 
 @pytest.mark.parametrize("enabled", [False, True])
-def test_wheel_controls_process_is_mapping_gated(enabled, monkeypatch):
-  monkeypatch.setattr(process_config, "Params", lambda **kwargs: SimpleNamespace(get_bool=lambda key: False))
+def test_wheel_controls_process_is_mapping_gated(enabled):
   params = SimpleNamespace(get_bool=lambda key: enabled if key == "WheelControlsEnabled" else False)
   assert wheel_controls_enabled(False, params, car.CarParams.new_message(), SimpleNamespace()) is enabled
-
-
-@pytest.mark.parametrize("started", [False, True])
-def test_wheel_controls_process_runs_only_during_test_when_mappings_are_disabled(started, monkeypatch):
-  memory = {"WheelControlTestActive": True}
-  monkeypatch.setattr(process_config, "Params", lambda **kwargs: SimpleNamespace(get_bool=lambda key: memory.get(key, False)))
-  params = SimpleNamespace(get_bool=lambda key: False)
-  assert wheel_controls_enabled(started, params, car.CarParams.new_message(), SimpleNamespace())
-
-  memory.clear()
-  assert not wheel_controls_enabled(started, params, car.CarParams.new_message(), SimpleNamespace())
 
 
 @pytest.mark.parametrize("started,platform,enabled,disable_logging,no_logging,not_car,expected", [

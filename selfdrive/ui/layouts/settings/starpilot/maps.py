@@ -9,36 +9,31 @@ import pyray as rl
 
 from openpilot.common.params import Params
 from openpilot.selfdrive.ui.ui_state import device, ui_state
-from openpilot.system.ui.lib.application import FONT_SCALE, FontWeight, gui_app
+from openpilot.system.ui.lib.application import FontWeight, gui_app
 from openpilot.system.ui.lib.multilang import tr, tr_noop, trn
+from openpilot.system.ui.lib.text_measure import measure_text_cached
 from openpilot.system.ui.widgets import DialogResult
 from openpilot.system.ui.widgets.confirm_dialog import ConfirmDialog, alert_dialog
+from openpilot.system.ui.widgets.label import gui_label, gui_text_box
 from openpilot.system.ui.widgets.option_dialog import MultiOptionDialog
 
-from openpilot.selfdrive.ui.lib import aether_style as AS
 from openpilot.selfdrive.ui.layouts.settings.starpilot.aethergrid import (
   AETHER_LIST_METRICS,
-  GROUP_OVERHEAD,
-  SECTION_GAP,
-  SETTINGS_ROW_SUBTITLE_FONT_SIZE,
-  SETTINGS_ROW_TITLE_FONT_SIZE,
-  SETTINGS_ROW_VALUE_FONT_SIZE,
   AetherButton,
   AetherListColors,
   AetherSegmentedControl,
   DEFAULT_PANEL_STYLE,
   PanelManagerView,
-  build_settings_group_frame,
+  aether_begin_scissor_mode,
+  aether_end_scissor_mode,
+  draw_action_pill,
   draw_busy_ring,
   draw_empty_state_card,
   draw_list_group_shell,
   draw_metric_strip,
-  draw_text_fit_common,
   draw_section_header,
-  draw_settings_card_row,
-  draw_settings_group,
+  draw_selection_list_row,
   with_alpha,
-  wrap_subtitle,
 )
 from openpilot.selfdrive.ui.layouts.settings.starpilot.panel import _SettingsPage
 from openpilot.starpilot.common.maps_catalog import (
@@ -95,17 +90,18 @@ REGIONAL_PACKAGES = {
   },
 }
 
-# Map Data uses the shared settings components: one status card with the standard card inset and
-# 112 px action buttons, the shared segmented control, and grouped region rows with row-sized buttons.
-# Everything scrolls together, like the other settings pages.
-STATUS_BUTTON_GAP = AS.SETTINGS_ROW_GAP
-STATUS_ACTIONS_MAX_WIDTH = 620.0
-STATUS_CARD_HEIGHT = AS.SETTINGS_CARD_INSET * 2 + AS.MIN_TOUCH * 2 + STATUS_BUTTON_GAP
-STATUS_METRICS_HEIGHT = 84.0
-STATUS_METRICS_VALUE_OFFSET = 40.0   # label line, then the value below it
-REGION_ROW_HEIGHT = 160.0
-REGION_ACTION_HEIGHT = AS.VALUE_PILL_HEIGHT
+STATUS_CARD_HEIGHT = 232.0
+SEGMENTED_CONTROL_HEIGHT = 68.0
+BROWSER_SECTION_HEADER_HEIGHT = 56.0
+BROWSER_REGION_ROW_HEIGHT = 104.0
 BROWSER_EMPTY_STATE_HEIGHT = 208.0
+BROWSER_INSET = 18.0
+
+HEADER_GAP = 16.0
+SUBHEADER_GAP = 12.0
+LIST_TOP_GAP = 12.0
+
+FIXED_HEADER_HEIGHT = STATUS_CARD_HEIGHT + HEADER_GAP + SEGMENTED_CONTROL_HEIGHT + SUBHEADER_GAP + BROWSER_SECTION_HEADER_HEIGHT + LIST_TOP_GAP
 
 
 def _format_mb(size_bytes: int) -> str:
@@ -167,6 +163,7 @@ class MapsManagerView(PanelManagerView):
   def __init__(self, controller: StarPilotMapsLayout):
     super().__init__()
     self._controller = controller
+    self._remove_rect = rl.Rectangle(0, 0, 0, 0)
 
     self._source_segmented_control = self._child(
       AetherSegmentedControl(
@@ -174,137 +171,253 @@ class MapsManagerView(PanelManagerView):
         self._controller._get_source_segment_index,
         self._controller._on_source_segment_change,
         style=PANEL_STYLE,
+        suppress_background=True,
       )
     )
 
   def _draw_header(self, rect: rl.Rectangle):
     pass
 
-  def _region_groups(self) -> list[tuple[str, str, list[dict], bool]]:
-    """(heading, trailing text, regions, downloaded) for each group of region rows."""
-    downloaded, downloadable = self._controller._browse_regions_for_active_view()
-    groups = []
-    if downloaded:
-      groups.append((tr("On This Device"), trn("{} region", "{} regions", len(downloaded)).format(len(downloaded)), downloaded, True))
-    if downloadable:
-      heading = tr("Available for Download") if downloaded else tr("Map Packages & Regions")
-      groups.append((heading, self._controller._active_view_count_text(), downloadable, False))
-    return groups
-
   def _measure_content_height(self, content_width: float) -> float:
-    height = STATUS_CARD_HEIGHT + AetherSegmentedControl.GAP
-    height += self._source_segmented_control.measure_height(content_width) + AetherSegmentedControl.GAP
-    groups = self._region_groups()
-    if not groups:
-      return height + BROWSER_EMPTY_STATE_HEIGHT
-    height += sum(GROUP_OVERHEAD + len(regions) * REGION_ROW_HEIGHT for _, _, regions, _ in groups)
-    return height + SECTION_GAP * (len(groups) - 1)
+    downloaded, downloadable = self._controller._browse_regions_for_active_view()
+    total_rows = len(downloaded) + len(downloadable)
+    if total_rows <= 0:
+      return BROWSER_EMPTY_STATE_HEIGHT
+    h = total_rows * BROWSER_REGION_ROW_HEIGHT
+    if downloaded and downloadable:
+      h += BROWSER_SECTION_HEADER_HEIGHT + 16.0
+    return h
 
-  def _draw_scroll_content(self, scroll_rect: rl.Rectangle, content_width: float):
-    y = scroll_rect.y + self._scroll_offset
-    x = scroll_rect.x
+  def _draw_static_elements(self, scroll_rect: rl.Rectangle, content_width: float):
+    # 1. Pinned Status Card
+    status_rect = rl.Rectangle(scroll_rect.x, scroll_rect.y, content_width, STATUS_CARD_HEIGHT)
+    self._draw_status_card(status_rect)
 
-    self._draw_status_card(rl.Rectangle(x, y, content_width, STATUS_CARD_HEIGHT))
-    y += STATUS_CARD_HEIGHT + AetherSegmentedControl.GAP
+    # 2. Pinned Source Segmented Control ([ U.S. States & Regions | Other Countries ])
+    seg_y = scroll_rect.y + STATUS_CARD_HEIGHT + HEADER_GAP
+    seg_rect = rl.Rectangle(scroll_rect.x + BROWSER_INSET, seg_y, content_width - BROWSER_INSET * 2, SEGMENTED_CONTROL_HEIGHT)
+    self._source_segmented_control.render(seg_rect)
 
-    seg_height = self._source_segmented_control.measure_height(content_width)
-    self._bind_scroll_widget(self._source_segmented_control)
-    self._source_segmented_control.render(rl.Rectangle(x, y, content_width, seg_height))
-    y += seg_height + AetherSegmentedControl.GAP
-
-    groups = self._region_groups()
-    if not groups:
-      title, body = self._controller._browse_empty_state()
-      draw_empty_state_card(rl.Rectangle(x, y, content_width, BROWSER_EMPTY_STATE_HEIGHT), title, body, style=PANEL_STYLE)
-      return
-
-    for heading, trailing, regions, downloaded in groups:
-      group_rect = rl.Rectangle(x, y, content_width, GROUP_OVERHEAD + len(regions) * REGION_ROW_HEIGHT)
-      body = draw_settings_group(group_rect, heading, style=PANEL_STYLE)
-      draw_section_header(build_settings_group_frame(group_rect).heading, "", trailing_text=trailing,
-                          trailing_size=AS.SETTINGS_GROUP_HEADING_SIZE - 4, style=PANEL_STYLE)
-      row_y = body.y
-      visible_top, visible_bottom = scroll_rect.y - REGION_ROW_HEIGHT, scroll_rect.y + scroll_rect.height
-      for index, region in enumerate(regions):
-        if visible_top <= row_y <= visible_bottom:
-          self._draw_region_row(rl.Rectangle(x, row_y, content_width, REGION_ROW_HEIGHT), region, downloaded,
-                                is_last=index == len(regions) - 1)
-        row_y += REGION_ROW_HEIGHT
-      y = group_rect.y + group_rect.height + SECTION_GAP
-
-  def _draw_region_row(self, rect: rl.Rectangle, region: dict, downloaded: bool, *, is_last: bool):
-    token = region["token"]
-    hovered, pressed = self._interactive_state(f"region:{token}", rect)
-    if downloaded:
-      subtitle, action, highlighted = tr("Downloaded on device"), tr("Downloaded"), True
-    else:
-      highlighted = self._controller._get_map_state(token)
-      subtitle, action = self._controller._region_primary_text(token), self._controller._region_action_text(token)
-    draw_settings_card_row(
-      rect, title=tr(region["label"]), subtitle=subtitle, action_text=action,
-      hovered=hovered, pressed=pressed, current=highlighted, grouped=True, is_last=is_last,
-      action_text_size=SETTINGS_ROW_VALUE_FONT_SIZE, action_height=REGION_ACTION_HEIGHT,
-      action_fill=with_alpha(AetherListColors.SUCCESS_SOFT, 60) if highlighted else None,
-      action_border=AetherListColors.SUCCESS if highlighted else None,
+    # 3. Pinned Master Section Header
+    header_y = seg_y + SEGMENTED_CONTROL_HEIGHT + SUBHEADER_GAP
+    draw_section_header(
+      rl.Rectangle(scroll_rect.x + BROWSER_INSET, header_y, content_width - BROWSER_INSET * 2, BROWSER_SECTION_HEADER_HEIGHT),
+      tr("Map Packages & Regions"),
+      trailing_text=self._controller._active_view_count_text(),
+      title_size=36,
+      trailing_size=24,
       style=PANEL_STYLE,
     )
 
+  def _draw_scroll_content(self, scroll_rect: rl.Rectangle, content_width: float):
+    rows_top_y = scroll_rect.y + FIXED_HEADER_HEIGHT
+    rows_visible_h = max(100.0, scroll_rect.height - FIXED_HEADER_HEIGHT)
+    rows_scissor_rect = rl.Rectangle(scroll_rect.x, rows_top_y, content_width, rows_visible_h)
+
+    aether_begin_scissor_mode(
+      int(rows_scissor_rect.x),
+      int(rows_scissor_rect.y),
+      int(rows_scissor_rect.width),
+      int(rows_scissor_rect.height),
+    )
+
+    downloaded, downloadable = self._controller._browse_regions_for_active_view()
+    if not downloaded and not downloadable:
+      title, body = self._controller._browse_empty_state()
+      draw_empty_state_card(
+        rl.Rectangle(scroll_rect.x + BROWSER_INSET, rows_top_y + self._scroll_offset, content_width - BROWSER_INSET * 2, BROWSER_EMPTY_STATE_HEIGHT),
+        title,
+        body,
+        title_size=32,
+        body_size=24,
+        border=with_alpha(PANEL_STYLE.surface_border, 10),
+        style=PANEL_STYLE,
+      )
+      aether_end_scissor_mode()
+      return
+
+    y = rows_top_y + self._scroll_offset
+
+    # ── TOP SECTION: Downloaded / Installed Maps ──
+    if downloaded:
+      for index, region in enumerate(downloaded):
+        token = region["token"]
+        row_rect = rl.Rectangle(scroll_rect.x + BROWSER_INSET, y, content_width - BROWSER_INSET * 2, BROWSER_REGION_ROW_HEIGHT)
+        target_id = f"region:{token}"
+        hovered, pressed = self._interactive_state(target_id, row_rect, pad_y=0)
+
+        draw_selection_list_row(
+          row_rect,
+          title=tr(region["label"]),
+          subtitle=tr("Downloaded on device"),
+          action_text=tr("Downloaded"),
+          current=True,
+          hovered=hovered,
+          pressed=pressed,
+          is_last=index == len(downloaded) - 1 and not downloadable,
+          action_width=164,
+          action_pill=True,
+          action_text_size=26,
+          action_pill_height=56,
+          action_pill_width=154,
+          row_separator=PANEL_STYLE.divider_color,
+          current_bg=PANEL_STYLE.current_fill,
+          current_border=PANEL_STYLE.current_border,
+          action_fill=with_alpha(AetherListColors.SUCCESS_SOFT, 36),
+          action_border=with_alpha(AetherListColors.SUCCESS, 60),
+          action_text_color=AetherListColors.HEADER,
+        )
+        y += BROWSER_REGION_ROW_HEIGHT
+
+      # ── THIN DIVIDER LINE + SECTION HEADER: Separating Downloaded from Downloadable ──
+      if downloadable:
+        y += 8.0
+        draw_section_header(
+          rl.Rectangle(scroll_rect.x + BROWSER_INSET, y, content_width - BROWSER_INSET * 2, BROWSER_SECTION_HEADER_HEIGHT),
+          tr("Available for Download"),
+          trailing_text=tr("{} available").format(len(downloadable)),
+          title_size=30,
+          trailing_size=22,
+          style=PANEL_STYLE,
+        )
+        y += BROWSER_SECTION_HEADER_HEIGHT + 8.0
+
+    # ── BOTTOM SECTION: Available / Downloadable Maps ──
+    for index, region in enumerate(downloadable):
+      token = region["token"]
+      selected = self._controller._get_map_state(token)
+      row_rect = rl.Rectangle(scroll_rect.x + BROWSER_INSET, y, content_width - BROWSER_INSET * 2, BROWSER_REGION_ROW_HEIGHT)
+      target_id = f"region:{token}"
+      hovered, pressed = self._interactive_state(target_id, row_rect, pad_y=0)
+
+      action_text = self._controller._region_action_text(token)
+      draw_selection_list_row(
+        row_rect,
+        title=tr(region["label"]),
+        subtitle=self._controller._region_primary_text(token),
+        action_text=action_text,
+        current=selected,
+        hovered=hovered,
+        pressed=pressed,
+        is_last=index == len(downloadable) - 1,
+        action_width=164,
+        action_pill=True,
+        action_text_size=26,
+        action_pill_height=56,
+        action_pill_width=154 if selected else 128,
+        row_separator=PANEL_STYLE.divider_color,
+        current_bg=PANEL_STYLE.current_fill,
+        current_border=PANEL_STYLE.current_border,
+        action_fill=with_alpha(AetherListColors.SUCCESS_SOFT, 24) if selected else rl.Color(255, 255, 255, 8),
+        action_border=with_alpha(AetherListColors.SUCCESS, 48) if selected else rl.Color(255, 255, 255, 20),
+        action_text_color=AetherListColors.HEADER,
+      )
+      y += BROWSER_REGION_ROW_HEIGHT
+
+    aether_end_scissor_mode()
+
+    if self._content_height > rows_visible_h:
+      self._scrollbar.render(rows_scissor_rect, self._content_height, self._scroll_offset)
+
   def _draw_status_card(self, rect: rl.Rectangle):
     draw_list_group_shell(rect, style=PANEL_STYLE)
-    inset = AS.SETTINGS_CARD_INSET
-    gap = STATUS_BUTTON_GAP
-    actions_w = min(STATUS_ACTIONS_MAX_WIDTH, rect.width * 0.42)
+
+    inset = 24.0
+    actions_w = min(400.0, max(320.0, rect.width * 0.36))
     actions_x = rect.x + rect.width - inset - actions_w
     content_x = rect.x + inset
-    summary_w = max(240.0, actions_x - AS.SETTINGS_CONTROL_GAP - content_x)
+    summary_w = max(240.0, actions_x - 20.0 - content_x)
 
-    # Left: status title and description (row typography), then the storage strip along the bottom.
-    # Pinned to the card's top inset, level with the Download button, rather than centered in the
-    # space above the storage strip (which left a gap above a short description).
-    y = rect.y + inset
-    draw_text_fit_common(gui_app.font(FontWeight.SEMI_BOLD), self._controller._progress_title(),
-                         rl.Vector2(content_x, y), summary_w, SETTINGS_ROW_TITLE_FONT_SIZE, color=AetherListColors.HEADER)
-    y += SETTINGS_ROW_TITLE_FONT_SIZE * FONT_SCALE + AS.SETTINGS_TEXT_GAP
-    body_font = gui_app.font(FontWeight.NORMAL)
-    for line in wrap_subtitle(body_font, self._controller._progress_body().replace("\n", " "), summary_w,
-                              SETTINGS_ROW_SUBTITLE_FONT_SIZE):
-      draw_text_fit_common(body_font, line, rl.Vector2(content_x, y), summary_w, SETTINGS_ROW_SUBTITLE_FONT_SIZE,
-                           color=AetherListColors.SUBTEXT)
-      y += SETTINGS_ROW_SUBTITLE_FONT_SIZE * FONT_SCALE + 2
+    # Title (32pt Bold)
+    title_text = self._controller._progress_title()
+    gui_label(rl.Rectangle(content_x, rect.y + 18, summary_w, 34), title_text, 32, AetherListColors.HEADER, FontWeight.SEMI_BOLD)
+
+    # Selection Summary Badge next to title if selected (24pt, height 38)
+    if self._controller._selected_count() > 0:
+      chip_text = self._controller._selected_summary_text()
+      title_measured_w = measure_text_cached(gui_app.font(FontWeight.SEMI_BOLD), title_text, 32, spacing=1).x
+      chip_width = measure_text_cached(gui_app.font(FontWeight.SEMI_BOLD), chip_text, 22, spacing=1).x + 30.0
+      chip_x = content_x + title_measured_w + 16.0
+      if chip_x + chip_width <= content_x + summary_w:
+        draw_action_pill(
+          rl.Rectangle(chip_x, rect.y + 16, chip_width, 38),
+          chip_text,
+          with_alpha(AetherListColors.SUCCESS_SOFT, 30),
+          AetherListColors.SUCCESS_SOFT,
+          AetherListColors.HEADER,
+          font_size=24,
+        )
+
+    # Subtitle / Body Progress Description (26pt)
+    gui_text_box(
+      rl.Rectangle(content_x, rect.y + 58, summary_w, 68),
+      self._controller._progress_body(),
+      26,
+      AetherListColors.SUBTEXT,
+      font_weight=FontWeight.NORMAL,
+      line_scale=0.95,
+    )
+
+    # Telemetry Strip (Storage & Last Updated — Label 24pt, Value 32pt, value_top_offset=30 for zero overlap)
     metrics = [
-      (tr("Selected"), self._controller._selected_summary_text()),
       (tr("Storage"), self._controller._storage_text),
       (tr("Last Updated"), self._controller._last_updated_text()),
     ]
-    # Centered on the Auto/Remove button row beside it, so labels and values read as one line with it.
-    metrics_block_h = STATUS_METRICS_VALUE_OFFSET + SETTINGS_ROW_VALUE_FONT_SIZE * FONT_SCALE
-    button_row_center = rect.y + inset + AS.MIN_TOUCH + gap + AS.MIN_TOUCH / 2
     draw_metric_strip(
-      rl.Rectangle(content_x, button_row_center - metrics_block_h / 2, summary_w, STATUS_METRICS_HEIGHT),
-      metrics, gap=36, min_col_width=140.0, label_size=SETTINGS_ROW_SUBTITLE_FONT_SIZE,
-      value_size=SETTINGS_ROW_VALUE_FONT_SIZE, style=PANEL_STYLE, value_top_offset=STATUS_METRICS_VALUE_OFFSET,
-      divider_bottom_offset=42,
+      rl.Rectangle(content_x, rect.y + 128, summary_w, 72),
+      metrics,
+      gap=36.0,
+      min_col_width=140.0,
+      label_size=24,
+      value_size=32,
+      style=PANEL_STYLE,
+      label_top_offset=0,
+      value_top_offset=30,
+      divider_top_offset=4,
+      divider_bottom_offset=54,
     )
 
-    # Right: the same 112 px AetherButtons used in page headers (Reset All, Maintenance).
-    button_h = AS.MIN_TOUCH
-    primary_rect = rl.Rectangle(actions_x, rect.y + inset, actions_w, button_h)
-    half_w = (actions_w - gap) / 2
-    second_y = primary_rect.y + button_h + gap
-    for button, button_rect in (
-      (self._controller._download_button, primary_rect),
-      (self._controller._schedule_button, rl.Rectangle(actions_x, second_y, half_w, button_h)),
-      (self._controller._remove_button, rl.Rectangle(actions_x + half_w + gap, second_y, half_w, button_h)),
-    ):
-      self._bind_scroll_widget(button)
-      button.render(button_rect)
+    # Action Column
+    primary_h = 84.0
+    primary_rect = rl.Rectangle(actions_x, rect.y + 20, actions_w, primary_h)
+    self._controller._download_button.render(primary_rect)
 
     if self._controller._download_state.active:
-      center = rl.Vector2(primary_rect.x + primary_rect.width - inset, primary_rect.y + primary_rect.height / 2)
+      center = rl.Vector2(primary_rect.x + primary_rect.width - 28, primary_rect.y + primary_rect.height / 2)
       draw_busy_ring(center, rl.get_time() * 160, PANEL_STYLE.accent, inner_radius=10, outer_radius=14, sweep=210, thickness=20)
 
+    # Bottom Row Actions: Schedule Button & Remove Maps Pill (64px height)
+    bottom_y = rect.y + 116.0
+    bottom_h = 64.0
+    col_gap = 10.0
+    sched_w = (actions_w - col_gap) * 0.58
+    remove_w = (actions_w - col_gap) * 0.42
+
+    sched_rect = rl.Rectangle(actions_x, bottom_y, sched_w, bottom_h)
+    self._controller._schedule_button.render(sched_rect)
+
+    self._remove_rect = rl.Rectangle(actions_x + sched_w + col_gap, bottom_y, remove_w, bottom_h)
+    enabled = self._controller._remove_enabled()
+    hovered, pressed = self._interactive_state("action:remove_maps", self._remove_rect, pad_y=4)
+
+    remove_bg = with_alpha(AetherListColors.DANGER_SOFT, 36 if (pressed or hovered) else (24 if enabled else 12))
+    remove_border = with_alpha(AetherListColors.DANGER, 90 if (pressed or hovered) else (56 if enabled else 24))
+    draw_action_pill(
+      self._remove_rect,
+      tr("Remove"),
+      remove_bg,
+      remove_border,
+      AetherListColors.HEADER if enabled else AetherListColors.MUTED,
+      font_size=26,
+    )
+
   def _activate_target(self, target_id: str | None):
-    if target_id and target_id.startswith("region:"):
+    if not target_id:
+      return
+    if target_id == "action:remove_maps":
+      self._controller._on_remove()
+      return
+    if target_id.startswith("region:"):
       self._controller._toggle_region(target_id.split(":", 1)[1])
 
 
@@ -342,16 +455,7 @@ class StarPilotMapsLayout(_SettingsPage):
         self._schedule_action_label,
         self._on_schedule,
         emphasized=False,
-      )
-    )
-    # Enabled whenever maps exist and no download is running; _on_remove explains when the car must be parked
-    # and asks for confirmation before deleting.
-    self._remove_button = self._child(
-      AetherButton(
-        tr("Remove"),
-        self._on_remove,
-        enabled=lambda: self._has_downloaded_data and not self._download_in_flight() and not self._is_visually_cancelling(),
-        neutral=True,
+        font_size=26,
       )
     )
 
@@ -704,8 +808,7 @@ class StarPilotMapsLayout(_SettingsPage):
         if selected_value is not None:
           self._params.put_int("PreferredSchedule", selected_value)
 
-    dialog = MultiOptionDialog(tr("Auto Update Schedule"), options, current, callback=on_select,
-                               subtitle=tr("Choose how often to update downloaded offline maps."))
+    dialog = MultiOptionDialog(tr("Auto Update Schedule"), options, current, callback=on_select)
     gui_app.push_widget(dialog)
 
   def _on_download(self):

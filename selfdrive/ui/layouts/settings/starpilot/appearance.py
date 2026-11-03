@@ -9,7 +9,6 @@ from openpilot.system.ui.widgets import DialogResult
 from openpilot.system.ui.widgets.option_dialog import MultiOptionDialog
 
 from openpilot.selfdrive.ui.lib.starpilot_state import starpilot_state
-from openpilot.selfdrive.ui.onroad.starpilot.turn_signals import FRAME_PATTERN as SIGNAL_FRAME_PATTERN
 from openpilot.selfdrive.ui.layouts.settings.starpilot.panel import _SettingsPage
 from openpilot.selfdrive.ui.layouts.settings.starpilot.aethergrid import (
     AetherSliderDialog,
@@ -21,8 +20,6 @@ from openpilot.selfdrive.ui.layouts.settings.starpilot.aethergrid import (
     CardHubManagerView,
 )
 from openpilot.selfdrive.ui.layouts.settings.starpilot.simple_download_manager import SimpleDownloadManager
-from openpilot.selfdrive.ui.layouts.settings.starpilot.choice_dialog import AetherChoiceDialog, PreviewChoice
-from openpilot.selfdrive.ui.layouts.settings.starpilot.signal_preview import SignalPreview, SIGNAL_PICKER_ORDER
 from openpilot.starpilot.assets.theme_manager import ThemeManager
 from openpilot.starpilot.common.starpilot_variables import THEME_SAVE_PATH, get_starpilot_toggles
 
@@ -32,12 +29,6 @@ THEME_KEY_CONFIG = {
     "BootLogo": {
         "default": "starpilot",
         "extra": [],
-    },
-    "SignalAnimation": {
-        "default": "stock",
-        "extra": [("stock", "None"), ("frog", "Frog"), ("pouncing_cat", "Pouncing Cat"),
-                  ("shooting_star", "Shooting Star"), ("sequential", "Sequential"), ("flow", "Flow"),
-                  ("open_flow", "Open Flow"), ("glide", "Glide"), ("bouncing_ball", "Bouncing Ball")],
     },
 }
 
@@ -151,7 +142,6 @@ class StarPilotAppearanceLayout(_SettingsPage):
             subtitle=subtitle,
             get_state=lambda k=key: self._params.get_bool(k),
             set_state=lambda s, k=key: self._params.put_bool(k, s),
-            preview_on=lambda k=key: self._params.assume(k, True),
         )
 
     def _show_lead_detection_threshold_selector(self):
@@ -165,7 +155,6 @@ class StarPilotAppearanceLayout(_SettingsPage):
                 float(self._params.get_int("LeadDetectionThreshold", return_default=True, default=35)),
                 on_close,
                 presets=[25.0, 50.0, 75.0, 100.0],
-                subtitle=tr("Minimum confidence required to display a detected lead vehicle."),
                 unit="%",
                 color=PANEL_STYLE.accent,
             )
@@ -263,18 +252,6 @@ class StarPilotAppearanceLayout(_SettingsPage):
 
         # ═══ 2. Driving Widgets & HUD ═══
         self._hud_rows = [
-            SettingRow("SignalAnimation", "value", tr_noop("Turn Signal Animation"),
-                       subtitle=tr_noop("Animation beside the speed when signalling"),
-                       get_value=lambda: self._get_theme_value("SignalAnimation"),
-                       on_click=lambda: self._show_theme_selector("SignalAnimation")),
-            SettingRow("SpeedAtBottom", "toggle", tr_noop("Speed at Bottom"),
-                       subtitle=tr_noop("Show the current speed and the turn-signal indicators beside it at the bottom of the screen, just above the torque bar."),
-                       get_state=lambda: self._params.get_bool("SpeedAtBottom"),
-                       set_state=lambda s: self._params.put_bool("SpeedAtBottom", s)),
-            SettingRow("HolidayThemes", "toggle", tr_noop("Holiday Themes"),
-                       subtitle=tr_noop("Automatically use seasonal themes during holidays. Turn off to keep your chosen theme year-round."),
-                       get_state=lambda: self._params.get_bool("HolidayThemes"),
-                       set_state=lambda s: self._params.put_bool("HolidayThemes", s)),
             SettingRow("Compass", "toggle", tr_noop("Compass"),
                        subtitle="",
                        get_state=lambda: self._params.get_bool("Compass"),
@@ -593,26 +570,16 @@ class StarPilotAppearanceLayout(_SettingsPage):
     def _build_theme_options(self, key: str) -> tuple[list[str], dict[str, str], str]:
         config = THEME_KEY_CONFIG[key]
         options_map = {display: slug for slug, display in config["extra"]}
-        if key == "SignalAnimation" and (THEME_SAVE_PATH / "theme_packs").is_dir():
-            for theme in sorted((THEME_SAVE_PATH / "theme_packs").iterdir()):
-                if any(SIGNAL_FRAME_PATTERN.fullmatch(path.name) and path.is_file() for path in (theme / "signals").glob("*")):
-                    options_map[_theme_display_name(theme.name)] = theme.name
         current_slug = self._params.get(key, encoding='utf-8') or config["default"]
-        current_display = next((display for display, slug in options_map.items() if slug == current_slug), _theme_display_name(current_slug))
+        current_display = _theme_display_name(current_slug)
         if current_display not in options_map:
-            if key == "SignalAnimation":
-                current_display = "None"
-            else:
-                options_map[current_display] = current_slug
+            options_map[current_display] = current_slug
         options = sorted(options_map.keys(), key=str.casefold)
         return options, options_map, current_display
 
     def _get_theme_value(self, key: str) -> str:
-        if key == "SignalAnimation" and not self._params.get_bool("CustomThemes"):
-            return tr("None")
         default = THEME_KEY_CONFIG[key]["default"]
-        slug = self._params.get(key, encoding='utf-8') or default
-        return next((display for value, display in THEME_KEY_CONFIG[key]["extra"] if value == slug), _theme_display_name(slug))
+        return _theme_display_name(self._params.get(key, encoding='utf-8') or default)
 
     def _show_theme_selector(self, key):
         themes, option_map, current = self._build_theme_options(key)
@@ -626,24 +593,7 @@ class StarPilotAppearanceLayout(_SettingsPage):
                     return
                 self._params.put(key, selected_slug)
 
-                if key == "SignalAnimation" and selected_slug not in ("stock", "none"):
-                    self._params.put_bool("RandomThemes", False)
-                    self._params.put_bool("CustomThemes", True)
-
-        title = tr({"SignalAnimation": "Turn Signal Animation", "BootLogo": "Boot Logo"}.get(key, key))
-        if key == "SignalAnimation":
-            order = {slug: index for index, slug in enumerate(SIGNAL_PICKER_ORDER)}
-            themes = sorted(themes, key=lambda display: (order.get(option_map[display], len(order)), display.casefold()))
-            choices = []
-            for display in themes:
-                slug = option_map[display]
-                preview = SignalPreview(slug, THEME_SAVE_PATH) if slug not in ("stock", "none") else None
-                choices.append(PreviewChoice(display, tr(display), preview, preview.close if preview else None))
-            if not self._params.get_bool("CustomThemes"):
-                current = "None"
-            dialog = AetherChoiceDialog(title, choices, current, subtitle=tr("Plays beside the speed while a blinker is on"), callback=on_select)
-        else:
-            dialog = MultiOptionDialog(title, themes, current, callback=on_select, subtitle=tr("Choose the image shown when the device starts."))
+        dialog = MultiOptionDialog(tr(key), themes, current, callback=on_select)
         gui_app.push_widget(dialog)
 
     # ── Widget helpers ──
@@ -663,8 +613,7 @@ class StarPilotAppearanceLayout(_SettingsPage):
                 idx = CAMERA_VIEWS.index(dialog.selection)
                 self._params.put_int("CameraView", idx)
 
-        dialog = MultiOptionDialog(tr("Camera View"), CAMERA_VIEWS, CAMERA_VIEWS[current], callback=on_select,
-                                   subtitle=tr("Choose the camera view shown on the driving screen."))
+        dialog = MultiOptionDialog(tr("Camera View"), CAMERA_VIEWS, CAMERA_VIEWS[current], callback=on_select)
         gui_app.push_widget(dialog)
 
     # ── Color selectors ──
@@ -685,9 +634,7 @@ class StarPilotAppearanceLayout(_SettingsPage):
                 else:
                     self._params.put(key, dialog.selection)
 
-        title, description = self._selection_details(key)
-        dialog = MultiOptionDialog(title, COLOR_PRESETS, current, callback=on_select,
-                                   subtitle=description or tr("Choose a color, or use the stock appearance."))
+        dialog = MultiOptionDialog(tr(key), COLOR_PRESETS, current, callback=on_select)
         gui_app.push_widget(dialog)
 
     # ── Numeric sliders (int / float) ──
@@ -696,9 +643,8 @@ class StarPilotAppearanceLayout(_SettingsPage):
         def on_close(res, val):
             if res == DialogResult.CONFIRM:
                 self._params.put_int(key, int(val))
-        title, description = self._selection_details(key)
-        gui_app.push_widget(AetherSliderDialog(title, min_v, max_v, 1, self._params.get_int(key), on_close,
-                                                 unit=unit, color=PANEL_STYLE.accent, subtitle=description))
+        gui_app.push_widget(AetherSliderDialog(tr(key), min_v, max_v, 1, self._params.get_int(key), on_close,
+                                                 unit=unit, color=PANEL_STYLE.accent))
 
     def _show_float_selector(self, key, min_v, max_v, step, unit="", convert=None, unconvert=None):
         current = self._params.get_float(key)
@@ -712,9 +658,8 @@ class StarPilotAppearanceLayout(_SettingsPage):
                     v = unconvert(v)
                 self._params.put_float(key, v)
 
-        title, description = self._selection_details(key)
-        gui_app.push_widget(AetherSliderDialog(title, min_v, max_v, step, current, on_close,
-                                                 unit=unit, color=PANEL_STYLE.accent, subtitle=description))
+        gui_app.push_widget(AetherSliderDialog(tr(key), min_v, max_v, step, current, on_close,
+                                                 unit=unit, color=PANEL_STYLE.accent))
 
     # ── Unit-aware display helpers ──
 
@@ -777,8 +722,7 @@ class StarPilotAppearanceLayout(_SettingsPage):
                     self._params.remove("StartupMessageTop")
                     self._params.remove("StartupMessageBottom")
 
-        dialog = MultiOptionDialog(tr("Startup Alert"), options, current, callback=on_select,
-                                   subtitle=tr("Choose the message displayed when a drive starts."))
+        dialog = MultiOptionDialog(tr("Startup Alert"), options, current, callback=on_select)
         gui_app.push_widget(dialog)
 
     # ── Developer sidebar metric selectors ──
@@ -797,8 +741,7 @@ class StarPilotAppearanceLayout(_SettingsPage):
                 )
                 self._params.put_int(key, selected_int)
 
-        dialog = MultiOptionDialog(tr("Metric #{}").format(idx), options, current_display, callback=on_select,
-                                   subtitle=tr("Choose the information shown in this developer sidebar slot."))
+        dialog = MultiOptionDialog(tr(f"Metric #{idx}"), options, current_display, callback=on_select)
         gui_app.push_widget(dialog)
 
     def _get_developer_sidebar_metric_display(self, idx: int) -> str:

@@ -8,15 +8,22 @@ import stubs
 stubs.install()
 
 import pyray as rl
-from openpilot.system.ui.lib.application import gui_app, MouseEvent, MousePos
 
 W, H = 2160, 1080
 
 
 def open_window():
+  os.environ["SCALE"] = "1"   # captures always use device pixels; do not open an auto-scale query window
   rl.set_trace_log_level(rl.TraceLogLevel.LOG_ERROR)
   rl.set_config_flags(rl.ConfigFlags.FLAG_MSAA_4X_HINT)
   rl.init_window(W, H, "snap")
+  load_application()
+
+
+def load_application():
+  # On macOS, install the app's logging callback after Cocoa/GL have initialized.
+  global gui_app, MouseEvent, MousePos
+  from openpilot.system.ui.lib.application import gui_app, MouseEvent, MousePos
   gui_app._load_fonts()
   gui_app._patch_text_functions()
   from openpilot.selfdrive.ui.tandem.fonts import prepare_fallback
@@ -33,6 +40,8 @@ def frame(draw, events=()):
 
 def save(path):
   img = rl.load_image_from_screen()
+  if (img.width, img.height) != (W, H):
+    rl.image_resize(img, W, H)
   rl.export_image(img, path)
   rl.unload_image(img)
 

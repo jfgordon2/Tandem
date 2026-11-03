@@ -7,4 +7,5 @@ def tandem_prefs(tmp_path, monkeypatch):
   folder = tmp_path / "prefs"
   folder.mkdir()
   monkeypatch.setenv("TANDEM_PREFS_DIR", str(folder))
+  monkeypatch.setenv("TANDEM_STATE_DIR", str(tmp_path / "state"))
   return folder

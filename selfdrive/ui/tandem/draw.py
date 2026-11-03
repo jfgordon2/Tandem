@@ -115,13 +115,18 @@ class _OwnFont:
   depth = 0   # nesting-safe: the flag goes back to off only when the outermost use ends
 
   def __enter__(self):
+    if not _OwnFont.depth:
+      self._previous_font = application.KEEP_FONT
+      self._previous_shapers = application.TEXT_SHAPERS[:]
+      application.TEXT_SHAPERS.extend(shape for shape in (arabic.shape, thai.shape) if shape not in application.TEXT_SHAPERS)
     _OwnFont.depth += 1
     application.KEEP_FONT = True
 
   def __exit__(self, *_):
     _OwnFont.depth -= 1
     if not _OwnFont.depth:
-      application.KEEP_FONT = False
+      application.KEEP_FONT = self._previous_font
+      application.TEXT_SHAPERS[:] = self._previous_shapers
 
 
 _own_font = _OwnFont()

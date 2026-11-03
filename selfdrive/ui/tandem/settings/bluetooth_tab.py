@@ -506,10 +506,12 @@ class UpstreamWheel:
     self._wc.start_learning(slot, self._memory, self._params)
 
   def cancel_learning(self) -> None:
-    self._wc.cancel_learning(self._memory, self._params)
+    from openpilot.starpilot.tandem.wheel import cancel_learning
+    cancel_learning(self._memory, self._params)
 
   def start_testing(self) -> None:
-    self._wc.start_testing(self._memory, self._params)
+    from openpilot.starpilot.tandem.wheel import start_testing
+    start_testing(self._memory, self._params)
 
   def stop_testing(self) -> None:
     self._wc.stop_testing(self._memory)

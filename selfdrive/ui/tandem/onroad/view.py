@@ -24,7 +24,6 @@ from openpilot.common.constants import CV
 from openpilot.common.params import Params
 from openpilot.selfdrive.ui.onroad.alert_renderer import AlertRenderer
 from openpilot.selfdrive.ui.onroad.augmented_road_view import CAMERA_VIEW_DRIVER
-from openpilot.selfdrive.ui.lib.starpilot_visuals import get_border_roundness
 from openpilot.selfdrive.ui.onroad.starpilot import starpilot_border, starpilot_onroad_view
 from openpilot.selfdrive.ui.onroad.starpilot.compass import get_compass_text
 from openpilot.selfdrive.ui.tandem.onroad.streets import short_street, short_streets_in
@@ -138,6 +137,8 @@ class _NoStoppedTimer:
 class EssentialsOnroadView(StarPilotOnroadView):
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
+    from openpilot.selfdrive.ui.tandem.onroad.turn_signals import TurnSignalRenderer
+    self._turn_signals = TurnSignalRenderer()
     zones = self.layout_manager.zones
     # StarPilot widgets Essentials replaces: the personality button, its driver monitor and steering wheel icons, and the
     # Aether Gauge (Conditional Experimental's "STOPPED"/"SLOW"/curve/light indicator), which the status chip says instead.
@@ -150,12 +151,11 @@ class EssentialsOnroadView(StarPilotOnroadView):
       widget.set_visible(False)
     self._model_chip = extras.ModelChip(self._model_source_widget)
     self.model_renderer._draw_radar_marker_texture = extras.draw_radar_marker   # white dots ringed in black
-    # StarPilot's curve glow keeps its timing and fade; Essentials draws it in our blue at every curve strength.
-    starpilot_border._glow_color = lambda intensity: T.ACCENT
-    starpilot_border._TRAINING = T.ACCENT
 
+    from openpilot.starpilot.tandem.state import HEADROOM
+    self._headroom_state = HEADROOM
     self._memory = Params(memory=True)
-    self._memory.put_nonblocking("SteeringHeadroomWarning", 0.0)
+    self._headroom_state.write(0.0)
     self._chips = ChipStack()
     self._forecast = shared_service()   # the parked screen shows the same forecast
     self._announcer = Announcer()
@@ -203,7 +203,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
     sm = ui_state.sm
     car = sm["carState"] if sm.valid.get("carState", False) and sm.recv_frame["carState"] >= ui_state.started_frame else None
     left, right = (bool(car.leftBlinker), bool(car.rightBlinker)) if car is not None else (False, False)
-    draw_speed(rect, self._hud_renderer.speed, "km/h" if ui_state.is_metric else "mph", self._hud_renderer.speed_offset_y,
+    draw_speed(rect, self._hud_renderer.speed, "km/h" if ui_state.is_metric else "mph", 0.0,
                left, right, time.monotonic())
 
   def _render_turn_signals(self) -> None:
@@ -219,6 +219,15 @@ class EssentialsOnroadView(StarPilotOnroadView):
                                 bottom_margin=BAR_HEIGHT + BAR_MARGIN + extras.SIGNAL_GAP)
     finally:
       rl.end_scissor_mode()
+
+  def close(self) -> None:
+    if (signals := getattr(self, "_turn_signals", None)) is not None:
+      signals.close()
+    super().close()
+
+  def _get_border_width(self) -> int:
+    from openpilot.selfdrive.ui.lib.starpilot_visuals import get_border_width
+    return get_border_width(T.px(8), ui_state.ui_params)
 
   def _render_speed_card(self):
     """The posted limit StarPilot's speed card would show, as the mock's sign; hidden while the new-limit card asks."""
@@ -366,10 +375,10 @@ class EssentialsOnroadView(StarPilotOnroadView):
     warning = active and (stage == AT_LIMIT or alerts.steer_limit_alert(sm)) and clear
     self.model_renderer.lane_line_color_override = LIMIT_LANE_COLOR if warning else None
     if warning and not self._headroom_chimed:
-      self._memory.put_nonblocking("SteeringHeadroomWarning", now)
+      self._headroom_state.write(now)
       self._headroom_chimed = True
     elif self._headroom_warning and not warning:
-      self._memory.put_nonblocking("SteeringHeadroomWarning", 0.0)
+      self._headroom_state.write(0.0)
     if not warning:
       self._headroom_chimed = False   # one chime per warning
     self._headroom_warning = warning
@@ -386,7 +395,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
     self._arc_state = ArcState()
     self._headroom_warning = self._headroom_chimed = False
     self.model_renderer.lane_line_color_override = None
-    self._memory.put_nonblocking("SteeringHeadroomWarning", 0.0)
+    self._headroom_state.write(0.0)
     super().hide_event()
 
   # Our layers
@@ -394,6 +403,10 @@ class EssentialsOnroadView(StarPilotOnroadView):
   def _render(self, rect: rl.Rectangle):
     self._layers_visible = False   # set again by _render_layers, from _draw_border, on frames that draw the view
     super()._render(rect)
+    if ui_state.started and self._draw_hud_controls:
+      self._render_turn_signals()
+    else:
+      self._turn_signals.render(self._content_rect, ui_state, enabled=False)
     self._render_driver_monitor()
 
   def _draw_border(self, rect: rl.Rectangle):
@@ -407,7 +420,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
     border_width = self._get_border_width()
     rl.draw_rectangle_lines_ex(rect, border_width, rl.BLACK)
     border_rect = rl.Rectangle(rect.x + border_width, rect.y + border_width, rect.width - 2 * border_width, rect.height - 2 * border_width)
-    roundness = get_border_roundness(border_rect, border_width)
+    roundness = min(0.12, 4.5 * border_width / max(1.0, min(border_rect.width, border_rect.height)))
     rl.draw_rectangle_rounded_lines_ex(border_rect, roundness, 10, border_width, self._get_border_color())
     halves = self._border_halves()
     if halves is not None:
@@ -440,7 +453,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
         extras.draw_path_edges(mr._rect, mr._track_edge_vertices, mr._path.projected_points)
       extras.draw_lanes(mr._rect, self._lane_sides())
       self._render_stopping_point()
-    starpilot_onroad_view.render_behind(rect, self._get_border_width())
+    starpilot_border.render_behind(rect, self._get_border_width(), csc_color=T.ACCENT)
 
   def _lane_sides(self):
     """(polygon, kind) for each adjacent lane, under StarPilot's AdjacentPath and BlindSpotPath."""

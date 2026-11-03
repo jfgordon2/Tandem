@@ -478,7 +478,7 @@ def test_path_style_presets_round_trip():
 
 def test_turn_signal_whimsy_round_trip():
   from openpilot.selfdrive.ui.tandem.settings.display import SIGNAL_STYLES, Display
-  from openpilot.selfdrive.ui.onroad.starpilot.turn_signals import BUNDLED_SIGNAL_PATHS
+  from openpilot.selfdrive.ui.tandem.onroad.turn_signals import BUNDLED_SIGNAL_PATHS
   store, cache = _store({"SignalAnimation": "stock", "CustomThemes": False, "RandomThemes": True})
   display = Display(store)
   assert display.signal_style == 0 and display.signal_name() == "Standard"
@@ -922,7 +922,8 @@ def test_bluetooth_test_mode_suppresses_real_actions_only_while_the_page_is_show
   memory = FakeParams()
   wheel_controlsd.set_controller_action_slot(0, controller_actions.CONTROLLER_ACTION_BOOKMARK, "Save a clip", params)
   wheel_controlsd.upsert_mapping(source(), 164, wheel_controlsd.FAVORITE_SLOT_COUNT, params)
-  daemon = wheel_controlsd.WheelControlsDaemon(params, memory)
+  from openpilot.starpilot.tandem.wheel import daemon_type
+  daemon = daemon_type(wheel_controlsd.WheelControlsDaemon)(params, memory)
   wheel = UpstreamWheel.__new__(UpstreamWheel)
   wheel._params, wheel._memory = params, memory
   wheel._wc, wheel._ca = wheel_controlsd, controller_actions
@@ -1153,7 +1154,8 @@ def test_device_actions_ask_first_with_our_dialog():
 
 
 def test_bar_metrics_pick_up_to_five_in_catalog_order_and_reset_to_the_mock():
-  from openpilot.selfdrive.ui.tandem.onroad.developer import STRIP_DEFAULT, STRIP_PARAM
+  from openpilot.selfdrive.ui.tandem.onroad.developer import STRIP_DEFAULT
+  from openpilot.selfdrive.ui.tandem.prefs import DEVELOPER_STRIP
   from openpilot.selfdrive.ui.tandem.settings.tuner import Tuner
   store, cache = _store()
   tuner = Tuner(store)
@@ -1165,7 +1167,7 @@ def test_bar_metrics_pick_up_to_five_in_catalog_order_and_reset_to_the_mock():
   assert tuner.strip() == ["accel", "want", "lat", "delay", "steer"]
   for key in list(tuner.strip()):
     tuner.toggle_strip(key)
-  assert tuner.strip() == [] and cache.values[STRIP_PARAM] == "none"
+  assert tuner.strip() == [] and DEVELOPER_STRIP.get() == "none" and "DeveloperStripMetrics" not in cache.values
   tuner.reset_all()
   assert tuner.strip() == list(STRIP_DEFAULT)
 

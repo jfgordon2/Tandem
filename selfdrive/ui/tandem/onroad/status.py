@@ -299,12 +299,14 @@ def snapshot(ui_state, nav_active: bool = False, limits: LimitWatch | None = Non
                                       bool(plan.slcIsLimitingMaxSet), bool(plan.speedLimitChanged), float(plan.slcOverriddenSpeed),
                                       s.speed, now)
     s.slowing_for_lead = bool(plan.experimentalMode and plan.trackingLead and not s.red_light)
+    from openpilot.starpilot.tandem.navigation import read_turn
+    turn = read_turn(now)
     # A route or experimental mode alone does not mean the car is slowing for a turn.
     s.nav_turn = bool(
-      nav_active and plan.navTurnControllingSpeed and valid.get("carState", False)
+      nav_active and turn["active"] and valid.get("carState", False)
       and sm["carState"].aEgo < -0.1 and s.speed > max(float(plan.vCruise), 0.1)
     )
-    s.nav_turn_maneuver, s.nav_turn_modifier = str(plan.navTurnManeuver), str(plan.navTurnModifier)
+    s.nav_turn_maneuver, s.nav_turn_modifier = turn["maneuver"], turn["modifier"]
     if toggles.get("weather_presets"):
       s.weather, suffix = weather_group(int(plan.weatherId))
       s.weather_gap = bool(suffix and float(toggles.get(f"increase_following_distance_{suffix}", 0) or 0) > 0)

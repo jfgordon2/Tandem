@@ -10,9 +10,9 @@ from types import SimpleNamespace
 import pyray as rl
 import pytest
 
-from openpilot.selfdrive.ui.onroad.starpilot import turn_signals
+from openpilot.selfdrive.ui.tandem.onroad import turn_signals
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[4]
 
 
 @pytest.fixture
@@ -149,7 +149,11 @@ def _start_new_signal(scene):
 def test_signal_folder_is_scanned_on_pack_change_and_new_signals_only(scene, monkeypatch):
   scans = []
   original = turn_signals.TurnSignalRenderer._scan
-  monkeypatch.setattr(turn_signals.TurnSignalRenderer, "_scan", staticmethod(lambda d: (d == turn_signals.ACTIVE_SIGNALS_PATH and scans.append(d)) or original(d)))
+  def scan(directory):
+    if directory == turn_signals.ACTIVE_SIGNALS_PATH:
+      scans.append(directory)
+    return original(directory)
+  monkeypatch.setattr(turn_signals.TurnSignalRenderer, "_scan", staticmethod(scan))
   # (one check = one look at the active folder, plus the bundled fallback if needed)
   scene.car.leftBlinker = False
   scene.renderer.render(scene.rect, scene.state)  # drive start: initial load
@@ -329,17 +333,6 @@ VIEW_PATH = "selfdrive/ui/onroad/starpilot/starpilot_onroad_view.py"
 VIEW_METHODS = {"_render_turn_signals", "_update_alert_margin", "_speed_offset"}
 
 
-def _view_namespace(state):
-  """Module-level names the view methods use (constants are read from the real source)."""
-  tree = ast.parse((ROOT / VIEW_PATH).read_text())
-  namespace = dict(rl=rl, ui_state=state, AlertSize=SimpleNamespace(full=3), gui_app=SimpleNamespace(width=2160))
-  for node in tree.body:
-    if isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name) \
-       and node.targets[0].id.startswith(("HUD_SPEED_", "SPEED_", "TORQUE_BAR_")):
-      namespace[node.targets[0].id] = ast.literal_eval(node.value)
-  return namespace
-
-
 class Params:
   def __init__(self, **values):
     self.values = values
@@ -354,149 +347,6 @@ class Params:
     self.values[key] = value
 
   put_bool = put
-
-
-@pytest.mark.parametrize("saved", ["stock", "gif_only", "missing"])
-def test_comma3_picker_only_offers_packs_with_renderable_png_frames(tmp_path, saved):
-  packs = {
-    "gif_only": "turn_signal.gif",
-    "blindspot_only": "turn_signal_blindspot.png",
-    "unsupported_name": "turn_signal_bad.png",
-    "static": "turn_signal.png",
-    "sequence": "turn_signal_10.PNG",
-    "directory_only": "turn_signal_1.png",
-  }
-  for name, filename in packs.items():
-    directory = tmp_path / "theme_packs" / name / "signals"
-    directory.mkdir(parents=True)
-    if name == "directory_only":
-      (directory / filename).mkdir()
-    else:
-      (directory / filename).touch()
-  cls = _source_class("selfdrive/ui/layouts/settings/starpilot/appearance.py", "StarPilotAppearanceLayout",
-                      {"_build_theme_options"}, dict(
-                        THEME_KEY_CONFIG={"SignalAnimation": {"default": "stock", "extra": [("stock", "None"), ("frog", "Frog")]}},
-                        THEME_SAVE_PATH=tmp_path, SIGNAL_FRAME_PATTERN=turn_signals.FRAME_PATTERN, _theme_display_name=str.title))
-  layout = cls()
-  layout._params = Params(SignalAnimation=saved)
-  options, mapping, current = layout._build_theme_options("SignalAnimation")
-  assert options == ["Frog", "None", "Sequence", "Static"]
-  assert mapping == {"None": "stock", "Frog": "frog", "Static": "static", "Sequence": "sequence"}
-  assert current == "None"
-
-
-@pytest.mark.parametrize("custom_enabled", [False, True])
-@pytest.mark.parametrize("result", [0, 1])
-def test_comma3_selection_only_applies_on_confirmation_and_preserves_other_preferences(tmp_path, custom_enabled, result):
-  dialogs = []
-  config = {"SignalAnimation": {"default": "stock", "extra": [("stock", "None"), ("frog", "Frog")]}}
-  def dialog(_title, _themes, _current, callback, **_kwargs):
-    assert [choice[0] for choice in _themes] == ["None", "Frog"]
-    assert _current == "None"
-    return SimpleNamespace(selection="Frog", confirm=lambda: callback(result))
-  cls = _source_class("selfdrive/ui/layouts/settings/starpilot/appearance.py", "StarPilotAppearanceLayout",
-                      {"_build_theme_options", "_get_theme_value", "_show_theme_selector"},
-                      dict(THEME_KEY_CONFIG=config, THEME_SAVE_PATH=tmp_path, _theme_display_name=str.title, tr=str,
-                           MultiOptionDialog=dialog, AetherChoiceDialog=dialog,
-                           PreviewChoice=lambda *args: args,
-                           SignalPreview=lambda *_args: SimpleNamespace(close=lambda: None), SIGNAL_PICKER_ORDER=("stock", "frog"),
-                           DialogResult=SimpleNamespace(CONFIRM=1),
-                           gui_app=SimpleNamespace(push_widget=dialogs.append)))
-  layout = cls()
-  layout._params = Params(SignalAnimation="stock", CustomThemes=custom_enabled, RandomThemes=True, ColorScheme="saved_colors")
-  layout._show_theme_selector("SignalAnimation")
-  dialogs[0].confirm()
-  if result == 0:
-    assert layout._params.values == {"SignalAnimation": "stock", "CustomThemes": custom_enabled, "RandomThemes": True, "ColorScheme": "saved_colors"}
-    return
-  assert layout._params.values == {"SignalAnimation": "frog", "CustomThemes": True, "RandomThemes": False, "ColorScheme": "saved_colors"}
-  assert layout._get_theme_value("SignalAnimation") == "Frog"
-
-
-@pytest.mark.parametrize("custom_enabled", [False, True])
-def test_comma4_selection_disables_random_themes_and_preserves_other_preferences(custom_enabled):
-  dialogs, notifications = [], []
-  def dialog(**kwargs):
-    return SimpleNamespace(get_selected_option=lambda: "Frog", confirm=kwargs["right_btn_callback"])
-  cls = _source_class("selfdrive/ui/mici/layouts/settings/visuals.py", "TurnSignalAnimationBigButton",
-                      {"refresh", "_show_selector"},
-                      dict(BigMultiOptionDialog=dialog, gui_app=SimpleNamespace(push_widget=dialogs.append),
-                           update_starpilot_toggles=lambda: notifications.append(True)))
-  button = cls()
-  button._params = Params(SignalAnimation="stock", CustomThemes=custom_enabled, RandomThemes=True, IconPack="saved_icons")
-  labels = []
-  button.set_value = labels.append
-  button._show_selector()
-  dialogs[0].confirm()
-  assert button._params.values == {"SignalAnimation": "frog", "CustomThemes": True, "RandomThemes": False, "IconPack": "saved_icons"}
-  assert labels == ["frog"]
-  assert notifications == [True]
-  dialogs[0].get_selected_option = lambda: "None"
-  dialogs[0].confirm()
-  assert button._params.values["SignalAnimation"] == "stock"
-  assert labels[-1] == "none"
-
-
-@pytest.mark.parametrize("alert_size,expected_enabled,expected_margin", [(None, True, 0), (1, True, 200), (3, False, 0)])
-def test_comma3_integration_reserves_alert_space_and_clips(scene, monkeypatch, alert_size, expected_enabled, expected_margin):
-  calls, clipping = [], []
-  monkeypatch.setattr(rl, "begin_scissor_mode", lambda *_args: clipping.append("begin"))
-  monkeypatch.setattr(rl, "end_scissor_mode", lambda: clipping.append("end"))
-  cls = _source_class("selfdrive/ui/onroad/starpilot/starpilot_onroad_view.py", "StarPilotOnroadView",
-                      VIEW_METHODS, _view_namespace(scene.state))
-  view = cls()
-  view._content_rect = scene.rect
-  alert = None if alert_size is None else SimpleNamespace(size=alert_size)
-  view.alert_renderer = SimpleNamespace(will_render=lambda: (alert, False),
-                                        rect=rl.Rectangle(30, 30 + 1020 - expected_margin, 2100, expected_margin))
-  view._turn_signals = SimpleNamespace(render=lambda *args, **kwargs: calls.append(kwargs))
-  view._turn_signal_margin = SimpleNamespace(update=lambda target: target)
-  view._speed_offset_y = 0.0
-  view._update_alert_margin()
-  view._render_turn_signals()
-  assert calls == [dict(enabled=expected_enabled, bottom_margin=expected_margin, static_offset=0.0)]
-  assert clipping == ["begin", "end"]
-
-
-def test_comma3_frogs_ease_with_alerts_instead_of_snapping(scene, monkeypatch):
-  from openpilot.common.filter_simple import FirstOrderFilter
-  monkeypatch.setattr(rl, "begin_scissor_mode", lambda *_args: None)
-  monkeypatch.setattr(rl, "end_scissor_mode", lambda: None)
-  cls = _source_class("selfdrive/ui/onroad/starpilot/starpilot_onroad_view.py", "StarPilotOnroadView",
-                      VIEW_METHODS, _view_namespace(scene.state))
-  view = cls()
-  view._content_rect = scene.rect
-  margins = []
-  view._turn_signals = SimpleNamespace(render=lambda *args, **kwargs: margins.append(kwargs["bottom_margin"]))
-  view._turn_signal_margin = FirstOrderFilter(0.0, 0.1, 1 / 20)
-  view._speed_offset_y = 0.0
-  small = SimpleNamespace(size=1)
-  state = {"alert": None, "out": True}
-  view.alert_renderer = SimpleNamespace(will_render=lambda: (state["alert"], state["out"]),
-                                        rect=rl.Rectangle(30, 30 + 1020 - 271, 2100, 271))
-
-  def frames(count):
-    for _ in range(count):
-      view._update_alert_margin()
-      view._render_turn_signals()
-
-  frames(3)
-  assert margins == [0, 0, 0]
-  state.update(alert=small, out=False)  # lane-change alert appears mid-hop
-  frames(20)
-  rising = margins[3:]
-  assert 0 < rising[0] < 271 * 0.5
-  assert all(b >= a for a, b in zip(rising, rising[1:], strict=False))
-  assert rising[-1] == pytest.approx(271, abs=1)
-  state["out"] = True  # alert fading out: frogs settle back down smoothly
-  frames(20)
-  falling = margins[23:]
-  assert 271 * 0.5 < falling[0] < 271
-  assert all(b <= a for a, b in zip(falling, falling[1:], strict=False))
-  assert falling[-1] == pytest.approx(0, abs=1)
-  state.update(alert=SimpleNamespace(size=3), out=False)  # full alert: hidden, no baseline climb
-  frames(5)
-  assert margins[-1] == pytest.approx(0, abs=1)
 
 
 def _load_mici_alert_background_height():
@@ -521,78 +371,6 @@ MICI_ALERT_CASES = [
   (3, "", True, False, 240),
   (None, "", False, False, 0),
 ]
-
-
-@pytest.mark.parametrize("alert_size,alert_type,enabled,expected_enabled,margin", MICI_ALERT_CASES)
-def test_comma4_integration_reserves_alert_space(scene, alert_size, alert_type, enabled, expected_enabled, margin):
-  calls = []
-  cls = _source_class("selfdrive/ui/mici/onroad/augmented_road_view.py", "AugmentedRoadView",
-                      {"_render_turn_signals"}, dict(ui_state=scene.state, log=SimpleNamespace(
-                        SelfdriveState=SimpleNamespace(AlertSize=SimpleNamespace(full=3))),
-                        get_alert_background_height=_load_mici_alert_background_height()))
-  view = cls()
-  view._content_rect = rl.Rectangle(0, 0, 424, 240)
-  view._turn_signals = SimpleNamespace(render=lambda *args, **kwargs: calls.append(kwargs))
-  view._render_turn_signals(None if alert_size is None else SimpleNamespace(size=alert_size, alert_type=alert_type), enabled)
-  assert calls == [dict(enabled=expected_enabled, top_margin=margin)]
-
-
-@pytest.mark.parametrize("alert_size,alert_type,_enabled,_expected_enabled,margin", MICI_ALERT_CASES)
-def test_comma4_background_and_signal_margin_use_the_same_actual_event_layout(scene, monkeypatch,
-                                                                            alert_size, alert_type, _enabled, _expected_enabled, margin):
-  draws = []
-  monkeypatch.setattr(rl, "draw_rectangle", lambda *_args: draws.append(_args))
-  monkeypatch.setattr(rl, "draw_rectangle_gradient_v", lambda *_args: draws.append(_args))
-  cls = _source_class("selfdrive/ui/mici/onroad/alert_renderer.py", "AlertRenderer", {"_draw_background"},
-                      dict(rl=rl, Alert=object, ALERT_COLORS={0: rl.Color(0, 0, 0, 255)}, AlertStatus=SimpleNamespace(normal=0),
-                           get_alert_background_height=_load_mici_alert_background_height()))
-  renderer = cls()
-  renderer._rect = rl.Rectangle(0, 0, 424, 240)
-  renderer._alpha_filter = SimpleNamespace(x=1)
-  alert = None if alert_size is None else SimpleNamespace(size=alert_size, alert_type=alert_type, status=0)
-  if alert is None:
-    assert _load_mici_alert_background_height()(None, 240) == 0
-  else:
-    renderer._draw_background(alert)
-    assert sum(call[3] for call in draws) == margin
-
-
-def test_comma3_holiday_themes_row_reads_and_writes_the_setting():
-  tree = ast.parse((ROOT / "selfdrive/ui/layouts/settings/starpilot/appearance.py").read_text())
-  call = next(node for node in ast.walk(tree) if isinstance(node, ast.Call) and getattr(node.func, "id", None) == "SettingRow"
-              and node.args and isinstance(node.args[0], ast.Constant) and node.args[0].value == "HolidayThemes")
-  view = SimpleNamespace(_params=Params(HolidayThemes=True))
-  args, kwargs = eval(compile(ast.Expression(call), "appearance.py", "eval"),
-                      dict(SettingRow=lambda *a, **k: (a, k), tr_noop=str, self=view))
-  assert args[:3] == ("HolidayThemes", "toggle", "Holiday Themes")
-  assert "visible" not in kwargs  # shown even when driving-screen widgets are off
-  assert kwargs["get_state"]() is True
-  kwargs["set_state"](False)
-  assert view._params.values["HolidayThemes"] is False
-  assert kwargs["get_state"]() is False
-
-
-def test_comma4_holiday_themes_toggle_saves_and_refreshes_starpilot_toggles():
-  tree = ast.parse((ROOT / "selfdrive/ui/mici/layouts/settings/visuals.py").read_text())
-  cls = next(node for node in tree.body if isinstance(node, ast.ClassDef) and node.name == "StarPilotBigParamControl")
-  layout = next(node for node in tree.body if isinstance(node, ast.ClassDef) and node.name == "VisualsLayoutMici")
-  assert "StarPilotBigParamControl('holiday themes', 'HolidayThemes')" in ast.unparse(layout)
-  notifications = []
-
-  class BigParamControl:  # mirrors the real widget: flip, then save
-    def __init__(self, text, param):
-      self.param, self.params, self._checked = param, Params(HolidayThemes=True), True
-
-    def _handle_mouse_release(self, _pos):
-      self._checked = not self._checked
-      self.params.put_bool(self.param, self._checked)
-
-  namespace = dict(BigParamControl=BigParamControl,
-                   update_starpilot_toggles=lambda: notifications.append(dict(control.params.values)))
-  exec(compile(ast.Module(body=[cls], type_ignores=[]), "visuals.py", "exec"), namespace)
-  control = namespace["StarPilotBigParamControl"]("holiday themes", "HolidayThemes")
-  control._handle_mouse_release(None)
-  assert notifications == [{"HolidayThemes": False}]  # saved before StarPilot is told to refresh
 
 
 # Hopping animations use the frog's 350x500 frames; static indicators use a short
@@ -620,7 +398,7 @@ def _png_size(path):
 @pytest.mark.parametrize("pack", sorted(BUNDLED_LAYOUTS))
 def test_bundled_signal_packs_have_the_expected_layout(pack):
   marker, frames, size = BUNDLED_LAYOUTS[pack]
-  directory = turn_signals.ASSETS_PATH / f"signal_packs/{pack}/signals"
+  directory = ROOT / f"selfdrive/ui/tandem/assets/signal_packs/{pack}/signals"
   assert turn_signals.BUNDLED_SIGNAL_PATHS[pack] == directory
   names = sorted(path.name for path in directory.iterdir())
   assert names == sorted([marker, *(f"turn_signal_{i}.png" for i in range(1, frames + 1)), "turn_signal_blindspot.png"])
@@ -628,14 +406,6 @@ def test_bundled_signal_packs_have_the_expected_layout(pack):
     png_size, color_type = _png_size(directory / name)
     assert png_size == size
     assert color_type == 6  # RGBA: transparent background like the frog frames
-
-
-def test_every_bundled_pack_is_offered_on_both_devices():
-  appearance = (ROOT / "selfdrive/ui/layouts/settings/starpilot/appearance.py").read_text()
-  visuals = (ROOT / "selfdrive/ui/mici/layouts/settings/visuals.py").read_text()
-  for slug in turn_signals.BUNDLED_SIGNAL_PATHS:
-    assert f'("{slug}", ' in appearance
-    assert f': "{slug}"' in visuals
 
 
 @pytest.mark.parametrize("pack", ["frog", *sorted(BUNDLED_LAYOUTS)])
@@ -669,67 +439,17 @@ def test_switching_between_frog_and_cat_swaps_textures(scene):
   assert sorted(t.id for t in scene.unloaded) == sorted(t.id for t in frog_textures)
 
 
-def test_comma3_menu_offers_cat_once_whether_or_not_it_is_installed(tmp_path):
-  import re
-  tree = ast.parse((ROOT / "selfdrive/ui/layouts/settings/starpilot/appearance.py").read_text())
-  config = next(node for node in tree.body if isinstance(node, ast.Assign) and node.targets[0].id == "THEME_KEY_CONFIG")
-  display = next(node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == "_theme_display_name")
-  namespace = {"re": re}
-  exec(compile(ast.Module(body=[config, display], type_ignores=[]), "appearance.py", "exec"), namespace)
-  cls = _source_class("selfdrive/ui/layouts/settings/starpilot/appearance.py", "StarPilotAppearanceLayout",
-                      {"_build_theme_options", "_get_theme_value"},
-                      dict(namespace, THEME_SAVE_PATH=tmp_path, SIGNAL_FRAME_PATTERN=turn_signals.FRAME_PATTERN, tr=str))
-  layout = cls()
-  layout._params = Params(SignalAnimation="pouncing_cat", CustomThemes=True)
-  expected = ["Bouncing Ball", "Flow", "Frog", "Glide", "None", "Open Flow", "Pouncing Cat", "Sequential", "Shooting Star"]
-  assert layout._build_theme_options("SignalAnimation")[0] == expected
-  for pack in turn_signals.BUNDLED_SIGNAL_PATHS:  # after boot these are also installed theme packs
-    (tmp_path / f"theme_packs/{pack}/signals").mkdir(parents=True)
-    (tmp_path / f"theme_packs/{pack}/signals/turn_signal_1.png").touch()
-  options, mapping, current = layout._build_theme_options("SignalAnimation")
-  assert options == expected
-  assert mapping["Pouncing Cat"] == "pouncing_cat" and current == "Pouncing Cat"
-  assert mapping["Shooting Star"] == "shooting_star" and mapping["Sequential"] == "sequential"
-  assert mapping["Open Flow"] == "open_flow"
-  assert layout._get_theme_value("SignalAnimation") == "Pouncing Cat"
-
-
-def test_comma4_menu_offers_and_saves_the_cat():
-  dialogs = []
-  def dialog(**kwargs):
-    dialogs.append(kwargs)
-    return SimpleNamespace(get_selected_option=lambda: "Pouncing Cat", confirm=kwargs["right_btn_callback"])
-  cls = _source_class("selfdrive/ui/mici/layouts/settings/visuals.py", "TurnSignalAnimationBigButton",
-                      {"refresh", "_show_selector"},
-                      dict(BigMultiOptionDialog=dialog, gui_app=SimpleNamespace(push_widget=lambda d: None),
-                           update_starpilot_toggles=lambda: None))
-  button = cls()
-  button._params = Params(SignalAnimation="frog", CustomThemes=True)
-  labels = []
-  button.set_value = labels.append
-  button._show_selector()
-  assert dialogs[0]["options"] == ["None", "Sequential", "Flow", "Open Flow", "Glide", "Frog", "Pouncing Cat",
-                                   "Shooting Star", "Bouncing Ball"]
-  assert dialogs[0]["default"] == "Frog"
-  dialogs[0]["right_btn_callback"]()
-  assert button._params.values["SignalAnimation"] == "pouncing_cat"
-  assert labels == ["pouncing cat"]
-
-
 def test_shooting_star_trail_points_back_along_its_arc():
   """The star rises then falls; its trail must stream behind it (where it came from)."""
   import importlib.util
-  spec = importlib.util.spec_from_file_location("star", ROOT / "starpilot/tools/make_shooting_star_signals.py")
+  spec = importlib.util.spec_from_file_location("star", ROOT / "selfdrive/ui/tandem/tools/make_shooting_star_signals.py")
   star = importlib.util.module_from_spec(spec)
-  try:
-    spec.loader.exec_module(star)
-  except ModuleNotFoundError:
-    pytest.skip("cairosvg is a dev-only dependency of the drawing script")
+  spec.loader.exec_module(star)
   heights = [star.TOP + star.ARC_K * (t - (star.FRAMES - 1) / 2) ** 2 for t in range(star.FRAMES)]
   assert heights[0] > heights[2] and heights[-1] > heights[3]  # one full arc: up, then down
   for t in range(star.FRAMES):
     svg = star.frame_svg(t)
-    x1, y1, x2, y2 = (float(v) for v in re.search(r'id="t%da".*?x1="([\d.-]+)" y1="([\d.-]+)" x2="([\d.-]+)" y2="([\d.-]+)"' % t, svg).groups())
+    x1, y1, x2, y2 = (float(v) for v in re.search(rf'id="t{t}a".*?x1="([\d.-]+)" y1="([\d.-]+)" x2="([\d.-]+)" y2="([\d.-]+)"', svg).groups())
     assert x2 > x1  # the star travels left, so its trail extends to the right
     if t < 2:
       assert y2 > y1  # rising: trail trails downwards
@@ -776,12 +496,9 @@ def test_sequential_chevrons_light_towards_the_turn():
 
 def _load_tool(name):
   import importlib.util
-  spec = importlib.util.spec_from_file_location(name, ROOT / f"starpilot/tools/{name}.py")
+  spec = importlib.util.spec_from_file_location(name, ROOT / f"selfdrive/ui/tandem/tools/{name}.py")
   module = importlib.util.module_from_spec(spec)
-  try:
-    spec.loader.exec_module(module)
-  except ModuleNotFoundError:
-    pytest.skip("cairosvg is a dev-only dependency of the drawing scripts")
+  spec.loader.exec_module(module)
   return module
 
 
@@ -821,9 +538,9 @@ def test_glide_chevrons_slide_out_and_fade():
 @pytest.mark.parametrize("tool", ["make_sequential_signals", "make_motion_signals"])
 def test_indicator_cards_use_the_on_road_widget_tokens(tool):
   module = _load_tool(tool)
-  style = (ROOT / "selfdrive/ui/lib/aether_style.py").read_text()
-  assert f"CARD_RADIUS = {module.RADIUS}" in style and f"CARD_BORDER_WIDTH = {module.BORDER_WIDTH}" in style
-  assert "CARD_FILL = rl.Color(0, 0, 0, 166)" in style and "CARD_BORDER = rl.Color(196, 205, 208, 180)" in style
+  other = _load_tool("make_motion_signals" if tool == "make_sequential_signals" else "make_sequential_signals")
+  assert (module.RADIUS, module.BORDER_WIDTH) == (other.RADIUS, other.BORDER_WIDTH) == (31, 6)
+
   assert (module.W, module.H) == (350, 170)
 
 
@@ -872,50 +589,6 @@ def test_preview_tool_options():
 
 # ── Speed at Bottom (comma 3/3X) ─────────────────────────────────────────────
 
-def _bottom_view(scene, toggle, alert_height=0):
-  scene.state.starpilot_toggles["speed_at_bottom"] = toggle
-  cls = _source_class(VIEW_PATH, "StarPilotOnroadView", VIEW_METHODS, _view_namespace(scene.state))
-  view = cls()
-  view._content_rect = scene.rect
-  alert = SimpleNamespace(size=1) if alert_height else None
-  view.alert_renderer = SimpleNamespace(will_render=lambda: (alert, False),
-                                        rect=rl.Rectangle(30, 30 + 1020 - alert_height, 2100, alert_height))
-  view._turn_signal_margin = SimpleNamespace(update=lambda target: target)
-  view._update_alert_margin()
-  return view
-
-
-def test_speed_at_bottom_offset_clears_the_torque_bar_and_rises_above_alerts(scene):
-  ns = _view_namespace(scene.state)
-  bottom = 30 + 1020
-  assert _bottom_view(scene, False)._speed_offset(scene.rect) == 0.0          # toggle off: unchanged
-  assert _bottom_view(scene, False, 271)._speed_offset(scene.rect) == 0.0
-  plain = _bottom_view(scene, True)._speed_offset(scene.rect)
-  # Same geometry as torque_bar.py at idle: the unit label sits as far above the bar as the bar sits above the bottom.
-  scale = 1020 / 240 * (2100 / 2160)
-  bar_bottom = bottom - 22 * scale
-  bar_top = bar_bottom - 14 * scale
-  unit_bottom = ns["HUD_SPEED_UNIT_CENTER_Y"] + plain + 66 / 2
-  assert bar_top - unit_bottom == pytest.approx(bottom - bar_bottom)
-  small = _bottom_view(scene, True, 271)._speed_offset(scene.rect)            # lane-change alert
-  assert small == bottom - (271 + ns["SPEED_ALERT_GAP"]) - ns["HUD_SPEED_UNIT_CENTER_Y"]
-  assert ns["HUD_SPEED_UNIT_CENTER_Y"] + small < bottom - 271
-  assert _bottom_view(scene, True, 60)._speed_offset(scene.rect) == plain     # alert lower than the speed: stays put
-  assert _bottom_view(scene, True)._speed_offset(rl.Rectangle(0, 0, 0, 0)) == 0.0
-
-
-def test_speed_at_bottom_moves_indicators_with_the_speed(scene, monkeypatch):
-  monkeypatch.setattr(rl, "begin_scissor_mode", lambda *_args: None)
-  monkeypatch.setattr(rl, "end_scissor_mode", lambda: None)
-  ns = _view_namespace(scene.state)
-  view = _bottom_view(scene, True)
-  view._speed_offset_y = view._speed_offset(scene.rect)
-  calls = []
-  view._turn_signals = SimpleNamespace(render=lambda *args, **kwargs: calls.append(kwargs))
-  view._render_turn_signals()
-  speed_top = ns["HUD_SPEED_DIGITS_TOP_Y"] + view._speed_offset_y - ns["SPEED_BLOCK_GAP"]
-  assert calls == [dict(enabled=True, bottom_margin=30 + 1020 - speed_top, static_offset=view._speed_offset_y)]
-
 
 @pytest.mark.parametrize("offset", [0.0, 500.0, 5000.0])
 def test_static_offset_moves_static_cards_and_keeps_them_on_screen(scene, offset):
@@ -928,7 +601,7 @@ def test_static_offset_moves_static_cards_and_keeps_them_on_screen(scene, offset
   assert moved.y == pytest.approx(min(base.y + offset, scene.rect.y + scene.rect.height - moved.height))
 
 
-def test_hud_speed_unit_and_compass_follow_the_speed_offset():
+def test_upstream_hud_speed_unit_and_compass_keep_their_original_positions():
   texts = []
   fake_rl = SimpleNamespace(Vector2=lambda x, y: (x, y), WHITE="white", Rectangle=rl.Rectangle,
                             draw_text_ex=lambda _font, text, pos, *_a: texts.append((text, pos[1])))
@@ -944,28 +617,7 @@ def test_hud_speed_unit_and_compass_follow_the_speed_offset():
     texts.clear()
     hud.speed_offset_y = offset
     hud._draw_current_speed(rl.Rectangle(0, 0, 2160, 1080))
-    assert texts == [("62", 160 + offset), ("mph", 270 + offset), ("NE", 45 + offset)]
-
-
-def test_speed_at_bottom_setting_is_offered_on_the_device_and_in_galaxy():
-  assert re.search(r'\{"SpeedAtBottom", \{PERSISTENT, BOOL, "0"', (ROOT / "common/params_keys.h").read_text())
-  assert 'toggle.speed_at_bottom = self.get_value("SpeedAtBottom")' in (ROOT / "starpilot/common/starpilot_variables.py").read_text()
-
-  tree = ast.parse((ROOT / "selfdrive/ui/layouts/settings/starpilot/appearance.py").read_text())
-  call = next(node for node in ast.walk(tree) if isinstance(node, ast.Call) and getattr(node.func, "id", None) == "SettingRow"
-              and node.args and isinstance(node.args[0], ast.Constant) and node.args[0].value == "SpeedAtBottom")
-  view = SimpleNamespace(_params=Params(SpeedAtBottom=False))
-  args, kwargs = eval(compile(ast.Expression(call), "appearance.py", "eval"),
-                      dict(SettingRow=lambda *a, **k: (a, k), tr_noop=str, self=view))
-  assert args[:3] == ("SpeedAtBottom", "toggle", "Speed at Bottom")
-  assert kwargs["get_state"]() is False
-  kwargs["set_state"](True)
-  assert view._params.values["SpeedAtBottom"] is True
-
-  import json
-  layout = json.loads((ROOT / "starpilot/common/assets/device_settings_layout.json").read_text())
-  entry = next(param for section in layout for param in section["params"] if param["key"] == "SpeedAtBottom")
-  assert entry["ui_type"] == "toggle" and entry["data_type"] == "bool"
+    assert texts == [("62", 160), ("mph", 270), ("NE", 45)]
 
 
 def test_preview_tool_speed_at_bottom_options():
@@ -976,12 +628,3 @@ def test_preview_tool_speed_at_bottom_options():
   assert (args.speed_at_bottom, args.alert) == (True, "mid")
 
 
-def test_starpilot_sub_menus_take_the_full_screen():
-  cls = _source_class("selfdrive/ui/layouts/settings/settings.py", "SettingsLayout",
-                      {"_sidebar_hidden", "_sidebar_width"},
-                      dict(PanelType=SimpleNamespace(STARPILOT=0, DEVICE=1), EXPANDED_WIDTH=500, COLLAPSED_WIDTH=0))
-  layout = cls.__new__(cls)
-  layout._sidebar_expanded = True
-  for panel, depth, width in ((0, 0, 500), (0, 1, 0), (0, 3, 0), (1, 1, 500)):
-    layout._current_panel, layout._panel_depth = panel, depth
-    assert layout._sidebar_width == width

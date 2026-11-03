@@ -8,7 +8,6 @@ from openpilot.selfdrive.ui import UI_BORDER_SIZE
 from openpilot.starpilot.common.vision_bsm import get_fresh_vasm_state
 
 from openpilot.selfdrive.ui.ui_state import ui_state
-from openpilot.selfdrive.ui.lib.starpilot_visuals import get_border_roundness
 from openpilot.selfdrive.ui.lib.starpilot_status import (
   CEM_OVERRIDE_COLOR, ENGAGED_COLOR, EXPERIMENTAL_COLOR, TRAFFIC_COLOR
 )
@@ -111,7 +110,7 @@ def _glow_color(intensity: float) -> rl.Color:
     return _lerp_color(_ORANGE, _RED, (t - 0.6) / 0.4)
 
 
-def _render_csc_glow(border_rect: rl.Rectangle, border_width: float = UI_BORDER_SIZE):
+def _render_csc_glow(border_rect: rl.Rectangle, border_width: float = UI_BORDER_SIZE, color_override: rl.Color | None = None):
   global _last_was_active, _activation_start, _fade_out_start, _last_state
 
   state = _csc_state()
@@ -163,6 +162,7 @@ def _render_csc_glow(border_rect: rl.Rectangle, border_width: float = UI_BORDER_
   gw = int(border_rect.width)
   gh = int(border_rect.height)
 
+  color = color_override if color_override is not None else color
   glow_rgba = rl.Color(color.r, color.g, color.b, edge_alpha)
   fade_rgba = rl.Color(color.r, color.g, color.b, 0)
 
@@ -220,7 +220,6 @@ def render_background_effects(rect: rl.Rectangle, border_width: float):
   sm = ui_state.sm
   border_rect = rl.Rectangle(rect.x + border_width, rect.y + border_width,
                              rect.width - 2 * border_width, rect.height - 2 * border_width)
-  border_roundness = get_border_roundness(border_rect, border_width)
 
   # 1. Turn Signal and Blind Spot indicators
   colors = get_traffic_border_colors()
@@ -228,11 +227,11 @@ def render_background_effects(rect: rl.Rectangle, border_width: float):
     left_color, right_color = colors
     if left_color.a > 0:
       rl.begin_scissor_mode(int(rect.x), int(rect.y), int(rect.width // 2), int(rect.height))
-      rl.draw_rectangle_rounded_lines_ex(border_rect, border_roundness, 10, border_width, left_color)
+      rl.draw_rectangle_rounded_lines_ex(border_rect, 0.12, 10, border_width, left_color)
       rl.end_scissor_mode()
     if right_color.a > 0:
       rl.begin_scissor_mode(int(rect.x + rect.width // 2), int(rect.y), int(rect.width // 2), int(rect.height))
-      rl.draw_rectangle_rounded_lines_ex(border_rect, border_roundness, 10, border_width, right_color)
+      rl.draw_rectangle_rounded_lines_ex(border_rect, 0.12, 10, border_width, right_color)
       rl.end_scissor_mode()
 
   # 2. Steering Torque Border
@@ -265,7 +264,7 @@ def render_background_effects(rect: rl.Rectangle, border_width: float):
         else:
           rl.begin_scissor_mode(int(rect.x + rect.width - border_width), y_pos, int(border_width), int(visible_height))
 
-        rl.draw_rectangle_rounded_lines_ex(border_rect, border_roundness, 10, border_width, col)
+        rl.draw_rectangle_rounded_lines_ex(border_rect, 0.12, 10, border_width, col)
         rl.end_scissor_mode()
 
 
@@ -274,10 +273,13 @@ _effects: list[BorderEffect] = [
 ]
 
 
-def render_behind(border_rect: rl.Rectangle, border_width: float):
+def render_behind(border_rect: rl.Rectangle, border_width: float, csc_color: rl.Color | None = None):
   for effect in _effects:
     if effect.layer == BorderLayer.BEHIND:
-      effect.render_fn(border_rect, border_width)
+      if effect.name == "csc_glow" and csc_color is not None:
+        effect.render_fn(border_rect, border_width, color_override=csc_color)
+      else:
+        effect.render_fn(border_rect, border_width)
 
 
 def render_overlay(border_rect: rl.Rectangle, border_width: float):

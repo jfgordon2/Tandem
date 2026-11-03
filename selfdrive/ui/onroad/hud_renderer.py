@@ -57,8 +57,6 @@ class Colors:
 
 
 UI_CONFIG = UIConfig()
-SPEED_DIGITS_TOP_Y = 75      # top of the current-speed digits, relative to the content top (top layout)
-SPEED_GRADIENT_LEAD = 120    # how far above the digits the bottom gradient starts fading in
 FONT_SIZES = FontSizes()
 COLORS = Colors()
 
@@ -83,11 +81,7 @@ class HudRenderer(Widget):
     self.draw_set_speed = True
     self.draw_current_speed = True
     self.draw_exp_button = True
-    # StarPilot "Speed at Bottom": shifts the current speed, unit and compass down as one
-    # block, and adds a bottom gradient so they stay legible over the camera image.
-    self.speed_offset_y: float = 0.0
-    self.draw_bottom_gradient = False
-    self.draw_gradients = True   # False drops both dark gradients (Tandem's Essentials onroad view)
+    self.draw_gradients = True  # Tandem disables the edge fade for its own HUD
 
   def _update_state(self) -> None:
     """Update HUD state based on car state and controls state."""
@@ -135,17 +129,6 @@ class HudRenderer(Widget):
         UI_CONFIG.header_height,
         COLORS.HEADER_GRADIENT_START,
         COLORS.HEADER_GRADIENT_END,
-      )
-
-    if self.draw_bottom_gradient and self.draw_gradients:
-      gradient_top = max(rect.y, rect.y + SPEED_DIGITS_TOP_Y - SPEED_GRADIENT_LEAD + self.speed_offset_y)
-      rl.draw_rectangle_gradient_v(
-        int(rect.x),
-        int(gradient_top),
-        int(rect.width),
-        int(rect.y + rect.height - gradient_top),
-        COLORS.HEADER_GRADIENT_END,
-        COLORS.HEADER_GRADIENT_START,
       )
 
     if self.draw_set_speed and self.is_cruise_available and not ui_state.starpilot_toggles.get("hide_max_speed", False):
@@ -210,17 +193,17 @@ class HudRenderer(Widget):
     """Draw the current vehicle speed and unit."""
     speed_text = str(round(self.speed))
     speed_text_size = measure_text_cached(self._font_bold, speed_text, FONT_SIZES.current_speed)
-    speed_pos = rl.Vector2(rect.x + rect.width / 2 - speed_text_size.x / 2, 180 + self.speed_offset_y - speed_text_size.y / 2)
+    speed_pos = rl.Vector2(rect.x + rect.width / 2 - speed_text_size.x / 2, 180 - speed_text_size.y / 2)
     rl.draw_text_ex(self._font_bold, speed_text, speed_pos, FONT_SIZES.current_speed, 0, COLORS.WHITE)
 
     unit_text = tr("km/h") if ui_state.is_metric else tr("mph")
     unit_text_size = measure_text_cached(self._font_medium, unit_text, FONT_SIZES.speed_unit)
-    unit_pos = rl.Vector2(rect.x + rect.width / 2 - unit_text_size.x / 2, 290 + self.speed_offset_y - unit_text_size.y / 2)
+    unit_pos = rl.Vector2(rect.x + rect.width / 2 - unit_text_size.x / 2, 290 - unit_text_size.y / 2)
     rl.draw_text_ex(self._font_medium, unit_text, unit_pos, FONT_SIZES.speed_unit, 0, COLORS.WHITE_TRANSLUCENT)
 
     compass_text = get_compass_text()
     if compass_text:
       compass_font_size = 50
       compass_size = measure_text_cached(self._font_bold, compass_text, compass_font_size)
-      compass_pos = rl.Vector2(rect.x + rect.width / 2 - compass_size.x / 2, 65 + self.speed_offset_y - compass_size.y / 2)
+      compass_pos = rl.Vector2(rect.x + rect.width / 2 - compass_size.x / 2, 65 - compass_size.y / 2)
       draw_text_with_shadow(self._font_bold, compass_text, compass_pos, compass_font_size, rl.WHITE)

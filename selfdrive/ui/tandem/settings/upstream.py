@@ -126,36 +126,3 @@ class StarPilotPage(Hosted):
         self._on_exit()
       else:
         self._open()
-
-
-def confirmed(prompt: Callable[[], None]) -> None:
-  """Runs an upstream prompt as if its confirm dialog were answered yes, because our dialog has already asked. Its dialog
-  is caught instead of shown and its callback runs upstream's own action and checks (e.g. engaged). Anything the
-  action itself pushes (an "it's started" notice) is caught too; our screen says it instead."""
-  from openpilot.system.ui.lib.application import gui_app
-  from openpilot.system.ui.widgets import DialogResult
-  caught: list = []
-  push = gui_app.push_widget
-  gui_app.push_widget = caught.append
-  try:
-    prompt()
-    for dialog in list(caught):
-      callback = getattr(dialog, "_callback", None)
-      if callback is not None:
-        callback(DialogResult.CONFIRM)
-  finally:
-    gui_app.push_widget = push
-
-
-def notices(action: Callable[[], None]) -> list[str]:
-  """Runs an upstream action and returns the messages of the notices it pushed (its alert_dialog boxes), so our screen
-  can say them in our own dialog instead."""
-  from openpilot.system.ui.lib.application import gui_app
-  caught: list = []
-  push = gui_app.push_widget
-  gui_app.push_widget = caught.append
-  try:
-    action()
-  finally:
-    gui_app.push_widget = push
-  return [str(text) for dialog in caught if (text := getattr(dialog, "_text", ""))]

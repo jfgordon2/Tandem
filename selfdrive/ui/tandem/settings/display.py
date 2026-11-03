@@ -509,7 +509,7 @@ class SignalThumb:
 
   def _load(self):
     self._loaded = True
-    from openpilot.selfdrive.ui.onroad.starpilot.turn_signals import BUNDLED_SIGNAL_PATHS, FRAME_PATTERN
+    from openpilot.selfdrive.ui.tandem.onroad.turn_signals import BUNDLED_SIGNAL_PATHS, FRAME_PATTERN
     directory = BUNDLED_SIGNAL_PATHS.get(self._slug)
     frames = sorted((p for p in directory.glob("*") if FRAME_PATTERN.fullmatch(p.name)),
                     key=lambda p: int(FRAME_PATTERN.fullmatch(p.name)[1] or 0)) if directory is not None and directory.is_dir() else []

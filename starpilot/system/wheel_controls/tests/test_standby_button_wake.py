@@ -159,22 +159,20 @@ def test_disconnected_device_does_not_suppress_next_press_on_reused_descriptor(i
 
 
 @pytest.mark.parametrize("started", [False, True])
-@pytest.mark.parametrize("mapping,management,standby,button,testing,expected", [
-  (False, False, False, False, False, False),
-  (False, True, True, True, False, True),
-  (False, False, True, True, False, False),
-  (False, True, False, True, False, False),
-  (False, True, True, False, False, False),
-  (True, False, False, False, False, True),
-  (False, False, False, False, True, True),
+@pytest.mark.parametrize("mapping,management,standby,button,expected", [
+  (False, False, False, False, False),
+  (False, True, True, True, True),
+  (False, False, True, True, False),
+  (False, True, False, True, False),
+  (False, True, True, False, False),
+  (True, False, False, False, True),
 ])
-def test_manager_runs_listener_for_enabled_mappings_standby_or_testing(started, mapping, management, standby, button, testing, expected):
+def test_manager_runs_listener_for_enabled_mappings_or_standby(started, mapping, management, standby, button, expected):
   # The manager module creates native processes at import, so load its real predicate only.
   path = Path(__file__).resolve().parents[4] / "system/manager/process_config.py"
   tree = ast.parse(path.read_text())
   node = next(node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == "wheel_controls_enabled")
-  memory = FakeParams({"WheelControlTestActive": testing})
-  namespace = {"Params": lambda **kwargs: memory, "car": SimpleNamespace(CarParams=object), "SimpleNamespace": SimpleNamespace}
+  namespace = {"Params": object, "car": SimpleNamespace(CarParams=object), "SimpleNamespace": SimpleNamespace}
   exec(compile(ast.Module(body=[node], type_ignores=[]), str(path), "exec"), namespace)
   params = FakeParams({"WheelControlsEnabled": mapping, "ScreenManagement": management,
                        "StandbyMode": standby, "StandbyWakeButton": button})

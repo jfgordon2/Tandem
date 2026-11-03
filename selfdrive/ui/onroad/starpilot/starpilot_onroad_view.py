@@ -4,7 +4,6 @@ from openpilot.selfdrive.ui.onroad.augmented_road_view import AugmentedRoadView
 from openpilot.selfdrive.ui.onroad.starpilot.starpilot_border import render_behind, render_overlay, render_background_effects
 from openpilot.selfdrive.ui.onroad.starpilot.path import render_adjacent_lanes, render_path_edges
 from openpilot.selfdrive.ui.ui_state import ui_state
-from openpilot.selfdrive.ui.lib.starpilot_visuals import get_border_roundness
 from openpilot.selfdrive.ui.onroad.starpilot.torque_bar import TorqueBar
 from openpilot.selfdrive.ui.onroad.starpilot.rivian_lateral_mode import rivian_lateral_mode
 from openpilot.selfdrive.ui.onroad.starpilot.widget_layout_manager import WidgetLayoutManager
@@ -19,8 +18,6 @@ from openpilot.selfdrive.ui.onroad.starpilot.pulse_glide import get_pulse_glide_
 from openpilot.selfdrive.ui.onroad.starpilot.pip_sidecam import PipSideCamera
 from openpilot.selfdrive.ui.onroad.starpilot.favorite_radial_menu import FavoriteRadialMenu
 from openpilot.selfdrive.ui.onroad.starpilot.weather_icon import render_weather_icon
-from openpilot.selfdrive.ui.onroad.starpilot.turn_signals import TurnSignalRenderer
-from openpilot.common.filter_simple import FirstOrderFilter
 from openpilot.selfdrive.ui.lib.starpilot_status import (
   get_screen_edge_color,
 )
@@ -36,19 +33,6 @@ from openpilot.system.ui.lib.text_measure import draw_text_with_shadow, measure_
 from cereal import log
 AlertSize = log.SelfdriveState.AlertSize
 
-# "Speed at Bottom": the current speed (with its unit, compass and the static turn-signal
-# indicators beside it) moves from the top of the screen to just above the torque bar,
-# and glides up above bottom alerts. Values are in content pixels on the comma 3/3X layout.
-HUD_SPEED_UNIT_CENTER_Y = 290    # hud_renderer centres the speed unit label here (top layout)
-HUD_SPEED_DIGITS_TOP_Y = 105     # top of the speed digits (top layout)
-SPEED_UNIT_HALF_HEIGHT = 33      # half the 66 px speed unit label
-# torque_bar.py at idle, in its own units (x SCALE): the gap from the content bottom up to the
-# peak of the bar's lower edge, and the bar's thickness. The speed unit sits the same gap above the bar.
-TORQUE_BAR_IDLE_OFFSET = 22
-TORQUE_BAR_IDLE_HEIGHT = 14
-SPEED_ALERT_GAP = 45             # unit centre above an alert's top edge
-SPEED_BLOCK_GAP = 15             # gap between travelling animations and the speed digits
-
 
 class StarPilotOnroadView(AugmentedRoadView):
   def __init__(self, stream_type: VisionStreamType = VisionStreamType.VISION_STREAM_ROAD):
@@ -58,12 +42,6 @@ class StarPilotOnroadView(AugmentedRoadView):
     self._font_bold = gui_app.font(FontWeight.BOLD)
     self._font_medium = gui_app.font(FontWeight.MEDIUM)
     self._torque_bar = TorqueBar()
-    self._turn_signals = TurnSignalRenderer()
-    # Ease the frogs' baseline with the alert slide (same time constant) instead
-    # of snapping it up or down by a whole alert height mid-hop.
-    self._turn_signal_margin = FirstOrderFilter(0.0, 0.1, 1 / gui_app.target_fps)
-    self._alert_margin = 0.0
-    self._speed_offset_y = 0.0
     self._min_fps = 99.9
     self._max_fps = 0.0
     self._avg_fps = 0.0
@@ -142,10 +120,6 @@ class StarPilotOnroadView(AugmentedRoadView):
       self._hud_renderer.draw_current_speed = (
         ui_state.started and not self._stopped_timer_widget.replaces_current_speed
       )
-      self._update_alert_margin()
-      self._speed_offset_y = self._speed_offset(self._content_rect)
-      self._hud_renderer.speed_offset_y = self._speed_offset_y
-      self._hud_renderer.draw_bottom_gradient = self._speed_offset_y != 0.0
       super()._render(rect)
 
       if not ui_state.started:
@@ -156,13 +130,11 @@ class StarPilotOnroadView(AugmentedRoadView):
       if self._draw_hud_controls:
         dm = self.driver_state_renderer
         self.layout_manager.update_layout(self._content_rect, is_rhd=dm.is_rhd if dm else False)
-        self._render_turn_signals()
         self._render_speed_card()
         self._render_overlays()
         self._render_road_name()
       else:
         self._unified_speed_widget.collapse_sources()
-        self._turn_signals.render(self._content_rect, ui_state, enabled=False)
 
       self._pip_sidecam.render(self._content_rect)
 
@@ -182,49 +154,6 @@ class StarPilotOnroadView(AugmentedRoadView):
     finally:
       gui_app.mouse_events[:] = original_events
 
-  def close(self) -> None:
-    if (signals := getattr(self, "_turn_signals", None)) is not None:
-      signals.close()
-    super().close()
-
-  def _update_alert_margin(self) -> float:
-    """Smoothed height of a bottom alert (0 with none or a full-screen alert), eased so the
-    speed and turn signals glide above alerts instead of snapping by a whole alert height."""
-    alert, animating_out = self.alert_renderer.will_render()
-    full_alert = alert is not None and alert.size == AlertSize.full
-    target_margin = 0.0
-    if alert is not None and not animating_out and not full_alert:
-      target_margin = max(0.0, self._content_rect.y + self._content_rect.height - self.alert_renderer.rect.y)
-    self._alert_margin = self._turn_signal_margin.update(target_margin)
-    return self._alert_margin
-
-  def _speed_offset(self, content: rl.Rectangle) -> float:
-    """How far the speed block moves down from the top layout (0 unless Speed at Bottom is on)."""
-    if not ui_state.starpilot_toggles.get("speed_at_bottom", False) or content.height <= 0:
-      return 0.0
-    bottom = content.y + content.height
-    scale = content.height / 240.0 * (content.width / gui_app.width)  # TorqueBar's SCALE
-    gap = TORQUE_BAR_IDLE_OFFSET * scale
-    bar_inset = gap + TORQUE_BAR_IDLE_HEIGHT * scale + gap + SPEED_UNIT_HALF_HEIGHT
-    unit_center = bottom - max(bar_inset, self._alert_margin + SPEED_ALERT_GAP)
-    return unit_center - HUD_SPEED_UNIT_CENTER_Y
-
-  def _render_turn_signals(self) -> None:
-    alert, _ = self.alert_renderer.will_render()
-    full_alert = alert is not None and alert.size == AlertSize.full
-    bottom_margin = self._alert_margin
-    if self._speed_offset_y:
-      # Speed at Bottom: travelling animations pass above the speed rather than over it.
-      speed_top = HUD_SPEED_DIGITS_TOP_Y + self._speed_offset_y - SPEED_BLOCK_GAP
-      bottom_margin = max(bottom_margin, self._content_rect.y + self._content_rect.height - speed_top)
-    rl.begin_scissor_mode(int(self._content_rect.x), int(self._content_rect.y),
-                          int(self._content_rect.width), int(self._content_rect.height))
-    try:
-      self._turn_signals.render(self._content_rect, ui_state, enabled=not full_alert,
-                                bottom_margin=bottom_margin, static_offset=self._speed_offset_y)
-    finally:
-      rl.end_scissor_mode()
-
   def _draw_border(self, rect: rl.Rectangle):
     border_width = self._get_border_width()
     if self._draw_hud_controls and not self._full_alert_showing():
@@ -233,7 +162,7 @@ class StarPilotOnroadView(AugmentedRoadView):
     border_rect = rl.Rectangle(rect.x + border_width, rect.y + border_width,
                                 rect.width - 2 * border_width, rect.height - 2 * border_width)
     border_color = self._get_border_color()
-    rl.draw_rectangle_rounded_lines_ex(border_rect, get_border_roundness(border_rect, border_width), 10, border_width, border_color)
+    rl.draw_rectangle_rounded_lines_ex(border_rect, 0.12, 10, border_width, border_color)
     render_background_effects(rect, border_width)
     render_overlay(border_rect, border_width)
 
@@ -252,8 +181,7 @@ class StarPilotOnroadView(AugmentedRoadView):
     if alert_showing is not None and alert_showing.size == AlertSize.full:
       return
 
-    content = self._content_rect
-    self._stopped_timer_widget.render(rl.Rectangle(content.x, content.y + self._speed_offset_y, content.width, content.height))
+    self._stopped_timer_widget.render(self._content_rect)
     if alert_showing is not None:
       return
 

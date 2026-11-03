@@ -7,8 +7,6 @@ from openpilot.system.ui.widgets import Widget
 
 
 def _enabled(name: str) -> bool:
-  from openpilot.selfdrive.ui.tandem.fonts import prepare_fallback
-  prepare_fallback()   # MainLayout asks for every screen through here, after gui_app has loaded its fonts
   return os.getenv(name, "1") != "0"
 
 
@@ -17,6 +15,7 @@ _settings: list = []   # the Essentials settings window, once MainLayout has mad
 
 def settings_window() -> Widget:
   if not _enabled("TANDEM_SETTINGS"):
+    _settings.clear()
     from openpilot.selfdrive.ui.layouts.settings.settings import SettingsLayout
     return SettingsLayout()
   from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow

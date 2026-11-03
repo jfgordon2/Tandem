@@ -213,18 +213,20 @@ class Tuner:
   # Developer View's strip: up to STRIP_MAX metrics, kept in STRIP_METRICS order
 
   def strip(self) -> list[str]:
-    from openpilot.selfdrive.ui.tandem.onroad.developer import STRIP_PARAM, strip_keys
-    return strip_keys(self._store.get_str(STRIP_PARAM) or None)   # unset reads as the default; picking none saves "none"
+    from openpilot.selfdrive.ui.tandem.onroad.developer import strip_keys
+    from openpilot.selfdrive.ui.tandem.prefs import DEVELOPER_STRIP
+    return strip_keys(DEVELOPER_STRIP.get())   # unset reads as the default; picking none saves "none"
 
   def toggle_strip(self, key: str) -> None:
     """Adds or removes a metric. Adding one past the limit does nothing; the picker shows it as unavailable."""
-    from openpilot.selfdrive.ui.tandem.onroad.developer import STRIP_MAX, STRIP_METRICS, STRIP_PARAM
+    from openpilot.selfdrive.ui.tandem.onroad.developer import STRIP_MAX, STRIP_METRICS
     picked = self.strip()
     if key in picked:
       picked.remove(key)
     elif len(picked) < STRIP_MAX and key in STRIP_METRICS:
       picked.append(key)
-    self._store.write({STRIP_PARAM: ",".join(k for k in STRIP_METRICS if k in picked) or "none"})
+    from openpilot.selfdrive.ui.tandem.prefs import DEVELOPER_STRIP
+    DEVELOPER_STRIP.set(",".join(k for k in STRIP_METRICS if k in picked) or "none")
 
   # Counts and reset
 
@@ -250,8 +252,9 @@ class Tuner:
     for bundle in OVERRIDE_BUNDLES:
       on = bundle.is_on(self._store)
       values |= {k: v for k, v in (bundle.on if on else bundle.off).items() if k in ITEM_NAMES}
-    from openpilot.selfdrive.ui.tandem.onroad.developer import STRIP_DEFAULT, STRIP_PARAM
-    values[STRIP_PARAM] = ",".join(STRIP_DEFAULT)
+    from openpilot.selfdrive.ui.tandem.onroad.developer import STRIP_DEFAULT
+    from openpilot.selfdrive.ui.tandem.prefs import DEVELOPER_STRIP
+    DEVELOPER_STRIP.set(",".join(STRIP_DEFAULT))
     self._store.write(values)
 
 

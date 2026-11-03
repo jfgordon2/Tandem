@@ -26,55 +26,69 @@ from openpilot.starpilot.assets.model_manager import (
   set_model_profile,
 )
 from openpilot.starpilot.common.starpilot_variables import MODELS_PATH, update_starpilot_toggles
-from openpilot.system.ui.lib.application import FontWeight, MousePos, gui_app
+from openpilot.system.ui.lib.application import FONT_SCALE, FontWeight, MouseEvent, MousePos, gui_app
 from openpilot.system.ui.lib.multilang import tr
 from openpilot.system.ui.lib.scroll_panel2 import GuiScrollPanel2
 from openpilot.system.ui.widgets import DialogResult, Widget
 from openpilot.system.ui.widgets.confirm_dialog import ConfirmDialog, alert_dialog
+from openpilot.system.ui.widgets.label import gui_label
 from openpilot.system.ui.widgets.option_dialog import MultiOptionDialog
 from openpilot.selfdrive.ui.layouts.settings.starpilot.panel import _SettingsPage
-from openpilot.system.ui.lib.text_measure import measure_text_cached
-from openpilot.selfdrive.ui.lib import aether_style as AS
 from openpilot.selfdrive.ui.layouts.settings.starpilot.aethergrid import (
   AETHER_LIST_METRICS,
   AetherButton,
   AetherInteractiveMixin,
+  AetherChip,
   AetherListColors,
   AetherScrollbar,
-  AetherSegmentedControl,
   DEFAULT_PANEL_STYLE,
-  GROUP_OVERHEAD,
   aether_begin_scissor_mode,
   aether_end_scissor_mode,
-  build_settings_group_frame,
   point_hits,
+  draw_action_rail,
   draw_action_pill,
+  draw_busy_ring,
+  draw_download_icon,
+  draw_empty_state_card,
+  draw_heart_icon,
+  draw_list_group_shell,
+  draw_list_row_shell,
   draw_list_scroll_fades,
   draw_section_header,
-  draw_settings_card_row,
-  draw_settings_empty_state,
-  draw_settings_group,
-  draw_settings_group_heading,
+  draw_status_led,
+  draw_overflow_dots,
   init_list_panel,
-  settings_empty_state_height,
   with_alpha,
   SECTION_GAP,
-  SETTINGS_ROW_VALUE_FONT_SIZE,
+  SECTION_HEADER_HEIGHT,
+  SECTION_HEADER_GAP,
+  ROW_HEIGHT,
+  SETTINGS_ROW_TITLE_FONT_SIZE,
+  SETTINGS_ROW_SUBTITLE_FONT_SIZE,
+  SPACING,
 )
+ROW_RADIUS = AETHER_LIST_METRICS.row_radius
+ACTION_WIDTH = AETHER_LIST_METRICS.action_width
+BUTTON_HEIGHT = AETHER_LIST_METRICS.header_button_height
 FADE_HEIGHT = AETHER_LIST_METRICS.fade_height
 DRIVING_MODEL_METRICS = replace(AETHER_LIST_METRICS, header_height=0)
 CONFIRM_TIMEOUT_SECONDS = 3.0
 TRANSITION_SECONDS = 0.24
 PANEL_STYLE = DEFAULT_PANEL_STYLE
-MODEL_ROW_HEIGHT = 160.0  # same grouped row as Map Data's regions
-DOWNLOAD_ALL_WIDTH = 520.0
+BANNER_HEIGHT = 128.0
+BANNER_GAP = 14.0
+HEADER_BUTTON_HEIGHT = float(ROW_HEIGHT)
+HEADER_BUTTON_GAP_Y = 14.0
+MANAGEMENT_STRIP_HEIGHT = float(ROW_HEIGHT)
+MANAGEMENT_PILL_HEIGHT = float(AETHER_LIST_METRICS.toggle_height)
+EMPTY_STATE_HEIGHT = 240.0
 _SORT_MODES = ("alphabetical", "date", "date_oldest", "favorites", "community_picks")
 _SORT_LABELS = {
   "alphabetical":     "Alphabetical",
-  "date":             "Date",
+  "date":             "Date (Newest)",
   "date_oldest":      "Date (Oldest)",
-  "favorites":        "Favorites",
-  "community_picks":  "Community",
+  "favorites":        "Favorites + Downloaded",
+  "community_picks":  "Community Picks",
 }
 _SORT_PILLS = ("alphabetical", "date", "favorites", "community_picks")
 
@@ -104,14 +118,7 @@ def _ease(current: float, target: float, tau: float = 0.085) -> float:
 
 
 class DrivingModelManagerView(AetherInteractiveMixin, Widget):
-  """Driving Model page on the shared components.
-
-  Page header: Refresh Catalog. Pinned: the sort segmented control (or Blacklist / Ratings while the
-  randomizer is on). Scrolling: an "Active Model" group (current model, randomizer, download all), then
-  the model groups as grouped rows with the shared 112 px action pills, like Map Data's regions.
-  """
-
-  def __init__(self, controller: StarPilotDrivingModelLayout):
+  def __init__(self, controller: "StarPilotDrivingModelLayout"):
     super().__init__()
     self._controller = controller
     self._scroll_panel = GuiScrollPanel2(horizontal=False)
@@ -125,48 +132,37 @@ class DrivingModelManagerView(AetherInteractiveMixin, Widget):
     self._active_download_key: str | None = None
     self._shell_rect = rl.Rectangle(0, 0, 0, 0)
     self._scroll_rect = rl.Rectangle(0, 0, 0, 0)
-    self._refresh_button = self._child(AetherButton(
-      lambda: self._controller.secondary_header_button_state()[0],
-      self._controller.refresh_manifest,
-      enabled=lambda: self._controller.secondary_header_button_state()[1],
-    ))
-    self._download_all_button = self._child(AetherButton(
-      lambda: self._controller.primary_header_button_state()[0],
-      lambda: self._controller.cancel_active_download() if self._controller._is_download_active() else self._controller.download_all_missing(),
-      enabled=lambda: self._controller.primary_header_button_state()[1],
-      emphasized=True,
-      accent_color=AS.ACCENT_SOLID,
-    ))
-    self._sort_control = self._child(AetherSegmentedControl(
-      [tr(_SORT_LABELS[mode]) for mode in _SORT_PILLS],
-      self._sort_index,
-      lambda index: self._controller._params.put("ModelSortMode", _SORT_PILLS[index]),
-      statuses=[tr("A to Z"), self._date_status, tr("Then downloaded"), tr("Most popular")],
-      style=PANEL_STYLE,
-      on_reselect=self._on_sort_reselect,
-    ))
-    self._blacklist_button = self._child(AetherButton(self._blacklist_label, self._controller._on_blacklist_clicked, neutral=True))
-    self._ratings_button = self._child(AetherButton(tr("Ratings"), self._controller._on_scores_clicked, neutral=True))
-    self._download_all_button.set_touch_valid_callback(lambda: self._scroll_panel.is_touch_valid())
-
-  def use_page_header(self) -> AetherButton:
-    return self._refresh_button
-
-  def _sort_index(self) -> int:
-    mode = self._controller._get_sort_mode()
-    return _SORT_PILLS.index("date" if mode == "date_oldest" else mode) if mode in (*_SORT_PILLS, "date_oldest") else 0
-
-  def _date_status(self) -> str:
-    return tr("Oldest first") if self._controller._get_sort_mode() == "date_oldest" else tr("Newest first")
-
-  def _on_sort_reselect(self, index: int):
-    if _SORT_PILLS[index] == "date":
-      current = self._controller._get_sort_mode()
-      self._controller._params.put("ModelSortMode", "date" if current == "date_oldest" else "date_oldest")
-
-  def _blacklist_label(self) -> str:
-    blacklisted = [m.strip() for m in (self._controller._params.get("BlacklistedModels", encoding="utf-8") or "").split(",") if m.strip()]
-    return tr("Blacklist: {} blocked").format(len(blacklisted)) if blacklisted else tr("Blacklist")
+    self._metric_font = gui_app.font(FontWeight.BOLD)
+    self._primary_header_button = self._child(
+      AetherButton(
+        lambda: self._controller.primary_header_button_state()[0],
+        lambda: self._controller.cancel_active_download() if self._controller._is_download_active() else self._controller.download_all_missing(),
+        enabled=lambda: self._controller.primary_header_button_state()[1],
+        emphasized=True,
+        font_size=SETTINGS_ROW_TITLE_FONT_SIZE,
+        accent_color=with_alpha(AetherListColors.PRIMARY, 92),
+      )
+    )
+    self._secondary_header_button = self._child(
+      AetherButton(
+        lambda: self._controller.secondary_header_button_state()[0],
+        self._controller.refresh_manifest,
+        enabled=lambda: self._controller.secondary_header_button_state()[1],
+        emphasized=False,
+        font_size=SETTINGS_ROW_TITLE_FONT_SIZE,
+      )
+    )
+    self._random_model_button = self._child(
+      AetherButton(
+        lambda: self._controller.random_model_button_label(),
+        self._controller.toggle_model_randomizer,
+        emphasized=False,
+        font_size=SETTINGS_ROW_TITLE_FONT_SIZE,
+      )
+    )
+    self._primary_header_button.set_touch_valid_callback(lambda: self._scroll_panel.is_touch_valid())
+    self._secondary_header_button.set_touch_valid_callback(lambda: self._scroll_panel.is_touch_valid())
+    self._random_model_button.set_touch_valid_callback(lambda: self._scroll_panel.is_touch_valid())
 
   def _clear_ephemeral_state(self):
     self._pressed_target = None
@@ -188,6 +184,8 @@ class DrivingModelManagerView(AetherInteractiveMixin, Widget):
     if self._confirm_key is not None and time.monotonic() >= self._confirm_until:
       self._confirm_key = None
 
+    self._random_model_button.set_emphasized(self._controller._params.get_bool("ModelRandomizer"))
+
     progress = self._controller.download_progress_text()
     active_key = canonical_model_key(self._controller._params_memory.get(MODEL_DOWNLOAD_PARAM, encoding="utf-8") or "")
     if active_key:
@@ -206,7 +204,8 @@ class DrivingModelManagerView(AetherInteractiveMixin, Widget):
         self._known_install_state[key] = installed
         continue
       if previous != installed:
-        self._transition_starts[key] = (time.monotonic(), 1.0 if installed else -1.0)
+        direction = 1.0 if installed else -1.0
+        self._transition_starts[key] = (time.monotonic(), direction)
         self._known_install_state[key] = installed
 
     for key in list(self._transition_starts.keys()):
@@ -215,10 +214,14 @@ class DrivingModelManagerView(AetherInteractiveMixin, Widget):
         self._transition_starts.pop(key, None)
 
   def _target_at(self, mouse_pos: MousePos) -> str | None:
-    # Menu pills sit over their row, so they win over the row underneath.
-    for prefix in ("menu:", "action:", "row:", "active:"):
+    for prefix in ("menu:", "action:", "row:"):
       for target_id, rect in self._interactive_rects.items():
-        if target_id.startswith(prefix) and point_hits(mouse_pos, rect, self._scroll_rect, pad_x=0, pad_y=0):
+        if target_id.startswith(prefix):
+          if point_hits(mouse_pos, rect, self._scroll_rect, pad_x=0, pad_y=0):
+            return target_id
+    for target_id, rect in self._interactive_rects.items():
+      if target_id.startswith("sortopt:") or target_id.startswith("mgmt:"):
+        if point_hits(mouse_pos, rect, self._shell_rect, pad_x=0, pad_y=0):
           return target_id
     return None
 
@@ -226,13 +229,10 @@ class DrivingModelManagerView(AetherInteractiveMixin, Widget):
     if not target:
       return
 
-    if target == "active:randomizer":
-      self._controller.toggle_model_randomizer()
-      return
-
     if target.startswith("row:"):
       self._confirm_key = None
-      self._controller.select_model(target.split(":", 1)[1])
+      model_key = target.split(":", 1)[1]
+      self._controller.select_model(model_key)
       return
 
     if target.startswith("action:"):
@@ -240,13 +240,16 @@ class DrivingModelManagerView(AetherInteractiveMixin, Widget):
       entry = self._controller._catalog_entries.get(model_key)
       if entry is None:
         return
+
       if not entry.installed:
         self._confirm_key = None
         self._controller.start_download(model_key)
         return
+
       if not self._controller.is_model_removable(model_key):
         return
-      # Toggle the Delete / Favorite pills open or closed.
+
+      # Toggle the options menu open/closed
       if self._confirm_key == model_key:
         self._confirm_key = None
       else:
@@ -263,8 +266,23 @@ class DrivingModelManagerView(AetherInteractiveMixin, Widget):
         self._controller.delete_model(model_key)
       elif action == "favorite":
         self._controller.toggle_favorite(model_key)
+      return
 
-  # ── layout ─────────────────────────────────────────────────
+    if target.startswith("mgmt:"):
+      action = target.split(":", 1)[1]
+      if action == "blacklist":
+        self._controller._on_blacklist_clicked()
+      elif action == "ratings":
+        self._controller._on_scores_clicked()
+      return
+
+    if target.startswith("sortopt:"):
+      mode = target.split(":", 1)[1]
+      if mode == "date":
+        current = self._controller._get_sort_mode()
+        mode = "date_oldest" if current == "date" else "date"
+      self._controller._params.put("ModelSortMode", mode)
+      return
 
   def _render(self, rect: rl.Rectangle):
     self.set_rect(rect)
@@ -273,8 +291,24 @@ class DrivingModelManagerView(AetherInteractiveMixin, Widget):
     frame, scroll_rect, content_width = init_list_panel(rect, PANEL_STYLE, metrics=DRIVING_MODEL_METRICS)
     self._shell_rect = frame.shell
 
-    pinned_h = self._draw_pinned_controls(rl.Rectangle(scroll_rect.x, scroll_rect.y, content_width, 0))
-    scroll_rect = rl.Rectangle(scroll_rect.x, scroll_rect.y + pinned_h, scroll_rect.width, max(0.0, scroll_rect.height - pinned_h))
+    current_entry = self._controller.current_entry()
+    if current_entry is not None:
+      banner_rect = rl.Rectangle(scroll_rect.x, scroll_rect.y, scroll_rect.width, BANNER_HEIGHT)
+      scroll_rect = rl.Rectangle(scroll_rect.x, scroll_rect.y + BANNER_HEIGHT + BANNER_GAP,
+                                 scroll_rect.width, scroll_rect.height - BANNER_HEIGHT - BANNER_GAP)
+      self._draw_current_banner(banner_rect, current_entry)
+
+    header_y = scroll_rect.y
+    self._draw_relocated_header(scroll_rect.x, header_y, content_width)
+    scroll_rect = rl.Rectangle(scroll_rect.x, scroll_rect.y + HEADER_BUTTON_HEIGHT + HEADER_BUTTON_GAP_Y,
+                               scroll_rect.width, scroll_rect.height - HEADER_BUTTON_HEIGHT - HEADER_BUTTON_GAP_Y)
+
+    randomizer_on = self._controller._params.get_bool("ModelRandomizer")
+    mgmt_y = scroll_rect.y
+    self._draw_sort_strip(scroll_rect.x, mgmt_y, content_width, randomizer_on)
+    scroll_rect = rl.Rectangle(scroll_rect.x, scroll_rect.y + MANAGEMENT_STRIP_HEIGHT,
+                               scroll_rect.width, scroll_rect.height - MANAGEMENT_STRIP_HEIGHT)
+
     self._scroll_rect = scroll_rect
 
     self._content_height = self._measure_content_height(content_width)
@@ -286,29 +320,111 @@ class DrivingModelManagerView(AetherInteractiveMixin, Widget):
     aether_end_scissor_mode()
 
     if self._content_height > scroll_rect.height:
-      self._scrollbar.render(scroll_rect, self._content_height, self._scroll_offset)
+      self._draw_scrollbar(scroll_rect)
+
     draw_list_scroll_fades(scroll_rect, self._content_height, self._scroll_offset, AetherListColors.PANEL_BG, fade_height=FADE_HEIGHT)
 
-  def _draw_pinned_controls(self, rect: rl.Rectangle) -> float:
-    """Sort control, or the randomizer's Blacklist / Ratings buttons, pinned like System's mode control."""
-    if self._controller._params.get_bool("ModelRandomizer"):
-      height = AS.MIN_TOUCH
-      half = (rect.width - AS.SETTINGS_TILE_GAP) / 2
-      self._blacklist_button.render(rl.Rectangle(rect.x, rect.y, half, height))
-      self._ratings_button.render(rl.Rectangle(rect.x + half + AS.SETTINGS_TILE_GAP, rect.y, half, height))
-    else:
-      height = self._sort_control.measure_height(rect.width)
-      self._sort_control.render(rl.Rectangle(rect.x, rect.y, rect.width, height))
-    return height + AetherSegmentedControl.GAP
+  def _draw_current_banner(self, rect: rl.Rectangle, entry: ModelCatalogEntry):
+    draw_list_row_shell(
+      rect,
+      current=True,
+      hovered=False,
+      pressed=False,
+      is_last=False,
+      alpha=255,
+      row_bg=AetherListColors.ROW_BG,
+      row_border=AetherListColors.ROW_BORDER,
+      row_separator=AetherListColors.ROW_SEPARATOR,
+      row_hover=AetherListColors.ROW_HOVER,
+      current_bg=AetherListColors.CURRENT_BG,
+      current_border=AetherListColors.CURRENT_BORDER,
+      row_radius=ROW_RADIUS,
+      separator_inset=22,
+    )
+
+    action_rect = draw_action_rail(rect, ACTION_WIDTH, current=True, alpha=255, fill=AetherListColors.ACTION_BG, separator=AetherListColors.ACTION_SEPARATOR, inset_y=18)
+    info_rect = rl.Rectangle(rect.x + 24, rect.y + 18, rect.width - ACTION_WIDTH - 42, rect.height - 36)
+    self._draw_model_info(info_rect, entry, current=True)
+    self._draw_current_action(action_rect)
+
+  def _draw_relocated_header(self, x: float, y: float, width: float):
+    btn_gap = float(AETHER_LIST_METRICS.header_button_gap)
+    btn_w = (width - 16.0 - btn_gap * 2) / 3.0
+
+    primary_rect = rl.Rectangle(x + 8, y, btn_w, HEADER_BUTTON_HEIGHT)
+    secondary_rect = rl.Rectangle(x + 8 + btn_w + btn_gap, y, btn_w, HEADER_BUTTON_HEIGHT)
+    random_rect = rl.Rectangle(x + 8 + (btn_w + btn_gap) * 2, y, btn_w, HEADER_BUTTON_HEIGHT)
+
+    self._primary_header_button.render(primary_rect)
+    self._secondary_header_button.render(secondary_rect)
+    self._random_model_button.render(random_rect)
+
+    # LED indicator
+    led_x = int(random_rect.x + random_rect.width - 38)
+    led_y = int(random_rect.y + random_rect.height / 2)
+    randomizer_on = self._controller._params.get_bool("ModelRandomizer")
+    draw_status_led(rl.Vector2(led_x, led_y), randomizer_on)
+
+  def _draw_sort_strip(self, x: float, y: float, width: float, randomizer_on: bool):
+    pill_h = MANAGEMENT_PILL_HEIGHT
+    pill_y = y + (MANAGEMENT_STRIP_HEIGHT - pill_h) / 2
+    left = x + 16
+    gap = float(SPACING.lg)
+    usable = width - 32.0
+
+    if randomizer_on:
+      blacklisted = [m.strip() for m in (self._controller._params.get("BlacklistedModels", encoding="utf-8") or "").split(",") if m.strip()]
+      bl_label = tr(f"Blacklist: {len(blacklisted)} blocked") if blacklisted else tr("Blacklist")
+      bl_w = (usable - gap) / 2
+      rt_w = (usable - gap) / 2
+      bl_pill = rl.Rectangle(left, pill_y, bl_w, pill_h)
+      draw_action_pill(bl_pill, bl_label,
+                       with_alpha(AetherListColors.PRIMARY, 18),
+                       with_alpha(AetherListColors.PRIMARY, 50),
+                       AetherListColors.HEADER, font_size=30, roundness=0.35)
+      self._interactive_rects["mgmt:blacklist"] = rl.Rectangle(bl_pill.x, y, bl_w, MANAGEMENT_STRIP_HEIGHT)
+      rt_pill = rl.Rectangle(left + bl_w + gap, pill_y, rt_w, pill_h)
+      draw_action_pill(rt_pill, tr("Ratings"),
+                       with_alpha(AetherListColors.PRIMARY, 18),
+                       with_alpha(AetherListColors.PRIMARY, 50),
+                       AetherListColors.HEADER, font_size=30, roundness=0.35)
+      self._interactive_rects["mgmt:ratings"] = rl.Rectangle(rt_pill.x, y, rt_w, MANAGEMENT_STRIP_HEIGHT)
+      return
+
+    sort_mode = self._controller._get_sort_mode()
+    n = len(_SORT_PILLS)
+    seg_w = (usable - gap * (n - 1)) / n
+
+    for i, mode in enumerate(_SORT_PILLS):
+      seg_x = left + i * (seg_w + gap)
+      seg_rect = rl.Rectangle(seg_x, pill_y, seg_w, pill_h)
+      if mode == "date":
+        is_active = sort_mode in ("date", "date_oldest")
+        label = tr("Date (Oldest)") if sort_mode == "date_oldest" else tr("Date (Newest)")
+      else:
+        is_active = (mode == sort_mode)
+        label = tr(_SORT_LABELS[mode])
+      pressed = self._pressed_target == f"sortopt:{mode}"
+      if pressed and is_active:
+        fill = with_alpha(AetherListColors.PRIMARY, 80)
+      elif pressed:
+        fill = rl.Color(255, 255, 255, 18)
+      elif is_active:
+        fill = with_alpha(AetherListColors.PRIMARY, 28)
+      else:
+        fill = rl.Color(255, 255, 255, 8)
+      border = with_alpha(AetherListColors.PRIMARY, 80) if is_active else rl.Color(255, 255, 255, 24)
+      draw_action_pill(seg_rect, label, fill, border, AetherListColors.HEADER, font_size=30, roundness=0.3)
+      self._interactive_rects[f"sortopt:{mode}"] = rl.Rectangle(seg_x, y, seg_w, MANAGEMENT_STRIP_HEIGHT)
 
   def _get_sections(self) -> list[tuple[str, list[ModelCatalogEntry]]]:
     sort_mode = self._controller._get_sort_mode()
-    is_current = self._controller.is_current_model
 
     if sort_mode == "favorites":
-      fav_entries = [e for e in self._controller.favorites_entries() if not is_current(e.key)]
+      fav_entries = [e for e in self._controller.favorites_entries() if not self._controller.is_current_model(e.key)]
       fav_keys = {e.key for e in self._controller.favorites_entries()}
-      other_installed = [e for e in self._controller.installed_entries() if e.key not in fav_keys and not is_current(e.key)]
+      other_installed = [e for e in self._controller.installed_entries() if e.key not in fav_keys and not self._controller.is_current_model(e.key)]
+
       sections = []
       if fav_entries:
         sections.append((tr("Favorites"), fav_entries))
@@ -317,11 +433,15 @@ class DrivingModelManagerView(AetherInteractiveMixin, Widget):
       return sections
 
     if sort_mode == "community_picks":
-      entries = [e for e in self._controller.community_picks_entries() if not is_current(e.key)]
-      return [(tr("Community Picks"), entries)] if entries else []
+      entries = [e for e in self._controller.community_picks_entries() if not self._controller.is_current_model(e.key)]
+      if entries:
+        return [(tr("Community Picks"), entries)]
+      return []
 
-    installed = [e for e in self._controller.installed_entries() if not is_current(e.key)]
+    # Standard sort modes (alphabetical, date, date_oldest)
+    installed = [e for e in self._controller.installed_entries() if not self._controller.is_current_model(e.key)]
     available = [] if self._controller._params.get_bool("ModelRandomizer") else self._controller.available_entries()
+
     sections = []
     if installed:
       sections.append((tr("On Device"), installed))
@@ -329,159 +449,250 @@ class DrivingModelManagerView(AetherInteractiveMixin, Widget):
       sections.append((tr("Available to Download"), available))
     return sections
 
-  def _active_rows(self) -> list[str]:
-    rows = ["current"] if self._controller.current_entry() is not None else []
-    return rows + ["randomizer", "download_all"]
-
   def _measure_content_height(self, width: float) -> float:
-    total = GROUP_OVERHEAD + len(self._active_rows()) * MODEL_ROW_HEIGHT
     sections = self._get_sections()
     if not sections:
-      return total + SECTION_GAP + GROUP_OVERHEAD + settings_empty_state_height()
-    for _title, entries in sections:
-      total += SECTION_GAP + GROUP_OVERHEAD + len(entries) * MODEL_ROW_HEIGHT
-    return float(total)
+      return EMPTY_STATE_HEIGHT
+    total_height = sum(SECTION_HEADER_HEIGHT + SECTION_HEADER_GAP + len(entries) * ROW_HEIGHT for _title, entries in sections)
+    total_height += (len(sections) - 1) * SECTION_GAP
+    return float(total_height)
 
   def _draw_scroll_content(self, rect: rl.Rectangle, width: float):
-    y = self._draw_active_group(rl.Rectangle(rect.x, rect.y + self._scroll_offset, width, 0))
     sections = self._get_sections()
     if not sections:
-      group = rl.Rectangle(rect.x, y + SECTION_GAP, width, GROUP_OVERHEAD + settings_empty_state_height())
-      body = draw_settings_group_heading(group, tr("Models"), style=PANEL_STYLE)
-      draw_settings_empty_state(body, self._controller.empty_state_title(), self._controller.empty_state_body(), style=PANEL_STYLE)
+      self._draw_empty_state(rl.Rectangle(rect.x, rect.y + self._scroll_offset + 36, width, EMPTY_STATE_HEIGHT - 40))
       return
-    for title, entries in sections:
-      y = self._draw_model_section(rect.x, y + SECTION_GAP, width, title, entries)
 
-  def _draw_active_group(self, rect: rl.Rectangle) -> float:
-    rows = self._active_rows()
-    group = rl.Rectangle(rect.x, rect.y, rect.width, GROUP_OVERHEAD + len(rows) * MODEL_ROW_HEIGHT)
-    body = draw_settings_group(group, tr("Active Model"), style=PANEL_STYLE)
-    y = body.y
-    randomizer_on = self._controller._params.get_bool("ModelRandomizer")
-    for index, row in enumerate(rows):
-      row_rect = rl.Rectangle(body.x, y, body.width, MODEL_ROW_HEIGHT)
-      is_last = index == len(rows) - 1
-      if row == "current":
-        entry = self._controller.current_entry()
-        assert entry is not None
-        self._draw_model_row(row_rect, entry, is_last=is_last)
-      elif row == "randomizer":
-        hovered, pressed = self._interactive_state("active:randomizer", row_rect)
-        draw_settings_card_row(row_rect, title=tr("Model Randomizer"), subtitle=tr("Drive a random downloaded model each time"),
-                               toggle_value=randomizer_on, hovered=hovered, pressed=pressed, grouped=True, is_last=is_last,
-                               style=PANEL_STYLE)
-      else:
-        draw_settings_card_row(row_rect, title=tr("Download Models"), subtitle=self._controller.header_description_text(),
-                               show_chevron=False, grouped=True, is_last=is_last, style=PANEL_STYLE)
-        button_w = min(DOWNLOAD_ALL_WIDTH, row_rect.width * 0.42)
-        button_rect = rl.Rectangle(row_rect.x + row_rect.width - AS.SETTINGS_CARD_INSET - button_w,
-                                   row_rect.y + (row_rect.height - AS.MIN_TOUCH) / 2, button_w, AS.MIN_TOUCH)
-        self._download_all_button.set_parent_rect(self._scroll_rect)
-        self._download_all_button.render(button_rect)
-      y += MODEL_ROW_HEIGHT
-    return group.y + group.height
+    y = rect.y + self._scroll_offset
+    for index, (title, entries) in enumerate(sections):
+      if index > 0:
+        y += SECTION_GAP
+      y = self._draw_model_section(rect.x, y, width, title, entries)
+
+  def _draw_empty_state(self, rect: rl.Rectangle):
+    draw_empty_state_card(
+      rl.Rectangle(rect.x, rect.y, rect.width, rect.height),
+      self._controller.empty_state_title(),
+      self._controller.empty_state_body(),
+      title_size=34,
+      body_size=26,
+      body_inset_x=48,
+      title_top_padding=32,
+      body_height=80,
+      style=PANEL_STYLE,
+    )
 
   def _draw_model_section(self, x: float, y: float, width: float, title: str, entries: list[ModelCatalogEntry]) -> float:
-    group = rl.Rectangle(x, y, width, GROUP_OVERHEAD + len(entries) * MODEL_ROW_HEIGHT)
-    body = draw_settings_group(group, title, style=PANEL_STYLE)
-    draw_section_header(build_settings_group_frame(group).heading, "", trailing_text=str(len(entries)),
-                        trailing_size=AS.SETTINGS_GROUP_HEADING_SIZE - 4, style=PANEL_STYLE)
-    visible_top, visible_bottom = self._scroll_rect.y - MODEL_ROW_HEIGHT, self._scroll_rect.y + self._scroll_rect.height
+    draw_section_header(rl.Rectangle(x + SPACING.xl, y, width - SPACING.xl * 2, SECTION_HEADER_HEIGHT), title, style=PANEL_STYLE)
+    y += SECTION_HEADER_HEIGHT + SECTION_HEADER_GAP
+
+    group_rect = rl.Rectangle(x, y, width, len(entries) * ROW_HEIGHT)
+    draw_list_group_shell(group_rect, style=PANEL_STYLE)
+
     for index, entry in enumerate(entries):
-      row_y = body.y + index * MODEL_ROW_HEIGHT
-      if visible_top <= row_y <= visible_bottom:
-        self._draw_model_row(rl.Rectangle(body.x, row_y, body.width, MODEL_ROW_HEIGHT), entry, is_last=index == len(entries) - 1)
-    return group.y + group.height
-
-  # ── model rows ─────────────────────────────────────────────
-
-  def _model_subtitle(self, entry: ModelCatalogEntry, current: bool) -> tuple[str, bool]:
-    parts: list[str] = [part for part in (entry.series, entry.released) if part]
-    if self._controller._params.get_bool("ModelRandomizer"):
-      parts.append(tr("In Pool"))
-    elif current:
-      parts.append(tr("Active"))
-    elif entry.builtin:
-      parts.append(tr("Built-in"))
-    if entry.user_favorite:
-      parts.append(tr("Favorite"))
-    if entry.partial:
-      parts.append(tr("Incomplete"))
-    if entry.requires_external_gpu:
-      parts.append(tr("GPU required"))
-    if not entry.user_favorite and entry.community_favorite:
-      parts.append(tr("Popular"))
-    return " • ".join(parts), entry.partial or entry.requires_external_gpu
-
-  def _model_action(self, entry: ModelCatalogEntry, current: bool) -> tuple[str, str]:
-    """(label, kind) for the row's pill; kind is current, protected, options, downloading or download."""
-    if entry.installed:
-      if current and not self._controller._params.get_bool("ModelRandomizer"):
-        return tr("Current"), "current"
-      if not self._controller.is_model_removable(entry.key):
-        return tr("Protected"), "protected"
-      return tr("Options"), "options"
-    if self._controller.is_entry_actively_downloading(entry.key, self._active_download_key):
-      return self._controller.download_progress_text() or tr("Downloading..."), "downloading"
-    return tr("Download"), "download"
+      row_rect = rl.Rectangle(x, y + index * ROW_HEIGHT, width, ROW_HEIGHT)
+      self._draw_model_row(row_rect, entry, is_last=index == len(entries) - 1)
+    return y + len(entries) * ROW_HEIGHT
 
   def _draw_model_row(self, rect: rl.Rectangle, entry: ModelCatalogEntry, is_last: bool):
+    mouse_pos = gui_app.last_mouse_event.pos
+    row_hovered = bool(point_hits(mouse_pos, rect, self._scroll_rect, pad_x=6, pad_y=0))
+    target_key = f"row:{entry.key}"
+    pressed = self._pressed_target == target_key
     current = self._controller.is_current_model(entry.key)
-    row_touchable = entry.installed and not self._controller._params.get_bool("ModelRandomizer")
-    hovered, pressed = self._interactive_state(f"row:{entry.key}", rect) if row_touchable else (False, False)
-    subtitle, warning = self._model_subtitle(entry, current)
-    alpha = self._row_alpha(entry.key)
-    label, kind = self._model_action(entry, current)
+    downloading = self._controller.is_entry_actively_downloading(entry.key, self._active_download_key)
+    removable = self._controller.is_model_removable(entry.key)
+    is_menu_open = (self._confirm_key == entry.key)
 
-    if self._confirm_key == entry.key:
-      draw_settings_card_row(rect, title=entry.name, subtitle=subtitle, show_chevron=False, hovered=hovered, pressed=pressed,
-                             current=current, grouped=True, is_last=is_last, alpha=alpha, style=PANEL_STYLE,
-                             subtitle_color=AetherListColors.WARNING if warning else None)
-      self._draw_options_menu(rect, entry)
-      return
-
-    action_kwargs = {}
-    if kind == "current":
-      action_kwargs = {"action_fill": with_alpha(AetherListColors.SUCCESS_SOFT, 60), "action_border": AetherListColors.SUCCESS}
-    elif kind == "protected":
-      action_kwargs = {"action_fill": with_alpha(AS.TRACK_OFF, 120), "action_border": AS.SETTINGS_TILE_BORDER,
-                       "action_text_color": AS.TEXT_SECONDARY}
-    elif kind in ("options", "downloading"):
-      action_kwargs = {"action_fill": with_alpha(AS.TRACK_OFF, 160), "action_border": AS.SETTINGS_TILE_BORDER}
-    action = draw_settings_card_row(
-      rect, title=entry.name, subtitle=subtitle, action_text=label, hovered=hovered, pressed=pressed, current=current,
-      grouped=True, is_last=is_last, alpha=alpha, style=PANEL_STYLE, action_text_size=SETTINGS_ROW_VALUE_FONT_SIZE,
-      action_height=AS.VALUE_PILL_HEIGHT, subtitle_color=AetherListColors.WARNING if warning else None, **action_kwargs,
+    alpha, offset_y, scale = self._row_transition_style(entry.key)
+    draw_rect = rl.Rectangle(
+      rect.x + (rect.width * (1 - scale) / 2), rect.y + offset_y + (rect.height * (1 - scale) / 2), rect.width * scale, rect.height * scale
     )
-    if kind in ("options", "download", "downloading"):
-      self._interactive_rects[f"action:{entry.key}"] = action
+
+    draw_list_row_shell(
+      draw_rect,
+      current=current,
+      hovered=row_hovered,
+      pressed=pressed,
+      is_last=is_last,
+      alpha=alpha,
+      row_bg=AetherListColors.ROW_BG,
+      row_border=AetherListColors.ROW_BORDER,
+      row_separator=AetherListColors.ROW_SEPARATOR,
+      row_hover=AetherListColors.ROW_HOVER,
+      current_bg=AetherListColors.CURRENT_BG,
+      current_border=AetherListColors.CURRENT_BORDER,
+      row_radius=ROW_RADIUS,
+      separator_inset=22,
+    )
+
+    action_width = ACTION_WIDTH * 2 + SPACING.lg if is_menu_open else ACTION_WIDTH
+    action_rect = draw_action_rail(
+      draw_rect, action_width, current=current, alpha=alpha,
+      fill=AetherListColors.ACTION_BG, separator=AetherListColors.ACTION_SEPARATOR, inset_y=18,
+    )
+
+    info_rect = rl.Rectangle(draw_rect.x + 24, draw_rect.y + 18, draw_rect.width - action_width - 42, draw_rect.height - 36)
+    row_touchable = entry.installed and not self._controller._params.get_bool("ModelRandomizer")
     if row_touchable:
-      # The row selects the model; the pill on its right does its own action.
-      self._interactive_rects[f"row:{entry.key}"] = rl.Rectangle(rect.x, rect.y, max(0.0, action.x - rect.x), rect.height)
+      self._interactive_rects[f"row:{entry.key}"] = rl.Rectangle(draw_rect.x, draw_rect.y, draw_rect.width - action_width, draw_rect.height)
 
-  def _draw_options_menu(self, rect: rl.Rectangle, entry: ModelCatalogEntry):
-    font = gui_app.font(FontWeight.SEMI_BOLD)
-    labels = [(tr("Delete"), "delete"), (tr("Unfavorite") if entry.user_favorite else tr("Favorite"), "favorite")]
-    right = rect.x + rect.width - AS.SETTINGS_CARD_INSET
-    y = rect.y + (rect.height - AS.VALUE_PILL_HEIGHT) / 2
-    for label, action in reversed(labels):
-      width = max(AS.MIN_TOUCH * 1.4, measure_text_cached(font, label, SETTINGS_ROW_VALUE_FONT_SIZE).x + AS.SETTINGS_CARD_INSET * 2)
-      pill = rl.Rectangle(right - width, y, width, AS.VALUE_PILL_HEIGHT)
-      if action == "delete":
-        fill, border = AetherListColors.DANGER_SOFT, with_alpha(AetherListColors.DANGER, 140)
+    self._draw_model_info(info_rect, entry, current)
+
+    if entry.installed:
+      randomizer_on = self._controller._params.get_bool("ModelRandomizer")
+      if current and not randomizer_on:
+        self._draw_current_action(action_rect)
+      elif not removable:
+        self._draw_protected_action(action_rect)
       else:
-        fill, border = AS.ACCENT_TINT, AS.ACCENT_EDGE
-      draw_action_pill(pill, label, fill, border, AS.TEXT, font_size=SETTINGS_ROW_VALUE_FONT_SIZE)
-      self._interactive_rects[f"menu:{entry.key}:{action}"] = pill
-      right = pill.x - AS.SETTINGS_CONTROL_GAP
+        if not is_menu_open:
+          self._interactive_rects[f"action:{entry.key}"] = action_rect
+        self._draw_menu_action(action_rect, is_menu_open, entry)
+    else:
+      self._interactive_rects[f"action:{entry.key}"] = action_rect
+      if downloading:
+        self._draw_downloading_action(action_rect, self._controller.download_progress_text())
+      else:
+        self._draw_download_action(action_rect)
 
-  def _row_alpha(self, key: str) -> int:
+  def _draw_model_info(self, rect: rl.Rectangle, entry: ModelCatalogEntry, current: bool):
+    title_size = SETTINGS_ROW_TITLE_FONT_SIZE
+    meta_size = SETTINGS_ROW_SUBTITLE_FONT_SIZE
+    inter_gap = 6
+    total_h = (title_size + meta_size) * FONT_SCALE + inter_gap
+    start_y = rect.y + (rect.height - total_h) / 2
+
+    heart_offset = 0
+    if entry.user_favorite:
+      heart_color = rl.Color(210, 100, 130, 230)
+      heart_center = rl.Vector2(rect.x + 14, start_y + title_size * FONT_SCALE / 2)
+      draw_heart_icon(heart_center, heart_color)
+      heart_offset = 36
+
+    title_rect = rl.Rectangle(rect.x + heart_offset, start_y, rect.width - heart_offset, title_size * FONT_SCALE)
+    gui_label(title_rect, entry.name, title_size, AetherListColors.HEADER, FontWeight.SEMI_BOLD)
+
+    meta_parts: list[str] = []
+    if entry.series:
+      meta_parts.append(entry.series)
+    if entry.released:
+      meta_parts.append(entry.released)
+
+    if self._controller._params.get_bool("ModelRandomizer"):
+      meta_parts.append(tr("In Pool"))
+    elif current:
+      meta_parts.append(tr("Active"))
+    elif entry.builtin:
+      meta_parts.append(tr("Built-in"))
+
+    if entry.partial:
+      meta_parts.append(tr("Incomplete"))
+    if entry.requires_external_gpu:
+      meta_parts.append(tr("GPU required"))
+    if not entry.user_favorite and entry.community_favorite:
+      meta_parts.append(tr("Popular"))
+
+    if meta_parts:
+      meta_rect = rl.Rectangle(rect.x, start_y + title_size * FONT_SCALE + inter_gap, rect.width, meta_size * FONT_SCALE)
+      has_warning = entry.partial or entry.requires_external_gpu
+      text_color = AetherListColors.WARNING if has_warning else AetherListColors.SUBTEXT
+      gui_label(meta_rect, " • ".join(meta_parts), meta_size, text_color, FontWeight.NORMAL if not has_warning else FontWeight.MEDIUM)
+
+  def _draw_download_action(self, rect: rl.Rectangle):
+    center_x = rect.x + rect.width / 2
+    center_y = rect.y + 42
+    draw_download_icon(rl.Vector2(center_x, center_y), AetherListColors.HEADER)
+    gui_label(
+      rl.Rectangle(rect.x + 16, rect.y + 72, rect.width - 32, 32),
+      tr("Download"),
+      26,
+      AetherListColors.SUBTEXT,
+      FontWeight.MEDIUM,
+      alignment=rl.GuiTextAlignment.TEXT_ALIGN_CENTER,
+    )
+
+  def _draw_downloading_action(self, rect: rl.Rectangle, progress_text: str):
+    center = rl.Vector2(rect.x + rect.width / 2, rect.y + 42)
+    phase = (time.monotonic() * 240.0) % 360.0
+    draw_busy_ring(center, phase, PANEL_STYLE.accent, inner_radius=14, outer_radius=20, thickness=24)
+
+    label = progress_text if progress_text else tr("Downloading")
+    gui_label(
+      rl.Rectangle(rect.x + 12, rect.y + 72, rect.width - 24, 32),
+      label,
+      24,
+      AetherListColors.SUBTEXT,
+      FontWeight.MEDIUM,
+      alignment=rl.GuiTextAlignment.TEXT_ALIGN_CENTER,
+    )
+
+  def _draw_menu_action(self, rect: rl.Rectangle, is_open: bool, entry: ModelCatalogEntry):
+    if not is_open:
+      center_x = rect.x + rect.width / 2
+      center_y = rect.y + 42
+      draw_overflow_dots(rl.Vector2(center_x, center_y), rl.Color(AetherListColors.HEADER.r, AetherListColors.HEADER.g, AetherListColors.HEADER.b, min(AetherListColors.HEADER.a, 200)))
+      gui_label(
+        rl.Rectangle(rect.x + 16, rect.y + 72, rect.width - 32, 32),
+        tr("Options"),
+        26,
+        AetherListColors.SUBTEXT,
+        FontWeight.MEDIUM,
+        alignment=rl.GuiTextAlignment.TEXT_ALIGN_CENTER,
+      )
+    else:
+      btn_h = AETHER_LIST_METRICS.header_button_height
+      gap = SPACING.lg
+      start_y = rect.y + (rect.height - btn_h) / 2
+      btn_w = (rect.width - SPACING.md * 2 - gap) / 2
+
+      delete_rect = rl.Rectangle(rect.x + SPACING.md, start_y, btn_w, btn_h)
+      fav_rect = rl.Rectangle(delete_rect.x + btn_w + gap, start_y, btn_w, btn_h)
+
+      self._interactive_rects[f"menu:{entry.key}:delete"] = rl.Rectangle(delete_rect.x, rect.y, btn_w, rect.height)
+      self._interactive_rects[f"menu:{entry.key}:favorite"] = rl.Rectangle(fav_rect.x, rect.y, btn_w, rect.height)
+
+      draw_action_pill(
+        delete_rect,
+        tr("Delete"),
+        AetherListColors.DANGER_SOFT,
+        rl.Color(AetherListColors.DANGER.r, AetherListColors.DANGER.g, AetherListColors.DANGER.b, min(AetherListColors.DANGER.a, 70)),
+        AetherListColors.HEADER,
+        font_size=32,
+      )
+
+      is_fav = entry.user_favorite
+      fav_fill = rl.Color(210, 100, 130, 44) if is_fav else rl.Color(PANEL_STYLE.accent.r, PANEL_STYLE.accent.g, PANEL_STYLE.accent.b, 26)
+      fav_border = rl.Color((210 if is_fav else PANEL_STYLE.accent.r), (100 if is_fav else PANEL_STYLE.accent.g), (130 if is_fav else PANEL_STYLE.accent.b), min((255 if is_fav else PANEL_STYLE.accent.a), 70))
+      fav_label = tr("Unfavorite") if is_fav else tr("Favorite")
+      draw_action_pill(fav_rect, fav_label, fav_fill, fav_border, AetherListColors.HEADER, font_size=32)
+
+  def _draw_current_action(self, rect: rl.Rectangle):
+    chip_h = 52
+    chip_w = rect.width - 56
+    chip_rect = rl.Rectangle(rect.x + 28, rect.y + (rect.height - chip_h) / 2, chip_w, chip_h)
+    AetherChip(tr("Current"), PANEL_STYLE.current_fill, PANEL_STYLE.current_border, AetherListColors.HEADER, font_size=26).render(chip_rect)
+
+  def _draw_protected_action(self, rect: rl.Rectangle):
+    chip_h = 52
+    chip_w = rect.width - 56
+    chip_rect = rl.Rectangle(rect.x + 28, rect.y + (rect.height - chip_h) / 2, chip_w, chip_h)
+    AetherChip(tr("Protected"), rl.Color(255, 255, 255, 10), AetherListColors.MUTED, AetherListColors.SUBTEXT, font_size=26).render(chip_rect)
+
+  def _draw_scrollbar(self, rect: rl.Rectangle):
+    self._scrollbar.render(rect, self._content_height, self._scroll_offset)
+
+  def _row_transition_style(self, key: str) -> tuple[int, float, float]:
     if key not in self._transition_starts:
-      return 255
-    started_at, _direction = self._transition_starts[key]
+      return 255, 0.0, 1.0
+
+    started_at, direction = self._transition_starts[key]
     elapsed = min(max((time.monotonic() - started_at) / TRANSITION_SECONDS, 0.0), 1.0)
-    return int(150 + 105 * (1.0 - (1.0 - elapsed) * (1.0 - elapsed)))
+    eased = 1.0 - (1.0 - elapsed) * (1.0 - elapsed)
+    alpha = int(150 + 105 * eased)
+    offset_y = direction * (1.0 - eased) * 14
+    scale = 0.965 + 0.035 * eased
+    return alpha, offset_y, scale
 
 
 class StarPilotDrivingModelLayout(_SettingsPage):
@@ -512,6 +723,9 @@ class StarPilotDrivingModelLayout(_SettingsPage):
 
     self._fetch_manifest_async()
     self._update_model_metadata()
+
+  def _show_notice(self, message: str):
+    gui_app.push_widget(alert_dialog(message))
 
   def _render(self, rect: rl.Rectangle):
     self._update_state()
@@ -701,7 +915,7 @@ class StarPilotDrivingModelLayout(_SettingsPage):
 
   def _show_selection_dialog(self, title: str, options: dict[str, str] | list[str], current_val: str, on_confirm: Callable, current_key: str = ""):
     if not options:
-      gui_app.push_widget(alert_dialog(tr("No options available.")))
+      self._show_notice(tr("No options available."))
       return
 
     option_labels = list(options.values()) if isinstance(options, dict) else list(options)
@@ -714,8 +928,7 @@ class StarPilotDrivingModelLayout(_SettingsPage):
         else:
           on_confirm(dialog.selection)
 
-    dialog = MultiOptionDialog(title, option_labels, current_val, callback=_on_close,
-                               subtitle=tr("Choose a driving model to continue."))
+    dialog = MultiOptionDialog(title, option_labels, current_val, callback=_on_close)
     gui_app.push_widget(dialog)
 
   def _is_download_active(self) -> bool:
@@ -869,13 +1082,13 @@ class StarPilotDrivingModelLayout(_SettingsPage):
     selected_model = canonical_model_key(model_key)
     entry = self._catalog_entries.get(selected_model)
     if entry is None or not entry.installed:
-      gui_app.push_widget(alert_dialog(tr("Model is not available on this device.")))
+      self._show_notice(tr("Model is not available on this device."))
       return False
     if entry.requires_external_gpu and not external_gpu_available():
-      gui_app.push_widget(alert_dialog(tr("This model requires a detected external GPU.")))
+      self._show_notice(tr("This model requires a detected external GPU."))
       return False
     if self._params.get_bool("ModelRandomizer"):
-      gui_app.push_widget(alert_dialog(tr("Turn off Model Randomizer to choose a model manually.")))
+      self._show_notice(tr("Turn off Model Randomizer to choose a model manually."))
       return False
     if selected_model == self._current_model_key:
       return True
@@ -898,27 +1111,27 @@ class StarPilotDrivingModelLayout(_SettingsPage):
     self._update_model_metadata()
     if ui_state.started:
       self._params.put_bool("OnroadCycleRequested", True)
-      gui_app.push_widget(alert_dialog(tr("Drive-cycle requested for immediate apply.")))
+      self._show_notice(tr("Drive-cycle requested for immediate apply."))
     return True
 
   def start_download(self, model_key: str):
     self._update_model_metadata()
     if ui_state.started:
-      gui_app.push_widget(alert_dialog(tr("Cannot download models while driving.")))
+      self._show_notice(tr("Cannot download models while driving."))
       return False
     if self._is_download_active():
-      gui_app.push_widget(alert_dialog(tr("A model download is already in progress.")))
+      self._show_notice(tr("A model download is already in progress."))
       return False
 
     entry = self._catalog_entries.get(canonical_model_key(model_key))
     if entry is None:
-      gui_app.push_widget(alert_dialog(tr("Unknown model.")))
+      self._show_notice(tr("Unknown model."))
       return False
     if entry.requires_external_gpu and not external_gpu_available():
-      gui_app.push_widget(alert_dialog(tr("This model requires a detected external GPU.")))
+      self._show_notice(tr("This model requires a detected external GPU."))
       return False
     if entry.installed:
-      gui_app.push_widget(alert_dialog(tr("Model is already on this device.")))
+      self._show_notice(tr("Model is already on this device."))
       return False
 
     self._params_memory.remove(CANCEL_DOWNLOAD_PARAM)
@@ -930,10 +1143,10 @@ class StarPilotDrivingModelLayout(_SettingsPage):
   def download_all_missing(self):
     self._update_model_metadata()
     if ui_state.started:
-      gui_app.push_widget(alert_dialog(tr("Cannot download models while driving.")))
+      self._show_notice(tr("Cannot download models while driving."))
       return False
     if self._is_download_active():
-      gui_app.push_widget(alert_dialog(tr("A model download is already in progress.")))
+      self._show_notice(tr("A model download is already in progress."))
       return False
     if not self.available_entries():
       return False
@@ -950,10 +1163,10 @@ class StarPilotDrivingModelLayout(_SettingsPage):
 
   def refresh_manifest(self):
     if ui_state.started:
-      gui_app.push_widget(alert_dialog(tr("Cannot refresh the model catalog while driving.")))
+      self._show_notice(tr("Cannot refresh the model catalog while driving."))
       return False
     if self._is_download_active():
-      gui_app.push_widget(alert_dialog(tr("Cannot refresh the model catalog during an active download.")))
+      self._show_notice(tr("Cannot refresh the model catalog during an active download."))
       return False
     self._fetch_manifest_async()
     return True
@@ -963,16 +1176,16 @@ class StarPilotDrivingModelLayout(_SettingsPage):
     key = canonical_model_key(model_key)
     entry = self._catalog_entries.get(key)
     if entry is None:
-      gui_app.push_widget(alert_dialog(tr("Unknown model.")))
+      self._show_notice(tr("Unknown model."))
       return False
     if ui_state.started:
-      gui_app.push_widget(alert_dialog(tr("Cannot delete model files while driving.")))
+      self._show_notice(tr("Cannot delete model files while driving."))
       return False
     if self._is_download_active():
-      gui_app.push_widget(alert_dialog(tr("Cannot delete model files while a download is in progress.")))
+      self._show_notice(tr("Cannot delete model files while a download is in progress."))
       return False
     if not self.is_model_removable(key):
-      gui_app.push_widget(alert_dialog(tr("This model is protected and cannot be removed.")))
+      self._show_notice(tr("This model is protected and cannot be removed."))
       return False
 
     for file in self._model_dir.iterdir():
@@ -1021,21 +1234,20 @@ class StarPilotDrivingModelLayout(_SettingsPage):
       elif dialog.selection == tr("Reset All"):
         self._params.remove("BlacklistedModels")
 
-    dialog = MultiOptionDialog(tr("Manage Blacklist"), [tr("Add"), tr("Remove"), tr("Reset All")], callback=_on_close,
-                               subtitle=tr("Manage models excluded from random selection."))
+    dialog = MultiOptionDialog(tr("Manage Blacklist"), [tr("Add"), tr("Remove"), tr("Reset All")], callback=_on_close)
     gui_app.push_widget(dialog)
 
   def _on_scores_clicked(self):
     scores_raw = self._params.get("ModelDrivesAndScores", encoding="utf-8") or ""
     if not scores_raw:
-      gui_app.push_widget(alert_dialog(tr("No model ratings found.")))
+      self._show_notice(tr("No model ratings found."))
       return
     try:
       scores = json.loads(scores_raw)
       lines = [f"{key}: {value.get('Score', 0)}% ({value.get('Drives', 0)} drives)" for key, value in scores.items()]
       gui_app.push_widget(ConfirmDialog("\n".join(lines), tr("Close"), rich=True))
     except Exception:
-      gui_app.push_widget(alert_dialog(tr("Unable to read model ratings.")))
+      self._show_notice(tr("Unable to read model ratings."))
 
   def _on_model_randomizer_toggled(self, state: bool):
     self._params.put_bool("ModelRandomizer", state)

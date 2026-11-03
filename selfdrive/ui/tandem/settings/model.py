@@ -347,13 +347,11 @@ class UpstreamModels:
     driving"); without it the message is dropped."""
     from openpilot.selfdrive.ui.layouts.settings.starpilot import driving_model as dm
     self._dm = dm
-    self._layout = dm.StarPilotDrivingModelLayout()
-    self._notify = notify or (lambda message: None)
+    from openpilot.selfdrive.ui.tandem.settings.controllers import notice_controller
+    self._layout = notice_controller(dm.StarPilotDrivingModelLayout, notify or (lambda message: None))()
 
   def _run(self, action: Callable[[], None]) -> None:
-    from openpilot.selfdrive.ui.tandem.settings.upstream import notices
-    for message in notices(action):
-      self._notify(message)
+    action()
 
   def refresh(self) -> None:
     self._layout.show_event()   # fetches the manifest in the background

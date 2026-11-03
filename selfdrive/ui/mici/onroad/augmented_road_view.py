@@ -7,7 +7,7 @@ from msgq.visionipc import VisionStreamType
 from openpilot.common.constants import CV
 from openpilot.selfdrive.ui.ui_state import ui_state
 from openpilot.selfdrive.ui.mici.onroad import SIDE_PANEL_WIDTH
-from openpilot.selfdrive.ui.mici.onroad.alert_renderer import AlertRenderer, ALERT_COLORS, AlertStatus, get_alert_background_height
+from openpilot.selfdrive.ui.mici.onroad.alert_renderer import AlertRenderer, ALERT_COLORS, AlertStatus
 from openpilot.selfdrive.ui.mici.onroad.driver_state import DriverStateRenderer
 from openpilot.selfdrive.ui.mici.onroad.hud_renderer import HudRenderer, VISION_SPEED_LIMIT_PULSE_COLOR
 from openpilot.selfdrive.ui.mici.onroad.model_renderer import ModelRenderer
@@ -23,7 +23,6 @@ from openpilot.selfdrive.ui.mici.onroad.cameraview import CameraView
 from openpilot.selfdrive.ui.onroad.starpilot.pip_sidecam import PipSideCamera
 from openpilot.selfdrive.ui.onroad.starpilot.pulse_glide import get_pulse_glide_border_color
 from openpilot.selfdrive.ui.onroad.starpilot.starpilot_border import get_traffic_border_colors
-from openpilot.selfdrive.ui.onroad.starpilot.turn_signals import TurnSignalRenderer
 from openpilot.selfdrive.ui.lib.starpilot_visuals import get_border_width
 from openpilot.starpilot.common.favorite_slots import (
   get_favorite_enum_state,
@@ -596,7 +595,6 @@ class AugmentedRoadView(CameraView):
     self._sidebar_widgets = MiciSidebarWidgets(self._confidence_ball)
     self._min_steer_speed_banner = MinSteerSpeedBanner()
     self._standstill_timer = StandstillTimerOverlay()
-    self._turn_signals = TurnSignalRenderer()
     self._favorite_slots = self._child(FavoriteSlotsOverlay())
     self._offroad_label = UnifiedLabel("start the car to\nuse openpilot", 54, FontWeight.DISPLAY,
                                        text_color=rl.Color(255, 255, 255, int(255 * 0.9)),
@@ -615,20 +613,6 @@ class AugmentedRoadView(CameraView):
   @staticmethod
   def _controls_ready() -> bool:
     return ui_state.sm.recv_frame["selfdriveState"] >= ui_state.started_frame
-
-  def close(self) -> None:
-    if (signals := getattr(self, "_turn_signals", None)) is not None:
-      signals.close()
-    super().close()
-
-  def _render_turn_signals(self, alert, enabled: bool) -> None:
-    # Mici alerts occupy the top of the viewport; keep the frogs below them.
-    top_margin = get_alert_background_height(alert, self._content_rect.height)
-    self._turn_signals.render(
-      self._content_rect, ui_state,
-      enabled=enabled and top_margin < self._content_rect.height and (alert is None or alert.size != log.SelfdriveState.AlertSize.full),
-      top_margin=top_margin,
-    )
 
   def _update_reverse_driver_camera_state(self) -> bool:
     should_force_driver = ui_state.started and ui_state.ui_params.get_bool("DriverCamera") and self._is_in_reverse()
@@ -781,7 +765,6 @@ class AugmentedRoadView(CameraView):
       self._hud_renderer.render_background()
 
     alert_to_render, not_animating_out = self._alert_renderer.will_render()
-    self._render_turn_signals(alert_to_render, draw_hud_controls)
 
     should_draw_dmoji = ui_state.is_onroad() and (
       is_driver_stream or camera_view_none or ((not in_reverse) and (not self._hud_renderer.drawing_top_icons()))

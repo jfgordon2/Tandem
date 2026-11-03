@@ -55,14 +55,6 @@ class FavoriteRadialMenu:
   CORNER_HINT_OUTER_RADIUS = 62.0
   CORNER_HINT_RING_RADIUS = 42.0
   CORNER_HINT_EDGE_MARGIN = 6.0
-  # Corner hint art: a soft white glow fanning out from the corner plus a chevron
-  # pointing into the screen (the swipe that opens the menu). The rounded screen
-  # border is drawn over the corner afterwards, so the chevron sits clear of its curve.
-  CORNER_HINT_GLOW_RADIUS = 150.0          # matches the 150px cached hint texture
-  CORNER_HINT_GLOW_ALPHA = (170, 215)      # peak at the corner: idle, pressed
-  CORNER_HINT_CHEVRON_TIP = 70.0           # tip offset from the corner along each axis
-  CORNER_HINT_CHEVRON_ARM = 16.0
-  CORNER_HINT_CHEVRON_WIDTH = 5.0
   _ELLIPSIS = "..."
 
   _PURPLE = (161, 112, 255)
@@ -713,6 +705,21 @@ class FavoriteRadialMenu:
       lines[-1] = FavoriteRadialMenu._append_ellipsis(font, lines[-1], font_size, max_width)
     return lines
 
+  @staticmethod
+  def _sample_aether_color(t: float, alpha: int) -> rl.Color:
+    """Sample from the tri-stop Aether gradient (#C49EFF -> #AC7DFF -> #58329E)."""
+    if t <= 0.5:
+      w = t * 2.0
+      r = int(196 - 24 * w)
+      g = int(158 - 33 * w)
+      b = 255
+    else:
+      w = (t - 0.5) * 2.0
+      r = int(172 - 84 * w)
+      g = int(125 - 75 * w)
+      b = int(255 - 97 * w)
+    return rl.Color(r, g, b, alpha)
+
   def _draw_corner_hint(self) -> None:
     scale = self._scale_for(self._rect)
     x0 = self._rect.x
@@ -755,34 +762,85 @@ class FavoriteRadialMenu:
   @classmethod
   def _draw_corner_hint_geometry(cls, scale: float, is_pressed: bool,
                                  x0: float, y0: float) -> None:
-    # 1. White glow: a quarter-circle centred on the corner, fading out with distance.
-    corner = rl.Vector2(x0, y0)
-    radius = cls.CORNER_HINT_GLOW_RADIUS
-    peak = cls.CORNER_HINT_GLOW_ALPHA[1 if is_pressed else 0]
-    step = 1.5
-    inner = 0.0
-    while inner < radius:
-      outer = min(inner + step, radius)
-      alpha = int(peak * (1.0 - (inner + outer) / (2.0 * radius)) ** 1.6)
-      if alpha > 0:
-        rl.draw_ring(corner, inner * scale, outer * scale, -90.0, 0.0, 32, rl.Color(255, 255, 255, alpha))
-      inner = outer
+    size = 150.0 * scale
 
-    # 2. Chevron pointing up-right, with a soft shadow so it reads on bright camera frames.
-    tip_offset = cls.CORNER_HINT_CHEVRON_TIP * scale
-    arm = cls.CORNER_HINT_CHEVRON_ARM * scale
-    width = cls.CORNER_HINT_CHEVRON_WIDTH * scale
-    shadow_offset = 1.6 * scale
+    steps = 48
+
+    # Build the gradient mesh once for this cached appearance.
+    v_origin = rl.Vector2(x0, y0)
+    inv_steps = 1.0 / steps
+    pts_top = [rl.Vector2(x0, y0 - size * (k * inv_steps)) for k in range(steps + 1)]
+    pts_right = [rl.Vector2(x0 + size * (k * inv_steps), y0) for k in range(steps + 1)]
+
+    # 2. Pass 0 (Smoked Obsidian Base) & Pass 1 (Tri-Stop Aether Gradient Mesh)
+    # Borderless design: smooth monotonic decay into exact 0 alpha at hypotenuse
+    base_max_alpha = 200 if is_pressed else 160
+    purple_max_alpha = 145 if is_pressed else 105
+
+    for i in range(steps):
+      t_mid = (i + 0.5) * inv_steps
+      v_ta, v_tb = pts_top[i], pts_top[i + 1]
+      v_ra, v_rb = pts_right[i], pts_right[i + 1]
+
+      base_a = int(base_max_alpha * ((1.0 - t_mid) ** 1.40))
+      purple_a = int(purple_max_alpha * ((1.0 - t_mid) ** 1.75))
+
+      for col in (rl.Color(8, 6, 18, base_a) if base_a > 0 else None,
+                  cls._sample_aether_color(t_mid, purple_a) if purple_a > 0 else None):
+        if col is None:
+          continue
+        if i == 0:
+          rl.draw_triangle(v_origin, v_rb, v_tb, col)
+        else:
+          rl.draw_triangle(v_ta, v_ra, v_tb, col)
+          rl.draw_triangle(v_tb, v_ra, v_rb, col)
+
+    # 3. Ultra-Polished Frosted-Glass Vector Arrow (Nestled deep in purple corner)
+    inset = (cls.CORNER_HINT_RING_RADIUS + cls.CORNER_HINT_EDGE_MARGIN) * scale
+    cx, cy = x0 + inset, y0 - inset
+
+    tip = rl.Vector2(cx + 15.0 * scale, cy - 15.0 * scale)
+    tail = rl.Vector2(cx - 15.0 * scale, cy + 15.0 * scale)
+    wing1 = rl.Vector2(tip.x - 14.0 * scale, tip.y + 1.2 * scale)
+    wing2 = rl.Vector2(tip.x - 1.2 * scale, tip.y + 14.0 * scale)
+
+    line_w = 4.6 * scale
+
+    # Tier 1: Deep Subsurface Ambient Occlusion Shadow
+    s_off = 1.6 * scale
+    s_tip = rl.Vector2(tip.x + s_off, tip.y + s_off)
+    s_tail = rl.Vector2(tail.x + s_off, tail.y + s_off)
+    s_w1 = rl.Vector2(wing1.x + s_off, wing1.y + s_off)
+    s_w2 = rl.Vector2(wing2.x + s_off, wing2.y + s_off)
+    shadow_w = line_w + 2.0 * scale
+    shadow_col = rl.Color(8, 6, 16, 130 if is_pressed else 105)
+
+    # Tier 2: Aether Violet Refractive Halo / Glass Bloom
+    halo_w = line_w + 3.2 * scale
+    halo_col = rl.Color(185, 145, 255, 75 if is_pressed else 55)
+
+    # Tier 3: Radiant High-Luminance Frost White Body
+    arrow_col = rl.Color(255, 255, 255, 245 if is_pressed else 225)
+
+    # Tier 4: Specular Spine Highlight
+    spec_w = 2.0 * scale
+    spec_col = rl.Color(255, 255, 255, 255 if is_pressed else 240)
+
+    # Render multi-pass optical stack
     layers = (
-      (shadow_offset, rl.Color(8, 6, 16, 130 if is_pressed else 105)),
-      (0.0, rl.Color(255, 255, 255, 245 if is_pressed else 225)),
+      (s_tail, s_tip, s_w1, s_w2, shadow_w, shadow_col),
+      (tail, tip, wing1, wing2, halo_w, halo_col),
+      (tail, tip, wing1, wing2, line_w, arrow_col),
+      (tail, tip, wing1, wing2, spec_w, spec_col),
     )
-    for offset, color in layers:
-      tip = rl.Vector2(x0 + tip_offset + offset, y0 - tip_offset + offset)
-      for end in (rl.Vector2(tip.x - arm, tip.y), rl.Vector2(tip.x, tip.y + arm)):
-        rl.draw_line_ex(tip, end, width, color)
-        rl.draw_circle_v(end, width * 0.5, color)
-      rl.draw_circle_v(tip, width * 0.5, color)
+
+    for p_tail, p_tip, p_w1, p_w2, width, col in layers:
+      rl.draw_line_ex(p_tail, p_tip, width, col)
+      rl.draw_line_ex(p_tip, p_w1, width, col)
+      rl.draw_line_ex(p_tip, p_w2, width, col)
+      r_cap = width * 0.5
+      for pt in (p_tail, p_tip, p_w1, p_w2):
+        rl.draw_circle_v(pt, r_cap, col)
 
   def _draw_radial_menu(self) -> None:
     scale = self._scale_for(self._rect)

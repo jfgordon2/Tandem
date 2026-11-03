@@ -51,8 +51,20 @@ FIELD_FONT = T.font_px(20)
 class _Field(InputBox):
   """Upstream's input box (cursor, masking, taps), drawn on our field: no fill of its own, our text color and size."""
 
+  def _get_font(self):
+    return draw._face(self._get_display_text(), T.FONT)
+
+  def _update_text_offset(self):
+    with draw._own_font:
+      super()._update_text_offset()
+
+  def _handle_mouse_release(self, mouse_pos):
+    with draw._own_font:
+      super()._handle_mouse_release(mouse_pos)
+
   def _render(self, rect, *_):
-    super()._render(rect, rl.BLANK, rl.BLANK, T.TEXT, FIELD_FONT)
+    with draw._own_font:
+      super()._render(rect, rl.BLANK, rl.BLANK, T.TEXT, FIELD_FONT)
 
 
 class _Key(Widget):

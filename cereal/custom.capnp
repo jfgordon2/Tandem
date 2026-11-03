@@ -239,9 +239,6 @@ struct StarPilotPlan @0xf98d843bfd7004a3 {
   approachStopLength @42 :Float32;  # pre-commit distance to a detected stop, m; 0 when off
   slcPresentedSpeedLimitSource @43 :Text;  # source of the shown accepted or pending posted limit
   slcIsLimitingMaxSet @44 :Bool;  # SLC target is below the configured Max Set
-  navTurnControllingSpeed @45 :Bool;  # navigation's turn target is setting the active cruise target
-  navTurnManeuver @46 :Text;  # maneuver selected by navigation's turn speed controller
-  navTurnModifier @47 :Text;  # direction of that maneuver, including a selected next turn
 }
 
 struct StarPilotRadarState @0xb86e6369214c01c8 {

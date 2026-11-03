@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Render StarPilot's real comma 3X on-road view to images, for previewing turn signals.
+"""Render the Essentials driving view with every bundled animation for asset previews.
 
-Everything drawn is StarPilot code: StarPilotOnroadView (border, HUD, unified
-speed card, steering-wheel widget, torque bar, bottom row) and the real
-TurnSignalRenderer with the bundled signal packs. Only the inputs are faked:
+Drawing uses EssentialsOnroadView and its owned TurnSignalRenderer. This preview also permits the
+indicator packs that Essentials normally replaces with its built-in chevrons. Only the inputs are faked:
 
   * no camera: VisionIPC is stubbed, so the road area is the camera-off background
   * car data: messaging is stubbed with real cereal structs (speed, cruise, blinkers, blind spot)
@@ -15,9 +14,9 @@ Compiled modules (params, transformations) are used when they load; otherwise
 pure-Python stand-ins are used (the HUD does not depend on them).
 
 Examples:
-  python starpilot/tools/render_onroad_preview.py --pack sequential --out /tmp/preview
-  python starpilot/tools/render_onroad_preview.py --pack bouncing_ball --right --gif /tmp/ball.gif
-  python starpilot/tools/render_onroad_preview.py --pack flow --hazards --blindspot --frames 1
+  python selfdrive/ui/tandem/tools/render_onroad_preview.py --pack sequential --out /tmp/preview
+  python selfdrive/ui/tandem/tools/render_onroad_preview.py --pack bouncing_ball --right --gif /tmp/ball.gif
+  python selfdrive/ui/tandem/tools/render_onroad_preview.py --pack flow --hazards --blindspot --frames 1
 
 On Linux without a display, run it under `xvfb-run -a`. On macOS a window may
 flash briefly while rendering.
@@ -33,7 +32,7 @@ import time
 import types
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[4]
 WIDTH, HEIGHT = 2160, 1080
 MPH = 0.44704
 FRAME_PATTERN = re.compile(r"turn_signal(?:_(\d+))?\.png", re.IGNORECASE)
@@ -44,7 +43,7 @@ def signals_dir(pack: str) -> Path:
   """Folder holding a bundled pack's frames (mirrors BUNDLED_SIGNAL_PATHS in turn_signals.py)."""
   if pack == "frog":
     return ROOT / "starpilot/assets/holiday_themes/world_frog_day/signals"
-  return ROOT / "starpilot/assets/signal_packs" / pack / "signals"
+  return ROOT / "selfdrive/ui/tandem/assets/signal_packs" / pack / "signals"
 
 
 def pack_timing(directory: Path) -> tuple[int, int, str]:
@@ -164,7 +163,7 @@ def install_stubs():
   cereal.messaging = messaging
 
   try:
-    import openpilot.common.transformations.transformations  # noqa: F401
+    import openpilot.common.transformations.transformations
   except ImportError:
     sys.modules["openpilot.common.transformations.transformations"] = _transformations_fallback()
 
@@ -268,10 +267,10 @@ def parse_args(argv=None):
   parser.add_argument("--blindspot", action="store_true", help="vehicle in the blind spot (warning image)")
   parser.add_argument("--speed", type=float, default=62, help="current speed in mph (default: 62)")
   parser.add_argument("--set-speed", type=float, default=65, help="cruise set speed in mph (default: 65)")
-  parser.add_argument("--speed-at-bottom", action="store_true", help="Speed at Bottom layout")
+  parser.add_argument("--speed-at-bottom", action="store_true", help="preview-only bottom speed layout (does not change a device setting)")
   parser.add_argument("--alert", choices=("none", "small", "mid"), default="none", help="show a bottom alert")
   parser.add_argument("--frames", type=int, help="frames to capture (default: one full animation cycle)")
-  parser.add_argument("--out", type=Path, default=Path("onroad_preview"), help="folder for PNG frames")
+  parser.add_argument("--out", type=Path, default=Path("selfdrive/ui/tandem/tools/out/onroad"), help="folder for PNG frames")
   parser.add_argument("--gif", type=Path, help="also write an animated GIF here (needs Pillow)")
   parser.add_argument("--gif-scale", type=float, default=0.5, help="GIF size relative to 2160x1080 (default: 0.5)")
   return parser.parse_args(argv)
@@ -319,13 +318,29 @@ def render(args) -> list[Path]:
   import pyray as rl
   from openpilot.system.ui.lib.application import gui_app
   from openpilot.selfdrive.ui.ui_state import ui_state
-  init_preview_window("StarPilot on-road preview")
-  from openpilot.selfdrive.ui.onroad.starpilot import turn_signals
-  from openpilot.selfdrive.ui.onroad.starpilot.starpilot_onroad_view import StarPilotOnroadView
+  init_preview_window("Tandem animation preview")
+  from openpilot.selfdrive.ui.tandem.onroad import turn_signals
+  from openpilot.selfdrive.ui.tandem.onroad.view import EssentialsOnroadView
+  from openpilot.selfdrive.ui.tandem.onroad.layers import BAR_HEIGHT, BAR_MARGIN, draw_speed
+  from openpilot.selfdrive.ui.tandem.onroad import extras
+
+  class AnimationPreview(EssentialsOnroadView):
+    def _render_turn_signals(self):
+      c = self._content_rect
+      rl.begin_scissor_mode(int(c.x), int(c.y), int(c.width), int(c.height))
+      try:
+        self._turn_signals.render(c, ui_state, enabled=self.alert_renderer.will_render()[0] is None,
+                                  bottom_margin=BAR_HEIGHT + BAR_MARGIN + extras.SIGNAL_GAP)
+      finally:
+        rl.end_scissor_mode()
+
+    def _draw_current_speed(self, rect):
+      offset = max(0, rect.height - BAR_HEIGHT - 380) if args.speed_at_bottom else 0
+      draw_speed(rect, self._hud_renderer.speed, "mph", offset, not args.right or args.hazards, args.right or args.hazards, clock[0])
 
   clock = [1000.0]
   turn_signals.time = types.SimpleNamespace(monotonic=lambda: clock[0])
-  view = StarPilotOnroadView()
+  view = AnimationPreview()
   target = rl.load_render_texture(WIDTH, HEIGHT)
 
   def draw():
@@ -352,6 +367,8 @@ def render(args) -> list[Path]:
 
   if args.gif:
     write_gif(written, args.gif, frame_ms, args.gif_scale)
+  rl.set_trace_log_level(rl.TraceLogLevel.LOG_ERROR)
+  view.close()
   rl.unload_render_texture(target)
   gui_app.close()
   return written

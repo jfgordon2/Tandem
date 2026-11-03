@@ -3,7 +3,7 @@
 
 Professional indicators in the on-road widget design language (the Set Speed
 card's translucent fill, border and corner radius from
-selfdrive/ui/lib/aether_style.py). All point left; the renderer
+the original asset design). All point left; the renderer
 mirrors them for right turns. They use the renderer's "static" style, so they
 stay beside the current speed; the 350x170 canvas keeps them level with the
 speed digits. 12 frames at 62 ms give smooth motion in a ~750 ms cycle.
@@ -17,21 +17,20 @@ speed digits. 12 frames at 62 ms give smooth motion in a ~750 ms cycle.
 Blind-spot images freeze the chevrons and turn the card traffic red.
 
 Dev-only dependency: pip install cairosvg
-Usage: python starpilot/tools/make_motion_signals.py [output_root]
-       (writes <output_root>/<slug>/signals; defaults to starpilot/assets/signal_packs)
+Usage: python selfdrive/ui/tandem/tools/make_motion_signals.py [output_root]
+       (writes <output_root>/<slug>/signals; defaults to selfdrive/ui/tandem/assets/signal_packs)
 """
 import math
 import sys
 from pathlib import Path
 
-import cairosvg
 
 W, H = 350, 170
 FRAMES = 12
 FRAME_MS = 62
 DEFAULT_ROOT = Path(__file__).resolve().parents[1] / "assets/signal_packs"
 
-# Design tokens mirrored from selfdrive/ui/lib/aether_style.py.
+# Design tokens mirrored from the original asset design.
 CARD_FILL_OPACITY = 166 / 255                     # CONTROL_BG
 CARD_BORDER, CARD_BORDER_OPACITY = "#C4CDD0", 180 / 255  # CONTROL_BORDER
 BORDER_WIDTH, RADIUS = 6, 31                      # CONTROL_BORDER_WIDTH, CONTROL_RADIUS
@@ -89,12 +88,12 @@ def defs(palette, cy, chevron_h, card):
   top, bottom, glow = palette
   x, y, w, h = card
   return (f'<defs><linearGradient id="lit" gradientUnits="userSpaceOnUse" x1="0" y1="{cy - chevron_h / 2}" x2="0" y2="{cy + chevron_h / 2}">'
-          f'<stop offset="0" stop-color="{top}"/><stop offset="1" stop-color="{bottom}"/></linearGradient>'
-          f'<radialGradient id="glow"><stop offset="0" stop-color="{glow}" stop-opacity="0.3"/>'
-          f'<stop offset="1" stop-color="{glow}" stop-opacity="0"/></radialGradient>'
-          f'<radialGradient id="innerglow" cx="50%" cy="50%" r="60%"><stop offset="0" stop-color="{glow}" stop-opacity="0.14"/>'
-          f'<stop offset="1" stop-color="{glow}" stop-opacity="0"/></radialGradient>'
-          f'<clipPath id="clip"><rect x="{x + 4}" y="{y + 4}" width="{w - 8}" height="{h - 8}" rx="{RADIUS - 4}"/></clipPath></defs>')
+          + f'<stop offset="0" stop-color="{top}"/><stop offset="1" stop-color="{bottom}"/></linearGradient>'
+          + f'<radialGradient id="glow"><stop offset="0" stop-color="{glow}" stop-opacity="0.3"/>'
+          + f'<stop offset="1" stop-color="{glow}" stop-opacity="0"/></radialGradient>'
+          + f'<radialGradient id="innerglow" cx="50%" cy="50%" r="60%"><stop offset="0" stop-color="{glow}" stop-opacity="0.14"/>'
+          + f'<stop offset="1" stop-color="{glow}" stop-opacity="0"/></radialGradient>'
+          + f'<clipPath id="clip"><rect x="{x + 4}" y="{y + 4}" width="{w - 8}" height="{h - 8}" rx="{RADIUS - 4}"/></clipPath></defs>')
 
 
 def card_rect(card, alert):
@@ -102,8 +101,8 @@ def card_rect(card, alert):
   border, border_opacity = (TRAFFIC_RED, 1.0) if alert else (CARD_BORDER, CARD_BORDER_OPACITY)
   glow = f'<rect x="{x + 8}" y="{y + 8}" width="{w - 16}" height="{h - 16}" rx="{RADIUS - 8}" fill="url(#innerglow)"/>' if alert else ""
   return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{RADIUS}" fill="#000" fill-opacity="{CARD_FILL_OPACITY:.3f}"/>{glow}'
-          f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{RADIUS}" fill="none" stroke="{border}" '
-          f'stroke-opacity="{border_opacity:.3f}" stroke-width="{BORDER_WIDTH}"/>')
+          + f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{RADIUS}" fill="none" stroke="{border}" '
+          + f'stroke-opacity="{border_opacity:.3f}" stroke-width="{BORDER_WIDTH}"/>')
 
 
 def chevron(cx, cy, size, opacity, shadow=False):
@@ -112,10 +111,10 @@ def chevron(cx, cy, size, opacity, shadow=False):
   out = ""
   if shadow:  # keeps card-less chevrons readable over bright scenes
     out += (f'<path d="{d}" transform="translate(0,3)" fill="none" stroke="#000" stroke-opacity="{0.45 * opacity:.2f}" '
-            f'stroke-width="{stroke + 8}" stroke-linecap="round" stroke-linejoin="round"/>')
+            + f'stroke-width="{stroke + 8}" stroke-linecap="round" stroke-linejoin="round"/>')
   out += f'<ellipse cx="{cx:.1f}" cy="{cy:.1f}" rx="{w * 1.4:.0f}" ry="{h * 0.8:.0f}" fill="url(#glow)" fill-opacity="{opacity:.2f}"/>'
   return out + (f'<path d="{d}" fill="none" stroke="url(#lit)" stroke-opacity="{opacity:.2f}" stroke-width="{stroke}" '
-                'stroke-linecap="round" stroke-linejoin="round"/>')
+                + 'stroke-linecap="round" stroke-linejoin="round"/>')
 
 
 def flow_svg(frame, alert=False, open_style=False):
@@ -147,6 +146,7 @@ PACKS = {
 
 
 def build(slug, out: Path):
+  import cairosvg
   draw = PACKS[slug]
   out.mkdir(parents=True, exist_ok=True)
   for frame in range(FRAMES):

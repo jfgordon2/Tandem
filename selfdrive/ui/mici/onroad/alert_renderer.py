@@ -65,18 +65,6 @@ class Alert:
   alert_type: str = ""
 
 
-def get_alert_background_height(alert: Alert | None, height: float) -> int:
-  if alert is None:
-    return 0
-  # Match the event-based gradient layout, independently of alert.size.
-  event_name = alert.alert_type.split('/', 1)[0] if alert.alert_type else ''
-  if event_name in ('preLaneChangeLeft', 'preLaneChangeRight', 'laneChange'):
-    return round(height * 0.583)
-  if event_name == 'laneChangeBlocked':
-    return round(height * 0.833)
-  return int(height)
-
-
 # Pre-defined alert instances
 ALERT_STARTUP_PENDING = Alert(
   text1="openpilot Unavailable",
@@ -285,7 +273,22 @@ class AlertRenderer(Widget):
     color = rl.Color(color.r, color.g, color.b, int(255 * 0.90 * self._alpha_filter.x))
     translucent_color = rl.Color(color.r, color.g, color.b, int(0 * self._alpha_filter.x))
 
-    bg_height = get_alert_background_height(alert, self._rect.height)
+    small_alert_height = round(self._rect.height * 0.583) # 140px at mici height
+    medium_alert_height = round(self._rect.height * 0.833) # 200px at mici height
+
+    # alert_type format is "EventName/eventType" (e.g., "preLaneChangeLeft/warning")
+    event_name = alert.alert_type.split('/')[0] if alert.alert_type else ''
+
+    if event_name == 'preLaneChangeLeft':
+      bg_height = small_alert_height
+    elif event_name == 'preLaneChangeRight':
+      bg_height = small_alert_height
+    elif event_name == 'laneChange':
+      bg_height = small_alert_height
+    elif event_name == 'laneChangeBlocked':
+      bg_height = medium_alert_height
+    else:
+      bg_height = int(self._rect.height)
 
     solid_height = round(bg_height * 0.2)
     rl.draw_rectangle(int(self._rect.x), int(self._rect.y), int(self._rect.width), solid_height, color)

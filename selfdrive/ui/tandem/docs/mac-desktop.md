@@ -80,7 +80,13 @@ SP_C3_COMPILE_ONLY=1 ./c3 8
 SP_C4_COMPILE_ONLY=1 ./c4 8
 ```
 
-A successful command exits with `C3 runtime artifacts prepared.` or `C4 runtime artifacts prepared.` This verifies the native runtime imports; it does not check the appearance of a screen.
+A successful command exits with `C3 runtime artifacts prepared.` or `C4 runtime artifacts prepared.` This verifies the native runtime imports; it does not check the appearance of a screen. The runner cleans up its native outputs on exit. To retain them in the isolated host cache for a separate native test run, use `SP_KEEP_DESKTOP_RUNTIME_ARTIFACTS=1 SP_C3_COMPILE_ONLY=1 ./c3 8`.
+
+For the owned Galaxy HTTP tests, also install the small test dependency set into the host environment after the build:
+
+```sh
+uv pip install --python .host_runtime/darwin/venv/bin/python -r selfdrive/ui/tandem/tests/requirements.txt
+```
 
 ## Development workflow and local files
 

@@ -17,55 +17,48 @@ from openpilot.selfdrive.ui.layouts.settings.starpilot.system_settings import St
 from openpilot.selfdrive.ui.layouts.settings.starpilot.appearance import StarPilotAppearanceLayout
 from openpilot.selfdrive.ui.layouts.settings.starpilot.vehicle import StarPilotVehicleSettingsLayout
 
-from openpilot.selfdrive.ui.layouts.settings.starpilot.aethergrid import HubGrid, HubTile, BreadcrumbController, build_settings_page_frame
+from openpilot.selfdrive.ui.layouts.settings.starpilot.aethergrid import TileGrid, HubTile, SPACING, BreadcrumbController, AETHER_LIST_METRICS, AetherListColors, draw_hud_background
 
 class StarPilotLayout(Widget):
   CATEGORIES = [
     {
       "title": "Sounds & Alerts",
-      "desc": "Alert volumes and chimes",
       "icon": "sound",
       "panel": "SOUNDS",
     },
     {
       "title": "Driving Model",
-      "desc": "Choose and manage models",
       "icon": "aicar",
       "panel": "DRIVING_MODEL",
     },
     {
       "title": "Driving Controls",
-      "desc": "Gas, brake, steering and navigation",
       "icon": "steering",
       "children": [
         {
           "title": "Navigation & Maps",
-          "desc": "Map data and navigation",
           "icon": "navigate",
           "children": [
-            {"title": "Map Data", "desc": "Download offline map data", "panel": "MAPS", "icon": "navigate"},
-            {"title": "Navigation", "desc": "Destinations and routing", "panel": "NAVIGATION", "icon": "road"},
+            {"title": "Map Data", "panel": "MAPS", "icon": "navigate"},
+            {"title": "Navigation", "panel": "NAVIGATION", "icon": "road"},
           ],
         },
-        {"title": "Gas / Brake", "desc": "Acceleration, braking and speed control", "panel": "LONGITUDINAL", "icon": "road"},
-        {"title": "Steering", "desc": "Steering behavior and lane changes", "panel": "LATERAL", "icon": "steering"},
+        {"title": "Gas / Brake", "panel": "LONGITUDINAL", "icon": "road"},
+        {"title": "Steering", "panel": "LATERAL", "icon": "steering"},
       ],
     },
     {
       "title": "System",
-      "desc": "Brightness, power and storage",
       "icon": "system",
       "panel": "SYSTEM",
     },
     {
       "title": "Appearance",
-      "desc": "Widgets, themes and model display",
       "icon": "display",
       "panel": "VISUALS",
     },
     {
       "title": "Vehicle Settings",
-      "desc": "Car-specific tuning and features",
       "icon": "vehicle",
       "panel": "VEHICLE",
     },
@@ -126,7 +119,7 @@ class StarPilotLayout(Widget):
     )
 
     self._breadcrumbs = BreadcrumbController()
-    self._main_grid = HubGrid()
+    self._main_grid = TileGrid(columns=None, padding=SPACING.tile_gap)
     self._rebuild_grid()
 
   def set_depth_callback(self, callback: Callable):
@@ -277,18 +270,30 @@ class StarPilotLayout(Widget):
     self._commit_navigation()
 
   def _render(self, rect: rl.Rectangle):
-    frame = build_settings_page_frame(rect)
-    panel = self._panels[self._current_panel].instance
-    header_control = panel.prepare_page_header() if panel and hasattr(panel, "prepare_page_header") else None
-    self._breadcrumbs.draw_header(frame.header,
-                                  root_subtitle=tr("Driving, display and vehicle preferences"), header_control=header_control)
+    TOP_BAR_HEIGHT = 72
+    BOTTOM_BAR_HEIGHT = 10
+    content_rect = rl.Rectangle(rect.x, rect.y + TOP_BAR_HEIGHT, rect.width, rect.height - TOP_BAR_HEIGHT - BOTTOM_BAR_HEIGHT)
+
+    # Standardize width to perfectly match subpanel shells
+    shell_w = min(rect.width - AETHER_LIST_METRICS.outer_margin_x * 2, AETHER_LIST_METRICS.max_content_width)
+    shell_x = rect.x + (rect.width - shell_w) / 2
+
+    # 0. Draw top bar with HubTile-style purple glow
+    glass_rect = rl.Rectangle(shell_x, rect.y + 2, shell_w, TOP_BAR_HEIGHT - 4)
+    draw_hud_background(glass_rect, AetherListColors.PRIMARY, radius_px=34)
+
+    # 1. Draw breadcrumbs in top bar
+    crumb_rect = rl.Rectangle(glass_rect.x, glass_rect.y, glass_rect.width, glass_rect.height)
+    self._breadcrumbs.draw(crumb_rect)
 
     # 4. Render active content panel
     if self._current_panel == StarPilotPanelType.MAIN:
-      self._main_grid.render(frame.content)
+      grid_rect = rl.Rectangle(shell_x, content_rect.y + AETHER_LIST_METRICS.outer_margin_y, shell_w, content_rect.height - AETHER_LIST_METRICS.outer_margin_y * 2)
+      self._main_grid.render(grid_rect)
     else:
-      if panel:
-        panel.render(frame.content)
+      panel = self._panels[self._current_panel]
+      if panel.instance:
+        panel.instance.render(content_rect)
 
   def _handle_mouse_press(self, mouse_pos: MousePos):
     self._breadcrumbs.init_interaction(mouse_pos)

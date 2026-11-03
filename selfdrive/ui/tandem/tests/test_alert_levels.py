@@ -71,9 +71,13 @@ def test_reverse_gear_translation_only_changes_the_display_copy(monkeypatch):
   faces, drawn = [], []
   monkeypatch.setattr(alerts, "face_for", lambda text, face: faces.append(text) or alerts.T.FONT_UNIFONT)
   selected = []
-  label = SimpleNamespace(set_font_weight=selected.append)
-  alerts.draw_reverse(source, label, label, drawn.append)
+  own_font = object()
+  monkeypatch.setattr(alerts, "font", lambda face: selected.append(face) or own_font)
+  title, line = (SimpleNamespace(_font=None, _cached_text="old") for _ in range(2))
+  alerts.draw_reverse(source, title, line, drawn.append)
   assert faces == ["Задняпередача", ""]
   assert selected == [alerts.T.FONT_UNIFONT, alerts.T.FONT_UNIFONT]
+  assert title._font is own_font and line._font is own_font
+  assert title._cached_text is None and line._cached_text is None
   assert drawn[0].text1 == display.text1
   assert source.text1 == "Reverse\nGear"
