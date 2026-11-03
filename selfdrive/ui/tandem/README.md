@@ -118,6 +118,7 @@ After a merge, check what Tandem reads from StarPilot, which can change without 
 
 ### How it's built
 
+- **Page background:** `tokens.BG` is true black (`#000000`) across Home, settings and the other Essentials pages, matching the boot logo. The mock palette uses the same black ground, with lighter surfaces for cards and controls.
 - **Window:** `window.py` has four tabs (Driving, Device, Connections, Software), each with its own page stack, and the close/back button. It also takes upstream `PanelType`s, so the home screen and sidebar open the right tab. Sheets and dialogs are drawn over the page by the window itself (`present`/`dismiss`), because the app draws only the top widget of its own stack.
 - **Models and panels:** each screen is a small model class that reads and writes params through `SettingsStore`, plus a function that builds its panel. One control usually writes several params, and the model owns that mapping. Tests drive the models with a fake param cache.
 - **Upstream logic:** anything with real logic behind it goes through an adapter class named `Upstream…` that calls upstream code. That covers downloads, Wi-Fi, Bluetooth, wheel remotes, the updater, the car list, and calibration and power. Upstream keeps its checks, threads and confirmations, and we only draw. The window takes each adapter as a constructor argument, so tests and headless renders pass fakes (`tests/fakes.py`).

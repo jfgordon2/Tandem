@@ -30,7 +30,7 @@ def _hex(value: str, alpha: int = 255) -> rl.Color:
 
 
 # ── Surfaces, darkest to lightest ──
-BG = _hex("0A0C0F")                     # page ground
+BG = _hex("000000")                     # true-black page ground for OLED
 SCRIM = _hex("050608")                  # behind sheets and dialogs
 NAV_BAR = _hex("0E1013")
 NAV_BAR_EDGE = _hex("1F242B")

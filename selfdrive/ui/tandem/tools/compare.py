@@ -63,7 +63,7 @@ def main(renders: Path, out: Path) -> None:
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mocks and built screens</title>
 <style>
-:root {{ --bg: #0A0C0F; --card: #16191D; --text: #F2F5F9; --muted: #AEB6C2; --match: #6FD8A0; --diff: #F0B35A; }}
+:root {{ --bg: #000000; --card: #16191D; --text: #F2F5F9; --muted: #AEB6C2; --match: #6FD8A0; --diff: #F0B35A; }}
 body {{ margin: 0; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui, sans-serif; }}
 main {{ max-width: 1500px; margin: 0 auto; padding: 24px 16px 48px; }}
 article {{ background: var(--card); border-radius: 16px; padding: 16px; margin: 0 0 16px; }}

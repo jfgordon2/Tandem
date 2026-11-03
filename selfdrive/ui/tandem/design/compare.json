@@ -3,43 +3,43 @@
   {
    "mock": "hub",
    "title": "Driving hub",
-   "note": "Matches the mock.",
+   "note": "Matches the mock. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "assistance",
    "title": "Driving › Assistance",
-   "note": "openpilot's core switches beside Driver Monitoring: Always-On Driver Monitoring, the Driver Camera preview, the reset, and While parked (Sentry Mode, and its Sensitivity as a sub-row). Rows keep the standard height, so While parked scrolls into view instead of fitting as in the mock.",
+   "note": "openpilot's core switches beside Driver Monitoring: Always-On Driver Monitoring, the Driver Camera preview, the reset, and While parked (Sentry Mode, and its Sensitivity as a sub-row). Rows keep the standard height, so While parked scrolls into view instead of fitting as in the mock. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "search",
    "title": "Settings search",
-   "note": "Matches the layout. The results are the build's real ones for \"gas\", best first; Search lists them all without the keyboard. The mic key sits beside 123, as on destination search.",
+   "note": "Matches the layout. The results are the build's real ones for \"gas\", best first; Search lists them all without the keyboard. The mic key sits beside 123, as on destination search. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "driving",
    "title": "Speed & Steering › Everyday",
-   "note": "Matches, including Higher and Lower limits and MAX follows limits under Match, the settings count and dividers. Adds an Assistance section and a Tuner Mode button.",
+   "note": "Matches, including Higher and Lower limits and MAX follows limits under Match, the settings count and dividers. Adds an Assistance section and a Tuner Mode button. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "drivingvehicle",
    "title": "Speed & Steering › Vehicle Profile",
-   "note": "Matches: tiles fill the panel, no line under the title.",
+   "note": "Matches: tiles fill the panel, no line under the title. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "drivingweather",
    "title": "Speed & Steering › Weather",
-   "note": "Matches: the four conditions are icon cards. Auto also writes preset amounts. Adds the Weather heads-up switch.",
+   "note": "Matches: the four conditions are icon cards. Auto also writes preset amounts. Adds the Weather heads-up switch. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "drivingnav",
    "title": "Speed & Steering › Navigation",
-   "note": "Matches, with the mock's row icons. Set and Change open StarPilot's destination search. Adds the Mapbox Keys row: which keys are saved, and How to add.",
+   "note": "Matches, with the mock's row icons. Set and Change open StarPilot's destination search. Adds the Mapbox Keys row: which keys are saved, and How to add. Page ground uses true black (#000000).",
    "match": true
   },
   {
@@ -51,13 +51,13 @@
   {
    "mock": "display",
    "title": "Display › Driving Screen",
-   "note": "Matches: Camera View, Driver Camera in Reverse, Driving Style Banner, Compass, Blind Spot Highlights and Lead Car Tag, then the power-user bundles. The rows are taller than the mock's, so the panel scrolls to Lead Insights.",
+   "note": "Matches: Camera View, Driver Camera in Reverse, Driving Style Banner, Compass, Blind Spot Highlights and Lead Car Tag, then the power-user bundles. The rows are taller than the mock's, so the panel scrolls to Lead Insights. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "displaytheme",
    "title": "Display › Theme & Startup",
-   "note": "Boot Logo is a StarPilot / comma choice; downloaded logos stay on StarPilot's screen.",
+   "note": "Boot Logo is a StarPilot / comma choice; downloaded logos stay on StarPilot's screen. Page ground uses true black (#000000).",
    "match": false
   },
   {
@@ -69,7 +69,7 @@
   {
    "mock": "displaymap",
    "title": "Display › Map",
-   "note": "Matches, with the note at the bottom. No Auto sign option: StarPilot's setting is US or Vienna.",
+   "note": "Matches, with the note at the bottom. No Auto sign option: StarPilot's setting is US or Vienna. Page ground uses true black (#000000).",
    "match": true
   },
   {
@@ -87,7 +87,7 @@
   {
    "mock": "alerts",
    "title": "Alerts",
-   "note": "Matches: Volume and Chimes side by side. The presets add Auto. Chimes include Weather heads-up.",
+   "note": "Matches: Volume and Chimes side by side. The presets add Auto. Chimes include Weather heads-up. Page ground uses true black (#000000).",
    "match": true
   },
   {
@@ -99,67 +99,67 @@
   {
    "mock": "model",
    "title": "Driving Model",
-   "note": "Matches: the active model on an accent card, other models beside it.",
+   "note": "Matches: the active model on an accent card, other models beside it. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "modelcatalog",
    "title": "Model catalog",
-   "note": "Matches, with the shared storage bar. The first tab is All models: StarPilot doesn't filter models by car. The bottom bar replaces the mock's back button.",
+   "note": "Matches, with the shared storage bar. The first tab is All models: StarPilot doesn't filter models by car. The bottom bar replaces the mock's back button. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "vehicle",
    "title": "Vehicle",
-   "note": "Matches: your car and Auto-Lock on the left, wheel buttons on the right. Adds a \"More for your car\" row.",
+   "note": "Matches: your car and Auto-Lock on the left, wheel buttons on the right. Adds a \"More for your car\" row. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "vehiclepicker",
    "title": "Choose your car",
-   "note": "Matches the mock.",
+   "note": "Matches the mock. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "mapdata",
    "title": "Offline Maps",
-   "note": "Matches the two columns, with the same storage bar as Storage & Data. Adds Update now.",
+   "note": "Matches the two columns, with the same storage bar as Storage & Data. Adds Update now. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "mapregions",
    "title": "Choose map regions",
-   "note": "Matches: region cards, the selection and its checks beside them. No YOUR REGION badge or size estimates.",
+   "note": "Matches: region cards, the selection and its checks beside them. No YOUR REGION badge or size estimates. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "mapdownloading",
    "title": "Map download progress",
-   "note": "Matches: percent, files and time left, the four steps, and a tile per region from mapd's per-location counts. It shows in place of Offline Maps while a download runs; Back is in the bottom bar.",
+   "note": "Matches: percent, files and time left, the four steps, and a tile per region from mapd's per-location counts. It shows in place of Offline Maps while a download runs; Back is in the bottom bar. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "tuner",
    "title": "Tuner › Steering",
-   "note": "Matches the mock.",
+   "note": "Matches the mock. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "tunergas",
    "title": "Tuner › Gas & Brake",
-   "note": "Matches: each profile shows its value, FROM STYLE or OVERRIDE, and Override or Reset. Built keeps a title and separate Start and Stop Acceleration rows.",
+   "note": "Matches: each profile shows its value, FROM STYLE or OVERRIDE, and Override or Reset. Built keeps a title and separate Start and Stop Acceleration rows. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "tunerfollowing",
    "title": "Tuner › Following & Stops",
-   "note": "Matches: the four gaps in one row of cells; a changed gap shows in amber and a tap edits it.",
+   "note": "Matches: the four gaps in one row of cells; a changed gap shows in amber and a tap edits it. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "tunerbundles",
    "title": "Tuner › Bundle Overrides",
-   "note": "Matches: Bundle on at the right, two columns with OVERRIDE badges.",
+   "note": "Matches: Bundle on at the right, two columns with OVERRIDE badges. Page ground uses true black (#000000).",
    "match": true
   },
   {
@@ -177,13 +177,13 @@
   {
    "mock": "devicetab",
    "title": "This Device",
-   "note": "Adds a More section: remote access, driver monitoring reset, language, regulatory, device ID and serial, and the modem IMEI (read once in the background).",
+   "note": "Adds a More section: remote access, driver monitoring reset, language, regulatory, device ID and serial, and the modem IMEI (read once in the background). Page ground uses true black (#000000).",
    "match": false
   },
   {
    "mock": "canrecorder",
    "title": "Device › Developer › CAN test recorder",
-   "note": "Matches: shared panels, large manual-action markers, Start/Stop and a pinned Abort button that discards the current test in one tap. Ready, Recording, Discarding and Discarded renders check button states and counter reset; translated renders check German, Spanish, Japanese and longer pseudo text. Both panels scroll independently. This is a passive recording, not a door control.",
+   "note": "Matches: shared panels, large manual-action markers, Start/Stop and a pinned Abort button that discards the current test in one tap. Ready, Recording, Discarding and Discarded renders check button states and counter reset; translated renders check German, Spanish, Japanese and longer pseudo text. Both panels scroll independently. This is a passive recording, not a door control. Page ground uses true black (#000000).",
    "match": true,
    "built": [
     "canrecorder",
@@ -196,55 +196,55 @@
   {
    "mock": "pairing",
    "title": "Pair the phone app",
-   "note": "Matches: the comma connect steps beside the QR code on a white tile. The code is upstream's, refreshed every 5 minutes.",
+   "note": "Matches: the comma connect steps beside the QR code on a white tile. The code is upstream's, refreshed every 5 minutes. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "drivercamera",
    "title": "Driver camera preview",
-   "note": "Matches: back, the status pill, the face box, the driver monitor tile and the hint. Built uses a flat stand-in where the camera image goes.",
+   "note": "Matches: back, the status pill, the face box, the driver monitor tile and the hint. Built uses a flat stand-in where the camera image goes. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "remoteaccess",
    "title": "Remote Access",
-   "note": "Matches: the Galaxy steps and Set up, with an empty tile until a password creates the link.",
+   "note": "Matches: the Galaxy steps and Set up, with an empty tile until a password creates the link. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "remoteaccessqr",
    "title": "Remote Access, set up",
-   "note": "Matches: the device's link as a QR code with the link under it, and Unpair, which asks first.",
+   "note": "Matches: the device's link as a QR code with the link under it, and Unpair, which asks first. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "keyboard",
    "title": "Keyboard",
-   "note": "Matches: the destination search mock's keys under our header, with the password field and its eye. The blue key names the action.",
+   "note": "Matches: the destination search mock's keys under our header, with the password field and its eye. The blue key names the action. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "system",
    "title": "General",
-   "note": "Uploads is Off, Parked or Always. Automatic weekly backups have no upstream support.",
+   "note": "Uploads is Off, Parked or Always. Automatic weekly backups have no upstream support. Page ground uses true black (#000000).",
    "match": false
   },
   {
    "mock": "systembackups",
    "title": "Backups",
-   "note": "No automatic schedule, for the same reason.",
+   "note": "No automatic schedule, for the same reason. Page ground uses true black (#000000).",
    "match": false
   },
   {
    "mock": "systemstorage",
    "title": "Storage & Data",
-   "note": "Matches, with the Offline Maps and Unused Models rows, the note at the bottom and no line under the title. The rows scroll, with a glow.",
+   "note": "Matches, with the Offline Maps and Unused Models rows, the note at the bottom and no line under the title. The rows scroll, with a glow. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "systemreport",
    "title": "Report a Problem",
-   "note": "Matches the two columns. No Attach last drive: StarPilot's report doesn't attach drives.",
+   "note": "Matches the two columns. No Attach last drive: StarPilot's report doesn't attach drives. Page ground uses true black (#000000).",
    "match": true
   },
   {
@@ -256,25 +256,25 @@
   {
    "mock": "connections",
    "title": "Connections › Wi-Fi",
-   "note": "Matches: the Wi-Fi list in the Connections tab's first section. Wi-Fi scans only while this section is open.",
+   "note": "Matches: the Wi-Fi list in the Connections tab's first section. Wi-Fi scans only while this section is open. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "connectionscellular",
    "title": "Connections › Cellular",
-   "note": "Matches: Hotspot, its current name and Edit button, its password, Save Data, and Roaming, APN and IP address behind one row. Both Edit buttons use the shared value pill, including its chevron.",
+   "note": "Matches: Hotspot, its current name and Edit button, its password, Save Data, and Roaming, APN and IP address behind one row. Both Edit buttons use the shared value pill, including its chevron. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "connectionsremote",
    "title": "Connections › Bluetooth Remote",
-   "note": "Matches: the remote's buttons and their actions, with press-to-find. Bluetooth and button testing run only while a Bluetooth section is open.",
+   "note": "Matches: the remote's buttons and their actions, with press-to-find. Bluetooth and button testing run only while a Bluetooth section is open. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "connectionsaudio",
    "title": "Connections › Car Audio & Devices",
-   "note": "Matches: car audio for alerts, and nearby devices to pair.",
+   "note": "Matches: car audio for alerts, and nearby devices to pair. Page ground uses true black (#000000).",
    "match": true
   },
   {
@@ -286,20 +286,20 @@
   {
    "mock": "softwaretab",
    "title": "Software",
-   "note": "Matches: the version card beside the update settings.",
+   "note": "Matches: the version card beside the update settings. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "onroad",
    "title": "Onroad",
-   "note": "Matches: Essentials' speed with its turn signal, the sign, the chip bottom left and the driver monitor tile top right. The stand-in road stands for the camera.",
+   "note": "Matches: Essentials' speed with its turn signal, the sign, the chip bottom left and the driver monitor tile top right. The stand-in road stands for the camera. Page ground uses true black (#000000).",
    "match": true,
    "built": "onroad_default"
   },
   {
    "mock": "gaptag",
    "title": "Onroad › Lead gap tag",
-   "note": "Matches the approved shared developer tag: centered gap alone by default, distance near a stop, all three values in Developer View or Lead Insights, and -- while unsure. The anchor and connector appear before the full-size tag settles in over 250 ms. StarPilot's projected ground point and marker size estimate the roof; no vehicle outline detector is added. The stand-in road replaces the camera.",
+   "note": "Matches the approved shared developer tag: centered gap alone by default, distance near a stop, all three values in Developer View or Lead Insights, and -- while unsure. The anchor and connector appear before the full-size tag settles in over 250 ms. StarPilot's projected ground point and marker size estimate the roof; no vehicle outline detector is added. The stand-in road replaces the camera. Page ground uses true black (#000000).",
    "match": true,
    "built": [
     "lead_following",
@@ -315,28 +315,28 @@
   {
    "mock": "steeringheadroom",
    "title": "Steering headroom",
-   "note": "This shows the at-limit stage: Help steer is the bottom Warning card in the bar's place, like StarPilot's alerts, with the arc moved above it. On the car the border also turns amber and the lane lines tint; this stand-in render keeps the green border.",
+   "note": "This shows the at-limit stage: Help steer is the bottom Warning card in the bar's place, like StarPilot's alerts, with the arc moved above it. On the car the border also turns amber and the lane lines tint; this stand-in render keeps the green border. Page ground uses true black (#000000).",
    "match": true,
    "built": "onroad_helpsteer"
   },
   {
    "mock": "confirmlimit",
    "title": "Confirm new speed limit",
-   "note": "Shown here together with the at-limit stage and its Help steer banner.",
+   "note": "Shown here together with the at-limit stage and its Help steer banner. Page ground uses true black (#000000).",
    "match": false,
    "built": "onroad_limit"
   },
   {
    "mock": "onroadnav",
    "title": "Onroad, navigating",
-   "note": "Matches: the sign top left with the turn card below it, the driver monitor tile top right, the bar with the street name.",
+   "note": "Matches: the sign top left with the turn card below it, the driver monitor tile top right, the bar with the street name. Page ground uses true black (#000000).",
    "match": true,
    "built": "onroad_nav"
   },
   {
    "mock": "alertstyles",
    "title": "Onroad alert levels",
-   "note": "Matches the three levels, drawn from StarPilot's real alerts: openpilot Unavailable (info), Pay Attention (warning), BRAKE! (critical). Light Turned Green and Lead Departed show as their status chips instead.",
+   "note": "Matches the three levels, drawn from StarPilot's real alerts: openpilot Unavailable (info), Pay Attention (warning), BRAKE! (critical). Light Turned Green and Lead Departed show as their status chips instead. Page ground uses true black (#000000).",
    "match": true,
    "built": [
     "alert_unavailable",
@@ -347,51 +347,51 @@
   {
    "mock": "home",
    "title": "Parked home",
-   "note": "The sidebar adds comma connect.",
+   "note": "The sidebar adds comma connect. Page ground uses true black (#000000).",
    "match": false,
    "built": "sidebar_home"
   },
   {
    "mock": "homeweather",
    "title": "Parked home: weather coming",
-   "note": "Matches: the next 12 hours under Ready, the coming snow named with when it starts and stops, its hours tinted as the chips are. The same forecast as Weather heads-up.",
+   "note": "Matches: the next 12 hours under Ready, the coming snow named with when it starts and stops, its hours tinted as the chips are. The same forecast as Weather heads-up. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "homeweatherdry",
    "title": "Parked home: dry weather",
-   "note": "Matches: Open-Meteo's sky in plain words (Sunny, Mostly sunny, Partly cloudy, Cloudy; Clear at night), from the most hours. Hidden without a forecast or with Weather heads-up off.",
+   "note": "Matches: Open-Meteo's sky in plain words (Sunny, Mostly sunny, Partly cloudy, Cloudy; Clear at night), from the most hours. Hidden without a forecast or with Weather heads-up off. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "homealerts",
    "title": "Home: alerts",
-   "note": "Matches: alert cards by severity with short titles, and StarPilot's one action (here Snooze update).",
+   "note": "Matches: alert cards by severity with short titles, and StarPilot's one action (here Snooze update). Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "homeupdate",
    "title": "Home: update ready",
-   "note": "Matches: the new version, its release notes and Restart and update.",
+   "note": "Matches: the new version, its release notes and Restart and update. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "onroaddev",
    "title": "Onroad, Developer View",
-   "note": "Matches the developer panel, strip and tag typography. The approved gaptag.html supersedes this older mock's lead triangle: the same distance/gap/relative-speed tag now has an anchor, connector and acquisition transition.",
+   "note": "Matches the developer panel, strip and tag typography. The approved gaptag.html supersedes this older mock's lead triangle: the same distance/gap/relative-speed tag now has an anchor, connector and acquisition transition. Page ground uses true black (#000000).",
    "match": false
   },
   {
    "mock": "onroadextras",
    "title": "Onroad › StarPilot extras",
-   "note": "Matches: pedal tiles and the model chip under the driver monitor, the compass tag at the start of the bar (where it sits while navigating), the weather now at its end without a route, the stopping line, lane and blind-spot washes, radar dots and the border halves, over a stand-in road.",
+   "note": "Matches: pedal tiles and the model chip under the driver monitor, the compass tag at the start of the bar (where it sits while navigating), the weather now at its end without a route, the stopping line, lane and blind-spot washes, radar dots and the border halves, over a stand-in road. Page ground uses true black (#000000).",
    "match": true,
    "built": "onroad_extras"
   },
   {
    "mock": "onroadwhereto",
    "title": "Where to? in the bar",
-   "note": "Matches: without a route, a tinted Where to? button beside MAX opens the same screen as the parked card; none while navigating, so the route's arrival, time left and End route keep their room.",
+   "note": "Matches: without a route, a tinted Where to? button beside MAX opens the same screen as the parked card; none while navigating, so the route's arrival, time left and End route keep their room. Page ground uses true black (#000000).",
    "match": true,
    "built": [
     "onroad_hero",
@@ -401,7 +401,7 @@
   {
    "mock": "statuschips",
    "title": "Onroad › Status chips",
-   "note": "Text, icons and order match. Top: the four steering pauses. Middle: the wheel-button modes with Lane change blocked, which replaces the blind spot banner. Each set is shown together here; on the road one pause and one Pulse & glide show at a time. Bottom: a real stack, the curve chip fading. Built chips use the dark fill from the onroad mock; this sheet tints each chip by tone, so the two mocks differ there.",
+   "note": "Text, icons and order match. Top: the four steering pauses. Middle: the wheel-button modes with Lane change blocked, which replaces the blind spot banner. Each set is shown together here; on the road one pause and one Pulse & glide show at a time. Bottom: a real stack, the curve chip fading. Built chips use the dark fill from the onroad mock; this sheet tints each chip by tone, so the two mocks differ there. Page ground uses true black (#000000).",
    "match": false,
    "built": [
     "onroad_pauses",
@@ -412,43 +412,43 @@
   {
    "mock": "destinations",
    "title": "Where to?",
-   "note": "Matches: Home, Work and Add favorite, then favorites and recents with stars. Offline maps shows only when opened from Settings.",
+   "note": "Matches: Home, Work and Add favorite, then favorites and recents with stars. Offline maps shows only when opened from Settings. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "navsearch",
    "title": "Destination search",
-   "note": "Matches: the field and two results above the Essentials keyboard, with the mic key beside 123 while parked. Results update as you type; Search lists them all.",
+   "note": "Matches: the field and two results above the Essentials keyboard, with the mic key beside 123 while parked. Results update as you type; Search lists them all. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "voicelistening",
    "title": "Voice typing: listening",
-   "note": "Matches: the mic (tap to stop), the page's hint and a live level meter, with Type instead. Listening also stops after a 1.5 s pause. The empty field has no placeholder, as when typing.",
+   "note": "Matches: the mic (tap to stop), the page's hint and a live level meter, with Type instead. Listening also stops after a 1.5 s pause. The empty field has no placeholder, as when typing. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "voicetranscribing",
    "title": "Voice typing: writing it down",
-   "note": "Matches: a spinner while Whisper works. The words land in the field for editing.",
+   "note": "Matches: a spinner while Whisper works. The words land in the field for editing. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "voicedownload",
    "title": "Voice typing: first use",
-   "note": "Matches layout. Setup text also covers preparing the native voice engine; the mock only names the model download.",
+   "note": "Matches layout. Setup text also covers preparing the native voice engine; the mock only names the model download. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "routepreview",
    "title": "Route preview",
-   "note": "Matches. The route comes from Mapbox before Start, drawn on the stylized map; the decorative highway band is left out so only the real route shows.",
+   "note": "Matches. The route comes from Mapbox before Start, drawn on the stylized map; the decorative highway band is left out so only the real route shows. Page ground uses true black (#000000).",
    "match": true
   },
   {
    "mock": "setup",
    "title": "First-run setup",
-   "note": "Matches: three tall cards with progress dots. Adds Back from step 2.",
+   "note": "Matches: three tall cards with progress dots. Adds Back from step 2. Page ground uses true black (#000000).",
    "match": true,
    "built": "setup0"
   }

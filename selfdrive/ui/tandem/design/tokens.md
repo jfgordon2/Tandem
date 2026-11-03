@@ -49,7 +49,7 @@ The mocks used about 60 hex values. These are merged into the named set below. W
 
 | Group | Tokens |
 | --- | --- |
-| Surfaces, dark to light | `BG #0A0C0F` · `SURFACE_1 #13161A` · `SURFACE_2 #16191D` · `SURFACE_3 #1A1D22` · `SURFACE_4 #1E2227` · `CONTROL #23272E` · `TRACK #2A2F36` |
+| Surfaces, dark to light | `BG #000000` · `SURFACE_1 #13161A` · `SURFACE_2 #16191D` · `SURFACE_3 #1A1D22` · `SURFACE_4 #1E2227` · `CONTROL #23272E` · `TRACK #2A2F36` |
 | Chrome | `NAV_BAR #0E1013` · `NAV_BAR_EDGE #1F242B` · `CONTROL_NAV #1F2328` · `SCRIM #050608` · `KEY #262A31` · `KEY_MOD #353A43` |
 | Text | `TEXT #F2F5F9` · `TEXT_SECONDARY #C9D0DA` · `TEXT_TERTIARY #AEB6C2` · `TEXT_MUTED #8FA0B5` (6.0:1 on `SURFACE_4`, the lowest-contrast pair; all text tokens pass 4.5:1) |
 | Accent | `ACCENT #5AAAF8` · `ACCENT_INK #0B1A2B` · `ACCENT_TEXT #7DBBF9` · `ACCENT_SURFACE #1F2E45` · `ACCENT_SELECTED #182434` · `ACCENT_CHIP_TEXT #DCEBFF` |
