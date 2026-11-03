@@ -16,10 +16,14 @@ def main(frame, save, out, tap, gui_app):
 
   shot("destinations")
   screen._go(D.SEARCH)
-  screen._keys.set_text("hardware sto")
-  places.search("hardware sto")
-  screen._searched = "hardware sto"
-  screen._typed = "hardware sto"
+  screen._keys.set_text("Hy-Vee")
+  # Sample branches with the same name and locality; the street distinguishes them on the existing second line.
+  places.found = [
+    ("Hy-Vee", "410 N Ankeny Blvd, Ankeny, IA 50023, United States"),
+    ("Hy-Vee", "2510 SW State St, Ankeny, IA 50023, United States"),
+  ]
+  screen._searched = "Hy-Vee"
+  screen._typed = "Hy-Vee"
   shot("navsearch")
   # Voice typing's three states, set directly: no worker or microphone here.
   session = screen._keys._voice
@@ -30,9 +34,10 @@ def main(frame, save, out, tap, gui_app):
     session.state, session.progress = state, 0.42
     shot(name)
   session.state = "idle"
-  screen._keys.set_text("hardware sto")
+  screen._keys.set_text("Hy-Vee")
   screen._view = D.RESULTS
   shot("navresults")
+  places.search("hardware sto")   # keep the route preview's sample place
   screen._pick_result(0)
   screen._update_state()
   shot("routepreview")

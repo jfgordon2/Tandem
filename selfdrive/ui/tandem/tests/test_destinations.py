@@ -1,3 +1,7 @@
+import sys
+from dataclasses import dataclass, replace
+from types import SimpleNamespace
+
 import pytest
 
 from openpilot.selfdrive.ui.tandem import keyboard as K
@@ -21,6 +25,65 @@ def _screen(**kw):
 def _type(screen, text):
   for ch in text:
     screen._keys._all_keys[ch]._click_callback()
+
+
+@pytest.mark.parametrize("fields, expected", [
+  ({"full_address": "410 N Ankeny Blvd, Ankeny, IA 50023", "address": "410 N Ankeny Blvd",
+    "place_formatted": "Ankeny, IA 50023"}, "410 N Ankeny Blvd, Ankeny, IA 50023"),
+  ({"address": "2510 SW State St", "place_formatted": "Ankeny, IA 50023"}, "2510 SW State St, Ankeny, IA 50023"),
+  ({"full_address": " 410 N Ankeny Blvd, Ankeny, IA 50023 "}, "410 N Ankeny Blvd, Ankeny, IA 50023"),
+  ({"address": " 410 N Ankeny Blvd ", "place_formatted": " Ankeny, IA 50023 "}, "410 N Ankeny Blvd, Ankeny, IA 50023"),
+  ({"address": "410 N Ankeny Blvd"}, "410 N Ankeny Blvd"),
+  ({"place_formatted": "Ankeny, IA 50023"}, "Ankeny, IA 50023"),
+  ({}, ""),
+])
+@pytest.mark.parametrize("retrieved", [False, True])
+def test_search_address_includes_street_without_repeating_locality(fields, expected, retrieved):
+  payload = {"properties": fields} if retrieved else fields
+  assert D.search_address(payload) == expected
+
+
+def test_tandem_search_client_preserves_results_and_distinguishes_branches(monkeypatch):
+  @dataclass(frozen=True)
+  class Result:
+    name: str
+    subtitle: str
+    mapbox_id: str
+    latitude: float = 41.7
+    longitude: float = -93.6
+
+  normalized = []
+
+  class Client:
+    @classmethod
+    def _normalize_result(cls, payload):
+      if not payload.get("name"):
+        return None
+      result = Result(payload["name"], payload.get("place_formatted", ""), payload["mapbox_id"])
+      normalized.append(result)
+      return result
+
+  monkeypatch.setitem(sys.modules, "openpilot.selfdrive.ui.layouts.settings.starpilot.navigation", SimpleNamespace(
+    MapboxSearchClient=Client, StarPilotNavigationLayout=lambda: SimpleNamespace(_search_client=Client())))
+  places = D.UpstreamPlaces()
+  client = places._nav._search_client
+  assert isinstance(client, Client)
+  payloads = [
+    {"name": "Hy-Vee", "mapbox_id": "north", "place_formatted": "Ankeny, IA 50023",
+     "full_address": "410 N Ankeny Blvd, Ankeny, IA 50023"},
+    {"name": "Hy-Vee", "mapbox_id": "south", "place_formatted": "Ankeny, IA 50023", "address": "2510 SW State St"},
+  ]
+  places._nav._search_results = [client._normalize_result(p) for p in payloads]
+  assert places.results() == [
+    ("Hy-Vee", "410 N Ankeny Blvd, Ankeny, IA 50023"),
+    ("Hy-Vee", "2510 SW State St, Ankeny, IA 50023"),
+  ]
+  for original, result in zip(normalized, places._nav._search_results, strict=True):
+    assert replace(result, subtitle=original.subtitle) == original   # IDs and coordinates still come from upstream
+  assert client._normalize_result({}) is None
+  result = client._normalize_result({"name": "410 N Ankeny Blvd", "mapbox_id": "address",
+                                     "full_address": "410 N Ankeny Blvd, Ankeny, IA 50023"})
+  assert result.subtitle == "Ankeny, IA 50023"   # address searches already put the street on the first line
 
 
 def test_typing_searches_after_a_pause_and_search_lists_everything(monkeypatch):

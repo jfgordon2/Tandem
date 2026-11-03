@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import time
 from collections.abc import Callable
+from dataclasses import replace
 from typing import Any, Protocol
 
 import pyray as rl
@@ -45,6 +46,17 @@ def place_line(place: dict[str, Any] | None) -> str:
   return full[len(name) + 2:] if full.startswith(name + ", ") else full
 
 
+def search_address(payload: dict[str, Any]) -> str:
+  """Street first, from a Search Box suggestion or retrieved feature's properties."""
+  properties = payload.get("properties")
+  properties = properties if isinstance(properties, dict) else {}
+
+  def field(key: str) -> str:
+    return str(payload.get(key) or properties.get(key) or "").strip()
+
+  return field("full_address") or ", ".join(part for part in (field("address"), field("place_formatted")) if part)
+
+
 class Places(Protocol):
   """What the screens need from StarPilot's navigation. UpstreamPlaces is the real one."""
 
@@ -77,8 +89,19 @@ class UpstreamPlaces:
   """Places backed by StarPilot's navigation controller."""
 
   def __init__(self):
-    from openpilot.selfdrive.ui.layouts.settings.starpilot.navigation import StarPilotNavigationLayout
+    from openpilot.selfdrive.ui.layouts.settings.starpilot.navigation import MapboxSearchClient, StarPilotNavigationLayout
+
+    class AddressSearchClient(MapboxSearchClient):
+      @classmethod
+      def _normalize_result(cls, payload):
+        result = super()._normalize_result(payload)
+        if result is None:
+          return None
+        address = search_address(payload) or result.subtitle
+        return replace(result, subtitle=place_line({"name": result.name, "place_name": address}))
+
     self._nav = StarPilotNavigationLayout()
+    self._nav._search_client = AddressSearchClient()
     self._routes = RouteFetcher(mapbox_route)
 
   def tick(self) -> None:

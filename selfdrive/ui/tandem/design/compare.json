@@ -418,7 +418,7 @@
   {
    "mock": "navsearch",
    "title": "Destination search",
-   "note": "Matches: the field and two results above the Essentials keyboard, with the mic key beside 123 while parked. Results update as you type; Search lists them all. Page ground uses true black (#000000).",
+   "note": "Matches: two Hy-Vee branches above the Essentials keyboard, with the street address before city/state/ZIP on the existing detail line. Card height and font sizes are unchanged; long lines end with an ellipsis. The full results list uses the same addresses. Results update as you type; Search lists them all. Page ground uses true black (#000000).",
    "match": true
   },
   {
