@@ -95,8 +95,9 @@ class VoiceTyping:
       log = speech.model_dir() / "worker.log"   # the last run's errors, for a bug report
       log.parent.mkdir(parents=True, exist_ok=True)
       with open(log, "w") as err:
-        self._process = subprocess.Popen(self._command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=err, text=True, bufsize=1,
-                                         env=env, preexec_fn=speech.relax_priority)
+        # A fresh interpreter drops priority before exec. Python preexec_fn can deadlock a threaded UI before Popen returns.
+        command = [sys.executable, str(WORKER), "--exec", *self._command]
+        self._process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=err, text=True, bufsize=1, env=env)
     except OSError:
       self._show("failed")
       return

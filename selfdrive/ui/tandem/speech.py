@@ -76,6 +76,9 @@ def driving_limits() -> None:
 
 if __name__ == "__main__":
   relax_priority()                        # before numpy and tinygrad load
+  if sys.argv[1:2] == ["--exec"]:
+    # The UI starts this fresh process instead of running Python callbacks between fork and exec.
+    os.execv(sys.argv[2], sys.argv[2:])
   if DRIVING:
     driving_limits()
 

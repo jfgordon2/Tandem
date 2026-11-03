@@ -4,7 +4,12 @@ The full checkpoint needs a 75 MB download; a small synthetic model tests decode
 speech.py --file runs the full model on a recording."""
 import json
 import io
+import os
+from pathlib import Path
+import signal
+import subprocess
 import sys
+import textwrap
 import threading
 import time
 
@@ -203,6 +208,51 @@ def test_session_follows_the_worker_to_the_words(ready):
   assert session.state == "listening"
   assert _until(session, lambda: heard)
   assert heard == ["hardware store"] and session.state == "idle" and 0.7 in session.levels
+
+
+@pytest.mark.skipif(sys.platform == "win32", reason="POSIX process groups and fork regression")
+def test_session_starts_while_another_ui_thread_holds_a_lock(tmp_path):
+  """A Python callback after fork can inherit a locked UI runtime and block Popen itself."""
+  script = textwrap.dedent('''
+    import json, sys, threading, time
+    sys.path.insert(0, sys.argv[1])
+    import stubs
+    stubs.install()
+    from openpilot.selfdrive.ui.tandem import speech, voice
+
+    lock, held, release = threading.Lock(), threading.Event(), threading.Event()
+    def ui_thread():
+      with lock:
+        held.set()
+        release.wait()
+    threading.Thread(target=ui_thread, daemon=True).start()
+    assert held.wait(2)
+    speech.model_ready = lambda: True
+    speech.relax_priority = lambda: lock.acquire()
+    heard = []
+    worker = [sys.executable, '-c', "import json; print(json.dumps(dict(text='worker started')), flush=True)"]
+    session = voice.VoiceTyping(heard.append, worker)
+    session.start()
+    deadline = time.monotonic() + 5
+    while not heard and time.monotonic() < deadline:
+      session.update()
+      time.sleep(0.01)
+    assert heard == ['worker started'], session.state
+    release.set()
+    print('Voice launch completed', flush=True)
+  ''')
+  render = Path(__file__).resolve().parents[1] / "tools" / "render"
+  env = dict(os.environ, TANDEM_SPEECH_DIR=str(tmp_path), SP_HEADLESS_TEST="1")
+  process = subprocess.Popen([sys.executable, "-c", script, str(render)], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                             text=True, start_new_session=True, env=env)
+  try:
+    output, error = process.communicate(timeout=10)
+    assert process.returncode == 0, error
+    assert "Voice launch completed" in output
+  finally:
+    if process.poll() is None:
+      os.killpg(process.pid, signal.SIGKILL)
+      process.communicate(timeout=5)
 
 
 def test_session_shows_download_progress_and_errors(monkeypatch):
