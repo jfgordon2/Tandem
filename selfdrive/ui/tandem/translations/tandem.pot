@@ -951,7 +951,7 @@ msgstr ""
 
 #: onroad/status.py:158
 #, python-brace-format
-msgid "Low memory · {}% used"
+msgid "Low on RAM · {}% used"
 msgstr ""
 
 #: onroad/status.py:115

@@ -408,8 +408,8 @@
   },
   {
    "mock": "memorychip",
-   "title": "Onroad › Low memory chip",
-   "note": "StarPilot's Low Memory notice as a red status chip instead of the bottom banner, in arrival order and the lowest priority. Fill, border, icon, text color and place match. The percentage is drawn in the label's color and weight, not bolder and whiter, so the sentence can be translated whole. Page ground uses true black (#000000).",
+   "title": "Onroad › Low RAM chip",
+   "note": "StarPilot's Low Memory notice (RAM, not storage) as a red Low on RAM chip instead of the bottom banner, in arrival order and the lowest priority. Fill, border, icon, text color and place match. The percentage is drawn in the label's color and weight, not bolder and whiter, so the sentence can be translated whole. Page ground uses true black (#000000).",
    "match": false
   },
   {

@@ -60,7 +60,7 @@ class Snapshot:
   weather_gap: bool = False                # ...and its preset adds following distance
   forecast: tuple[str, str] | None = None  # Weather heads-up (forecast.py): ("Snow in 12 min" or "Snow until 8:15 PM", icon)
   forecast_active: bool = False            # ...and it's falling now, so it stands in for the longer-gap chip
-  memory_percent: int = 0                  # memory in use, from deviceState
+  memory_percent: int = 0                  # RAM in use, from deviceState
   events: set[str] = field(default_factory=set)
 
 
@@ -155,7 +155,7 @@ def chips_for(s: Snapshot) -> list[Chip]:
   # Last, so it's the first to give way when more than MAX apply. StarPilot decides when memory is low (its lowMemory
   # event); this chip stands in for that event's notice. Its disengage and can't-engage forms stay alerts.
   if "lowMemory" in s.events:
-    out.append(Chip("low_memory", t_("Low memory · {}% used", s.memory_percent), ChipTone.ALERT, "memory"))
+    out.append(Chip("low_memory", t_("Low on RAM · {}% used", s.memory_percent), ChipTone.ALERT, "memory"))
   return out
 
 

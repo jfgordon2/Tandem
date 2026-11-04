@@ -976,8 +976,8 @@ msgstr "Solo dirección"
 
 #: onroad/status.py:158
 #, python-brace-format
-msgid "Low memory · {}% used"
-msgstr "Poca memoria · {} % en uso"
+msgid "Low on RAM · {}% used"
+msgstr "Poca RAM · {} % en uso"
 
 #: onroad/status.py:115
 #, python-brace-format

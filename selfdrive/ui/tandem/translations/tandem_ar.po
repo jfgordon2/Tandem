@@ -985,8 +985,8 @@ msgstr "التوجيه فقط"
 
 #: onroad/status.py:158
 #, python-brace-format
-msgid "Low memory · {}% used"
-msgstr "ذاكرة منخفضة · {}% مستخدمة"
+msgid "Low on RAM · {}% used"
+msgstr "ذاكرة RAM منخفضة · {}% مستخدمة"
 
 #: onroad/status.py:115
 #, python-brace-format

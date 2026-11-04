@@ -978,8 +978,8 @@ msgstr "Yalnızca direksiyon"
 
 #: onroad/status.py:158
 #, python-brace-format
-msgid "Low memory · {}% used"
-msgstr "Bellek az · %{} kullanımda"
+msgid "Low on RAM · {}% used"
+msgstr "RAM az · %{} kullanımda"
 
 #: onroad/status.py:115
 #, python-brace-format

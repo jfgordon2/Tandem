@@ -331,7 +331,7 @@ def test_low_memory_chip_is_red_in_arrival_order_and_lowest_priority():
   from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, ChipTone, Snapshot, chips_for
   low = dict(events={"lowMemory"}, memory_percent=91)
   chip = chips_for(Snapshot(**low))[0]
-  assert (chip.key, chip.label, chip.tone, chip.icon) == ("low_memory", "Low memory · 91% used", ChipTone.ALERT, "memory")
+  assert (chip.key, chip.label, chip.tone, chip.icon) == ("low_memory", "Low on RAM · 91% used", ChipTone.ALERT, "memory")
   assert chips_for(Snapshot(memory_percent=91)) == []                     # StarPilot decides when memory is low
   stack = ChipStack()
   keys = lambda shown: [c.key for c, _ in shown]  # noqa: E731

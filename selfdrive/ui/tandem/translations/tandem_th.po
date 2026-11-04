@@ -975,8 +975,8 @@ msgstr "บังคับเลี้ยวเท่านั้น"
 
 #: onroad/status.py:158
 #, python-brace-format
-msgid "Low memory · {}% used"
-msgstr "หน่วยความจำเหลือน้อย · ใช้ไป {}%"
+msgid "Low on RAM · {}% used"
+msgstr "RAM เหลือน้อย · ใช้ไป {}%"
 
 #: onroad/status.py:115
 #, python-brace-format
