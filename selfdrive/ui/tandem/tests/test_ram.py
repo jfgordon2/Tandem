@@ -128,3 +128,27 @@ def test_device_tab_has_ram_with_a_dot_until_opened(tmp_path):
   assert page._sidebar._items[ram].dot()
   page.select(ram)
   assert not page._sidebar._items[ram].dot()
+
+
+def test_ram_is_hidden_until_a_drive_runs_low(tmp_path):
+  from openpilot.selfdrive.ui.tandem.tests.test_settings import _search_window
+  from openpilot.selfdrive.ui.tandem.base import resolve
+  from openpilot.selfdrive.ui.tandem.settings.window import Tab
+  log, _ = _log(tmp_path)
+  window = _search_window()
+  window.ram_log = lambda: log
+  window.show_event()
+  window.select_tab(Tab.DEVICE)
+  ram = [s for s in window.top._sections if s.label == "RAM"][0]
+  assert not resolve(ram.visible)
+  log.note(1, 91)
+  assert resolve(ram.visible)
+
+
+def test_search_finds_ram_only_once_it_shows_and_report_without_tuner_mode():
+  from openpilot.selfdrive.ui.tandem.settings.search import search
+  assert "RAM" not in [e.name for e in search("ram", tuner=True)]
+  assert search("ram", tuner=False, ram=True)[0].name == "RAM"
+  assert search("report a problem", tuner=False)[0].name == "Report a Problem"   # not a Tuner Mode screen
+  assert "SSH" not in [e.name for e in search("ssh", tuner=False)]               # Developer is
+  assert "SSH" in [e.name for e in search("ssh", tuner=True)]

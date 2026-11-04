@@ -252,7 +252,7 @@
   {
    "mock": "systemram",
    "title": "Device › RAM",
-   "note": "What was using RAM at the peak of each of the last three drives that ran low, with the Low on RAM chip's 85% hold: the picker of drives, the top five processes with a plain description, a bar against the largest and their size, then everything else. A red dot on RAM in the sidebar until it's opened. Page ground uses true black (#000000).",
+   "note": "What was using RAM at the peak of each of the last three drives that ran low, with the Low on RAM chip's 85% hold: the picker of drives, the top five processes with a plain description, a bar against the largest and their size, then everything else. A red dot on RAM in the sidebar until it's opened; the section is hidden until a drive first runs low. Page ground uses true black (#000000).",
    "match": true
   },
   {

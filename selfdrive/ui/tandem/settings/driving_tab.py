@@ -123,7 +123,7 @@ def driving_hub(window) -> Widget:
     def pick(entry) -> None:
       window.dismiss()
       window.open_at(entry.tab, entry.page, entry.section)
-    window.present(SettingsSearch(tuner, pick, window.dismiss))
+    window.present(SettingsSearch(tuner, pick, window.dismiss, ram=lambda: bool(window.ram_log().snapshots())))
 
   from openpilot.selfdrive.ui.tandem.settings.search import SearchButton
   hub = HubPage(N_("Driving"), N_("Good defaults are on. Change only what matters to you."), [

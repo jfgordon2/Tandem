@@ -45,7 +45,15 @@ class Entry:
 
   @property
   def tuner(self) -> bool:
-    return self.page == "tuner" or (self.tab == 1 and self.section == 5)
+    return self.page == "tuner" or self._device_section("Developer")
+
+  @property
+  def ram(self) -> bool:
+    """Device › RAM, which shows only once a drive has run low on RAM."""
+    return self._device_section("RAM")
+
+  def _device_section(self, name: str) -> bool:
+    return self.tab == 1 and self.page is None and self.section == SECTIONS[1].index(name)
 
   @property
   def where(self) -> str:
@@ -210,14 +218,15 @@ ENTRIES: list[Entry] = [
 ]
 
 
-def search(query: str, tuner: bool) -> list[Entry]:
-  """Entries matching every word of the query, best first: the name starting with it, then in the name, then anywhere."""
+def search(query: str, tuner: bool, ram: bool = False) -> list[Entry]:
+  """Entries matching every word of the query, best first: the name starting with it, then in the name, then anywhere.
+  tuner and ram say whether Tuner Mode's screens and Device › RAM are showing."""
   words = query.lower().split()
   if len(query.strip()) < MIN_QUERY:
     return []
   scored = []
   for i, e in enumerate(ENTRIES):
-    if e.tuner and not tuner:
+    if (e.tuner and not tuner) or (e.ram and not ram):
       continue
     name, rest = e.name.lower(), f"{e.detail} {e.where} {e.words}".lower()
     if not all(w in name or w in rest for w in words):
@@ -264,9 +273,11 @@ class SettingsSearch(Component):
   keyboard, and tapping the field brings it back. Picking a result closes search and opens its place."""
   grow_touch_target = False
 
-  def __init__(self, tuner: Callable[[], bool], on_pick: Callable[[Entry], None], on_close: Callable[[], None]):
+  def __init__(self, tuner: Callable[[], bool], on_pick: Callable[[Entry], None], on_close: Callable[[], None],
+               ram: Callable[[], bool] = lambda: False):
     super().__init__()
     self._tuner = tuner
+    self._ram = ram
     self._on_pick = on_pick
     self._keys = KeyPad(self._show_all, N_("Search"), MIN_QUERY,
                         voice_hint=N_("Say a setting, like speed limit. Tap the mic when you're done."))
@@ -289,7 +300,7 @@ class SettingsSearch(Component):
     self._keys.set_text(text)
 
   def results(self) -> list[Entry]:
-    return search(self._keys.text, self._tuner())
+    return search(self._keys.text, self._tuner(), self._ram())
 
   def _back_or_close(self, on_close: Callable[[], None]) -> Callable[[], None]:
     def back() -> None:

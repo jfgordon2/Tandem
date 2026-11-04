@@ -326,7 +326,7 @@ class SettingsWindow(Widget):
       Section(N_("General"), lambda: general_panel(general, self)),
       Section(N_("Backups"), lambda: backups_panel(general, self)),
       Section(N_("Storage & Data"), lambda: storage_panel(general, self, Models(self.store, self.model_source()))),
-      Section(N_("RAM"), lambda: ram_panel(ram, self.ram_now), dot=ram.unseen),
+      Section(N_("RAM"), lambda: ram_panel(ram, self.ram_now), visible=lambda: bool(ram.snapshots()), dot=ram.unseen),   # once a drive runs low
       Section(N_("Report a Problem"), lambda: report_panel(report)),
       Section(N_("Developer"), lambda: DeveloperPage(Developer(self.store, self.developer_source()), self),
               visible=lambda: TUNER_MODE.is_on(self.store)),

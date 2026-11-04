@@ -1,6 +1,7 @@
 """Device › RAM (design/systemram.html): what was using RAM at the peak of each of the last drives that ran low.
 
-ram.RamLog records the snapshots from the drive screen; this panel only shows them. Opening it clears the sidebar's dot.
+ram.RamLog records the snapshots from the drive screen; this panel only shows them. The section is hidden until the first
+drive runs low; opening it clears the sidebar's dot.
 """
 from __future__ import annotations
 
@@ -87,7 +88,7 @@ def ram_panel(log: RamLog, now_percent: Callable[[], int]) -> Widget:
     snaps = log.snapshots()
     chosen[0] = min(chosen[0], max(0, len(snaps) - 1))
     header = Label(lambda: t_("Now {}% used", now_percent()), T.font_px(15), T.TEXT_TERTIARY, T.FONT, h=Align.END, fit=True)
-    if snaps:
+    if snaps:   # the section is hidden until the first; the text covers the moment before it hides
       picker = Segmented([drive_label(s) for s in snaps], lambda: chosen[0], lambda i: chosen.__setitem__(0, i), equal=True,
                          font_size=T.font_px(15))
       items: list[Widget] = [Padded(picker, y=T.px(10)),
