@@ -13,6 +13,35 @@ from openpilot.starpilot.tandem.routing.bundles import ID, digest, load
 from openpilot.starpilot.tandem.routing.tools import graph_tar
 
 
+def build_graph(sources, output: Path, *, all_modes=False, concurrency=2, start=None, admin=None, timezone=None) -> Path:
+  """One native build for every region. Never build states independently."""
+  if not sources or not all(path.is_file() for path, _ in sources) or not 1 <= concurrency <= 8:
+    raise C.RoutingError("invalid_request")
+  output.mkdir(parents=True, exist_ok=True)
+  tiles = output / "tiles"
+  tiles.mkdir(exist_ok=True)
+  code = ("import json,sys; from valhalla import get_config; " +
+          "c=get_config(tile_dir=sys.argv[1], tile_extract=''); print(json.dumps(c))")
+  config = json.loads(subprocess.check_output([str(C.runtime_python()), "-c", code, str(tiles.resolve())], text=True))
+  config["mjolnir"].update(concurrency=concurrency, include_driving=True, include_bicycle=all_modes,
+                          include_pedestrian=all_modes, include_driveways=True, hierarchy=True, shortcuts=True,
+                          keep_osm_node_ids=False, keep_all_osm_node_ids=False, include_platforms=False,
+                          import_bike_share_stations=False, include_construction=False, pedestrian_areas=False)
+  for key, path in (("admin", admin), ("timezone", timezone)):
+    if path is not None:
+      if not path.is_file():
+        raise C.RoutingError("data_missing")
+      config["mjolnir"][key] = str(path.resolve())
+  config["logging"] = {"type": "std_out", "color": False}
+  config_path = output / "build-config.json"
+  config_path.write_text(json.dumps(config, indent=2) + "\n")
+  builder = subprocess.check_output([str(C.runtime_python()), "-c",
+    "from valhalla import PYVALHALLA_DIR; print(PYVALHALLA_DIR / 'bin' / 'valhalla_build_tiles')"], text=True).strip()
+  stages = ["--start", start] if start else []
+  subprocess.run([builder, "-c", str(config_path), *stages, *(str(path) for path, _ in sources)], check=True)
+  return tiles
+
+
 def build(source: Path, output: Path, bundle_id: str, title: str, bounds: list[float], source_url: str, *,
           additional_sources: tuple[tuple[Path, str], ...] = (), regions: tuple[str, ...] = (),
           all_modes=False, compressed=True, storage=None) -> None:
@@ -28,24 +57,7 @@ def build(source: Path, output: Path, bundle_id: str, title: str, bounds: list[f
     from openpilot.starpilot.tandem.routing.catalog import tokens
     if set(regions) != tokens(",".join(regions)):
       raise C.RoutingError("invalid_request")
-  output.mkdir(parents=True, exist_ok=True)
-  tiles = output / "tiles"
-  tiles.mkdir(exist_ok=True)
-  # Run configuration and graph tools in the isolated environment, not the UI interpreter.
-  code = ("import json,sys; from valhalla import get_config; " +
-          "c=get_config(tile_dir=sys.argv[1], tile_extract=''); " +
-          "c['mjolnir']['concurrency']=2; print(json.dumps(c))")
-  config = json.loads(subprocess.check_output([str(C.runtime_python()), "-c", code, str(tiles.resolve())], text=True))
-  config["mjolnir"].update(include_driving=True, include_bicycle=all_modes, include_pedestrian=all_modes,
-                          include_driveways=True, hierarchy=True, shortcuts=True,
-                          keep_osm_node_ids=False, keep_all_osm_node_ids=False, include_platforms=False,
-                          import_bike_share_stations=False, include_construction=False, pedestrian_areas=False)
-  config_path = output / "build-config.json"
-  config_path.write_text(json.dumps(config, indent=2) + "\n")
-  builder = subprocess.check_output([str(C.runtime_python()), "-c",
-    "from valhalla import PYVALHALLA_DIR; print(PYVALHALLA_DIR / 'bin' / 'valhalla_build_tiles')"], text=True).strip()
-  # Feed every extract into one native build so shared roads connect across borders.
-  subprocess.run([builder, "-c", str(config_path), *(str(path) for path, _ in sources)], check=True)
+  tiles = build_graph(sources, output, all_modes=all_modes)
   graph_tar.write(tiles, output / "tiles.tar")
   graph = output / "tiles.tar"
   stamp = datetime.datetime.now(datetime.UTC).isoformat()

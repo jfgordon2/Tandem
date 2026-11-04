@@ -78,7 +78,7 @@ class Progress:
 
   @property
   def fraction(self) -> float:
-    if self.phase == "ready":
+    if self.phase in ("install", "ready"):
       return 1.0
     return self.done / self.total if self.total else 0.0
 
@@ -134,10 +134,11 @@ class Maps:
     self._store.write({"PreferredSchedule": index})
 
   def ready(self) -> bool:
-    return self.source.has_selection() and all(ok for _, ok in self.source.checks()) and not self.source.progress().active
+    selected = self.source.has_selection() or getattr(self.source, "can_clear", lambda: False)()
+    return selected and all(ok for _, ok in self.source.checks()) and not self.source.progress().active
 
   def blocked_reason(self) -> str:
-    if not self.source.has_selection():
+    if not self.source.has_selection() and not getattr(self.source, "can_clear", lambda: False)():
       return N_("Choose at least one region")
     return next((t_("Waiting: {}", name.lower()) for name, ok in self.source.checks() if not ok), "")
 
@@ -317,7 +318,10 @@ class RegionsPage(Component):
     super().__init__()
     self._maps = maps
     self._tab = 0
-    self._header = self._child(PageHeader(N_("Add map regions"), N_("Pick a region, or switch to states for less storage")))
+    def subtitle():
+      return N_("Pick where you drive. Maps for routes, speed limits and street names.") \
+        if getattr(maps.source, "catalog", {}).get("schema") == 2 else N_("Pick a region, or switch to states for less storage")
+    self._header = self._child(PageHeader(N_("Add map regions"), subtitle))
     self._tabs = self._child(Sidebar(N_("REGIONS"), [SidebarItem(t, on_select=lambda i=i: self._select(i)) for i, t in enumerate(self.TABS)],
                                      selected=lambda: self._tab, width=T.px(220)))
 

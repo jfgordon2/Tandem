@@ -19,7 +19,7 @@ from openpilot.starpilot.tandem.routing import config as C, verified
 
 
 def is_image(bundle) -> bool:
-  return bundle.manifest["schema"] == 3
+  return bundle.manifest["schema"] in (3, 4)
 
 
 def mount_root() -> Path:
@@ -30,7 +30,14 @@ def mount_root() -> Path:
 
 
 def mount_path(bundle) -> Path:
+  if _staged(bundle):
+    folder = hashlib.sha256(str(bundle.folder.resolve()).encode()).hexdigest()[:16]
+    return mount_root() / "incoming" / f"{bundle.id}-{bundle.generation}-{folder}"
   return mount_root() / f"{bundle.id}-{bundle.generation}"
+
+
+def _staged(bundle):
+  return bundle.folder.resolve().is_relative_to((C.root() / "downloads").resolve())
 
 
 def source(bundle) -> Path:
@@ -108,6 +115,10 @@ def ensure(bundle) -> Path:
   if (mount_root().is_symlink() or root_stat.st_uid not in (0, os.getuid()) or root_stat.st_mode & 0o022
       or point.is_symlink()):
     raise C.RoutingError("data_incompatible")
+  if _staged(bundle):
+    point.parent.mkdir(exist_ok=True, mode=0o700)
+    if point.parent.is_symlink() or point.parent.stat().st_uid != os.getuid() or point.parent.stat().st_mode & 0o022:
+      raise C.RoutingError("data_incompatible")
   point.mkdir(exist_ok=True, mode=0o700)
   if any(point.iterdir()):
     raise C.RoutingError("data_incompatible")
@@ -156,6 +167,25 @@ def release_unused() -> None:
         _unmount_point(point)
     except (OSError, C.RoutingError):
       pass  # a live reader or a busy kernel mount wins; retry after it closes
+  for point in (mount_root() / "incoming").glob("*"):
+    if not point.is_dir() or point.is_symlink():
+      continue
+    try:
+      row = _mounts().get(point)
+      if not row:
+        point.rmdir()
+        continue
+      folder = _backing(row).parent
+      if folder.is_symlink() or not folder.resolve().is_relative_to((C.root() / "downloads").resolve()):
+        continue
+      if folder.exists():
+        with (folder / ".lease").open("a") as lease:
+          fcntl.flock(lease, fcntl.LOCK_EX | fcntl.LOCK_NB)
+          _unmount_point(point)
+      else:
+        _unmount_point(point)
+    except (OSError, C.RoutingError):
+      pass
 
 
 @contextmanager
@@ -168,6 +198,96 @@ def reader(bundle):
     verified.require(bundle)
     ensure(bundle)
     yield
+
+
+@contextmanager
+def staged_reader(bundle):
+  """One incoming part at a time; its lease also protects crash cleanup."""
+  if not _staged(bundle):
+    raise C.RoutingError("invalid_request")
+  with (bundle.folder / ".lease").open("a") as lease:
+    try:
+      fcntl.flock(lease, fcntl.LOCK_SH | fcntl.LOCK_NB)
+    except BlockingIOError:
+      raise C.RoutingError("busy") from None
+    try:
+      ensure(bundle)
+      yield graph_path(bundle)
+    finally:
+      fcntl.flock(lease, fcntl.LOCK_EX | fcntl.LOCK_NB)
+      _unmount_point(mount_path(bundle))
+
+
+def pack_stream(chunks, size: int, image: Path, gate=lambda: None):
+  """Wrap a streamed native tar in SquashFS; never materialize an expanded file."""
+  import tarfile
+  from openpilot.starpilot.tandem.routing import tiles
+  tool = shutil.which("mksquashfs")
+  if tool is None:
+    raise C.RoutingError("data_incompatible")
+  info = tarfile.TarInfo("tiles.tar")
+  info.size, info.mode = size, 0o444
+  command = [tool, "-", str(image.resolve()), "-tar", "-comp", "gzip", "-Xcompression-level", "6", "-b", "131072",
+             "-processors", "1", "-mem", "64M", "-noappend", "-no-xattrs", "-no-progress", "-mkfs-time", "0", "-all-time", "0"]
+  count, digest = 0, hashlib.sha256()
+  def outer():
+    nonlocal count
+    yield info.tobuf(format=tarfile.GNU_FORMAT)
+    for block in chunks:
+      count += len(block)
+      if count > size:
+        raise C.RoutingError("data_incompatible")
+      digest.update(block)
+      yield block
+    if count != size:
+      raise C.RoutingError("data_incompatible")
+    yield bytes(tiles.padded(512 + size + 1024, tarfile.RECORDSIZE) - 512 - size)
+  try:
+    with subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) as process:
+      try:
+        os.set_blocking(process.stdin.fileno(), False)
+        with selectors.DefaultSelector() as selector:
+          selector.register(process.stdin, selectors.EVENT_WRITE)
+          deadline = time.monotonic() + 300
+          for block in outer():
+            pending = memoryview(block)
+            while pending:
+              gate()
+              if time.monotonic() > deadline:
+                raise C.RoutingError("timeout")
+              if process.poll() is not None:
+                raise C.RoutingError("data_incompatible")
+              if selector.select(.2):
+                try:
+                  pending = pending[os.write(process.stdin.fileno(), pending[:tiles.BLOCK]):]
+                  deadline = time.monotonic() + 300
+                except BlockingIOError:
+                  pass
+        process.stdin.close()
+        while process.poll() is None:
+          gate()
+          if time.monotonic() > deadline:
+            raise C.RoutingError("timeout")
+          time.sleep(.1)
+        if process.returncode:
+          raise C.RoutingError("no_space" if shutil.disk_usage(image.parent).free < 256 * 1024**2 else "data_incompatible")
+      finally:
+        if process.poll() is None:
+          process.terminate()
+          try:
+            process.wait(timeout=3)
+          except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait()
+  except (OSError, subprocess.SubprocessError):
+    raise C.RoutingError("data_incompatible") from None
+  finally:
+    # Close a producer suspended on a mounted input before its lease unwinds.
+    # An exception traceback can otherwise retain that file descriptor.
+    close = getattr(chunks, "close", None)
+    if close is not None:
+      close()
+  return {"bytes": count, "sha256": digest.hexdigest()}
 
 
 def verify_graph(folder: Path, manifest: dict, gate=lambda: None) -> None:

@@ -18,6 +18,13 @@ def fetch(url: str, target: Path, size: int, checksum: str, gate=lambda: None, p
   gate()
   target.parent.mkdir(parents=True, exist_ok=True)
   done = target.stat().st_size if target.exists() else 0
+  if done == size:
+    if bundles.digest(target, gate) == checksum:
+      gate()
+      progress(size, size)
+      return
+    target.unlink()  # a damaged completed cache file must be downloaded again
+    done = 0
   if done > size:
     target.unlink()
     done = 0
@@ -66,7 +73,7 @@ def fetch(url: str, target: Path, size: int, checksum: str, gate=lambda: None, p
     raise C.RoutingError("data_incompatible")
 
 
-def install(package: dict, gate=lambda: None, progress=lambda done, total: None, installing=lambda: None, *, activate=True):
+def prepare(package: dict, gate=lambda: None, progress=lambda done, total: None, installing=lambda: None):
   gate()
   opener = urllib.request.build_opener(HTTPSRedirect())
   with opener.open(package["manifest"], timeout=15) as response:
@@ -88,7 +95,25 @@ def install(package: dict, gate=lambda: None, progress=lambda done, total: None,
   folder = C.root() / "downloads" / package["sha256"]
   folder.mkdir(parents=True, exist_ok=True)
   ready = folder / "ready"
+  if folder.is_symlink() or ready.is_symlink():
+    raise C.RoutingError("data_incompatible")
   if ready.exists():
+    try:
+      from openpilot.starpilot.tandem.routing import verified
+      existing = bundles.load(ready)
+      if existing.generation == package["sha256"] and verified.read(existing):
+        existing = bundles.verify(ready, gate)
+        progress(total, total)
+        return existing
+    except C.RoutingError as error:
+      if error.code != "data_incompatible":
+        raise
+    # Preserve complete physical parts across an interrupted assembly.
+    for name, record in data["files"].items():
+      source = ready / name
+      target = folder / name
+      if "download" not in record and source.is_file() and not source.is_symlink() and not target.exists():
+        source.replace(target)
     shutil.rmtree(ready)  # reclaim interrupted expansion before checking free space
   ready.mkdir()
   transports = {r.get("download", {}).get("name", n): r.get("download", r) for n, r in data["files"].items()}
@@ -116,7 +141,16 @@ def install(package: dict, gate=lambda: None, progress=lambda done, total: None,
     else:
       shutil.move(folder / name, ready / name)
   gate()
-  bundle = bundles.install(ready, consume=True, gate=gate)
+  return bundles.verify(ready, gate)
+
+
+def install(package: dict, gate=lambda: None, progress=lambda done, total: None, installing=lambda: None, *, activate=True, pack_gate=None):
+  if package.get("kind") == "dataset":
+    from openpilot.starpilot.tandem.routing import datasets
+    return datasets.install(package, gate, progress, installing, pack_gate=pack_gate)
+  ready = prepare(package, gate, progress, installing)
+  folder = ready.folder.parent
+  bundle = bundles.install(ready.folder, consume=True, gate=gate)
   shutil.rmtree(folder)
   gate()
   if activate:

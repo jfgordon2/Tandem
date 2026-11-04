@@ -61,6 +61,32 @@ class SampleMaps(FakeMaps):
     pass
 
 
+class StateSelectionMaps(SampleMaps):
+  catalog = {"schema": 2}
+
+  def can_clear(self):
+    return not self.picked
+
+  def selection_summary(self):
+    return "Iowa" if self.picked else "None selected"
+
+  def summary(self):
+    return {"road": "Already downloaded", "routes": "Ready" if self.picked else "Removed on update",
+            "note": "Updates offline routes to match this selection.", "route_ready": bool(self.picked),
+            "road_ready": True, "available": True}
+
+  def download_label(self):
+    return "Update maps"
+
+  def checks(self):
+    return [("Parked", True), ("Wi-Fi", True), ("Enough storage", True)]
+
+  def region_status(self, token):
+    if token in {"us_state.IA", "us_state.IL", "us_state.MN", "us_state.NE"}:
+      return "Road data ready", "Routes ready"
+    return "Not downloaded", "Offline routes available"
+
+
 def main(frame, save, out, tap, gui_app):
   from scene_compare import FakeCache, FakeDevice, VALUES
   from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow
@@ -80,10 +106,10 @@ def main(frame, save, out, tap, gui_app):
       maps_source=lambda: source, boot_logos=FakeBootLogos)
     window.show_event()
     rect = rl.Rectangle(0, 0, 2160, 1080)
-    def shot(name, render=None):
+    def shot(name, render=None, prefix="valhalla2"):
       for _ in range(5):
         frame(render or (lambda: window.render(rect)))
-      save(str(Path(out) / ("valhalla2-" + name + ".png")))
+      save(str(Path(out) / (prefix + "-" + name + ".png")))
     for name, only, preferred in (("prefer-online", False, "online"), ("prefer-offline", False, "offline"),
                                   ("offline-only", True, "online"), ("offline-only-missing", True, "offline")):
       C.set_policy(offline_only=only, preferred=preferred)
@@ -106,6 +132,15 @@ def main(frame, save, out, tap, gui_app):
       window.push(pane)
       shot(name)
       window.pop()
+    state_source = StateSelectionMaps()
+    state_model = Maps(store, state_source)
+    for name, picked in (("regions-update", {"us_state.IA"}), ("regions-empty", set())):
+      state_source.picked = picked
+      pane = RegionsPage(state_model, lambda: None)
+      pane._select(1)
+      window.push(pane)
+      shot(name, prefix="valhalla3")
+      window.pop()
     source.picked, source.missing = {"us_state.IA"}, False
     for name, phase, unit in (("download-prepare", "prepare", "bytes"), ("download-progress", "download", "bytes"),
                               ("download-road", "road", "files"), ("download-group", "download", "bytes"),
@@ -125,6 +160,9 @@ def main(frame, save, out, tap, gui_app):
       source.state = Progress(phase not in ("failed", "ready"), done, total, source.selection_summary(), regions, phase=phase, unit=unit,
         error="download_failed" if phase == "failed" else "", note="Iowa: road data ready; offline routes downloading." if phase == "download" else "")
       shot(name)
+    source.state = Progress(True, 0, 0, "Iowa", (RegionProgress("us_state.IA", 0, 0, False),),
+                            phase="install", unit="bytes", current_regions=("us_state.IA",))
+    shot("local-rebuild", prefix="valhalla3")
     source.state = Progress(False, 0, 0, "")
     window.dismiss()
     from openpilot.selfdrive.ui.tandem.settings.device_sections import confirm, DELETE_MAPS_MESSAGE

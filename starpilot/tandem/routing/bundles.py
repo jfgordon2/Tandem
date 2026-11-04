@@ -31,7 +31,7 @@ def digest(path: Path, gate=lambda: None) -> str:
 def validate_manifest(data: dict) -> dict:
   """Validate installed files separately from their optional compressed transport."""
   try:
-    if (type(data["schema"]) is not int or data["schema"] not in (1, 2, 3)
+    if (type(data["schema"]) is not int or data["schema"] not in (1, 2, 3, 4)
         or not ID.fullmatch(data["id"]) or data["runtime_version"] != C.VERSION):
       raise ValueError
     bounds = data["bounds"]
@@ -40,9 +40,25 @@ def validate_manifest(data: dict) -> dict:
       raise ValueError
     if not data.get("source") or not data.get("attribution"):
       raise ValueError
-    if data["schema"] == 3:
+    if data["schema"] in (3, 4):
       graph = data["graph"]
-      if (graph["format"] != "squashfs" or graph["path"] != "tiles.tar" or set(data["files"]) != {graph["file"]}
+      expected = {graph["file"]}
+      if data["schema"] == 4:
+        dataset = data["dataset"]
+        if (not ID.fullmatch(dataset["id"]) or not re.fullmatch("[a-f0-9]{64}", dataset["sha256"])
+            or dataset["index"] != "tiles.json" or not isinstance(data["parts"], list) or not data["parts"]
+            or len(set(data["parts"])) != len(data["parts"]) or not all(ID.fullmatch(p) for p in data["parts"])):
+          raise ValueError
+        if data.get("kind") not in ("tile-part", "state-set") or graph["file"] == dataset["index"]:
+          raise ValueError
+        if data["kind"] == "state-set":
+          regions = data["regions"]
+          if (not regions or len(set(regions)) != len(regions) or set(data["region_parts"]) != set(regions)
+              or any(not re.fullmatch(r"us_state\.[A-Z]{2}", region) or not data["region_parts"][region]
+                     or not set(data["region_parts"][region]) <= set(data["parts"]) for region in regions)):
+            raise ValueError
+        expected.add(dataset["index"])
+      if (graph["format"] != "squashfs" or graph["path"] != "tiles.tar" or set(data["files"]) != expected
           or type(graph["bytes"]) is not int or graph["bytes"] <= 0 or not re.fullmatch(r"[0-9a-f]{64}", graph["sha256"])):
         raise ValueError
     elif "tiles.tar" not in data["files"]:
@@ -95,23 +111,41 @@ def load(folder: Path, verify: bool = False, gate=lambda: None, *, logical=True)
         raise C.RoutingError("data_incompatible")
       if verify and digest(path, gate) != record["sha256"]:
         raise C.RoutingError("data_incompatible")
-    if verify and logical and data["schema"] == 3:
+    if verify and logical and data["schema"] in (3, 4):
       images.verify_graph(folder, data, gate)
     return Bundle(folder, data, digest(manifest_path, gate))
   except (OSError, ValueError, KeyError, TypeError):
     raise C.RoutingError("data_incompatible") from None
 
 
+def folders() -> list[Path]:
+  """Include damaged bundles so explicit map removal can still reclaim them."""
+  return [path for path in sorted((C.root() / "bundles").glob("*"))
+          if ID.fullmatch(path.name) and path.is_dir() and not path.is_symlink()]
+
+
 def installed() -> list[Bundle]:
   result = []
-  for folder in sorted((C.root() / "bundles").glob("*")):
-    if folder.is_symlink():
-      continue
+  for folder in folders():
     try:
       result.append(load(folder))
     except C.RoutingError:
       continue
   return result
+
+
+def routing_bundles() -> list[Bundle]:
+  """A committed state set is authoritative, even while an old lease drains."""
+  present = installed()
+  try:
+    selected = json.loads((C.root() / "active.json").read_text())
+    if "state_selection" in selected:
+      return [bundle for bundle in present if bundle.id == selected["id"] and bundle.generation == selected["generation"]]
+  except (OSError, ValueError, KeyError, TypeError):
+    pass
+  # Shared sets are usable only through their committed exact-selection
+  # pointer. A missing/corrupt pointer must not resurrect a retired state.
+  return [bundle for bundle in present if bundle.manifest.get("kind") != "state-set"]
 
 
 def verify(folder: Path, gate=lambda: None) -> Bundle:
@@ -173,11 +207,22 @@ def selected(message: dict) -> Bundle:
     return active()  # existing benchmark/protocol callers
   if not isinstance(identity, str) or not ID.fullmatch(identity):
     raise C.RoutingError("invalid_request")
-  return load(C.root() / "bundles" / identity)
+  active_selection = None
+  try:
+    active_selection = json.loads((C.root() / "active.json").read_text())
+    if "state_selection" in active_selection and active_selection.get("id") != identity:
+      raise C.RoutingError("superseded")
+  except (OSError, ValueError, TypeError):
+    pass
+  bundle = load(C.root() / "bundles" / identity)
+  if bundle.manifest.get("kind") == "state-set" and (not isinstance(active_selection, dict) or "state_selection" not in active_selection
+      or active_selection.get("id") != bundle.id or active_selection.get("generation") != bundle.generation):
+    raise C.RoutingError("superseded")
+  return bundle
 
 
 def for_trip(start, destination) -> Bundle:
-  candidates = [b for b in installed() if b.covers(start[0], start[1]) and
+  candidates = [b for b in routing_bundles() if b.covers(start[0], start[1]) and
                 b.covers(destination["latitude"], destination["longitude"])]
   if not candidates:
     raise C.RoutingError("outside_coverage" if installed() else "data_missing")
@@ -209,7 +254,11 @@ def activate(bundle_id: str) -> Bundle:
       previous = json.loads((C.root() / "active.json").read_text())
     except (OSError, ValueError):
       previous = None
-    C.atomic_json(C.root() / "active.json", {"id": bundle.id, "generation": bundle.generation, "previous": previous})
+    selection = {"id": bundle.id, "generation": bundle.generation, "previous": previous}
+    if bundle.manifest.get("kind") == "state-set":
+      selection["state_selection"] = bundle.manifest["regions"]
+      selection["previous"] = None
+    C.atomic_json(C.root() / "active.json", selection)
   return bundle
 
 
@@ -301,7 +350,7 @@ def capability() -> dict:
   if not C.runtime_ready():
     return {"status": "runtime_missing", "generation": ""}
   try:
-    present = installed()
+    present = routing_bundles()
     available = [b for b in present if verified.read(b)]
     if not available:
       raise C.RoutingError("data_incompatible" if present else "data_missing")

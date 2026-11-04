@@ -1,3 +1,9 @@
+Tandem 2026.11.04
+========================
+* Offline maps: choose any US states for offline routing
+* Update your selection to reuse current routing data and remove unchecked states
+* Uncheck every state and choose Update maps to clear offline routing data
+
 Tandem 2026.11.03
 ========================
 * Steering controller: Vehicle default uses StarPilot's normal controller for your car

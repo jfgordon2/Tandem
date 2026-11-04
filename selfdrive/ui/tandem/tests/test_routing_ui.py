@@ -129,6 +129,14 @@ def test_routing_keeps_ram_at_lowest_priority():
   assert {c.key for c, _ in stack.update(state, 100, False)} == {"pause_button", "routing"}
 
 
+def test_local_rebuild_keeps_approved_install_progress_without_marking_routes_ready():
+  from openpilot.selfdrive.ui.tandem.settings.maps import Progress, RegionProgress
+  region = RegionProgress("us_state.IA", 0, 0, False)
+  progress = Progress(True, 0, 0, "Iowa", (region,), phase="install", unit="bytes", current_regions=(region.location,))
+  assert progress.fraction == 1 and progress.step == 2 and progress.active
+  assert progress.current is region and not region.finished
+
+
 def test_shared_maps_adds_missing_routes_without_redownloading_roads():
   from openpilot.selfdrive.ui.tandem.settings.map_source import CombinedMaps
   from openpilot.selfdrive.ui.tandem.settings.maps import Progress, RegionProgress
@@ -145,3 +153,75 @@ def test_shared_maps_adds_missing_routes_without_redownloading_roads():
   source.job = {"phase": "road", "regions_ready": []}
   progress = source.progress()
   assert progress.active and not progress.regions[0].finished  # no gap before routing preparation
+
+
+def test_shared_state_selection_can_clear_and_update_without_road_downloads(monkeypatch, tmp_path):
+  from openpilot.selfdrive.ui.tandem.settings.map_source import CombinedMaps
+  from openpilot.selfdrive.ui.tandem.settings.maps import Maps, Progress
+  from openpilot.starpilot.tandem.routing import catalog, maps
+  monkeypatch.setenv("TANDEM_ROUTING_DIR", str(tmp_path))
+  monkeypatch.setattr(catalog, "load", lambda **_: {"schema": 2})
+  monkeypatch.setattr(catalog, "plan", lambda *a, **k: ([{"bytes": 0}], set()))
+  picked, calls = [""], []
+  road = SimpleNamespace(_layout=SimpleNamespace(_params=SimpleNamespace(get=lambda *a, **k: picked[0])),
+    has_selection=lambda: bool(picked[0]), checks=lambda: [("Parked", True)],
+    progress=lambda: Progress(False, 0, 0, ""), downloaded=lambda: True, download=lambda: calls.append("road"),
+    selection_summary=lambda: "None selected")
+  source = CombinedMaps(road)
+  source.road_ready = source.route_ready = {"us_state.IA"}
+  monkeypatch.setattr(source, "checks", lambda: [("Parked", True), ("Wi-Fi", True)])
+  model = Maps(SimpleNamespace(), source)
+  assert model.ready() and not model.blocked_reason() and source.download_label() == "Update maps"
+  assert source.summary()["routes"] == "Removed on update"
+  source.download()
+  assert maps.read("map-request.json")["selection"] == "" and not calls
+  assert not model.ready()  # avoid duplicate clear requests while the operation runs
+  source.job = {"selection": "", "phase": "ready"}
+  source.route_ready = set()
+  assert source.progress().phase == "" and not source.progress().active
+
+
+def test_state_picker_does_not_replan_or_read_installed_graphs_on_each_draw(monkeypatch):
+  from openpilot.selfdrive.ui.tandem.settings.map_source import CombinedMaps
+  from openpilot.starpilot.tandem.routing import bundles, catalog
+  data = {"schema": 2, "dataset": {"regions": {"us_state.IA": {}, "us_state.IL": {}}}, "packages": []}
+  monkeypatch.setattr(catalog, "load", lambda **_: data)
+  monkeypatch.setattr(catalog, "ready_regions", lambda: set())
+  calls, picked = [], ["us_state.IA"]
+  disk_reads = []
+  monkeypatch.setattr(bundles, "installed", lambda: disk_reads.append("snapshot") or [])
+  monkeypatch.setattr(catalog, "plan", lambda selection, *_: (calls.append(selection) or [{"bytes": 1000}], set()))
+  road = SimpleNamespace(_layout=SimpleNamespace(_params=SimpleNamespace(get=lambda key, **_: picked[0] if key == "MapsSelected" else "")),
+    _m=SimpleNamespace(REGIONAL_PACKAGES={}), tick=lambda: None, downloaded=lambda: True)
+  source = CombinedMaps(road)
+  source.road_ready = {"us_state.IA", "us_state.IL"}
+  for _ in range(10):
+    assert source.region_status("us_state.IA")[1] == "Routes not downloaded"
+    source.summary()
+    source.download_label()
+    source.routes_size()
+  assert calls == ["us_state.IA"]
+  assert not disk_reads
+  picked[0] = "us_state.IL"
+  source.summary()
+  assert calls == ["us_state.IA", "us_state.IL"]
+  source.tick()
+  source.summary()
+  assert calls == ["us_state.IA", "us_state.IL", "us_state.IL"]
+  assert disk_reads == ["snapshot"]
+
+
+def test_same_state_update_keeps_road_controller_and_deselection_reuses_roads(monkeypatch):
+  from openpilot.selfdrive.ui.tandem.settings.map_source import CombinedMaps
+  from openpilot.starpilot.tandem.routing import catalog, maps
+  monkeypatch.setattr(catalog, "load", lambda **_: {"schema": 2})
+  calls, picked = [], ["us_state.IA,us_state.IL"]
+  road = SimpleNamespace(_layout=SimpleNamespace(_params=SimpleNamespace(get=lambda *a, **k: picked[0])),
+                         download=lambda: calls.append("road"))
+  source = CombinedMaps(road)
+  source.road_ready = source.route_ready = {"us_state.IA", "us_state.IL"}
+  source.download()
+  assert calls == ["road"]  # an ordinary Update still checks upstream road data
+  picked[0] = "us_state.IA"
+  source.download()
+  assert calls == ["road"] and maps.read("map-request.json")["selection"] == "us_state.IA"

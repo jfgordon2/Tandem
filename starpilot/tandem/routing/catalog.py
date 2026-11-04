@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+from functools import lru_cache
 from pathlib import Path
 import re
 import urllib.request
@@ -10,7 +11,7 @@ from openpilot.starpilot.common.maps_selection import normalize_maps_selected
 from openpilot.starpilot.tandem.routing import bundles, config as C, verified
 from openpilot.starpilot.tandem.routing.tools.manage import HTTPSRedirect
 
-URL = "https://github.com/jfgordon2/Tandem/releases/download/routing-data-v1/catalog-squashfs-v1.json"
+URL = "https://github.com/jfgordon2/Tandem/releases/download/routing-us-v1/catalog.json"
 
 
 def tokens(selection: str) -> set[str]:
@@ -24,8 +25,27 @@ def tokens(selection: str) -> set[str]:
 
 def validate(data: dict) -> dict:
   try:
-    if data["schema"] != 1 or data["runtime_version"] != C.VERSION or not isinstance(data["packages"], list):
+    if type(data["schema"]) is not int or data["schema"] not in (1, 2) or data["runtime_version"] != C.VERSION or not isinstance(data["packages"], list):
       raise ValueError
+    if data["schema"] == 2:
+      dataset = data["dataset"]
+      if (not bundles.ID.fullmatch(dataset["id"]) or len(dataset["id"]) > 48 or not re.fullmatch("[a-f0-9]{64}", dataset["sha256"])
+          or dataset["runtime_version"] != C.VERSION or dataset["profile"] != "driving"
+          or not dataset["regions"] or not isinstance(dataset["parts"], list)):
+        raise ValueError
+      parts = set()
+      for part in dataset["parts"]:
+        if (not bundles.ID.fullmatch(part["id"]) or part["id"] in parts or not part["manifest"].startswith("https://")
+            or not re.fullmatch("[a-f0-9]{64}", part["sha256"]) or type(part["bytes"]) is not int or part["bytes"] <= 0):
+          raise ValueError
+        parts.add(part["id"])
+      for region, spec in dataset["regions"].items():
+        bounds = spec["bounds"]
+        if (not region.startswith("us_state.") or tokens(region) != {region} or not spec["parts"]
+            or len(set(spec["parts"])) != len(spec["parts"]) or not set(spec["parts"]) <= parts
+            or len(bounds) != 4 or not all(type(v) in (int, float) for v in bounds)
+            or not -180 <= bounds[0] < bounds[2] <= 180 or not -90 <= bounds[1] < bounds[3] <= 90):
+          raise ValueError
     identities = set()
     for p in data["packages"]:
       if (not bundles.ID.fullmatch(p["id"]) or p["id"] in identities or not p["manifest"].startswith("https://")
@@ -36,6 +56,11 @@ def validate(data: dict) -> dict:
     return data
   except (KeyError, ValueError, TypeError, AttributeError):
     raise C.RoutingError("catalog_unavailable") from None
+
+
+@lru_cache(maxsize=2)
+def _read(path, identity):
+  return validate(json.loads(path.read_text()))
 
 
 def load(refresh=False, gate=lambda: None) -> dict:
@@ -57,7 +82,8 @@ def load(refresh=False, gate=lambda: None) -> dict:
       pass
   for path in (cache, Path(__file__).with_suffix(".json")):
     try:
-      return validate(json.loads(path.read_text()))
+      stat = path.stat()
+      return _read(path, (stat.st_dev, stat.st_ino, stat.st_size, stat.st_mtime_ns, stat.st_ctime_ns))
     except (OSError, ValueError, C.RoutingError):
       continue
   raise C.RoutingError("catalog_unavailable")
@@ -65,9 +91,16 @@ def load(refresh=False, gate=lambda: None) -> dict:
 
 def plan(selection: str, data: dict | None = None) -> tuple[list[dict], set[str]]:
   remaining, result = tokens(selection), []
+  data = data or load()
+  if data["schema"] == 2:
+    from openpilot.starpilot.tandem.routing import datasets
+    selected = remaining.intersection(data["dataset"]["regions"])
+    if selected or not remaining:
+      result.append(datasets.plan(data["dataset"], selected))
+      remaining.difference_update(selected)
   # Prefer connected graphs covering several selected regions. Additional
   # independent graphs can serve separate trips, never a stitched cross-border route.
-  packages = (data or load())["packages"]
+  packages = data["packages"]
   while remaining:
     candidates = [p for p in packages if remaining.intersection(p["regions"])]
     if not candidates:
@@ -81,7 +114,7 @@ def plan(selection: str, data: dict | None = None) -> tuple[list[dict], set[str]
 def ready_regions() -> set[str]:
   result = set()
   known = {p["id"]: p["regions"] for p in load()["packages"]}
-  for b in bundles.installed():
+  for b in bundles.routing_bundles():
     if not verified.read(b):
       continue
     # Recognize the measured legacy Iowa graph only by its exact checksum.

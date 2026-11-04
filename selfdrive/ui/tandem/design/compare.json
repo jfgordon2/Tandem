@@ -542,8 +542,9 @@
     {
       "mock": "valhalla2-download-install",
       "title": "Install keeps the existing step",
-      "note": "Matches the approved progress layout in the native device capture. Keep Install as step three. Download at 100% is not Ready: the region remains current until its maps are checked and installed. The built screen retains the shared settings footer/page header. Time remaining appears only after a measured download rate exists.",
-      "match": true
+      "note": "Matches the approved progress layout. Keep Install as step three. Download at 100% is not Ready: the region remains current until its maps are checked and installed. The second capture applies the same approved screen to a local selection rebuild with zero new download bytes. The built screen retains the shared settings footer/page header. Time remaining appears only after a measured download rate exists.",
+      "match": true,
+      "built": ["valhalla2-download-install", "valhalla3-local-rebuild"]
     },
     {
       "mock": "valhalla2-download-failed",
@@ -632,6 +633,18 @@
         "memorychip",
         "valhalla2-chip-ram"
       ]
+    },
+    {
+      "mock": "valhalla3-regions-update",
+      "title": "Shared US build · Apply the checked states",
+      "note": "Approved state-selection update. Update keeps checked states and rebuilds from verified tiles already present; only missing or newer packs download. The built screen retains the existing shared settings footer. Readiness shown for other states is illustrative sample data.",
+      "match": false
+    },
+    {
+      "mock": "valhalla3-regions-empty",
+      "title": "Shared US build · Clear the routing selection",
+      "note": "Approved empty selection. Update remains available while routes are installed and clears offline routing data. Existing road-map data remains. The built screen retains the existing shared settings footer; local clear returns to the selector rather than showing download progress.",
+      "match": false
     }
   ]
 }

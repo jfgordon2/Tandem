@@ -193,3 +193,57 @@ def test_truncated_image_can_be_repaired_without_changing_immutable_manifest(dec
   verified.require(repaired)
   assert repaired.generation == bundle.generation
   assert images.source(repaired).read_bytes() == b"fixture:" + logical
+
+
+def test_streamed_compressor_receives_one_tar_without_expanded_disk_file(tmp_path, monkeypatch):
+  script = tmp_path / "mksquashfs"
+  script.write_text(f"#!{sys.executable}\n" + '''import pathlib,sys,tarfile
+assert sys.argv[1]=='-' and '-tar' in sys.argv
+assert sys.argv[sys.argv.index('-processors')+1]=='1'
+assert sys.argv[sys.argv.index('-mem')+1]=='64M'
+with tarfile.open(fileobj=sys.stdin.buffer,mode='r|') as archive:
+  item=next(iter(archive))
+  assert item.name=='tiles.tar' and item.mode==0o444
+  with pathlib.Path(sys.argv[2]).open('wb') as target:
+    source=archive.extractfile(item)
+    while block:=source.read(65536): target.write(block)
+  assert archive.next() is None
+''')
+  script.chmod(0o700)
+  monkeypatch.setattr(images.shutil, "which", lambda _: str(script))
+  payload = b"native graph tile" * 65536
+  output = tmp_path / "tiles.squashfs"
+  result = images.pack_stream((payload[n:n+65536] for n in range(0, len(payload), 65536)), len(payload), output)
+  assert output.read_bytes() == payload
+  assert result == {"bytes": len(payload), "sha256": hashlib.sha256(payload).hexdigest()}
+  assert not (tmp_path / "tiles.tar").exists()
+
+
+def test_cancelled_stream_terminates_compressor_even_when_its_pipe_is_full(tmp_path, monkeypatch):
+  script = tmp_path / "mksquashfs"
+  script.write_text(f"#!{sys.executable}\nimport time\ntime.sleep(60)\n")
+  script.chmod(0o700)
+  monkeypatch.setattr(images.shutil, "which", lambda _: str(script))
+  processes, calls = [], 0
+  popen = images.subprocess.Popen
+  def start(*args, **kwargs):
+    process = popen(*args, **kwargs)
+    processes.append(process)
+    return process
+  monkeypatch.setattr(images.subprocess, "Popen", start)
+  def gate():
+    nonlocal calls
+    calls += 1
+    if calls == 4:
+      raise C.RoutingError("interrupted")
+  closed = []
+  def source():
+    try:
+      yield bytes(2 * 1024**2)
+    finally:
+      closed.append(True)
+  producer = source()
+  with pytest.raises(C.RoutingError, match="interrupted"):
+    images.pack_stream(producer, 2 * 1024**2, tmp_path / "tiles.squashfs", gate)
+  assert len(processes) == 1 and processes[0].poll() is not None
+  assert closed == [True]  # close a mounted input before its reader lease unwinds

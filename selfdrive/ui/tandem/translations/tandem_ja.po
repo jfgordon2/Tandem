@@ -82,8 +82,8 @@ msgid "Start"
 msgstr "開始"
 
 #: destinations.py:426
-#: settings/maps.py:243
-#: settings/maps.py:217
+#: settings/maps.py:244
+#: settings/maps.py:218
 msgid "Choose regions"
 msgstr "地域を選ぶ"
 
@@ -2024,8 +2024,8 @@ msgid "Fine-tuning screens for gas, brake, steering and following"
 msgstr "アクセル、ブレーキ、ステアリング、追従の微調整画面"
 
 #: settings/can_recorder.py:13
-#: settings/map_source.py:72
-#: settings/maps.py:508
+#: settings/map_source.py:89
+#: settings/maps.py:512
 msgid "Ready"
 msgstr "準備完了"
 
@@ -2233,7 +2233,7 @@ msgid "CONNECTIONS"
 msgstr "接続"
 
 #: settings/connections.py:64
-#: settings/map_source.py:138
+#: settings/map_source.py:163
 #: settings/network_tab.py:199
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
@@ -2681,7 +2681,7 @@ msgid "Remove offline routes, speed limits and street names from this device. Sa
 msgstr "Remove offline routes, speed limits and street names from this device. Saved places stay saved. Your regions stay chosen, so a scheduled update downloads them again."
 
 #: settings/device_sections.py:50
-#: settings/maps.py:428
+#: settings/maps.py:432
 msgid "Parked"
 msgstr "駐車中"
 
@@ -2739,7 +2739,7 @@ msgstr "削除"
 
 #: settings/device_sections.py:317
 #: settings/display.py:325
-#: settings/maps.py:231
+#: settings/maps.py:232
 msgid "Offline Maps"
 msgstr "オフラインマップ"
 
@@ -2798,7 +2798,7 @@ msgid "Models"
 msgstr "モデル"
 
 #: settings/device_sections.py:313
-#: settings/maps.py:231
+#: settings/maps.py:232
 msgid "Speed limits and curves work without a connection"
 msgstr "制限速度とカーブが接続なしで使えます"
 
@@ -3428,121 +3428,137 @@ msgid " · Not set"
 msgstr " · 未設定"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:152
+#: settings/map_source.py:179
 msgid "Download selected maps"
 msgstr "Download selected maps"
 
+#. English fallback for new map-selection wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:38
+msgid "None selected"
+msgstr "None selected"
+
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:57
+#: settings/map_source.py:71
 msgid "Midwest"
 msgstr "Midwest"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:57
+#: settings/map_source.py:71
 msgid "West"
 msgstr "West"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:57
+#: settings/map_source.py:71
 msgid "South"
 msgstr "South"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:57
+#: settings/map_source.py:71
 msgid "Northeast"
 msgstr "Northeast"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:88
+#: settings/map_source.py:110
 msgid "All maps ready"
 msgstr "All maps ready"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:89
+#: settings/map_source.py:111
 msgid "Choose where you drive"
 msgstr "Choose where you drive"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:147
-msgid "Download road data"
-msgstr "Download road data"
-
-#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:149
-#: settings/maps.py:237
+#: settings/map_source.py:172
+#: settings/map_source.py:176
+#: settings/maps.py:238
 msgid "Update maps"
 msgstr "Update maps"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:151
+#: settings/map_source.py:174
+msgid "Download road data"
+msgstr "Download road data"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:178
 #, python-brace-format
 msgid "Download {} MiB"
 msgstr "Download {} MiB"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:64
+#: settings/map_source.py:79
 msgid "Road data ready"
 msgstr "Road data ready"
 
-#: settings/map_source.py:64
+#: settings/map_source.py:79
 #: sidebar.py:138
 msgid "Not downloaded"
 msgstr "未ダウンロード"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:65
-#: settings/maps.py:299
+#: settings/map_source.py:80
+#: settings/maps.py:300
 msgid "Routes ready"
 msgstr "Routes ready"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:71
+#: settings/map_source.py:87
 msgid "Already downloaded"
 msgstr "Already downloaded"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:71
+#: settings/map_source.py:88
 msgid "Download missing road data"
 msgstr "Download missing road data"
 
+#. English fallback for new map-selection wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:89
+msgid "Removed on update"
+msgstr "Removed on update"
+
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:75
+#: settings/map_source.py:92
 msgid "Routing coverage is not available for every selected region."
 msgstr "Routing coverage is not available for every selected region."
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:76
-msgid "Downloads all missing map data for this selection."
-msgstr "Downloads all missing map data for this selection."
-
-#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:65
+#: settings/map_source.py:80
 msgid "Routes not downloaded"
 msgstr "Routes not downloaded"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:65
+#: settings/map_source.py:80
 msgid "Routes not available yet"
 msgstr "Routes not available yet"
 
+#. English fallback for new map-selection wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:93
+msgid "Updates offline routes to match this selection."
+msgstr "Updates offline routes to match this selection."
+
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:73
+#: settings/map_source.py:94
+msgid "Downloads all missing map data for this selection."
+msgstr "Downloads all missing map data for this selection."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:136
+msgid "Road data ready; offline routes downloading."
+msgstr "Road data ready; offline routes downloading."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:90
 msgid "Not available for this region"
 msgstr "Not available for this region"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:74
-#: settings/maps.py:251
+#: settings/map_source.py:91
+#: settings/maps.py:252
 #, python-brace-format
 msgid "{} MiB"
 msgstr "{} MiB"
 
-#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:112
-msgid "Road data ready; offline routes downloading."
-msgstr "Road data ready; offline routes downloading."
-
-#: settings/maps.py:509
+#: settings/maps.py:513
 msgid "Pauses if you start driving or lose Wi-Fi, and picks up where it stopped. Keep the device powered."
 msgstr "運転を始めるか Wi-Fi が切れると一時停止し、止まったところから再開します。デバイスの電源は入れたままにしてください。"
 
@@ -3554,293 +3570,298 @@ msgstr "毎週"
 msgid "Monthly"
 msgstr "毎月"
 
-#: settings/maps.py:508
+#: settings/maps.py:512
 msgid "Prepare"
 msgstr "準備"
 
-#: settings/maps.py:508
+#: settings/maps.py:512
+#: settings/maps.py:200
 #: settings/maps.py:199
-#: settings/maps.py:198
 msgid "Download"
 msgstr "ダウンロード"
 
-#: settings/maps.py:508
+#: settings/maps.py:512
 msgid "Install"
 msgstr "インストール"
 
-#: settings/maps.py:239
-#: settings/maps.py:204
+#: settings/maps.py:240
+#: settings/maps.py:205
 msgid "Remove maps"
 msgstr "地図を削除"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:266
+#: settings/maps.py:267
 #: settings/speed_steering.py:438
 msgid "Routes, speed limits and street names without a connection"
 msgstr "Routes, speed limits and street names without a connection"
 
-#: settings/maps.py:314
+#: settings/maps.py:315
 msgid "U.S. regions"
 msgstr "米国の地域"
 
-#: settings/maps.py:314
+#: settings/maps.py:315
 msgid "U.S. states"
 msgstr "米国の州"
 
-#: settings/maps.py:314
+#: settings/maps.py:315
 msgid "Other countries"
 msgstr "その他の国"
 
-#: settings/maps.py:454
+#: settings/maps.py:458
 msgid "Park to delete offline maps"
 msgstr "オフラインマップを削除するには駐車してください"
 
-#: settings/maps.py:459
 #: settings/maps.py:463
+#: settings/maps.py:467
 #: settings/model.py:404
 msgid "Wait for the download to finish"
 msgstr "ダウンロードが終わるまでお待ちください"
 
-#: settings/maps.py:572
+#: settings/maps.py:576
 msgid "You can leave this screen. It keeps going in the background."
 msgstr "この画面を離れても、バックグラウンドで続きます。"
 
-#: settings/maps.py:141
+#: settings/maps.py:142
 msgid "Choose at least one region"
 msgstr "地域を1つ以上選んでください"
 
-#: settings/maps.py:149
+#: settings/maps.py:150
 msgid "Cancelling…"
 msgstr "中止しています…"
 
-#: settings/maps.py:151
+#: settings/maps.py:152
 #, python-brace-format
 msgid "Downloading {} · {}%"
 msgstr "{}をダウンロード中 · {}%"
 
-#: settings/maps.py:152
+#: settings/maps.py:153
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:253
 msgid "Downloaded"
 msgstr "ダウンロード済み"
 
-#: settings/maps.py:152
+#: settings/maps.py:153
 msgid "Not downloaded yet"
 msgstr "まだダウンロードしていません"
 
-#: settings/maps.py:185
+#: settings/maps.py:186
 #, python-brace-format
 msgid "{} of {} files · {}. Pauses if you drive or lose the connection."
 msgstr "{1} 件中 {0} 件のファイル · {2}。運転するか接続が切れると一時停止します。"
 
-#: settings/maps.py:199
+#: settings/maps.py:200
 msgid "Update now"
 msgstr "今すぐ更新"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:569
+#: settings/maps.py:573
 #, python-brace-format
 msgid "{} download stopped"
 msgstr "{} download stopped"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:587
+#: settings/maps.py:591
 msgid "Download complete · Installing maps"
 msgstr "Download complete · Installing maps"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:595
+#: settings/maps.py:599
 msgid " · Download stopped"
 msgstr " · Download stopped"
 
-#: settings/maps.py:597
+#: settings/maps.py:601
 #, python-brace-format
 msgid " · about {} min left"
 msgstr " · 残り約 {} 分"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:654
+#: settings/maps.py:658
 msgid "Paused. Downloads continue when parked on Wi-Fi."
 msgstr "Paused. Downloads continue when parked on Wi-Fi."
 
-#: settings/maps.py:142
+#: settings/maps.py:143
 #, python-brace-format
 msgid "Waiting: {}"
 msgstr "待機中：{}"
 
-#: settings/maps.py:167
-#: settings/maps.py:542
+#: settings/maps.py:168
+#: settings/maps.py:546
 msgid "Cancel download"
 msgstr "ダウンロードを中止"
 
-#: settings/maps.py:204
+#: settings/maps.py:205
 msgid "Park to remove maps"
 msgstr "地図を削除するには駐車してください"
 
-#: settings/maps.py:205
-#: settings/maps.py:239
+#: settings/maps.py:206
+#: settings/maps.py:240
 msgid "Remove offline maps?"
 msgstr "オフラインマップを削除しますか？"
 
-#: settings/maps.py:210
+#: settings/maps.py:211
 msgid "YOUR REGIONS"
 msgstr "選んだ地域"
 
-#: settings/maps.py:211
+#: settings/maps.py:212
 msgid "Change them in Choose regions"
 msgstr "「地域を選ぶ」で変更できます"
 
-#: settings/maps.py:221
-#: settings/maps.py:258
+#: settings/maps.py:222
+#: settings/maps.py:259
 msgid "Keep up to date"
 msgstr "最新に保つ"
 
-#: settings/maps.py:223
+#: settings/maps.py:224
 msgid "Updates download only while parked and online"
 msgstr "更新は駐車中かつオンラインのときだけダウンロードされます"
 
-#: settings/maps.py:227
+#: settings/maps.py:228
 msgid "Without maps, speed limits need a connection."
 msgstr "地図がないと制限速度には接続が必要です。"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:245
+#: settings/maps.py:246
 msgid "DOWNLOADED REGIONS"
 msgstr "DOWNLOADED REGIONS"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:260
+#: settings/maps.py:261
 msgid "One schedule for road data and offline routes, while parked on Wi-Fi."
 msgstr "One schedule for road data and offline routes, while parked on Wi-Fi."
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:264
+#: settings/maps.py:265
 msgid "Updates keep the current maps until the new maps are ready."
 msgstr "Updates keep the current maps until the new maps are ready."
 
-#: settings/maps.py:320
-msgid "Add map regions"
-msgstr "地図の地域を追加"
+#. English fallback for new map-selection wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:322
+msgid "Pick where you drive. Maps for routes, speed limits and street names."
+msgstr "Pick where you drive. Maps for routes, speed limits and street names."
 
-#: settings/maps.py:320
+#: settings/maps.py:323
 msgid "Pick a region, or switch to states for less storage"
 msgstr "地域を選ぶか、容量を減らすなら州に切り替えます"
 
-#: settings/maps.py:321
-#: settings/maps.py:617
+#: settings/maps.py:324
+msgid "Add map regions"
+msgstr "地図の地域を追加"
+
+#: settings/maps.py:325
+#: settings/maps.py:621
 msgid "REGIONS"
 msgstr "地域"
 
-#: settings/maps.py:352
+#: settings/maps.py:356
 msgid "SELECTED"
 msgstr "選択済み"
 
-#: settings/maps.py:428
+#: settings/maps.py:432
 #: settings/speed_steering.py:420
 #: sidebar.py:94
 msgid "Online"
 msgstr "オンライン"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:467
+#: settings/maps.py:471
 msgid "Park and end the route to remove maps"
 msgstr "Park and end the route to remove maps"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:543
+#: settings/maps.py:547
 msgid "Retry download"
 msgstr "Retry download"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:569
+#: settings/maps.py:573
 #, python-brace-format
 msgid "{} maps ready"
 msgstr "{} maps ready"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:577
-#: settings/maps.py:589
+#: settings/maps.py:581
+#: settings/maps.py:593
 msgid "Both map sets ready"
 msgstr "Both map sets ready"
 
-#: settings/maps.py:617
+#: settings/maps.py:621
 #, python-brace-format
 msgid "REGIONS · {} OF {} DONE"
 msgstr "地域 · {1} 中 {0} 完了"
 
-#: settings/maps.py:627
+#: settings/maps.py:631
 #, python-brace-format
 msgid "+{} more"
 msgstr "他 {} 件"
 
-#: settings/maps.py:217
+#: settings/maps.py:218
 msgid "Add or remove states, regions and countries"
 msgstr "州・地域・国を追加または削除"
 
-#: settings/maps.py:226
-#: settings/maps.py:263
+#: settings/maps.py:227
+#: settings/maps.py:264
 #: settings/model.py:316
 msgid "Storage"
 msgstr "ストレージ"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:247
-#: settings/maps.py:341
+#: settings/maps.py:248
+#: settings/maps.py:345
 msgid "Road data"
 msgstr "Road data"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:247
+#: settings/maps.py:248
 msgid "Speed limits and street names"
 msgstr "Speed limits and street names"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:251
-#: settings/maps.py:344
+#: settings/maps.py:252
+#: settings/maps.py:348
 msgid "Offline routes"
 msgstr "Offline routes"
 
-#: settings/maps.py:395
+#: settings/maps.py:399
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:583
 msgid "Whole U.S."
 msgstr "米国全土"
 
-#: settings/maps.py:395
+#: settings/maps.py:399
 msgid "Every state and territory"
 msgstr "すべての州と準州"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:570
+#: settings/maps.py:574
 #, python-brace-format
 msgid "Preparing {} maps"
 msgstr "Preparing {} maps"
 
-#: settings/maps.py:570
+#: settings/maps.py:574
 #, python-brace-format
 msgid "Downloading {}"
 msgstr "{}をダウンロード中"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:591
+#: settings/maps.py:595
 #, python-brace-format
 msgid "Offline routes · {} of {} MiB"
 msgstr "Offline routes · {} of {} MiB"
 
-#: settings/maps.py:336
+#: settings/maps.py:340
 #, python-brace-format
 msgid "{}: not yet"
 msgstr "{}：まだ"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:593
+#: settings/maps.py:597
 #, python-brace-format
 msgid "Road data · {} of {} files"
 msgstr "Road data · {} of {} files"
 
-#: settings/maps.py:593
+#: settings/maps.py:597
 msgid "Getting ready"
 msgstr "準備中"
 
-#: settings/maps.py:326
+#: settings/maps.py:330
 msgid "No regions available."
 msgstr "利用できる地域がありません。"
 

@@ -4,6 +4,7 @@ import builtins
 import datetime
 import hashlib
 import io
+import json
 from pathlib import Path
 import threading
 import time
@@ -88,8 +89,34 @@ def test_online_exception_and_missing_key_fall_back_offline():
   assert engine.fetch_route("", None, {}) is result
 
 
-def test_catalog_resolves_connected_coverage_and_reports_missing():
-  data = catalog.load()
+def legacy_catalog():
+  return catalog.validate(json.loads((Path(__file__).parent / "fixtures/routing-catalog-v1.json").read_text()))
+
+
+def test_bundled_country_catalog_covers_selector_and_arbitrary_state_unions():
+  from openpilot.starpilot.common.maps_catalog import VALID_MAP_TOKENS
+  data = catalog.validate(json.loads(Path(catalog.__file__).with_suffix(".json").read_text()))
+  assert data["schema"] == 2
+  dataset = data["dataset"]
+  assert set(dataset["regions"]) == {token for token in VALID_MAP_TOKENS if token.startswith("us_state.")}
+  parts = {part["id"]: part for part in dataset["parts"]}
+  for selection in ("us_state.IA,us_state.IL", "us_state.CA,us_state.NY,us_state.PR", "nation.US", ""):
+    planned, missing = catalog.plan(selection, data)
+    assert not missing and len(planned) == 1
+    expected = {part for region in catalog.tokens(selection) for part in dataset["regions"][region]["parts"]}
+    assert set(planned[0]["parts"]) == expected
+    assert planned[0]["bytes"] == sum(parts[part]["bytes"] for part in expected)
+  national, _ = catalog.plan("nation.US", data)
+  assert set(national[0]["parts"]) == set(parts)
+  iowa = set(dataset["regions"]["us_state.IA"]["parts"])
+  illinois = set(dataset["regions"]["us_state.IL"]["parts"])
+  assert iowa & illinois  # Border/hierarchy packs are shared once, not duplicated.
+  _, missing = catalog.plan("nation.CA", data)
+  assert missing == {"nation.CA"}
+
+
+def test_legacy_catalog_resolves_connected_coverage_and_reports_missing():
+  data = legacy_catalog()
   packages, missing = catalog.plan("us_state.IA,us_state.IL", data)
   assert len(packages) == 1 and set(packages[0]["regions"]) == {"us_state.IA", "us_state.IL"} and not missing
   packages, missing = catalog.plan("us_state.IA,us_state.WI", data)
@@ -100,8 +127,23 @@ def test_catalog_resolves_connected_coverage_and_reports_missing():
       catalog.validate({**data, **change})
 
 
+def test_catalog_snapshot_reuses_parsed_metadata_and_detects_atomic_replacement(monkeypatch):
+  path = C.root() / "catalog.json"
+  data = legacy_catalog()
+  C.atomic_json(path, data)
+  checks, validate = [], catalog.validate
+  def checked(value):
+    checks.append(value)
+    return validate(value)
+  monkeypatch.setattr(catalog, "validate", checked)
+  assert catalog.load() is catalog.load() and len(checks) == 1
+  data["packages"][0]["title"] = "A newer catalog snapshot"
+  C.atomic_json(path, data)
+  assert catalog.load()["packages"][0]["title"] == "A newer catalog snapshot" and len(checks) == 2
+
+
 def test_iowa_then_illinois_installs_connected_package_once(monkeypatch):
-  data, calls = catalog.load(), []
+  data, calls = legacy_catalog(), []
   monkeypatch.setattr(catalog, "load", lambda **_: data)
   def install(package, **kwargs):
     calls.append(package["id"])

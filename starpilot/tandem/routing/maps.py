@@ -22,8 +22,9 @@ def read(name="map-job.json") -> dict:
 
 
 def request(selection: str, wait_for_road=False) -> str:
+  original = selection
   selection = catalog.normalize_maps_selected(selection)
-  if not selection:
+  if not selection and (original or catalog.load()["schema"] != 2):
     raise C.RoutingError("invalid_request")
   # mapd's published receipt uses epoch seconds, so this comparison must use
   # the same clock. All internal deadlines and rate estimates are monotonic.
@@ -66,18 +67,18 @@ def deletion():
   with bundles.lock(), ExitStack() as leases:
     if running():
       raise C.RoutingError("busy")
-    graphs = bundles.installed()
-    for bundle in graphs:
-      stream = leases.enter_context((bundle.folder / ".lease").open("a"))
+    folders = bundles.folders()
+    for folder in folders:
+      stream = leases.enter_context((folder / ".lease").open("a"))
       try:
         fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
       except BlockingIOError:
         raise C.RoutingError("busy") from None
     yield
     import shutil
-    for bundle in graphs:
-      images.unmount(bundle)
-      shutil.rmtree(bundle.folder)
+    for folder in folders:
+      images.unmount_id(folder.name)
+      shutil.rmtree(folder)
     shutil.rmtree(C.root() / "downloads", ignore_errors=True)
     for name in ("active.json", "map-job.json", "map-request.json", "map-cancel.json"):
       (C.root() / name).unlink(missing_ok=True)
@@ -145,6 +146,9 @@ class Manager:
         raise C.RoutingError("interrupted")
       C.require_parked()
     try:
+      from openpilot.starpilot.tandem.routing.datasets import cleanup
+      gate()
+      cleanup()
       for bundle in bundles.installed():
         gate()
         if verified.due(bundle):
@@ -153,6 +157,18 @@ class Manager:
             bundles.verify(bundle.folder, gate)
     except (C.RoutingError, OSError):
       pass  # never run a full scan in a route request or interrupt a map job
+
+  def assembly_gate(self):
+    """Stop the compressor across a drive; retain downloaded parts for retry."""
+    if self.stop.is_set() or not self.allowed():
+      raise C.RoutingError("interrupted")
+    if (not C.enabled() or read("map-cancel.json").get("id") == self.state["id"]
+        or read("map-request.json").get("id") != self.state["id"]):
+      raise C.RoutingError("cancelled")
+    try:
+      C.require_parked()
+    except C.RoutingError:
+      raise C.RoutingError("interrupted") from None
 
   def run(self, pending):
     previous = read()
@@ -183,16 +199,19 @@ class Manager:
       self.gate()
       packages, unsupported = catalog.plan(pending["selection"], catalog.load(refresh=True, gate=self.gate))
       self.publish(unsupported=sorted(unsupported))
-      if packages:
+      if unsupported and any(package.get("kind") == "dataset" for package in packages):
+        raise C.RoutingError("coverage_unavailable")
+      if any(package.get("kind") != "dataset" or package["parts"] for package in packages):
         self.prepare(cancelled=lambda: self._setup_cancelled())
       for package in packages:
         self.gate()
-        if any(b.id == package["id"] and verified.read(b) for b in bundles.installed()):
+        if package.get("kind") != "dataset" and any(b.id == package["id"] and verified.read(b) for b in bundles.installed()):
           self.publish(regions_ready=sorted(set(self.state["regions_ready"]) | set(package["regions"])))
           continue
         self.publish(phase="download", done=0, total=package["bytes"], current_regions=package["regions"])
+        kwargs = {"pack_gate": self.assembly_gate} if package.get("kind") == "dataset" else {}
         installed = self.installer(package, gate=self.gate, progress=lambda done, total: self.publish(done=done, total=total),
-                                   installing=lambda: self.publish(phase="install"))
+                                   installing=lambda: self.publish(phase="install"), **kwargs)
         if installed is not None:
           # Keep one previous compatible graph for recovery; do not accumulate
           # a full extra graph on every Weekly/Monthly update.
@@ -216,6 +235,11 @@ class Manager:
         self.publish(phase="cancelled" if error.code == "cancelled" else "failed", error=error.code)
     except Exception:
       self.publish(phase="failed", error="download_failed")
+    finally:
+      # Large inventories are temporary. Return unused native/Python heap
+      # pages after an update or an interrupted assembly, before a drive.
+      from openpilot.starpilot.tandem.routing.native_worker import release_heap
+      release_heap()
 
   def _setup_cancelled(self):
     # Runtime installer already rechecks parked state and cancellation between
