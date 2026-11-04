@@ -15,6 +15,7 @@ Everything else, from the camera and path to alerts, is upstream's.
 from __future__ import annotations
 
 import datetime
+import json
 from collections.abc import Callable
 import time
 
@@ -38,7 +39,7 @@ from openpilot.selfdrive.ui.tandem.onroad.layers import (AT_LIMIT, BAR_HEIGHT, B
                                                          Headroom, HeadroomArc, HelpSteer, ARC, DEV_ARC, LimitCard, LimitOffer, OnroadBar, StatusChip,
                                                          dm_tile, draw_driver_monitor, draw_speed, draw_speed_limit,
                                                          draw_turn_card, sign_tile, TURN_BELOW_SIGN, TURN_CARD_TOP)
-from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, LimitWatch, RamWatch, chips_for, snapshot
+from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, LimitWatch, RamWatch, chips_for, routing_chip, snapshot
 from openpilot.selfdrive.ui.tandem.ram import shared_log
 from openpilot.selfdrive.ui.tandem.onroad.limits import LimitFollower, LimitOfferState, OfferChime
 from openpilot.selfdrive.ui.tandem.onroad.lead import GapTracker, detailed_tag_on, lead_anchor, read_lead_sample
@@ -59,6 +60,18 @@ class EssentialsTurnCard(NavigationCardRenderer):
     super().__init__()
     self._top = top
     self.box: rl.Rectangle | None = None   # where it was drawn this frame, if it was
+
+  def _update_state(self) -> None:
+    super()._update_state()
+    from openpilot.starpilot.tandem.routing.config import enabled
+    if enabled():
+      raw = ui_state.params_memory.get("NavInstructionState") or {}
+      try:
+        value = json.loads(raw) if isinstance(raw, str) else raw
+        if not 0 <= time.monotonic() - float(value.get("updatedAtMonotonic", 0)) <= 2.5:
+          self._valid = False
+      except (ValueError, TypeError, AttributeError):
+        self._valid = False
 
   def _render(self, rect: rl.Rectangle) -> None:
     self.box = None
@@ -498,6 +511,11 @@ class EssentialsOnroadView(StarPilotOnroadView):
     current = snapshot(ui_state, self._navigating(), self._limits, now, self._ram)
     if current.low_ram:
       self._ram_log.note(ui_state.started_frame, current.memory_percent)
+    if self._navigating():
+      from openpilot.starpilot.tandem.routing.config import enabled, policy
+      from openpilot.starpilot.tandem.routing.navigationd import STATUS
+      if enabled():
+        current.routing = routing_chip(STATUS.read(max_age=2.5), now, policy()[0])
     self._apply_forecast(current)
     self._braking_for_lead = any(chip.key == "traffic" for chip in chips_for(current))
     self._chip_list = self._chips.update(current, now, alert is not None or self._headroom_warning)
@@ -570,10 +588,21 @@ class EssentialsOnroadView(StarPilotOnroadView):
       import cereal.messaging as messaging
       self._nav_sm = messaging.SubMaster(["navInstruction"])
     self._nav_sm.update(0)
-    if not self._nav_sm.valid.get("navInstruction", False):
+    from openpilot.starpilot.tandem.routing.config import enabled
+    if enabled() and (not self._nav_sm.valid.get("navInstruction", False)
+                      or not 0 <= time.monotonic() - self._nav_sm.recv_time.get("navInstruction", 0) <= 2.5):
+      from openpilot.starpilot.tandem.routing.navigationd import STATUS
+      from openpilot.selfdrive.ui.tandem.routing_status import display_estimate
+      state = STATUS.read(max_age=2.5)
+      estimate = display_estimate(state, time.monotonic())
+      if estimate is None:
+        return "", ""
+      seconds, meters = estimate
+    elif not self._nav_sm.valid.get("navInstruction", False):
       return "", ""
-    nav = self._nav_sm["navInstruction"]
-    seconds, meters = float(nav.timeRemaining), float(nav.distanceRemaining)
+    else:
+      nav = self._nav_sm["navInstruction"]
+      seconds, meters = float(nav.timeRemaining), float(nav.distanceRemaining)
     arrive = (datetime.datetime.now() + datetime.timedelta(seconds=seconds)).strftime("%-I:%M %p")
     distance = t_("{} km", f"{meters / 1000:.1f}") if metric else t_("{} mi", f"{meters / 1609.344:.1f}")
     return arrive, t_("{} min · {}", max(1, round(seconds / 60)), distance)

@@ -1,476 +1,637 @@
 {
- "entries": [
-  {
-   "mock": "hub",
-   "title": "Driving hub",
-   "note": "Matches the mock. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "assistance",
-   "title": "Driving › Assistance",
-   "note": "openpilot's core switches beside Driver Monitoring: Always-On Driver Monitoring, the Driver Camera preview, the reset, and While parked (Sentry Mode, and its Sensitivity as a sub-row). Rows keep the standard height, so While parked scrolls into view instead of fitting as in the mock. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "search",
-   "title": "Settings search",
-   "note": "Matches the layout. The results are the build's real ones for \"gas\", best first; Search lists them all without the keyboard. The mic key sits beside 123, as on destination search. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "driving",
-   "title": "Speed & Steering › Everyday",
-   "note": "Matches, including Higher and Lower limits and MAX follows limits under Match, the settings count and dividers. Adds an Assistance section and a Tuner Mode button. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "drivingvehicle",
-   "title": "Speed & Steering › Vehicle Profile",
-   "note": "Matches: tiles fill the panel, no line under the title. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "drivingweather",
-   "title": "Speed & Steering › Weather",
-   "note": "Matches: the four conditions are icon cards. Auto also writes preset amounts. Adds the Weather heads-up switch. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "drivingnav",
-   "title": "Speed & Steering › Navigation",
-   "note": "Matches, with the mock's row icons. Set and Change open StarPilot's destination search. Adds the Mapbox Keys row: which keys are saved, and How to add. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "mapboxkey",
-   "title": "Mapbox key help",
-   "note": "Matches: four steps from an account to pasting both keys on Galaxy's App Keys page, with the secret token's scopes. Opens from Navigation's Mapbox Keys row. The mock bolds pk. and sk.; the wrapped text can't.",
-   "match": true
-  },
-  {
-   "mock": "display",
-   "title": "Display › Driving Screen",
-   "note": "Matches: Camera View, Driver Camera in Reverse, Driving Style Banner, Compass, Blind Spot Highlights and Lead Car Tag, then the power-user bundles. The rows are taller than the mock's, so the panel scrolls to Lead Insights. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "displaytheme",
-   "title": "Display › Theme & Startup",
-   "note": "Boot Logo is a StarPilot / comma choice; downloaded logos stay on StarPilot's screen. Page ground uses true black (#000000).",
-   "match": false
-  },
-  {
-   "mock": "bootlogo",
-   "title": "Tandem boot logo",
-   "note": "Matches the HTML source. The shipped 2160×1080 JPEG uses a true-black background; decoded outer margins are RGB (0, 0, 0), so they can test the OLED's black level during boot.",
-   "match": true
-  },
-  {
-   "mock": "displaymap",
-   "title": "Display › Map",
-   "note": "Matches, with the note at the bottom. No Auto sign option: StarPilot's setting is US or Vienna. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "pathstylepicker",
-   "title": "Path Style picker",
-   "note": "Matches: a drawn preview of each style.",
-   "match": true
-  },
-  {
-   "mock": "signalpicker",
-   "title": "Turn Signal picker",
-   "note": "Matches: Standard, then the Whimsy animations, each shown by a frame of StarPilot's own animation. On the road they cross above the bar while signalling; the chevrons by the speed stay.",
-   "match": true
-  },
-  {
-   "mock": "alerts",
-   "title": "Alerts",
-   "note": "Matches: Volume and Chimes side by side. The presets add Auto. Chimes include Weather heads-up. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "volumeeditor",
-   "title": "Volume editor",
-   "note": "Matches: the slider marks Quiet at 25% and Normal at this group's 60%, as in the mock. Loud sits at the group's real level, not the mock's placeholder.",
-   "match": true
-  },
-  {
-   "mock": "model",
-   "title": "Driving Model",
-   "note": "Matches: the active model on an accent card, other models beside it. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "modelcatalog",
-   "title": "Model catalog",
-   "note": "Matches, with the shared storage bar. The first tab is All models: StarPilot doesn't filter models by car. The bottom bar replaces the mock's back button. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "vehicle",
-   "title": "Vehicle",
-   "note": "Matches: your car and Auto-Lock on the left, wheel buttons on the right. Adds a \"More for your car\" row. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "vehiclepicker",
-   "title": "Choose your car",
-   "note": "Matches the mock. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "mapdata",
-   "title": "Offline Maps",
-   "note": "Matches the two columns, with the same storage bar as Storage & Data. Adds Update now. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "mapregions",
-   "title": "Choose map regions",
-   "note": "Matches: region cards, the selection and its checks beside them. No YOUR REGION badge or size estimates. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "mapdownloading",
-   "title": "Map download progress",
-   "note": "Matches: percent, files and time left, the four steps, and a tile per region from mapd's per-location counts. It shows in place of Offline Maps while a download runs; Back is in the bottom bar. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "tuner",
-   "title": "Tuner › Steering",
-   "note": "Matches the five controller choices and selected-choice explanation. Vehicle default matches StarPilot and is applied by Essentials setup and tuning resets. Settings keep standard row heights, so the controller row can scroll into view.",
-   "match": true
-  },
-  {
-   "mock": "steeringcontroller",
-   "title": "Steering controller",
-   "note": "Matches the five controller choices and selected-choice explanation. Vehicle default matches StarPilot and is applied by Essentials setup and tuning resets. Settings keep standard row heights, so the controller row can scroll into view.",
-   "match": true,
-   "built": "steeringcontroller"
-  },
-  {
-   "mock": "tunergas",
-   "title": "Tuner › Gas & Brake",
-   "note": "Matches: each profile shows its value, FROM STYLE or OVERRIDE, and Override or Reset. Built keeps a title and separate Start and Stop Acceleration rows. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "tunerfollowing",
-   "title": "Tuner › Following & Stops",
-   "note": "Matches: the four gaps in one row of cells; a changed gap shows in amber and a tap edits it. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "tunerbundles",
-   "title": "Tuner › Bundle Overrides",
-   "note": "Matches: Bundle on at the right, two columns with OVERRIDE badges. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "bundlesheet",
-   "title": "Display › What a bundle sets",
-   "note": "Matches: the options each bundle sets as tiles of name and param, with tabs for the two bundles. Built lists the bundles' real contents.",
-   "match": true
-  },
-  {
-   "mock": "valueeditor",
-   "title": "Number editor",
-   "note": "Matches: separate − and + squares, the value with its unit below, and the step note beside Reset. Start Acceleration has no quick picks, so none show.",
-   "match": true
-  },
-  {
-   "mock": "devicetab",
-   "title": "This Device",
-   "note": "Adds a More section: remote access, driver monitoring reset, language, regulatory, device ID and serial, and the modem IMEI (read once in the background). Page ground uses true black (#000000).",
-   "match": false
-  },
-  {
-   "mock": "canrecorder",
-   "title": "Device › Developer › CAN test recorder",
-   "note": "Matches: shared panels and Camera/OBD segmented control, an OBD frame count, large manual-action markers, Start/Stop and a pinned Abort button. Ready (Camera and OBD), Recording, Discarding and Discarded renders check selection locking, button states and counter reset; translated renders check German, Spanish, Japanese and longer pseudo text. Both panels scroll independently. OBD stops after two minutes and restores normal input before Saved. This is a passive recording, not a door control. Page ground uses true black (#000000).",
-   "match": true,
-   "built": [
-    "canrecorder",
-    "canrecorder_ready",
-    "canrecorder_obd_ready",
-    "canrecorder_aborting",
-    "canrecorder_discarded",
-    "canrecorder_saved"
-   ]
-  },
-  {
-   "mock": "pairing",
-   "title": "Pair the phone app",
-   "note": "Matches: the comma connect steps beside the QR code on a white tile. The code is upstream's, refreshed every 5 minutes. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "drivercamera",
-   "title": "Driver camera preview",
-   "note": "Matches: back, the status pill, the face box, the driver monitor tile and the hint. Built uses a flat stand-in where the camera image goes. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "remoteaccess",
-   "title": "Remote Access",
-   "note": "Matches: the Galaxy steps and Set up, with an empty tile until a password creates the link. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "remoteaccessqr",
-   "title": "Remote Access, set up",
-   "note": "Matches: the device's link as a QR code with the link under it, and Unpair, which asks first. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "keyboard",
-   "title": "Keyboard",
-   "note": "Matches: the destination search mock's keys under our header, with the password field and its eye. The blue key names the action. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "system",
-   "title": "General",
-   "note": "Uploads is Off, Parked or Always. Automatic weekly backups have no upstream support. Page ground uses true black (#000000).",
-   "match": false
-  },
-  {
-   "mock": "systembackups",
-   "title": "Backups",
-   "note": "No automatic schedule, for the same reason. Page ground uses true black (#000000).",
-   "match": false
-  },
-  {
-   "mock": "systemstorage",
-   "title": "Storage & Data",
-   "note": "Matches, with the Offline Maps and Unused Models rows, the note at the bottom and no line under the title. The rows scroll, with a glow. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "systemram",
-   "title": "Device › RAM",
-   "note": "What was using RAM at the peak of each of the last three drives that ran low, with the Low on RAM chip's 85% hold: the picker of drives, the top five processes with a plain description, a bar against the largest and their size, then everything else. A red dot on RAM in the sidebar until it's opened; the section is hidden until a drive first runs low. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "systemreport",
-   "title": "Report a Problem",
-   "note": "Matches the two columns. No Attach last drive: StarPilot's report doesn't attach drives. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "confirmdialog",
-   "title": "Confirm dialog",
-   "note": "Matches, with icon wells.",
-   "match": true
-  },
-  {
-   "mock": "connections",
-   "title": "Connections › Wi-Fi",
-   "note": "Matches: the Wi-Fi list in the Connections tab's first section. Wi-Fi scans only while this section is open. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "connectionscellular",
-   "title": "Connections › Cellular",
-   "note": "Matches: Hotspot, its current name and Edit button, its password, Save Data, and Roaming, APN and IP address behind one row. Both Edit buttons use the shared value pill, including its chevron. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "connectionsremote",
-   "title": "Connections › Bluetooth Remote",
-   "note": "Matches: the remote's buttons and their actions, with press-to-find. Bluetooth and button testing run only while a Bluetooth section is open. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "connectionsaudio",
-   "title": "Connections › Car Audio & Devices",
-   "note": "Matches: car audio for alerts, and nearby devices to pair. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "wheelbuttonlearn",
-   "title": "Assign a button",
-   "note": "Matches. The action grid lists what the remote offers, including each favorite by its saved name, so it differs from the mock's sample list.",
-   "match": true
-  },
-  {
-   "mock": "softwaretab",
-   "title": "Software",
-   "note": "Matches: the version card beside the update settings. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "onroad",
-   "title": "Onroad",
-   "note": "Matches: Essentials' speed with its turn signal, the sign, the chip bottom left and the driver monitor tile top right. The stand-in road stands for the camera. Page ground uses true black (#000000).",
-   "match": true,
-   "built": "onroad_default"
-  },
-  {
-   "mock": "gaptag",
-   "title": "Onroad › Lead gap tag",
-   "note": "Matches the approved shared developer tag: centered gap alone by default, distance near a stop, all three values in Developer View or Lead Insights, and -- while unsure. The anchor and connector appear before the full-size tag settles in over 250 ms. StarPilot's projected ground point and marker size estimate the roof; no vehicle outline detector is added. The stand-in road replaces the camera. Page ground uses true black (#000000).",
-   "match": true,
-   "built": [
-    "lead_following",
-    "lead_braking",
-    "gap_stopped",
-    "gap_uncertain",
-    "gap_developer",
-    "gap_acquire_40",
-    "gap_acquire_120",
-    "gap_acquire_250"
-   ]
-  },
-  {
-   "mock": "steeringheadroom",
-   "title": "Steering headroom",
-   "note": "This shows the at-limit stage: Help steer is the bottom Warning card in the bar's place, like StarPilot's alerts, with the arc moved above it. On the car the border also turns amber and the lane lines tint; this stand-in render keeps the green border. Page ground uses true black (#000000).",
-   "match": true,
-   "built": "onroad_helpsteer"
-  },
-  {
-   "mock": "confirmlimit",
-   "title": "Confirm new speed limit",
-   "note": "Shown here together with the at-limit stage and its Help steer banner. Page ground uses true black (#000000).",
-   "match": false,
-   "built": "onroad_limit"
-  },
-  {
-   "mock": "onroadnav",
-   "title": "Onroad, navigating",
-   "note": "Matches: the sign top left with the turn card below it, the driver monitor tile top right, the bar with the street name. Page ground uses true black (#000000).",
-   "match": true,
-   "built": "onroad_nav"
-  },
-  {
-   "mock": "alertstyles",
-   "title": "Onroad alert levels",
-   "note": "Matches the three levels, drawn from StarPilot's real alerts: openpilot Unavailable (info), Pay Attention (warning), BRAKE! (critical). Light Turned Green and Lead Departed show as their status chips instead. Page ground uses true black (#000000).",
-   "match": true,
-   "built": [
-    "alert_unavailable",
-    "alert_pay_attention",
-    "alert_fcw"
-   ]
-  },
-  {
-   "mock": "home",
-   "title": "Parked home",
-   "note": "The sidebar adds comma connect. Page ground uses true black (#000000).",
-   "match": false,
-   "built": "sidebar_home"
-  },
-  {
-   "mock": "homeweather",
-   "title": "Parked home: weather coming",
-   "note": "Matches: the next 12 hours under Ready, the coming snow named with when it starts and stops, its hours tinted as the chips are. The same forecast as Weather heads-up. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "homeweatherdry",
-   "title": "Parked home: dry weather",
-   "note": "Matches: Open-Meteo's sky in plain words (Sunny, Mostly sunny, Partly cloudy, Cloudy; Clear at night), from the most hours. Hidden without a forecast or with Weather heads-up off. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "homealerts",
-   "title": "Home: alerts",
-   "note": "Matches: alert cards by severity with short titles, and StarPilot's one action (here Snooze update). Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "homeupdate",
-   "title": "Home: update ready",
-   "note": "Matches: the new version, its release notes and Restart and update. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "onroaddev",
-   "title": "Onroad, Developer View",
-   "note": "Matches the developer panel, strip and tag typography. Developer labels follow the selected language; a measured gap separates each strip label from its value, including Arabic. English follows the mock. The approved gaptag.html supersedes this older mock's lead triangle: the same distance/gap/relative-speed tag now has an anchor, connector and acquisition transition. Page ground uses true black (#000000).",
-   "match": false
-  },
-  {
-   "mock": "onroadextras",
-   "title": "Onroad › StarPilot extras",
-   "note": "Matches: pedal tiles and the model chip under the driver monitor, the compass tag at the start of the bar (where it sits while navigating), the weather now at its end without a route, the stopping line, lane and blind-spot washes, radar dots and the border halves, over a stand-in road. Page ground uses true black (#000000).",
-   "match": true,
-   "built": "onroad_extras"
-  },
-  {
-   "mock": "onroadwhereto",
-   "title": "Where to? in the bar",
-   "note": "Matches: without a route, a tinted Where to? button beside MAX opens the same screen as the parked card; none while navigating, so the route's arrival, time left and End route keep their room. Page ground uses true black (#000000).",
-   "match": true,
-   "built": [
-    "onroad_hero",
-    "onroad_nav"
-   ]
-  },
-  {
-   "mock": "memorychip",
-   "title": "Onroad › Low RAM chip",
-   "note": "StarPilot's Low Memory notice (RAM, not storage) as a red Low on RAM chip instead of the bottom banner, in arrival order and the lowest priority. Fill, border, icon, text color and place match. The percentage is drawn in the label's color and weight, not bolder and whiter, so the sentence can be translated whole. Page ground uses true black (#000000).",
-   "match": false
-  },
-  {
-   "mock": "statuschips",
-   "title": "Onroad › Status chips",
-   "note": "Text, icons and order match. Top: the four steering pauses. Middle: the wheel-button modes with Lane change blocked, which replaces the blind spot banner. Each set is shown together here; on the road one pause and one Pulse & glide show at a time. Bottom: a real stack, the curve chip fading. Built chips use the dark fill from the onroad mock; this sheet tints each chip by tone, so the two mocks differ there. Page ground uses true black (#000000).",
-   "match": false,
-   "built": [
-    "onroad_pauses",
-    "onroad_modes",
-    "onroad_stack"
-   ]
-  },
-  {
-   "mock": "destinations",
-   "title": "Where to?",
-   "note": "Matches: Home, Work and Add favorite, then favorites and recents with stars. Offline maps shows only when opened from Settings. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "navsearch",
-   "title": "Destination search",
-   "note": "Matches: four suggestions in two rows, with the same keyboard height as settings search. Each card shows the name and street address before city/state/ZIP; long lines end with an ellipsis. Results update as you type; Search opens the full list. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "voicelistening",
-   "title": "Voice typing: listening",
-   "note": "Matches: the mic (tap to stop), the page's hint and a live level meter, with Type instead. Listening also stops after a 1.5 s pause. The empty field has no placeholder, as when typing. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "voicetranscribing",
-   "title": "Voice typing: writing it down",
-   "note": "Matches: a spinner while Whisper works. The words land in the field for editing. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "voicedownload",
-   "title": "Voice typing: first use",
-   "note": "Matches layout. Setup text also covers preparing the native voice engine; the mock only names the model download. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "routepreview",
-   "title": "Route preview",
-   "note": "Matches. The route comes from Mapbox before Start, drawn on the stylized map; the decorative highway band is left out so only the real route shows. Page ground uses true black (#000000).",
-   "match": true
-  },
-  {
-   "mock": "setup",
-   "title": "First-run setup",
-   "note": "Matches: three tall cards with progress dots. Adds Back from step 2. Page ground uses true black (#000000).",
-   "match": true,
-   "built": "setup0"
-  }
- ]
+  "entries": [
+    {
+      "mock": "hub",
+      "title": "Driving hub",
+      "note": "Matches the mock. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "assistance",
+      "title": "Driving › Assistance",
+      "note": "openpilot's core switches beside Driver Monitoring: Always-On Driver Monitoring, the Driver Camera preview, the reset, and While parked (Sentry Mode, and its Sensitivity as a sub-row). Rows keep the standard height, so While parked scrolls into view instead of fitting as in the mock. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "search",
+      "title": "Settings search",
+      "note": "Matches the layout. The results are the build's real ones for \"gas\", best first; Search lists them all without the keyboard. The mic key sits beside 123, as on destination search. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "driving",
+      "title": "Speed & Steering › Everyday",
+      "note": "Matches, including Higher and Lower limits and MAX follows limits under Match, the settings count and dividers. Adds an Assistance section and a Tuner Mode button. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "drivingvehicle",
+      "title": "Speed & Steering › Vehicle Profile",
+      "note": "Matches: tiles fill the panel, no line under the title. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "drivingweather",
+      "title": "Speed & Steering › Weather",
+      "note": "Matches: the four conditions are icon cards. Auto also writes preset amounts. Adds the Weather heads-up switch. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "drivingnav",
+      "title": "Speed & Steering › Navigation",
+      "note": "The new offline-routing variant adds its management row and clarifies map data. See drivingnavrouting for the current layout; the approved original mock is unchanged.",
+      "match": false,
+      "built": "drivingnavrouting"
+    },
+    {
+      "mock": "mapboxkey",
+      "title": "Mapbox key help",
+      "note": "Matches: four steps from an account to pasting both keys on Galaxy's App Keys page, with the secret token's scopes. Opens from Navigation's Mapbox Keys row. The mock bolds pk. and sk.; the wrapped text can't.",
+      "match": true
+    },
+    {
+      "mock": "display",
+      "title": "Display › Driving Screen",
+      "note": "Matches: Camera View, Driver Camera in Reverse, Driving Style Banner, Compass, Blind Spot Highlights and Lead Car Tag, then the power-user bundles. The rows are taller than the mock's, so the panel scrolls to Lead Insights. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "displaytheme",
+      "title": "Display › Theme & Startup",
+      "note": "Boot Logo is a StarPilot / comma choice; downloaded logos stay on StarPilot's screen. Page ground uses true black (#000000).",
+      "match": false
+    },
+    {
+      "mock": "bootlogo",
+      "title": "Tandem boot logo",
+      "note": "Matches the HTML source. The shipped 2160×1080 JPEG uses a true-black background; decoded outer margins are RGB (0, 0, 0), so they can test the OLED's black level during boot.",
+      "match": true
+    },
+    {
+      "mock": "displaymap",
+      "title": "Display › Map",
+      "note": "Matches, with the note at the bottom. No Auto sign option: StarPilot's setting is US or Vienna. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "pathstylepicker",
+      "title": "Path Style picker",
+      "note": "Matches: a drawn preview of each style.",
+      "match": true
+    },
+    {
+      "mock": "signalpicker",
+      "title": "Turn Signal picker",
+      "note": "Matches: Standard, then the Whimsy animations, each shown by a frame of StarPilot's own animation. On the road they cross above the bar while signalling; the chevrons by the speed stay.",
+      "match": true
+    },
+    {
+      "mock": "alerts",
+      "title": "Alerts",
+      "note": "Matches: Volume and Chimes side by side. The presets add Auto. Chimes include Weather heads-up. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "volumeeditor",
+      "title": "Volume editor",
+      "note": "Matches: the slider marks Quiet at 25% and Normal at this group's 60%, as in the mock. Loud sits at the group's real level, not the mock's placeholder.",
+      "match": true
+    },
+    {
+      "mock": "model",
+      "title": "Driving Model",
+      "note": "Matches: the active model on an accent card, other models beside it. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "modelcatalog",
+      "title": "Model catalog",
+      "note": "Matches, with the shared storage bar. The first tab is All models: StarPilot doesn't filter models by car. The bottom bar replaces the mock's back button. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "vehicle",
+      "title": "Vehicle",
+      "note": "Matches: your car and Auto-Lock on the left, wheel buttons on the right. Adds a \"More for your car\" row. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "vehiclepicker",
+      "title": "Choose your car",
+      "note": "Matches the mock. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "mapdata",
+      "title": "Offline Maps",
+      "note": "Matches the two columns, with the same storage bar as Storage & Data. Adds Update now. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "mapregions",
+      "title": "Choose map regions",
+      "note": "Matches: region cards, the selection and its checks beside them. No YOUR REGION badge or size estimates. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "mapdownloading",
+      "title": "Map download progress",
+      "note": "Matches: percent, files and time left, the four steps, and a tile per region from mapd's per-location counts. It shows in place of Offline Maps while a download runs; Back is in the bottom bar. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "tuner",
+      "title": "Tuner › Steering",
+      "note": "Matches the five controller choices and selected-choice explanation. Vehicle default matches StarPilot and is applied by Essentials setup and tuning resets. Settings keep standard row heights, so the controller row can scroll into view.",
+      "match": true
+    },
+    {
+      "mock": "steeringcontroller",
+      "title": "Steering controller",
+      "note": "Matches the five controller choices and selected-choice explanation. Vehicle default matches StarPilot and is applied by Essentials setup and tuning resets. Settings keep standard row heights, so the controller row can scroll into view.",
+      "match": true,
+      "built": "steeringcontroller"
+    },
+    {
+      "mock": "tunergas",
+      "title": "Tuner › Gas & Brake",
+      "note": "Matches: each profile shows its value, FROM STYLE or OVERRIDE, and Override or Reset. Built keeps a title and separate Start and Stop Acceleration rows. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "tunerfollowing",
+      "title": "Tuner › Following & Stops",
+      "note": "Matches: the four gaps in one row of cells; a changed gap shows in amber and a tap edits it. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "tunerbundles",
+      "title": "Tuner › Bundle Overrides",
+      "note": "Matches: Bundle on at the right, two columns with OVERRIDE badges. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "bundlesheet",
+      "title": "Display › What a bundle sets",
+      "note": "Matches: the options each bundle sets as tiles of name and param, with tabs for the two bundles. Built lists the bundles' real contents.",
+      "match": true
+    },
+    {
+      "mock": "valueeditor",
+      "title": "Number editor",
+      "note": "Matches: separate − and + squares, the value with its unit below, and the step note beside Reset. Start Acceleration has no quick picks, so none show.",
+      "match": true
+    },
+    {
+      "mock": "devicetab",
+      "title": "This Device",
+      "note": "Adds a More section: remote access, driver monitoring reset, language, regulatory, device ID and serial, and the modem IMEI (read once in the background). Page ground uses true black (#000000).",
+      "match": false
+    },
+    {
+      "mock": "canrecorder",
+      "title": "Device › Developer › CAN test recorder",
+      "note": "Matches: shared panels and Camera/OBD segmented control, an OBD frame count, large manual-action markers, Start/Stop and a pinned Abort button. Ready (Camera and OBD), Recording, Discarding and Discarded renders check selection locking, button states and counter reset; translated renders check German, Spanish, Japanese and longer pseudo text. Both panels scroll independently. OBD stops after two minutes and restores normal input before Saved. This is a passive recording, not a door control. Page ground uses true black (#000000).",
+      "match": true,
+      "built": [
+        "canrecorder",
+        "canrecorder_ready",
+        "canrecorder_obd_ready",
+        "canrecorder_aborting",
+        "canrecorder_discarded",
+        "canrecorder_saved"
+      ]
+    },
+    {
+      "mock": "pairing",
+      "title": "Pair the phone app",
+      "note": "Matches: the comma connect steps beside the QR code on a white tile. The code is upstream's, refreshed every 5 minutes. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "drivercamera",
+      "title": "Driver camera preview",
+      "note": "Matches: back, the status pill, the face box, the driver monitor tile and the hint. Built uses a flat stand-in where the camera image goes. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "remoteaccess",
+      "title": "Remote Access",
+      "note": "Matches: the Galaxy steps and Set up, with an empty tile until a password creates the link. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "remoteaccessqr",
+      "title": "Remote Access, set up",
+      "note": "Matches: the device's link as a QR code with the link under it, and Unpair, which asks first. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "keyboard",
+      "title": "Keyboard",
+      "note": "Matches: the destination search mock's keys under our header, with the password field and its eye. The blue key names the action. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "system",
+      "title": "General",
+      "note": "Uploads is Off, Parked or Always. Automatic weekly backups have no upstream support. Page ground uses true black (#000000).",
+      "match": false
+    },
+    {
+      "mock": "systembackups",
+      "title": "Backups",
+      "note": "No automatic schedule, for the same reason. Page ground uses true black (#000000).",
+      "match": false
+    },
+    {
+      "mock": "systemstorage",
+      "title": "Storage & Data",
+      "note": "Matches, with the Offline Maps and Unused Models rows, the note at the bottom and no line under the title. The rows scroll, with a glow. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "systemreport",
+      "title": "Report a Problem",
+      "note": "Matches the two columns. No Attach last drive: StarPilot's report doesn't attach drives. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "confirmdialog",
+      "title": "Confirm dialog",
+      "note": "Matches, with icon wells.",
+      "match": true
+    },
+    {
+      "mock": "connections",
+      "title": "Connections › Wi-Fi",
+      "note": "Matches: the Wi-Fi list in the Connections tab's first section. Wi-Fi scans only while this section is open. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "connectionscellular",
+      "title": "Connections › Cellular",
+      "note": "Matches: Hotspot, its current name and Edit button, its password, Save Data, and Roaming, APN and IP address behind one row. Both Edit buttons use the shared value pill, including its chevron. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "connectionsremote",
+      "title": "Connections › Bluetooth Remote",
+      "note": "Matches: the remote's buttons and their actions, with press-to-find. Bluetooth and button testing run only while a Bluetooth section is open. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "connectionsaudio",
+      "title": "Connections › Car Audio & Devices",
+      "note": "Matches: car audio for alerts, and nearby devices to pair. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "wheelbuttonlearn",
+      "title": "Assign a button",
+      "note": "Matches. The action grid lists what the remote offers, including each favorite by its saved name, so it differs from the mock's sample list.",
+      "match": true
+    },
+    {
+      "mock": "softwaretab",
+      "title": "Software",
+      "note": "Matches: the version card beside the update settings. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "onroad",
+      "title": "Onroad",
+      "note": "Matches: Essentials' speed with its turn signal, the sign, the chip bottom left and the driver monitor tile top right. The stand-in road stands for the camera. Page ground uses true black (#000000).",
+      "match": true,
+      "built": "onroad_default"
+    },
+    {
+      "mock": "gaptag",
+      "title": "Onroad › Lead gap tag",
+      "note": "Matches the approved shared developer tag: centered gap alone by default, distance near a stop, all three values in Developer View or Lead Insights, and -- while unsure. The anchor and connector appear before the full-size tag settles in over 250 ms. StarPilot's projected ground point and marker size estimate the roof; no vehicle outline detector is added. The stand-in road replaces the camera. Page ground uses true black (#000000).",
+      "match": true,
+      "built": [
+        "lead_following",
+        "lead_braking",
+        "gap_stopped",
+        "gap_uncertain",
+        "gap_developer",
+        "gap_acquire_40",
+        "gap_acquire_120",
+        "gap_acquire_250"
+      ]
+    },
+    {
+      "mock": "steeringheadroom",
+      "title": "Steering headroom",
+      "note": "This shows the at-limit stage: Help steer is the bottom Warning card in the bar's place, like StarPilot's alerts, with the arc moved above it. On the car the border also turns amber and the lane lines tint; this stand-in render keeps the green border. Page ground uses true black (#000000).",
+      "match": true,
+      "built": "onroad_helpsteer"
+    },
+    {
+      "mock": "confirmlimit",
+      "title": "Confirm new speed limit",
+      "note": "Shown here together with the at-limit stage and its Help steer banner. Page ground uses true black (#000000).",
+      "match": false,
+      "built": "onroad_limit"
+    },
+    {
+      "mock": "onroadnav",
+      "title": "Onroad, navigating",
+      "note": "Matches: the sign top left with the turn card below it, the driver monitor tile top right, the bar with the street name. Page ground uses true black (#000000).",
+      "match": true,
+      "built": "onroad_nav"
+    },
+    {
+      "mock": "alertstyles",
+      "title": "Onroad alert levels",
+      "note": "Matches the three levels, drawn from StarPilot's real alerts: openpilot Unavailable (info), Pay Attention (warning), BRAKE! (critical). Light Turned Green and Lead Departed show as their status chips instead. Page ground uses true black (#000000).",
+      "match": true,
+      "built": [
+        "alert_unavailable",
+        "alert_pay_attention",
+        "alert_fcw"
+      ]
+    },
+    {
+      "mock": "home",
+      "title": "Parked home",
+      "note": "The sidebar adds comma connect. Page ground uses true black (#000000).",
+      "match": false,
+      "built": "sidebar_home"
+    },
+    {
+      "mock": "homeweather",
+      "title": "Parked home: weather coming",
+      "note": "Matches: the next 12 hours under Ready, the coming snow named with when it starts and stops, its hours tinted as the chips are. The same forecast as Weather heads-up. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "homeweatherdry",
+      "title": "Parked home: dry weather",
+      "note": "Matches: Open-Meteo's sky in plain words (Sunny, Mostly sunny, Partly cloudy, Cloudy; Clear at night), from the most hours. Hidden without a forecast or with Weather heads-up off. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "homealerts",
+      "title": "Home: alerts",
+      "note": "Matches: alert cards by severity with short titles, and StarPilot's one action (here Snooze update). Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "homeupdate",
+      "title": "Home: update ready",
+      "note": "Matches: the new version, its release notes and Restart and update. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "onroaddev",
+      "title": "Onroad, Developer View",
+      "note": "Matches the developer panel, strip and tag typography. Developer labels follow the selected language; a measured gap separates each strip label from its value, including Arabic. English follows the mock. The approved gaptag.html supersedes this older mock's lead triangle: the same distance/gap/relative-speed tag now has an anchor, connector and acquisition transition. Page ground uses true black (#000000).",
+      "match": false
+    },
+    {
+      "mock": "onroadextras",
+      "title": "Onroad › StarPilot extras",
+      "note": "Matches: pedal tiles and the model chip under the driver monitor, the compass tag at the start of the bar (where it sits while navigating), the weather now at its end without a route, the stopping line, lane and blind-spot washes, radar dots and the border halves, over a stand-in road. Page ground uses true black (#000000).",
+      "match": true,
+      "built": "onroad_extras"
+    },
+    {
+      "mock": "onroadwhereto",
+      "title": "Where to? in the bar",
+      "note": "Matches: without a route, a tinted Where to? button beside MAX opens the same screen as the parked card; none while navigating, so the route's arrival, time left and End route keep their room. Page ground uses true black (#000000).",
+      "match": true,
+      "built": [
+        "onroad_hero",
+        "onroad_nav"
+      ]
+    },
+    {
+      "mock": "statuschips",
+      "title": "Onroad › Status chips",
+      "note": "Text, icons and order match. Top: the four steering pauses. Middle: the wheel-button modes with Lane change blocked, which replaces the blind spot banner. Each set is shown together here; on the road one pause and one Pulse & glide show at a time. Bottom: a real stack, the curve chip fading. Built chips use the dark fill from the onroad mock; this sheet tints each chip by tone, so the two mocks differ there. Page ground uses true black (#000000).",
+      "match": false,
+      "built": [
+        "onroad_pauses",
+        "onroad_modes",
+        "onroad_stack"
+      ]
+    },
+    {
+      "mock": "destinations",
+      "title": "Where to?",
+      "note": "Matches: Home, Work and Add favorite, then favorites and recents with stars. Offline maps shows only when opened from Settings. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "navsearch",
+      "title": "Destination search",
+      "note": "Matches: four suggestions in two rows, with the same keyboard height as settings search. Each card shows the name and street address before city/state/ZIP; long lines end with an ellipsis. Results update as you type; Search opens the full list. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "voicelistening",
+      "title": "Voice typing: listening",
+      "note": "Matches: the mic (tap to stop), the page's hint and a live level meter, with Type instead. Listening also stops after a 1.5 s pause. The empty field has no placeholder, as when typing. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "voicetranscribing",
+      "title": "Voice typing: writing it down",
+      "note": "Matches: a spinner while Whisper works. The words land in the field for editing. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "voicedownload",
+      "title": "Voice typing: first use",
+      "note": "Matches layout. Setup text also covers preparing the native voice engine; the mock only names the model download. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "routepreview",
+      "title": "Route preview",
+      "note": "Matches. The route comes from Mapbox before Start, drawn on the stylized map; the decorative highway band is left out so only the real route shows. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "setup",
+      "title": "First-run setup",
+      "note": "Matches: three tall cards with progress dots. Adds Back from step 2. Page ground uses true black (#000000).",
+      "match": true,
+      "built": "setup0"
+    },
+    {
+      "mock": "valhalla2-prefer-online",
+      "title": "Prefer online",
+      "note": "Native device capture with sample data. Use a valid online route when it succeeds. If it is unavailable or fails, try the downloaded offline route once. Default: this setting, with Offline maps only off. The built maps row keeps a general feature description; geographic readiness is shown after opening it. Mapbox retains its configured-key status, with optional wording in strict mode.",
+      "match": false
+    },
+    {
+      "mock": "valhalla2-prefer-offline",
+      "title": "Prefer offline",
+      "note": "Native device capture with sample data. Try a usable local route first. Missing coverage/data, a local failure, or no route triggers one online attempt if online routing is usable. The built maps row keeps a general feature description; geographic readiness is shown after opening it. Mapbox retains its configured-key status, with optional wording in strict mode.",
+      "match": false
+    },
+    {
+      "mock": "valhalla2-offline-only",
+      "title": "Offline maps only",
+      "note": "Native device capture with sample data. No online routing request and no online routing fallback. Preferred maps is disabled and remembers its prior selection for when the override is turned off. Search remains a separate online feature. The built maps row keeps a general feature description; geographic readiness is shown after opening it. Mapbox retains its configured-key status, with optional wording in strict mode.",
+      "match": false
+    },
+    {
+      "mock": "valhalla2-offline-only-missing",
+      "title": "Offline only, maps missing",
+      "note": "Native device capture with sample data. Keep the strict choice. The Offline Maps row leads to the existing region panes to obtain the missing maps. Do not silently use online routing. The built maps row keeps a general feature description; geographic readiness is shown after opening it. Mapbox retains its configured-key status, with optional wording in strict mode.",
+      "match": false
+    },
+    {
+      "mock": "valhalla2-regions-a",
+      "title": "A · One selection downloads all missing maps",
+      "note": "Native device capture with sample data. One region selection and one Download action. Add its 280 MiB routing data without redownloading the road data. Software setup happens as part of Prepare, with no separate user step. Region labels use real catalog availability in production; Iowa and Illinois routing is currently published. The mock has illustrative coverage elsewhere. The built screen retains the shared settings footer/page header.",
+      "match": false
+    },
+    {
+      "mock": "valhalla2-regions-groups",
+      "title": "Existing U.S. region groups",
+      "note": "Native device capture with sample data. Use the same catalog and summary for multi-state coverage. The available routing package must cover the selection as a connected graph; unsupported combinations are not labelled ready. Region labels use real catalog availability in production; Iowa and Illinois routing is currently published. The mock has illustrative coverage elsewhere. The built screen retains the shared settings footer/page header.",
+      "match": false
+    },
+    {
+      "mock": "valhalla2-regions-countries",
+      "title": "Existing country pane",
+      "note": "Native device capture with sample data. The same flow handles countries. Catalog availability shown here is illustrative; the small Liechtenstein graph was used for the standalone trial. Region labels use real catalog availability in production; Iowa and Illinois routing is currently published. The mock has illustrative coverage elsewhere. The built screen retains the shared settings footer/page header.",
+      "match": false
+    },
+    {
+      "mock": "valhalla2-regions-unavailable",
+      "title": "A region without routing coverage",
+      "note": "Native device capture with sample data. Show the limitation in the same pane. Road data may still download. Offline maps only never falls back online, so it cannot route there until coverage is provided. Region labels use real catalog availability in production; Iowa and Illinois routing is currently published. The mock has illustrative coverage elsewhere. The built screen retains the shared settings footer/page header.",
+      "match": false
+    },
+    {
+      "mock": "valhalla2-maps-home",
+      "title": "One Offline Maps page",
+      "note": "Native device capture with sample data. The existing maps page shows both data types, a shared update schedule and Choose regions. No routing-software or URL page is needed. The existing global Remove maps action removes both datasets; per-region deletion is not exposed by mapd. Settings footer and device-wide storage bar are retained. The built screen retains the shared settings footer/page header.",
+      "match": false
+    },
+    {
+      "mock": "valhalla2-download-prepare",
+      "title": "Prepare in the current layout",
+      "note": "Matches the approved progress layout in the native device capture. Keep the current percentage, bar, four steps, region tiles, footer and background-download message. Both map sets are included automatically. The built screen retains the shared settings footer/page header. Time remaining appears only after a measured download rate exists.",
+      "match": true
+    },
+    {
+      "mock": "valhalla2-download-progress",
+      "title": "Offline routes, current progress layout",
+      "note": "Matches the approved progress layout in the native device capture. Restore the existing large percentage, single bar and region grid. The small Offline routes label scopes this percentage to routing bytes, while a short line confirms road data is ready. The built screen retains the shared settings footer/page header. Time remaining appears only after a measured download rate exists.",
+      "match": true
+    },
+    {
+      "mock": "valhalla2-download-road",
+      "title": "Road data, same progress screen",
+      "note": "Matches the approved progress layout in the native device capture. Keep the existing file count and region tile. Offline routes follow automatically in the same screen. The phase label and percentage reset explicitly when switching datasets; do not average file counts and bytes. The built screen retains the shared settings footer/page header. Time remaining appears only after a measured download rate exists.",
+      "match": true
+    },
+    {
+      "mock": "valhalla2-download-group",
+      "title": "Multiple regions, familiar tiles",
+      "note": "Matches the approved progress layout in the native device capture. Keep the current seven-column region grid, completed/current/waiting colors and per-region percentage. A green region means both required map sets are installed; the top percentage describes the labelled download phase. The built screen retains the shared settings footer/page header. Time remaining appears only after a measured download rate exists.",
+      "match": true
+    },
+    {
+      "mock": "valhalla2-download-install",
+      "title": "Install keeps the existing step",
+      "note": "Matches the approved progress layout in the native device capture. Keep Install as step three. Download at 100% is not Ready: the region remains current until its maps are checked and installed. The built screen retains the shared settings footer/page header. Time remaining appears only after a measured download rate exists.",
+      "match": true
+    },
+    {
+      "mock": "valhalla2-download-failed",
+      "title": "Retry in the same layout",
+      "note": "Matches the approved progress layout in the native device capture. Retain the last reported routing percentage, show the affected region in amber and replace the header action with Retry download. Retry only missing data; keep existing maps. The built screen retains the shared settings footer/page header. Time remaining appears only after a measured download rate exists.",
+      "match": true
+    },
+    {
+      "mock": "valhalla2-download-ready",
+      "title": "Ready in the same layout",
+      "note": "Matches the approved progress layout in the native device capture. Advance the existing steps to Ready and turn the region green. Done returns to Offline Maps. No new management screen is introduced. The built screen retains the shared settings footer/page header. Time remaining appears only after a measured download rate exists.",
+      "match": true
+    },
+    {
+      "mock": "valhalla2-remove-region",
+      "title": "Remove both map sets",
+      "note": "Native device capture with sample data. The existing global Remove maps action removes both datasets after confirmation. Saved places remain. The mock’s Remove region caption becomes Remove maps because mapd has no per-region tile ownership/deletion interface. The complete storage bar and shared settings footer are retained.",
+      "match": false
+    },
+    {
+      "mock": "valhalla2-chip-recalculate",
+      "title": "Recalculating route",
+      "note": "Chip placement and time/street layout match in the native device capture. Use the existing bottom-left status-chip placement and dark fill. Keep the time, distance-left and live street in the normal bottom bar. Hide stale turn guidance independently. The road background is synthetic; existing button/control state is retained.",
+      "match": true
+    },
+    {
+      "mock": "valhalla2-chip-offline-fallback",
+      "title": "Online failed; offline route works",
+      "note": "Chip placement and time/street layout match in the native device capture. Using offline maps appears briefly in the existing chip stack, then fades. The time/street layout stays in place. The road background is synthetic; existing button/control state is retained.",
+      "match": true
+    },
+    {
+      "mock": "valhalla2-chip-online-fallback",
+      "title": "Offline failed; online route works",
+      "note": "Chip placement and time/street layout match in the native device capture. Using online maps appears briefly in the same chip. This state must never occur with Offline maps only on. The road background is synthetic; existing button/control state is retained.",
+      "match": true
+    },
+    {
+      "mock": "valhalla2-chip-strict-unavailable",
+      "title": "Offline only, route unavailable",
+      "note": "Chip placement and time/street layout match in the native device capture. The warning uses the existing chip; no online request is made. This example has no previous route estimate, so the time fields show dashes while the available street stays visible. The road background is synthetic; existing button/control state is retained.",
+      "match": true
+    },
+    {
+      "mock": "valhalla2-chip-gps",
+      "title": "Waiting for GPS",
+      "note": "Chip placement and time/street layout match in the native device capture. Show Waiting for GPS in the status chip. Last useful trip estimates may remain visible; they must not be treated as valid turn guidance. This mock illustrates a short interruption. The road background is synthetic; existing button/control state is retained.",
+      "match": true
+    },
+    {
+      "mock": "valhalla2-chip-stack",
+      "title": "Routing and existing statuses together",
+      "note": "Chip placement and time/street layout match in the native device capture. Use the existing stack and spacing. Routing is informational and yields to safety alerts; it does not replace or recolor steering warnings. The road background is synthetic; existing button/control state is retained.",
+      "match": true
+    },
+    {
+      "mock": "valhalla2-chip-first-route",
+      "title": "First route, no previous estimate",
+      "note": "Chip placement and time/street layout match in the native device capture. The chip says Finding route. Time fields stay as dashes instead of invented values, and the street remains in its normal place. The road background is synthetic; existing button/control state is retained.",
+      "match": true
+    },
+    {
+      "mock": "valhalla2-places",
+      "title": "Same maps entry from saved places",
+      "note": "Native device capture with sample data. The footer opens the same Offline Maps and region selection flow as Navigation. No separate package manager or URL-entry flow.",
+      "match": false
+    },
+    {
+      "mock": "valhalla2-preview-strict-missing",
+      "title": "Offline-only preview needs maps",
+      "note": "Native device capture with sample data. Start stays disabled. Choose regions opens the existing region panes, rather than offering an online route or asking for a package URL.",
+      "match": false
+    },
+    {
+      "mock": "systemram",
+      "title": "Device › RAM",
+      "note": "What was using RAM at the peak of each of the last three drives that ran low, with the Low on RAM chip's 85% hold: the picker of drives, the top five processes with a plain description, a bar against the largest and their size, then everything else. A red dot on RAM in the sidebar until it's opened; the section is hidden until a drive first runs low. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "memorychip",
+      "title": "Onroad › Low RAM chip",
+      "note": "StarPilot's Low Memory notice (RAM, not storage) as a red Low on RAM chip instead of the bottom banner, in arrival order and the lowest priority. Fill, border, icon, text color and place match. The percentage is drawn in the label's color and weight, not bolder and whiter, so the sentence can be translated whole. Page ground uses true black (#000000). The second native capture verifies the owner-requested merge: routing precedes Low on RAM in priority, with RamWatch retaining its 85% clear threshold and the normal time/street bar.",
+      "match": false,
+      "built": [
+        "memorychip",
+        "valhalla2-chip-ram"
+      ]
+    }
+  ]
 }

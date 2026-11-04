@@ -403,10 +403,23 @@ class Navigation:
   def mapbox_status(self) -> tuple[str, bool]:
     """The Mapbox Key row's line, and whether both keys are saved."""
     from openpilot.selfdrive.ui.tandem.mapbox_help import status
+    from openpilot.starpilot.tandem.routing.config import policy
+    if policy()[0]:
+      configured = bool(self._store.get_str("MapboxPublicKey") and self._store.get_str("MapboxSecretKey"))
+      return N_("Optional for online search and speed-limit filling"), configured
     return status(self._store.get_str)
 
 
 def navigation_panel(model: Navigation, open_destinations, open_offline_maps, open_mapbox_help=lambda: None) -> ListPanel:
+  from openpilot.starpilot.tandem.routing import config as routing
+
+  preferred = SettingRow(N_("Preferred maps (when available)"),
+    lambda: N_("Used when Offline maps only is off.") if routing.policy()[0] else
+      N_("Try online first; fall back to downloaded maps.") if routing.policy()[1] == "online" else
+      N_("Try downloaded maps first; fall back to online."),
+    Segmented([N_("Online"), N_("Offline")], lambda: int(routing.policy()[1] == "offline"),
+              lambda i: routing.set_policy(preferred=("online", "offline")[i]), equal=True))
+  preferred.set_enabled(lambda: not routing.policy()[0])
 
   def place(title: str, icon: str, get) -> SettingRow:
     return SettingRow(title, lambda: get() or N_("Not set"), Button(lambda: N_("Change") if get() else N_("Set"), open_destinations),
@@ -418,8 +431,12 @@ def navigation_panel(model: Navigation, open_destinations, open_offline_maps, op
     SettingRow(N_("Other favorites"), lambda: t_("{} saved", model.others()), on_click=open_destinations, leading=Icon("star")),
     SettingRow(N_("End Route When Parked"), N_("Clears the destination when you turn off the car"),
                Switch(lambda: model.end_when_parked, model.set_end_when_parked)),
+    SettingRow(N_("Offline maps only"), lambda: N_("Never use online routing.") if routing.policy()[0] else
+               N_("Use the preferred maps, with a fallback if needed."),
+               Switch(lambda: routing.policy()[0], lambda on: routing.set_policy(offline_only=on))),
+    preferred,
+    SettingRow(N_("Offline Maps"), N_("Routes, speed limits and street names without a connection"), on_click=open_offline_maps),
     SettingRow(N_("Mapbox Keys"), lambda: model.mapbox_status()[0],
                Button(lambda: N_("How to change") if model.mapbox_status()[1] else N_("How to add"), open_mapbox_help),
                subtitle_color=lambda: T.SUCCESS_TEXT if model.mapbox_status()[1] else T.WARNING),
-    SettingRow(N_("Offline Maps"), N_("Speed limits and routing without a connection"), on_click=open_offline_maps),
-  ], title=N_("Navigation"), subtitle=N_("While a route is active, the car slows for turns and uses route speed limits"))
+  ], title=N_("Navigation"), subtitle=N_("Saved places and the maps used to calculate your route"))

@@ -8,4 +8,5 @@ def tandem_prefs(tmp_path, monkeypatch):
   folder.mkdir()
   monkeypatch.setenv("TANDEM_PREFS_DIR", str(folder))
   monkeypatch.setenv("TANDEM_STATE_DIR", str(tmp_path / "state"))
+  monkeypatch.setenv("TANDEM_ROUTING_DIR", str(tmp_path / "routing"))
   return folder

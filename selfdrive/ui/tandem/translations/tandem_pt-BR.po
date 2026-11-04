@@ -5,177 +5,189 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\n"
 
-#: controls.py:174
+#: controls.py:179
 msgid "On"
 msgstr "Ativado"
 
-#: controls.py:174
-#: controls.py:177
+#: controls.py:179
+#: controls.py:182
 #: settings/device_sections.py:50
 msgid "Off"
 msgstr "Desativado"
 
-#: controls.py:271
+#: controls.py:276
 msgid "RECOMMENDED"
 msgstr "RECOMENDADO"
 
-#: controls.py:542
+#: controls.py:547
 #: settings/display.py:168
 #: settings/display.py:315
 msgid "Default"
 msgstr "Padrão"
 
-#: destinations.py:346
-#: settings/search.py:282
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: destinations.py:664
+msgid "Road data still supplies speed limits"
+msgstr "Road data still supplies speed limits"
+
+#: destinations.py:386
+#: settings/search.py:285
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:688
 msgid "Search"
 msgstr "Buscar"
 
-#: destinations.py:359
+#: destinations.py:400
 msgid "Offline maps"
 msgstr "Mapas offline"
 
-#: destinations.py:480
+#: destinations.py:529
 #: home.py:144
 msgid "Where to?"
 msgstr "Para onde?"
 
-#: destinations.py:145
+#: destinations.py:168
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:703
 msgid "Searching…"
 msgstr "Buscando…"
 
-#: destinations.py:145
+#: destinations.py:168
 msgid "Looking up places"
 msgstr "Buscando lugares"
 
-#: destinations.py:147
+#: destinations.py:170
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:713
 msgid "Search unavailable"
 msgstr "Busca indisponível"
 
-#: destinations.py:149
+#: destinations.py:172
 msgid "Nothing found"
 msgstr "Nenhum resultado"
 
-#: destinations.py:149
+#: destinations.py:172
 msgid "Try a different place or address"
 msgstr "Tente outro lugar ou endereço"
 
-#: destinations.py:347
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: destinations.py:187
+msgid "This saved place has no coordinates. Search again when online."
+msgstr "This saved place has no coordinates. Search again when online."
+
+#: destinations.py:387
 msgid "Say a place or an address. Tap the mic when you're done."
 msgstr "Diga um lugar ou endereço. Toque no microfone ao terminar."
 
-#: destinations.py:382
+#: destinations.py:423
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:643
 msgid "Start"
 msgstr "Iniciar"
 
-#: destinations.py:487
+#: destinations.py:426
+#: settings/maps.py:243
+#: settings/maps.py:217
+msgid "Choose regions"
+msgstr "Escolher regiões"
+
+#: destinations.py:536
 msgid "Offline maps ready"
 msgstr "Mapas offline prontos"
 
-#: destinations.py:546
+#: destinations.py:595
 msgid "Search needs the public Mapbox key · see Settings › Driving › Speed & Steering › Navigation"
 msgstr "A busca precisa da chave pública do Mapbox · veja Configurações › Condução › Velocidade e direção › Navegação"
 
-#: destinations.py:603
+#: destinations.py:652
 msgid "Arrive"
 msgstr "Chegada"
 
-#: destinations.py:603
+#: destinations.py:652
 msgid "Time"
 msgstr "Tempo"
 
-#: destinations.py:603
+#: destinations.py:652
 #: settings/vehicle.py:228
 #: settings/vehicle.py:229
 msgid "Distance"
 msgstr "Distância"
 
-#: destinations.py:615
+#: destinations.py:668
 msgid "Slows ahead of turns on the route"
 msgstr "Reduz a velocidade antes das curvas da rota"
 
-#: destinations.py:616
-msgid "Uses route speed limits when signs are missing"
-msgstr "Usa os limites de velocidade da rota quando não há placas"
-
-#: destinations.py:294
+#: destinations.py:334
 msgid "Search for a place or address"
 msgstr "Buscar um lugar ou endereço"
 
-#: destinations.py:362
+#: destinations.py:403
 msgid "Turns and speed follow the route automatically while navigating"
 msgstr "Ajusta automaticamente a direção e a velocidade à rota durante a navegação"
 
-#: destinations.py:509
+#: destinations.py:558
 msgid "RECENT"
 msgstr "RECENTES"
 
-#: destinations.py:357
+#: destinations.py:397
 msgid "Add favorite"
 msgstr "Adicionar favorito"
 
-#: destinations.py:357
+#: destinations.py:397
 msgid "Search for a place"
 msgstr "Buscar um lugar"
 
-#: destinations.py:502
+#: destinations.py:551
 msgid "ON A ROUTE"
 msgstr "EM UMA ROTA"
 
-#: destinations.py:503
+#: destinations.py:552
 #, python-brace-format
 msgid "To {}"
 msgstr "Para {}"
 
-#: destinations.py:506
+#: destinations.py:555
 msgid "FAVORITES"
 msgstr "FAVORITOS"
 
-#: destinations.py:517
+#: destinations.py:566
 msgid "Places you navigate to show up here."
 msgstr "Seus destinos aparecem aqui."
 
-#: destinations.py:549
+#: destinations.py:598
 msgid "Type a place or address"
 msgstr "Digite um lugar ou endereço"
 
-#: destinations.py:549
+#: destinations.py:598
 #, python-brace-format
 msgid "Results show as you type, from {} letters"
 msgstr "Os resultados aparecem a partir de {} letras"
 
-#: destinations.py:351
-#: settings/speed_steering.py:416
+#: destinations.py:391
+#: settings/speed_steering.py:429
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:778
 msgid "Home"
 msgstr "Casa"
 
-#: destinations.py:351
+#: destinations.py:391
 msgid "Set Home"
 msgstr "Definir casa"
 
-#: destinations.py:352
+#: destinations.py:392
 msgid "Search for your home address"
 msgstr "Buscar seu endereço de casa"
 
-#: destinations.py:354
-#: settings/speed_steering.py:417
+#: destinations.py:394
+#: settings/speed_steering.py:430
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:780
 msgid "Work"
 msgstr "Trabalho"
 
-#: destinations.py:354
+#: destinations.py:394
 msgid "Set Work"
 msgstr "Definir trabalho"
 
-#: destinations.py:355
+#: destinations.py:395
 msgid "Search for your work address"
 msgstr "Buscar seu endereço de trabalho"
 
-#: destinations.py:504
+#: destinations.py:553
 #: onroad/layers.py:69
 msgid "End route"
 msgstr "Encerrar rota"
@@ -198,7 +210,7 @@ msgstr "Iniciando a câmera…"
 
 #: forecast.py:37
 #: forecast.py:37
-#: onroad/status.py:226
+#: onroad/status.py:254
 msgid "Fog"
 msgstr "Neblina"
 
@@ -219,14 +231,14 @@ msgid "Freezing drizzle"
 msgstr "Garoa congelante"
 
 #: forecast.py:40
-#: onroad/status.py:223
+#: onroad/status.py:251
 #: settings/speed_steering.py:239
 msgid "Rain"
 msgstr "Chuva"
 
 #: forecast.py:40
 #: forecast.py:43
-#: onroad/status.py:224
+#: onroad/status.py:252
 msgid "Heavy rain"
 msgstr "Chuva forte"
 
@@ -240,7 +252,7 @@ msgid "Light snow"
 msgstr "Neve fraca"
 
 #: forecast.py:42
-#: onroad/status.py:225
+#: onroad/status.py:253
 #: settings/speed_steering.py:241
 msgid "Snow"
 msgstr "Neve"
@@ -392,7 +404,7 @@ msgstr "Atualização pronta"
 
 #: home.py:147
 #: settings/search.py:24
-#: settings/search.py:213
+#: settings/search.py:216
 msgid "Software"
 msgstr "Software"
 
@@ -507,8 +519,8 @@ msgid "space"
 msgstr "espaço"
 
 #: keyboard.py:126
-#: mapbox_help.py:84
-#: settings/alerts.py:165
+#: mapbox_help.py:87
+#: routing_status.py:9
 msgid "Done"
 msgstr "Concluído"
 
@@ -567,7 +579,16 @@ msgstr "No Galaxy: Navigation & Maps › App Keys. A chave pública é para busc
 msgid "Not added · needed for place search and routes"
 msgstr "Não adicionadas · necessárias para buscar lugares e rotas"
 
-#: mapbox_help.py:83
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: mapbox_help.py:84
+msgid "Optional: online search and speed-limit filling"
+msgstr "Optional: online search and speed-limit filling"
+
+#: mapbox_help.py:85
+msgid "For place search, routes, and speed limits the maps don't have"
+msgstr "Para buscar lugares, calcular rotas e obter limites de velocidade ausentes dos mapas"
+
+#: mapbox_help.py:86
 msgid "Add Mapbox keys"
 msgstr "Adicionar chaves do Mapbox"
 
@@ -582,10 +603,6 @@ msgstr "Só a chave pública · as rotas também precisam da chave secreta"
 #: mapbox_help.py:50
 msgid "Secret key only · search needs the public key too"
 msgstr "Só a chave secreta · a busca também precisa da chave pública"
-
-#: mapbox_help.py:83
-msgid "For place search, routes, and speed limits the maps don't have"
-msgstr "Para buscar lugares, calcular rotas e obter limites de velocidade ausentes dos mapas"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
 #: onroad/developer.py:84
@@ -895,115 +912,152 @@ msgstr "Câmera"
 msgid "Mapbox"
 msgstr "Mapbox"
 
-#: onroad/status.py:121
-#: onroad/status.py:126
+#: onroad/status.py:122
+#: onroad/status.py:127
 msgid "Stopped"
 msgstr "Parado"
 
-#: onroad/status.py:121
+#: onroad/status.py:122
 msgid "Stopping"
 msgstr "Parando"
 
-#: onroad/status.py:95
-#: onroad/status.py:107
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: onroad/status.py:171
+#: onroad/status.py:173
+msgid "Recalculating route"
+msgstr "Recalculating route"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: onroad/status.py:171
+msgid "Finding route"
+msgstr "Finding route"
+
+#: onroad/status.py:96
+#: onroad/status.py:108
 msgid "Steering paused"
 msgstr "Direção pausada"
 
-#: onroad/status.py:109
+#: onroad/status.py:110
 msgid "Speed control paused"
 msgstr "Controle de velocidade pausado"
 
-#: onroad/status.py:114
+#: onroad/status.py:115
 msgid "Lane change blocked"
 msgstr "Mudança de faixa bloqueada"
 
-#: onroad/status.py:119
-#: onroad/status.py:149
+#: onroad/status.py:120
+#: onroad/status.py:150
 msgid "Light is green"
 msgstr "Sinal verde"
 
-#: onroad/status.py:128
+#: onroad/status.py:129
 msgid "Slowing for curve"
 msgstr "Reduzindo para curva"
 
-#: onroad/status.py:130
+#: onroad/status.py:131
 msgid "Slowing for turn"
 msgstr "Reduzindo para conversão"
 
-#: onroad/status.py:133
+#: onroad/status.py:134
 msgid "Turning left"
 msgstr "Virando à esquerda"
 
-#: onroad/status.py:137
+#: onroad/status.py:138
 msgid "Slowing for traffic"
 msgstr "Reduzindo pelo trânsito"
 
-#: onroad/status.py:139
+#: onroad/status.py:140
 #, python-brace-format
 msgid "Matching limit {}"
 msgstr "Ajustando ao limite {}"
 
-#: onroad/status.py:141
+#: onroad/status.py:142
 msgid "Coasting"
 msgstr "Embalando"
 
-#: onroad/status.py:147
+#: onroad/status.py:148
 #, python-brace-format
 msgid "{} · longer gap"
 msgstr "{} · distância maior"
 
-#: onroad/status.py:151
+#: onroad/status.py:152
 msgid "Car ahead moved"
 msgstr "O carro à frente saiu"
 
-#: onroad/status.py:153
+#: onroad/status.py:154
 msgid "Ready · tap resume"
 msgstr "Pronto · toque em retomar"
 
-#: onroad/status.py:155
+#: onroad/status.py:156
 msgid "Steering only"
 msgstr "Somente direção"
 
-#: onroad/status.py:159
+#: onroad/status.py:162
 #, python-brace-format
 msgid "Low on RAM · {}% used"
 msgstr "Pouca RAM · {}% em uso"
 
-#: onroad/status.py:116
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: onroad/status.py:175
+msgid "Waiting for GPS"
+msgstr "Waiting for GPS"
+
+#: onroad/status.py:117
 #, python-brace-format
 msgid "Changing lanes {}"
 msgstr "Mudando de faixa à {}"
 
-#: onroad/status.py:123
+#: onroad/status.py:124
 #, python-brace-format
 msgid "{} for stop sign"
 msgstr "{} na placa de pare"
 
-#: onroad/status.py:135
+#: onroad/status.py:136
 msgid "Turning right"
 msgstr "Virando à direita"
 
-#: onroad/status.py:143
+#: onroad/status.py:144
 msgid "Pulse & glide · gliding"
 msgstr "Acelerar e embalar · embalando"
 
-#: onroad/status.py:143
+#: onroad/status.py:144
 msgid "Pulse & glide"
 msgstr "Acelerar e embalar"
 
-#: onroad/status.py:101
+#: onroad/status.py:102
 msgid "Steering paused for signal"
 msgstr "Direção pausada pelo pisca"
 
-#: onroad/status.py:103
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: onroad/status.py:183
+msgid "Using offline maps"
+msgstr "Using offline maps"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: onroad/status.py:183
+msgid "Using online maps"
+msgstr "Using online maps"
+
+#: onroad/status.py:104
 msgid "Steering paused after turn"
 msgstr "Direção pausada após conversão"
 
-#: onroad/status.py:126
+#: onroad/status.py:127
 msgid "Stopping ahead"
 msgstr "Parada à frente"
 
-#: onroad/status.py:105
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: onroad/status.py:187
+msgid "Offline maps unavailable"
+msgstr "Offline maps unavailable"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: onroad/status.py:187
+#: routing_status.py:34
+msgid "Route unavailable"
+msgstr "Route unavailable"
+
+#: onroad/status.py:106
 #, python-brace-format
 msgid "Steering paused · under {} {}"
 msgstr "Direção pausada · abaixo de {} {}"
@@ -1120,17 +1174,17 @@ msgstr "Cswy"
 msgid "Byp"
 msgstr "Byp"
 
-#: onroad/view.py:578
+#: onroad/view.py:607
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
-#: onroad/view.py:578
+#: onroad/view.py:607
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/view.py:579
+#: onroad/view.py:608
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{} min · {}"
@@ -1190,13 +1244,13 @@ msgstr "Registro da viagem"
 
 #: ram.py:42
 #: settings/device_sections.py:357
-#: settings/search.py:189
+#: settings/search.py:192
 msgid "Uploads"
 msgstr "Envios"
 
 #: ram.py:43
 #: ram.py:44
-#: ram.py:52
+#: ram.py:54
 msgid "Remote access"
 msgstr "Acesso remoto"
 
@@ -1205,42 +1259,46 @@ msgid "Speed limits and curves"
 msgstr "Limites de velocidade e curvas"
 
 #: ram.py:46
+#: ram.py:47
+#: ram.py:48
 msgid "Routing"
 msgstr "Rotas"
 
-#: ram.py:47
+#: ram.py:49
 msgid "Sounds"
 msgstr "Sons"
 
-#: ram.py:48
+#: ram.py:50
 msgid "Car interface"
 msgstr "Interface do carro"
 
-#: ram.py:49
+#: ram.py:51
 msgid "Starts and stops the rest"
 msgstr "Inicia e para o resto"
 
-#: ram.py:50
+#: ram.py:52
 msgid "StarPilot's planning"
 msgstr "Planejamento do StarPilot"
 
-#: ram.py:51
+#: ram.py:53
 msgid "Speed limit sign reading"
 msgstr "Leitura de placas de velocidade"
 
-#: ram.py:53
+#: ram.py:55
 msgid "Power and temperature"
 msgstr "Energia e temperatura"
 
-#: ram.py:54
+#: ram.py:56
 msgid "Bluetooth remote"
 msgstr "Controle Bluetooth"
 
-#: ram.py:55
+#: ram.py:57
 msgid "Car connection"
 msgstr "Conexão com o carro"
 
 #: routemap.py:154
+#: routing_status.py:7
+#: routing_status.py:8
 msgid "Finding a route…"
 msgstr "Buscando rota…"
 
@@ -1265,6 +1323,132 @@ msgstr "{} min"
 #, python-brace-format
 msgid "{} h {} min"
 msgstr "{} h {} min"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:10
+msgid "Installation failed. Check the connection and package."
+msgstr "Installation failed. Check the connection and package."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:11
+msgid "Online routing is selected"
+msgstr "Online routing is selected"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:12
+msgid "Offline routing data ready"
+msgstr "Offline routing data ready"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:13
+#: routing_status.py:14
+msgid "Download maps for this region"
+msgstr "Download maps for this region"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:15
+msgid "Routing data needs to be installed again"
+msgstr "Routing data needs to be installed again"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:16
+msgid "This trip needs more routing data"
+msgstr "This trip needs more routing data"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:17
+msgid "No offline route found for this trip"
+msgstr "No offline route found for this trip"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:18
+msgid "Routing is busy. Trying again…"
+msgstr "Routing is busy. Trying again…"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:19
+msgid "The route took too long. Trying again…"
+msgstr "The route took too long. Trying again…"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:20
+msgid "Routing is unavailable. Trying again…"
+msgstr "Routing is unavailable. Trying again…"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:21
+msgid "Routing returned an unusable route"
+msgstr "Routing returned an unusable route"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:22
+msgid "This place has no usable coordinates"
+msgstr "This place has no usable coordinates"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:23
+msgid "Waiting for a fresh GPS fix"
+msgstr "Waiting for a fresh GPS fix"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:24
+msgid "Finding another offline route…"
+msgstr "Finding another offline route…"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:25
+msgid "Park and end the route to change routing data"
+msgstr "Park and end the route to change routing data"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:26
+msgid "There is not enough storage for this package"
+msgstr "There is not enough storage for this package"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:27
+msgid "This package is already installed with different data"
+msgstr "This package is already installed with different data"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:28
+msgid "Installation cancelled"
+msgstr "Installation cancelled"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:29
+msgid "Finding the updated route…"
+msgstr "Finding the updated route…"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:30
+msgid "Map downloads are unavailable. Try again when connected."
+msgstr "Map downloads are unavailable. Try again when connected."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:31
+msgid "Map download failed. Existing maps are kept."
+msgstr "Map download failed. Existing maps are kept."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:32
+msgid "Road data download did not finish. Try again when connected."
+msgstr "Road data download did not finish. Try again when connected."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:33
+msgid "Offline routes are not available for every selected region."
+msgstr "Offline routes are not available for every selected region."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:35
+msgid "Online routing is unavailable"
+msgstr "Online routing is unavailable"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:40
+msgid "Routing is unavailable"
+msgstr "Routing is unavailable"
 
 #: settings/alerts.py:43
 #: settings/alerts.py:93
@@ -1320,53 +1504,53 @@ msgid "When you need to steer or brake now"
 msgstr "Quando você precisa esterçar ou frear agora"
 
 #: settings/alerts.py:46
-#: settings/search.py:118
+#: settings/search.py:121
 msgid "Green Light"
 msgstr "Sinal verde"
 
 #: settings/alerts.py:46
-#: settings/search.py:118
+#: settings/search.py:121
 msgid "When the light turns green and you are stopped"
 msgstr "Quando o sinal fica verde e você está parado"
 
 #: settings/alerts.py:47
-#: settings/search.py:119
+#: settings/search.py:122
 msgid "Lead Departure"
 msgstr "Saída do veículo à frente"
 
 #: settings/alerts.py:47
-#: settings/search.py:119
+#: settings/search.py:122
 msgid "When the car ahead pulls away"
 msgstr "Quando o carro à frente sai"
 
 #: settings/alerts.py:48
-#: settings/search.py:120
+#: settings/search.py:123
 msgid "Speed Limit Change"
 msgstr "Mudança no limite de velocidade"
 
 #: settings/alerts.py:48
-#: settings/search.py:120
+#: settings/search.py:123
 msgid "When the posted limit changes"
 msgstr "Quando o limite sinalizado muda"
 
 #: settings/alerts.py:49
-#: settings/search.py:121
+#: settings/search.py:124
 msgid "Loud Blind Spot"
 msgstr "Alerta alto de ponto cego"
 
 #: settings/alerts.py:49
-#: settings/search.py:121
+#: settings/search.py:124
 msgid "Signalling into an occupied lane, even when paused"
 msgstr "Ao sinalizar para uma faixa ocupada, mesmo em pausa"
 
 #: settings/alerts.py:50
 #: settings/search.py:91
-#: settings/search.py:122
+#: settings/search.py:125
 msgid "Weather heads-up"
 msgstr "Aviso de tempo"
 
 #: settings/alerts.py:50
-#: settings/search.py:122
+#: settings/search.py:125
 msgid "Once, when rain, snow or storms are coming"
 msgstr "Uma vez, quando há previsão de chuva, neve ou tempestades"
 
@@ -1426,7 +1610,7 @@ msgid "Reset to Normal"
 msgstr "Restaurar Normal"
 
 #: settings/alerts.py:173
-#: settings/search.py:117
+#: settings/search.py:120
 msgid "Volume"
 msgstr "Volume"
 
@@ -1489,7 +1673,7 @@ msgid "A sound plays in {}…"
 msgstr "Um som será reproduzido em {}…"
 
 #: settings/bluetooth_tab.py:54
-#: settings/speed_steering.py:412
+#: settings/speed_steering.py:425
 msgid "Not set"
 msgstr "Não definido"
 
@@ -1771,7 +1955,7 @@ msgid "No devices found yet."
 msgstr "Nenhum dispositivo encontrado ainda."
 
 #: settings/bundles.py:43
-#: settings/search.py:106
+#: settings/search.py:109
 msgid "Developer View"
 msgstr "Visão de desenvolvedor"
 
@@ -1780,7 +1964,7 @@ msgid "Sidebar with live metrics, CPU, GPU, memory and temperatures, and where s
 msgstr "Barra lateral com métricas ao vivo, CPU, GPU, memória, temperaturas e fontes dos limites"
 
 #: settings/bundles.py:47
-#: settings/search.py:107
+#: settings/search.py:110
 msgid "Lead Insights"
 msgstr "Dados do veículo à frente"
 
@@ -1795,12 +1979,13 @@ msgid "Tuner Mode"
 msgstr "Modo Ajustes"
 
 #: settings/bundles.py:52
-#: settings/search.py:139
+#: settings/search.py:142
 msgid "Fine-tuning screens for gas, brake, steering and following"
 msgstr "Ajustes de aceleração, freio, direção e distância de seguimento"
 
 #: settings/can_recorder.py:13
-#: settings/maps.py:405
+#: settings/map_source.py:72
+#: settings/maps.py:508
 msgid "Ready"
 msgstr "Pronto"
 
@@ -1923,7 +2108,7 @@ msgstr "Status do teste"
 
 #: settings/can_recorder.py:71
 #: settings/developer.py:154
-#: settings/search.py:193
+#: settings/search.py:196
 msgid "CAN test recorder"
 msgstr "Gravador de teste CAN"
 
@@ -2009,8 +2194,8 @@ msgid "CONNECTIONS"
 msgstr "CONEXÕES"
 
 #: settings/connections.py:64
+#: settings/map_source.py:138
 #: settings/network_tab.py:199
-#: settings/search.py:31
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -2022,7 +2207,7 @@ msgstr "Rede móvel"
 
 #: settings/connections.py:69
 #: settings/search.py:31
-#: settings/search.py:211
+#: settings/search.py:214
 msgid "Car Audio & Devices"
 msgstr "Áudio do carro e dispositivos"
 
@@ -2031,7 +2216,7 @@ msgid "openpilot longitudinal control is in alpha for this car and turns off Aut
 msgstr "O controle longitudinal do openpilot está em alfa neste carro e desativa a frenagem automática de emergência (AEB). O controle de cruzeiro do carro é o padrão. O modo experimental é recomendado com esta função. O openpilot reinicia se o carro estiver ligado."
 
 #: settings/developer.py:145
-#: settings/search.py:198
+#: settings/search.py:201
 msgid "openpilot Longitudinal (Alpha)"
 msgstr "Controle longitudinal do openpilot (alfa)"
 
@@ -2062,7 +2247,7 @@ msgstr "Adiciona todas as chaves públicas de uma conta GitHub. Nunca use a cont
 
 #: settings/developer.py:155
 #: settings/search.py:30
-#: settings/search.py:192
+#: settings/search.py:195
 msgid "Developer"
 msgstr "Desenvolvedor"
 
@@ -2086,7 +2271,7 @@ msgid "Turn On"
 msgstr "Ativar"
 
 #: settings/developer.py:148
-#: settings/search.py:194
+#: settings/search.py:197
 msgid "ADB"
 msgstr "ADB"
 
@@ -2095,7 +2280,7 @@ msgid "Connect over USB or the network (docs.comma.ai). Change it with the car o
 msgstr "Conecte por USB ou rede (docs.comma.ai). Altere com o carro desligado."
 
 #: settings/developer.py:149
-#: settings/search.py:195
+#: settings/search.py:198
 msgid "SSH"
 msgstr "SSH"
 
@@ -2104,13 +2289,13 @@ msgid "Remote shell access with the keys below"
 msgstr "Acesso remoto ao terminal com as chaves abaixo"
 
 #: settings/developer.py:150
-#: settings/search.py:196
+#: settings/search.py:199
 #: selfdrive/ui/layouts/settings/developer.py:53
 msgid "SSH Keys"
 msgstr "Chaves SSH"
 
 #: settings/developer.py:151
-#: settings/search.py:197
+#: settings/search.py:200
 #: selfdrive/ui/layouts/settings/developer.py:56
 msgid "Joystick Debug Mode"
 msgstr "Depuração por joystick"
@@ -2120,18 +2305,18 @@ msgid "Drive openpilot's controls from a joystick. Change it with the car off."
 msgstr "Controle o openpilot por joystick. Altere com o carro desligado."
 
 #: settings/developer.py:153
-#: settings/search.py:199
+#: settings/search.py:202
 #: selfdrive/ui/layouts/settings/developer.py:72
 msgid "UI Debug Mode"
 msgstr "Depuração da interface"
 
 #: settings/developer.py:153
-#: settings/search.py:199
+#: settings/search.py:202
 msgid "Shows touches and the frame rate"
 msgstr "Mostra toques e a taxa de quadros"
 
 #: settings/developer.py:154
-#: settings/search.py:193
+#: settings/search.py:196
 msgid "Record traffic and mark manual lock/unlock actions"
 msgstr "Grave o tráfego e marque ações manuais de travar e destravar"
 
@@ -2229,7 +2414,7 @@ msgstr "Desparear"
 
 #: settings/device.py:264
 #: settings/device.py:107
-#: settings/search.py:168
+#: settings/search.py:171
 msgid "Remote Access"
 msgstr "Acesso remoto"
 
@@ -2238,7 +2423,7 @@ msgid "Reach this device from the Galaxy web app"
 msgstr "Acesse este aparelho pelo aplicativo web Galaxy"
 
 #: settings/device.py:68
-#: settings/search.py:135
+#: settings/search.py:138
 #: selfdrive/ui/layouts/settings/device.py:152
 msgid "Driver Camera"
 msgstr "Câmera do motorista"
@@ -2248,25 +2433,25 @@ msgid "Check that it can see your face. The car must be off."
 msgstr "Verifique se ela consegue ver seu rosto. O carro deve estar desligado."
 
 #: settings/device.py:69
-#: settings/search.py:136
+#: settings/search.py:139
 #: settings/speed_steering.py:368
 msgid "Driver Monitoring"
 msgstr "Monitoramento do motorista"
 
 #: settings/device.py:69
-#: settings/search.py:136
+#: settings/search.py:139
 msgid "Forget which side of the car the driver sits on"
 msgstr "Esquecer o lado em que o motorista se senta"
 
 #: settings/device.py:92
 #: settings/device.py:92
-#: settings/search.py:175
+#: settings/search.py:178
 msgid "Power Off"
 msgstr "Desligar"
 
 #: settings/device.py:95
 #: settings/device.py:96
-#: settings/search.py:174
+#: settings/search.py:177
 msgid "Restart"
 msgstr "Reiniciar"
 
@@ -2277,7 +2462,7 @@ msgstr "Recalibrar"
 
 #: settings/device.py:226
 #: settings/device.py:114
-#: settings/search.py:171
+#: settings/search.py:174
 msgid "Regulatory"
 msgstr "Regulamentação"
 
@@ -2340,7 +2525,7 @@ msgstr "A calibração recomeça. O openpilot reaprende a posição do aparelho 
 
 #: settings/device.py:117
 #: settings/search.py:30
-#: settings/search.py:166
+#: settings/search.py:169
 msgid "This Device"
 msgstr "Este aparelho"
 
@@ -2381,22 +2566,22 @@ msgid "Your code appears here once you choose a password"
 msgstr "Seu código aparece aqui após escolher uma senha"
 
 #: settings/device.py:104
-#: settings/search.py:167
+#: settings/search.py:170
 msgid "Phone App"
 msgstr "Aplicativo do celular"
 
 #: settings/device.py:110
-#: settings/search.py:169
+#: settings/search.py:172
 msgid "Camera Calibration"
 msgstr "Calibração da câmera"
 
 #: settings/device.py:112
-#: settings/search.py:170
+#: settings/search.py:173
 msgid "How It Works"
 msgstr "Como funciona"
 
 #: settings/device.py:112
-#: settings/search.py:170
+#: settings/search.py:173
 msgid "Rules, features and limits"
 msgstr "Regras, recursos e limites"
 
@@ -2405,12 +2590,12 @@ msgid "MORE"
 msgstr "MAIS"
 
 #: settings/device.py:115
-#: settings/search.py:172
+#: settings/search.py:175
 msgid "Device ID and Serial"
 msgstr "ID e número de série"
 
 #: settings/device.py:116
-#: settings/search.py:173
+#: settings/search.py:176
 msgid "IMEI"
 msgstr "IMEI"
 
@@ -2447,12 +2632,13 @@ msgstr "Todos os trajetos gravados e seus vídeos serão excluídos. Isso não p
 msgid "Backup {}"
 msgstr "Backup {}"
 
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/device_sections.py:306
-msgid "Speed limits and curves will need a connection until maps download again. Your regions stay chosen, so a scheduled update downloads them again."
-msgstr "Limites e curvas precisarão de conexão até baixar os mapas novamente. Suas regiões continuam selecionadas, então uma atualização agendada as baixará novamente."
+msgid "Remove offline routes, speed limits and street names from this device. Saved places stay saved. Your regions stay chosen, so a scheduled update downloads them again."
+msgstr "Remove offline routes, speed limits and street names from this device. Saved places stay saved. Your regions stay chosen, so a scheduled update downloads them again."
 
 #: settings/device_sections.py:50
-#: settings/maps.py:345
+#: settings/maps.py:428
 msgid "Parked"
 msgstr "Estacionado"
 
@@ -2510,17 +2696,17 @@ msgstr "Excluir"
 
 #: settings/device_sections.py:317
 #: settings/display.py:325
-#: settings/maps.py:209
+#: settings/maps.py:231
 msgid "Offline Maps"
 msgstr "Mapas offline"
 
 #: settings/device_sections.py:337
-#: settings/search.py:186
+#: settings/search.py:189
 msgid "Unused Models"
 msgstr "Modelos sem uso"
 
 #: settings/device_sections.py:341
-#: settings/search.py:187
+#: settings/search.py:190
 msgid "Record Driver Camera"
 msgstr "Gravar câmera do motorista"
 
@@ -2529,7 +2715,7 @@ msgid "Saved and uploaded with your drives. Restarts openpilot if the car is on.
 msgstr "Salva e enviada com seus trajetos. Reinicia o openpilot se o carro estiver ligado."
 
 #: settings/device_sections.py:343
-#: settings/search.py:188
+#: settings/search.py:191
 msgid "Record Microphone"
 msgstr "Gravar microfone"
 
@@ -2539,13 +2725,13 @@ msgstr "Áudio da cabine nas gravações dos trajetos. Reinicia o openpilot se o
 
 #: settings/device_sections.py:158
 #: settings/device_sections.py:171
-#: settings/search.py:179
+#: settings/search.py:182
 msgid "Language"
 msgstr "Idioma"
 
 #: settings/device_sections.py:175
 #: settings/search.py:30
-#: settings/search.py:176
+#: settings/search.py:179
 msgid "General"
 msgstr "Geral"
 
@@ -2569,7 +2755,7 @@ msgid "Models"
 msgstr "Modelos"
 
 #: settings/device_sections.py:313
-#: settings/maps.py:209
+#: settings/maps.py:231
 msgid "Speed limits and curves work without a connection"
 msgstr "Limites de velocidade e curvas funcionam sem conexão"
 
@@ -2597,7 +2783,7 @@ msgstr[1] "{} modelos sem uso serão removidos. Você poderá baixá-los novamen
 
 #: settings/device_sections.py:358
 #: settings/search.py:30
-#: settings/search.py:183
+#: settings/search.py:186
 msgid "Storage & Data"
 msgstr "Armazenamento e dados"
 
@@ -2610,49 +2796,49 @@ msgid "For menus and alerts"
 msgstr "Para menus e alertas"
 
 #: settings/device_sections.py:169
-#: settings/search.py:177
+#: settings/search.py:180
 msgid "Units"
 msgstr "Unidades"
 
 #: settings/device_sections.py:169
-#: settings/search.py:177
+#: settings/search.py:180
 msgid "Speed and distance everywhere"
 msgstr "Velocidade e distância em todo o sistema"
 
 #: settings/device_sections.py:170
-#: settings/search.py:178
+#: settings/search.py:181
 #: sidebar.py:148
 msgid "Temperature"
 msgstr "Temperatura"
 
 #: settings/device_sections.py:170
-#: settings/search.py:178
+#: settings/search.py:181
 msgid "For the weather forecast"
 msgstr "Para a previsão do tempo"
 
 #: settings/device_sections.py:172
-#: settings/search.py:180
+#: settings/search.py:183
 msgid "Screen Brightness"
 msgstr "Brilho da tela"
 
 #: settings/device_sections.py:172
-#: settings/search.py:180
+#: settings/search.py:183
 msgid "Auto follows ambient light, day and night"
 msgstr "Auto acompanha a luz ambiente, de dia e de noite"
 
 #: settings/device_sections.py:174
-#: settings/search.py:181
+#: settings/search.py:184
 msgid "Standby"
 msgstr "Espera"
 
 #: settings/device_sections.py:174
-#: settings/search.py:181
+#: settings/search.py:184
 msgid "Screen sleeps while driving, wakes for alerts"
 msgstr "A tela apaga ao dirigir e acende para alertas"
 
 #: settings/device_sections.py:194
 #: settings/search.py:30
-#: settings/search.py:182
+#: settings/search.py:185
 msgid "Backups"
 msgstr "Backups"
 
@@ -2675,12 +2861,12 @@ msgid "Delete offline maps?"
 msgstr "Excluir mapas offline?"
 
 #: settings/device_sections.py:349
-#: settings/search.py:184
+#: settings/search.py:187
 msgid "Recorded Drives"
 msgstr "Trajetos gravados"
 
 #: settings/device_sections.py:349
-#: settings/search.py:184
+#: settings/search.py:187
 msgid "Oldest drives are removed when space runs low"
 msgstr "Os trajetos mais antigos são removidos quando falta espaço"
 
@@ -2689,7 +2875,7 @@ msgid "RECORDING & UPLOADS"
 msgstr "GRAVAÇÃO E ENVIOS"
 
 #: settings/device_sections.py:357
-#: settings/search.py:189
+#: settings/search.py:192
 msgid "Drive logs and video for debugging"
 msgstr "Registros e vídeos dos trajetos para depuração"
 
@@ -2881,7 +3067,7 @@ msgstr "Tela de condução"
 
 #: settings/display.py:293
 #: settings/display.py:313
-#: settings/search.py:110
+#: settings/search.py:113
 msgid "Boot Logo"
 msgstr "Logo de inicialização"
 
@@ -2920,62 +3106,62 @@ msgid "Whimsy animations cross the road above the bar while you signal; the chev
 msgstr "Animações divertidas cruzam a via acima da barra ao sinalizar; as setas ao lado da velocidade permanecem."
 
 #: settings/display.py:267
-#: settings/search.py:100
+#: settings/search.py:103
 msgid "Camera View"
 msgstr "Visão da câmera"
 
 #: settings/display.py:267
-#: settings/search.py:100
+#: settings/search.py:103
 msgid "Wide shows more of the road at low speed"
 msgstr "Ampla mostra mais da via em baixa velocidade"
 
 #: settings/display.py:269
-#: settings/search.py:101
+#: settings/search.py:104
 msgid "Driver Camera in Reverse"
 msgstr "Câmera do motorista na ré"
 
 #: settings/display.py:269
-#: settings/search.py:101
+#: settings/search.py:104
 msgid "Shows the inside camera while backing up"
 msgstr "Mostra a câmera interna ao dar ré"
 
 #: settings/display.py:271
-#: settings/search.py:102
+#: settings/search.py:105
 msgid "Driving Style Banner"
 msgstr "Faixa de estilo de condução"
 
 #: settings/display.py:271
-#: settings/search.py:102
+#: settings/search.py:105
 msgid "Shows the current style when it changes"
 msgstr "Mostra o estilo atual quando ele muda"
 
 #: settings/display.py:273
-#: settings/search.py:103
+#: settings/search.py:106
 msgid "Compass"
 msgstr "Bússola"
 
 #: settings/display.py:273
-#: settings/search.py:103
+#: settings/search.py:106
 msgid "Heading beside the street name, like NE"
 msgstr "Direção ao lado do nome da rua, como NE"
 
 #: settings/display.py:274
-#: settings/search.py:104
+#: settings/search.py:107
 msgid "Blind Spot Highlights"
 msgstr "Destaques de ponto cego"
 
 #: settings/display.py:274
-#: settings/search.py:104
+#: settings/search.py:107
 msgid "Colors the screen edge and lane when a car is beside you"
 msgstr "Colore a borda da tela e a faixa quando há um carro ao lado"
 
 #: settings/display.py:276
-#: settings/search.py:105
+#: settings/search.py:108
 msgid "Lead Car Tag"
 msgstr "Indicador do carro à frente"
 
 #: settings/display.py:276
-#: settings/search.py:105
+#: settings/search.py:108
 msgid "Numbers above the car ahead. Off keeps only the bar under it"
 msgstr "Números acima do carro à frente. Desativado mantém só a barra abaixo dele"
 
@@ -2986,60 +3172,58 @@ msgstr "USUÁRIO AVANÇADO"
 
 #: settings/display.py:294
 #: settings/display.py:313
-#: settings/search.py:110
+#: settings/search.py:113
 msgid "Shown while the device starts up"
 msgstr "Mostrado ao iniciar o aparelho"
 
 #: settings/display.py:301
 #: settings/display.py:311
-#: settings/search.py:108
+#: settings/search.py:111
 msgid "Path Style"
 msgstr "Estilo da trajetória"
 
 #: settings/display.py:306
 #: settings/display.py:312
-#: settings/search.py:109
+#: settings/search.py:112
 msgid "Turn Signal"
 msgstr "Pisca"
 
 #: settings/display.py:311
-#: settings/search.py:108
+#: settings/search.py:111
 msgid "Color, width and edges as one preset"
 msgstr "Cor, largura e bordas em um perfil"
 
 #: settings/display.py:312
-#: settings/search.py:109
+#: settings/search.py:112
 msgid "Chevrons by the speed, or a whimsical animation"
 msgstr "Setas ao lado da velocidade ou animação divertida"
 
 #: settings/display.py:314
-#: settings/search.py:111
+#: settings/search.py:114
 msgid "Startup Message"
 msgstr "Mensagem inicial"
 
 #: settings/display.py:321
-#: settings/search.py:112
+#: settings/search.py:115
 msgid "Turn-by-Turn on Screen"
 msgstr "Instruções de navegação"
 
 #: settings/display.py:321
-#: settings/search.py:112
+#: settings/search.py:115
 msgid "Next turn, arrival time and distance while navigating"
 msgstr "Próxima conversão, hora de chegada e distância durante a navegação"
 
 #: settings/display.py:323
-#: settings/search.py:113
+#: settings/search.py:116
 msgid "Speed Limit Sign"
 msgstr "Placa de limite de velocidade"
 
 #: settings/display.py:323
-#: settings/search.py:113
+#: settings/search.py:116
 msgid "US style, or the round Vienna style used in most other countries"
 msgstr "Estilo dos EUA ou o redondo de Viena usado na maioria dos outros países"
 
 #: settings/display.py:325
-#: settings/search.py:97
-#: settings/search.py:114
 msgid "Speed limits and routing without a connection"
 msgstr "Limites de velocidade e rotas sem conexão"
 
@@ -3083,7 +3267,7 @@ msgid "Sets {} options"
 msgstr "Define {} opções"
 
 #: settings/display.py:314
-#: settings/search.py:111
+#: settings/search.py:114
 msgid "The banner when you start the car"
 msgstr "A faixa exibida ao ligar o carro"
 
@@ -3126,7 +3310,7 @@ msgstr "Velocidade e direção"
 
 #: settings/driving_tab.py:131
 #: settings/search.py:25
-#: settings/search.py:99
+#: settings/search.py:102
 msgid "Display"
 msgstr "Exibição"
 
@@ -3138,13 +3322,13 @@ msgstr "Modelo de condução"
 
 #: settings/driving_tab.py:136
 #: settings/search.py:26
-#: settings/search.py:125
+#: settings/search.py:128
 msgid "Vehicle"
 msgstr "Veículo"
 
 #: settings/driving_tab.py:138
 #: settings/search.py:26
-#: settings/search.py:129
+#: settings/search.py:132
 msgid "Assistance"
 msgstr "Assistência"
 
@@ -3199,210 +3383,420 @@ msgstr "Favorito {}"
 msgid " · Not set"
 msgstr " · Não definido"
 
-#: settings/maps.py:406
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:152
+msgid "Download selected maps"
+msgstr "Download selected maps"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:57
+msgid "Midwest"
+msgstr "Midwest"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:57
+msgid "West"
+msgstr "West"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:57
+msgid "South"
+msgstr "South"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:57
+msgid "Northeast"
+msgstr "Northeast"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:88
+msgid "All maps ready"
+msgstr "All maps ready"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:89
+msgid "Choose where you drive"
+msgstr "Choose where you drive"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:147
+msgid "Download road data"
+msgstr "Download road data"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:149
+#: settings/maps.py:237
+msgid "Update maps"
+msgstr "Update maps"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:151
+#, python-brace-format
+msgid "Download {} MiB"
+msgstr "Download {} MiB"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:64
+msgid "Road data ready"
+msgstr "Road data ready"
+
+#: settings/map_source.py:64
+#: sidebar.py:138
+msgid "Not downloaded"
+msgstr "Não baixado"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:65
+#: settings/maps.py:299
+msgid "Routes ready"
+msgstr "Routes ready"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:71
+msgid "Already downloaded"
+msgstr "Already downloaded"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:71
+msgid "Download missing road data"
+msgstr "Download missing road data"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:75
+msgid "Routing coverage is not available for every selected region."
+msgstr "Routing coverage is not available for every selected region."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:76
+msgid "Downloads all missing map data for this selection."
+msgstr "Downloads all missing map data for this selection."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:65
+msgid "Routes not downloaded"
+msgstr "Routes not downloaded"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:65
+msgid "Routes not available yet"
+msgstr "Routes not available yet"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:73
+msgid "Not available for this region"
+msgstr "Not available for this region"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:74
+#: settings/maps.py:251
+#, python-brace-format
+msgid "{} MiB"
+msgstr "{} MiB"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:112
+msgid "Road data ready; offline routes downloading."
+msgstr "Road data ready; offline routes downloading."
+
+#: settings/maps.py:509
 msgid "Pauses if you start driving or lose Wi-Fi, and picks up where it stopped. Keep the device powered."
 msgstr "Pausa ao dirigir ou perder o Wi-Fi e retoma de onde parou. Mantenha o aparelho ligado à energia."
 
-#: settings/maps.py:28
+#: settings/maps.py:29
 msgid "Weekly"
 msgstr "Semanal"
 
-#: settings/maps.py:28
+#: settings/maps.py:29
 msgid "Monthly"
 msgstr "Mensal"
 
-#: settings/maps.py:405
+#: settings/maps.py:508
 msgid "Prepare"
 msgstr "Preparar"
 
-#: settings/maps.py:405
-#: settings/maps.py:177
-#: settings/maps.py:265
+#: settings/maps.py:508
+#: settings/maps.py:199
+#: settings/maps.py:198
 msgid "Download"
 msgstr "Baixar"
 
-#: settings/maps.py:405
+#: settings/maps.py:508
 msgid "Install"
 msgstr "Instalar"
 
-#: settings/maps.py:249
+#: settings/maps.py:239
+#: settings/maps.py:204
+msgid "Remove maps"
+msgstr "Remover mapas"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:266
+#: settings/speed_steering.py:438
+msgid "Routes, speed limits and street names without a connection"
+msgstr "Routes, speed limits and street names without a connection"
+
+#: settings/maps.py:314
 msgid "U.S. regions"
 msgstr "Regiões dos EUA"
 
-#: settings/maps.py:249
+#: settings/maps.py:314
 msgid "U.S. states"
 msgstr "Estados dos EUA"
 
-#: settings/maps.py:249
+#: settings/maps.py:314
 msgid "Other countries"
 msgstr "Outros países"
 
-#: settings/maps.py:371
+#: settings/maps.py:454
 msgid "Park to delete offline maps"
 msgstr "Estacione para excluir mapas offline"
 
-#: settings/maps.py:376
+#: settings/maps.py:459
+#: settings/maps.py:463
 #: settings/model.py:404
 msgid "Wait for the download to finish"
 msgstr "Aguarde o download terminar"
 
-#: settings/maps.py:123
+#: settings/maps.py:572
+msgid "You can leave this screen. It keeps going in the background."
+msgstr "Você pode sair desta tela. O download continua em segundo plano."
+
+#: settings/maps.py:141
 msgid "Choose at least one region"
 msgstr "Escolha pelo menos uma região"
 
-#: settings/maps.py:129
+#: settings/maps.py:149
 msgid "Cancelling…"
 msgstr "Cancelando…"
 
-#: settings/maps.py:131
+#: settings/maps.py:151
 #, python-brace-format
 msgid "Downloading {} · {}%"
 msgstr "Baixando {} · {}%"
 
-#: settings/maps.py:132
+#: settings/maps.py:152
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:253
 msgid "Downloaded"
 msgstr "Baixado"
 
-#: settings/maps.py:132
+#: settings/maps.py:152
 msgid "Not downloaded yet"
 msgstr "Ainda não baixado"
 
-#: settings/maps.py:165
+#: settings/maps.py:185
 #, python-brace-format
 msgid "{} of {} files · {}. Pauses if you drive or lose the connection."
 msgstr "{} de {} arquivos · {}. Pausa ao dirigir ou perder a conexão."
 
-#: settings/maps.py:177
+#: settings/maps.py:199
 msgid "Update now"
 msgstr "Atualizar agora"
 
-#: settings/maps.py:461
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:569
 #, python-brace-format
-msgid "Downloading {}"
-msgstr "Baixando {}"
+msgid "{} download stopped"
+msgstr "{} download stopped"
 
-#: settings/maps.py:462
-msgid "You can leave this screen. It keeps going in the background."
-msgstr "Você pode sair desta tela. O download continua em segundo plano."
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:587
+msgid "Download complete · Installing maps"
+msgstr "Download complete · Installing maps"
 
-#: settings/maps.py:470
-#, python-brace-format
-msgid "{} of {} files"
-msgstr "{} de {} arquivos"
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:595
+msgid " · Download stopped"
+msgstr " · Download stopped"
 
-#: settings/maps.py:470
-msgid "Getting ready"
-msgstr "Preparando"
-
-#: settings/maps.py:472
+#: settings/maps.py:597
 #, python-brace-format
 msgid " · about {} min left"
 msgstr " · cerca de {} min restantes"
 
-#: settings/maps.py:124
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:654
+msgid "Paused. Downloads continue when parked on Wi-Fi."
+msgstr "Paused. Downloads continue when parked on Wi-Fi."
+
+#: settings/maps.py:142
 #, python-brace-format
 msgid "Waiting: {}"
 msgstr "Aguardando: {}"
 
-#: settings/maps.py:147
-#: settings/maps.py:439
+#: settings/maps.py:167
+#: settings/maps.py:542
 msgid "Cancel download"
 msgstr "Cancelar download"
 
-#: settings/maps.py:182
+#: settings/maps.py:204
 msgid "Park to remove maps"
 msgstr "Estacione para remover mapas"
 
-#: settings/maps.py:182
-msgid "Remove maps"
-msgstr "Remover mapas"
-
-#: settings/maps.py:183
+#: settings/maps.py:205
+#: settings/maps.py:239
 msgid "Remove offline maps?"
 msgstr "Remover mapas offline?"
 
-#: settings/maps.py:188
+#: settings/maps.py:210
 msgid "YOUR REGIONS"
 msgstr "SUAS REGIÕES"
 
-#: settings/maps.py:189
+#: settings/maps.py:211
 msgid "Change them in Choose regions"
 msgstr "Altere em Escolher regiões"
 
-#: settings/maps.py:199
+#: settings/maps.py:221
+#: settings/maps.py:258
 msgid "Keep up to date"
 msgstr "Manter atualizado"
 
-#: settings/maps.py:201
+#: settings/maps.py:223
 msgid "Updates download only while parked and online"
 msgstr "Atualizações são baixadas somente com o carro estacionado e conectado"
 
-#: settings/maps.py:205
+#: settings/maps.py:227
 msgid "Without maps, speed limits need a connection."
 msgstr "Sem mapas, os limites precisam de conexão."
 
-#: settings/maps.py:255
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:245
+msgid "DOWNLOADED REGIONS"
+msgstr "DOWNLOADED REGIONS"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:260
+msgid "One schedule for road data and offline routes, while parked on Wi-Fi."
+msgstr "One schedule for road data and offline routes, while parked on Wi-Fi."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:264
+msgid "Updates keep the current maps until the new maps are ready."
+msgstr "Updates keep the current maps until the new maps are ready."
+
+#: settings/maps.py:320
 msgid "Add map regions"
 msgstr "Adicionar regiões de mapas"
 
-#: settings/maps.py:255
+#: settings/maps.py:320
 msgid "Pick a region, or switch to states for less storage"
 msgstr "Escolha uma região ou mude para estados para ocupar menos espaço"
 
-#: settings/maps.py:256
-#: settings/maps.py:492
+#: settings/maps.py:321
+#: settings/maps.py:617
 msgid "REGIONS"
 msgstr "REGIÕES"
 
-#: settings/maps.py:345
+#: settings/maps.py:352
+msgid "SELECTED"
+msgstr "SELECIONADOS"
+
+#: settings/maps.py:428
+#: settings/speed_steering.py:420
 #: sidebar.py:94
 msgid "Online"
 msgstr "Online"
 
-#: settings/maps.py:492
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:467
+msgid "Park and end the route to remove maps"
+msgstr "Park and end the route to remove maps"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:543
+msgid "Retry download"
+msgstr "Retry download"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:569
+#, python-brace-format
+msgid "{} maps ready"
+msgstr "{} maps ready"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:577
+#: settings/maps.py:589
+msgid "Both map sets ready"
+msgstr "Both map sets ready"
+
+#: settings/maps.py:617
 #, python-brace-format
 msgid "REGIONS · {} OF {} DONE"
 msgstr "REGIÕES · {} DE {} CONCLUÍDAS"
 
-#: settings/maps.py:502
+#: settings/maps.py:627
 #, python-brace-format
 msgid "+{} more"
 msgstr "+{} mais"
 
-#: settings/maps.py:195
-msgid "Choose regions"
-msgstr "Escolher regiões"
-
-#: settings/maps.py:195
+#: settings/maps.py:217
 msgid "Add or remove states, regions and countries"
 msgstr "Adicione ou remova estados, regiões e países"
 
-#: settings/maps.py:204
+#: settings/maps.py:226
+#: settings/maps.py:263
 #: settings/model.py:316
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:363
 msgid "Storage"
 msgstr "Armazenamento"
 
-#: settings/maps.py:312
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:247
+#: settings/maps.py:341
+msgid "Road data"
+msgstr "Road data"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:247
+msgid "Speed limits and street names"
+msgstr "Speed limits and street names"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:251
+#: settings/maps.py:344
+msgid "Offline routes"
+msgstr "Offline routes"
+
+#: settings/maps.py:395
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:583
 msgid "Whole U.S."
 msgstr "Todos os EUA"
 
-#: settings/maps.py:312
+#: settings/maps.py:395
 msgid "Every state and territory"
 msgstr "Todos os estados e territórios"
 
-#: settings/maps.py:270
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:570
+#, python-brace-format
+msgid "Preparing {} maps"
+msgstr "Preparing {} maps"
+
+#: settings/maps.py:570
+#, python-brace-format
+msgid "Downloading {}"
+msgstr "Baixando {}"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:591
+#, python-brace-format
+msgid "Offline routes · {} of {} MiB"
+msgstr "Offline routes · {} of {} MiB"
+
+#: settings/maps.py:336
 #, python-brace-format
 msgid "{}: not yet"
 msgstr "{}: ainda não"
 
-#: settings/maps.py:274
-msgid "SELECTED"
-msgstr "SELECIONADOS"
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:593
+#, python-brace-format
+msgid "Road data · {} of {} files"
+msgstr "Road data · {} of {} files"
 
-#: settings/maps.py:261
+#: settings/maps.py:593
+msgid "Getting ready"
+msgstr "Preparando"
+
+#: settings/maps.py:326
 msgid "No regions available."
 msgstr "Nenhuma região disponível."
 
@@ -3506,7 +3900,7 @@ msgid "Remove unused models"
 msgstr "Remover modelos sem uso"
 
 #: settings/model.py:279
-#: settings/search.py:124
+#: settings/search.py:127
 msgid "Use recommended"
 msgstr "Usar recomendado"
 
@@ -3587,7 +3981,7 @@ msgstr "Editar"
 
 #: settings/network_tab.py:225
 #: settings/network_tab.py:217
-#: settings/search.py:209
+#: settings/search.py:212
 msgid "Roaming, APN and IP address"
 msgstr "Roaming, APN e endereço IP"
 
@@ -3602,7 +3996,7 @@ msgstr "Digite a senha"
 
 #: settings/network_tab.py:106
 #: settings/network_tab.py:213
-#: settings/search.py:206
+#: settings/search.py:209
 msgid "Hotspot name"
 msgstr "Nome do ponto de acesso"
 
@@ -3611,32 +4005,32 @@ msgid "A saved network already uses this name"
 msgstr "Uma rede salva já usa este nome"
 
 #: settings/network_tab.py:212
-#: settings/search.py:205
+#: settings/search.py:208
 msgid "Hotspot"
 msgstr "Ponto de acesso"
 
 #: settings/network_tab.py:212
-#: settings/search.py:205
+#: settings/search.py:208
 msgid "Share this device's connection"
 msgstr "Compartilhar a conexão deste aparelho"
 
 #: settings/network_tab.py:215
-#: settings/search.py:207
+#: settings/search.py:210
 msgid "Hotspot Password"
 msgstr "Senha do ponto de acesso"
 
 #: settings/network_tab.py:215
-#: settings/search.py:207
+#: settings/search.py:210
 msgid "For phones joining this device's hotspot"
 msgstr "Para celulares que se conectam ao ponto de acesso deste aparelho"
 
 #: settings/network_tab.py:216
-#: settings/search.py:208
+#: settings/search.py:211
 msgid "Save Data"
 msgstr "Economizar dados"
 
 #: settings/network_tab.py:216
-#: settings/search.py:208
+#: settings/search.py:211
 msgid "No large uploads on cellular or phone hotspots"
 msgstr "Sem envios grandes na rede móvel ou em pontos de acesso de celulares"
 
@@ -3649,7 +4043,7 @@ msgid "Use cellular data outside your carrier's network"
 msgstr "Usar dados móveis fora da rede da sua operadora"
 
 #: settings/network_tab.py:224
-#: settings/search.py:202
+#: settings/search.py:205
 msgid "IP Address"
 msgstr "Endereço IP"
 
@@ -3663,7 +4057,7 @@ msgid "Scanning for networks…"
 msgstr "Buscando redes…"
 
 #: settings/network_tab.py:199
-#: settings/search.py:203
+#: settings/search.py:206
 msgid "Join a hidden network"
 msgstr "Conectar a uma rede oculta"
 
@@ -3733,31 +4127,31 @@ msgid "Connections"
 msgstr "Conexões"
 
 #: settings/search.py:29
-#: settings/search.py:141
+#: settings/search.py:144
 #: settings/tuner.py:330
 msgid "Steering"
 msgstr "Direção"
 
 #: settings/search.py:29
-#: settings/search.py:148
+#: settings/search.py:151
 #: settings/tuner.py:361
 msgid "Gas & Brake"
 msgstr "Acelerador e freio"
 
 #: settings/search.py:29
-#: settings/search.py:156
+#: settings/search.py:159
 #: settings/tuner.py:428
 msgid "Following & Stops"
 msgstr "Distância e paradas"
 
 #: settings/search.py:29
-#: settings/search.py:163
+#: settings/search.py:166
 #: settings/tuner.py:582
 msgid "Bundle Overrides"
 msgstr "Opções dos grupos"
 
 #: settings/search.py:30
-#: settings/search.py:191
+#: settings/search.py:194
 #: settings/window.py:330
 msgid "Report a Problem"
 msgstr "Relatar um problema"
@@ -3884,7 +4278,7 @@ msgid "Home, Work and favorites; slows for turns on a route"
 msgstr "Casa, trabalho e favoritos; reduz nas curvas da rota"
 
 #: settings/search.py:94
-#: settings/speed_steering.py:418
+#: settings/speed_steering.py:431
 msgid "Other favorites"
 msgstr "Outros favoritos"
 
@@ -3893,548 +4287,577 @@ msgid "Saved places for Where to?"
 msgstr "Lugares salvos para Para onde?"
 
 #: settings/search.py:95
-#: settings/speed_steering.py:419
+#: settings/speed_steering.py:432
 msgid "End Route When Parked"
 msgstr "Encerrar rota ao estacionar"
 
 #: settings/search.py:95
-#: settings/speed_steering.py:419
+#: settings/speed_steering.py:432
 msgid "Clears the destination when you turn off the car"
 msgstr "Limpa o destino ao desligar o carro"
 
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/search.py:96
-#: settings/speed_steering.py:421
+#: settings/speed_steering.py:434
+msgid "Offline maps only"
+msgstr "Offline maps only"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/search.py:96
+msgid "Never use online routing"
+msgstr "Never use online routing"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/search.py:97
+#: settings/speed_steering.py:416
+msgid "Preferred maps (when available)"
+msgstr "Preferred maps (when available)"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/search.py:97
+msgid "Choose which maps to try first, with a fallback"
+msgstr "Choose which maps to try first, with a fallback"
+
+#: settings/search.py:99
+#: settings/speed_steering.py:439
 msgid "Mapbox Keys"
 msgstr "Chaves do Mapbox"
 
-#: settings/search.py:96
-msgid "Needed for place search and routes"
-msgstr "Necessárias para buscar lugares e rotas"
-
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/search.py:99
+msgid "Keys for online search, routes and speed limits"
+msgstr "Keys for online search, routes and speed limits"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/search.py:100
+#: settings/search.py:117
+msgid "Speed limits and street names without a connection"
+msgstr "Speed limits and street names without a connection"
+
+#: settings/search.py:102
 msgid "The driving screen, theme and startup, and the map"
 msgstr "Tela de condução, tema, inicialização e mapa"
 
-#: settings/search.py:106
+#: settings/search.py:109
 msgid "Side panel with system and controls data"
 msgstr "Painel lateral com dados do sistema e dos controles"
 
-#: settings/search.py:107
+#: settings/search.py:110
 msgid "Distance, gap and speed of the car ahead, plus radar points"
 msgstr "Distância, intervalo e velocidade do carro à frente, além de pontos do radar"
 
-#: settings/search.py:116
+#: settings/search.py:119
 msgid "Volume and the optional chimes"
 msgstr "Volume e sons opcionais"
 
-#: settings/search.py:117
+#: settings/search.py:120
 msgid "One volume for everything, or each group on its own"
 msgstr "Um volume para tudo ou para cada grupo"
 
-#: settings/search.py:123
+#: settings/search.py:126
 msgid "The model that drives, and downloading others"
 msgstr "O modelo que dirige e o download de outros"
 
-#: settings/search.py:124
+#: settings/search.py:127
 msgid "The recommended driving model"
 msgstr "O modelo de condução recomendado"
 
-#: settings/search.py:125
+#: settings/search.py:128
 msgid "Your car, its steering wheel buttons and car-specific options"
 msgstr "Seu carro, os botões do volante e opções específicas"
 
-#: settings/search.py:126
+#: settings/search.py:129
 #: settings/vehicle.py:194
 msgid "Steering Wheel Buttons"
 msgstr "Botões do volante"
 
-#: settings/search.py:126
+#: settings/search.py:129
 msgid "What the car's own buttons do while driving"
 msgstr "O que os botões do carro fazem ao dirigir"
 
-#: settings/search.py:127
+#: settings/search.py:130
 #: settings/vehicle.py:185
 msgid "Auto-Lock Doors"
 msgstr "Travar portas automaticamente"
 
-#: settings/search.py:127
+#: settings/search.py:130
 #: settings/vehicle.py:185
 msgid "Locks when you shift out of park"
 msgstr "Trava ao sair de P"
 
-#: settings/search.py:128
+#: settings/search.py:131
 #: settings/vehicle.py:193
 #: settings/vehicle.py:318
 msgid "More for your car"
 msgstr "Mais para seu carro"
 
-#: settings/search.py:128
+#: settings/search.py:131
 #: settings/vehicle.py:193
 msgid "Features specific to your make and model"
 msgstr "Recursos específicos da sua marca e modelo"
 
-#: settings/search.py:129
+#: settings/search.py:132
 msgid "openpilot's core switches and driver monitoring"
 msgstr "Controles principais do openpilot e monitoramento do motorista"
 
-#: settings/search.py:130
+#: settings/search.py:133
 msgid "Adaptive cruise and lane keeping"
 msgstr "Cruzeiro adaptativo e manutenção de faixa"
 
-#: settings/search.py:131
+#: settings/search.py:134
 #: settings/speed_steering.py:349
 msgid "Disengage on Gas Pedal"
 msgstr "Desativar ao acelerar"
 
-#: settings/search.py:131
+#: settings/search.py:134
 #: settings/speed_steering.py:349
 msgid "Pressing the accelerator turns openpilot off"
 msgstr "Pressionar o acelerador desativa o openpilot"
 
-#: settings/search.py:132
+#: settings/search.py:135
 #: settings/speed_steering.py:350
 msgid "Lane Departure Warnings"
 msgstr "Alertas de saída de faixa"
 
-#: settings/search.py:132
+#: settings/search.py:135
 msgid "Alerts when you drift over a lane line without signaling"
 msgstr "Alerta ao cruzar uma linha de faixa sem sinalizar"
 
-#: settings/search.py:133
+#: settings/search.py:136
 #: settings/speed_steering.py:351
 msgid "Safe Mode"
 msgstr "Modo seguro"
 
-#: settings/search.py:133
+#: settings/search.py:136
 msgid "Stock tuning, the default model and Relaxed"
 msgstr "Ajustes originais, modelo padrão e estilo Tranquilo"
 
-#: settings/search.py:134
+#: settings/search.py:137
 #: settings/speed_steering.py:359
 msgid "Always-On Driver Monitoring"
 msgstr "Monitoramento sempre ativo"
 
-#: settings/search.py:134
+#: settings/search.py:137
 #: settings/speed_steering.py:359
 msgid "Watches for distraction even when openpilot is off"
 msgstr "Monitora distrações mesmo com o openpilot desligado"
 
-#: settings/search.py:135
+#: settings/search.py:138
 msgid "Check that it can see your face"
 msgstr "Verifique se consegue ver seu rosto"
 
-#: settings/search.py:137
+#: settings/search.py:140
 #: settings/speed_steering.py:363
 msgid "Sentry Mode"
 msgstr "Modo sentinela"
 
-#: settings/search.py:137
+#: settings/search.py:140
 #: settings/speed_steering.py:363
 msgid "Pictures in Galaxy if the parked car is bumped"
 msgstr "Fotos no Galaxy se o carro estacionado sofrer um impacto"
 
-#: settings/search.py:138
+#: settings/search.py:141
 #: settings/speed_steering.py:365
 msgid "Sensitivity"
 msgstr "Sensibilidade"
 
-#: settings/search.py:138
+#: settings/search.py:141
 #: settings/speed_steering.py:365
 msgid "High notices smaller bumps"
 msgstr "Alta detecta impactos menores"
 
-#: settings/search.py:141
+#: settings/search.py:144
 msgid "Learned steering values and the controller"
 msgstr "Valores de direção aprendidos e controlador"
 
-#: settings/search.py:142
+#: settings/search.py:145
 #: settings/tuner.py:49
 msgid "Steering Delay"
 msgstr "Atraso da direção"
 
-#: settings/search.py:142
+#: settings/search.py:145
 #: settings/tuner.py:49
 msgid "Time from command to wheel response"
 msgstr "Tempo entre o comando e a resposta do volante"
 
-#: settings/search.py:143
+#: settings/search.py:146
 #: settings/tuner.py:51
 msgid "Friction"
 msgstr "Atrito"
 
-#: settings/search.py:143
+#: settings/search.py:146
 #: settings/tuner.py:51
 msgid "Extra torque near center"
 msgstr "Torque extra próximo ao centro"
 
-#: settings/search.py:144
+#: settings/search.py:147
 #: settings/tuner.py:53
 msgid "Lateral Acceleration"
 msgstr "Aceleração lateral"
 
-#: settings/search.py:144
+#: settings/search.py:147
 #: settings/tuner.py:53
 msgid "Torque to cornering scaling"
 msgstr "Relação entre torque e aceleração em curva"
 
-#: settings/search.py:145
+#: settings/search.py:148
 #: settings/tuner.py:55
 msgid "Kp Factor"
 msgstr "Fator Kp"
 
-#: settings/search.py:145
+#: settings/search.py:148
 #: settings/tuner.py:55
 msgid "Correction strength"
 msgstr "Força de correção"
 
-#: settings/search.py:146
+#: settings/search.py:149
 #: settings/tuner.py:328
 msgid "Steering controller"
 msgstr "Controlador de direção"
 
-#: settings/search.py:146
+#: settings/search.py:149
 msgid "Vehicle default, neural feedforward or torque"
 msgstr "Padrão do veículo, pré-alimentação neural ou torque"
 
-#: settings/search.py:148
+#: settings/search.py:151
 msgid "Acceleration and braking profiles and values"
 msgstr "Perfis e valores de aceleração e frenagem"
 
-#: settings/search.py:149
+#: settings/search.py:152
 #: settings/tuner.py:356
 msgid "Acceleration Profile"
 msgstr "Perfil de aceleração"
 
-#: settings/search.py:149
+#: settings/search.py:152
 #: settings/tuner.py:356
 msgid "How quickly the car speeds up"
 msgstr "A rapidez com que o carro acelera"
 
-#: settings/search.py:150
+#: settings/search.py:153
 #: settings/tuner.py:358
 msgid "Braking Profile"
 msgstr "Perfil de frenagem"
 
-#: settings/search.py:150
+#: settings/search.py:153
 #: settings/tuner.py:358
 msgid "How early and firmly it slows down"
 msgstr "Quando e com que intensidade reduz"
 
-#: settings/search.py:151
+#: settings/search.py:154
 #: settings/tuner.py:58
 msgid "Maximum Acceleration"
 msgstr "Aceleração máxima"
 
-#: settings/search.py:151
+#: settings/search.py:154
 #: settings/tuner.py:58
 msgid "The hardest openpilot will accelerate"
 msgstr "A aceleração máxima que o openpilot solicita"
 
-#: settings/search.py:152
+#: settings/search.py:155
 #: settings/tuner.py:60
 msgid "Start Acceleration"
 msgstr "Aceleração na saída"
 
-#: settings/search.py:152
+#: settings/search.py:155
 #: settings/tuner.py:60
 msgid "How firmly the car pulls away from a stop"
 msgstr "A intensidade com que o carro sai da parada"
 
-#: settings/search.py:153
+#: settings/search.py:156
 #: settings/tuner.py:62
 msgid "Stop Acceleration"
 msgstr "Aceleração na parada"
 
-#: settings/search.py:153
+#: settings/search.py:156
 #: settings/tuner.py:62
 msgid "Braking held while stopped"
 msgstr "Frenagem mantida enquanto parado"
 
-#: settings/search.py:154
+#: settings/search.py:157
 #: settings/tuner.py:64
 msgid "Stopping Rate"
 msgstr "Progressão da frenagem"
 
-#: settings/search.py:154
+#: settings/search.py:157
 #: settings/tuner.py:64
 msgid "How quickly braking builds into a stop"
 msgstr "A rapidez com que a frenagem aumenta até parar"
 
-#: settings/search.py:155
+#: settings/search.py:158
 #: settings/tuner.py:66
 msgid "Actuator Delay"
 msgstr "Atraso do atuador"
 
-#: settings/search.py:155
+#: settings/search.py:158
 #: settings/tuner.py:66
 msgid "Time from command to gas or brake response"
 msgstr "Tempo entre o comando e a resposta do acelerador ou freio"
 
-#: settings/search.py:156
+#: settings/search.py:159
 msgid "Following gaps and how the car stops"
 msgstr "Distâncias de seguimento e como o carro para"
 
-#: settings/search.py:157
+#: settings/search.py:160
 msgid "Following Gaps"
 msgstr "Distâncias de seguimento"
 
-#: settings/search.py:157
+#: settings/search.py:160
 msgid "Relaxed, Standard, Aggressive and Traffic"
 msgstr "Tranquilo, Padrão, Agressivo e Trânsito"
 
-#: settings/search.py:158
+#: settings/search.py:161
 #: settings/tuner.py:70
 msgid "Lead Detection Sensitivity"
 msgstr "Sensibilidade de detecção à frente"
 
-#: settings/search.py:158
+#: settings/search.py:161
 #: settings/tuner.py:70
 msgid "Lower notices cars ahead sooner"
 msgstr "Menor detecta carros à frente mais cedo"
 
-#: settings/search.py:159
+#: settings/search.py:162
 #: settings/tuner.py:72
 msgid "Stopped Distance"
 msgstr "Distância na parada"
 
-#: settings/search.py:159
+#: settings/search.py:162
 #: settings/tuner.py:72
 msgid "Extra room left behind a stopped car"
 msgstr "Espaço extra atrás de um carro parado"
 
-#: settings/search.py:160
+#: settings/search.py:163
 #: settings/tuner.py:422
 msgid "Use Radar for Take-Offs"
 msgstr "Radar para arrancadas"
 
-#: settings/search.py:160
+#: settings/search.py:163
 msgid "Starts moving as soon as the car ahead pulls away"
 msgstr "Começa a andar assim que o carro à frente sai"
 
-#: settings/search.py:161
+#: settings/search.py:164
 #: settings/tuner.py:424
 msgid "Force Stops at Lights"
 msgstr "Forçar paradas em semáforos"
 
-#: settings/search.py:161
+#: settings/search.py:164
 #: settings/tuner.py:424
 msgid "Comes to a full stop for red lights the model detects"
 msgstr "Para totalmente nos sinais vermelhos detectados pelo modelo"
 
-#: settings/search.py:162
+#: settings/search.py:165
 #: settings/tuner.py:426
 msgid "Cruise Button Step"
 msgstr "Passo do botão de cruzeiro"
 
-#: settings/search.py:162
+#: settings/search.py:165
 #: settings/tuner.py:426
 msgid "How far one press of + or − moves the set speed"
 msgstr "Quanto cada toque em + ou − altera a velocidade definida"
 
-#: settings/search.py:163
+#: settings/search.py:166
 msgid "Change one option that Developer View or Lead Insights sets"
 msgstr "Alterar uma opção definida por Visão de desenvolvedor ou Dados do veículo à frente"
 
-#: settings/search.py:164
+#: settings/search.py:167
 msgid "Bar Metrics"
 msgstr "Métricas da barra"
 
-#: settings/search.py:164
+#: settings/search.py:167
 msgid "Up to five values in Developer View's strip"
 msgstr "Até cinco valores na faixa da visão de desenvolvedor"
 
-#: settings/search.py:166
+#: settings/search.py:169
 msgid "Pairing, remote access, calibration, restart and power"
 msgstr "Pareamento, acesso remoto, calibração, reinício e energia"
 
-#: settings/search.py:167
+#: settings/search.py:170
 msgid "comma connect: see drives and change settings on your phone"
 msgstr "comma connect: veja trajetos e altere configurações pelo celular"
 
-#: settings/search.py:168
+#: settings/search.py:171
 msgid "Galaxy: reach this device from a web browser"
 msgstr "Galaxy: acesse este aparelho pelo navegador"
 
-#: settings/search.py:169
+#: settings/search.py:172
 msgid "How the device is mounted"
 msgstr "Como o aparelho está montado"
 
-#: settings/search.py:171
+#: settings/search.py:174
 msgid "Regulatory information"
 msgstr "Informações regulatórias"
 
-#: settings/search.py:172
+#: settings/search.py:175
 msgid "This device's IDs"
 msgstr "Identificadores deste aparelho"
 
-#: settings/search.py:173
+#: settings/search.py:176
 msgid "The cellular modem's ID"
 msgstr "Identificador do modem celular"
 
-#: settings/search.py:174
+#: settings/search.py:177
 msgid "Restart the device"
 msgstr "Reiniciar o aparelho"
 
-#: settings/search.py:175
+#: settings/search.py:178
 msgid "Turn the device off until the car starts"
 msgstr "Desligar o aparelho até ligar o carro"
 
-#: settings/search.py:176
+#: settings/search.py:179
 msgid "Units, language, brightness and standby"
 msgstr "Unidades, idioma, brilho e espera"
 
-#: settings/search.py:179
+#: settings/search.py:182
 msgid "Menus and alerts"
 msgstr "Menus e alertas"
 
-#: settings/search.py:182
+#: settings/search.py:185
 msgid "Snapshots of your settings"
 msgstr "Cópias das suas configurações"
 
-#: settings/search.py:183
+#: settings/search.py:186
 msgid "What's using space, and recording and uploads"
 msgstr "Uso de espaço, gravação e envios"
 
-#: settings/search.py:185
+#: settings/search.py:188
 msgid "Delete downloaded map data"
 msgstr "Excluir dados de mapas baixados"
 
-#: settings/search.py:186
+#: settings/search.py:189
 msgid "Downloaded models that aren't in use"
 msgstr "Modelos baixados sem uso"
 
-#: settings/search.py:187
+#: settings/search.py:190
 msgid "Saved and uploaded with your drives"
 msgstr "Salva e enviada com seus trajetos"
 
-#: settings/search.py:188
+#: settings/search.py:191
 msgid "Cabin audio in your drive recordings"
 msgstr "Áudio da cabine nas gravações dos trajetos"
 
-#: settings/search.py:190
+#: settings/search.py:193
 msgid "What was using RAM on drives that ran low"
 msgstr "O que usava a RAM nas viagens com pouca RAM"
 
-#: settings/search.py:191
+#: settings/search.py:194
 msgid "Send what happened to the developers"
 msgstr "Envie o que aconteceu aos desenvolvedores"
 
-#: settings/search.py:192
+#: settings/search.py:195
 msgid "ADB, SSH and debug modes"
 msgstr "ADB, SSH e modos de depuração"
 
-#: settings/search.py:194
+#: settings/search.py:197
 msgid "Connect over USB or the network"
 msgstr "Conecte por USB ou rede"
 
-#: settings/search.py:195
+#: settings/search.py:198
 msgid "Remote shell access"
 msgstr "Acesso remoto ao terminal"
 
-#: settings/search.py:196
+#: settings/search.py:199
 msgid "Adds every public key in a GitHub account"
 msgstr "Adiciona todas as chaves públicas de uma conta GitHub"
 
-#: settings/search.py:197
+#: settings/search.py:200
 msgid "Drive openpilot's controls from a joystick"
 msgstr "Controlar o openpilot por joystick"
 
-#: settings/search.py:198
+#: settings/search.py:201
 msgid "Turns off the car's emergency braking"
 msgstr "Desativa a frenagem de emergência do carro"
 
-#: settings/search.py:201
+#: settings/search.py:204
 msgid "Networks nearby, and joining one"
 msgstr "Redes próximas e como conectar"
 
-#: settings/search.py:202
+#: settings/search.py:205
 msgid "This device's local address, beside the connected network"
 msgstr "Endereço local deste aparelho, ao lado da rede conectada"
 
-#: settings/search.py:203
+#: settings/search.py:206
 msgid "Enter its name and password"
 msgstr "Digite o nome e a senha"
 
-#: settings/search.py:204
+#: settings/search.py:207
 msgid "Hotspot, data use, roaming and APN"
 msgstr "Ponto de acesso, uso de dados, roaming e APN"
 
-#: settings/search.py:206
+#: settings/search.py:209
 msgid "The name phones see when joining this device"
 msgstr "O nome que os celulares veem ao conectar a este aparelho"
 
-#: settings/search.py:209
+#: settings/search.py:212
 msgid "Roaming, APN and the device's IP address"
 msgstr "Roaming, APN e endereço IP do aparelho"
 
-#: settings/search.py:210
+#: settings/search.py:213
 msgid "A wheel remote's buttons and what they do"
 msgstr "Botões de um controle remoto do volante e suas ações"
 
-#: settings/search.py:211
+#: settings/search.py:214
 msgid "Car audio for alerts, and pairing devices"
 msgstr "Áudio do carro para alertas e pareamento de dispositivos"
 
-#: settings/search.py:213
+#: settings/search.py:216
 msgid "Updates and the release notes"
 msgstr "Atualizações e notas de versão"
 
-#: settings/search.py:214
+#: settings/search.py:217
 #: settings/software_tab.py:192
 msgid "Automatic Updates"
 msgstr "Atualizações automáticas"
 
-#: settings/search.py:214
+#: settings/search.py:217
 #: settings/software_tab.py:192
 msgid "Download while parked, install when you turn off the car"
 msgstr "Baixa ao estacionar, instala ao desligar o carro"
 
-#: settings/search.py:215
+#: settings/search.py:218
 #: settings/software_tab.py:188
 #: settings/software_tab.py:140
 msgid "Release Channel"
 msgstr "Canal de atualização"
 
-#: settings/search.py:215
+#: settings/search.py:218
 #: settings/software_tab.py:140
 msgid "The branch to download updates from"
 msgstr "A branch de onde baixar atualizações"
 
-#: settings/search.py:216
+#: settings/search.py:219
 #: settings/software_tab.py:195
 msgid "Reset Settings"
 msgstr "Redefinir configurações"
 
-#: settings/search.py:216
+#: settings/search.py:219
 msgid "Back to the Essentials defaults"
 msgstr "Restaurar os padrões Essentials"
 
-#: settings/search.py:217
+#: settings/search.py:220
 #: settings/software_tab.py:169
 #: settings/software_tab.py:198
 msgid "Uninstall"
 msgstr "Desinstalar"
 
-#: settings/search.py:217
+#: settings/search.py:220
 msgid "Remove this software from the device"
 msgstr "Remover este software do aparelho"
 
-#: settings/search.py:394
-#: settings/search.py:385
+#: settings/search.py:397
+#: settings/search.py:388
 msgid "Search settings"
 msgstr "Buscar configurações"
 
-#: settings/search.py:283
+#: settings/search.py:286
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "Diga uma configuração, como limite de velocidade. Toque no microfone ao terminar."
 
-#: settings/search.py:365
-#: settings/search.py:324
+#: settings/search.py:368
+#: settings/search.py:327
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "Nenhuma configuração corresponde a “{}”"
 
-#: settings/search.py:366
+#: settings/search.py:369
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "Digite o nome de uma configuração ou sua função, como brilho ou mudança de faixa"
 
@@ -4732,9 +5155,10 @@ msgstr "Controles principais do openpilot"
 msgid "Watches that you're paying attention"
 msgstr "Verifica se você está prestando atenção"
 
-#: settings/speed_steering.py:425
-msgid "While a route is active, the car slows for turns and uses route speed limits"
-msgstr "Com uma rota ativa, o carro reduz para curvas e usa os limites da rota"
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/speed_steering.py:442
+msgid "Saved places and the maps used to calculate your route"
+msgstr "Saved places and the maps used to calculate your route"
 
 #: settings/speed_steering.py:138
 msgid "Speed limits off"
@@ -4781,11 +5205,37 @@ msgstr "Usa ajustes originais, modelo padrão e Tranquilo até ser desativado."
 msgid "WHILE PARKED"
 msgstr "ESTACIONADO"
 
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/speed_steering.py:409
+msgid "Optional for online search and speed-limit filling"
+msgstr "Optional for online search and speed-limit filling"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/speed_steering.py:417
+msgid "Used when Offline maps only is off."
+msgstr "Used when Offline maps only is off."
+
+#: settings/speed_steering.py:420
+#: sidebar.py:94
+#: sidebar.py:99
+msgid "Offline"
+msgstr "Offline"
+
 #: settings/speed_steering.py:385
 msgid "Saved place"
 msgstr "Lugar salvo"
 
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/speed_steering.py:418
+msgid "Try online first; fall back to downloaded maps."
+msgstr "Try online first; fall back to downloaded maps."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/speed_steering.py:419
+msgid "Try downloaded maps first; fall back to online."
+msgstr "Try downloaded maps first; fall back to online."
+
+#: settings/speed_steering.py:431
 #, python-brace-format
 msgid "{} saved"
 msgstr "{} salvo"
@@ -4794,23 +5244,33 @@ msgstr "{} salvo"
 msgid " Restarts openpilot if the car is on."
 msgstr " Reinicia o openpilot se o carro estiver ligado."
 
-#: settings/speed_steering.py:412
+#: settings/speed_steering.py:425
 msgid "Change"
 msgstr "Alterar"
 
-#: settings/speed_steering.py:412
+#: settings/speed_steering.py:425
 msgid "Set"
 msgstr "Definir"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/speed_steering.py:434
+msgid "Never use online routing."
+msgstr "Never use online routing."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/speed_steering.py:435
+msgid "Use the preferred maps, with a fallback if needed."
+msgstr "Use the preferred maps, with a fallback if needed."
 
 #: settings/speed_steering.py:225
 msgid "Adjusts acceleration and braking for what you drive"
 msgstr "Ajusta aceleração e frenagem ao seu veículo"
 
-#: settings/speed_steering.py:422
+#: settings/speed_steering.py:440
 msgid "How to change"
 msgstr "Como alterar"
 
-#: settings/speed_steering.py:422
+#: settings/speed_steering.py:440
 msgid "How to add"
 msgstr "Como adicionar"
 
@@ -5420,12 +5880,6 @@ msgstr "comma connect"
 msgid "Network"
 msgstr "Rede"
 
-#: sidebar.py:94
-#: sidebar.py:99
-#: sidebar.py:94
-msgid "Offline"
-msgstr "Offline"
-
 #: sidebar.py:59
 msgid "Settings"
 msgstr "Configurações"
@@ -5449,10 +5903,6 @@ msgstr "Morno"
 #: sidebar.py:143
 msgid "Hot"
 msgstr "Quente"
-
-#: sidebar.py:138
-msgid "Not downloaded"
-msgstr "Não baixado"
 
 #: voice.py:36
 msgid "Didn't catch that. Tap the mic to try again."

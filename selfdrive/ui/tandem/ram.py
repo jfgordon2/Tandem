@@ -44,6 +44,8 @@ DESCRIPTIONS = {
   "manage_athenad": N_("Remote access"),
   "mapd": N_("Speed limits and curves"),
   "valhalla_service": N_("Routing"),
+  "routingd": N_("Routing"),
+  "native_worker": N_("Routing"),
   "soundd": N_("Sounds"),
   "card": N_("Car interface"),
   "manager": N_("Starts and stops the rest"),

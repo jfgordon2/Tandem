@@ -20,7 +20,8 @@ def main(frame, save, out, tap, gui_app):
   from openpilot.selfdrive.ui.tandem import draw
   draw.DRAWN = set()
   os.makedirs(out, exist_ok=True)
-  runpy.run_path(os.path.join(HERE, "scene_compare.py"))["main"](frame=frame, save=save, out=out, tap=tap, gui_app=gui_app)
+  scene = os.environ.get("TANDEM_PSEUDO_SCENE", "scene_compare.py")
+  runpy.run_path(os.path.join(HERE, scene))["main"](frame=frame, save=save, out=out, tap=tap, gui_app=gui_app)
   missed = sorted(t for t in draw.DRAWN if any(c.isalpha() for c in t) and "[" not in t and t not in SAMPLE)
   with open(os.path.join(out, "missed.txt"), "w", encoding="utf-8") as f:
     f.write("\n".join(missed) + "\n")

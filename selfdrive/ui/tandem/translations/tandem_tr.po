@@ -5,177 +5,189 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\n"
 
-#: controls.py:174
+#: controls.py:179
 msgid "On"
 msgstr "Açık"
 
-#: controls.py:174
-#: controls.py:177
+#: controls.py:179
+#: controls.py:182
 #: settings/device_sections.py:50
 msgid "Off"
 msgstr "Kapalı"
 
-#: controls.py:271
+#: controls.py:276
 msgid "RECOMMENDED"
 msgstr "ÖNERİLEN"
 
-#: controls.py:542
+#: controls.py:547
 #: settings/display.py:168
 #: settings/display.py:315
 msgid "Default"
 msgstr "Varsayılan"
 
-#: destinations.py:346
-#: settings/search.py:282
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: destinations.py:664
+msgid "Road data still supplies speed limits"
+msgstr "Road data still supplies speed limits"
+
+#: destinations.py:386
+#: settings/search.py:285
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:688
 msgid "Search"
 msgstr "Ara"
 
-#: destinations.py:359
+#: destinations.py:400
 msgid "Offline maps"
 msgstr "Çevrimdışı haritalar"
 
-#: destinations.py:480
+#: destinations.py:529
 #: home.py:144
 msgid "Where to?"
 msgstr "Nereye?"
 
-#: destinations.py:145
+#: destinations.py:168
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:703
 msgid "Searching…"
 msgstr "Aranıyor…"
 
-#: destinations.py:145
+#: destinations.py:168
 msgid "Looking up places"
 msgstr "Yerler aranıyor"
 
-#: destinations.py:147
+#: destinations.py:170
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:713
 msgid "Search unavailable"
 msgstr "Arama kullanılamıyor"
 
-#: destinations.py:149
+#: destinations.py:172
 msgid "Nothing found"
 msgstr "Sonuç bulunamadı"
 
-#: destinations.py:149
+#: destinations.py:172
 msgid "Try a different place or address"
 msgstr "Başka bir yer veya adres deneyin"
 
-#: destinations.py:347
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: destinations.py:187
+msgid "This saved place has no coordinates. Search again when online."
+msgstr "This saved place has no coordinates. Search again when online."
+
+#: destinations.py:387
 msgid "Say a place or an address. Tap the mic when you're done."
 msgstr "Bir yer veya adres söyleyin. Bitirdiğinizde mikrofona dokunun."
 
-#: destinations.py:382
+#: destinations.py:423
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:643
 msgid "Start"
 msgstr "Başlat"
 
-#: destinations.py:487
+#: destinations.py:426
+#: settings/maps.py:243
+#: settings/maps.py:217
+msgid "Choose regions"
+msgstr "Bölge seç"
+
+#: destinations.py:536
 msgid "Offline maps ready"
 msgstr "Çevrimdışı haritalar hazır"
 
-#: destinations.py:546
+#: destinations.py:595
 msgid "Search needs the public Mapbox key · see Settings › Driving › Speed & Steering › Navigation"
 msgstr "Arama için Mapbox açık anahtarı gerekir · Ayarlar › Sürüş › Hız ve direksiyon › Navigasyon bölümüne bakın"
 
-#: destinations.py:603
+#: destinations.py:652
 msgid "Arrive"
 msgstr "Varış"
 
-#: destinations.py:603
+#: destinations.py:652
 msgid "Time"
 msgstr "Süre"
 
-#: destinations.py:603
+#: destinations.py:652
 #: settings/vehicle.py:228
 #: settings/vehicle.py:229
 msgid "Distance"
 msgstr "Mesafe"
 
-#: destinations.py:615
+#: destinations.py:668
 msgid "Slows ahead of turns on the route"
 msgstr "Güzergâhtaki virajlardan önce yavaşlar"
 
-#: destinations.py:616
-msgid "Uses route speed limits when signs are missing"
-msgstr "Tabela yoksa güzergâhın hız sınırlarını kullanır"
-
-#: destinations.py:294
+#: destinations.py:334
 msgid "Search for a place or address"
 msgstr "Yer veya adres ara"
 
-#: destinations.py:362
+#: destinations.py:403
 msgid "Turns and speed follow the route automatically while navigating"
 msgstr "Navigasyon sırasında direksiyonu ve hızı güzergâha göre otomatik ayarlar"
 
-#: destinations.py:509
+#: destinations.py:558
 msgid "RECENT"
 msgstr "SON YERLER"
 
-#: destinations.py:357
+#: destinations.py:397
 msgid "Add favorite"
 msgstr "Sık kullanılanlara ekle"
 
-#: destinations.py:357
+#: destinations.py:397
 msgid "Search for a place"
 msgstr "Yer ara"
 
-#: destinations.py:502
+#: destinations.py:551
 msgid "ON A ROUTE"
 msgstr "GÜZERGÂHTA"
 
-#: destinations.py:503
+#: destinations.py:552
 #, python-brace-format
 msgid "To {}"
 msgstr "Hedef: {}"
 
-#: destinations.py:506
+#: destinations.py:555
 msgid "FAVORITES"
 msgstr "SIK KULLANILANLAR"
 
-#: destinations.py:517
+#: destinations.py:566
 msgid "Places you navigate to show up here."
 msgstr "Gittiğiniz yerler burada görünür."
 
-#: destinations.py:549
+#: destinations.py:598
 msgid "Type a place or address"
 msgstr "Yer veya adres yazın"
 
-#: destinations.py:549
+#: destinations.py:598
 #, python-brace-format
 msgid "Results show as you type, from {} letters"
 msgstr "{} harften sonra yazdıkça sonuçlar görünür"
 
-#: destinations.py:351
-#: settings/speed_steering.py:416
+#: destinations.py:391
+#: settings/speed_steering.py:429
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:778
 msgid "Home"
 msgstr "Ev"
 
-#: destinations.py:351
+#: destinations.py:391
 msgid "Set Home"
 msgstr "Ev adresini ayarla"
 
-#: destinations.py:352
+#: destinations.py:392
 msgid "Search for your home address"
 msgstr "Ev adresinizi arayın"
 
-#: destinations.py:354
-#: settings/speed_steering.py:417
+#: destinations.py:394
+#: settings/speed_steering.py:430
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:780
 msgid "Work"
 msgstr "İş"
 
-#: destinations.py:354
+#: destinations.py:394
 msgid "Set Work"
 msgstr "İş adresini ayarla"
 
-#: destinations.py:355
+#: destinations.py:395
 msgid "Search for your work address"
 msgstr "İş adresinizi arayın"
 
-#: destinations.py:504
+#: destinations.py:553
 #: onroad/layers.py:69
 msgid "End route"
 msgstr "Güzergâhı bitir"
@@ -198,7 +210,7 @@ msgstr "Kamera başlatılıyor…"
 
 #: forecast.py:37
 #: forecast.py:37
-#: onroad/status.py:226
+#: onroad/status.py:254
 msgid "Fog"
 msgstr "Sis"
 
@@ -219,14 +231,14 @@ msgid "Freezing drizzle"
 msgstr "Donan çiseleme"
 
 #: forecast.py:40
-#: onroad/status.py:223
+#: onroad/status.py:251
 #: settings/speed_steering.py:239
 msgid "Rain"
 msgstr "Yağmur"
 
 #: forecast.py:40
 #: forecast.py:43
-#: onroad/status.py:224
+#: onroad/status.py:252
 msgid "Heavy rain"
 msgstr "Şiddetli yağmur"
 
@@ -240,7 +252,7 @@ msgid "Light snow"
 msgstr "Hafif kar"
 
 #: forecast.py:42
-#: onroad/status.py:225
+#: onroad/status.py:253
 #: settings/speed_steering.py:241
 msgid "Snow"
 msgstr "Kar"
@@ -393,7 +405,7 @@ msgstr "Güncelleme hazır"
 
 #: home.py:147
 #: settings/search.py:24
-#: settings/search.py:213
+#: settings/search.py:216
 msgid "Software"
 msgstr "Yazılım"
 
@@ -510,8 +522,8 @@ msgid "space"
 msgstr "boşluk"
 
 #: keyboard.py:126
-#: mapbox_help.py:84
-#: settings/alerts.py:165
+#: mapbox_help.py:87
+#: routing_status.py:9
 msgid "Done"
 msgstr "Bitti"
 
@@ -570,7 +582,16 @@ msgstr "Galaxy'de: Navigation & Maps › App Keys. Açık anahtar arama, gizli a
 msgid "Not added · needed for place search and routes"
 msgstr "Eklenmedi · yer araması ve güzergâhlar için gerekli"
 
-#: mapbox_help.py:83
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: mapbox_help.py:84
+msgid "Optional: online search and speed-limit filling"
+msgstr "Optional: online search and speed-limit filling"
+
+#: mapbox_help.py:85
+msgid "For place search, routes, and speed limits the maps don't have"
+msgstr "Yer araması, güzergâhlar ve haritalarda olmayan hız sınırları için"
+
+#: mapbox_help.py:86
 msgid "Add Mapbox keys"
 msgstr "Mapbox anahtarlarını ekle"
 
@@ -585,10 +606,6 @@ msgstr "Yalnızca açık anahtar · güzergâhlar için gizli anahtar da gerekiy
 #: mapbox_help.py:50
 msgid "Secret key only · search needs the public key too"
 msgstr "Yalnızca gizli anahtar · arama için açık anahtar da gerekiyor"
-
-#: mapbox_help.py:83
-msgid "For place search, routes, and speed limits the maps don't have"
-msgstr "Yer araması, güzergâhlar ve haritalarda olmayan hız sınırları için"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
 #: onroad/developer.py:84
@@ -910,115 +927,152 @@ msgstr "Kamera"
 msgid "Mapbox"
 msgstr "Mapbox"
 
-#: onroad/status.py:121
-#: onroad/status.py:126
+#: onroad/status.py:122
+#: onroad/status.py:127
 msgid "Stopped"
 msgstr "Durdu"
 
-#: onroad/status.py:121
+#: onroad/status.py:122
 msgid "Stopping"
 msgstr "Duruyor"
 
-#: onroad/status.py:95
-#: onroad/status.py:107
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: onroad/status.py:171
+#: onroad/status.py:173
+msgid "Recalculating route"
+msgstr "Recalculating route"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: onroad/status.py:171
+msgid "Finding route"
+msgstr "Finding route"
+
+#: onroad/status.py:96
+#: onroad/status.py:108
 msgid "Steering paused"
 msgstr "Direksiyon duraklatıldı"
 
-#: onroad/status.py:109
+#: onroad/status.py:110
 msgid "Speed control paused"
 msgstr "Hız kontrolü duraklatıldı"
 
-#: onroad/status.py:114
+#: onroad/status.py:115
 msgid "Lane change blocked"
 msgstr "Şerit değiştirme engellendi"
 
-#: onroad/status.py:119
-#: onroad/status.py:149
+#: onroad/status.py:120
+#: onroad/status.py:150
 msgid "Light is green"
 msgstr "Yeşil ışık yandı"
 
-#: onroad/status.py:128
+#: onroad/status.py:129
 msgid "Slowing for curve"
 msgstr "Viraj için yavaşlıyor"
 
-#: onroad/status.py:130
+#: onroad/status.py:131
 msgid "Slowing for turn"
 msgstr "Dönüş için yavaşlıyor"
 
-#: onroad/status.py:133
+#: onroad/status.py:134
 msgid "Turning left"
 msgstr "Sola dönüyor"
 
-#: onroad/status.py:137
+#: onroad/status.py:138
 msgid "Slowing for traffic"
 msgstr "Trafik için yavaşlıyor"
 
-#: onroad/status.py:139
+#: onroad/status.py:140
 #, python-brace-format
 msgid "Matching limit {}"
 msgstr "{} sınırına uyarlanıyor"
 
-#: onroad/status.py:141
+#: onroad/status.py:142
 msgid "Coasting"
 msgstr "Süzülüyor"
 
-#: onroad/status.py:147
+#: onroad/status.py:148
 #, python-brace-format
 msgid "{} · longer gap"
 msgstr "{} · daha fazla takip mesafesi"
 
-#: onroad/status.py:151
+#: onroad/status.py:152
 msgid "Car ahead moved"
 msgstr "Öndeki araç hareket etti"
 
-#: onroad/status.py:153
+#: onroad/status.py:154
 msgid "Ready · tap resume"
 msgstr "Hazır · devam düğmesine basın"
 
-#: onroad/status.py:155
+#: onroad/status.py:156
 msgid "Steering only"
 msgstr "Yalnızca direksiyon"
 
-#: onroad/status.py:159
+#: onroad/status.py:162
 #, python-brace-format
 msgid "Low on RAM · {}% used"
 msgstr "RAM az · %{} kullanımda"
 
-#: onroad/status.py:116
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: onroad/status.py:175
+msgid "Waiting for GPS"
+msgstr "Waiting for GPS"
+
+#: onroad/status.py:117
 #, python-brace-format
 msgid "Changing lanes {}"
 msgstr "{} şeride geçiyor"
 
-#: onroad/status.py:123
+#: onroad/status.py:124
 #, python-brace-format
 msgid "{} for stop sign"
 msgstr "Dur tabelası için {}"
 
-#: onroad/status.py:135
+#: onroad/status.py:136
 msgid "Turning right"
 msgstr "Sağa dönüyor"
 
-#: onroad/status.py:143
+#: onroad/status.py:144
 msgid "Pulse & glide · gliding"
 msgstr "Hızlan ve süzül · süzülüyor"
 
-#: onroad/status.py:143
+#: onroad/status.py:144
 msgid "Pulse & glide"
 msgstr "Hızlan ve süzül"
 
-#: onroad/status.py:101
+#: onroad/status.py:102
 msgid "Steering paused for signal"
 msgstr "Sinyal nedeniyle direksiyon duraklatıldı"
 
-#: onroad/status.py:103
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: onroad/status.py:183
+msgid "Using offline maps"
+msgstr "Using offline maps"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: onroad/status.py:183
+msgid "Using online maps"
+msgstr "Using online maps"
+
+#: onroad/status.py:104
 msgid "Steering paused after turn"
 msgstr "Dönüşten sonra direksiyon duraklatıldı"
 
-#: onroad/status.py:126
+#: onroad/status.py:127
 msgid "Stopping ahead"
 msgstr "İleride duruyor"
 
-#: onroad/status.py:105
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: onroad/status.py:187
+msgid "Offline maps unavailable"
+msgstr "Offline maps unavailable"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: onroad/status.py:187
+#: routing_status.py:34
+msgid "Route unavailable"
+msgstr "Route unavailable"
+
+#: onroad/status.py:106
 #, python-brace-format
 msgid "Steering paused · under {} {}"
 msgstr "Direksiyon duraklatıldı · {} {} altında"
@@ -1164,18 +1218,18 @@ msgid "Byp"
 msgstr "Byp"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:578
+#: onroad/view.py:607
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:578
+#: onroad/view.py:607
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/view.py:579
+#: onroad/view.py:608
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{} dk · {}"
@@ -1235,13 +1289,13 @@ msgstr "Sürüş kaydı"
 
 #: ram.py:42
 #: settings/device_sections.py:357
-#: settings/search.py:189
+#: settings/search.py:192
 msgid "Uploads"
 msgstr "Yüklemeler"
 
 #: ram.py:43
 #: ram.py:44
-#: ram.py:52
+#: ram.py:54
 msgid "Remote access"
 msgstr "Uzaktan erişim"
 
@@ -1250,42 +1304,46 @@ msgid "Speed limits and curves"
 msgstr "Hız sınırları ve virajlar"
 
 #: ram.py:46
+#: ram.py:47
+#: ram.py:48
 msgid "Routing"
 msgstr "Rota"
 
-#: ram.py:47
+#: ram.py:49
 msgid "Sounds"
 msgstr "Sesler"
 
-#: ram.py:48
+#: ram.py:50
 msgid "Car interface"
 msgstr "Araç arayüzü"
 
-#: ram.py:49
+#: ram.py:51
 msgid "Starts and stops the rest"
 msgstr "Diğerlerini başlatır ve durdurur"
 
-#: ram.py:50
+#: ram.py:52
 msgid "StarPilot's planning"
 msgstr "StarPilot planlaması"
 
-#: ram.py:51
+#: ram.py:53
 msgid "Speed limit sign reading"
 msgstr "Hız sınırı tabelası okuma"
 
-#: ram.py:53
+#: ram.py:55
 msgid "Power and temperature"
 msgstr "Güç ve sıcaklık"
 
-#: ram.py:54
+#: ram.py:56
 msgid "Bluetooth remote"
 msgstr "Bluetooth kumanda"
 
-#: ram.py:55
+#: ram.py:57
 msgid "Car connection"
 msgstr "Araç bağlantısı"
 
 #: routemap.py:154
+#: routing_status.py:7
+#: routing_status.py:8
 msgid "Finding a route…"
 msgstr "Güzergâh bulunuyor…"
 
@@ -1310,6 +1368,132 @@ msgstr "{} dk"
 #, python-brace-format
 msgid "{} h {} min"
 msgstr "{} sa {} dk"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:10
+msgid "Installation failed. Check the connection and package."
+msgstr "Installation failed. Check the connection and package."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:11
+msgid "Online routing is selected"
+msgstr "Online routing is selected"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:12
+msgid "Offline routing data ready"
+msgstr "Offline routing data ready"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:13
+#: routing_status.py:14
+msgid "Download maps for this region"
+msgstr "Download maps for this region"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:15
+msgid "Routing data needs to be installed again"
+msgstr "Routing data needs to be installed again"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:16
+msgid "This trip needs more routing data"
+msgstr "This trip needs more routing data"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:17
+msgid "No offline route found for this trip"
+msgstr "No offline route found for this trip"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:18
+msgid "Routing is busy. Trying again…"
+msgstr "Routing is busy. Trying again…"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:19
+msgid "The route took too long. Trying again…"
+msgstr "The route took too long. Trying again…"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:20
+msgid "Routing is unavailable. Trying again…"
+msgstr "Routing is unavailable. Trying again…"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:21
+msgid "Routing returned an unusable route"
+msgstr "Routing returned an unusable route"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:22
+msgid "This place has no usable coordinates"
+msgstr "This place has no usable coordinates"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:23
+msgid "Waiting for a fresh GPS fix"
+msgstr "Waiting for a fresh GPS fix"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:24
+msgid "Finding another offline route…"
+msgstr "Finding another offline route…"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:25
+msgid "Park and end the route to change routing data"
+msgstr "Park and end the route to change routing data"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:26
+msgid "There is not enough storage for this package"
+msgstr "There is not enough storage for this package"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:27
+msgid "This package is already installed with different data"
+msgstr "This package is already installed with different data"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:28
+msgid "Installation cancelled"
+msgstr "Installation cancelled"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:29
+msgid "Finding the updated route…"
+msgstr "Finding the updated route…"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:30
+msgid "Map downloads are unavailable. Try again when connected."
+msgstr "Map downloads are unavailable. Try again when connected."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:31
+msgid "Map download failed. Existing maps are kept."
+msgstr "Map download failed. Existing maps are kept."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:32
+msgid "Road data download did not finish. Try again when connected."
+msgstr "Road data download did not finish. Try again when connected."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:33
+msgid "Offline routes are not available for every selected region."
+msgstr "Offline routes are not available for every selected region."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:35
+msgid "Online routing is unavailable"
+msgstr "Online routing is unavailable"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:40
+msgid "Routing is unavailable"
+msgstr "Routing is unavailable"
 
 #: settings/alerts.py:43
 #: settings/alerts.py:93
@@ -1365,53 +1549,53 @@ msgid "When you need to steer or brake now"
 msgstr "Hemen direksiyon veya fren kullanmanız gerektiğinde"
 
 #: settings/alerts.py:46
-#: settings/search.py:118
+#: settings/search.py:121
 msgid "Green Light"
 msgstr "Yeşil ışık"
 
 #: settings/alerts.py:46
-#: settings/search.py:118
+#: settings/search.py:121
 msgid "When the light turns green and you are stopped"
 msgstr "Dururken ışık yeşile döndüğünde"
 
 #: settings/alerts.py:47
-#: settings/search.py:119
+#: settings/search.py:122
 msgid "Lead Departure"
 msgstr "Öndeki aracın kalkışı"
 
 #: settings/alerts.py:47
-#: settings/search.py:119
+#: settings/search.py:122
 msgid "When the car ahead pulls away"
 msgstr "Öndeki araç hareket ettiğinde"
 
 #: settings/alerts.py:48
-#: settings/search.py:120
+#: settings/search.py:123
 msgid "Speed Limit Change"
 msgstr "Hız sınırı değişimi"
 
 #: settings/alerts.py:48
-#: settings/search.py:120
+#: settings/search.py:123
 msgid "When the posted limit changes"
 msgstr "Tabeladaki sınır değiştiğinde"
 
 #: settings/alerts.py:49
-#: settings/search.py:121
+#: settings/search.py:124
 msgid "Loud Blind Spot"
 msgstr "Yüksek sesli kör nokta uyarısı"
 
 #: settings/alerts.py:49
-#: settings/search.py:121
+#: settings/search.py:124
 msgid "Signalling into an occupied lane, even when paused"
 msgstr "Duraklatılmışken bile dolu şeride sinyal verdiğinizde"
 
 #: settings/alerts.py:50
 #: settings/search.py:91
-#: settings/search.py:122
+#: settings/search.py:125
 msgid "Weather heads-up"
 msgstr "Hava durumu ön uyarısı"
 
 #: settings/alerts.py:50
-#: settings/search.py:122
+#: settings/search.py:125
 msgid "Once, when rain, snow or storms are coming"
 msgstr "Yağmur, kar veya fırtına yaklaşırken bir kez"
 
@@ -1471,7 +1655,7 @@ msgid "Reset to Normal"
 msgstr "Normal'e sıfırla"
 
 #: settings/alerts.py:173
-#: settings/search.py:117
+#: settings/search.py:120
 msgid "Volume"
 msgstr "Ses düzeyi"
 
@@ -1534,7 +1718,7 @@ msgid "A sound plays in {}…"
 msgstr "{} sonra bir ses çalar…"
 
 #: settings/bluetooth_tab.py:54
-#: settings/speed_steering.py:412
+#: settings/speed_steering.py:425
 msgid "Not set"
 msgstr "Ayarlanmadı"
 
@@ -1817,7 +2001,7 @@ msgid "No devices found yet."
 msgstr "Henüz cihaz bulunamadı."
 
 #: settings/bundles.py:43
-#: settings/search.py:106
+#: settings/search.py:109
 msgid "Developer View"
 msgstr "Geliştirici görünümü"
 
@@ -1826,7 +2010,7 @@ msgid "Sidebar with live metrics, CPU, GPU, memory and temperatures, and where s
 msgstr "Canlı ölçümler, CPU, GPU, bellek, sıcaklıklar ve hız sınırı kaynaklarını gösteren yan panel"
 
 #: settings/bundles.py:47
-#: settings/search.py:107
+#: settings/search.py:110
 msgid "Lead Insights"
 msgstr "Öndeki araç bilgileri"
 
@@ -1841,12 +2025,13 @@ msgid "Tuner Mode"
 msgstr "İnce ayar modu"
 
 #: settings/bundles.py:52
-#: settings/search.py:139
+#: settings/search.py:142
 msgid "Fine-tuning screens for gas, brake, steering and following"
 msgstr "Gaz, fren, direksiyon ve takip için ince ayar ekranları"
 
 #: settings/can_recorder.py:13
-#: settings/maps.py:405
+#: settings/map_source.py:72
+#: settings/maps.py:508
 msgid "Ready"
 msgstr "Hazır"
 
@@ -1969,7 +2154,7 @@ msgstr "Test durumu"
 
 #: settings/can_recorder.py:71
 #: settings/developer.py:154
-#: settings/search.py:193
+#: settings/search.py:196
 msgid "CAN test recorder"
 msgstr "CAN test kaydedicisi"
 
@@ -2056,8 +2241,8 @@ msgid "CONNECTIONS"
 msgstr "BAĞLANTILAR"
 
 #: settings/connections.py:64
+#: settings/map_source.py:138
 #: settings/network_tab.py:199
-#: settings/search.py:31
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -2069,7 +2254,7 @@ msgstr "Hücresel"
 
 #: settings/connections.py:69
 #: settings/search.py:31
-#: settings/search.py:211
+#: settings/search.py:214
 msgid "Car Audio & Devices"
 msgstr "Araç sesi ve cihazlar"
 
@@ -2078,7 +2263,7 @@ msgid "openpilot longitudinal control is in alpha for this car and turns off Aut
 msgstr "Bu araçta openpilot boylamsal kontrolü alfa aşamasındadır ve Otomatik Acil Frenlemeyi (AEB) kapatır. Varsayılan, aracın kendi hız sabitleyicisidir. Birlikte Deneysel mod önerilir. Araç çalışıyorsa openpilot yeniden başlar."
 
 #: settings/developer.py:145
-#: settings/search.py:198
+#: settings/search.py:201
 msgid "openpilot Longitudinal (Alpha)"
 msgstr "openpilot boylamsal kontrolü (Alfa)"
 
@@ -2109,7 +2294,7 @@ msgstr "GitHub hesabındaki tüm açık anahtarları ekler. Başkasının hesab�
 
 #: settings/developer.py:155
 #: settings/search.py:30
-#: settings/search.py:192
+#: settings/search.py:195
 msgid "Developer"
 msgstr "Geliştirici"
 
@@ -2134,7 +2319,7 @@ msgstr "Aç"
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: settings/developer.py:148
-#: settings/search.py:194
+#: settings/search.py:197
 msgid "ADB"
 msgstr "ADB"
 
@@ -2144,7 +2329,7 @@ msgstr "USB veya ağ üzerinden bağlanın (docs.comma.ai). Araç kapalıyken de
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: settings/developer.py:149
-#: settings/search.py:195
+#: settings/search.py:198
 msgid "SSH"
 msgstr "SSH"
 
@@ -2153,13 +2338,13 @@ msgid "Remote shell access with the keys below"
 msgstr "Aşağıdaki anahtarlarla uzaktan kabuk erişimi"
 
 #: settings/developer.py:150
-#: settings/search.py:196
+#: settings/search.py:199
 #: selfdrive/ui/layouts/settings/developer.py:53
 msgid "SSH Keys"
 msgstr "SSH anahtarları"
 
 #: settings/developer.py:151
-#: settings/search.py:197
+#: settings/search.py:200
 #: selfdrive/ui/layouts/settings/developer.py:56
 msgid "Joystick Debug Mode"
 msgstr "Oyun çubuğu hata ayıklama"
@@ -2169,18 +2354,18 @@ msgid "Drive openpilot's controls from a joystick. Change it with the car off."
 msgstr "openpilot kontrollerini oyun çubuğuyla kullanın. Araç kapalıyken değiştirin."
 
 #: settings/developer.py:153
-#: settings/search.py:199
+#: settings/search.py:202
 #: selfdrive/ui/layouts/settings/developer.py:72
 msgid "UI Debug Mode"
 msgstr "Arayüz hata ayıklama"
 
 #: settings/developer.py:153
-#: settings/search.py:199
+#: settings/search.py:202
 msgid "Shows touches and the frame rate"
 msgstr "Dokunuşları ve kare hızını gösterir"
 
 #: settings/developer.py:154
-#: settings/search.py:193
+#: settings/search.py:196
 msgid "Record traffic and mark manual lock/unlock actions"
 msgstr "Trafiği kaydedin, elle kilitleme ve açma işlemlerini işaretleyin"
 
@@ -2278,7 +2463,7 @@ msgstr "Eşleştirmeyi kaldır"
 
 #: settings/device.py:264
 #: settings/device.py:107
-#: settings/search.py:168
+#: settings/search.py:171
 msgid "Remote Access"
 msgstr "Uzaktan erişim"
 
@@ -2287,7 +2472,7 @@ msgid "Reach this device from the Galaxy web app"
 msgstr "Galaxy web uygulamasından bu cihaza erişin"
 
 #: settings/device.py:68
-#: settings/search.py:135
+#: settings/search.py:138
 #: selfdrive/ui/layouts/settings/device.py:152
 msgid "Driver Camera"
 msgstr "Sürücü kamerası"
@@ -2297,25 +2482,25 @@ msgid "Check that it can see your face. The car must be off."
 msgstr "Yüzünüzü görebildiğini kontrol edin. Araç kapalı olmalı."
 
 #: settings/device.py:69
-#: settings/search.py:136
+#: settings/search.py:139
 #: settings/speed_steering.py:368
 msgid "Driver Monitoring"
 msgstr "Sürücü izleme"
 
 #: settings/device.py:69
-#: settings/search.py:136
+#: settings/search.py:139
 msgid "Forget which side of the car the driver sits on"
 msgstr "Sürücünün aracın hangi tarafında oturduğunu unut"
 
 #: settings/device.py:92
 #: settings/device.py:92
-#: settings/search.py:175
+#: settings/search.py:178
 msgid "Power Off"
 msgstr "Kapat"
 
 #: settings/device.py:95
 #: settings/device.py:96
-#: settings/search.py:174
+#: settings/search.py:177
 msgid "Restart"
 msgstr "Yeniden başlat"
 
@@ -2326,7 +2511,7 @@ msgstr "Yeniden kalibre et"
 
 #: settings/device.py:226
 #: settings/device.py:114
-#: settings/search.py:171
+#: settings/search.py:174
 msgid "Regulatory"
 msgstr "Yasal bilgiler"
 
@@ -2389,7 +2574,7 @@ msgstr "Kalibrasyon baştan başlar. openpilot, sonraki birkaç dakikalık sür�
 
 #: settings/device.py:117
 #: settings/search.py:30
-#: settings/search.py:166
+#: settings/search.py:169
 msgid "This Device"
 msgstr "Bu cihaz"
 
@@ -2431,22 +2616,22 @@ msgid "Your code appears here once you choose a password"
 msgstr "Parola seçtikten sonra kodunuz burada görünür"
 
 #: settings/device.py:104
-#: settings/search.py:167
+#: settings/search.py:170
 msgid "Phone App"
 msgstr "Telefon uygulaması"
 
 #: settings/device.py:110
-#: settings/search.py:169
+#: settings/search.py:172
 msgid "Camera Calibration"
 msgstr "Kamera kalibrasyonu"
 
 #: settings/device.py:112
-#: settings/search.py:170
+#: settings/search.py:173
 msgid "How It Works"
 msgstr "Nasıl çalışır"
 
 #: settings/device.py:112
-#: settings/search.py:170
+#: settings/search.py:173
 msgid "Rules, features and limits"
 msgstr "Kurallar, özellikler ve sınırlar"
 
@@ -2455,13 +2640,13 @@ msgid "MORE"
 msgstr "DAHA FAZLA"
 
 #: settings/device.py:115
-#: settings/search.py:172
+#: settings/search.py:175
 msgid "Device ID and Serial"
 msgstr "Cihaz kimliği ve seri numarası"
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: settings/device.py:116
-#: settings/search.py:173
+#: settings/search.py:176
 msgid "IMEI"
 msgstr "IMEI"
 
@@ -2498,12 +2683,13 @@ msgstr "Kayıtlı tüm sürüşler ve videoları silinir. Bu işlem geri alınam
 msgid "Backup {}"
 msgstr "Yedek {}"
 
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/device_sections.py:306
-msgid "Speed limits and curves will need a connection until maps download again. Your regions stay chosen, so a scheduled update downloads them again."
-msgstr "Haritalar yeniden indirilene kadar hız sınırları ve virajlar için bağlantı gerekir. Bölge seçimleriniz korunur; planlı güncellemede tekrar indirilir."
+msgid "Remove offline routes, speed limits and street names from this device. Saved places stay saved. Your regions stay chosen, so a scheduled update downloads them again."
+msgstr "Remove offline routes, speed limits and street names from this device. Saved places stay saved. Your regions stay chosen, so a scheduled update downloads them again."
 
 #: settings/device_sections.py:50
-#: settings/maps.py:345
+#: settings/maps.py:428
 msgid "Parked"
 msgstr "Park halinde"
 
@@ -2561,17 +2747,17 @@ msgstr "Sil"
 
 #: settings/device_sections.py:317
 #: settings/display.py:325
-#: settings/maps.py:209
+#: settings/maps.py:231
 msgid "Offline Maps"
 msgstr "Çevrimdışı haritalar"
 
 #: settings/device_sections.py:337
-#: settings/search.py:186
+#: settings/search.py:189
 msgid "Unused Models"
 msgstr "Kullanılmayan modeller"
 
 #: settings/device_sections.py:341
-#: settings/search.py:187
+#: settings/search.py:190
 msgid "Record Driver Camera"
 msgstr "Sürücü kamerasını kaydet"
 
@@ -2580,7 +2766,7 @@ msgid "Saved and uploaded with your drives. Restarts openpilot if the car is on.
 msgstr "Sürüşlerle birlikte kaydedilir ve yüklenir. Araç çalışıyorsa openpilot yeniden başlar."
 
 #: settings/device_sections.py:343
-#: settings/search.py:188
+#: settings/search.py:191
 msgid "Record Microphone"
 msgstr "Mikrofonu kaydet"
 
@@ -2590,13 +2776,13 @@ msgstr "Sürüş kayıtlarına kabin sesi eklenir. Araç çalışıyorsa openpil
 
 #: settings/device_sections.py:158
 #: settings/device_sections.py:171
-#: settings/search.py:179
+#: settings/search.py:182
 msgid "Language"
 msgstr "Dil"
 
 #: settings/device_sections.py:175
 #: settings/search.py:30
-#: settings/search.py:176
+#: settings/search.py:179
 msgid "General"
 msgstr "Genel"
 
@@ -2620,7 +2806,7 @@ msgid "Models"
 msgstr "Modeller"
 
 #: settings/device_sections.py:313
-#: settings/maps.py:209
+#: settings/maps.py:231
 msgid "Speed limits and curves work without a connection"
 msgstr "Hız sınırları ve virajlar bağlantı olmadan çalışır"
 
@@ -2650,7 +2836,7 @@ msgstr[1] "Kullanmadığınız {} model kaldırılır. Model kataloğundan tekra
 
 #: settings/device_sections.py:358
 #: settings/search.py:30
-#: settings/search.py:183
+#: settings/search.py:186
 msgid "Storage & Data"
 msgstr "Depolama ve veri"
 
@@ -2663,49 +2849,49 @@ msgid "For menus and alerts"
 msgstr "Menüler ve uyarılar için"
 
 #: settings/device_sections.py:169
-#: settings/search.py:177
+#: settings/search.py:180
 msgid "Units"
 msgstr "Birimler"
 
 #: settings/device_sections.py:169
-#: settings/search.py:177
+#: settings/search.py:180
 msgid "Speed and distance everywhere"
 msgstr "Her yerde hız ve mesafe birimleri"
 
 #: settings/device_sections.py:170
-#: settings/search.py:178
+#: settings/search.py:181
 #: sidebar.py:148
 msgid "Temperature"
 msgstr "Sıcaklık"
 
 #: settings/device_sections.py:170
-#: settings/search.py:178
+#: settings/search.py:181
 msgid "For the weather forecast"
 msgstr "Hava tahmini için"
 
 #: settings/device_sections.py:172
-#: settings/search.py:180
+#: settings/search.py:183
 msgid "Screen Brightness"
 msgstr "Ekran parlaklığı"
 
 #: settings/device_sections.py:172
-#: settings/search.py:180
+#: settings/search.py:183
 msgid "Auto follows ambient light, day and night"
 msgstr "Otomatik, gece gündüz ortam ışığına uyar"
 
 #: settings/device_sections.py:174
-#: settings/search.py:181
+#: settings/search.py:184
 msgid "Standby"
 msgstr "Bekleme"
 
 #: settings/device_sections.py:174
-#: settings/search.py:181
+#: settings/search.py:184
 msgid "Screen sleeps while driving, wakes for alerts"
 msgstr "Sürüşte ekran uyur, uyarılarda uyanır"
 
 #: settings/device_sections.py:194
 #: settings/search.py:30
-#: settings/search.py:182
+#: settings/search.py:185
 msgid "Backups"
 msgstr "Yedekler"
 
@@ -2728,12 +2914,12 @@ msgid "Delete offline maps?"
 msgstr "Çevrimdışı haritalar silinsin mi?"
 
 #: settings/device_sections.py:349
-#: settings/search.py:184
+#: settings/search.py:187
 msgid "Recorded Drives"
 msgstr "Kayıtlı sürüşler"
 
 #: settings/device_sections.py:349
-#: settings/search.py:184
+#: settings/search.py:187
 msgid "Oldest drives are removed when space runs low"
 msgstr "Alan azalınca en eski sürüşler silinir"
 
@@ -2742,7 +2928,7 @@ msgid "RECORDING & UPLOADS"
 msgstr "KAYIT VE YÜKLEMELER"
 
 #: settings/device_sections.py:357
-#: settings/search.py:189
+#: settings/search.py:192
 msgid "Drive logs and video for debugging"
 msgstr "Hata ayıklama için sürüş günlükleri ve video"
 
@@ -2934,7 +3120,7 @@ msgstr "Sürüş ekranı"
 
 #: settings/display.py:293
 #: settings/display.py:313
-#: settings/search.py:110
+#: settings/search.py:113
 msgid "Boot Logo"
 msgstr "Açılış logosu"
 
@@ -2973,62 +3159,62 @@ msgid "Whimsy animations cross the road above the bar while you signal; the chev
 msgstr "Sinyal verirken eğlenceli animasyonlar çubuğun üstündeki yoldan geçer; hızın yanındaki oklar kalır."
 
 #: settings/display.py:267
-#: settings/search.py:100
+#: settings/search.py:103
 msgid "Camera View"
 msgstr "Kamera görünümü"
 
 #: settings/display.py:267
-#: settings/search.py:100
+#: settings/search.py:103
 msgid "Wide shows more of the road at low speed"
 msgstr "Geniş, düşük hızda yolun daha fazlasını gösterir"
 
 #: settings/display.py:269
-#: settings/search.py:101
+#: settings/search.py:104
 msgid "Driver Camera in Reverse"
 msgstr "Geri viteste sürücü kamerası"
 
 #: settings/display.py:269
-#: settings/search.py:101
+#: settings/search.py:104
 msgid "Shows the inside camera while backing up"
 msgstr "Geri giderken iç kamerayı gösterir"
 
 #: settings/display.py:271
-#: settings/search.py:102
+#: settings/search.py:105
 msgid "Driving Style Banner"
 msgstr "Sürüş tarzı bildirimi"
 
 #: settings/display.py:271
-#: settings/search.py:102
+#: settings/search.py:105
 msgid "Shows the current style when it changes"
 msgstr "Değiştiğinde geçerli tarzı gösterir"
 
 #: settings/display.py:273
-#: settings/search.py:103
+#: settings/search.py:106
 msgid "Compass"
 msgstr "Pusula"
 
 #: settings/display.py:273
-#: settings/search.py:103
+#: settings/search.py:106
 msgid "Heading beside the street name, like NE"
 msgstr "Sokak adının yanında KD gibi yön bilgisi"
 
 #: settings/display.py:274
-#: settings/search.py:104
+#: settings/search.py:107
 msgid "Blind Spot Highlights"
 msgstr "Kör nokta vurguları"
 
 #: settings/display.py:274
-#: settings/search.py:104
+#: settings/search.py:107
 msgid "Colors the screen edge and lane when a car is beside you"
 msgstr "Yanınızda araç varsa ekran kenarını ve şeridi renklendirir"
 
 #: settings/display.py:276
-#: settings/search.py:105
+#: settings/search.py:108
 msgid "Lead Car Tag"
 msgstr "Öndeki araç etiketi"
 
 #: settings/display.py:276
-#: settings/search.py:105
+#: settings/search.py:108
 msgid "Numbers above the car ahead. Off keeps only the bar under it"
 msgstr "Öndeki aracın üstündeki sayılar. Kapatınca yalnız altındaki çubuk kalır"
 
@@ -3039,60 +3225,58 @@ msgstr "İLERİ DÜZEY KULLANICI"
 
 #: settings/display.py:294
 #: settings/display.py:313
-#: settings/search.py:110
+#: settings/search.py:113
 msgid "Shown while the device starts up"
 msgstr "Cihaz başlarken gösterilir"
 
 #: settings/display.py:301
 #: settings/display.py:311
-#: settings/search.py:108
+#: settings/search.py:111
 msgid "Path Style"
 msgstr "Yol stili"
 
 #: settings/display.py:306
 #: settings/display.py:312
-#: settings/search.py:109
+#: settings/search.py:112
 msgid "Turn Signal"
 msgstr "Sinyal"
 
 #: settings/display.py:311
-#: settings/search.py:108
+#: settings/search.py:111
 msgid "Color, width and edges as one preset"
 msgstr "Renk, genişlik ve kenarlar tek ön ayarda"
 
 #: settings/display.py:312
-#: settings/search.py:109
+#: settings/search.py:112
 msgid "Chevrons by the speed, or a whimsical animation"
 msgstr "Hızın yanında oklar veya eğlenceli animasyon"
 
 #: settings/display.py:314
-#: settings/search.py:111
+#: settings/search.py:114
 msgid "Startup Message"
 msgstr "Başlangıç mesajı"
 
 #: settings/display.py:321
-#: settings/search.py:112
+#: settings/search.py:115
 msgid "Turn-by-Turn on Screen"
 msgstr "Ekranda adım adım yol tarifi"
 
 #: settings/display.py:321
-#: settings/search.py:112
+#: settings/search.py:115
 msgid "Next turn, arrival time and distance while navigating"
 msgstr "Navigasyonda sonraki dönüş, varış saati ve mesafe"
 
 #: settings/display.py:323
-#: settings/search.py:113
+#: settings/search.py:116
 msgid "Speed Limit Sign"
 msgstr "Hız sınırı tabelası"
 
 #: settings/display.py:323
-#: settings/search.py:113
+#: settings/search.py:116
 msgid "US style, or the round Vienna style used in most other countries"
 msgstr "ABD stili veya çoğu ülkede kullanılan yuvarlak Viyana stili"
 
 #: settings/display.py:325
-#: settings/search.py:97
-#: settings/search.py:114
 msgid "Speed limits and routing without a connection"
 msgstr "Bağlantı olmadan hız sınırları ve güzergâhlar"
 
@@ -3139,7 +3323,7 @@ msgid "Sets {} options"
 msgstr "{} seçeneği ayarlar"
 
 #: settings/display.py:314
-#: settings/search.py:111
+#: settings/search.py:114
 msgid "The banner when you start the car"
 msgstr "Aracı çalıştırdığınızda görünen bildirim"
 
@@ -3182,7 +3366,7 @@ msgstr "Hız ve direksiyon"
 
 #: settings/driving_tab.py:131
 #: settings/search.py:25
-#: settings/search.py:99
+#: settings/search.py:102
 msgid "Display"
 msgstr "Ekran"
 
@@ -3194,13 +3378,13 @@ msgstr "Sürüş modeli"
 
 #: settings/driving_tab.py:136
 #: settings/search.py:26
-#: settings/search.py:125
+#: settings/search.py:128
 msgid "Vehicle"
 msgstr "Araç"
 
 #: settings/driving_tab.py:138
 #: settings/search.py:26
-#: settings/search.py:129
+#: settings/search.py:132
 msgid "Assistance"
 msgstr "Yardım"
 
@@ -3255,210 +3439,420 @@ msgstr "Sık kullanılan {}"
 msgid " · Not set"
 msgstr " · Ayarlanmadı"
 
-#: settings/maps.py:406
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:152
+msgid "Download selected maps"
+msgstr "Download selected maps"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:57
+msgid "Midwest"
+msgstr "Midwest"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:57
+msgid "West"
+msgstr "West"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:57
+msgid "South"
+msgstr "South"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:57
+msgid "Northeast"
+msgstr "Northeast"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:88
+msgid "All maps ready"
+msgstr "All maps ready"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:89
+msgid "Choose where you drive"
+msgstr "Choose where you drive"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:147
+msgid "Download road data"
+msgstr "Download road data"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:149
+#: settings/maps.py:237
+msgid "Update maps"
+msgstr "Update maps"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:151
+#, python-brace-format
+msgid "Download {} MiB"
+msgstr "Download {} MiB"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:64
+msgid "Road data ready"
+msgstr "Road data ready"
+
+#: settings/map_source.py:64
+#: sidebar.py:138
+msgid "Not downloaded"
+msgstr "İndirilmedi"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:65
+#: settings/maps.py:299
+msgid "Routes ready"
+msgstr "Routes ready"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:71
+msgid "Already downloaded"
+msgstr "Already downloaded"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:71
+msgid "Download missing road data"
+msgstr "Download missing road data"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:75
+msgid "Routing coverage is not available for every selected region."
+msgstr "Routing coverage is not available for every selected region."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:76
+msgid "Downloads all missing map data for this selection."
+msgstr "Downloads all missing map data for this selection."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:65
+msgid "Routes not downloaded"
+msgstr "Routes not downloaded"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:65
+msgid "Routes not available yet"
+msgstr "Routes not available yet"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:73
+msgid "Not available for this region"
+msgstr "Not available for this region"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:74
+#: settings/maps.py:251
+#, python-brace-format
+msgid "{} MiB"
+msgstr "{} MiB"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:112
+msgid "Road data ready; offline routes downloading."
+msgstr "Road data ready; offline routes downloading."
+
+#: settings/maps.py:509
 msgid "Pauses if you start driving or lose Wi-Fi, and picks up where it stopped. Keep the device powered."
 msgstr "Sürüşe başlayınca veya Wi-Fi kesilince duraklar, sonra kaldığı yerden sürer. Cihazı açık tutun."
 
-#: settings/maps.py:28
+#: settings/maps.py:29
 msgid "Weekly"
 msgstr "Haftalık"
 
-#: settings/maps.py:28
+#: settings/maps.py:29
 msgid "Monthly"
 msgstr "Aylık"
 
-#: settings/maps.py:405
+#: settings/maps.py:508
 msgid "Prepare"
 msgstr "Hazırla"
 
-#: settings/maps.py:405
-#: settings/maps.py:177
-#: settings/maps.py:265
+#: settings/maps.py:508
+#: settings/maps.py:199
+#: settings/maps.py:198
 msgid "Download"
 msgstr "İndir"
 
-#: settings/maps.py:405
+#: settings/maps.py:508
 msgid "Install"
 msgstr "Yükle"
 
-#: settings/maps.py:249
+#: settings/maps.py:239
+#: settings/maps.py:204
+msgid "Remove maps"
+msgstr "Haritaları kaldır"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:266
+#: settings/speed_steering.py:438
+msgid "Routes, speed limits and street names without a connection"
+msgstr "Routes, speed limits and street names without a connection"
+
+#: settings/maps.py:314
 msgid "U.S. regions"
 msgstr "ABD bölgeleri"
 
-#: settings/maps.py:249
+#: settings/maps.py:314
 msgid "U.S. states"
 msgstr "ABD eyaletleri"
 
-#: settings/maps.py:249
+#: settings/maps.py:314
 msgid "Other countries"
 msgstr "Diğer ülkeler"
 
-#: settings/maps.py:371
+#: settings/maps.py:454
 msgid "Park to delete offline maps"
 msgstr "Çevrimdışı haritaları silmek için park edin"
 
-#: settings/maps.py:376
+#: settings/maps.py:459
+#: settings/maps.py:463
 #: settings/model.py:404
 msgid "Wait for the download to finish"
 msgstr "İndirmenin bitmesini bekleyin"
 
-#: settings/maps.py:123
+#: settings/maps.py:572
+msgid "You can leave this screen. It keeps going in the background."
+msgstr "Bu ekrandan çıkabilirsiniz. Arka planda devam eder."
+
+#: settings/maps.py:141
 msgid "Choose at least one region"
 msgstr "En az bir bölge seçin"
 
-#: settings/maps.py:129
+#: settings/maps.py:149
 msgid "Cancelling…"
 msgstr "İptal ediliyor…"
 
-#: settings/maps.py:131
+#: settings/maps.py:151
 #, python-brace-format
 msgid "Downloading {} · {}%"
 msgstr "{} indiriliyor · %{}"
 
-#: settings/maps.py:132
+#: settings/maps.py:152
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:253
 msgid "Downloaded"
 msgstr "İndirildi"
 
-#: settings/maps.py:132
+#: settings/maps.py:152
 msgid "Not downloaded yet"
 msgstr "Henüz indirilmedi"
 
-#: settings/maps.py:165
+#: settings/maps.py:185
 #, python-brace-format
 msgid "{} of {} files · {}. Pauses if you drive or lose the connection."
 msgstr "{1} dosyanın {0} tanesi · {2}. Sürüşte veya bağlantı kesilirse duraklar."
 
-#: settings/maps.py:177
+#: settings/maps.py:199
 msgid "Update now"
 msgstr "Şimdi güncelle"
 
-#: settings/maps.py:461
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:569
 #, python-brace-format
-msgid "Downloading {}"
-msgstr "{} indiriliyor"
+msgid "{} download stopped"
+msgstr "{} download stopped"
 
-#: settings/maps.py:462
-msgid "You can leave this screen. It keeps going in the background."
-msgstr "Bu ekrandan çıkabilirsiniz. Arka planda devam eder."
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:587
+msgid "Download complete · Installing maps"
+msgstr "Download complete · Installing maps"
 
-#: settings/maps.py:470
-#, python-brace-format
-msgid "{} of {} files"
-msgstr "{1} dosyanın {0} tanesi"
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:595
+msgid " · Download stopped"
+msgstr " · Download stopped"
 
-#: settings/maps.py:470
-msgid "Getting ready"
-msgstr "Hazırlanıyor"
-
-#: settings/maps.py:472
+#: settings/maps.py:597
 #, python-brace-format
 msgid " · about {} min left"
 msgstr " · yaklaşık {} dk kaldı"
 
-#: settings/maps.py:124
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:654
+msgid "Paused. Downloads continue when parked on Wi-Fi."
+msgstr "Paused. Downloads continue when parked on Wi-Fi."
+
+#: settings/maps.py:142
 #, python-brace-format
 msgid "Waiting: {}"
 msgstr "Bekleniyor: {}"
 
-#: settings/maps.py:147
-#: settings/maps.py:439
+#: settings/maps.py:167
+#: settings/maps.py:542
 msgid "Cancel download"
 msgstr "İndirmeyi iptal et"
 
-#: settings/maps.py:182
+#: settings/maps.py:204
 msgid "Park to remove maps"
 msgstr "Haritaları kaldırmak için park edin"
 
-#: settings/maps.py:182
-msgid "Remove maps"
-msgstr "Haritaları kaldır"
-
-#: settings/maps.py:183
+#: settings/maps.py:205
+#: settings/maps.py:239
 msgid "Remove offline maps?"
 msgstr "Çevrimdışı haritalar kaldırılsın mı?"
 
-#: settings/maps.py:188
+#: settings/maps.py:210
 msgid "YOUR REGIONS"
 msgstr "BÖLGELERİNİZ"
 
-#: settings/maps.py:189
+#: settings/maps.py:211
 msgid "Change them in Choose regions"
 msgstr "Bölge seç bölümünden değiştirin"
 
-#: settings/maps.py:199
+#: settings/maps.py:221
+#: settings/maps.py:258
 msgid "Keep up to date"
 msgstr "Güncel tut"
 
-#: settings/maps.py:201
+#: settings/maps.py:223
 msgid "Updates download only while parked and online"
 msgstr "Güncellemeler yalnız park halinde ve internete bağlıyken indirilir"
 
-#: settings/maps.py:205
+#: settings/maps.py:227
 msgid "Without maps, speed limits need a connection."
 msgstr "Harita yoksa hız sınırları için bağlantı gerekir."
 
-#: settings/maps.py:255
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:245
+msgid "DOWNLOADED REGIONS"
+msgstr "DOWNLOADED REGIONS"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:260
+msgid "One schedule for road data and offline routes, while parked on Wi-Fi."
+msgstr "One schedule for road data and offline routes, while parked on Wi-Fi."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:264
+msgid "Updates keep the current maps until the new maps are ready."
+msgstr "Updates keep the current maps until the new maps are ready."
+
+#: settings/maps.py:320
 msgid "Add map regions"
 msgstr "Harita bölgesi ekle"
 
-#: settings/maps.py:255
+#: settings/maps.py:320
 msgid "Pick a region, or switch to states for less storage"
 msgstr "Bölge seçin veya daha az alan için eyaletlere geçin"
 
-#: settings/maps.py:256
-#: settings/maps.py:492
+#: settings/maps.py:321
+#: settings/maps.py:617
 msgid "REGIONS"
 msgstr "BÖLGELER"
 
-#: settings/maps.py:345
+#: settings/maps.py:352
+msgid "SELECTED"
+msgstr "SEÇİLENLER"
+
+#: settings/maps.py:428
+#: settings/speed_steering.py:420
 #: sidebar.py:94
 msgid "Online"
 msgstr "Çevrimiçi"
 
-#: settings/maps.py:492
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:467
+msgid "Park and end the route to remove maps"
+msgstr "Park and end the route to remove maps"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:543
+msgid "Retry download"
+msgstr "Retry download"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:569
+#, python-brace-format
+msgid "{} maps ready"
+msgstr "{} maps ready"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:577
+#: settings/maps.py:589
+msgid "Both map sets ready"
+msgstr "Both map sets ready"
+
+#: settings/maps.py:617
 #, python-brace-format
 msgid "REGIONS · {} OF {} DONE"
 msgstr "BÖLGELER · {1} İÇİNDE {0} TAMAM"
 
-#: settings/maps.py:502
+#: settings/maps.py:627
 #, python-brace-format
 msgid "+{} more"
 msgstr "+{} tane daha"
 
-#: settings/maps.py:195
-msgid "Choose regions"
-msgstr "Bölge seç"
-
-#: settings/maps.py:195
+#: settings/maps.py:217
 msgid "Add or remove states, regions and countries"
 msgstr "Eyalet, bölge ve ülke ekleyin veya kaldırın"
 
-#: settings/maps.py:204
+#: settings/maps.py:226
+#: settings/maps.py:263
 #: settings/model.py:316
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:363
 msgid "Storage"
 msgstr "Depolama"
 
-#: settings/maps.py:312
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:247
+#: settings/maps.py:341
+msgid "Road data"
+msgstr "Road data"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:247
+msgid "Speed limits and street names"
+msgstr "Speed limits and street names"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:251
+#: settings/maps.py:344
+msgid "Offline routes"
+msgstr "Offline routes"
+
+#: settings/maps.py:395
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:583
 msgid "Whole U.S."
 msgstr "Tüm ABD"
 
-#: settings/maps.py:312
+#: settings/maps.py:395
 msgid "Every state and territory"
 msgstr "Tüm eyaletler ve bölgeler"
 
-#: settings/maps.py:270
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:570
+#, python-brace-format
+msgid "Preparing {} maps"
+msgstr "Preparing {} maps"
+
+#: settings/maps.py:570
+#, python-brace-format
+msgid "Downloading {}"
+msgstr "{} indiriliyor"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:591
+#, python-brace-format
+msgid "Offline routes · {} of {} MiB"
+msgstr "Offline routes · {} of {} MiB"
+
+#: settings/maps.py:336
 #, python-brace-format
 msgid "{}: not yet"
 msgstr "{}: henüz değil"
 
-#: settings/maps.py:274
-msgid "SELECTED"
-msgstr "SEÇİLENLER"
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:593
+#, python-brace-format
+msgid "Road data · {} of {} files"
+msgstr "Road data · {} of {} files"
 
-#: settings/maps.py:261
+#: settings/maps.py:593
+msgid "Getting ready"
+msgstr "Hazırlanıyor"
+
+#: settings/maps.py:326
 msgid "No regions available."
 msgstr "Kullanılabilir bölge yok."
 
@@ -3562,7 +3956,7 @@ msgid "Remove unused models"
 msgstr "Kullanılmayan modelleri kaldır"
 
 #: settings/model.py:279
-#: settings/search.py:124
+#: settings/search.py:127
 msgid "Use recommended"
 msgstr "Önerileni kullan"
 
@@ -3644,7 +4038,7 @@ msgstr "Düzenle"
 
 #: settings/network_tab.py:225
 #: settings/network_tab.py:217
-#: settings/search.py:209
+#: settings/search.py:212
 msgid "Roaming, APN and IP address"
 msgstr "Dolaşım, APN ve IP adresi"
 
@@ -3659,7 +4053,7 @@ msgstr "Parola girin"
 
 #: settings/network_tab.py:106
 #: settings/network_tab.py:213
-#: settings/search.py:206
+#: settings/search.py:209
 msgid "Hotspot name"
 msgstr "Erişim noktası adı"
 
@@ -3668,32 +4062,32 @@ msgid "A saved network already uses this name"
 msgstr "Kayıtlı bir ağ bu adı zaten kullanıyor"
 
 #: settings/network_tab.py:212
-#: settings/search.py:205
+#: settings/search.py:208
 msgid "Hotspot"
 msgstr "Erişim noktası"
 
 #: settings/network_tab.py:212
-#: settings/search.py:205
+#: settings/search.py:208
 msgid "Share this device's connection"
 msgstr "Bu cihazın bağlantısını paylaş"
 
 #: settings/network_tab.py:215
-#: settings/search.py:207
+#: settings/search.py:210
 msgid "Hotspot Password"
 msgstr "Erişim noktası parolası"
 
 #: settings/network_tab.py:215
-#: settings/search.py:207
+#: settings/search.py:210
 msgid "For phones joining this device's hotspot"
 msgstr "Bu cihazın erişim noktasına katılan telefonlar için"
 
 #: settings/network_tab.py:216
-#: settings/search.py:208
+#: settings/search.py:211
 msgid "Save Data"
 msgstr "Veri tasarrufu"
 
 #: settings/network_tab.py:216
-#: settings/search.py:208
+#: settings/search.py:211
 msgid "No large uploads on cellular or phone hotspots"
 msgstr "Hücresel veya telefon erişim noktalarında büyük yükleme yapılmaz"
 
@@ -3706,7 +4100,7 @@ msgid "Use cellular data outside your carrier's network"
 msgstr "Operatörünüzün ağı dışında hücresel veri kullanın"
 
 #: settings/network_tab.py:224
-#: settings/search.py:202
+#: settings/search.py:205
 msgid "IP Address"
 msgstr "IP adresi"
 
@@ -3720,7 +4114,7 @@ msgid "Scanning for networks…"
 msgstr "Ağlar taranıyor…"
 
 #: settings/network_tab.py:199
-#: settings/search.py:203
+#: settings/search.py:206
 msgid "Join a hidden network"
 msgstr "Gizli ağa katıl"
 
@@ -3790,31 +4184,31 @@ msgid "Connections"
 msgstr "Bağlantılar"
 
 #: settings/search.py:29
-#: settings/search.py:141
+#: settings/search.py:144
 #: settings/tuner.py:330
 msgid "Steering"
 msgstr "Direksiyon"
 
 #: settings/search.py:29
-#: settings/search.py:148
+#: settings/search.py:151
 #: settings/tuner.py:361
 msgid "Gas & Brake"
 msgstr "Gaz ve fren"
 
 #: settings/search.py:29
-#: settings/search.py:156
+#: settings/search.py:159
 #: settings/tuner.py:428
 msgid "Following & Stops"
 msgstr "Takip ve duruşlar"
 
 #: settings/search.py:29
-#: settings/search.py:163
+#: settings/search.py:166
 #: settings/tuner.py:582
 msgid "Bundle Overrides"
 msgstr "Paket ayarlarını geçersiz kıl"
 
 #: settings/search.py:30
-#: settings/search.py:191
+#: settings/search.py:194
 #: settings/window.py:330
 msgid "Report a Problem"
 msgstr "Sorun bildir"
@@ -3941,7 +4335,7 @@ msgid "Home, Work and favorites; slows for turns on a route"
 msgstr "Ev, İş ve sık kullanılanlar; güzergâhta dönüşler için yavaşlar"
 
 #: settings/search.py:94
-#: settings/speed_steering.py:418
+#: settings/speed_steering.py:431
 msgid "Other favorites"
 msgstr "Diğer sık kullanılanlar"
 
@@ -3950,548 +4344,577 @@ msgid "Saved places for Where to?"
 msgstr "Nereye? için kayıtlı yerler"
 
 #: settings/search.py:95
-#: settings/speed_steering.py:419
+#: settings/speed_steering.py:432
 msgid "End Route When Parked"
 msgstr "Park edince güzergâhı bitir"
 
 #: settings/search.py:95
-#: settings/speed_steering.py:419
+#: settings/speed_steering.py:432
 msgid "Clears the destination when you turn off the car"
 msgstr "Aracı kapattığınızda hedefi temizler"
 
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/search.py:96
-#: settings/speed_steering.py:421
+#: settings/speed_steering.py:434
+msgid "Offline maps only"
+msgstr "Offline maps only"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/search.py:96
+msgid "Never use online routing"
+msgstr "Never use online routing"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/search.py:97
+#: settings/speed_steering.py:416
+msgid "Preferred maps (when available)"
+msgstr "Preferred maps (when available)"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/search.py:97
+msgid "Choose which maps to try first, with a fallback"
+msgstr "Choose which maps to try first, with a fallback"
+
+#: settings/search.py:99
+#: settings/speed_steering.py:439
 msgid "Mapbox Keys"
 msgstr "Mapbox anahtarları"
 
-#: settings/search.py:96
-msgid "Needed for place search and routes"
-msgstr "Yer araması ve güzergâhlar için gerekli"
-
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/search.py:99
+msgid "Keys for online search, routes and speed limits"
+msgstr "Keys for online search, routes and speed limits"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/search.py:100
+#: settings/search.py:117
+msgid "Speed limits and street names without a connection"
+msgstr "Speed limits and street names without a connection"
+
+#: settings/search.py:102
 msgid "The driving screen, theme and startup, and the map"
 msgstr "Sürüş ekranı, tema, başlangıç ve harita"
 
-#: settings/search.py:106
+#: settings/search.py:109
 msgid "Side panel with system and controls data"
 msgstr "Sistem ve kontrol verilerini gösteren yan panel"
 
-#: settings/search.py:107
+#: settings/search.py:110
 msgid "Distance, gap and speed of the car ahead, plus radar points"
 msgstr "Öndeki aracın mesafesi, zaman aralığı, hızı ve radar noktaları"
 
-#: settings/search.py:116
+#: settings/search.py:119
 msgid "Volume and the optional chimes"
 msgstr "Ses düzeyi ve isteğe bağlı sesler"
 
-#: settings/search.py:117
+#: settings/search.py:120
 msgid "One volume for everything, or each group on its own"
 msgstr "Her şey için tek düzey veya her grup için ayrı düzey"
 
-#: settings/search.py:123
+#: settings/search.py:126
 msgid "The model that drives, and downloading others"
 msgstr "Sürüş modeli ve başka modelleri indirme"
 
-#: settings/search.py:124
+#: settings/search.py:127
 msgid "The recommended driving model"
 msgstr "Önerilen sürüş modeli"
 
-#: settings/search.py:125
+#: settings/search.py:128
 msgid "Your car, its steering wheel buttons and car-specific options"
 msgstr "Aracınız, direksiyon düğmeleri ve araca özgü seçenekler"
 
-#: settings/search.py:126
+#: settings/search.py:129
 #: settings/vehicle.py:194
 msgid "Steering Wheel Buttons"
 msgstr "Direksiyon düğmeleri"
 
-#: settings/search.py:126
+#: settings/search.py:129
 msgid "What the car's own buttons do while driving"
 msgstr "Sürüşte aracın kendi düğmelerinin işlevleri"
 
-#: settings/search.py:127
+#: settings/search.py:130
 #: settings/vehicle.py:185
 msgid "Auto-Lock Doors"
 msgstr "Kapıları otomatik kilitle"
 
-#: settings/search.py:127
+#: settings/search.py:130
 #: settings/vehicle.py:185
 msgid "Locks when you shift out of park"
 msgstr "Park konumundan çıkınca kilitler"
 
-#: settings/search.py:128
+#: settings/search.py:131
 #: settings/vehicle.py:193
 #: settings/vehicle.py:318
 msgid "More for your car"
 msgstr "Aracınız için daha fazlası"
 
-#: settings/search.py:128
+#: settings/search.py:131
 #: settings/vehicle.py:193
 msgid "Features specific to your make and model"
 msgstr "Marka ve modele özgü özellikler"
 
-#: settings/search.py:129
+#: settings/search.py:132
 msgid "openpilot's core switches and driver monitoring"
 msgstr "openpilot'un temel anahtarları ve sürücü izleme"
 
-#: settings/search.py:130
+#: settings/search.py:133
 msgid "Adaptive cruise and lane keeping"
 msgstr "Adaptif hız sabitleme ve şerit koruma"
 
-#: settings/search.py:131
+#: settings/search.py:134
 #: settings/speed_steering.py:349
 msgid "Disengage on Gas Pedal"
 msgstr "Gaz pedalında devreden çıkar"
 
-#: settings/search.py:131
+#: settings/search.py:134
 #: settings/speed_steering.py:349
 msgid "Pressing the accelerator turns openpilot off"
 msgstr "Gaz pedalına basmak openpilot'u kapatır"
 
-#: settings/search.py:132
+#: settings/search.py:135
 #: settings/speed_steering.py:350
 msgid "Lane Departure Warnings"
 msgstr "Şeritten ayrılma uyarıları"
 
-#: settings/search.py:132
+#: settings/search.py:135
 msgid "Alerts when you drift over a lane line without signaling"
 msgstr "Sinyal vermeden çizgiyi aşınca uyarır"
 
-#: settings/search.py:133
+#: settings/search.py:136
 #: settings/speed_steering.py:351
 msgid "Safe Mode"
 msgstr "Güvenli mod"
 
-#: settings/search.py:133
+#: settings/search.py:136
 msgid "Stock tuning, the default model and Relaxed"
 msgstr "Fabrika ayarı, varsayılan model ve Sakin"
 
-#: settings/search.py:134
+#: settings/search.py:137
 #: settings/speed_steering.py:359
 msgid "Always-On Driver Monitoring"
 msgstr "Sürücü izleme hep açık"
 
-#: settings/search.py:134
+#: settings/search.py:137
 #: settings/speed_steering.py:359
 msgid "Watches for distraction even when openpilot is off"
 msgstr "openpilot kapalıyken de dikkat dağınıklığını izler"
 
-#: settings/search.py:135
+#: settings/search.py:138
 msgid "Check that it can see your face"
 msgstr "Yüzünüzü görebildiğini kontrol edin"
 
-#: settings/search.py:137
+#: settings/search.py:140
 #: settings/speed_steering.py:363
 msgid "Sentry Mode"
 msgstr "Nöbetçi modu"
 
-#: settings/search.py:137
+#: settings/search.py:140
 #: settings/speed_steering.py:363
 msgid "Pictures in Galaxy if the parked car is bumped"
 msgstr "Park halindeki araca çarpılırsa Galaxy'de fotoğraflar"
 
-#: settings/search.py:138
+#: settings/search.py:141
 #: settings/speed_steering.py:365
 msgid "Sensitivity"
 msgstr "Hassasiyet"
 
-#: settings/search.py:138
+#: settings/search.py:141
 #: settings/speed_steering.py:365
 msgid "High notices smaller bumps"
 msgstr "Yüksek, daha küçük darbeleri algılar"
 
-#: settings/search.py:141
+#: settings/search.py:144
 msgid "Learned steering values and the controller"
 msgstr "Öğrenilen direksiyon değerleri ve kontrolcü"
 
-#: settings/search.py:142
+#: settings/search.py:145
 #: settings/tuner.py:49
 msgid "Steering Delay"
 msgstr "Direksiyon gecikmesi"
 
-#: settings/search.py:142
+#: settings/search.py:145
 #: settings/tuner.py:49
 msgid "Time from command to wheel response"
 msgstr "Komuttan direksiyon tepkisine kadar geçen süre"
 
-#: settings/search.py:143
+#: settings/search.py:146
 #: settings/tuner.py:51
 msgid "Friction"
 msgstr "Sürtünme"
 
-#: settings/search.py:143
+#: settings/search.py:146
 #: settings/tuner.py:51
 msgid "Extra torque near center"
 msgstr "Merkez yakınında ek tork"
 
-#: settings/search.py:144
+#: settings/search.py:147
 #: settings/tuner.py:53
 msgid "Lateral Acceleration"
 msgstr "Yanal ivme"
 
-#: settings/search.py:144
+#: settings/search.py:147
 #: settings/tuner.py:53
 msgid "Torque to cornering scaling"
 msgstr "Tork ile viraj ivmesi arasındaki oran"
 
-#: settings/search.py:145
+#: settings/search.py:148
 #: settings/tuner.py:55
 msgid "Kp Factor"
 msgstr "Kp katsayısı"
 
-#: settings/search.py:145
+#: settings/search.py:148
 #: settings/tuner.py:55
 msgid "Correction strength"
 msgstr "Düzeltme gücü"
 
-#: settings/search.py:146
+#: settings/search.py:149
 #: settings/tuner.py:328
 msgid "Steering controller"
 msgstr "Direksiyon denetleyicisi"
 
-#: settings/search.py:146
+#: settings/search.py:149
 msgid "Vehicle default, neural feedforward or torque"
 msgstr "Araç varsayılanı, sinir ağı ileri beslemesi veya tork"
 
-#: settings/search.py:148
+#: settings/search.py:151
 msgid "Acceleration and braking profiles and values"
 msgstr "Hızlanma ve frenleme profilleri ile değerleri"
 
-#: settings/search.py:149
+#: settings/search.py:152
 #: settings/tuner.py:356
 msgid "Acceleration Profile"
 msgstr "Hızlanma profili"
 
-#: settings/search.py:149
+#: settings/search.py:152
 #: settings/tuner.py:356
 msgid "How quickly the car speeds up"
 msgstr "Aracın ne kadar hızlı hızlandığı"
 
-#: settings/search.py:150
+#: settings/search.py:153
 #: settings/tuner.py:358
 msgid "Braking Profile"
 msgstr "Frenleme profili"
 
-#: settings/search.py:150
+#: settings/search.py:153
 #: settings/tuner.py:358
 msgid "How early and firmly it slows down"
 msgstr "Ne kadar erken ve güçlü yavaşladığı"
 
-#: settings/search.py:151
+#: settings/search.py:154
 #: settings/tuner.py:58
 msgid "Maximum Acceleration"
 msgstr "Azami ivme"
 
-#: settings/search.py:151
+#: settings/search.py:154
 #: settings/tuner.py:58
 msgid "The hardest openpilot will accelerate"
 msgstr "openpilot'un uygulayacağı en güçlü hızlanma"
 
-#: settings/search.py:152
+#: settings/search.py:155
 #: settings/tuner.py:60
 msgid "Start Acceleration"
 msgstr "Kalkış ivmesi"
 
-#: settings/search.py:152
+#: settings/search.py:155
 #: settings/tuner.py:60
 msgid "How firmly the car pulls away from a stop"
 msgstr "Aracın duruştan ne kadar güçlü kalktığı"
 
-#: settings/search.py:153
+#: settings/search.py:156
 #: settings/tuner.py:62
 msgid "Stop Acceleration"
 msgstr "Duruş ivmesi"
 
-#: settings/search.py:153
+#: settings/search.py:156
 #: settings/tuner.py:62
 msgid "Braking held while stopped"
 msgstr "Dururken tutulan fren"
 
-#: settings/search.py:154
+#: settings/search.py:157
 #: settings/tuner.py:64
 msgid "Stopping Rate"
 msgstr "Fren artış hızı"
 
-#: settings/search.py:154
+#: settings/search.py:157
 #: settings/tuner.py:64
 msgid "How quickly braking builds into a stop"
 msgstr "Durana kadar frenin ne kadar hızlı arttığı"
 
-#: settings/search.py:155
+#: settings/search.py:158
 #: settings/tuner.py:66
 msgid "Actuator Delay"
 msgstr "Aktüatör gecikmesi"
 
-#: settings/search.py:155
+#: settings/search.py:158
 #: settings/tuner.py:66
 msgid "Time from command to gas or brake response"
 msgstr "Komuttan gaz veya fren tepkisine kadar geçen süre"
 
-#: settings/search.py:156
+#: settings/search.py:159
 msgid "Following gaps and how the car stops"
 msgstr "Takip mesafeleri ve aracın durma biçimi"
 
-#: settings/search.py:157
+#: settings/search.py:160
 msgid "Following Gaps"
 msgstr "Takip mesafeleri"
 
-#: settings/search.py:157
+#: settings/search.py:160
 msgid "Relaxed, Standard, Aggressive and Traffic"
 msgstr "Sakin, Standart, Agresif ve Trafik"
 
-#: settings/search.py:158
+#: settings/search.py:161
 #: settings/tuner.py:70
 msgid "Lead Detection Sensitivity"
 msgstr "Öndeki araç algılama hassasiyeti"
 
-#: settings/search.py:158
+#: settings/search.py:161
 #: settings/tuner.py:70
 msgid "Lower notices cars ahead sooner"
 msgstr "Daha düşük değer, öndeki aracı daha erken algılar"
 
-#: settings/search.py:159
+#: settings/search.py:162
 #: settings/tuner.py:72
 msgid "Stopped Distance"
 msgstr "Duruş mesafesi"
 
-#: settings/search.py:159
+#: settings/search.py:162
 #: settings/tuner.py:72
 msgid "Extra room left behind a stopped car"
 msgstr "Duran aracın arkasında bırakılan ek boşluk"
 
-#: settings/search.py:160
+#: settings/search.py:163
 #: settings/tuner.py:422
 msgid "Use Radar for Take-Offs"
 msgstr "Kalkış için radar kullan"
 
-#: settings/search.py:160
+#: settings/search.py:163
 msgid "Starts moving as soon as the car ahead pulls away"
 msgstr "Öndeki araç kalkar kalkmaz hareket eder"
 
-#: settings/search.py:161
+#: settings/search.py:164
 #: settings/tuner.py:424
 msgid "Force Stops at Lights"
 msgstr "Işıklarda tam dur"
 
-#: settings/search.py:161
+#: settings/search.py:164
 #: settings/tuner.py:424
 msgid "Comes to a full stop for red lights the model detects"
 msgstr "Modelin algıladığı kırmızı ışıklarda tam durur"
 
-#: settings/search.py:162
+#: settings/search.py:165
 #: settings/tuner.py:426
 msgid "Cruise Button Step"
 msgstr "Hız sabitleme düğmesi adımı"
 
-#: settings/search.py:162
+#: settings/search.py:165
 #: settings/tuner.py:426
 msgid "How far one press of + or − moves the set speed"
 msgstr "+ veya − düğmesine bir basışta hızın ne kadar değiştiği"
 
-#: settings/search.py:163
+#: settings/search.py:166
 msgid "Change one option that Developer View or Lead Insights sets"
 msgstr "Geliştirici görünümü veya Öndeki araç bilgilerinin ayarladığı tek bir seçeneği değiştirin"
 
-#: settings/search.py:164
+#: settings/search.py:167
 msgid "Bar Metrics"
 msgstr "Çubuk ölçümleri"
 
-#: settings/search.py:164
+#: settings/search.py:167
 msgid "Up to five values in Developer View's strip"
 msgstr "Geliştirici görünümü çubuğunda en fazla beş değer"
 
-#: settings/search.py:166
+#: settings/search.py:169
 msgid "Pairing, remote access, calibration, restart and power"
 msgstr "Eşleştirme, uzaktan erişim, kalibrasyon, yeniden başlatma ve güç"
 
-#: settings/search.py:167
+#: settings/search.py:170
 msgid "comma connect: see drives and change settings on your phone"
 msgstr "comma connect: telefonunuzdan sürüşleri görün ve ayarları değiştirin"
 
-#: settings/search.py:168
+#: settings/search.py:171
 msgid "Galaxy: reach this device from a web browser"
 msgstr "Galaxy: web tarayıcısından bu cihaza erişin"
 
-#: settings/search.py:169
+#: settings/search.py:172
 msgid "How the device is mounted"
 msgstr "Cihazın nasıl monte edildiği"
 
-#: settings/search.py:171
+#: settings/search.py:174
 msgid "Regulatory information"
 msgstr "Yasal bilgiler"
 
-#: settings/search.py:172
+#: settings/search.py:175
 msgid "This device's IDs"
 msgstr "Bu cihazın kimlikleri"
 
-#: settings/search.py:173
+#: settings/search.py:176
 msgid "The cellular modem's ID"
 msgstr "Hücresel modemin kimliği"
 
-#: settings/search.py:174
+#: settings/search.py:177
 msgid "Restart the device"
 msgstr "Cihazı yeniden başlat"
 
-#: settings/search.py:175
+#: settings/search.py:178
 msgid "Turn the device off until the car starts"
 msgstr "Araç çalışana kadar cihazı kapat"
 
-#: settings/search.py:176
+#: settings/search.py:179
 msgid "Units, language, brightness and standby"
 msgstr "Birimler, dil, parlaklık ve bekleme"
 
-#: settings/search.py:179
+#: settings/search.py:182
 msgid "Menus and alerts"
 msgstr "Menüler ve uyarılar"
 
-#: settings/search.py:182
+#: settings/search.py:185
 msgid "Snapshots of your settings"
 msgstr "Ayarlarınızın kopyaları"
 
-#: settings/search.py:183
+#: settings/search.py:186
 msgid "What's using space, and recording and uploads"
 msgstr "Alan kullanımı, kayıt ve yüklemeler"
 
-#: settings/search.py:185
+#: settings/search.py:188
 msgid "Delete downloaded map data"
 msgstr "İndirilen harita verilerini sil"
 
-#: settings/search.py:186
+#: settings/search.py:189
 msgid "Downloaded models that aren't in use"
 msgstr "Kullanılmayan indirilmiş modeller"
 
-#: settings/search.py:187
+#: settings/search.py:190
 msgid "Saved and uploaded with your drives"
 msgstr "Sürüşlerinizle kaydedilir ve yüklenir"
 
-#: settings/search.py:188
+#: settings/search.py:191
 msgid "Cabin audio in your drive recordings"
 msgstr "Sürüş kayıtlarındaki kabin sesi"
 
-#: settings/search.py:190
+#: settings/search.py:193
 msgid "What was using RAM on drives that ran low"
 msgstr "RAM'i az kalan sürüşlerde RAM'i ne kullanıyordu"
 
-#: settings/search.py:191
+#: settings/search.py:194
 msgid "Send what happened to the developers"
 msgstr "Olanları geliştiricilere gönderin"
 
-#: settings/search.py:192
+#: settings/search.py:195
 msgid "ADB, SSH and debug modes"
 msgstr "ADB, SSH ve hata ayıklama modları"
 
-#: settings/search.py:194
+#: settings/search.py:197
 msgid "Connect over USB or the network"
 msgstr "USB veya ağ üzerinden bağlanın"
 
-#: settings/search.py:195
+#: settings/search.py:198
 msgid "Remote shell access"
 msgstr "Uzaktan kabuk erişimi"
 
-#: settings/search.py:196
+#: settings/search.py:199
 msgid "Adds every public key in a GitHub account"
 msgstr "GitHub hesabındaki tüm açık anahtarları ekler"
 
-#: settings/search.py:197
+#: settings/search.py:200
 msgid "Drive openpilot's controls from a joystick"
 msgstr "openpilot kontrollerini oyun çubuğuyla kullanın"
 
-#: settings/search.py:198
+#: settings/search.py:201
 msgid "Turns off the car's emergency braking"
 msgstr "Aracın acil frenlemesini kapatır"
 
-#: settings/search.py:201
+#: settings/search.py:204
 msgid "Networks nearby, and joining one"
 msgstr "Yakındaki ağlar ve bir ağa katılma"
 
-#: settings/search.py:202
+#: settings/search.py:205
 msgid "This device's local address, beside the connected network"
 msgstr "Bağlı ağın yanında bu cihazın yerel adresi"
 
-#: settings/search.py:203
+#: settings/search.py:206
 msgid "Enter its name and password"
 msgstr "Adını ve parolasını girin"
 
-#: settings/search.py:204
+#: settings/search.py:207
 msgid "Hotspot, data use, roaming and APN"
 msgstr "Erişim noktası, veri kullanımı, dolaşım ve APN"
 
-#: settings/search.py:206
+#: settings/search.py:209
 msgid "The name phones see when joining this device"
 msgstr "Telefonların bu cihaza katılırken gördüğü ad"
 
-#: settings/search.py:209
+#: settings/search.py:212
 msgid "Roaming, APN and the device's IP address"
 msgstr "Dolaşım, APN ve cihazın IP adresi"
 
-#: settings/search.py:210
+#: settings/search.py:213
 msgid "A wheel remote's buttons and what they do"
 msgstr "Direksiyon kumandasının düğmeleri ve işlevleri"
 
-#: settings/search.py:211
+#: settings/search.py:214
 msgid "Car audio for alerts, and pairing devices"
 msgstr "Uyarılar için araç sesi ve cihaz eşleştirme"
 
-#: settings/search.py:213
+#: settings/search.py:216
 msgid "Updates and the release notes"
 msgstr "Güncellemeler ve sürüm notları"
 
-#: settings/search.py:214
+#: settings/search.py:217
 #: settings/software_tab.py:192
 msgid "Automatic Updates"
 msgstr "Otomatik güncellemeler"
 
-#: settings/search.py:214
+#: settings/search.py:217
 #: settings/software_tab.py:192
 msgid "Download while parked, install when you turn off the car"
 msgstr "Park halinde indir, aracı kapatınca yükle"
 
-#: settings/search.py:215
+#: settings/search.py:218
 #: settings/software_tab.py:188
 #: settings/software_tab.py:140
 msgid "Release Channel"
 msgstr "Sürüm kanalı"
 
-#: settings/search.py:215
+#: settings/search.py:218
 #: settings/software_tab.py:140
 msgid "The branch to download updates from"
 msgstr "Güncellemelerin indirileceği dal"
 
-#: settings/search.py:216
+#: settings/search.py:219
 #: settings/software_tab.py:195
 msgid "Reset Settings"
 msgstr "Ayarları sıfırla"
 
-#: settings/search.py:216
+#: settings/search.py:219
 msgid "Back to the Essentials defaults"
 msgstr "Essentials varsayılanlarına dön"
 
-#: settings/search.py:217
+#: settings/search.py:220
 #: settings/software_tab.py:169
 #: settings/software_tab.py:198
 msgid "Uninstall"
 msgstr "Kaldır"
 
-#: settings/search.py:217
+#: settings/search.py:220
 msgid "Remove this software from the device"
 msgstr "Bu yazılımı cihazdan kaldır"
 
-#: settings/search.py:394
-#: settings/search.py:385
+#: settings/search.py:397
+#: settings/search.py:388
 msgid "Search settings"
 msgstr "Ayarlarda ara"
 
-#: settings/search.py:283
+#: settings/search.py:286
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "Hız sınırı gibi bir ayar söyleyin. Bitirdiğinizde mikrofona dokunun."
 
-#: settings/search.py:365
-#: settings/search.py:324
+#: settings/search.py:368
+#: settings/search.py:327
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "“{}” ile eşleşen ayar yok"
 
-#: settings/search.py:366
+#: settings/search.py:369
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "Parlaklık veya şerit değişimi gibi ayar adını ya da işlevini yazın"
 
@@ -4789,9 +5212,10 @@ msgstr "openpilot'un temel anahtarları"
 msgid "Watches that you're paying attention"
 msgstr "Dikkatinizin yolda olduğunu izler"
 
-#: settings/speed_steering.py:425
-msgid "While a route is active, the car slows for turns and uses route speed limits"
-msgstr "Güzergâh etkinken dönüşler için yavaşlar ve güzergâh sınırlarını kullanır"
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/speed_steering.py:442
+msgid "Saved places and the maps used to calculate your route"
+msgstr "Saved places and the maps used to calculate your route"
 
 #: settings/speed_steering.py:138
 msgid "Speed limits off"
@@ -4838,11 +5262,37 @@ msgstr "Kapatılana kadar fabrika ayarını, varsayılan modeli ve Sakin'i kulla
 msgid "WHILE PARKED"
 msgstr "PARK HALİNDE"
 
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/speed_steering.py:409
+msgid "Optional for online search and speed-limit filling"
+msgstr "Optional for online search and speed-limit filling"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/speed_steering.py:417
+msgid "Used when Offline maps only is off."
+msgstr "Used when Offline maps only is off."
+
+#: settings/speed_steering.py:420
+#: sidebar.py:94
+#: sidebar.py:99
+msgid "Offline"
+msgstr "Çevrimdışı"
+
 #: settings/speed_steering.py:385
 msgid "Saved place"
 msgstr "Kayıtlı yer"
 
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/speed_steering.py:418
+msgid "Try online first; fall back to downloaded maps."
+msgstr "Try online first; fall back to downloaded maps."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/speed_steering.py:419
+msgid "Try downloaded maps first; fall back to online."
+msgstr "Try downloaded maps first; fall back to online."
+
+#: settings/speed_steering.py:431
 #, python-brace-format
 msgid "{} saved"
 msgstr "{} kaydedildi"
@@ -4851,23 +5301,33 @@ msgstr "{} kaydedildi"
 msgid " Restarts openpilot if the car is on."
 msgstr " Araç çalışıyorsa openpilot yeniden başlar."
 
-#: settings/speed_steering.py:412
+#: settings/speed_steering.py:425
 msgid "Change"
 msgstr "Değiştir"
 
-#: settings/speed_steering.py:412
+#: settings/speed_steering.py:425
 msgid "Set"
 msgstr "Ayarla"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/speed_steering.py:434
+msgid "Never use online routing."
+msgstr "Never use online routing."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/speed_steering.py:435
+msgid "Use the preferred maps, with a fallback if needed."
+msgstr "Use the preferred maps, with a fallback if needed."
 
 #: settings/speed_steering.py:225
 msgid "Adjusts acceleration and braking for what you drive"
 msgstr "Sürdüğünüz araca göre hızlanma ve frenlemeyi ayarlar"
 
-#: settings/speed_steering.py:422
+#: settings/speed_steering.py:440
 msgid "How to change"
 msgstr "Nasıl değiştirilir"
 
-#: settings/speed_steering.py:422
+#: settings/speed_steering.py:440
 msgid "How to add"
 msgstr "Nasıl eklenir"
 
@@ -5481,12 +5941,6 @@ msgstr "comma connect"
 msgid "Network"
 msgstr "Ağ"
 
-#: sidebar.py:94
-#: sidebar.py:99
-#: sidebar.py:94
-msgid "Offline"
-msgstr "Çevrimdışı"
-
 #: sidebar.py:59
 msgid "Settings"
 msgstr "Ayarlar"
@@ -5510,10 +5964,6 @@ msgstr "Ilık"
 #: sidebar.py:143
 msgid "Hot"
 msgstr "Sıcak"
-
-#: sidebar.py:138
-msgid "Not downloaded"
-msgstr "İndirilmedi"
 
 #: voice.py:36
 msgid "Didn't catch that. Tap the mic to try again."

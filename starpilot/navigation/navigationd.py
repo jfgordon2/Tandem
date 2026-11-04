@@ -61,6 +61,9 @@ class Navigationd:
   def _route_token(self) -> str:
     return self.params.get("MapboxSecretKey", encoding="utf-8") or ""
 
+  def _can_fetch_route(self, token: str) -> bool:
+    return bool(token)
+
   def _clear_route(self, *, remove_destination: bool = False) -> None:
     with self._route_lock:
       self._route = None
@@ -82,7 +85,7 @@ class Navigationd:
       return
 
     token = self._route_token()
-    if not token:
+    if not self._can_fetch_route(token):
       return
 
     position = self._last_position
@@ -369,7 +372,8 @@ class Navigationd:
 
 
 def main() -> None:
-  Navigationd().run()
+  from openpilot.starpilot.tandem.routing.navigationd import navigationd_type
+  navigationd_type(Navigationd)().run()
 
 
 if __name__ == "__main__":

@@ -20,8 +20,8 @@ from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.blocks import Icon
 from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, back_glyph
 from openpilot.selfdrive.ui.tandem.keyboard import KeyPad
-from openpilot.selfdrive.ui.tandem.layout import FILL, column, grid, inset, place, row
-from openpilot.selfdrive.ui.tandem.routemap import NOT_SET_UP, RouteFetcher, RoutePlan, arrive_text, distance_text, draw_route_map, \
+from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, grid, inset, place, row
+from openpilot.selfdrive.ui.tandem.routemap import FINDING, NO_FIX, NOT_SET_UP, RouteFetcher, RoutePlan, arrive_text, distance_text, draw_route_map, \
   mapbox_route, time_text
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, SectionHeader, SettingRow, Text
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_
@@ -100,14 +100,34 @@ class UpstreamPlaces:
         address = search_address(payload) or result.subtitle
         return replace(result, subtitle=place_line({"name": result.name, "place_name": address}))
 
-    self._nav = StarPilotNavigationLayout()
+    from openpilot.starpilot.tandem.routing.config import enabled
+    self._local = enabled()
+    if self._local:
+      from openpilot.starpilot.tandem.routing.bundles import capability
+      class LocalController(StarPilotNavigationLayout):
+        def _routing_available(self):
+          from openpilot.starpilot.tandem.routing.config import policy
+          return enabled() and (capability()["status"] == "ready" or
+                                (not policy()[0] and bool(self._params.get("MapboxSecretKey", encoding="utf-8"))))
+      self._nav = LocalController()
+    else:
+      self._nav = StarPilotNavigationLayout()
     self._nav._search_client = AddressSearchClient()
-    self._routes = RouteFetcher(mapbox_route)
+    if self._local:
+      from openpilot.selfdrive.ui.tandem.routemap import policy_route, local_identity
+      from openpilot.selfdrive.ui.tandem.routing_status import status_text
+      self._routes = RouteFetcher(policy_route, identity=local_identity, max_age=30,
+                                 retry_errors=tuple(status_text(c) for c in ("busy", "worker_failed", "timeout", "superseded")))
+    else:
+      self._routes = RouteFetcher(mapbox_route)
 
   def tick(self) -> None:
     self._nav._update_state()   # takes finished searches and refreshes favorites and recents
 
   def refresh(self) -> None:
+    from openpilot.starpilot.tandem.routing.config import enabled
+    if enabled() != self._local:
+      self.__init__()
     self._nav.show_event()
 
   def active(self):
@@ -128,6 +148,9 @@ class UpstreamPlaces:
     if favorite is not None:
       self._nav._store.remove_favorite(favorite)
       self._nav._refresh_navigation_state(force=True)
+      return
+    from openpilot.starpilot.navigation.destination_store import normalize_destination_payload
+    if normalize_destination_payload(place) is None:
       return
     self._nav._select_destination(place)
     self._nav._ensure_favorite()
@@ -155,6 +178,14 @@ class UpstreamPlaces:
       self._nav._select_search_result(results[index])
 
   def pick(self, place) -> None:
+    from openpilot.starpilot.navigation.destination_store import normalize_destination_payload
+    self.clear_draft()
+    if normalize_destination_payload(place) is None:
+      if self.can_search():
+        self.search(place_name(place))
+      else:
+        self._nav._search_error = N_("This saved place has no coordinates. Search again when online.")
+      return
     favorite = self._nav._favorite_for_destination(place)
     self._nav._select_destination(place, favorite)
 
@@ -179,12 +210,16 @@ class UpstreamPlaces:
       self._nav._toggle_special("is_home" if kind == "home" else "is_work")
 
   def can_start(self) -> bool:
+    if self._local:
+      return self._nav._routing_available() and self.draft() is not None and self.route()[0] is not None
     return self._nav._routing_available()
 
   def can_search(self) -> bool:
     return bool(self._nav._public_mapbox_key())
 
   def start(self) -> bool:
+    if not self.can_start():
+      return False
     self._nav._start_navigation()
     return self._nav._draft_destination is None and self._nav._active_destination is not None
 
@@ -192,6 +227,9 @@ class UpstreamPlaces:
     self._nav._cancel_navigation()
 
   def maps_ready(self) -> bool:
+    if self._local:
+      from openpilot.starpilot.tandem.routing.bundles import capability
+      return capability()["status"] == "ready"
     try:
       from openpilot.common.params import Params
       from openpilot.starpilot.common.maps_download_progress import MAPS_STORAGE_CACHE_PARAM, load_maps_storage_cache
@@ -200,6 +238,8 @@ class UpstreamPlaces:
       return False
 
   def route(self):
+    if self._local:
+      return self._routes.route(self.draft())
     if not self.can_start():
       return None, NOT_SET_UP
     return self._routes.route(self.draft())
@@ -356,9 +396,10 @@ class DestinationsScreen(Component):
                                     lambda: self._open_special("is_work"), lambda: self._special("is_work") is None)),
                    self._child(Tile("plus", lambda: N_("Add favorite"), lambda: N_("Search for a place"), lambda: self._go(SEARCH),
                                     lambda: True))]
-    maps = Button(N_("Offline maps"), open_maps or (lambda: None), ButtonStyle.NAV, height=T.NAV_BUTTON, font_size=T.font_px(18),
+    from openpilot.selfdrive.ui.tandem.settings.maps import open_maps as default_open_maps
+    maps = Button(N_("Offline maps"), open_maps or default_open_maps,
+                  ButtonStyle.NAV, height=T.NAV_BUTTON, font_size=T.font_px(18),
                   radius=T.RADIUS_CARD, padding=T.px(26))
-    maps.set_visible(open_maps is not None)
     self._list_footer = self._child(Footer(self._back, lambda: N_("Turns and speed follow the route automatically while navigating"), maps))
     self._list_panel: ListPanel | None = None
     self._list_key: object = None
@@ -382,6 +423,7 @@ class DestinationsScreen(Component):
     self._start_button = self._child(Button(N_("Start"), self._start, ButtonStyle.PRIMARY, height=T.px(64), font_size=T.font_px(20),
                                             radius=T.px(16), weight=T.FONT_EXTRABOLD))
     self._start_button.set_enabled(places.can_start)
+    self._choose_maps = self._child(Button(N_("Choose regions"), open_maps or default_open_maps))
 
   # Navigation between views
 
@@ -423,7 +465,12 @@ class DestinationsScreen(Component):
 
   def _pick(self, place: dict) -> None:
     self._places.pick(place)
-    self._go(PREVIEW)
+    if self._places.draft() is None:
+      self._keys.set_text(place_name(place))
+      self._searched = place_name(place)
+      self._go(SEARCH)
+    else:
+      self._go(PREVIEW)
 
   def _pick_result(self, index: int) -> None:
     self._places.pick_result(index)
@@ -475,7 +522,9 @@ class DestinationsScreen(Component):
     self._list_footer.render(footer)
     body = inset(body, left=T.px(20), right=T.px(20), top=T.px(20), bottom=T.px(14))
     header, tiles, panel = column(body, [T.px(60), T.px(86), FILL], T.px(14))
-    chip_w = T.px(200) if self._places.maps_ready() else 0
+    from openpilot.starpilot.tandem.routing.config import enabled
+    local = enabled()
+    chip_w = T.px(240 if local else 200) if self._places.maps_ready() else 0
     title, pill, chip = row(header, [T.px(170), FILL, chip_w], T.px(14))
     draw.text(inset(title, left=T.px(6)), N_("Where to?"), T.font_px(28), T.TEXT, T.FONT_EXTRABOLD)
     self._search_pill.render(pill)
@@ -582,9 +631,9 @@ class DestinationsScreen(Component):
     back = rl.Rectangle(map_rect.x + T.px(14), map_rect.y + T.px(14), T.px(60), T.px(60))
     draw.fill(back, TAG_FILL, T.px(16))
     self._preview_back.render(back)
-    self._render_place(side, plan)
+    self._render_place(side, plan, status)
 
-  def _render_place(self, rect: rl.Rectangle, plan: RoutePlan | None) -> None:
+  def _render_place(self, rect: rl.Rectangle, plan: RoutePlan | None, status: str = "") -> None:
     draft = self._places.draft()
     draw.fill(rect, T.SURFACE_2, T.RADIUS_PANEL)
     inner = inset(rect, T.px(24))
@@ -593,7 +642,7 @@ class DestinationsScreen(Component):
     label_h, value_h = draw.line_height(T.font_px(13)), draw.line_height(T.font_px(22))
     tile_h = T.px(12) * 2 + label_h + T.px(4) + value_h
     check_h = draw.line_height(T.font_px(15))
-    head, tiles, checks, _, actions = column(inner, [title_h + (T.px(6) + line_h if line else 0), tile_h, check_h * 2 + T.px(10), FILL,
+    head, tiles, checks, suggestion, actions = column(inner, [title_h + (T.px(6) + line_h if line else 0), tile_h, check_h * 2 + T.px(10), FILL,
                                                      T.px(64)], T.px(18))
     draw.text(rl.Rectangle(head.x, head.y, head.width, title_h), draw.fit(name, T.font_px(28), T.FONT_EXTRABOLD, head.width),
               T.font_px(28), T.TEXT, T.FONT_EXTRABOLD)
@@ -612,8 +661,11 @@ class DestinationsScreen(Component):
       top, bottom = column(words, [label_h, value_h], T.px(4))
       draw.text(top, label, T.font_px(13), DATA_LABEL)
       draw.text(bottom, draw.fit(value, T.font_px(22), T.FONT_BOLD, bottom.width), T.font_px(22), T.TEXT, T.FONT_BOLD)
-    for cell, words in zip(column(checks, [check_h, check_h], T.px(10)), (N_("Slows ahead of turns on the route"),
-                                                                            N_("Uses route speed limits when signs are missing")), strict=True):
+    second = N_("Road data still supplies speed limits")
+    from openpilot.starpilot.tandem.routing.config import policy
+    if plan is None and policy()[0] and status not in (FINDING, NO_FIX):
+      self._choose_maps.render(place(suggestion, T.px(180), T.px(48), Align.START, Align.CENTER))
+    for cell, words in zip(column(checks, [check_h, check_h], T.px(10)), (N_("Slows ahead of turns on the route"), second), strict=True):
       icon, text = row(cell, [T.px(18), FILL], T.px(10))
       draw.icon(icon, "check", T.SUCCESS_TEXT, T.px(18))
       size = next((z for z in (T.font_px(15), T.font_px(14)) if draw.text_width(words, z) <= text.width), T.font_px(14))

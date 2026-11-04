@@ -402,6 +402,11 @@ def update_maps(now, params, params_memory, manual_update=False):
   time.sleep(1)
 
   msg = messaging.new_message("mapdIn")
+  try:
+    from openpilot.starpilot.tandem.routing.maps import on_map_download_started
+    on_map_download_started(maps_selected)
+  except Exception:
+    pass
   msg.mapdIn.type = 0
   msg.mapdIn.str = maps_selected
   pm.send("mapdIn", msg)

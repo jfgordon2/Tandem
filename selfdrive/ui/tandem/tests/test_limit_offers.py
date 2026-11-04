@@ -8,14 +8,15 @@ from openpilot.selfdrive.ui.onroad.alert_renderer import Alert
 from openpilot.selfdrive.ui.tandem.onroad import view as onroad
 from openpilot.selfdrive.ui.tandem.forecast import Announcer
 from openpilot.selfdrive.ui.tandem.onroad.limits import LimitFollower, LimitOfferState, OfferChime
-from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, LimitWatch
+from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, LimitWatch, RamWatch
+from openpilot.selfdrive.ui.tandem.ram import RamLog
 
 
 @pytest.fixture
-def limit_view(monkeypatch):
+def limit_view(monkeypatch, tmp_path):
   plan = custom.StarPilotPlan.new_message(lateralCheck=True)
   sm = {"starpilotPlan": plan}
-  state = SimpleNamespace(sm=SimpleNamespace(valid={"starpilotPlan": True}), is_metric=False, started=True,
+  state = SimpleNamespace(sm=SimpleNamespace(valid={"starpilotPlan": True}), is_metric=False, started=True, started_frame=1,
                           engaged=True, always_on_lateral_active=False, starpilot_toggles={},
                           ui_params=SimpleNamespace(get_bool=lambda _: False))
 
@@ -32,6 +33,8 @@ def limit_view(monkeypatch):
   view._follower = LimitFollower()
   view._offer_chime = OfferChime()
   view._limits = LimitWatch()
+  view._ram = RamWatch()
+  view._ram_log = RamLog(tmp_path / "ram.json", read=lambda: ([], 0), background=False)
   view._chips = ChipStack()
   view._headroom_warning = False
   view._forecast, view._announcer = SimpleNamespace(tick=lambda: None, forecast=None), Announcer()
@@ -133,3 +136,16 @@ def test_limit_changes_are_observed_while_the_card_is_hidden(limit_view, hidden_
   view._render_layers()   # production draws these under the border, not after the inherited _render
   assert not view._layers_visible
   assert update().limit == pytest.approx(65)
+
+
+def test_ram_snapshot_is_recorded_even_while_the_hud_is_hidden(limit_view):
+  view, _, _, state = limit_view
+  view.alert_renderer = SimpleNamespace(will_render=lambda: (None, False))
+  view._draw_hud_controls = False
+  view._navigating = lambda: False
+  state.sm.valid.update(selfdriveState=True, deviceState=True)
+  state.sm["selfdriveState"] = SimpleNamespace(alertType="lowMemory/normal")
+  state.sm["deviceState"] = SimpleNamespace(memoryUsagePercent=91)
+  view._render_layers()
+  assert view._ram.on and not view._layers_visible
+  assert [(s.drive, s.percent) for s in view._ram_log.snapshots()] == [(1, 91)]

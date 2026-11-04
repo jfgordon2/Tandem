@@ -145,13 +145,18 @@ class ButtonRow(Component):
   """Buttons side by side at equal widths, e.g. Restart and Power Off. Hidden buttons give up their space."""
   grow_touch_target = False
 
-  def __init__(self, buttons: list[Button], height: float = T.px(52), gap: float = T.px(10)):
+  def __init__(self, buttons: list[Button], height: float = T.px(52), gap: float = T.px(10), compact: bool = False):
     super().__init__()
     self._buttons = [self._child(b) for b in buttons]
     self._height = height
     self._gap = gap
+    self._compact = compact
 
   def preferred_size(self, max_width: float) -> tuple[float, float]:
+    if self._compact:
+      visible = [b for b in self._buttons if b.is_visible]
+      natural = max((b.preferred_size(max_width)[0] for b in visible), default=0)
+      return min(max_width, natural * len(visible) + self._gap * max(0, len(visible) - 1)), self._height
     return max_width, self._height
 
   def _render(self, rect: rl.Rectangle):

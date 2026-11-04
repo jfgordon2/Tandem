@@ -141,5 +141,5 @@ def driving_hub(window) -> Widget:
   hub.pages = {"speed_steering": opener(speed_steering), "display": opener(display), "alerts": opener(lambda: alerts_page(alerts, window)),
                "model": opener(lambda: model_page(models.get(), opener(lambda: CatalogPage(models.get(), window.device_data().storage)))),
                "vehicle": opener(lambda: vehicle_page(vehicle.get(), window, opener(lambda: extras_page(window.car_extras(), window)))),
-               "assistance": opener(assistance_page), "tuner": open_tuner}
+               "assistance": opener(assistance_page), "tuner": open_tuner, "maps": open_maps}
   return hub
