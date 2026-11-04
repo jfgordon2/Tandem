@@ -198,7 +198,7 @@ msgstr "카메라 시작 중…"
 
 #: forecast.py:37
 #: forecast.py:37
-#: onroad/status.py:219
+#: onroad/status.py:225
 msgid "Fog"
 msgstr "안개"
 
@@ -219,14 +219,14 @@ msgid "Freezing drizzle"
 msgstr "어는 이슬비"
 
 #: forecast.py:40
-#: onroad/status.py:216
+#: onroad/status.py:222
 #: settings/speed_steering.py:239
 msgid "Rain"
 msgstr "비"
 
 #: forecast.py:40
 #: forecast.py:43
-#: onroad/status.py:217
+#: onroad/status.py:223
 msgid "Heavy rain"
 msgstr "많은 비"
 
@@ -240,7 +240,7 @@ msgid "Light snow"
 msgstr "약한 눈"
 
 #: forecast.py:42
-#: onroad/status.py:218
+#: onroad/status.py:224
 #: settings/speed_steering.py:241
 msgid "Snow"
 msgstr "눈"
@@ -834,11 +834,11 @@ msgstr "대형 모델 실패"
 msgid "Small model in use"
 msgstr "소형 모델 사용 중"
 
-#: onroad/layers.py:332
+#: onroad/layers.py:337
 msgid "Help steer"
 msgstr "조향을 도와주세요"
 
-#: onroad/layers.py:332
+#: onroad/layers.py:337
 msgid "Steering is at its limit for this curve"
 msgstr "이 커브에서 조향 한계에 도달했습니다"
 
@@ -847,35 +847,35 @@ msgstr "이 커브에서 조향 한계에 도달했습니다"
 msgid "MAX"
 msgstr "MAX"
 
-#: onroad/layers.py:399
+#: onroad/layers.py:404
 #, python-brace-format
 msgid "New limit {}"
 msgstr "새 제한 {}"
 
-#: onroad/layers.py:400
+#: onroad/layers.py:405
 msgid "Slow down"
 msgstr "감속"
 
-#: onroad/layers.py:400
+#: onroad/layers.py:405
 msgid "Speed up"
 msgstr "가속"
 
-#: onroad/layers.py:401
+#: onroad/layers.py:406
 #, python-brace-format
 msgid "{} to {} {}?"
 msgstr "{}하여 {} {}로?"
 
-#: onroad/layers.py:402
+#: onroad/layers.py:407
 #, python-brace-format
 msgid "From {} · ignored in {} s"
 msgstr "출처: {} · {}초 후 무시"
 
-#: onroad/layers.py:377
+#: onroad/layers.py:382
 #: settings/speed_steering.py:15
 msgid "Match"
 msgstr "제한에 맞춤"
 
-#: onroad/layers.py:379
+#: onroad/layers.py:384
 msgid "Ignore"
 msgstr "무시"
 
@@ -903,110 +903,115 @@ msgstr "카메라 인식"
 msgid "Mapbox"
 msgstr "Mapbox"
 
-#: onroad/status.py:118
-#: onroad/status.py:123
+#: onroad/status.py:120
+#: onroad/status.py:125
 msgid "Stopped"
 msgstr "정지됨"
 
-#: onroad/status.py:118
+#: onroad/status.py:120
 msgid "Stopping"
 msgstr "정지 중"
 
-#: onroad/status.py:92
-#: onroad/status.py:104
+#: onroad/status.py:94
+#: onroad/status.py:106
 msgid "Steering paused"
 msgstr "조향 일시 정지"
 
-#: onroad/status.py:106
+#: onroad/status.py:108
 msgid "Speed control paused"
 msgstr "속도 제어 일시 정지"
 
-#: onroad/status.py:111
+#: onroad/status.py:113
 msgid "Lane change blocked"
 msgstr "차로 변경 차단됨"
 
-#: onroad/status.py:116
-#: onroad/status.py:146
+#: onroad/status.py:118
+#: onroad/status.py:148
 msgid "Light is green"
 msgstr "초록불입니다"
 
-#: onroad/status.py:125
+#: onroad/status.py:127
 msgid "Slowing for curve"
 msgstr "커브 때문에 감속 중"
 
-#: onroad/status.py:127
+#: onroad/status.py:129
 msgid "Slowing for turn"
 msgstr "회전 때문에 감속 중"
 
-#: onroad/status.py:130
+#: onroad/status.py:132
 msgid "Turning left"
 msgstr "좌회전 중"
 
-#: onroad/status.py:134
+#: onroad/status.py:136
 msgid "Slowing for traffic"
 msgstr "교통 상황에 따라 감속 중"
 
-#: onroad/status.py:136
+#: onroad/status.py:138
 #, python-brace-format
 msgid "Matching limit {}"
 msgstr "제한 {}에 맞추는 중"
 
-#: onroad/status.py:138
+#: onroad/status.py:140
 msgid "Coasting"
 msgstr "타력 주행 중"
 
-#: onroad/status.py:144
+#: onroad/status.py:146
 #, python-brace-format
 msgid "{} · longer gap"
 msgstr "{} · 차간거리 증가"
 
-#: onroad/status.py:148
+#: onroad/status.py:150
 msgid "Car ahead moved"
 msgstr "앞차가 출발했습니다"
 
-#: onroad/status.py:150
+#: onroad/status.py:152
 msgid "Ready · tap resume"
 msgstr "준비됨 · 재개 버튼을 누르세요"
 
-#: onroad/status.py:152
+#: onroad/status.py:154
 msgid "Steering only"
 msgstr "조향만 사용"
 
-#: onroad/status.py:113
+#: onroad/status.py:158
+#, python-brace-format
+msgid "Low memory · {}% used"
+msgstr "메모리 부족 · {}% 사용 중"
+
+#: onroad/status.py:115
 #, python-brace-format
 msgid "Changing lanes {}"
 msgstr "{} 차로로 변경 중"
 
-#: onroad/status.py:120
+#: onroad/status.py:122
 #, python-brace-format
 msgid "{} for stop sign"
 msgstr "정지 표지판에서 {}"
 
-#: onroad/status.py:132
+#: onroad/status.py:134
 msgid "Turning right"
 msgstr "우회전 중"
 
-#: onroad/status.py:140
+#: onroad/status.py:142
 msgid "Pulse & glide · gliding"
 msgstr "가속 후 타력 주행 · 타력 주행 중"
 
-#: onroad/status.py:140
+#: onroad/status.py:142
 msgid "Pulse & glide"
 msgstr "가속 후 타력 주행"
 
-#: onroad/status.py:98
+#: onroad/status.py:100
 msgid "Steering paused for signal"
 msgstr "방향지시등으로 조향 일시 정지"
 
-#: onroad/status.py:100
+#: onroad/status.py:102
 msgid "Steering paused after turn"
 msgstr "회전 후 조향 일시 정지"
 
-#: onroad/status.py:123
+#: onroad/status.py:125
 msgid "Stopping ahead"
 msgstr "전방에서 정지 예정"
 
-#: onroad/status.py:102
+#: onroad/status.py:104
 #, python-brace-format
 msgid "Steering paused · under {} {}"
 msgstr "조향 일시 정지 · {} {} 미만"

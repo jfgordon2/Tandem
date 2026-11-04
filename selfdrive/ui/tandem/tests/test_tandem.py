@@ -327,6 +327,21 @@ def test_chip_stack_keeps_the_four_highest_priority():
   assert len(shown) == 4 and "pause_button" in shown and "steering_only" not in shown
 
 
+def test_low_memory_chip_is_red_in_arrival_order_and_lowest_priority():
+  from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, ChipTone, Snapshot, chips_for
+  low = dict(events={"lowMemory"}, memory_percent=91)
+  chip = chips_for(Snapshot(**low))[0]
+  assert (chip.key, chip.label, chip.tone, chip.icon) == ("low_memory", "Low memory · 91% used", ChipTone.ALERT, "memory")
+  assert chips_for(Snapshot(memory_percent=91)) == []                     # StarPilot decides when memory is low
+  stack = ChipStack()
+  keys = lambda shown: [c.key for c, _ in shown]  # noqa: E731
+  assert keys(stack.update(Snapshot(**low), 0.0, False)) == ["low_memory"]
+  assert keys(stack.update(Snapshot(curve_control=True, **low), 0.5, False)) == ["curve", "low_memory"]   # newest nearest the bar
+  busy = Snapshot(lateral_paused=True, curve_control=True, limit_changed=True, speed_limit=45, weather="Rain", weather_gap=True, **low)
+  assert chips_for(busy)[-1].key == "low_memory"
+  assert "low_memory" not in keys(ChipStack().update(busy, 0.0, False))  # the first to give way
+
+
 def test_steering_pause_chip_names_the_real_reason():
   from openpilot.selfdrive.ui.tandem.onroad.status import Snapshot, chip_for
   setting = dict(pause_lateral_ms=8.94, pause_lateral_speed=20)          # StarPilot's Pause steering below 20 mph

@@ -198,7 +198,7 @@ msgstr "Iniciando la cámara…"
 
 #: forecast.py:37
 #: forecast.py:37
-#: onroad/status.py:219
+#: onroad/status.py:225
 msgid "Fog"
 msgstr "Niebla"
 
@@ -219,14 +219,14 @@ msgid "Freezing drizzle"
 msgstr "Llovizna helada"
 
 #: forecast.py:40
-#: onroad/status.py:216
+#: onroad/status.py:222
 #: settings/speed_steering.py:239
 msgid "Rain"
 msgstr "Lluvia"
 
 #: forecast.py:40
 #: forecast.py:43
-#: onroad/status.py:217
+#: onroad/status.py:223
 msgid "Heavy rain"
 msgstr "Lluvia intensa"
 
@@ -240,7 +240,7 @@ msgid "Light snow"
 msgstr "Nieve ligera"
 
 #: forecast.py:42
-#: onroad/status.py:218
+#: onroad/status.py:224
 #: settings/speed_steering.py:241
 msgid "Snow"
 msgstr "Nieve"
@@ -836,11 +836,11 @@ msgstr "Falló el modelo grande"
 msgid "Small model in use"
 msgstr "Usando el modelo pequeño"
 
-#: onroad/layers.py:332
+#: onroad/layers.py:337
 msgid "Help steer"
 msgstr "Ayuda a girar"
 
-#: onroad/layers.py:332
+#: onroad/layers.py:337
 msgid "Steering is at its limit for this curve"
 msgstr "La dirección está al límite en esta curva"
 
@@ -849,35 +849,35 @@ msgstr "La dirección está al límite en esta curva"
 msgid "MAX"
 msgstr "MAX"
 
-#: onroad/layers.py:399
+#: onroad/layers.py:404
 #, python-brace-format
 msgid "New limit {}"
 msgstr "Nuevo límite {}"
 
-#: onroad/layers.py:400
+#: onroad/layers.py:405
 msgid "Slow down"
 msgstr "Reduce"
 
-#: onroad/layers.py:400
+#: onroad/layers.py:405
 msgid "Speed up"
 msgstr "Acelera"
 
-#: onroad/layers.py:401
+#: onroad/layers.py:406
 #, python-brace-format
 msgid "{} to {} {}?"
 msgstr "¿{} a {} {}?"
 
-#: onroad/layers.py:402
+#: onroad/layers.py:407
 #, python-brace-format
 msgid "From {} · ignored in {} s"
 msgstr "Desde {} · se ignora en {} s"
 
-#: onroad/layers.py:377
+#: onroad/layers.py:382
 #: settings/speed_steering.py:15
 msgid "Match"
 msgstr "Ajustar"
 
-#: onroad/layers.py:379
+#: onroad/layers.py:384
 msgid "Ignore"
 msgstr "Ignorar"
 
@@ -905,110 +905,115 @@ msgstr "Visión"
 msgid "Mapbox"
 msgstr "Mapbox"
 
-#: onroad/status.py:118
-#: onroad/status.py:123
+#: onroad/status.py:120
+#: onroad/status.py:125
 msgid "Stopped"
 msgstr "Detenido"
 
-#: onroad/status.py:118
+#: onroad/status.py:120
 msgid "Stopping"
 msgstr "Deteniéndose"
 
-#: onroad/status.py:92
-#: onroad/status.py:104
+#: onroad/status.py:94
+#: onroad/status.py:106
 msgid "Steering paused"
 msgstr "Dirección en pausa"
 
-#: onroad/status.py:106
+#: onroad/status.py:108
 msgid "Speed control paused"
 msgstr "Control de velocidad en pausa"
 
-#: onroad/status.py:111
+#: onroad/status.py:113
 msgid "Lane change blocked"
 msgstr "Cambio de carril bloqueado"
 
-#: onroad/status.py:116
-#: onroad/status.py:146
+#: onroad/status.py:118
+#: onroad/status.py:148
 msgid "Light is green"
 msgstr "El semáforo está en verde"
 
-#: onroad/status.py:125
+#: onroad/status.py:127
 msgid "Slowing for curve"
 msgstr "Frenando por la curva"
 
-#: onroad/status.py:127
+#: onroad/status.py:129
 msgid "Slowing for turn"
 msgstr "Frenando por el giro"
 
-#: onroad/status.py:130
+#: onroad/status.py:132
 msgid "Turning left"
 msgstr "Girando a la izquierda"
 
-#: onroad/status.py:134
+#: onroad/status.py:136
 msgid "Slowing for traffic"
 msgstr "Frenando por el tráfico"
 
-#: onroad/status.py:136
+#: onroad/status.py:138
 #, python-brace-format
 msgid "Matching limit {}"
 msgstr "Ajustando al límite {}"
 
-#: onroad/status.py:138
+#: onroad/status.py:140
 msgid "Coasting"
 msgstr "Sin acelerar"
 
-#: onroad/status.py:144
+#: onroad/status.py:146
 #, python-brace-format
 msgid "{} · longer gap"
 msgstr "{} · más distancia"
 
-#: onroad/status.py:148
+#: onroad/status.py:150
 msgid "Car ahead moved"
 msgstr "El coche de delante arrancó"
 
-#: onroad/status.py:150
+#: onroad/status.py:152
 msgid "Ready · tap resume"
 msgstr "Listo · toca reanudar"
 
-#: onroad/status.py:152
+#: onroad/status.py:154
 msgid "Steering only"
 msgstr "Solo dirección"
 
-#: onroad/status.py:113
+#: onroad/status.py:158
+#, python-brace-format
+msgid "Low memory · {}% used"
+msgstr "Poca memoria · {} % en uso"
+
+#: onroad/status.py:115
 #, python-brace-format
 msgid "Changing lanes {}"
 msgstr "Cambiando de carril {}"
 
-#: onroad/status.py:120
+#: onroad/status.py:122
 #, python-brace-format
 msgid "{} for stop sign"
 msgstr "{} por la señal de alto"
 
-#: onroad/status.py:132
+#: onroad/status.py:134
 msgid "Turning right"
 msgstr "Girando a la derecha"
 
-#: onroad/status.py:140
+#: onroad/status.py:142
 msgid "Pulse & glide · gliding"
 msgstr "Pulso y deslizamiento · deslizando"
 
-#: onroad/status.py:140
+#: onroad/status.py:142
 msgid "Pulse & glide"
 msgstr "Pulso y deslizamiento"
 
-#: onroad/status.py:98
+#: onroad/status.py:100
 msgid "Steering paused for signal"
 msgstr "Dirección en pausa por el intermitente"
 
-#: onroad/status.py:100
+#: onroad/status.py:102
 msgid "Steering paused after turn"
 msgstr "Dirección en pausa tras el giro"
 
-#: onroad/status.py:123
+#: onroad/status.py:125
 msgid "Stopping ahead"
 msgstr "Parada más adelante"
 
-#: onroad/status.py:102
+#: onroad/status.py:104
 #, python-brace-format
 msgid "Steering paused · under {} {}"
 msgstr "Dirección en pausa · por debajo de {} {}"

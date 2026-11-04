@@ -43,6 +43,12 @@ def test_routine_status_banners_go_to_chips():
   assert not alerts.shown_as_chip("")
 
 
+def test_low_memory_notice_is_a_chip_but_its_disengage_is_not():
+  assert alerts.shown_as_chip("lowMemory/permanent")
+  assert not alerts.shown_as_chip("lowMemory/softDisable")    # Low memory: reboot your device, the car is handing back
+  assert not alerts.shown_as_chip("lowMemory/noEntry")
+
+
 def test_alerts_translate_before_folding_upstream_line_breaks(monkeypatch):
   monkeypatch.setattr(i18n, "_language", lambda: "main_tr")
   assert alerts._clean("TAKE CONTROL IMMEDIATELY") == "HEMEN KONTROLÜ DEVRALIN"

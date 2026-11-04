@@ -198,7 +198,7 @@ msgstr "カメラを起動中…"
 
 #: forecast.py:37
 #: forecast.py:37
-#: onroad/status.py:219
+#: onroad/status.py:225
 msgid "Fog"
 msgstr "霧"
 
@@ -219,14 +219,14 @@ msgid "Freezing drizzle"
 msgstr "着氷性の霧雨"
 
 #: forecast.py:40
-#: onroad/status.py:216
+#: onroad/status.py:222
 #: settings/speed_steering.py:239
 msgid "Rain"
 msgstr "雨"
 
 #: forecast.py:40
 #: forecast.py:43
-#: onroad/status.py:217
+#: onroad/status.py:223
 msgid "Heavy rain"
 msgstr "大雨"
 
@@ -240,7 +240,7 @@ msgid "Light snow"
 msgstr "小雪"
 
 #: forecast.py:42
-#: onroad/status.py:218
+#: onroad/status.py:224
 #: settings/speed_steering.py:241
 msgid "Snow"
 msgstr "雪"
@@ -834,11 +834,11 @@ msgstr "大きいモデルが失敗しました"
 msgid "Small model in use"
 msgstr "小さいモデルを使用中"
 
-#: onroad/layers.py:332
+#: onroad/layers.py:337
 msgid "Help steer"
 msgstr "ハンドル操作を手伝って"
 
-#: onroad/layers.py:332
+#: onroad/layers.py:337
 msgid "Steering is at its limit for this curve"
 msgstr "このカーブではステアリングが限界です"
 
@@ -847,35 +847,35 @@ msgstr "このカーブではステアリングが限界です"
 msgid "MAX"
 msgstr "MAX"
 
-#: onroad/layers.py:399
+#: onroad/layers.py:404
 #, python-brace-format
 msgid "New limit {}"
 msgstr "新しい制限 {}"
 
-#: onroad/layers.py:400
+#: onroad/layers.py:405
 msgid "Slow down"
 msgstr "減速"
 
-#: onroad/layers.py:400
+#: onroad/layers.py:405
 msgid "Speed up"
 msgstr "加速"
 
-#: onroad/layers.py:401
+#: onroad/layers.py:406
 #, python-brace-format
 msgid "{} to {} {}?"
 msgstr "{1} {2}に{0}？"
 
-#: onroad/layers.py:402
+#: onroad/layers.py:407
 #, python-brace-format
 msgid "From {} · ignored in {} s"
 msgstr "{0}から · {1}秒後に無視"
 
-#: onroad/layers.py:377
+#: onroad/layers.py:382
 #: settings/speed_steering.py:15
 msgid "Match"
 msgstr "合わせる"
 
-#: onroad/layers.py:379
+#: onroad/layers.py:384
 msgid "Ignore"
 msgstr "無視"
 
@@ -903,110 +903,115 @@ msgstr "カメラ"
 msgid "Mapbox"
 msgstr "Mapbox"
 
-#: onroad/status.py:118
-#: onroad/status.py:123
+#: onroad/status.py:120
+#: onroad/status.py:125
 msgid "Stopped"
 msgstr "停止中"
 
-#: onroad/status.py:118
+#: onroad/status.py:120
 msgid "Stopping"
 msgstr "停止しています"
 
-#: onroad/status.py:92
-#: onroad/status.py:104
+#: onroad/status.py:94
+#: onroad/status.py:106
 msgid "Steering paused"
 msgstr "ステアリング一時停止"
 
-#: onroad/status.py:106
+#: onroad/status.py:108
 msgid "Speed control paused"
 msgstr "速度制御一時停止"
 
-#: onroad/status.py:111
+#: onroad/status.py:113
 msgid "Lane change blocked"
 msgstr "車線変更できません"
 
-#: onroad/status.py:116
-#: onroad/status.py:146
+#: onroad/status.py:118
+#: onroad/status.py:148
 msgid "Light is green"
 msgstr "信号が青です"
 
-#: onroad/status.py:125
+#: onroad/status.py:127
 msgid "Slowing for curve"
 msgstr "カーブのため減速中"
 
-#: onroad/status.py:127
+#: onroad/status.py:129
 msgid "Slowing for turn"
 msgstr "曲がるため減速中"
 
-#: onroad/status.py:130
+#: onroad/status.py:132
 msgid "Turning left"
 msgstr "左折中"
 
-#: onroad/status.py:134
+#: onroad/status.py:136
 msgid "Slowing for traffic"
 msgstr "前方車両のため減速中"
 
-#: onroad/status.py:136
+#: onroad/status.py:138
 #, python-brace-format
 msgid "Matching limit {}"
 msgstr "制限 {} に合わせています"
 
-#: onroad/status.py:138
+#: onroad/status.py:140
 msgid "Coasting"
 msgstr "惰性走行"
 
-#: onroad/status.py:144
+#: onroad/status.py:146
 #, python-brace-format
 msgid "{} · longer gap"
 msgstr "{} · 車間を広げています"
 
-#: onroad/status.py:148
+#: onroad/status.py:150
 msgid "Car ahead moved"
 msgstr "前の車が発進しました"
 
-#: onroad/status.py:150
+#: onroad/status.py:152
 msgid "Ready · tap resume"
 msgstr "準備完了 · 再開をタップ"
 
-#: onroad/status.py:152
+#: onroad/status.py:154
 msgid "Steering only"
 msgstr "ステアリングのみ"
 
-#: onroad/status.py:113
+#: onroad/status.py:158
+#, python-brace-format
+msgid "Low memory · {}% used"
+msgstr "メモリ不足 · {}% 使用中"
+
+#: onroad/status.py:115
 #, python-brace-format
 msgid "Changing lanes {}"
 msgstr "車線変更中 {}"
 
-#: onroad/status.py:120
+#: onroad/status.py:122
 #, python-brace-format
 msgid "{} for stop sign"
 msgstr "一時停止標識のため{}"
 
-#: onroad/status.py:132
+#: onroad/status.py:134
 msgid "Turning right"
 msgstr "右折中"
 
-#: onroad/status.py:140
+#: onroad/status.py:142
 msgid "Pulse & glide · gliding"
 msgstr "パルス＆グライド · 惰性中"
 
-#: onroad/status.py:140
+#: onroad/status.py:142
 msgid "Pulse & glide"
 msgstr "パルス＆グライド"
 
-#: onroad/status.py:98
+#: onroad/status.py:100
 msgid "Steering paused for signal"
 msgstr "ウインカーのためステアリング一時停止"
 
-#: onroad/status.py:100
+#: onroad/status.py:102
 msgid "Steering paused after turn"
 msgstr "曲がった後のためステアリング一時停止"
 
-#: onroad/status.py:123
+#: onroad/status.py:125
 msgid "Stopping ahead"
 msgstr "この先で停止"
 
-#: onroad/status.py:102
+#: onroad/status.py:104
 #, python-brace-format
 msgid "Steering paused · under {} {}"
 msgstr "ステアリング一時停止 · {} {}未満"

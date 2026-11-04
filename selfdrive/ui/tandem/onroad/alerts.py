@@ -5,8 +5,8 @@ and timing; only the drawing changes.
 - Warning: an amber two-line card at the bottom and an amber border.
 - Critical: a full-screen dark red takeover with a steering wheel icon and a red border.
 
-Light Turned Green, Lead Departed, Car Detected in Blindspot (as Lane change blocked), lane changes and turn progress are
-left to the status chips;
+Light Turned Green, Lead Departed, Car Detected in Blindspot (as Lane change blocked), lane changes, turn progress and the
+Low Memory notice are left to the status chips;
 Speed limit changed is left to the new-limit card while it asks.
 """
 from __future__ import annotations
@@ -56,12 +56,13 @@ def level(size: int, status: int, alert_type: str = "") -> str:
 
 
 CHIP_ALERTS = {"greenLight", "leadDeparting", "laneChange", "laneChangeBlocked", "laneChangeBlockedLoud", "turningLeft", "turningRight"}
+CHIP_ALERT_TYPES = {"lowMemory/permanent"}   # only this form: Low memory's disengage and can't-engage alerts still show
 LIMIT_ALERT = "speedLimitChanged"
 
 
 def shown_as_chip(alert_type: str) -> bool:
   """Alerts the status chips already say: their chime still plays, but the chip replaces the banner."""
-  return (alert_type or "").split("/", 1)[0] in CHIP_ALERTS
+  return (alert_type or "").split("/", 1)[0] in CHIP_ALERTS or alert_type in CHIP_ALERT_TYPES
 
 
 def replaced_by_headroom(alert_type: str) -> bool:

@@ -13,6 +13,7 @@ class ChipTone(Enum):
   INFO = "info"         # blue: the car is changing speed or steering on its own
   PAUSED = "paused"     # amber: steering paused or a change blocked
   WAITING = "waiting"   # green: waiting on the driver
+  ALERT = "alert"       # red: something on the device needs attention, not the drive
 
 
 @dataclass(frozen=True)
@@ -59,6 +60,7 @@ class Snapshot:
   weather_gap: bool = False                # ...and its preset adds following distance
   forecast: tuple[str, str] | None = None  # Weather heads-up (forecast.py): ("Snow in 12 min" or "Snow until 8:15 PM", icon)
   forecast_active: bool = False            # ...and it's falling now, so it stands in for the longer-gap chip
+  memory_percent: int = 0                  # memory in use, from deviceState
   events: set[str] = field(default_factory=set)
 
 
@@ -81,7 +83,7 @@ MOVING_SPEED = 0.5       # m/s
 
 
 def chips_for(s: Snapshot) -> list[Chip]:
-  """Every chip that applies now, highest priority first: paused or blocked, stopping, slowing, then waiting. Reasons that
+  """Every chip that applies now, highest priority first: paused or blocked, stopping, slowing, waiting, then low memory. Reasons that
   exclude each other (the two pauses, blocked or changing lanes, a sign or the model's stop) give one chip."""
   unit = "km/h" if s.metric else "mph"
   out: list[Chip] = []
@@ -150,6 +152,10 @@ def chips_for(s: Snapshot) -> list[Chip]:
     out.append(Chip("ready", N_("Ready · tap resume"), ChipTone.WAITING, "play"))
   if s.always_on_lateral and not s.engaged:
     out.append(Chip("steering_only", N_("Steering only"), ChipTone.INFO, "wheel"))
+  # Last, so it's the first to give way when more than MAX apply. StarPilot decides when memory is low (its lowMemory
+  # event); this chip stands in for that event's notice. Its disengage and can't-engage forms stay alerts.
+  if "lowMemory" in s.events:
+    out.append(Chip("low_memory", t_("Low memory · {}% used", s.memory_percent), ChipTone.ALERT, "memory"))
   return out
 
 
@@ -317,4 +323,6 @@ def snapshot(ui_state, nav_active: bool = False, limits: LimitWatch | None = Non
   for service in ("selfdriveState", "starpilotSelfdriveState"):
     if valid.get(service, False) and sm[service].alertType:
       s.events.add(str(sm[service].alertType).split("/", 1)[0])
+  if valid.get("deviceState", False):
+    s.memory_percent = int(sm["deviceState"].memoryUsagePercent)
   return s

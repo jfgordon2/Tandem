@@ -175,7 +175,7 @@ class StatusChip(Component):
   """What the car is doing on its own, bottom left just above the bar: a stack of up to four chips, the newest nearest
   the bar (status.ChipStack decides which, and their opacity). Chips slide to their new place as others come and go."""
   grow_touch_target = False
-  INK = {ChipTone.INFO: T.ACCENT_TEXT, ChipTone.PAUSED: T.WARNING, ChipTone.WAITING: T.SUCCESS_TEXT}
+  INK = {ChipTone.INFO: T.ACCENT_TEXT, ChipTone.PAUSED: T.WARNING, ChipTone.WAITING: T.SUCCESS_TEXT, ChipTone.ALERT: T.DANGER_CHIP_ICON}
   HEIGHT, GAP, STEP = T.px(44), T.px(12), T.px(52)
   SLIDE = 0.25   # share of the remaining distance a chip moves each frame
 
@@ -197,12 +197,17 @@ class StatusChip(Component):
         continue
       w, h = self.size(chip)
       box = rl.Rectangle(rect.x + BAR_MARGIN, bar_top - self.GAP - h - slot * self.STEP, w, h)
-      draw.fill(box, draw.alpha(T.BG, 0.8 * alpha), T.px(12))
       body = inset(box, x=T.px(16))
       ink = self.INK[chip.tone]
+      label = T.TEXT if chip.tone == ChipTone.INFO else ink
+      if chip.tone == ChipTone.ALERT:   # the one chip that needs noticing: red fill and border (design/memorychip.html)
+        draw.fill(box, draw.alpha(T.DANGER_CHIP, alpha), T.px(12))
+        draw.stroke(box, draw.alpha(T.DANGER, alpha), T.px(12), T.px(2))
+        label = T.DANGER_CHIP_TEXT
+      else:
+        draw.fill(box, draw.alpha(T.BG, 0.8 * alpha), T.px(12))
       draw.icon(rl.Rectangle(body.x, body.y, T.px(22), body.height), chip.icon, draw.alpha(ink, alpha), T.px(22))
-      draw.text(inset(body, left=T.px(32)), chip.label, T.font_px(17), draw.alpha(T.TEXT if chip.tone == ChipTone.INFO else ink, alpha),
-                T.FONT_SEMIBOLD)
+      draw.text(inset(body, left=T.px(32)), chip.label, T.font_px(17), draw.alpha(label, alpha), T.FONT_SEMIBOLD)
 
 
 # ── Steering headroom ──

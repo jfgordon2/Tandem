@@ -407,6 +407,12 @@
    ]
   },
   {
+   "mock": "memorychip",
+   "title": "Onroad › Low memory chip",
+   "note": "StarPilot's Low Memory notice as a red status chip instead of the bottom banner, in arrival order and the lowest priority. Fill, border, icon, text color and place match. The percentage is drawn in the label's color and weight, not bolder and whiter, so the sentence can be translated whole. Page ground uses true black (#000000).",
+   "match": false
+  },
+  {
    "mock": "statuschips",
    "title": "Onroad › Status chips",
    "note": "Text, icons and order match. Top: the four steering pauses. Middle: the wheel-button modes with Lane change blocked, which replaces the blind spot banner. Each set is shown together here; on the road one pause and one Pulse & glide show at a time. Bottom: a real stack, the curve chip fading. Built chips use the dark fill from the onroad mock; this sheet tints each chip by tone, so the two mocks differ there. Page ground uses true black (#000000).",

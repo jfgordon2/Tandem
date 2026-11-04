@@ -49,6 +49,7 @@ def main(frame, save, out, tap, gui_app):
   shots = {
     "onroad_stack": scene(BarState(True, True, 63, "mph", "Market Street"), ArcState(0.3, 0.4, True),
                           [(c, a) for c, a in __import__("scene_stack").stacked()]),
+    "memorychip": scene(BarState(True, True, 63, "mph", "Market Street"), ArcState(0.18, 0.2, True), __import__("scene_stack").low_memory()),
     "onroad_pauses": scene(BarState(True, True, 17, "mph", "Market Street"), ArcState(0.3, 0.4, True),
                            [(chip_for(x), 1.0) for x in (
                              Snapshot(lateral_paused=True, speed=8.0),

@@ -84,6 +84,9 @@ DANGER_SURFACE = _hex("3A2026")
 DANGER_BORDER = _hex("5A3A40")
 DANGER_STRIPE = _hex("2A1A1E")          # the darker band of the hatched safety floor; the other is DANGER_SURFACE
 CRITICAL_FILL = _hex("2A0E12")
+DANGER_CHIP = _hex("4A161C", 242)      # the red status chip: fill, icon and text
+DANGER_CHIP_ICON = _hex("FF7A84")
+DANGER_CHIP_TEXT = _hex("FFD6DA")
 
 # ── Switch ──
 SWITCH_TRACK_ON = ACCENT
