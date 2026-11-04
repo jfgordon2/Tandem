@@ -86,6 +86,7 @@ class Section:
   value: Bindable[str] | None = None
   visible: Bindable[bool] = True
   value_tone: Tone = Tone.NEUTRAL
+  dot: Bindable[bool] = False
 
 
 class SectionPage(Component):
@@ -101,7 +102,7 @@ class SectionPage(Component):
     self._selected = selected
     self._shown = False
     items = [SidebarItem(s.label, on_select=lambda i=i: self.select(i), value=s.value, value_tone=s.value_tone,
-                         visible=s.visible) for i, s in enumerate(sections)]
+                         visible=s.visible, dot=s.dot) for i, s in enumerate(sections)]
     self._sidebar = self._child(Sidebar(caption, items, selected=lambda: self._selected, tone=tone, footer=footer))
 
   @property

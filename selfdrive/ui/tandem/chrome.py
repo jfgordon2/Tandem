@@ -77,6 +77,7 @@ class SidebarItem:
   value: Bindable[str] | None = None        # short state on the right, e.g. "Car", "Auto"
   value_tone: Tone = Tone.NEUTRAL           # WARNING for Tuner Mode's "1 changed"
   visible: Bindable[bool] = True
+  dot: Bindable[bool] = False               # a red dot on the right: something new to look at (Device › RAM)
 
 
 class Sidebar(Component):
@@ -134,6 +135,9 @@ class Sidebar(Component):
       elif self.is_pressed and i == self._pressed_item:
         draw.pressed(r, T.RADIUS_ITEM)
       body = inset(r, x=T.px(16))
+      if resolve(item.dot):
+        draw.disc(rl.Vector2(body.x + body.width - T.px(5), body.y + body.height / 2), T.px(5), T.DANGER)
+        body = inset(body, right=T.px(20))
       value = resolve(item.value) if item.value is not None else None
       if value:
         ink = T.WARNING if item.value_tone == Tone.WARNING else (T.TEXT_TERTIARY if chosen else T.TEXT_MUTED)

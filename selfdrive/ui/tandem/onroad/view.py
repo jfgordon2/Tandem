@@ -38,7 +38,8 @@ from openpilot.selfdrive.ui.tandem.onroad.layers import (AT_LIMIT, BAR_HEIGHT, B
                                                          Headroom, HeadroomArc, HelpSteer, ARC, DEV_ARC, LimitCard, LimitOffer, OnroadBar, StatusChip,
                                                          dm_tile, draw_driver_monitor, draw_speed, draw_speed_limit,
                                                          draw_turn_card, sign_tile, TURN_BELOW_SIGN, TURN_CARD_TOP)
-from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, LimitWatch, chips_for, snapshot
+from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, LimitWatch, RamWatch, chips_for, snapshot
+from openpilot.selfdrive.ui.tandem.ram import shared_log
 from openpilot.selfdrive.ui.tandem.onroad.limits import LimitFollower, LimitOfferState, OfferChime
 from openpilot.selfdrive.ui.tandem.onroad.lead import GapTracker, detailed_tag_on, lead_anchor, read_lead_sample
 from openpilot.selfdrive.ui.tandem.forecast import Announcer, heads_up, now_conditions, shared_service, wall_clock
@@ -160,6 +161,8 @@ class EssentialsOnroadView(StarPilotOnroadView):
     self._forecast = shared_service()   # the parked screen shows the same forecast
     self._announcer = Announcer()
     self._limits = LimitWatch()
+    self._ram = RamWatch()
+    self._ram_log = shared_log()   # what was using RAM at each drive's peak, for Device › RAM
     self._chip_list: list = []   # (chip, opacity), nearest the bar first
     self._headroom = Headroom()
     self._arc_state = ArcState()
@@ -492,7 +495,9 @@ class EssentialsOnroadView(StarPilotOnroadView):
     # Help steer is a Warning alert drawn by us: like StarPilot's alerts, it takes the bar's place at the bottom.
     self._layers_visible = bool(ui_state.started and self._draw_hud_controls and alert is None and not self._headroom_warning)
     now = time.monotonic()
-    current = snapshot(ui_state, self._navigating(), self._limits, now)
+    current = snapshot(ui_state, self._navigating(), self._limits, now, self._ram)
+    if current.low_ram:
+      self._ram_log.note(ui_state.started_frame, current.memory_percent)
     self._apply_forecast(current)
     self._braking_for_lead = any(chip.key == "traffic" for chip in chips_for(current))
     self._chip_list = self._chips.update(current, now, alert is not None or self._headroom_warning)
@@ -644,6 +649,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
     super()._offroad_transition()
     self._limit_offer = LimitOfferState()
     self._limits = LimitWatch()
+    self._ram = RamWatch()
     self._follower = LimitFollower()
     self._offer_chime = OfferChime()
 

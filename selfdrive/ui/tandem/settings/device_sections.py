@@ -1,4 +1,4 @@
-"""Device tab sections besides This Device: General, Backups, Storage & Data, and Report a Problem.
+"""Device tab sections besides This Device: General, Backups, Storage & Data, and Report a Problem (RAM is in ram.py).
 
 File work (settings snapshots, storage sizes, deleting drives) and sending a report go through DeviceData;
 UpstreamData does them the way StarPilot's System screen does, with the same paths.
@@ -360,9 +360,10 @@ def storage_panel(model: General, window, models) -> ListPanel:
 
 
 class Report:
-  def __init__(self, data: DeviceData, store: SettingsStore):
+  def __init__(self, data: DeviceData, store: SettingsStore, ram=None):
     self.data = data
     self._store = store
+    self._ram = ram   # ram.RamLog: the last drives that ran low go with the report
     self.category = -1
     self.details = ""
     self.discord = store.get_str("DiscordUsername")
@@ -375,6 +376,9 @@ class Report:
     if not self.ready():
       return
     issue = REPORT_CATEGORIES[self.category] + (f": {self.details}" if self.details else "")
+    if self._ram is not None and (low := self._ram.snapshots()):
+      from openpilot.selfdrive.ui.tandem.ram import report_text
+      issue += "\n" + report_text(low)
     self.data.send_report(issue, self.discord)
     if self.discord:
       self._store.write({"DiscordUsername": self.discord})

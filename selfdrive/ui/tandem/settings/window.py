@@ -23,6 +23,8 @@ from openpilot.selfdrive.ui.tandem.settings.device_sections import (General, Rep
                                                                     report_panel, storage_panel)
 from openpilot.selfdrive.ui.tandem.settings.developer import Developer, DeveloperPage
 from openpilot.selfdrive.ui.tandem.settings.model import Models
+from openpilot.selfdrive.ui.tandem.settings.ram import ram_panel
+from openpilot.selfdrive.ui.tandem.ram import now_percent, shared_log
 from openpilot.selfdrive.ui.tandem.settings.network_tab import Network, advanced_panel
 from openpilot.selfdrive.ui.tandem.settings.software_tab import Software, SoftwarePage
 from openpilot.selfdrive.ui.tandem.settings.driving_tab import driving_hub
@@ -117,7 +119,7 @@ def _upstream_cars():
 class SettingsWindow(Widget):
   def __init__(self, store: SettingsStore | None = None, live=None, model_source=None, car_catalog=None, device_data=None,
                device=None, wifi=None, wheel=None, bluetooth=None, updates=None, maps_source=None, boot_logos=None, developer_source=None,
-               car_extras=None):
+               car_extras=None, ram_log=None, ram_now=None):
     """The arguments replace device-backed state and StarPilot data in tests; each defaults to the real one."""
     super().__init__()
     self._store = store
@@ -134,6 +136,8 @@ class SettingsWindow(Widget):
     self.developer_source = developer_source or _upstream_developer
     self.car_extras = car_extras or _upstream_car_extras
     self.boot_logos = boot_logos or _upstream_boot_logos
+    self.ram_log = ram_log or shared_log
+    self.ram_now = ram_now or now_percent
     self._tab = Tab.DRIVING
     self._roots: list[Callable[[], Widget]] = [self._driving, self._device, self._connections, self._software]
     self._stacks: list[list[Widget]] = [[] for _ in TABS]
@@ -315,12 +319,14 @@ class SettingsWindow(Widget):
   def _device(self) -> Widget:
     data = self.device_data()
     general = General(self.store, data, self.live)
-    report = Report(data, self.store)
+    ram = self.ram_log()
+    report = Report(data, self.store, ram)
     return SectionPage(N_("DEVICE"), [
       Section(N_("This Device"), lambda: self._this_device()),
       Section(N_("General"), lambda: general_panel(general, self)),
       Section(N_("Backups"), lambda: backups_panel(general, self)),
       Section(N_("Storage & Data"), lambda: storage_panel(general, self, Models(self.store, self.model_source()))),
+      Section(N_("RAM"), lambda: ram_panel(ram, self.ram_now), dot=ram.unseen),
       Section(N_("Report a Problem"), lambda: report_panel(report)),
       Section(N_("Developer"), lambda: DeveloperPage(Developer(self.store, self.developer_source()), self),
               visible=lambda: TUNER_MODE.is_on(self.store)),

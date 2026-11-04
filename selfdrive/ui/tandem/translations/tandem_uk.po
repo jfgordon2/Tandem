@@ -26,7 +26,7 @@ msgid "Default"
 msgstr "Типово"
 
 #: destinations.py:346
-#: settings/search.py:270
+#: settings/search.py:271
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:688
 msgid "Search"
 msgstr "Пошук"
@@ -198,7 +198,7 @@ msgstr "Запуск камери…"
 
 #: forecast.py:37
 #: forecast.py:37
-#: onroad/status.py:225
+#: onroad/status.py:226
 msgid "Fog"
 msgstr "Туман"
 
@@ -219,14 +219,14 @@ msgid "Freezing drizzle"
 msgstr "Переохолоджена мряка"
 
 #: forecast.py:40
-#: onroad/status.py:222
+#: onroad/status.py:223
 #: settings/speed_steering.py:239
 msgid "Rain"
 msgstr "Дощ"
 
 #: forecast.py:40
 #: forecast.py:43
-#: onroad/status.py:223
+#: onroad/status.py:224
 msgid "Heavy rain"
 msgstr "Сильний дощ"
 
@@ -240,7 +240,7 @@ msgid "Light snow"
 msgstr "Невеликий сніг"
 
 #: forecast.py:42
-#: onroad/status.py:224
+#: onroad/status.py:225
 #: settings/speed_steering.py:241
 msgid "Snow"
 msgstr "Сніг"
@@ -393,7 +393,7 @@ msgstr "Оновлення готове"
 
 #: home.py:147
 #: settings/search.py:24
-#: settings/search.py:204
+#: settings/search.py:205
 msgid "Software"
 msgstr "Програмне забезпечення"
 
@@ -730,6 +730,7 @@ msgstr "{} s"
 #. Unit notation; keep as written.
 #: onroad/developer.py:291
 #: settings/device_sections.py:301
+#: settings/ram.py:28
 #, python-brace-format
 msgid "{} GB"
 msgstr "{} GB"
@@ -760,7 +761,7 @@ msgstr "джерело"
 
 #: onroad/developer.py:155
 #: settings/search.py:24
-#: settings/window.py:42
+#: settings/window.py:44
 msgid "Device"
 msgstr "Пристрій"
 
@@ -807,6 +808,8 @@ msgstr "GPU"
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: onroad/developer.py:165
+#: settings/ram.py:97
+#: settings/search.py:30
 msgid "RAM"
 msgstr "RAM"
 
@@ -907,115 +910,115 @@ msgstr "Камера"
 msgid "Mapbox"
 msgstr "Mapbox"
 
-#: onroad/status.py:120
-#: onroad/status.py:125
+#: onroad/status.py:121
+#: onroad/status.py:126
 msgid "Stopped"
 msgstr "Зупинено"
 
-#: onroad/status.py:120
+#: onroad/status.py:121
 msgid "Stopping"
 msgstr "Зупинка"
 
-#: onroad/status.py:94
-#: onroad/status.py:106
+#: onroad/status.py:95
+#: onroad/status.py:107
 msgid "Steering paused"
 msgstr "Кермування призупинено"
 
-#: onroad/status.py:108
+#: onroad/status.py:109
 msgid "Speed control paused"
 msgstr "Керування швидкістю призупинено"
 
-#: onroad/status.py:113
+#: onroad/status.py:114
 msgid "Lane change blocked"
 msgstr "Зміну смуги заблоковано"
 
-#: onroad/status.py:118
-#: onroad/status.py:148
+#: onroad/status.py:119
+#: onroad/status.py:149
 msgid "Light is green"
 msgstr "Зелене світло"
 
-#: onroad/status.py:127
+#: onroad/status.py:128
 msgid "Slowing for curve"
 msgstr "Сповільнення перед поворотом"
 
-#: onroad/status.py:129
+#: onroad/status.py:130
 msgid "Slowing for turn"
 msgstr "Сповільнення перед зміною напрямку"
 
-#: onroad/status.py:132
+#: onroad/status.py:133
 msgid "Turning left"
 msgstr "Поворот ліворуч"
 
-#: onroad/status.py:136
+#: onroad/status.py:137
 msgid "Slowing for traffic"
 msgstr "Сповільнення через рух"
 
-#: onroad/status.py:138
+#: onroad/status.py:139
 #, python-brace-format
 msgid "Matching limit {}"
 msgstr "Узгодження з обмеженням {}"
 
-#: onroad/status.py:140
+#: onroad/status.py:141
 msgid "Coasting"
 msgstr "Рух накатом"
 
-#: onroad/status.py:146
+#: onroad/status.py:147
 #, python-brace-format
 msgid "{} · longer gap"
 msgstr "{} · більша дистанція"
 
-#: onroad/status.py:150
+#: onroad/status.py:151
 msgid "Car ahead moved"
 msgstr "Авто попереду рушило"
 
-#: onroad/status.py:152
+#: onroad/status.py:153
 msgid "Ready · tap resume"
 msgstr "Готово · натисніть відновлення"
 
-#: onroad/status.py:154
+#: onroad/status.py:155
 msgid "Steering only"
 msgstr "Лише кермування"
 
-#: onroad/status.py:158
+#: onroad/status.py:159
 #, python-brace-format
 msgid "Low on RAM · {}% used"
 msgstr "Мало RAM · {}% використано"
 
-#: onroad/status.py:115
+#: onroad/status.py:116
 #, python-brace-format
 msgid "Changing lanes {}"
 msgstr "Зміна смуги: {}"
 
-#: onroad/status.py:122
+#: onroad/status.py:123
 #, python-brace-format
 msgid "{} for stop sign"
 msgstr "{} перед знаком «Стоп»"
 
-#: onroad/status.py:134
+#: onroad/status.py:135
 msgid "Turning right"
 msgstr "Поворот праворуч"
 
-#: onroad/status.py:142
+#: onroad/status.py:143
 msgid "Pulse & glide · gliding"
 msgstr "Розгін і накат · рух накатом"
 
-#: onroad/status.py:142
+#: onroad/status.py:143
 msgid "Pulse & glide"
 msgstr "Розгін і накат"
 
-#: onroad/status.py:100
+#: onroad/status.py:101
 msgid "Steering paused for signal"
 msgstr "Кермування призупинено через покажчик повороту"
 
-#: onroad/status.py:102
+#: onroad/status.py:103
 msgid "Steering paused after turn"
 msgstr "Кермування призупинено після повороту"
 
-#: onroad/status.py:125
+#: onroad/status.py:126
 msgid "Stopping ahead"
 msgstr "Попереду зупинка"
 
-#: onroad/status.py:104
+#: onroad/status.py:105
 #, python-brace-format
 msgid "Steering paused · under {} {}"
 msgstr "Кермування призупинено · нижче {} {}"
@@ -1161,21 +1164,104 @@ msgid "Byp"
 msgstr "Byp"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:573
+#: onroad/view.py:578
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:573
+#: onroad/view.py:578
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/view.py:574
+#: onroad/view.py:579
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{} хв · {}"
+
+#: ram.py:29
+#: settings/window.py:258
+msgid "Driving model"
+msgstr "Модель водіння"
+
+#: ram.py:30
+msgid "Driver monitoring model"
+msgstr "Модель стеження за водієм"
+
+#: ram.py:31
+msgid "This screen"
+msgstr "Цей екран"
+
+#: ram.py:32
+msgid "Driving decisions"
+msgstr "Рішення щодо керування"
+
+#: ram.py:33
+msgid "Steering and speed control"
+msgstr "Кермо і швидкість"
+
+#: ram.py:34
+msgid "Speed planning"
+msgstr "Планування швидкості"
+
+#: ram.py:35
+msgid "Radar"
+msgstr "Радар"
+
+#: ram.py:36
+msgid "Position and heading"
+msgstr "Положення і курс"
+
+#: ram.py:37
+msgid "Car calibration"
+msgstr "Калібрування авто"
+
+#: ram.py:38
+msgid "Camera calibration"
+msgstr "Калібрування камери"
+
+#: ram.py:39
+msgid "Cameras"
+msgstr "Камери"
+
+#: ram.py:40
+msgid "Video recording"
+msgstr "Запис відео"
+
+#: ram.py:41
+msgid "Drive logging"
+msgstr "Журнал поїздки"
+
+#: ram.py:42
+#: settings/device_sections.py:357
+#: settings/search.py:181
+msgid "Uploads"
+msgstr "Вивантаження"
+
+#: ram.py:43
+msgid "Remote access"
+msgstr "Віддалений доступ"
+
+#: ram.py:44
+msgid "Speed limits and curves"
+msgstr "Обмеження швидкості та повороти"
+
+#: ram.py:45
+msgid "Routing"
+msgstr "Маршрути"
+
+#: ram.py:46
+msgid "Sounds"
+msgstr "Звуки"
+
+#: ram.py:47
+msgid "Car interface"
+msgstr "Інтерфейс авто"
+
+#: ram.py:48
+msgid "Car connection"
+msgstr "Зв'язок з авто"
 
 #: routemap.py:154
 msgid "Finding a route…"
@@ -1676,7 +1762,7 @@ msgid "Pairing waits until you're parked."
 msgstr "Сполучення доступне після паркування."
 
 #: settings/bluetooth_tab.py:248
-#: settings/device_sections.py:389
+#: settings/device_sections.py:393
 #: settings/display.py:352
 msgid "Save"
 msgstr "Зберегти"
@@ -1861,7 +1947,7 @@ msgstr "Стан тесту"
 
 #: settings/can_recorder.py:71
 #: settings/developer.py:154
-#: settings/search.py:184
+#: settings/search.py:185
 msgid "CAN test recorder"
 msgstr "Записувач тесту CAN"
 
@@ -1961,7 +2047,7 @@ msgstr "Мобільна мережа"
 
 #: settings/connections.py:69
 #: settings/search.py:31
-#: settings/search.py:202
+#: settings/search.py:203
 msgid "Car Audio & Devices"
 msgstr "Аудіо авто й пристрої"
 
@@ -1970,7 +2056,7 @@ msgid "openpilot longitudinal control is in alpha for this car and turns off Aut
 msgstr "Поздовжнє керування openpilot для цього авто перебуває в альфа-стадії та вимикає автоматичне екстрене гальмування (AEB). Типово використовується круїз авто. Рекомендовано експериментальний режим. Якщо авто ввімкнене, openpilot перезапуститься."
 
 #: settings/developer.py:145
-#: settings/search.py:189
+#: settings/search.py:190
 msgid "openpilot Longitudinal (Alpha)"
 msgstr "Поздовжнє керування openpilot (альфа)"
 
@@ -2001,7 +2087,7 @@ msgstr "Додає всі публічні ключі облікового за�
 
 #: settings/developer.py:155
 #: settings/search.py:30
-#: settings/search.py:183
+#: settings/search.py:184
 msgid "Developer"
 msgstr "Розробник"
 
@@ -2026,7 +2112,7 @@ msgstr "Увімкнути"
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: settings/developer.py:148
-#: settings/search.py:185
+#: settings/search.py:186
 msgid "ADB"
 msgstr "ADB"
 
@@ -2036,7 +2122,7 @@ msgstr "Підключайтеся через USB або мережу (docs.comm
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: settings/developer.py:149
-#: settings/search.py:186
+#: settings/search.py:187
 msgid "SSH"
 msgstr "SSH"
 
@@ -2045,13 +2131,13 @@ msgid "Remote shell access with the keys below"
 msgstr "Віддалений доступ до оболонки з ключами нижче"
 
 #: settings/developer.py:150
-#: settings/search.py:187
+#: settings/search.py:188
 #: selfdrive/ui/layouts/settings/developer.py:53
 msgid "SSH Keys"
 msgstr "Ключі SSH"
 
 #: settings/developer.py:151
-#: settings/search.py:188
+#: settings/search.py:189
 #: selfdrive/ui/layouts/settings/developer.py:56
 msgid "Joystick Debug Mode"
 msgstr "Налагодження джойстиком"
@@ -2061,18 +2147,18 @@ msgid "Drive openpilot's controls from a joystick. Change it with the car off."
 msgstr "Керуйте openpilot джойстиком. Змінюйте, коли авто вимкнене."
 
 #: settings/developer.py:153
-#: settings/search.py:190
+#: settings/search.py:191
 #: selfdrive/ui/layouts/settings/developer.py:72
 msgid "UI Debug Mode"
 msgstr "Налагодження інтерфейсу"
 
 #: settings/developer.py:153
-#: settings/search.py:190
+#: settings/search.py:191
 msgid "Shows touches and the frame rate"
 msgstr "Показує дотики й частоту кадрів"
 
 #: settings/developer.py:154
-#: settings/search.py:184
+#: settings/search.py:185
 msgid "Record traffic and mark manual lock/unlock actions"
 msgstr "Записуйте трафік і позначайте ручне замикання та відмикання"
 
@@ -2440,6 +2526,7 @@ msgid "Brighter"
 msgstr "Яскравіше"
 
 #: settings/device_sections.py:301
+#: settings/ram.py:28
 #, python-brace-format
 msgid "{} MB"
 msgstr "{} МБ"
@@ -2634,39 +2721,34 @@ msgstr "ЗАПИС І ВИВАНТАЖЕННЯ"
 
 #: settings/device_sections.py:357
 #: settings/search.py:181
-msgid "Uploads"
-msgstr "Вивантаження"
-
-#: settings/device_sections.py:357
-#: settings/search.py:181
 msgid "Drive logs and video for debugging"
 msgstr "Журнали й відео поїздок для налагодження"
 
-#: settings/device_sections.py:390
+#: settings/device_sections.py:394
 msgid "Optional"
 msgstr "Необов'язково"
 
-#: settings/device_sections.py:400
+#: settings/device_sections.py:404
 msgid "Sent. Thank you!"
 msgstr "Надіслано. Дякуємо!"
 
-#: settings/device_sections.py:400
+#: settings/device_sections.py:404
 msgid "Send report"
 msgstr "Надіслати звіт"
 
-#: settings/device_sections.py:408
+#: settings/device_sections.py:412
 msgid "Details (optional)"
 msgstr "Подробиці (необов'язково)"
 
-#: settings/device_sections.py:408
+#: settings/device_sections.py:412
 msgid "Where and when it happened"
 msgstr "Де й коли це сталося"
 
-#: settings/device_sections.py:410
+#: settings/device_sections.py:414
 msgid "Discord name (optional)"
 msgstr "Ім'я в Discord (необов'язково)"
 
-#: settings/device_sections.py:410
+#: settings/device_sections.py:414
 msgid "So we can follow up"
 msgstr "Щоб ми могли зв'язатися"
 
@@ -2700,15 +2782,15 @@ msgstr "Створити копію"
 msgid "Delete all"
 msgstr "Видалити все"
 
-#: settings/device_sections.py:404
+#: settings/device_sections.py:408
 msgid "What happened?"
 msgstr "Що сталося?"
 
-#: settings/device_sections.py:409
+#: settings/device_sections.py:413
 msgid "Details"
 msgstr "Подробиці"
 
-#: settings/device_sections.py:411
+#: settings/device_sections.py:415
 msgid "Discord name"
 msgstr "Ім'я в Discord"
 
@@ -3049,7 +3131,7 @@ msgstr "Додаткові подробиці й точні налаштуван
 
 #: settings/driving_tab.py:129
 #: settings/search.py:24
-#: settings/window.py:42
+#: settings/window.py:44
 msgid "Driving"
 msgstr "Водіння"
 
@@ -3540,7 +3622,7 @@ msgstr "Змінити"
 
 #: settings/network_tab.py:225
 #: settings/network_tab.py:217
-#: settings/search.py:200
+#: settings/search.py:201
 msgid "Roaming, APN and IP address"
 msgstr "Роумінг, APN та IP-адреса"
 
@@ -3555,7 +3637,7 @@ msgstr "Введіть пароль"
 
 #: settings/network_tab.py:106
 #: settings/network_tab.py:213
-#: settings/search.py:197
+#: settings/search.py:198
 msgid "Hotspot name"
 msgstr "Назва точки доступу"
 
@@ -3564,32 +3646,32 @@ msgid "A saved network already uses this name"
 msgstr "Збережена мережа вже має таку назву"
 
 #: settings/network_tab.py:212
-#: settings/search.py:196
+#: settings/search.py:197
 msgid "Hotspot"
 msgstr "Точка доступу"
 
 #: settings/network_tab.py:212
-#: settings/search.py:196
+#: settings/search.py:197
 msgid "Share this device's connection"
 msgstr "Спільний доступ до інтернету цього пристрою"
 
 #: settings/network_tab.py:215
-#: settings/search.py:198
+#: settings/search.py:199
 msgid "Hotspot Password"
 msgstr "Пароль точки доступу"
 
 #: settings/network_tab.py:215
-#: settings/search.py:198
+#: settings/search.py:199
 msgid "For phones joining this device's hotspot"
 msgstr "Для телефонів, що підключаються до точки доступу"
 
 #: settings/network_tab.py:216
-#: settings/search.py:199
+#: settings/search.py:200
 msgid "Save Data"
 msgstr "Економія трафіку"
 
 #: settings/network_tab.py:216
-#: settings/search.py:199
+#: settings/search.py:200
 msgid "No large uploads on cellular or phone hotspots"
 msgstr "Без великих вивантажень через мобільну мережу чи точку доступу телефона"
 
@@ -3602,7 +3684,7 @@ msgid "Use cellular data outside your carrier's network"
 msgstr "Використовувати мобільні дані поза мережею оператора"
 
 #: settings/network_tab.py:224
-#: settings/search.py:193
+#: settings/search.py:194
 msgid "IP Address"
 msgstr "IP-адреса"
 
@@ -3616,7 +3698,7 @@ msgid "Scanning for networks…"
 msgstr "Пошук мереж…"
 
 #: settings/network_tab.py:199
-#: settings/search.py:194
+#: settings/search.py:195
 msgid "Join a hidden network"
 msgstr "Підключитися до прихованої мережі"
 
@@ -3644,8 +3726,44 @@ msgstr "Відкрита"
 msgid "Automatic"
 msgstr "Автоматично"
 
+#: settings/ram.py:44
+#, python-brace-format
+msgid "{} · {}%"
+msgstr "{} · {}%"
+
+#: settings/ram.py:37
+#, python-brace-format
+msgid "Today {}"
+msgstr "Сьогодні {}"
+
+#: settings/ram.py:39
+#, python-brace-format
+msgid "Yesterday {}"
+msgstr "Учора {}"
+
+#: settings/ram.py:65
+msgid "Everything else"
+msgstr "Усе інше"
+
+#: settings/ram.py:89
+#, python-brace-format
+msgid "Now {}% used"
+msgstr "Зараз використано {}%"
+
+#: settings/ram.py:98
+msgid "What was using it at the peak of each drive that ran low. The last three drives are kept."
+msgstr "Що використовувало RAM на піку кожної поїздки, коли її бракувало. Зберігаються три останні поїздки."
+
+#: settings/ram.py:99
+msgid "Added to Report a Problem. A reboot clears RAM."
+msgstr "Додається до звіту про проблему. Перезавантаження звільняє RAM."
+
+#: settings/ram.py:96
+msgid "No drive has run low on RAM yet."
+msgstr "Поки що в жодній поїздці не бракувало RAM."
+
 #: settings/search.py:24
-#: settings/window.py:42
+#: settings/window.py:44
 msgid "Connections"
 msgstr "З'єднання"
 
@@ -3674,8 +3792,8 @@ msgid "Bundle Overrides"
 msgstr "Заміна параметрів набору"
 
 #: settings/search.py:30
-#: settings/search.py:182
-#: settings/window.py:324
+#: settings/search.py:183
+#: settings/window.py:330
 msgid "Report a Problem"
 msgstr "Повідомити про проблему"
 
@@ -4229,125 +4347,129 @@ msgid "Cabin audio in your drive recordings"
 msgstr "Звук салону в записах поїздок"
 
 #: settings/search.py:182
+msgid "What was using RAM on drives that ran low"
+msgstr "Що використовувало RAM у поїздках, коли її бракувало"
+
+#: settings/search.py:183
 msgid "Send what happened to the developers"
 msgstr "Надіслати опис проблеми розробникам"
 
-#: settings/search.py:183
+#: settings/search.py:184
 msgid "ADB, SSH and debug modes"
 msgstr "ADB, SSH та режими налагодження"
 
-#: settings/search.py:185
+#: settings/search.py:186
 msgid "Connect over USB or the network"
 msgstr "Підключення через USB або мережу"
 
-#: settings/search.py:186
+#: settings/search.py:187
 msgid "Remote shell access"
 msgstr "Віддалений доступ до оболонки"
 
-#: settings/search.py:187
+#: settings/search.py:188
 msgid "Adds every public key in a GitHub account"
 msgstr "Додає всі публічні ключі облікового запису GitHub"
 
-#: settings/search.py:188
+#: settings/search.py:189
 msgid "Drive openpilot's controls from a joystick"
 msgstr "Керування openpilot джойстиком"
 
-#: settings/search.py:189
+#: settings/search.py:190
 msgid "Turns off the car's emergency braking"
 msgstr "Вимикає екстрене гальмування авто"
 
-#: settings/search.py:192
+#: settings/search.py:193
 msgid "Networks nearby, and joining one"
 msgstr "Мережі поруч і підключення до них"
 
-#: settings/search.py:193
+#: settings/search.py:194
 msgid "This device's local address, beside the connected network"
 msgstr "Локальна адреса пристрою біля підключеної мережі"
 
-#: settings/search.py:194
+#: settings/search.py:195
 msgid "Enter its name and password"
 msgstr "Введіть назву й пароль"
 
-#: settings/search.py:195
+#: settings/search.py:196
 msgid "Hotspot, data use, roaming and APN"
 msgstr "Точка доступу, трафік, роумінг і APN"
 
-#: settings/search.py:197
+#: settings/search.py:198
 msgid "The name phones see when joining this device"
 msgstr "Назва, яку бачать телефони при підключенні"
 
-#: settings/search.py:200
+#: settings/search.py:201
 msgid "Roaming, APN and the device's IP address"
 msgstr "Роумінг, APN та IP-адреса пристрою"
 
-#: settings/search.py:201
+#: settings/search.py:202
 msgid "A wheel remote's buttons and what they do"
 msgstr "Кнопки пульта керма та їхні дії"
 
-#: settings/search.py:202
+#: settings/search.py:203
 msgid "Car audio for alerts, and pairing devices"
 msgstr "Аудіо авто для попереджень і сполучення пристроїв"
 
-#: settings/search.py:204
+#: settings/search.py:205
 msgid "Updates and the release notes"
 msgstr "Оновлення й примітки до випуску"
 
-#: settings/search.py:205
+#: settings/search.py:206
 #: settings/software_tab.py:192
 msgid "Automatic Updates"
 msgstr "Автоматичні оновлення"
 
-#: settings/search.py:205
+#: settings/search.py:206
 #: settings/software_tab.py:192
 msgid "Download while parked, install when you turn off the car"
 msgstr "Завантаження на стоянці, встановлення після вимкнення авто"
 
-#: settings/search.py:206
+#: settings/search.py:207
 #: settings/software_tab.py:188
 #: settings/software_tab.py:140
 msgid "Release Channel"
 msgstr "Канал оновлень"
 
-#: settings/search.py:206
+#: settings/search.py:207
 #: settings/software_tab.py:140
 msgid "The branch to download updates from"
 msgstr "Гілка для завантаження оновлень"
 
-#: settings/search.py:207
+#: settings/search.py:208
 #: settings/software_tab.py:195
 msgid "Reset Settings"
 msgstr "Скинути налаштування"
 
-#: settings/search.py:207
+#: settings/search.py:208
 msgid "Back to the Essentials defaults"
 msgstr "Повернути типові налаштування Essentials"
 
-#: settings/search.py:208
+#: settings/search.py:209
 #: settings/software_tab.py:169
 #: settings/software_tab.py:198
 msgid "Uninstall"
 msgstr "Видалити програму"
 
-#: settings/search.py:208
+#: settings/search.py:209
 msgid "Remove this software from the device"
 msgstr "Видалити цю програму з пристрою"
 
-#: settings/search.py:382
-#: settings/search.py:373
+#: settings/search.py:383
+#: settings/search.py:374
 msgid "Search settings"
 msgstr "Пошук налаштувань"
 
-#: settings/search.py:271
+#: settings/search.py:272
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "Назвіть налаштування, наприклад обмеження швидкості. Завершивши, торкніться мікрофона."
 
-#: settings/search.py:353
-#: settings/search.py:312
+#: settings/search.py:354
+#: settings/search.py:313
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "Немає налаштувань за запитом «{}»"
 
-#: settings/search.py:354
+#: settings/search.py:355
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "Введіть назву чи дію, наприклад яскравість або зміна смуги"
 
@@ -5226,13 +5348,9 @@ msgstr "Увімкнути"
 msgid "Turn off"
 msgstr "Вимкнути"
 
-#: settings/window.py:319
+#: settings/window.py:324
 msgid "DEVICE"
 msgstr "ПРИСТРІЙ"
-
-#: settings/window.py:254
-msgid "Driving model"
-msgstr "Модель водіння"
 
 #: setup.py:33
 msgid "driving style"

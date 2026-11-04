@@ -26,7 +26,7 @@ msgid "Default"
 msgstr "Varsayılan"
 
 #: destinations.py:346
-#: settings/search.py:270
+#: settings/search.py:271
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:688
 msgid "Search"
 msgstr "Ara"
@@ -198,7 +198,7 @@ msgstr "Kamera başlatılıyor…"
 
 #: forecast.py:37
 #: forecast.py:37
-#: onroad/status.py:225
+#: onroad/status.py:226
 msgid "Fog"
 msgstr "Sis"
 
@@ -219,14 +219,14 @@ msgid "Freezing drizzle"
 msgstr "Donan çiseleme"
 
 #: forecast.py:40
-#: onroad/status.py:222
+#: onroad/status.py:223
 #: settings/speed_steering.py:239
 msgid "Rain"
 msgstr "Yağmur"
 
 #: forecast.py:40
 #: forecast.py:43
-#: onroad/status.py:223
+#: onroad/status.py:224
 msgid "Heavy rain"
 msgstr "Şiddetli yağmur"
 
@@ -240,7 +240,7 @@ msgid "Light snow"
 msgstr "Hafif kar"
 
 #: forecast.py:42
-#: onroad/status.py:224
+#: onroad/status.py:225
 #: settings/speed_steering.py:241
 msgid "Snow"
 msgstr "Kar"
@@ -393,7 +393,7 @@ msgstr "Güncelleme hazır"
 
 #: home.py:147
 #: settings/search.py:24
-#: settings/search.py:204
+#: settings/search.py:205
 msgid "Software"
 msgstr "Yazılım"
 
@@ -730,6 +730,7 @@ msgstr "{} s"
 #. Unit notation; keep as written.
 #: onroad/developer.py:291
 #: settings/device_sections.py:301
+#: settings/ram.py:28
 #, python-brace-format
 msgid "{} GB"
 msgstr "{} GB"
@@ -760,7 +761,7 @@ msgstr "kaynak"
 
 #: onroad/developer.py:155
 #: settings/search.py:24
-#: settings/window.py:42
+#: settings/window.py:44
 msgid "Device"
 msgstr "Cihaz"
 
@@ -807,6 +808,8 @@ msgstr "GPU"
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: onroad/developer.py:165
+#: settings/ram.py:97
+#: settings/search.py:30
 msgid "RAM"
 msgstr "RAM"
 
@@ -907,115 +910,115 @@ msgstr "Kamera"
 msgid "Mapbox"
 msgstr "Mapbox"
 
-#: onroad/status.py:120
-#: onroad/status.py:125
+#: onroad/status.py:121
+#: onroad/status.py:126
 msgid "Stopped"
 msgstr "Durdu"
 
-#: onroad/status.py:120
+#: onroad/status.py:121
 msgid "Stopping"
 msgstr "Duruyor"
 
-#: onroad/status.py:94
-#: onroad/status.py:106
+#: onroad/status.py:95
+#: onroad/status.py:107
 msgid "Steering paused"
 msgstr "Direksiyon duraklatıldı"
 
-#: onroad/status.py:108
+#: onroad/status.py:109
 msgid "Speed control paused"
 msgstr "Hız kontrolü duraklatıldı"
 
-#: onroad/status.py:113
+#: onroad/status.py:114
 msgid "Lane change blocked"
 msgstr "Şerit değiştirme engellendi"
 
-#: onroad/status.py:118
-#: onroad/status.py:148
+#: onroad/status.py:119
+#: onroad/status.py:149
 msgid "Light is green"
 msgstr "Yeşil ışık yandı"
 
-#: onroad/status.py:127
+#: onroad/status.py:128
 msgid "Slowing for curve"
 msgstr "Viraj için yavaşlıyor"
 
-#: onroad/status.py:129
+#: onroad/status.py:130
 msgid "Slowing for turn"
 msgstr "Dönüş için yavaşlıyor"
 
-#: onroad/status.py:132
+#: onroad/status.py:133
 msgid "Turning left"
 msgstr "Sola dönüyor"
 
-#: onroad/status.py:136
+#: onroad/status.py:137
 msgid "Slowing for traffic"
 msgstr "Trafik için yavaşlıyor"
 
-#: onroad/status.py:138
+#: onroad/status.py:139
 #, python-brace-format
 msgid "Matching limit {}"
 msgstr "{} sınırına uyarlanıyor"
 
-#: onroad/status.py:140
+#: onroad/status.py:141
 msgid "Coasting"
 msgstr "Süzülüyor"
 
-#: onroad/status.py:146
+#: onroad/status.py:147
 #, python-brace-format
 msgid "{} · longer gap"
 msgstr "{} · daha fazla takip mesafesi"
 
-#: onroad/status.py:150
+#: onroad/status.py:151
 msgid "Car ahead moved"
 msgstr "Öndeki araç hareket etti"
 
-#: onroad/status.py:152
+#: onroad/status.py:153
 msgid "Ready · tap resume"
 msgstr "Hazır · devam düğmesine basın"
 
-#: onroad/status.py:154
+#: onroad/status.py:155
 msgid "Steering only"
 msgstr "Yalnızca direksiyon"
 
-#: onroad/status.py:158
+#: onroad/status.py:159
 #, python-brace-format
 msgid "Low on RAM · {}% used"
 msgstr "RAM az · %{} kullanımda"
 
-#: onroad/status.py:115
+#: onroad/status.py:116
 #, python-brace-format
 msgid "Changing lanes {}"
 msgstr "{} şeride geçiyor"
 
-#: onroad/status.py:122
+#: onroad/status.py:123
 #, python-brace-format
 msgid "{} for stop sign"
 msgstr "Dur tabelası için {}"
 
-#: onroad/status.py:134
+#: onroad/status.py:135
 msgid "Turning right"
 msgstr "Sağa dönüyor"
 
-#: onroad/status.py:142
+#: onroad/status.py:143
 msgid "Pulse & glide · gliding"
 msgstr "Hızlan ve süzül · süzülüyor"
 
-#: onroad/status.py:142
+#: onroad/status.py:143
 msgid "Pulse & glide"
 msgstr "Hızlan ve süzül"
 
-#: onroad/status.py:100
+#: onroad/status.py:101
 msgid "Steering paused for signal"
 msgstr "Sinyal nedeniyle direksiyon duraklatıldı"
 
-#: onroad/status.py:102
+#: onroad/status.py:103
 msgid "Steering paused after turn"
 msgstr "Dönüşten sonra direksiyon duraklatıldı"
 
-#: onroad/status.py:125
+#: onroad/status.py:126
 msgid "Stopping ahead"
 msgstr "İleride duruyor"
 
-#: onroad/status.py:104
+#: onroad/status.py:105
 #, python-brace-format
 msgid "Steering paused · under {} {}"
 msgstr "Direksiyon duraklatıldı · {} {} altında"
@@ -1161,21 +1164,104 @@ msgid "Byp"
 msgstr "Byp"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:573
+#: onroad/view.py:578
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:573
+#: onroad/view.py:578
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/view.py:574
+#: onroad/view.py:579
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{} dk · {}"
+
+#: ram.py:29
+#: settings/window.py:258
+msgid "Driving model"
+msgstr "Sürüş modeli"
+
+#: ram.py:30
+msgid "Driver monitoring model"
+msgstr "Sürücü izleme modeli"
+
+#: ram.py:31
+msgid "This screen"
+msgstr "Bu ekran"
+
+#: ram.py:32
+msgid "Driving decisions"
+msgstr "Sürüş kararları"
+
+#: ram.py:33
+msgid "Steering and speed control"
+msgstr "Direksiyon ve hız kontrolü"
+
+#: ram.py:34
+msgid "Speed planning"
+msgstr "Hız planlama"
+
+#: ram.py:35
+msgid "Radar"
+msgstr "Radar"
+
+#: ram.py:36
+msgid "Position and heading"
+msgstr "Konum ve yön"
+
+#: ram.py:37
+msgid "Car calibration"
+msgstr "Araç kalibrasyonu"
+
+#: ram.py:38
+msgid "Camera calibration"
+msgstr "Kamera kalibrasyonu"
+
+#: ram.py:39
+msgid "Cameras"
+msgstr "Kameralar"
+
+#: ram.py:40
+msgid "Video recording"
+msgstr "Video kaydı"
+
+#: ram.py:41
+msgid "Drive logging"
+msgstr "Sürüş kaydı"
+
+#: ram.py:42
+#: settings/device_sections.py:357
+#: settings/search.py:181
+msgid "Uploads"
+msgstr "Yüklemeler"
+
+#: ram.py:43
+msgid "Remote access"
+msgstr "Uzaktan erişim"
+
+#: ram.py:44
+msgid "Speed limits and curves"
+msgstr "Hız sınırları ve virajlar"
+
+#: ram.py:45
+msgid "Routing"
+msgstr "Rota"
+
+#: ram.py:46
+msgid "Sounds"
+msgstr "Sesler"
+
+#: ram.py:47
+msgid "Car interface"
+msgstr "Araç arayüzü"
+
+#: ram.py:48
+msgid "Car connection"
+msgstr "Araç bağlantısı"
 
 #: routemap.py:154
 msgid "Finding a route…"
@@ -1676,7 +1762,7 @@ msgid "Pairing waits until you're parked."
 msgstr "Eşleştirme park etmenizi bekler."
 
 #: settings/bluetooth_tab.py:248
-#: settings/device_sections.py:389
+#: settings/device_sections.py:393
 #: settings/display.py:352
 msgid "Save"
 msgstr "Kaydet"
@@ -1861,7 +1947,7 @@ msgstr "Test durumu"
 
 #: settings/can_recorder.py:71
 #: settings/developer.py:154
-#: settings/search.py:184
+#: settings/search.py:185
 msgid "CAN test recorder"
 msgstr "CAN test kaydedicisi"
 
@@ -1961,7 +2047,7 @@ msgstr "Hücresel"
 
 #: settings/connections.py:69
 #: settings/search.py:31
-#: settings/search.py:202
+#: settings/search.py:203
 msgid "Car Audio & Devices"
 msgstr "Araç sesi ve cihazlar"
 
@@ -1970,7 +2056,7 @@ msgid "openpilot longitudinal control is in alpha for this car and turns off Aut
 msgstr "Bu araçta openpilot boylamsal kontrolü alfa aşamasındadır ve Otomatik Acil Frenlemeyi (AEB) kapatır. Varsayılan, aracın kendi hız sabitleyicisidir. Birlikte Deneysel mod önerilir. Araç çalışıyorsa openpilot yeniden başlar."
 
 #: settings/developer.py:145
-#: settings/search.py:189
+#: settings/search.py:190
 msgid "openpilot Longitudinal (Alpha)"
 msgstr "openpilot boylamsal kontrolü (Alfa)"
 
@@ -2001,7 +2087,7 @@ msgstr "GitHub hesabındaki tüm açık anahtarları ekler. Başkasının hesab�
 
 #: settings/developer.py:155
 #: settings/search.py:30
-#: settings/search.py:183
+#: settings/search.py:184
 msgid "Developer"
 msgstr "Geliştirici"
 
@@ -2026,7 +2112,7 @@ msgstr "Aç"
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: settings/developer.py:148
-#: settings/search.py:185
+#: settings/search.py:186
 msgid "ADB"
 msgstr "ADB"
 
@@ -2036,7 +2122,7 @@ msgstr "USB veya ağ üzerinden bağlanın (docs.comma.ai). Araç kapalıyken de
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: settings/developer.py:149
-#: settings/search.py:186
+#: settings/search.py:187
 msgid "SSH"
 msgstr "SSH"
 
@@ -2045,13 +2131,13 @@ msgid "Remote shell access with the keys below"
 msgstr "Aşağıdaki anahtarlarla uzaktan kabuk erişimi"
 
 #: settings/developer.py:150
-#: settings/search.py:187
+#: settings/search.py:188
 #: selfdrive/ui/layouts/settings/developer.py:53
 msgid "SSH Keys"
 msgstr "SSH anahtarları"
 
 #: settings/developer.py:151
-#: settings/search.py:188
+#: settings/search.py:189
 #: selfdrive/ui/layouts/settings/developer.py:56
 msgid "Joystick Debug Mode"
 msgstr "Oyun çubuğu hata ayıklama"
@@ -2061,18 +2147,18 @@ msgid "Drive openpilot's controls from a joystick. Change it with the car off."
 msgstr "openpilot kontrollerini oyun çubuğuyla kullanın. Araç kapalıyken değiştirin."
 
 #: settings/developer.py:153
-#: settings/search.py:190
+#: settings/search.py:191
 #: selfdrive/ui/layouts/settings/developer.py:72
 msgid "UI Debug Mode"
 msgstr "Arayüz hata ayıklama"
 
 #: settings/developer.py:153
-#: settings/search.py:190
+#: settings/search.py:191
 msgid "Shows touches and the frame rate"
 msgstr "Dokunuşları ve kare hızını gösterir"
 
 #: settings/developer.py:154
-#: settings/search.py:184
+#: settings/search.py:185
 msgid "Record traffic and mark manual lock/unlock actions"
 msgstr "Trafiği kaydedin, elle kilitleme ve açma işlemlerini işaretleyin"
 
@@ -2440,6 +2526,7 @@ msgid "Brighter"
 msgstr "Daha parlak"
 
 #: settings/device_sections.py:301
+#: settings/ram.py:28
 #, python-brace-format
 msgid "{} MB"
 msgstr "{} MB"
@@ -2634,39 +2721,34 @@ msgstr "KAYIT VE YÜKLEMELER"
 
 #: settings/device_sections.py:357
 #: settings/search.py:181
-msgid "Uploads"
-msgstr "Yüklemeler"
-
-#: settings/device_sections.py:357
-#: settings/search.py:181
 msgid "Drive logs and video for debugging"
 msgstr "Hata ayıklama için sürüş günlükleri ve video"
 
-#: settings/device_sections.py:390
+#: settings/device_sections.py:394
 msgid "Optional"
 msgstr "İsteğe bağlı"
 
-#: settings/device_sections.py:400
+#: settings/device_sections.py:404
 msgid "Sent. Thank you!"
 msgstr "Gönderildi. Teşekkürler!"
 
-#: settings/device_sections.py:400
+#: settings/device_sections.py:404
 msgid "Send report"
 msgstr "Rapor gönder"
 
-#: settings/device_sections.py:408
+#: settings/device_sections.py:412
 msgid "Details (optional)"
 msgstr "Ayrıntılar (isteğe bağlı)"
 
-#: settings/device_sections.py:408
+#: settings/device_sections.py:412
 msgid "Where and when it happened"
 msgstr "Nerede ve ne zaman oldu"
 
-#: settings/device_sections.py:410
+#: settings/device_sections.py:414
 msgid "Discord name (optional)"
 msgstr "Discord adı (isteğe bağlı)"
 
-#: settings/device_sections.py:410
+#: settings/device_sections.py:414
 msgid "So we can follow up"
 msgstr "Size geri dönebilmemiz için"
 
@@ -2700,15 +2782,15 @@ msgstr "Şimdi yedekle"
 msgid "Delete all"
 msgstr "Tümünü sil"
 
-#: settings/device_sections.py:404
+#: settings/device_sections.py:408
 msgid "What happened?"
 msgstr "Ne oldu?"
 
-#: settings/device_sections.py:409
+#: settings/device_sections.py:413
 msgid "Details"
 msgstr "Ayrıntılar"
 
-#: settings/device_sections.py:411
+#: settings/device_sections.py:415
 msgid "Discord name"
 msgstr "Discord adı"
 
@@ -3049,7 +3131,7 @@ msgstr "Ek ayrıntılar ve ince ayarlar, her biri tek anahtarın arkasında"
 
 #: settings/driving_tab.py:129
 #: settings/search.py:24
-#: settings/window.py:42
+#: settings/window.py:44
 msgid "Driving"
 msgstr "Sürüş"
 
@@ -3540,7 +3622,7 @@ msgstr "Düzenle"
 
 #: settings/network_tab.py:225
 #: settings/network_tab.py:217
-#: settings/search.py:200
+#: settings/search.py:201
 msgid "Roaming, APN and IP address"
 msgstr "Dolaşım, APN ve IP adresi"
 
@@ -3555,7 +3637,7 @@ msgstr "Parola girin"
 
 #: settings/network_tab.py:106
 #: settings/network_tab.py:213
-#: settings/search.py:197
+#: settings/search.py:198
 msgid "Hotspot name"
 msgstr "Erişim noktası adı"
 
@@ -3564,32 +3646,32 @@ msgid "A saved network already uses this name"
 msgstr "Kayıtlı bir ağ bu adı zaten kullanıyor"
 
 #: settings/network_tab.py:212
-#: settings/search.py:196
+#: settings/search.py:197
 msgid "Hotspot"
 msgstr "Erişim noktası"
 
 #: settings/network_tab.py:212
-#: settings/search.py:196
+#: settings/search.py:197
 msgid "Share this device's connection"
 msgstr "Bu cihazın bağlantısını paylaş"
 
 #: settings/network_tab.py:215
-#: settings/search.py:198
+#: settings/search.py:199
 msgid "Hotspot Password"
 msgstr "Erişim noktası parolası"
 
 #: settings/network_tab.py:215
-#: settings/search.py:198
+#: settings/search.py:199
 msgid "For phones joining this device's hotspot"
 msgstr "Bu cihazın erişim noktasına katılan telefonlar için"
 
 #: settings/network_tab.py:216
-#: settings/search.py:199
+#: settings/search.py:200
 msgid "Save Data"
 msgstr "Veri tasarrufu"
 
 #: settings/network_tab.py:216
-#: settings/search.py:199
+#: settings/search.py:200
 msgid "No large uploads on cellular or phone hotspots"
 msgstr "Hücresel veya telefon erişim noktalarında büyük yükleme yapılmaz"
 
@@ -3602,7 +3684,7 @@ msgid "Use cellular data outside your carrier's network"
 msgstr "Operatörünüzün ağı dışında hücresel veri kullanın"
 
 #: settings/network_tab.py:224
-#: settings/search.py:193
+#: settings/search.py:194
 msgid "IP Address"
 msgstr "IP adresi"
 
@@ -3616,7 +3698,7 @@ msgid "Scanning for networks…"
 msgstr "Ağlar taranıyor…"
 
 #: settings/network_tab.py:199
-#: settings/search.py:194
+#: settings/search.py:195
 msgid "Join a hidden network"
 msgstr "Gizli ağa katıl"
 
@@ -3644,8 +3726,44 @@ msgstr "Açık"
 msgid "Automatic"
 msgstr "Otomatik"
 
+#: settings/ram.py:44
+#, python-brace-format
+msgid "{} · {}%"
+msgstr "{} · %{}"
+
+#: settings/ram.py:37
+#, python-brace-format
+msgid "Today {}"
+msgstr "Bugün {}"
+
+#: settings/ram.py:39
+#, python-brace-format
+msgid "Yesterday {}"
+msgstr "Dün {}"
+
+#: settings/ram.py:65
+msgid "Everything else"
+msgstr "Diğer her şey"
+
+#: settings/ram.py:89
+#, python-brace-format
+msgid "Now {}% used"
+msgstr "Şu an %{} kullanımda"
+
+#: settings/ram.py:98
+msgid "What was using it at the peak of each drive that ran low. The last three drives are kept."
+msgstr "RAM'i az kalan her sürüşün zirvesinde onu ne kullanıyordu. Son üç sürüş saklanır."
+
+#: settings/ram.py:99
+msgid "Added to Report a Problem. A reboot clears RAM."
+msgstr "Sorun bildir'e eklenir. Yeniden başlatmak RAM'i boşaltır."
+
+#: settings/ram.py:96
+msgid "No drive has run low on RAM yet."
+msgstr "Henüz RAM'i az kalan bir sürüş yok."
+
 #: settings/search.py:24
-#: settings/window.py:42
+#: settings/window.py:44
 msgid "Connections"
 msgstr "Bağlantılar"
 
@@ -3674,8 +3792,8 @@ msgid "Bundle Overrides"
 msgstr "Paket ayarlarını geçersiz kıl"
 
 #: settings/search.py:30
-#: settings/search.py:182
-#: settings/window.py:324
+#: settings/search.py:183
+#: settings/window.py:330
 msgid "Report a Problem"
 msgstr "Sorun bildir"
 
@@ -4229,125 +4347,129 @@ msgid "Cabin audio in your drive recordings"
 msgstr "Sürüş kayıtlarındaki kabin sesi"
 
 #: settings/search.py:182
+msgid "What was using RAM on drives that ran low"
+msgstr "RAM'i az kalan sürüşlerde RAM'i ne kullanıyordu"
+
+#: settings/search.py:183
 msgid "Send what happened to the developers"
 msgstr "Olanları geliştiricilere gönderin"
 
-#: settings/search.py:183
+#: settings/search.py:184
 msgid "ADB, SSH and debug modes"
 msgstr "ADB, SSH ve hata ayıklama modları"
 
-#: settings/search.py:185
+#: settings/search.py:186
 msgid "Connect over USB or the network"
 msgstr "USB veya ağ üzerinden bağlanın"
 
-#: settings/search.py:186
+#: settings/search.py:187
 msgid "Remote shell access"
 msgstr "Uzaktan kabuk erişimi"
 
-#: settings/search.py:187
+#: settings/search.py:188
 msgid "Adds every public key in a GitHub account"
 msgstr "GitHub hesabındaki tüm açık anahtarları ekler"
 
-#: settings/search.py:188
+#: settings/search.py:189
 msgid "Drive openpilot's controls from a joystick"
 msgstr "openpilot kontrollerini oyun çubuğuyla kullanın"
 
-#: settings/search.py:189
+#: settings/search.py:190
 msgid "Turns off the car's emergency braking"
 msgstr "Aracın acil frenlemesini kapatır"
 
-#: settings/search.py:192
+#: settings/search.py:193
 msgid "Networks nearby, and joining one"
 msgstr "Yakındaki ağlar ve bir ağa katılma"
 
-#: settings/search.py:193
+#: settings/search.py:194
 msgid "This device's local address, beside the connected network"
 msgstr "Bağlı ağın yanında bu cihazın yerel adresi"
 
-#: settings/search.py:194
+#: settings/search.py:195
 msgid "Enter its name and password"
 msgstr "Adını ve parolasını girin"
 
-#: settings/search.py:195
+#: settings/search.py:196
 msgid "Hotspot, data use, roaming and APN"
 msgstr "Erişim noktası, veri kullanımı, dolaşım ve APN"
 
-#: settings/search.py:197
+#: settings/search.py:198
 msgid "The name phones see when joining this device"
 msgstr "Telefonların bu cihaza katılırken gördüğü ad"
 
-#: settings/search.py:200
+#: settings/search.py:201
 msgid "Roaming, APN and the device's IP address"
 msgstr "Dolaşım, APN ve cihazın IP adresi"
 
-#: settings/search.py:201
+#: settings/search.py:202
 msgid "A wheel remote's buttons and what they do"
 msgstr "Direksiyon kumandasının düğmeleri ve işlevleri"
 
-#: settings/search.py:202
+#: settings/search.py:203
 msgid "Car audio for alerts, and pairing devices"
 msgstr "Uyarılar için araç sesi ve cihaz eşleştirme"
 
-#: settings/search.py:204
+#: settings/search.py:205
 msgid "Updates and the release notes"
 msgstr "Güncellemeler ve sürüm notları"
 
-#: settings/search.py:205
+#: settings/search.py:206
 #: settings/software_tab.py:192
 msgid "Automatic Updates"
 msgstr "Otomatik güncellemeler"
 
-#: settings/search.py:205
+#: settings/search.py:206
 #: settings/software_tab.py:192
 msgid "Download while parked, install when you turn off the car"
 msgstr "Park halinde indir, aracı kapatınca yükle"
 
-#: settings/search.py:206
+#: settings/search.py:207
 #: settings/software_tab.py:188
 #: settings/software_tab.py:140
 msgid "Release Channel"
 msgstr "Sürüm kanalı"
 
-#: settings/search.py:206
+#: settings/search.py:207
 #: settings/software_tab.py:140
 msgid "The branch to download updates from"
 msgstr "Güncellemelerin indirileceği dal"
 
-#: settings/search.py:207
+#: settings/search.py:208
 #: settings/software_tab.py:195
 msgid "Reset Settings"
 msgstr "Ayarları sıfırla"
 
-#: settings/search.py:207
+#: settings/search.py:208
 msgid "Back to the Essentials defaults"
 msgstr "Essentials varsayılanlarına dön"
 
-#: settings/search.py:208
+#: settings/search.py:209
 #: settings/software_tab.py:169
 #: settings/software_tab.py:198
 msgid "Uninstall"
 msgstr "Kaldır"
 
-#: settings/search.py:208
+#: settings/search.py:209
 msgid "Remove this software from the device"
 msgstr "Bu yazılımı cihazdan kaldır"
 
-#: settings/search.py:382
-#: settings/search.py:373
+#: settings/search.py:383
+#: settings/search.py:374
 msgid "Search settings"
 msgstr "Ayarlarda ara"
 
-#: settings/search.py:271
+#: settings/search.py:272
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "Hız sınırı gibi bir ayar söyleyin. Bitirdiğinizde mikrofona dokunun."
 
-#: settings/search.py:353
-#: settings/search.py:312
+#: settings/search.py:354
+#: settings/search.py:313
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "“{}” ile eşleşen ayar yok"
 
-#: settings/search.py:354
+#: settings/search.py:355
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "Parlaklık veya şerit değişimi gibi ayar adını ya da işlevini yazın"
 
@@ -5226,13 +5348,9 @@ msgstr "Aç"
 msgid "Turn off"
 msgstr "Kapat"
 
-#: settings/window.py:319
+#: settings/window.py:324
 msgid "DEVICE"
 msgstr "CİHAZ"
-
-#: settings/window.py:254
-msgid "Driving model"
-msgstr "Sürüş modeli"
 
 #: setup.py:33
 msgid "driving style"

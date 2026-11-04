@@ -17,7 +17,7 @@ def main(frame, save, out, tap, gui_app):
   win = _search_window()
   win.show_event()
   win.select_tab(Tab.DEVICE)
-  win.top.select(5)
+  win.top.select(6)
   recorder = FakeRecorder()
   page = CanRecorderPage(recorder, allowed=lambda: True, clock_ns=lambda: 13_034_000_000)
   win.push(page)

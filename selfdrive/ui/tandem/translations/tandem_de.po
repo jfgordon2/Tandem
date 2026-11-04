@@ -26,7 +26,7 @@ msgid "Default"
 msgstr "Standard"
 
 #: destinations.py:346
-#: settings/search.py:270
+#: settings/search.py:271
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:688
 msgid "Search"
 msgstr "Suchen"
@@ -198,7 +198,7 @@ msgstr "Kamera startet…"
 
 #: forecast.py:37
 #: forecast.py:37
-#: onroad/status.py:225
+#: onroad/status.py:226
 msgid "Fog"
 msgstr "Nebel"
 
@@ -219,14 +219,14 @@ msgid "Freezing drizzle"
 msgstr "Gefrierender Nieselregen"
 
 #: forecast.py:40
-#: onroad/status.py:222
+#: onroad/status.py:223
 #: settings/speed_steering.py:239
 msgid "Rain"
 msgstr "Regen"
 
 #: forecast.py:40
 #: forecast.py:43
-#: onroad/status.py:223
+#: onroad/status.py:224
 msgid "Heavy rain"
 msgstr "Starker Regen"
 
@@ -240,7 +240,7 @@ msgid "Light snow"
 msgstr "Leichter Schneefall"
 
 #: forecast.py:42
-#: onroad/status.py:224
+#: onroad/status.py:225
 #: settings/speed_steering.py:241
 msgid "Snow"
 msgstr "Schnee"
@@ -392,7 +392,7 @@ msgstr "Update bereit"
 
 #: home.py:147
 #: settings/search.py:24
-#: settings/search.py:204
+#: settings/search.py:205
 msgid "Software"
 msgstr "Software"
 
@@ -728,6 +728,7 @@ msgstr "{} s"
 #. Unit notation; keep as written.
 #: onroad/developer.py:291
 #: settings/device_sections.py:301
+#: settings/ram.py:28
 #, python-brace-format
 msgid "{} GB"
 msgstr "{} GB"
@@ -758,7 +759,7 @@ msgstr "Quelle"
 
 #: onroad/developer.py:155
 #: settings/search.py:24
-#: settings/window.py:42
+#: settings/window.py:44
 msgid "Device"
 msgstr "Gerät"
 
@@ -805,6 +806,8 @@ msgstr "GPU"
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: onroad/developer.py:165
+#: settings/ram.py:97
+#: settings/search.py:30
 msgid "RAM"
 msgstr "RAM"
 
@@ -905,115 +908,115 @@ msgstr "Kamera"
 msgid "Mapbox"
 msgstr "Mapbox"
 
-#: onroad/status.py:120
-#: onroad/status.py:125
+#: onroad/status.py:121
+#: onroad/status.py:126
 msgid "Stopped"
 msgstr "Angehalten"
 
-#: onroad/status.py:120
+#: onroad/status.py:121
 msgid "Stopping"
 msgstr "Hält an"
 
-#: onroad/status.py:94
-#: onroad/status.py:106
+#: onroad/status.py:95
+#: onroad/status.py:107
 msgid "Steering paused"
 msgstr "Lenkung pausiert"
 
-#: onroad/status.py:108
+#: onroad/status.py:109
 msgid "Speed control paused"
 msgstr "Temporegelung pausiert"
 
-#: onroad/status.py:113
+#: onroad/status.py:114
 msgid "Lane change blocked"
 msgstr "Spurwechsel blockiert"
 
-#: onroad/status.py:118
-#: onroad/status.py:148
+#: onroad/status.py:119
+#: onroad/status.py:149
 msgid "Light is green"
 msgstr "Die Ampel ist grün"
 
-#: onroad/status.py:127
+#: onroad/status.py:128
 msgid "Slowing for curve"
 msgstr "Bremst für die Kurve"
 
-#: onroad/status.py:129
+#: onroad/status.py:130
 msgid "Slowing for turn"
 msgstr "Bremst zum Abbiegen"
 
-#: onroad/status.py:132
+#: onroad/status.py:133
 msgid "Turning left"
 msgstr "Biegt links ab"
 
-#: onroad/status.py:136
+#: onroad/status.py:137
 msgid "Slowing for traffic"
 msgstr "Bremst wegen Verkehr"
 
-#: onroad/status.py:138
+#: onroad/status.py:139
 #, python-brace-format
 msgid "Matching limit {}"
 msgstr "Passt an Limit {} an"
 
-#: onroad/status.py:140
+#: onroad/status.py:141
 msgid "Coasting"
 msgstr "Rollt"
 
-#: onroad/status.py:146
+#: onroad/status.py:147
 #, python-brace-format
 msgid "{} · longer gap"
 msgstr "{} · größerer Abstand"
 
-#: onroad/status.py:150
+#: onroad/status.py:151
 msgid "Car ahead moved"
 msgstr "Vorderfahrzeug fährt los"
 
-#: onroad/status.py:152
+#: onroad/status.py:153
 msgid "Ready · tap resume"
 msgstr "Bereit · Fortsetzen tippen"
 
-#: onroad/status.py:154
+#: onroad/status.py:155
 msgid "Steering only"
 msgstr "Nur Lenkung"
 
-#: onroad/status.py:158
+#: onroad/status.py:159
 #, python-brace-format
 msgid "Low on RAM · {}% used"
 msgstr "Wenig RAM · {} % belegt"
 
-#: onroad/status.py:115
+#: onroad/status.py:116
 #, python-brace-format
 msgid "Changing lanes {}"
 msgstr "Spurwechsel {}"
 
-#: onroad/status.py:122
+#: onroad/status.py:123
 #, python-brace-format
 msgid "{} for stop sign"
 msgstr "{} für Stoppschild"
 
-#: onroad/status.py:134
+#: onroad/status.py:135
 msgid "Turning right"
 msgstr "Biegt rechts ab"
 
-#: onroad/status.py:142
+#: onroad/status.py:143
 msgid "Pulse & glide · gliding"
 msgstr "Pulse & Glide · gleitet"
 
-#: onroad/status.py:142
+#: onroad/status.py:143
 msgid "Pulse & glide"
 msgstr "Pulse & Glide"
 
-#: onroad/status.py:100
+#: onroad/status.py:101
 msgid "Steering paused for signal"
 msgstr "Lenkung pausiert wegen Blinker"
 
-#: onroad/status.py:102
+#: onroad/status.py:103
 msgid "Steering paused after turn"
 msgstr "Lenkung pausiert nach dem Abbiegen"
 
-#: onroad/status.py:125
+#: onroad/status.py:126
 msgid "Stopping ahead"
 msgstr "Halt voraus"
 
-#: onroad/status.py:104
+#: onroad/status.py:105
 #, python-brace-format
 msgid "Steering paused · under {} {}"
 msgstr "Lenkung pausiert · unter {} {}"
@@ -1159,21 +1162,104 @@ msgid "Byp"
 msgstr "Byp"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:573
+#: onroad/view.py:578
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:573
+#: onroad/view.py:578
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/view.py:574
+#: onroad/view.py:579
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{} Min. · {}"
+
+#: ram.py:29
+#: settings/window.py:258
+msgid "Driving model"
+msgstr "Fahrmodell"
+
+#: ram.py:30
+msgid "Driver monitoring model"
+msgstr "Modell der Fahrerüberwachung"
+
+#: ram.py:31
+msgid "This screen"
+msgstr "Dieser Bildschirm"
+
+#: ram.py:32
+msgid "Driving decisions"
+msgstr "Fahrentscheidungen"
+
+#: ram.py:33
+msgid "Steering and speed control"
+msgstr "Lenkung und Tempo"
+
+#: ram.py:34
+msgid "Speed planning"
+msgstr "Tempoplanung"
+
+#: ram.py:35
+msgid "Radar"
+msgstr "Radar"
+
+#: ram.py:36
+msgid "Position and heading"
+msgstr "Position und Richtung"
+
+#: ram.py:37
+msgid "Car calibration"
+msgstr "Fahrzeugkalibrierung"
+
+#: ram.py:38
+msgid "Camera calibration"
+msgstr "Kamerakalibrierung"
+
+#: ram.py:39
+msgid "Cameras"
+msgstr "Kameras"
+
+#: ram.py:40
+msgid "Video recording"
+msgstr "Videoaufnahme"
+
+#: ram.py:41
+msgid "Drive logging"
+msgstr "Fahrtprotokoll"
+
+#: ram.py:42
+#: settings/device_sections.py:357
+#: settings/search.py:181
+msgid "Uploads"
+msgstr "Uploads"
+
+#: ram.py:43
+msgid "Remote access"
+msgstr "Fernzugriff"
+
+#: ram.py:44
+msgid "Speed limits and curves"
+msgstr "Tempolimits und Kurven"
+
+#: ram.py:45
+msgid "Routing"
+msgstr "Routenplanung"
+
+#: ram.py:46
+msgid "Sounds"
+msgstr "Töne"
+
+#: ram.py:47
+msgid "Car interface"
+msgstr "Fahrzeugschnittstelle"
+
+#: ram.py:48
+msgid "Car connection"
+msgstr "Fahrzeugverbindung"
 
 #: routemap.py:154
 msgid "Finding a route…"
@@ -1673,7 +1759,7 @@ msgid "Pairing waits until you're parked."
 msgstr "Die Kopplung wartet, bis du parkst."
 
 #: settings/bluetooth_tab.py:248
-#: settings/device_sections.py:389
+#: settings/device_sections.py:393
 #: settings/display.py:352
 msgid "Save"
 msgstr "Speichern"
@@ -1858,7 +1944,7 @@ msgstr "Teststatus"
 
 #: settings/can_recorder.py:71
 #: settings/developer.py:154
-#: settings/search.py:184
+#: settings/search.py:185
 msgid "CAN test recorder"
 msgstr "CAN-Testrekorder"
 
@@ -1957,7 +2043,7 @@ msgstr "Mobilfunk"
 
 #: settings/connections.py:69
 #: settings/search.py:31
-#: settings/search.py:202
+#: settings/search.py:203
 msgid "Car Audio & Devices"
 msgstr "Auto-Audio & Geräte"
 
@@ -1966,7 +2052,7 @@ msgid "openpilot longitudinal control is in alpha for this car and turns off Aut
 msgstr "Die Längsregelung von openpilot ist für dieses Auto im Alpha-Stadium und schaltet den Notbremsassistenten (AEB) ab. Standard ist der eigene Tempomat des Autos. Dazu wird der experimentelle Modus empfohlen. openpilot startet neu, wenn das Auto an ist."
 
 #: settings/developer.py:145
-#: settings/search.py:189
+#: settings/search.py:190
 msgid "openpilot Longitudinal (Alpha)"
 msgstr "openpilot-Längsregelung (Alpha)"
 
@@ -1997,7 +2083,7 @@ msgstr "Fügt jeden öffentlichen Schlüssel eines GitHub-Kontos hinzu. Nutze ni
 
 #: settings/developer.py:155
 #: settings/search.py:30
-#: settings/search.py:183
+#: settings/search.py:184
 msgid "Developer"
 msgstr "Entwickler"
 
@@ -2022,7 +2108,7 @@ msgstr "Einschalten"
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: settings/developer.py:148
-#: settings/search.py:185
+#: settings/search.py:186
 msgid "ADB"
 msgstr "ADB"
 
@@ -2032,7 +2118,7 @@ msgstr "Verbinde dich per USB oder Netzwerk (docs.comma.ai). Bei ausgeschaltetem
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: settings/developer.py:149
-#: settings/search.py:186
+#: settings/search.py:187
 msgid "SSH"
 msgstr "SSH"
 
@@ -2041,13 +2127,13 @@ msgid "Remote shell access with the keys below"
 msgstr "Fernzugriff auf die Shell mit den Schlüsseln unten"
 
 #: settings/developer.py:150
-#: settings/search.py:187
+#: settings/search.py:188
 #: selfdrive/ui/layouts/settings/developer.py:53
 msgid "SSH Keys"
 msgstr "SSH-Schlüssel"
 
 #: settings/developer.py:151
-#: settings/search.py:188
+#: settings/search.py:189
 #: selfdrive/ui/layouts/settings/developer.py:56
 msgid "Joystick Debug Mode"
 msgstr "Joystick-Debugmodus"
@@ -2057,18 +2143,18 @@ msgid "Drive openpilot's controls from a joystick. Change it with the car off."
 msgstr "Steuert openpilot mit einem Joystick. Bei ausgeschaltetem Auto ändern."
 
 #: settings/developer.py:153
-#: settings/search.py:190
+#: settings/search.py:191
 #: selfdrive/ui/layouts/settings/developer.py:72
 msgid "UI Debug Mode"
 msgstr "UI-Debugmodus"
 
 #: settings/developer.py:153
-#: settings/search.py:190
+#: settings/search.py:191
 msgid "Shows touches and the frame rate"
 msgstr "Zeigt Berührungen und die Bildrate"
 
 #: settings/developer.py:154
-#: settings/search.py:184
+#: settings/search.py:185
 msgid "Record traffic and mark manual lock/unlock actions"
 msgstr "CAN-Daten aufzeichnen und manuelles Ver- und Entriegeln markieren"
 
@@ -2436,6 +2522,7 @@ msgid "Brighter"
 msgstr "Heller"
 
 #: settings/device_sections.py:301
+#: settings/ram.py:28
 #, python-brace-format
 msgid "{} MB"
 msgstr "{} MB"
@@ -2628,39 +2715,34 @@ msgstr "AUFNAHME & UPLOADS"
 
 #: settings/device_sections.py:357
 #: settings/search.py:181
-msgid "Uploads"
-msgstr "Uploads"
-
-#: settings/device_sections.py:357
-#: settings/search.py:181
 msgid "Drive logs and video for debugging"
 msgstr "Fahrtprotokolle und Video zur Fehlersuche"
 
-#: settings/device_sections.py:390
+#: settings/device_sections.py:394
 msgid "Optional"
 msgstr "Optional"
 
-#: settings/device_sections.py:400
+#: settings/device_sections.py:404
 msgid "Sent. Thank you!"
 msgstr "Gesendet. Danke!"
 
-#: settings/device_sections.py:400
+#: settings/device_sections.py:404
 msgid "Send report"
 msgstr "Bericht senden"
 
-#: settings/device_sections.py:408
+#: settings/device_sections.py:412
 msgid "Details (optional)"
 msgstr "Details (optional)"
 
-#: settings/device_sections.py:408
+#: settings/device_sections.py:412
 msgid "Where and when it happened"
 msgstr "Wo und wann es passiert ist"
 
-#: settings/device_sections.py:410
+#: settings/device_sections.py:414
 msgid "Discord name (optional)"
 msgstr "Discord-Name (optional)"
 
-#: settings/device_sections.py:410
+#: settings/device_sections.py:414
 msgid "So we can follow up"
 msgstr "Damit wir nachfragen können"
 
@@ -2694,15 +2776,15 @@ msgstr "Jetzt sichern"
 msgid "Delete all"
 msgstr "Alle löschen"
 
-#: settings/device_sections.py:404
+#: settings/device_sections.py:408
 msgid "What happened?"
 msgstr "Was ist passiert?"
 
-#: settings/device_sections.py:409
+#: settings/device_sections.py:413
 msgid "Details"
 msgstr "Details"
 
-#: settings/device_sections.py:411
+#: settings/device_sections.py:415
 msgid "Discord name"
 msgstr "Discord-Name"
 
@@ -3043,7 +3125,7 @@ msgstr "Mehr Details und Feinabstimmung, jeweils hinter einem Schalter"
 
 #: settings/driving_tab.py:129
 #: settings/search.py:24
-#: settings/window.py:42
+#: settings/window.py:44
 msgid "Driving"
 msgstr "Fahren"
 
@@ -3534,7 +3616,7 @@ msgstr "Bearbeiten"
 
 #: settings/network_tab.py:225
 #: settings/network_tab.py:217
-#: settings/search.py:200
+#: settings/search.py:201
 msgid "Roaming, APN and IP address"
 msgstr "Roaming, APN und IP-Adresse"
 
@@ -3549,7 +3631,7 @@ msgstr "Passwort eingeben"
 
 #: settings/network_tab.py:106
 #: settings/network_tab.py:213
-#: settings/search.py:197
+#: settings/search.py:198
 msgid "Hotspot name"
 msgstr "Hotspot-Name"
 
@@ -3558,32 +3640,32 @@ msgid "A saved network already uses this name"
 msgstr "Ein gespeichertes Netzwerk verwendet bereits diesen Namen"
 
 #: settings/network_tab.py:212
-#: settings/search.py:196
+#: settings/search.py:197
 msgid "Hotspot"
 msgstr "Hotspot"
 
 #: settings/network_tab.py:212
-#: settings/search.py:196
+#: settings/search.py:197
 msgid "Share this device's connection"
 msgstr "Die Verbindung dieses Geräts teilen"
 
 #: settings/network_tab.py:215
-#: settings/search.py:198
+#: settings/search.py:199
 msgid "Hotspot Password"
 msgstr "Hotspot-Passwort"
 
 #: settings/network_tab.py:215
-#: settings/search.py:198
+#: settings/search.py:199
 msgid "For phones joining this device's hotspot"
 msgstr "Für Handys, die sich mit dem Hotspot verbinden"
 
 #: settings/network_tab.py:216
-#: settings/search.py:199
+#: settings/search.py:200
 msgid "Save Data"
 msgstr "Daten sparen"
 
 #: settings/network_tab.py:216
-#: settings/search.py:199
+#: settings/search.py:200
 msgid "No large uploads on cellular or phone hotspots"
 msgstr "Keine großen Uploads über Mobilfunk oder Handy-Hotspots"
 
@@ -3596,7 +3678,7 @@ msgid "Use cellular data outside your carrier's network"
 msgstr "Mobile Daten außerhalb des eigenen Netzes nutzen"
 
 #: settings/network_tab.py:224
-#: settings/search.py:193
+#: settings/search.py:194
 msgid "IP Address"
 msgstr "IP-Adresse"
 
@@ -3610,7 +3692,7 @@ msgid "Scanning for networks…"
 msgstr "Suche nach Netzwerken…"
 
 #: settings/network_tab.py:199
-#: settings/search.py:194
+#: settings/search.py:195
 msgid "Join a hidden network"
 msgstr "Verstecktem Netzwerk beitreten"
 
@@ -3638,8 +3720,44 @@ msgstr "Offen"
 msgid "Automatic"
 msgstr "Automatisch"
 
+#: settings/ram.py:44
+#, python-brace-format
+msgid "{} · {}%"
+msgstr "{} · {} %"
+
+#: settings/ram.py:37
+#, python-brace-format
+msgid "Today {}"
+msgstr "Heute {}"
+
+#: settings/ram.py:39
+#, python-brace-format
+msgid "Yesterday {}"
+msgstr "Gestern {}"
+
+#: settings/ram.py:65
+msgid "Everything else"
+msgstr "Alles andere"
+
+#: settings/ram.py:89
+#, python-brace-format
+msgid "Now {}% used"
+msgstr "Jetzt {} % belegt"
+
+#: settings/ram.py:98
+msgid "What was using it at the peak of each drive that ran low. The last three drives are kept."
+msgstr "Was ihn auf dem Höhepunkt jeder Fahrt mit wenig RAM belegt hat. Die letzten drei Fahrten bleiben gespeichert."
+
+#: settings/ram.py:99
+msgid "Added to Report a Problem. A reboot clears RAM."
+msgstr "Wird mit „Problem melden“ gesendet. Ein Neustart gibt RAM frei."
+
+#: settings/ram.py:96
+msgid "No drive has run low on RAM yet."
+msgstr "Noch keine Fahrt mit wenig RAM."
+
 #: settings/search.py:24
-#: settings/window.py:42
+#: settings/window.py:44
 msgid "Connections"
 msgstr "Verbindungen"
 
@@ -3668,8 +3786,8 @@ msgid "Bundle Overrides"
 msgstr "Paket-Ausnahmen"
 
 #: settings/search.py:30
-#: settings/search.py:182
-#: settings/window.py:324
+#: settings/search.py:183
+#: settings/window.py:330
 msgid "Report a Problem"
 msgstr "Problem melden"
 
@@ -4223,125 +4341,129 @@ msgid "Cabin audio in your drive recordings"
 msgstr "Innenraum-Ton in deinen Aufnahmen"
 
 #: settings/search.py:182
+msgid "What was using RAM on drives that ran low"
+msgstr "Was bei Fahrten mit wenig RAM den RAM belegt hat"
+
+#: settings/search.py:183
 msgid "Send what happened to the developers"
 msgstr "Schick den Entwicklern, was passiert ist"
 
-#: settings/search.py:183
+#: settings/search.py:184
 msgid "ADB, SSH and debug modes"
 msgstr "ADB, SSH und Debugmodi"
 
-#: settings/search.py:185
+#: settings/search.py:186
 msgid "Connect over USB or the network"
 msgstr "Per USB oder Netzwerk verbinden"
 
-#: settings/search.py:186
+#: settings/search.py:187
 msgid "Remote shell access"
 msgstr "Fernzugriff auf die Shell"
 
-#: settings/search.py:187
+#: settings/search.py:188
 msgid "Adds every public key in a GitHub account"
 msgstr "Fügt jeden öffentlichen Schlüssel eines GitHub-Kontos hinzu"
 
-#: settings/search.py:188
+#: settings/search.py:189
 msgid "Drive openpilot's controls from a joystick"
 msgstr "Steuert openpilot mit einem Joystick"
 
-#: settings/search.py:189
+#: settings/search.py:190
 msgid "Turns off the car's emergency braking"
 msgstr "Schaltet die Notbremsung des Autos ab"
 
-#: settings/search.py:192
+#: settings/search.py:193
 msgid "Networks nearby, and joining one"
 msgstr "Netzwerke in der Nähe und verbinden"
 
-#: settings/search.py:193
+#: settings/search.py:194
 msgid "This device's local address, beside the connected network"
 msgstr "Die lokale Adresse dieses Geräts, neben dem verbundenen Netz"
 
-#: settings/search.py:194
+#: settings/search.py:195
 msgid "Enter its name and password"
 msgstr "Namen und Passwort eingeben"
 
-#: settings/search.py:195
+#: settings/search.py:196
 msgid "Hotspot, data use, roaming and APN"
 msgstr "Hotspot, Datennutzung, Roaming und APN"
 
-#: settings/search.py:197
+#: settings/search.py:198
 msgid "The name phones see when joining this device"
 msgstr "Der Name, den Handys beim Verbinden mit diesem Gerät sehen"
 
-#: settings/search.py:200
+#: settings/search.py:201
 msgid "Roaming, APN and the device's IP address"
 msgstr "Roaming, APN und die IP-Adresse des Geräts"
 
-#: settings/search.py:201
+#: settings/search.py:202
 msgid "A wheel remote's buttons and what they do"
 msgstr "Die Tasten einer Lenkrad-Fernbedienung und ihre Funktionen"
 
-#: settings/search.py:202
+#: settings/search.py:203
 msgid "Car audio for alerts, and pairing devices"
 msgstr "Auto-Audio für Hinweise und Geräte koppeln"
 
-#: settings/search.py:204
+#: settings/search.py:205
 msgid "Updates and the release notes"
 msgstr "Updates und Versionshinweise"
 
-#: settings/search.py:205
+#: settings/search.py:206
 #: settings/software_tab.py:192
 msgid "Automatic Updates"
 msgstr "Automatische Updates"
 
-#: settings/search.py:205
+#: settings/search.py:206
 #: settings/software_tab.py:192
 msgid "Download while parked, install when you turn off the car"
 msgstr "Laden im Parken, installieren beim Ausschalten"
 
-#: settings/search.py:206
+#: settings/search.py:207
 #: settings/software_tab.py:188
 #: settings/software_tab.py:140
 msgid "Release Channel"
 msgstr "Release-Kanal"
 
-#: settings/search.py:206
+#: settings/search.py:207
 #: settings/software_tab.py:140
 msgid "The branch to download updates from"
 msgstr "Der Branch, aus dem Updates geladen werden"
 
-#: settings/search.py:207
+#: settings/search.py:208
 #: settings/software_tab.py:195
 msgid "Reset Settings"
 msgstr "Einstellungen zurücksetzen"
 
-#: settings/search.py:207
+#: settings/search.py:208
 msgid "Back to the Essentials defaults"
 msgstr "Zurück zu den Essentials-Standards"
 
-#: settings/search.py:208
+#: settings/search.py:209
 #: settings/software_tab.py:169
 #: settings/software_tab.py:198
 msgid "Uninstall"
 msgstr "Deinstallieren"
 
-#: settings/search.py:208
+#: settings/search.py:209
 msgid "Remove this software from the device"
 msgstr "Diese Software vom Gerät entfernen"
 
-#: settings/search.py:382
-#: settings/search.py:373
+#: settings/search.py:383
+#: settings/search.py:374
 msgid "Search settings"
 msgstr "Einstellungen durchsuchen"
 
-#: settings/search.py:271
+#: settings/search.py:272
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "Sag eine Einstellung, etwa Tempolimit. Tippe auf das Mikrofon, wenn du fertig bist."
 
-#: settings/search.py:353
-#: settings/search.py:312
+#: settings/search.py:354
+#: settings/search.py:313
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "Keine Einstellung passt zu „{}“"
 
-#: settings/search.py:354
+#: settings/search.py:355
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "Gib den Namen einer Einstellung oder ihre Funktion ein, etwa Helligkeit oder Spurwechsel"
 
@@ -5220,13 +5342,9 @@ msgstr "Einschalten"
 msgid "Turn off"
 msgstr "Ausschalten"
 
-#: settings/window.py:319
+#: settings/window.py:324
 msgid "DEVICE"
 msgstr "GERÄT"
-
-#: settings/window.py:254
-msgid "Driving model"
-msgstr "Fahrmodell"
 
 #: setup.py:33
 msgid "driving style"

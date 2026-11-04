@@ -61,6 +61,7 @@ class Snapshot:
   forecast: tuple[str, str] | None = None  # Weather heads-up (forecast.py): ("Snow in 12 min" or "Snow until 8:15 PM", icon)
   forecast_active: bool = False            # ...and it's falling now, so it stands in for the longer-gap chip
   memory_percent: int = 0                  # RAM in use, from deviceState
+  low_ram: bool = False                    # StarPilot raised Low Memory and RAM hasn't yet fallen to RamWatch.CLEAR
   events: set[str] = field(default_factory=set)
 
 
@@ -154,7 +155,7 @@ def chips_for(s: Snapshot) -> list[Chip]:
     out.append(Chip("steering_only", N_("Steering only"), ChipTone.INFO, "wheel"))
   # Last, so it's the first to give way when more than MAX apply. StarPilot decides when memory is low (its lowMemory
   # event); this chip stands in for that event's notice. Its disengage and can't-engage forms stay alerts.
-  if "lowMemory" in s.events:
+  if s.low_ram or "lowMemory" in s.events:
     out.append(Chip("low_memory", t_("Low on RAM · {}% used", s.memory_percent), ChipTone.ALERT, "memory"))
   return out
 
@@ -261,8 +262,23 @@ class LimitWatch:
     return limiting and not pending and overridden <= 0
 
 
-def snapshot(ui_state, nav_active: bool = False, limits: LimitWatch | None = None, now: float = 0.0) -> Snapshot:
-  """Fill a Snapshot from upstream's ui_state. Missing messages leave defaults. limits tracks speed limit changes."""
+class RamWatch:
+  """Holds Low on RAM from StarPilot's Low Memory (above 90%) until RAM falls to CLEAR, so the chip doesn't blink while
+  RAM hovers around 90%."""
+  CLEAR = 85
+
+  def __init__(self):
+    self.on = False
+
+  def update(self, raised: bool, percent: int) -> bool:
+    self.on = raised or (self.on and percent > self.CLEAR)
+    return self.on
+
+
+def snapshot(ui_state, nav_active: bool = False, limits: LimitWatch | None = None, now: float = 0.0,
+             ram: RamWatch | None = None) -> Snapshot:
+  """Fill a Snapshot from upstream's ui_state. Missing messages leave defaults. limits tracks speed limit changes, ram
+  holds Low on RAM."""
   sm = ui_state.sm
   valid = sm.valid
   s = Snapshot(engaged=bool(ui_state.engaged), metric=bool(ui_state.is_metric), always_on_lateral=bool(ui_state.always_on_lateral_active))
@@ -325,4 +341,6 @@ def snapshot(ui_state, nav_active: bool = False, limits: LimitWatch | None = Non
       s.events.add(str(sm[service].alertType).split("/", 1)[0])
   if valid.get("deviceState", False):
     s.memory_percent = int(sm["deviceState"].memoryUsagePercent)
+  if ram is not None:
+    s.low_ram = ram.update("lowMemory" in s.events, s.memory_percent)
   return s
