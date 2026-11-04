@@ -182,6 +182,7 @@ hierarchy packs. They differ from the original two-state pilot below. Incoming
 packs are removed after successful assembly, leaving one compressed image plus
 its inventory and receipt. Exact installed sizes and update costs depend on the
 selection; the table excludes upstream road data and the one-time runtime.
+Small manifest requests add metadata overhead to these payload sizes.
 
 All 61 sampled routes matched the complete loose graph using their selected
 state packs. The same 61 also matched through the full 15 GiB indexed tar.
@@ -190,6 +191,15 @@ speed slots. The corpus includes a local route in every selectable region and
 five interstate/border routes; it is a smoke corpus, not exhaustive US route
 coverage or driving-load RAM acceptance. `ROUTE-VERIFICATION.json` accompanies
 the published catalog.
+
+The [catalog](https://github.com/jfgordon2/Tandem/releases/tag/routing-us-v1),
+both graph buckets and the source release were published as prereleases after
+all 1,054 assets were checked against their remote SHA-256 values. A fresh
+unauthenticated public HTTPS check downloaded the catalog and three DC packs,
+verified them, assembled a temporary maintainer QA tar and matched the native
+DC route to the full graph. That check ran on macOS, took 6.8 seconds, and
+deleted its expanded scratch files. It does not exercise the device's kernel
+mount or represent an on-device install.
 
 The final host routing suite passed 151 tests. The UI suite passed 698 tests
 with two skips; the four cereal/hardware UI files listed in AGENTS.md were
@@ -200,6 +210,24 @@ pending: SSH at 192.168.4.40 became unavailable, and the owner asked to retry
 later. The live checkout and destinations were not changed. The hardware pilot
 below uses the earlier connected graph and must not be reported as a national
 package test. A supervised routed drive with the new data remains outstanding.
+
+### Owner test on the new catalog
+
+1. Update the `valhalla` branch and restart. Keep the device powered, parked and
+   on Wi-Fi. Choose Iowa in Offline Maps and Update; wait for Ready. The first
+   update downloads the new dataset rather than reusing incompatible old IDs.
+2. Keep Iowa checked, add Illinois and Update. This downloads missing shared
+   packs, rather than another complete combined bundle. Check a saved route in
+   each state and a route across their border.
+3. Uncheck Iowa and Update with Illinois still checked. With the same catalog
+   and valid checksums, routing downloads are zero. Install rebuilds from the
+   retained data. Road tiles are retained by upstream mapd.
+4. Add Iowa again and Update, or uncheck every state and Update to clear routing
+   data. Returning to the same state selection must produce the same logical
+   graph. Saved places remain.
+5. On a supervised routed drive, watch the existing Low on RAM status and record
+   memory through initial routing and a reroute. The parked/desktop results
+   above do not establish driving-load headroom.
 
 ## Device pilot, November 4
 
