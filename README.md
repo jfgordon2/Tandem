@@ -66,6 +66,29 @@ here's what you need to know:
 
 Tandem uses **`release`** as its default branch and release channel in [`jfgordon2/Tandem`](https://github.com/jfgordon2/Tandem/tree/release).
 
+### Installing
+
+On the comma device's setup screen, choose **Custom Software** and enter:
+
+```
+installer.comma.ai/jfgordon2/release
+```
+
+To reach the setup screen on a device that already runs openpilot or a fork, use Settings › Software › Uninstall first.
+comma's installer always clones `github.com/<user>/openpilot`, so `jfgordon2/openpilot` forwards to this repository
+(GitHub keeps the old name after a rename). Don't create a repository named `openpilot` under this account, or the
+installer will clone that instead.
+
+A device already on StarPilot can switch over SSH instead, keeping its settings:
+
+```sh
+cd /data/openpilot
+git remote set-url origin https://github.com/jfgordon2/Tandem.git
+git fetch origin release
+git checkout -B release origin/release   # set aside local changes first (git stash) if it refuses
+sudo reboot
+```
+
 Tandem inherits StarPilot's vehicle support, driving models, tuning, navigation, Bluetooth controls,
 and Galaxy remote access. Available features depend on the vehicle and hardware. The
 [StarPilot wiki](https://wiki.firestar.link) covers upstream hardware, installation, and configuration;
