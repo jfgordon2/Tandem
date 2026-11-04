@@ -1,6 +1,6 @@
 # Compressed installed maps, verified startup and RAM
 
-November 4, 2026, `valhalla` branch. This changes owned routing code and maintainer tools only. No screen, wording, approved mock or additional upstream hook changes are part of this storage revision. The live device checkout has not been updated and no drive has been performed.
+November 4, 2026, `valhalla` branch. This changes owned routing code and maintainer tools only. No screen, wording, approved mock or additional upstream hook changes are part of this storage revision. Bench tests used isolated source/data directories; the subsequent owner-reported drive is recorded separately below.
 
 ## Installed representation
 
@@ -53,6 +53,10 @@ Warm full IPC roundtrips had medians of 0.14 seconds for the Iowa local route an
 
 The initial Iowa image install took 2.51 seconds in the first trial; the connected install took 8.54 seconds. Both installed only the image, manifest and receipt. Runtime/reboot caches and concurrent driving load were not simulated.
 
+## First owner drive test
+
+On November 4, the owner switched the device to `valhalla` at `d4f5c3f8f9`, reported that it worked perfectly, and confirmed that the test included a drive with no Low on RAM warning. Record this as a successful user-reported drive smoke test. Graph/provider selection, reroute behavior and peak RAM were not independently verified for that drive; the parked measurements above remain the instrumented results.
+
 ## Verification
 
 - Host routing regressions: 122 passed. The host cannot import the ELF cereal/msgq extension; its separate real-schema test runs on the device.
@@ -67,4 +71,4 @@ The initial Iowa image install took 2.51 seconds in the first trial; the connect
 
 Raw reports under ignored `tools/out/routing-reports/`: `verified-startup-device.json`, `squashfs-device-acceptance.json`, `squashfs-https-install.json`, `squashfs-tile-equivalence.json` and the earlier `squashfs-performance*.json`. Benchmark scripts remain in the isolated device directory. Tests exercise stale/missing receipts, same-size mutation, inode changes, parked migration/audit, full-hash failure, bounded decoder protocol, schema compatibility, install repair, mount identity/flags, leases, deletion, idle release and normalized response equivalence.
 
-The known driving-only name-consistency penalty variation near the Des Moines destination remains unchanged. No useful graph fields, hierarchy, shortcuts or lane guidance were removed for these storage savings. Translation acceptance and the first supervised routed drive alongside modeld remain open. Watch the existing Low on RAM threshold and per-drive recorder; these parked process measurements do not establish total-system RAM headroom while driving.
+The known driving-only name-consistency penalty variation near the Des Moines destination remains unchanged. No useful graph fields, hierarchy, shortcuts or lane guidance were removed for these storage savings. Translation acceptance and instrumented driving-load/RAM checks alongside modeld remain open. Watch the existing Low on RAM threshold and per-drive recorder; neither the parked process measurements nor absence of a reported warning establishes peak total-system RAM use while driving.
