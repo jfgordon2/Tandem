@@ -1236,26 +1236,48 @@ msgid "Uploads"
 msgstr "上傳"
 
 #: ram.py:43
+#: ram.py:44
+#: ram.py:52
 msgid "Remote access"
 msgstr "遠端存取"
 
-#: ram.py:44
+#: ram.py:45
 msgid "Speed limits and curves"
 msgstr "速限與彎道"
 
-#: ram.py:45
+#: ram.py:46
 msgid "Routing"
 msgstr "路線規劃"
 
-#: ram.py:46
+#: ram.py:47
 msgid "Sounds"
 msgstr "音效"
 
-#: ram.py:47
+#: ram.py:48
 msgid "Car interface"
 msgstr "車輛介面"
 
-#: ram.py:48
+#: ram.py:49
+msgid "Starts and stops the rest"
+msgstr "啟動和停止其他程式"
+
+#: ram.py:50
+msgid "StarPilot's planning"
+msgstr "StarPilot 規劃"
+
+#: ram.py:51
+msgid "Speed limit sign reading"
+msgstr "速限標誌辨識"
+
+#: ram.py:53
+msgid "Power and temperature"
+msgstr "電源與溫度"
+
+#: ram.py:54
+msgid "Bluetooth remote"
+msgstr "藍牙遙控器"
+
+#: ram.py:55
 msgid "Car connection"
 msgstr "車輛連線"
 

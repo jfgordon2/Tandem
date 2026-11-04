@@ -1236,26 +1236,48 @@ msgid "Uploads"
 msgstr "업로드"
 
 #: ram.py:43
+#: ram.py:44
+#: ram.py:52
 msgid "Remote access"
 msgstr "원격 접속"
 
-#: ram.py:44
+#: ram.py:45
 msgid "Speed limits and curves"
 msgstr "제한 속도 및 커브"
 
-#: ram.py:45
+#: ram.py:46
 msgid "Routing"
 msgstr "경로 탐색"
 
-#: ram.py:46
+#: ram.py:47
 msgid "Sounds"
 msgstr "소리"
 
-#: ram.py:47
+#: ram.py:48
 msgid "Car interface"
 msgstr "차량 인터페이스"
 
-#: ram.py:48
+#: ram.py:49
+msgid "Starts and stops the rest"
+msgstr "나머지를 시작하고 중지"
+
+#: ram.py:50
+msgid "StarPilot's planning"
+msgstr "StarPilot 계획"
+
+#: ram.py:51
+msgid "Speed limit sign reading"
+msgstr "제한 속도 표지판 인식"
+
+#: ram.py:53
+msgid "Power and temperature"
+msgstr "전원 및 온도"
+
+#: ram.py:54
+msgid "Bluetooth remote"
+msgstr "블루투스 리모컨"
+
+#: ram.py:55
 msgid "Car connection"
 msgstr "차량 연결"
 

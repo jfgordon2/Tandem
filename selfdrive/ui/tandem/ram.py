@@ -41,10 +41,17 @@ DESCRIPTIONS = {
   "loggerd": N_("Drive logging"),
   "uploader": N_("Uploads"),
   "athenad": N_("Remote access"),
+  "manage_athenad": N_("Remote access"),
   "mapd": N_("Speed limits and curves"),
   "valhalla_service": N_("Routing"),
   "soundd": N_("Sounds"),
   "card": N_("Car interface"),
+  "manager": N_("Starts and stops the rest"),
+  "starpilot_process": N_("StarPilot's planning"),
+  "speed_limit_vision": N_("Speed limit sign reading"),
+  "the_galaxy": N_("Remote access"),
+  "hardwared": N_("Power and temperature"),
+  "bluetooth.daemon": N_("Bluetooth remote"),
   "pandad": N_("Car connection"),
 }
 
@@ -66,11 +73,30 @@ class Snapshot:
                     int(d.get("drive", 0)))
 
 
+GENERIC = {"daemon", "main", "service", "server"}   # module names that need their package to mean anything
+
+
+def _module_name(module: str) -> str:
+  """selfdrive.selfdrived.selfdrived → selfdrived; starpilot.system.bluetooth.daemon → bluetooth.daemon."""
+  parts = module.split(".")
+  return ".".join(parts[-2:]) if parts[-1] in GENERIC and len(parts) > 1 else parts[-1]
+
+
 def process_name(name: str, cmdline: list[str]) -> str:
-  """The name a process goes by: manager titles Python processes with their module (selfdrive.selfdrived.selfdrived)."""
+  """The name a process goes by. Manager titles most Python processes with their module (selfdrive.selfdrived.selfdrived);
+  others run as python -m <module> (the UI) or python <script> (manager.py, comma's /usr/comma services)."""
   title = cmdline[0] if cmdline else name
   title = os.path.basename(title.split(" ", 1)[0]) or name
-  return title.rsplit(".", 1)[-1] if "." in title and not title.endswith(".py") else title
+  if title.startswith("python"):
+    args = iter(cmdline[1:])
+    for arg in args:
+      if arg == "-m":
+        return _module_name(next(args, title))
+      if arg.startswith("-"):
+        continue
+      return os.path.basename(arg).removesuffix(".py") or title
+    return title
+  return _module_name(title) if "." in title and not title.endswith(".py") else title
 
 
 def read_processes() -> tuple[list[tuple[str, int]], int]:

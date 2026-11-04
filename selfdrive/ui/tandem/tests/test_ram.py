@@ -69,12 +69,17 @@ def test_a_failed_read_records_nothing(tmp_path):
   assert log.snapshots() == [] and not log.unseen()
 
 
-def test_process_names_as_manager_titles_them():
-  assert process_name("selfdrive.selfd", ["selfdrive.selfdrived.selfdrived"]) == "selfdrived"
-  assert process_name("ui", ["./ui"]) == "ui"
-  assert process_name("python3", ["/usr/bin/python3", "-m", "something"]) == "python3"
+def test_process_names_as_a_device_shows_them():
+  # Command lines read from a comma device running Tandem
+  assert process_name("selfdrive.pandad.pandad", ["selfdrive.pandad.pandad"]) == "pandad"           # titled by manager
+  assert process_name("system.timed", ["system.timed", ""]) == "timed"
+  assert process_name("starpilot.system.bluetooth.daemon", ["starpilot.system.bluetooth.daemon"]) == "bluetooth.daemon"
+  assert process_name("/usr/local/venv", ["/usr/local/venv/bin/python3", "-m", "openpilot.selfdrive.ui.ui"]) == "ui"
+  assert process_name("python", ["python", "-m", "system.athena.manage_athenad"]) == "manage_athenad"
+  assert process_name("python3", ["python3", "./manager.py"]) == "manager"
+  assert process_name("python", ["/usr/local/venv/bin/python", "-u", "/usr/comma/magic.py"]) == "magic"
+  assert process_name("python", ["/usr/local/venv/bin/python", "-"]) == "python"                    # a script on stdin
   assert process_name("kworker", []) == "kworker"
-  assert process_name("python3", ["/data/openpilot/tools/thing.py"]) == "thing.py"
 
 
 def test_report_lists_each_drive_for_the_developers():

@@ -1240,26 +1240,48 @@ msgid "Uploads"
 msgstr "Вивантаження"
 
 #: ram.py:43
+#: ram.py:44
+#: ram.py:52
 msgid "Remote access"
 msgstr "Віддалений доступ"
 
-#: ram.py:44
+#: ram.py:45
 msgid "Speed limits and curves"
 msgstr "Обмеження швидкості та повороти"
 
-#: ram.py:45
+#: ram.py:46
 msgid "Routing"
 msgstr "Маршрути"
 
-#: ram.py:46
+#: ram.py:47
 msgid "Sounds"
 msgstr "Звуки"
 
-#: ram.py:47
+#: ram.py:48
 msgid "Car interface"
 msgstr "Інтерфейс авто"
 
-#: ram.py:48
+#: ram.py:49
+msgid "Starts and stops the rest"
+msgstr "Запускає і зупиняє решту"
+
+#: ram.py:50
+msgid "StarPilot's planning"
+msgstr "Планування StarPilot"
+
+#: ram.py:51
+msgid "Speed limit sign reading"
+msgstr "Розпізнавання знаків швидкості"
+
+#: ram.py:53
+msgid "Power and temperature"
+msgstr "Живлення і температура"
+
+#: ram.py:54
+msgid "Bluetooth remote"
+msgstr "Bluetooth-пульт"
+
+#: ram.py:55
 msgid "Car connection"
 msgstr "Зв'язок з авто"
 

@@ -1247,26 +1247,48 @@ msgid "Uploads"
 msgstr "تحميلات"
 
 #: ram.py:43
+#: ram.py:44
+#: ram.py:52
 msgid "Remote access"
 msgstr "الوصول عن بُعد"
 
-#: ram.py:44
+#: ram.py:45
 msgid "Speed limits and curves"
 msgstr "حدود السرعة والمنعطفات"
 
-#: ram.py:45
+#: ram.py:46
 msgid "Routing"
 msgstr "المسارات"
 
-#: ram.py:46
+#: ram.py:47
 msgid "Sounds"
 msgstr "الأصوات"
 
-#: ram.py:47
+#: ram.py:48
 msgid "Car interface"
 msgstr "واجهة السيارة"
 
-#: ram.py:48
+#: ram.py:49
+msgid "Starts and stops the rest"
+msgstr "يشغّل البقية ويوقفها"
+
+#: ram.py:50
+msgid "StarPilot's planning"
+msgstr "تخطيط StarPilot"
+
+#: ram.py:51
+msgid "Speed limit sign reading"
+msgstr "قراءة لافتات حدود السرعة"
+
+#: ram.py:53
+msgid "Power and temperature"
+msgstr "الطاقة والحرارة"
+
+#: ram.py:54
+msgid "Bluetooth remote"
+msgstr "جهاز تحكم Bluetooth"
+
+#: ram.py:55
 msgid "Car connection"
 msgstr "الاتصال بالسيارة"
 
