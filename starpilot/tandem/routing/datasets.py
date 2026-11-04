@@ -133,11 +133,10 @@ def _install(package, gate, progress, installing, *, pack_gate):
     raise C.RoutingError("no_space")
   old_rows = _checked_index(previous, dataset) if previous else []
   rows = {row["path"]: row for row in old_rows if row["part"] in required}
-  sources, done = {}, 0
-  total = sum(part["bytes"] for part in package["missing"])
-  for part in package["missing"]:
+  sources = {}
+  incoming_parts = downloads.prepare_many(package["missing"], gate, progress)
+  for part, incoming in zip(package["missing"], incoming_parts, strict=True):
     gate()
-    incoming = downloads.prepare(part, gate, lambda n, _total, start=done: progress(start + n, total))
     if (incoming.manifest.get("kind") != "tile-part" or incoming.manifest["dataset"]["sha256"] != dataset["sha256"]
         or incoming.manifest["parts"] != [part["id"]]):
       raise C.RoutingError("data_incompatible")
@@ -146,7 +145,6 @@ def _install(package, gate, progress, installing, *, pack_gate):
       if row["part"] != part["id"] or row["path"] in rows:
         raise C.RoutingError("data_incompatible")
       rows[row["path"]] = row
-    done += part["bytes"]
   if {row["part"] for row in rows.values()} != required:
     raise C.RoutingError("data_incompatible")
   indexed, length = T.layout(list(rows.values()))
@@ -187,6 +185,10 @@ def _install(package, gate, progress, installing, *, pack_gate):
         logical = images.pack_stream(T.stream(indexed, read, check), length, ready / "tiles.squashfs", check)
     check()
     C.atomic_json(ready / "tiles.json", {"schema": 1, "dataset": dataset["sha256"], "tiles": indexed})
+    # Set final permissions before hashing, so identity-bound evidence remains
+    # valid through acceptance. No ctime changes are excused by the cache.
+    (ready / "tiles.squashfs").chmod(0o444)
+    checks = verified.Hashes()
     bounds = [dataset["regions"][region]["bounds"] for region in selected]
     manifest = {"schema": 4, "id": package["id"], "kind": "state-set", "title": "Offline routes", "runtime_version": C.VERSION,
       "source": dataset["source"], "attribution": dataset["attribution"], "built_at": dataset["built_at"],
@@ -195,12 +197,12 @@ def _install(package, gate, progress, installing, *, pack_gate):
       "dataset": {"id": dataset["id"], "sha256": dataset["sha256"], "index": "tiles.json"},
       "bounds": [min(b[0] for b in bounds), min(b[1] for b in bounds), max(b[2] for b in bounds), max(b[3] for b in bounds)],
       "graph": {"format": "squashfs", "file": "tiles.squashfs", "path": "tiles.tar", **logical},
-      "files": {name: {"bytes": (ready / name).stat().st_size, "sha256": B.digest(ready / name, check)}
+      "files": {name: {"bytes": (ready / name).stat().st_size, "sha256": checks.digest(ready / name, check)}
                 for name in ("tiles.squashfs", "tiles.json")}}
     if dataset.get("sources"):
       manifest["sources"] = dataset["sources"]
     C.atomic_json(ready / "manifest.json", manifest)
-    bundle = B.install(ready, consume=True, gate=check)
+    bundle = B.install(ready, consume=True, gate=check, checks=checks)
     check()
     B.activate(bundle.id)
   # Completed parts are only a resumable download cache. Their tiles now live

@@ -6,6 +6,7 @@ import math
 import os
 import stat
 import time
+from pathlib import Path
 
 from openpilot.starpilot.tandem.routing import config as C
 
@@ -18,6 +19,26 @@ def identity(path) -> list[int]:
   if not stat.S_ISREG(value.st_mode):
     raise C.RoutingError("data_incompatible")
   return [value.st_dev, value.st_ino, value.st_size, value.st_mtime_ns, value.st_ctime_ns]
+
+
+class Hashes:
+  """Operation-local hash evidence; never shared with startup or parked audits."""
+  def __init__(self):
+    self._checked = {}
+
+  def digest(self, path, gate=lambda: None):
+    from openpilot.starpilot.tandem.routing.bundles import digest
+    path = Path(path).absolute()
+    gate()
+    before = identity(path)
+    previous = self._checked.get(path)
+    if previous and previous[0] == before:
+      return previous[1]
+    checksum = digest(path, gate)
+    if identity(path) != before:
+      raise C.RoutingError("data_incompatible")
+    self._checked[path] = (before, checksum)
+    return checksum
 
 
 def files(bundle) -> dict:

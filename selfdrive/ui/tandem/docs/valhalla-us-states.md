@@ -84,7 +84,7 @@ The native reader continues to map **one indexed tar**, with no runtime patch,
 directory cache, custom filesystem or multi-graph route stitching.
 
 The replacement goes directly through `mksquashfs -tar`, gzip level 6, 128 KiB
-blocks, **one processor and a 64 MiB compressor memory setting**. Checksum and
+blocks, **two compression threads and a 64 MiB compressor memory setting**. Checksum and
 file-copy buffers are bounded. The installer reserves compressed replacement
 space plus headroom, rather than the logical tar's full size. It keeps temporary
 input packs only until activation, preventing permanent double storage. A
@@ -105,6 +105,21 @@ Very large selections can take much longer than the two-state measurements.
 Use sufficient parked power/time, as for an upstream country download. Existing
 shutdown and low-voltage policy remains in StarPilot; an interrupted assembly
 restarts from its retained verified packs.
+
+Missing packs use two transfer workers, with 256 KiB transfer buffers and bounded
+checksum buffers. The owning job thread alone checks the policy gate, publishes
+aggregate byte progress and performs logical image acceptance. Workers pause on
+that gate and stop together on a failure or cancellation; an in-flight network
+read retains the existing 15-second socket timeout. Every worker is joined before
+assembly begins. Completed and partial private files remain resumable on failure.
+
+Hash evidence can be reused within an operation only while path, device/inode,
+size, modification time and change time all still match. Downloads use their
+final staging paths and images become read-only before their first checksum.
+Renames or permission changes do not receive exceptions from this check. The
+completed image still gets independent full logical readback. Existing-data
+Update checks and parked audits use fresh physical checksums; route startup
+continues to use its cheap metadata receipt. See the [speed verification](valhalla-update-speed.md).
 
 The UI caches parsed catalog metadata by file identity and caches download plans
 for its existing half-second snapshot. Drawing state cards uses catalog coverage

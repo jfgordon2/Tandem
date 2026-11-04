@@ -2,6 +2,7 @@
 import io
 import json
 import os
+from pathlib import Path
 import sys
 import threading
 from types import SimpleNamespace
@@ -97,6 +98,48 @@ def test_receipt_does_not_survive_inode_replacement(tmp_path):
   assert not verified.read(bundle)
   bundles.verify(bundle.folder)
   verified.require(bundle)
+
+
+@pytest.mark.parametrize("change", ["content", "replacement", "permissions", "rename"])
+def test_operation_hashes_require_the_complete_unchanged_identity(tmp_path, monkeypatch, change):
+  path = tmp_path / "checked"
+  path.write_bytes(b"original bytes")
+  cache, scans, original = verified.Hashes(), [], bundles.digest
+  def digest(source, *args):
+    scans.append(source)
+    return original(source, *args)
+  monkeypatch.setattr(bundles, "digest", digest)
+  first = cache.digest(path)
+  assert cache.digest(path) == first and len(scans) == 1
+  before = path.stat()
+  if change == "content":
+    path.write_bytes(b"different data")
+    os.utime(path, ns=(before.st_atime_ns, before.st_mtime_ns))
+  elif change == "replacement":
+    replacement = tmp_path / "new"
+    replacement.write_bytes(path.read_bytes())
+    replacement.replace(path)
+  elif change == "permissions":
+    path.chmod(0o444)
+  else:
+    moved = Path(str(path) + ".moved")
+    path.replace(moved)
+    moved.replace(path)
+  assert cache.digest(path) == original(path) and len(scans) == 2
+  assert (cache.digest(path) != first) == (change == "content")
+
+
+def test_mutation_during_hash_is_not_recorded_as_verified(tmp_path, monkeypatch):
+  path = tmp_path / "changing"
+  path.write_bytes(b"initial bytes")
+  original = bundles.digest
+  def digest(source, *args):
+    result = original(source, *args)
+    source.write_bytes(b"changed bytes")
+    return result
+  monkeypatch.setattr(bundles, "digest", digest)
+  with pytest.raises(C.RoutingError, match="data_incompatible"):
+    verified.Hashes().digest(path)
 
 
 def test_compact_native_payload_preserves_all_guidance_fields():

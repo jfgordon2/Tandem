@@ -8,6 +8,8 @@ The `valhalla` branch adds offline routing for saved places with coordinates. Na
 
 The [shared US build](docs/valhalla-us-states.md) adds exact state selections: Update reuses checksummed data from the same build, downloads missing packs, removes unchecked routing data and streams one compressed replacement while parked. Deselect-all clears routing data. Border packs remain once when another selected state needs them. This requires no additional upstream hooks. Per-state removal applies to routing data; mapd's existing road-data deletion remains global.
 
+State updates use two transfer workers and two gzip compression threads, with operation-local checksum reuse and independent logical acceptance. Gzip level 6, 128 KiB blocks and the 64 MiB compressor setting remain. See [update speed and verification](docs/valhalla-update-speed.md) for host measurements and pending device checks. This changes no screens or upstream hooks.
+
 | Module | Contents |
 | --- | --- |
 | `fonts.py` | `font(face)`: maps upstream weight identifiers to our Figtree and Noto files, plus ExtraBold and JetBrains Mono. All load on first use without replacing upstream fonts. |

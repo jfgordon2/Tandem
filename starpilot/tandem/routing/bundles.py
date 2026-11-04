@@ -95,7 +95,7 @@ class Bundle:
     return south <= lat <= north and west <= lon <= east
 
 
-def load(folder: Path, verify: bool = False, gate=lambda: None, *, logical=True) -> Bundle:
+def load(folder: Path, verify: bool = False, gate=lambda: None, *, logical=True, checks=None) -> Bundle:
   try:
     manifest_path = folder / "manifest.json"
     if folder.is_symlink() or manifest_path.is_symlink():
@@ -109,7 +109,7 @@ def load(folder: Path, verify: bool = False, gate=lambda: None, *, logical=True)
         raise C.RoutingError("data_incompatible")
       if path.is_symlink() or not path.is_file() or path.stat().st_size != record["bytes"]:
         raise C.RoutingError("data_incompatible")
-      if verify and digest(path, gate) != record["sha256"]:
+      if verify and (checks.digest(path, gate) if checks else digest(path, gate)) != record["sha256"]:
         raise C.RoutingError("data_incompatible")
     if verify and logical and data["schema"] in (3, 4):
       images.verify_graph(folder, data, gate)
@@ -148,7 +148,7 @@ def routing_bundles() -> list[Bundle]:
   return [bundle for bundle in present if bundle.manifest.get("kind") != "state-set"]
 
 
-def verify(folder: Path, gate=lambda: None) -> Bundle:
+def verify(folder: Path, gate=lambda: None, *, checks=None) -> Bundle:
   """Explicit full check; never invoked by the route worker's startup path."""
   C.require_parked()
   bundle = load(folder)
@@ -158,7 +158,7 @@ def verify(folder: Path, gate=lambda: None) -> Bundle:
       path.chmod(path.stat().st_mode & ~0o222)
   before = verified.files(bundle)
   try:
-    checked = load(folder, verify=True, gate=gate, logical=not bool(verified.read(bundle)))
+    checked = load(folder, verify=True, gate=gate, logical=not bool(verified.read(bundle)), checks=checks)
     if checked.generation != bundle.generation:
       raise C.RoutingError("data_incompatible")
     for name in (*checked.manifest["files"], "manifest.json"):
@@ -262,9 +262,9 @@ def activate(bundle_id: str) -> Bundle:
   return bundle
 
 
-def install(source: Path, *, consume=False, gate=lambda: None) -> Bundle:
+def install(source: Path, *, consume=False, gate=lambda: None, checks=None) -> Bundle:
   C.require_parked()
-  bundle = verify(source, gate)
+  bundle = verify(source, gate, checks=checks)
   if consume and not source.resolve().is_relative_to((C.root() / "downloads").resolve()):
     raise C.RoutingError("invalid_request")
   target = C.root() / "bundles" / bundle.id

@@ -4,6 +4,8 @@ import io
 import json
 import shutil
 import sys
+import threading
+import time
 from types import SimpleNamespace
 
 import pytest
@@ -180,7 +182,7 @@ def test_failed_staged_mount_validation_releases_its_mount(shared, monkeypatch):
 def test_cancelling_cached_pack_verification_keeps_its_valid_receipt(shared, monkeypatch):
   part = shared.data["dataset"]["parts"][0]
   incoming = downloads.prepare(part)
-  def cancelled(*_):
+  def cancelled(*_, **kwargs):
     raise C.RoutingError("cancelled")
   monkeypatch.setattr(B, "verify", cancelled)
   with pytest.raises(C.RoutingError, match="cancelled"):
@@ -207,6 +209,149 @@ def test_single_selection_matches_incremental_tar_regardless_of_order(shared, mo
   update("us_state.IL")
   incremental = update("us_state.IA,us_state.IL")
   assert images.source(incremental).read_bytes() == canonical
+
+
+def test_two_transfers_overlap_but_acceptance_progress_and_gate_stay_on_owner(shared, monkeypatch):
+  owner, mutex, overlap = threading.get_ident(), threading.Lock(), threading.Event()
+  active, peak, started = 0, 0, 0
+  class Response(io.BytesIO):
+    status, headers = 200, {}
+    def __init__(self, data, image):
+      super().__init__(data)
+      self.image = image
+    def __enter__(self):
+      nonlocal active, peak, started
+      if self.image:
+        with mutex:
+          active += 1
+          started += 1
+          peak = max(peak, active)
+          if active == 2:
+            overlap.set()
+        assert overlap.wait(2), "second transfer did not overlap the first"
+      return self
+    def __exit__(self, *args):
+      nonlocal active
+      if self.image:
+        with mutex:
+          active -= 1
+      return super().__exit__(*args)
+  def open_(request, **_):
+    url = request if isinstance(request, str) else request.full_url
+    return Response(shared.assets[url], url.endswith(".squashfs"))
+  monkeypatch.setattr(downloads.urllib.request, "build_opener", lambda *_: SimpleNamespace(open=open_))
+  checks, original = [], B.verify
+  def verify(*args, **kwargs):
+    checks.append(threading.get_ident())
+    assert threading.get_ident() == owner
+    return original(*args, **kwargs)
+  monkeypatch.setattr(B, "verify", verify)
+  progress = []
+  def gate():
+    assert threading.get_ident() == owner
+  def report(done, total):
+    assert threading.get_ident() == owner and 0 <= done <= total
+    progress.append((done, total))
+  parts = shared.data["dataset"]["parts"]
+  result = downloads.prepare_many(parts, gate, report)
+  assert peak == 2 and active == 0 and started == len(parts)
+  assert len(checks) == len(parts) and [b.id for b in result] == [part["id"] for part in parts]
+  assert progress[-1] == (sum(p["bytes"] for p in parts),) * 2
+  assert [done for done, _ in progress] == sorted(done for done, _ in progress)
+
+
+def test_failed_transfer_stops_its_peer_and_does_not_start_the_next_pack(shared, monkeypatch):
+  parts = shared.data["dataset"]["parts"]
+  barrier, closed = threading.Barrier(2), []
+  def transfer(package, gate, *_args, **_kwargs):
+    try:
+      barrier.wait(2)
+      if package["id"] == parts[0]["id"]:
+        raise C.RoutingError("download_failed")
+      while True:
+        gate()
+        time.sleep(.005)
+    finally:
+      closed.append(package["id"])
+  monkeypatch.setattr(downloads, "_transfer", transfer)
+  with pytest.raises(C.RoutingError, match="download_failed"):
+    downloads.prepare_many(parts)
+  assert set(closed) == {part["id"] for part in parts[:2]}
+  assert not any(thread.name.startswith("routing-download") for thread in threading.enumerate())
+
+
+def test_paused_parallel_transfers_stop_cleanly_when_manager_shuts_down(shared, monkeypatch):
+  from openpilot.starpilot.tandem.routing import maps
+  allowed, started, mutex = threading.Event(), threading.Barrier(3), threading.Lock()
+  allowed.set()
+  steps, closed, errors = 0, [], []
+  def transfer(package, gate, *_args, **_kwargs):
+    nonlocal steps
+    try:
+      started.wait(2)
+      while True:
+        gate()
+        with mutex:
+          steps += 1
+        time.sleep(.005)
+    finally:
+      closed.append(package["id"])
+  monkeypatch.setattr(downloads, "_transfer", transfer)
+  manager = maps.Manager(None, allowed=allowed.is_set, prepare=lambda **_: None)
+  manager.state = {"id": maps.request("us_state.IA")}
+  def run():
+    try:
+      downloads.prepare_many(shared.data["dataset"]["parts"], manager.gate)
+    except C.RoutingError as error:
+      errors.append(error.code)
+  thread = threading.Thread(target=run)
+  thread.start()
+  try:
+    started.wait(2)
+    allowed.clear()
+    for _ in range(100):
+      if maps.read().get("paused"):
+        break
+      time.sleep(.01)
+    assert maps.read().get("paused")
+    time.sleep(.02)  # allow the last already-permitted chunk to finish
+    before = steps
+    time.sleep(.04)
+    assert steps == before
+  finally:
+    manager.stop.set()
+    thread.join(2)
+  assert not thread.is_alive() and errors == ["interrupted"] and len(closed) == 2
+
+
+def test_assembled_image_hash_is_reused_and_full_logical_readback_is_kept(shared, monkeypatch):
+  scans, original = [], B.digest
+  def digest(path, *args):
+    if path.name == "tiles.squashfs" and "assembled" in path.parts:
+      scans.append(path)
+    return original(path, *args)
+  monkeypatch.setattr(B, "digest", digest)
+  decoder_log = shared.output.parent / "decoder.calls"
+  before = len(decoder_log.read_text().splitlines())
+  bundle = update("us_state.IA,us_state.IL")
+  assert len(scans) == 1 and verified.read(bundle)
+  assert len(decoder_log.read_text().splitlines()) - before == len(shared.data["dataset"]["parts"]) + 1
+
+
+def test_changed_image_between_manifest_and_acceptance_cannot_reuse_a_hash(shared, monkeypatch):
+  original_bundle = update("us_state.IA")
+  install = B.install
+  def damage(source, **kwargs):
+    path = source / "tiles.squashfs"
+    payload = path.read_bytes()
+    path.chmod(0o600)
+    path.write_bytes(payload[:-1] + bytes([payload[-1] ^ 1]))
+    path.chmod(0o444)
+    return install(source, **kwargs)
+  monkeypatch.setattr(B, "install", damage)
+  with pytest.raises(C.RoutingError, match="data_incompatible"):
+    update("us_state.IA,us_state.IL")
+  assert B.active().generation == original_bundle.generation and verified.read(original_bundle)
 
 
 def test_partition_retains_every_hierarchy_level_and_fringe_tile_once(shared):

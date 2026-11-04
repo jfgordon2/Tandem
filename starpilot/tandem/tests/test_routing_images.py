@@ -164,6 +164,63 @@ def test_image_download_verifies_and_installs_only_physical_bytes(decoder, tmp_p
   assert not (bundle.folder / "tiles.tar").exists()
 
 
+def test_download_handoff_hashes_once_but_still_decodes_before_acceptance(decoder, tmp_path, monkeypatch):
+  source, _ = make_image(tmp_path / "source")
+  raw = (source.folder / "manifest.json").read_bytes()
+  payload = images.source(source).read_bytes()
+  class Response(io.BytesIO):
+    status = 200
+    headers = {}
+  monkeypatch.setattr(downloads.urllib.request, "build_opener", lambda *_: SimpleNamespace(open=lambda request, **_:
+    Response(raw if (request if isinstance(request, str) else request.full_url).endswith("manifest.json") else payload)))
+  scans, original = [], bundles.digest
+  def digest(path, *args):
+    if path.name == "tiles.squashfs":
+      scans.append(path)
+    return original(path, *args)
+  monkeypatch.setattr(bundles, "digest", digest)
+  entry = {"id": source.id, "manifest": "https://example.test/manifest.json", "sha256": hashlib.sha256(raw).hexdigest(),
+           "bytes": len(payload)}
+  bundle = downloads.install(entry)
+  assert len(scans) == 1 and decoder.log.read_text().splitlines() == ["decode"]
+  bundles.verify(bundle.folder)  # a later full check cannot inherit operation-local evidence
+  assert len(scans) == 2
+
+
+def test_interrupted_private_download_resumes_ready_file_with_range(decoder, tmp_path, monkeypatch):
+  source, _ = make_image(tmp_path / "source")
+  raw, payload = (source.folder / "manifest.json").read_bytes(), images.source(source).read_bytes()
+  requests = []
+  class Response(io.BytesIO):
+    status = 200
+    headers = {}
+  class Interrupted(Response):
+    def read(self, size):
+      if self.tell():
+        raise C.RoutingError("cancelled")
+      return super().read(32)
+  def open_(request, **_):
+    url = request if isinstance(request, str) else request.full_url
+    if url.endswith("manifest.json"):
+      return Response(raw)
+    requests.append(request)
+    if len(requests) == 1:
+      return Interrupted(payload)
+    assert request.get_header("Range") == "bytes=32-"
+    response = Response(payload[32:])
+    response.status, response.headers = 206, {"Content-Range": f"bytes 32-{len(payload)-1}/{len(payload)}"}
+    return response
+  monkeypatch.setattr(downloads.urllib.request, "build_opener", lambda *_: SimpleNamespace(open=open_))
+  entry = {"id": source.id, "manifest": "https://example.test/manifest.json", "sha256": hashlib.sha256(raw).hexdigest(),
+           "bytes": len(payload)}
+  with pytest.raises(C.RoutingError, match="cancelled"):
+    downloads.prepare(entry)
+  partial = C.root() / "downloads" / entry["sha256"] / "ready/tiles.squashfs"
+  assert partial.stat().st_size == 32
+  assert images.source(downloads.prepare(entry)).read_bytes() == payload
+  assert len(requests) == 2
+
+
 def test_damaged_logical_graph_is_rejected_before_receipt(decoder, tmp_path):
   source, _ = make_image(tmp_path / "source")
   manifest = source.manifest
@@ -199,7 +256,7 @@ def test_streamed_compressor_receives_one_tar_without_expanded_disk_file(tmp_pat
   script = tmp_path / "mksquashfs"
   script.write_text(f"#!{sys.executable}\n" + '''import pathlib,sys,tarfile
 assert sys.argv[1]=='-' and '-tar' in sys.argv
-assert sys.argv[sys.argv.index('-processors')+1]=='1'
+assert sys.argv[sys.argv.index('-processors')+1]=='2'
 assert sys.argv[sys.argv.index('-mem')+1]=='64M'
 with tarfile.open(fileobj=sys.stdin.buffer,mode='r|') as archive:
   item=next(iter(archive))

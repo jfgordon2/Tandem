@@ -228,7 +228,7 @@ def pack_stream(chunks, size: int, image: Path, gate=lambda: None):
   info = tarfile.TarInfo("tiles.tar")
   info.size, info.mode = size, 0o444
   command = [tool, "-", str(image.resolve()), "-tar", "-comp", "gzip", "-Xcompression-level", "6", "-b", "131072",
-             "-processors", "1", "-mem", "64M", "-noappend", "-no-xattrs", "-no-progress", "-mkfs-time", "0", "-all-time", "0"]
+             "-processors", "2", "-mem", "64M", "-noappend", "-no-xattrs", "-no-progress", "-mkfs-time", "0", "-all-time", "0"]
   count, digest = 0, hashlib.sha256()
   def outer():
     nonlocal count

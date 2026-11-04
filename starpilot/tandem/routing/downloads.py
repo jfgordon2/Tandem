@@ -1,25 +1,34 @@
 """Resumable, checksum-verified catalog downloads with a pause/cancel gate."""
 from __future__ import annotations
 
+from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
+from dataclasses import dataclass
 import hashlib
 import json
 from pathlib import Path
 import shutil
+import threading
 import time
 import urllib.request
 
-from openpilot.starpilot.tandem.routing import archive, bundles, config as C
+from openpilot.starpilot.tandem.routing import archive, bundles, config as C, verified
 from openpilot.starpilot.tandem.routing.tools.manage import HTTPSRedirect
 
 
-def fetch(url: str, target: Path, size: int, checksum: str, gate=lambda: None, progress=lambda done, total: None):
+def fetch(url: str, target: Path, size: int, checksum: str, gate=lambda: None, progress=lambda done, total: None, *, checks=None, readonly=False):
   if not url.startswith("https://"):
     raise C.RoutingError("data_incompatible")
   gate()
   target.parent.mkdir(parents=True, exist_ok=True)
+  if target.is_symlink():
+    raise C.RoutingError("data_incompatible")
+  def digest():
+    if readonly and target.stat().st_mode & 0o222:
+      target.chmod(target.stat().st_mode & ~0o222)
+    return checks.digest(target, gate) if checks else bundles.digest(target, gate)
   done = target.stat().st_size if target.exists() else 0
   if done == size:
-    if bundles.digest(target, gate) == checksum:
+    if digest() == checksum:
       gate()
       progress(size, size)
       return
@@ -28,6 +37,8 @@ def fetch(url: str, target: Path, size: int, checksum: str, gate=lambda: None, p
   if done > size:
     target.unlink()
     done = 0
+  if readonly and target.exists() and not target.stat().st_mode & 0o200:
+    target.chmod(target.stat().st_mode | 0o200)  # resume an incomplete private download
   failures = 0
   while done < size:
     gate()
@@ -68,12 +79,23 @@ def fetch(url: str, target: Path, size: int, checksum: str, gate=lambda: None, p
       gate()
       done = target.stat().st_size if target.exists() else 0
   gate()
-  if done != size or bundles.digest(target, gate) != checksum:
+  if done != size or digest() != checksum:
     target.unlink(missing_ok=True)
     raise C.RoutingError("data_incompatible")
 
 
-def prepare(package: dict, gate=lambda: None, progress=lambda done, total: None, installing=lambda: None):
+@dataclass
+class Pending:
+  package: dict
+  data: dict
+  ready: Path
+  checks: verified.Hashes
+  cached: bool = False
+
+
+def _transfer(package, gate, progress, *, checks=None, reuse=True):
+  """Transfer/hash physical files; receipt acceptance and decoding stay serial."""
+  checks = checks or verified.Hashes()
   gate()
   opener = urllib.request.build_opener(HTTPSRedirect())
   with opener.open(package["manifest"], timeout=15) as response:
@@ -97,26 +119,24 @@ def prepare(package: dict, gate=lambda: None, progress=lambda done, total: None,
   ready = folder / "ready"
   if folder.is_symlink() or ready.is_symlink():
     raise C.RoutingError("data_incompatible")
-  if ready.exists():
+  transports = {r.get("download", {}).get("name", n): r.get("download", r) for n, r in data["files"].items()}
+  if ready.exists() and reuse:
     try:
-      from openpilot.starpilot.tandem.routing import verified
       existing = bundles.load(ready)
       if existing.generation == package["sha256"] and verified.read(existing):
-        existing = bundles.verify(ready, gate)
-        progress(total, total)
-        return existing
+        return Pending(package, data, ready, checks, cached=True)
     except C.RoutingError as error:
       if error.code != "data_incompatible":
         raise
-    # Preserve complete physical parts across an interrupted assembly.
-    for name, record in data["files"].items():
+  if ready.exists():
+    # Preserve complete and partial physical parts across an interrupted job.
+    for name in transports:
       source = ready / name
       target = folder / name
-      if "download" not in record and source.is_file() and not source.is_symlink() and not target.exists():
+      if source.is_file() and not source.is_symlink() and not target.exists():
         source.replace(target)
     shutil.rmtree(ready)  # reclaim interrupted expansion before checking free space
   ready.mkdir()
-  transports = {r.get("download", {}).get("name", n): r.get("download", r) for n, r in data["files"].items()}
   already = sum(min((folder / n).stat().st_size, r["bytes"]) for n, r in transports.items() if (folder / n).is_file())
   expanded = sum(r["bytes"] for r in data["files"].values() if "download" in r)
   # Compressed input plus one expanded graph. The ready directory is renamed
@@ -129,28 +149,114 @@ def prepare(package: dict, gate=lambda: None, progress=lambda done, total: None,
     transport = record.get("download", record)
     asset = transport.get("name", name)
     url = urllib.parse.urljoin(package["manifest"], transport.get("url", asset))
-    fetch(url, folder / asset, transport["bytes"], transport["sha256"], gate,
-          lambda n, _total, baseline=done: progress(baseline + n, total))
+    target = ready / asset
+    if (folder / asset).exists() and not target.exists():
+      (folder / asset).replace(target)  # resume the previous cache layout too
+    fetch(url, target, transport["bytes"], transport["sha256"], gate,
+          lambda n, _total, baseline=done: progress(baseline + n, total), checks=checks,
+          readonly=data["schema"] in (3, 4) and name == data["graph"]["file"])
     done += transport["bytes"]
+  return Pending(package, data, ready, checks)
+
+
+def _finish(pending, gate, installing=lambda: None):
+  data, ready = pending.data, pending.ready
   gate()
   installing()
-  for name, record in data["files"].items():
-    gate()
-    if "download" in record:
-      archive.expand(folder / record["download"]["name"], ready / name, record, gate)
-    else:
-      shutil.move(folder / name, ready / name)
+  if not pending.cached:
+    for name, record in data["files"].items():
+      gate()
+      if "download" in record:
+        source = ready / record["download"]["name"]
+        archive.expand(source, ready / name, record, gate)
+        source.unlink()
   gate()
-  return bundles.verify(ready, gate)
+  return bundles.verify(ready, gate, checks=pending.checks)
+
+
+def prepare(package: dict, gate=lambda: None, progress=lambda done, total: None, installing=lambda: None, *, checks=None):
+  pending = _transfer(package, gate, progress, checks=checks)
+  try:
+    result = _finish(pending, gate, installing)
+  except C.RoutingError as error:
+    if not pending.cached or error.code != "data_incompatible":
+      raise
+    pending = _transfer(package, gate, progress, reuse=False)
+    result = _finish(pending, gate, installing)
+  progress(package["bytes"], package["bytes"])
+  return result
+
+
+def prepare_many(packages, gate=lambda: None, progress=lambda done, total: None):
+  """Two bounded transfers; the owner alone gates, publishes and verifies."""
+  if not packages:
+    return []
+  if len({part["sha256"] for part in packages}) != len(packages):
+    raise C.RoutingError("invalid_request")
+  stopped, permitted, mutex = threading.Event(), threading.Event(), threading.Lock()
+  counts, total, reported = [0] * len(packages), sum(part["bytes"] for part in packages), None
+  def update(index, done):
+    with mutex:
+      counts[index] = done
+  def owner_gate():
+    nonlocal reported
+    permitted.clear()
+    gate()
+    permitted.set()
+    with mutex:
+      done = sum(counts)
+    if done != reported:
+      progress(done, total)
+      reported = done
+  def worker_gate():
+    while not stopped.is_set():
+      if permitted.wait(.1):
+        if not stopped.is_set():
+          return
+    raise C.RoutingError("interrupted")
+  owner_gate()
+  executor = ThreadPoolExecutor(max_workers=2, thread_name_prefix="routing-download")
+  futures, results, remaining = {}, {}, iter(range(len(packages)))
+  def submit(index, *, reuse=True):
+    futures[executor.submit(_transfer, packages[index], worker_gate,
+      lambda done, _total: update(index, done), reuse=reuse)] = index
+  try:
+    for _ in range(min(2, len(packages))):
+      submit(next(remaining))
+    while futures:
+      owner_gate()
+      completed, _ = wait(futures, timeout=.1, return_when=FIRST_COMPLETED)
+      for future in completed:
+        index = futures.pop(future)
+        pending = future.result()
+        try:
+          results[index] = _finish(pending, owner_gate)
+        except C.RoutingError as error:
+          if not pending.cached or error.code != "data_incompatible":
+            raise
+          update(index, 0)
+          submit(index, reuse=False)
+          continue
+        update(index, packages[index]["bytes"])
+        next_index = next(remaining, None)
+        if next_index is not None:
+          submit(next_index)
+    owner_gate()
+    return [results[index] for index in range(len(packages))]
+  finally:
+    stopped.set()
+    permitted.set()
+    executor.shutdown(wait=True, cancel_futures=True)
 
 
 def install(package: dict, gate=lambda: None, progress=lambda done, total: None, installing=lambda: None, *, activate=True, pack_gate=None):
   if package.get("kind") == "dataset":
     from openpilot.starpilot.tandem.routing import datasets
     return datasets.install(package, gate, progress, installing, pack_gate=pack_gate)
-  ready = prepare(package, gate, progress, installing)
+  checks = verified.Hashes()
+  ready = prepare(package, gate, progress, installing, checks=checks)
   folder = ready.folder.parent
-  bundle = bundles.install(ready.folder, consume=True, gate=gate)
+  bundle = bundles.install(ready.folder, consume=True, gate=gate, checks=checks)
   shutil.rmtree(folder)
   gate()
   if activate:
