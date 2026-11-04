@@ -71,13 +71,10 @@ Tandem uses **`release`** as its default branch and release channel in [`jfgordo
 On the comma device's setup screen, choose **Custom Software** and enter:
 
 ```
-installer.comma.ai/jfgordon2/release
+jfgordon2/release
 ```
 
-To reach the setup screen on a device that already runs openpilot or a fork, use Settings › Software › Uninstall first.
-comma's installer always clones `github.com/<user>/openpilot`, so `jfgordon2/openpilot` forwards to this repository
-(GitHub keeps the old name after a rename). Don't create a repository named `openpilot` under this account, or the
-installer will clone that instead.
+To reach the setup screen on a device that already runs openpilot or a fork, use Settings › Software › Uninstall first
 
 A device already on StarPilot can switch over SSH instead, keeping its settings:
 
