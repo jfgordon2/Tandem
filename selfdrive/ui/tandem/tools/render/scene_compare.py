@@ -39,19 +39,20 @@ VALUES = {
 
 
 def sample_ram(out):
-  """Device › RAM's three drives as the mock shows them: today 4:12 PM, yesterday 8:40 AM and Oct 30."""
+  """Device › RAM's three drives as the mock shows them: today 4:46, 4:25 and 3:31 PM."""
   import datetime
   import json
   from pathlib import Path
   from openpilot.selfdrive.ui.tandem.ram import RamLog
   mb = 2**20
   today = datetime.datetime.now().replace(second=0, microsecond=0)
-  top = [["modeld", 1300 * mb], ["ui", 620 * mb], ["selfdrived", 410 * mb], ["mapd", 290 * mb], ["locationd", 240 * mb]]
-  drives = [(today.replace(hour=16, minute=12), 92), (today.replace(hour=8, minute=40) - datetime.timedelta(days=1), 91),
-            (today.replace(month=10, day=30, hour=9, minute=0), 93)]
+  top = [["starpilot_process", 352 * mb], ["modeld", 250 * mb], ["dmonitoringmodeld", 205 * mb], ["ui", 170 * mb],
+         ["speed_limit_vision", 160 * mb]]
+  grew = {"starpilot_process": 270 * mb, "modeld": 2 * mb, "dmonitoringmodeld": 1 * mb, "ui": 4 * mb, "speed_limit_vision": 40 * mb}
+  drives = [(today.replace(hour=16, minute=46), 95), (today.replace(hour=16, minute=25), 93), (today.replace(hour=15, minute=31), 92)]
   path = Path(out) / "_ram.json"
-  path.write_text(json.dumps({"unseen": True, "drives": [{"when": when.timestamp(), "percent": percent, "top": top, "rest": 4500 * mb,
-                                                          "drive": i} for i, (when, percent) in enumerate(drives)]}))
+  path.write_text(json.dumps({"unseen": True, "drives": [{"when": when.timestamp(), "percent": percent, "top": top, "rest": 2300 * mb,
+                                                          "drive": i, "grew": grew} for i, (when, percent) in enumerate(drives)]}))
   return RamLog(path)
 
 
@@ -62,7 +63,7 @@ def main(frame, save, out, tap, gui_app):
   ram = sample_ram(out)
   win = W.SettingsWindow(store=SettingsStore(cache, lambda: None), live=FakeLive(), model_source=lambda: models, car_catalog=FakeCars,
                          device_data=FakeData, device=FakeDevice, wifi=FakeWifi, wheel=lambda: wheel, bluetooth=FakeBluetooth,
-                         updates=FakeUpdates, maps_source=lambda: maps, boot_logos=FakeBootLogos, ram_log=lambda: ram, ram_now=lambda: 54)
+                         updates=FakeUpdates, maps_source=lambda: maps, boot_logos=FakeBootLogos, ram_log=lambda: ram, ram_now=lambda: 38)
   win.show_event()
   rect = rl.Rectangle(0, 0, 2160, 1080)
   draw = lambda: win.render(rect)  # noqa: E731

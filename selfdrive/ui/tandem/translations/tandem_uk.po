@@ -730,7 +730,7 @@ msgstr "{} s"
 #. Unit notation; keep as written.
 #: onroad/developer.py:291
 #: settings/device_sections.py:301
-#: settings/ram.py:29
+#: settings/ram.py:30
 #, python-brace-format
 msgid "{} GB"
 msgstr "{} GB"
@@ -808,7 +808,7 @@ msgstr "GPU"
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: onroad/developer.py:165
-#: settings/ram.py:98
+#: settings/ram.py:110
 #: settings/search.py:30
 msgid "RAM"
 msgstr "RAM"
@@ -1164,124 +1164,124 @@ msgid "Byp"
 msgstr "Byp"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:578
+#: onroad/view.py:580
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:578
+#: onroad/view.py:580
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/view.py:579
+#: onroad/view.py:581
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{} хв · {}"
 
-#: ram.py:29
+#: ram.py:41
 #: settings/window.py:258
 msgid "Driving model"
 msgstr "Модель водіння"
 
-#: ram.py:30
+#: ram.py:42
 msgid "Driver monitoring model"
 msgstr "Модель стеження за водієм"
 
-#: ram.py:31
+#: ram.py:43
 msgid "This screen"
 msgstr "Цей екран"
 
-#: ram.py:32
+#: ram.py:44
 msgid "Driving decisions"
 msgstr "Рішення щодо керування"
 
-#: ram.py:33
+#: ram.py:45
 msgid "Steering and speed control"
 msgstr "Кермо і швидкість"
 
-#: ram.py:34
+#: ram.py:46
 msgid "Speed planning"
 msgstr "Планування швидкості"
 
-#: ram.py:35
+#: ram.py:47
 msgid "Radar"
 msgstr "Радар"
 
-#: ram.py:36
+#: ram.py:48
 msgid "Position and heading"
 msgstr "Положення і курс"
 
-#: ram.py:37
+#: ram.py:49
 msgid "Car calibration"
 msgstr "Калібрування авто"
 
-#: ram.py:38
+#: ram.py:50
 msgid "Camera calibration"
 msgstr "Калібрування камери"
 
-#: ram.py:39
+#: ram.py:51
 msgid "Cameras"
 msgstr "Камери"
 
-#: ram.py:40
+#: ram.py:52
 msgid "Video recording"
 msgstr "Запис відео"
 
-#: ram.py:41
+#: ram.py:53
 msgid "Drive logging"
 msgstr "Журнал поїздки"
 
-#: ram.py:42
+#: ram.py:54
 #: settings/device_sections.py:357
 #: settings/search.py:189
 msgid "Uploads"
 msgstr "Вивантаження"
 
-#: ram.py:43
-#: ram.py:44
-#: ram.py:52
+#: ram.py:55
+#: ram.py:56
+#: ram.py:64
 msgid "Remote access"
 msgstr "Віддалений доступ"
 
-#: ram.py:45
+#: ram.py:57
 msgid "Speed limits and curves"
 msgstr "Обмеження швидкості та повороти"
 
-#: ram.py:46
+#: ram.py:58
 msgid "Routing"
 msgstr "Маршрути"
 
-#: ram.py:47
+#: ram.py:59
 msgid "Sounds"
 msgstr "Звуки"
 
-#: ram.py:48
+#: ram.py:60
 msgid "Car interface"
 msgstr "Інтерфейс авто"
 
-#: ram.py:49
+#: ram.py:61
 msgid "Starts and stops the rest"
 msgstr "Запускає і зупиняє решту"
 
-#: ram.py:50
+#: ram.py:62
 msgid "StarPilot's planning"
 msgstr "Планування StarPilot"
 
-#: ram.py:51
+#: ram.py:63
 msgid "Speed limit sign reading"
 msgstr "Розпізнавання знаків швидкості"
 
-#: ram.py:53
+#: ram.py:65
 msgid "Power and temperature"
 msgstr "Живлення і температура"
 
-#: ram.py:54
+#: ram.py:66
 msgid "Bluetooth remote"
 msgstr "Bluetooth-пульт"
 
-#: ram.py:55
+#: ram.py:67
 msgid "Car connection"
 msgstr "Зв'язок з авто"
 
@@ -2548,7 +2548,7 @@ msgid "Brighter"
 msgstr "Яскравіше"
 
 #: settings/device_sections.py:301
-#: settings/ram.py:29
+#: settings/ram.py:30
 #, python-brace-format
 msgid "{} MB"
 msgstr "{} МБ"
@@ -3748,39 +3748,39 @@ msgstr "Відкрита"
 msgid "Automatic"
 msgstr "Автоматично"
 
-#: settings/ram.py:45
+#: settings/ram.py:50
 #, python-brace-format
 msgid "{} · {}%"
 msgstr "{} · {}%"
 
-#: settings/ram.py:38
+#: settings/ram.py:39
 #, python-brace-format
 msgid "Today {}"
 msgstr "Сьогодні {}"
 
-#: settings/ram.py:40
+#: settings/ram.py:41
 #, python-brace-format
 msgid "Yesterday {}"
 msgstr "Учора {}"
 
-#: settings/ram.py:66
-msgid "Everything else"
-msgstr "Усе інше"
+#: settings/ram.py:73
+msgid "Other processes and the system"
+msgstr "Інші процеси та система"
 
-#: settings/ram.py:90
+#: settings/ram.py:102
 #, python-brace-format
 msgid "Now {}% used"
 msgstr "Зараз використано {}%"
 
-#: settings/ram.py:99
-msgid "What was using it at the peak of each drive that ran low. The last three drives are kept."
-msgstr "Що використовувало RAM на піку кожної поїздки, коли її бракувало. Зберігаються три останні поїздки."
+#: settings/ram.py:111
+msgid "What was using it at each drive's peak, and how much it grew since the drive started."
+msgstr "Що використовувало RAM на піку кожної поїздки і наскільки це зросло від початку поїздки."
 
-#: settings/ram.py:100
-msgid "Added to Report a Problem. A reboot clears RAM."
-msgstr "Додається до звіту про проблему. Перезавантаження звільняє RAM."
+#: settings/ram.py:113
+msgid "The last three drives are kept and added to Report a Problem. A reboot clears RAM."
+msgstr "Три останні поїздки зберігаються і додаються до звіту про проблему. Перезавантаження звільняє RAM."
 
-#: settings/ram.py:97
+#: settings/ram.py:109
 msgid "No drive has run low on RAM yet."
 msgstr "Поки що в жодній поїздці не бракувало RAM."
 

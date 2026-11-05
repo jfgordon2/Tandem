@@ -21,7 +21,8 @@ from openpilot.selfdrive.ui.tandem.rows import ListPanel, Padded, Text
 from openpilot.system.ui.widgets import Widget
 
 ROW_HEIGHT = T.px(41)
-NAME_WIDTH, WHAT_WIDTH, SIZE_WIDTH = T.px(120), T.px(190), T.px(70)
+NAME_WIDTH, WHAT_WIDTH, SIZE_WIDTH, GREW_WIDTH = T.px(166), T.px(160), T.px(70), T.px(74)
+LARGE_GROWTH = 50 * 2**20   # amber from here: a leak, not a process settling in
 
 
 def size_text(size: float) -> str:
@@ -41,18 +42,23 @@ def when_text(when: float, now: datetime.datetime | None = None) -> str:
   return at.strftime("%b %-d")
 
 
+def growth_text(size: int) -> str:
+  return ("+" if size >= 0 else "-") + size_text(abs(size))
+
+
 def drive_label(snap: Snapshot, now: datetime.datetime | None = None) -> str:
   return t_("{} · {}%", when_text(snap.when, now), snap.percent)
 
 
 class ProcessRow(Component):
-  """A process's name, what it does, a bar against the largest, and its size; or "Everything else" (bar=None)."""
+  """A process's name, what it does, a bar against the largest, its size and its growth since the drive's baseline; or
+  "Other processes and the system" for the rest."""
   grow_touch_target = False
 
   def __init__(self, snap: Callable[[], Snapshot], index: int):
     super().__init__()
     self._snap = snap
-    self._index = index   # into snap.top; len(top) is "Everything else"
+    self._index = index   # into snap.top; len(top) is the rest
 
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, ROW_HEIGHT
@@ -62,13 +68,14 @@ class ProcessRow(Component):
     if self._index > len(snap.top):
       return
     body = inset(rect, x=T.PANEL_HEADER_INSET)
+    label_r, size_r, _ = row(body, [FILL, SIZE_WIDTH, GREW_WIDTH], T.px(14))
     if self._index == len(snap.top):
-      draw.text(body, N_("Everything else"), T.font_px(15), T.TEXT_TERTIARY)
-      draw.text(body, size_text(snap.rest), T.font_px(16), T.TEXT_TERTIARY, T.FONT_BOLD, Align.END)
+      draw.text(label_r, N_("Other processes and the system"), T.font_px(15), T.TEXT_TERTIARY)
+      draw.text(size_r, size_text(snap.rest), T.font_px(16), T.TEXT_TERTIARY, T.FONT_BOLD, Align.END)
       return
     name, size = snap.top[self._index]
     largest = snap.top[0][1] or 1
-    name_r, what_r, bar_r, size_r = row(body, [NAME_WIDTH, WHAT_WIDTH, FILL, SIZE_WIDTH], T.px(16))
+    name_r, what_r, bar_r, size_r, grew_r = row(body, [NAME_WIDTH, WHAT_WIDTH, FILL, SIZE_WIDTH, GREW_WIDTH], T.px(14))
     draw.text(name_r, draw.fit(name, T.font_px(15), T.FONT_MONO, name_r.width), T.font_px(15), T.TEXT, T.FONT_MONO)
     what = DESCRIPTIONS.get(name)
     if what:
@@ -77,6 +84,11 @@ class ProcessRow(Component):
     draw.fill(track, T.TRACK, T.px(4))
     draw.fill(rl.Rectangle(track.x, track.y, max(T.px(8), track.width * size / largest), track.height), T.DANGER, T.px(4))
     draw.text(size_r, size_text(size), T.font_px(16), T.TEXT, T.FONT_BOLD, Align.END)
+    if name in snap.grew:
+      grew = snap.grew[name]
+      large = grew >= LARGE_GROWTH
+      draw.text(grew_r, growth_text(grew), T.SIZE_SUBTITLE, T.WARNING if large else T.TEXT_MUTED, T.FONT_BOLD if large else T.FONT_MEDIUM,
+                Align.END)
 
 
 def ram_panel(log: RamLog, now_percent: Callable[[], int]) -> Widget:
@@ -96,7 +108,8 @@ def ram_panel(log: RamLog, now_percent: Callable[[], int]) -> Widget:
     else:
       items = [Text(N_("No drive has run low on RAM yet."))]
     return ListPanel(items, title=N_("RAM"),
-                     subtitle=N_("What was using it at the peak of each drive that ran low. The last three drives are kept."),
-                     header_control=header, footnote=N_("Added to Report a Problem. A reboot clears RAM."))
+                     subtitle=N_("What was using it at each drive's peak, and how much it grew since the drive started."),
+                     header_control=header,
+                     footnote=N_("The last three drives are kept and added to Report a Problem. A reboot clears RAM."))
 
   return Rebuilding(lambda: tuple((s.when, s.percent) for s in log.snapshots()), build, on_show=log.mark_seen)

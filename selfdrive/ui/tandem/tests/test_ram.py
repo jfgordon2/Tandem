@@ -152,3 +152,47 @@ def test_search_finds_ram_only_once_it_shows_and_report_without_tuner_mode():
   assert search("report a problem", tuner=False)[0].name == "Report a Problem"   # not a Tuner Mode screen
   assert "SSH" not in [e.name for e in search("ssh", tuner=False)]               # Developer is
   assert "SSH" in [e.name for e in search("ssh", tuner=True)]
+
+
+def test_growth_is_measured_from_a_baseline_a_minute_into_the_drive(tmp_path):
+  sizes = {"starpilot_process": 100 * MB, "modeld": 300 * MB}
+
+  def read():
+    return sorted(sizes.items(), key=lambda kv: -kv[1]), 3000 * MB
+  log = RamLog(tmp_path / ".tandem_ram.json", read, lambda: 1000.0, background=False)
+  log.drive(7, now=10.0)
+  log.drive(7, now=69.0)                        # not a minute yet
+  sizes["starpilot_process"] = 120 * MB         # still settling in: not counted as growth
+  log.drive(7, now=70.0)                        # baseline taken here
+  sizes["starpilot_process"] = 390 * MB         # then it leaks
+  log.note(7, 95)
+  snap = log.snapshots()[0]
+  assert snap.grew == {"starpilot_process": 270 * MB, "modeld": 0}
+  assert "starpilot_process 390 MB (+270)" in report_text([snap])
+
+
+def test_a_new_drive_waits_for_its_own_baseline(tmp_path):
+  log, _ = _log(tmp_path)
+  log.drive(1, now=0.0)
+  log.drive(1, now=61.0)
+  log.drive(2, now=100.0)                       # the next drive starts: the old baseline doesn't apply
+  log.note(2, 91)
+  assert log.snapshots()[0].grew == {}
+
+
+def test_snapshots_saved_before_growth_still_load(tmp_path):
+  path = tmp_path / ".tandem_ram.json"
+  path.write_text(json.dumps({"drives": [{"when": 1.0, "percent": 92, "top": [["modeld", 300 * MB]], "rest": 0, "drive": 1}]}))
+  assert RamLog(path).snapshots()[0].grew == {}
+
+
+def test_pss_sums_a_processes_share_of_each_mapping():
+  from openpilot.selfdrive.ui.tandem.ram import pss_of
+  smaps = (b"7f00-7f10 r-xp 00000000 08:01 1 /lib/libc.so\nRss:   400 kB\nPss:   100 kB\nShared_Clean: 300 kB\n" +
+           b"7f20-7f30 rw-p 00000000 00:00 0\nRss:   50 kB\nPss:   50 kB\n")
+  assert pss_of(smaps) == 150 * 1024
+
+
+def test_growth_reads_as_a_signed_size():
+  from openpilot.selfdrive.ui.tandem.settings.ram import growth_text
+  assert (growth_text(270 * MB), growth_text(-3 * MB), growth_text(0)) == ("+270 MB", "-3 MB", "+0 MB")

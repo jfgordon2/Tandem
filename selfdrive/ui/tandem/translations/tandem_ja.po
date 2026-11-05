@@ -726,7 +726,7 @@ msgstr "{} s"
 #. Unit notation; keep as written.
 #: onroad/developer.py:291
 #: settings/device_sections.py:301
-#: settings/ram.py:29
+#: settings/ram.py:30
 #, python-brace-format
 msgid "{} GB"
 msgstr "{} GB"
@@ -804,7 +804,7 @@ msgstr "GPU"
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: onroad/developer.py:165
-#: settings/ram.py:98
+#: settings/ram.py:110
 #: settings/search.py:30
 msgid "RAM"
 msgstr "RAM"
@@ -1160,124 +1160,124 @@ msgid "Byp"
 msgstr "Byp"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:578
+#: onroad/view.py:580
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:578
+#: onroad/view.py:580
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/view.py:579
+#: onroad/view.py:581
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{}分 · {}"
 
-#: ram.py:29
+#: ram.py:41
 #: settings/window.py:258
 msgid "Driving model"
 msgstr "運転モデル"
 
-#: ram.py:30
+#: ram.py:42
 msgid "Driver monitoring model"
 msgstr "ドライバー監視モデル"
 
-#: ram.py:31
+#: ram.py:43
 msgid "This screen"
 msgstr "この画面"
 
-#: ram.py:32
+#: ram.py:44
 msgid "Driving decisions"
 msgstr "運転の判断"
 
-#: ram.py:33
+#: ram.py:45
 msgid "Steering and speed control"
 msgstr "ステアリングと速度制御"
 
-#: ram.py:34
+#: ram.py:46
 msgid "Speed planning"
 msgstr "速度の計画"
 
-#: ram.py:35
+#: ram.py:47
 msgid "Radar"
 msgstr "レーダー"
 
-#: ram.py:36
+#: ram.py:48
 msgid "Position and heading"
 msgstr "位置と向き"
 
-#: ram.py:37
+#: ram.py:49
 msgid "Car calibration"
 msgstr "車のキャリブレーション"
 
-#: ram.py:38
+#: ram.py:50
 msgid "Camera calibration"
 msgstr "カメラのキャリブレーション"
 
-#: ram.py:39
+#: ram.py:51
 msgid "Cameras"
 msgstr "カメラ"
 
-#: ram.py:40
+#: ram.py:52
 msgid "Video recording"
 msgstr "ビデオ録画"
 
-#: ram.py:41
+#: ram.py:53
 msgid "Drive logging"
 msgstr "走行ログ"
 
-#: ram.py:42
+#: ram.py:54
 #: settings/device_sections.py:357
 #: settings/search.py:189
 msgid "Uploads"
 msgstr "アップロード"
 
-#: ram.py:43
-#: ram.py:44
-#: ram.py:52
+#: ram.py:55
+#: ram.py:56
+#: ram.py:64
 msgid "Remote access"
 msgstr "リモートアクセス"
 
-#: ram.py:45
+#: ram.py:57
 msgid "Speed limits and curves"
 msgstr "制限速度とカーブ"
 
-#: ram.py:46
+#: ram.py:58
 msgid "Routing"
 msgstr "ルート検索"
 
-#: ram.py:47
+#: ram.py:59
 msgid "Sounds"
 msgstr "サウンド"
 
-#: ram.py:48
+#: ram.py:60
 msgid "Car interface"
 msgstr "車のインターフェース"
 
-#: ram.py:49
+#: ram.py:61
 msgid "Starts and stops the rest"
 msgstr "他の処理を起動・停止"
 
-#: ram.py:50
+#: ram.py:62
 msgid "StarPilot's planning"
 msgstr "StarPilotの計画"
 
-#: ram.py:51
+#: ram.py:63
 msgid "Speed limit sign reading"
 msgstr "速度標識の読み取り"
 
-#: ram.py:53
+#: ram.py:65
 msgid "Power and temperature"
 msgstr "電源と温度"
 
-#: ram.py:54
+#: ram.py:66
 msgid "Bluetooth remote"
 msgstr "Bluetoothリモコン"
 
-#: ram.py:55
+#: ram.py:67
 msgid "Car connection"
 msgstr "車との接続"
 
@@ -2540,7 +2540,7 @@ msgid "Brighter"
 msgstr "明るく"
 
 #: settings/device_sections.py:301
-#: settings/ram.py:29
+#: settings/ram.py:30
 #, python-brace-format
 msgid "{} MB"
 msgstr "{} MB"
@@ -3736,39 +3736,39 @@ msgstr "オープン"
 msgid "Automatic"
 msgstr "自動"
 
-#: settings/ram.py:45
+#: settings/ram.py:50
 #, python-brace-format
 msgid "{} · {}%"
 msgstr "{} · {}%"
 
-#: settings/ram.py:38
+#: settings/ram.py:39
 #, python-brace-format
 msgid "Today {}"
 msgstr "今日 {}"
 
-#: settings/ram.py:40
+#: settings/ram.py:41
 #, python-brace-format
 msgid "Yesterday {}"
 msgstr "昨日 {}"
 
-#: settings/ram.py:66
-msgid "Everything else"
-msgstr "その他すべて"
+#: settings/ram.py:73
+msgid "Other processes and the system"
+msgstr "その他のプロセスとシステム"
 
-#: settings/ram.py:90
+#: settings/ram.py:102
 #, python-brace-format
 msgid "Now {}% used"
 msgstr "現在 {}% 使用中"
 
-#: settings/ram.py:99
-msgid "What was using it at the peak of each drive that ran low. The last three drives are kept."
-msgstr "RAMが不足した各走行のピーク時に使っていたもの。直近3回の走行を保存します。"
+#: settings/ram.py:111
+msgid "What was using it at each drive's peak, and how much it grew since the drive started."
+msgstr "各走行のピーク時にRAMを使っていたものと、走行開始からの増加量。"
 
-#: settings/ram.py:100
-msgid "Added to Report a Problem. A reboot clears RAM."
-msgstr "問題の報告に添付されます。再起動するとRAMが解放されます。"
+#: settings/ram.py:113
+msgid "The last three drives are kept and added to Report a Problem. A reboot clears RAM."
+msgstr "直近3回の走行を保存し、問題の報告に添付します。再起動するとRAMが解放されます。"
 
-#: settings/ram.py:97
+#: settings/ram.py:109
 msgid "No drive has run low on RAM yet."
 msgstr "RAMが不足した走行はまだありません。"
 
