@@ -63,6 +63,8 @@ env:
 
 jobs:
   build_and_push:
+    # Tandem keeps this inherited publisher disabled pending a separate review.
+    if: github.repository == 'StarPilotHQ/StarPilot'
     runs-on: [self-hosted, truenas, starpilot-build]
     timeout-minutes: 720
     steps:

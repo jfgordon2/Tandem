@@ -20,6 +20,8 @@ jobs:
         with:
           ref: valhalla
           persist-credentials: false
+      - name: Check reviewed workflow policy
+        run: python3 selfdrive/ui/tandem/tools/workflow_policy.py
       - name: Measure hosted runner build space
         run: >-
           python3 -m openpilot.starpilot.tandem.routing.tools.hosted

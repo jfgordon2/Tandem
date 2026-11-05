@@ -92,6 +92,9 @@ Navigation still reports the turn StarPilot actually selected through its option
 | File | Integration |
 | --- | --- |
 | `.github/workflows/tandem_routing_maps.yaml` | Thin hosted-runner launcher for owned routing-data maintenance tools. It checks out `valhalla`, independent of the device release branch. Resource probes and build/publication logic stay under `starpilot/tandem/routing/tools/`. |
+| `.github/workflows/compile_starpilot.yaml` | One job-level repository gate keeps this inherited binary-building/branch-pushing workflow inert in Tandem. Also disabled in the repository's Actions settings. Its upstream implementation is retained for merge compatibility. |
+| `.github/workflows/compile_bluescreens.yaml` | The same repository gate and Actions disablement keep the inherited binary/panda build and branch push inert in Tandem. |
+| `.github/workflows/publish_truenas_runner.yaml` | The same repository gate and Actions disablement keep the inherited GHCR image publisher inert in Tandem. |
 | `README.md` | Fork introduction, documentation links, screenshots and upstream credits. |
 | `selfdrive/ui/layouts/main.py` | Screen factories and sidebar widths from `screens.py`; each factory has an upstream fallback. |
 | `selfdrive/ui/layouts/home.py` | `_show_header()` override; the default is `True`. |
@@ -160,6 +163,7 @@ Use the Upstream integration inventory above to review overlapping changes. Owne
 
 After a merge, check the interfaces that can change without a source conflict:
 
+- Run `tools/workflow_policy.py` before pushing. The [workflow review](docs/github-workflows.md) records the inherited publishers disabled in Tandem, the retained read-only safety tests, and the reviewed workflow/action fingerprints. Review every new or changed workflow before accepting its fingerprint; maps do not call upstream CI composites.
 - Run `tests/` and `starpilot/tandem/tests/`, plus `tools/upstream_audit.py --check`. The Galaxy HTTP tests need `tests/requirements.txt`.
 - Check the upstream model, maps, navigation, vehicle and device controller methods used by the owned adapters. Named confirmations must keep their original engagement checks; new confirmation actions must not be auto-approved.
 - Check the optional navigation observer, publisher placement and source-message validity. The snapshot must reflect the target actually binding cruise, including a selected next turn, and expire when the producer stops.

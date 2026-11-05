@@ -15,6 +15,8 @@ permissions:
 
 jobs:
   publish:
+    # Tandem keeps this inherited publisher disabled pending a separate review.
+    if: github.repository == 'StarPilotHQ/StarPilot'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
