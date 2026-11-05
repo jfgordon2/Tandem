@@ -61,15 +61,22 @@ binary. It maps the same rounded 2-degree download archive groups to their
 quarter-degree tile directories. Sparse `download_rows` are honored only when
 the installed binary declares that field; older binaries use bounding boxes.
 The binary is memory-mapped and only a bounded menu slice is decoded. No tile
-contents, second geographic catalog or network request is needed for cleanup.
+contents, new geographic catalog or network request is needed for cleanup.
+
+When the native menu lacks a selected region, the existing local routing
+catalog supplies its geographic bounds as a retention guard. A valid cached
+catalog is preferred, with bundled metadata available for regions an older
+cache lacks. Guam's missing legacy entry therefore does not block Guam-only,
+mixed-state or whole-US cleanup. The native menu remains authoritative when it
+defines the region. Fallback coverage only protects existing tiles; it does not
+perform or certify a legacy download, and cannot create a legacy Ready receipt.
 
 Cleanup rechecks parked state, cancellation and downloader activity between
 files. Only recognized map tile names under valid grid directories are removed;
-unknown files and symlinks stay untouched. Unreadable or unknown region metadata
-prevents cleanup before files or readiness receipts change. The current embedded
-menu lacks `us_state.GU`; selecting it (including the whole-US expansion) requires
-a corrected mapd menu before cleanup can run. Routing coverage for Guam is
-separate from this legacy metadata limitation.
+unknown files and symlinks stay untouched. Unreadable menus, or a region unknown
+to both native and routing metadata, prevent cleanup before legacy files or
+readiness receipts change. A missing native menu entry does not prevent cleaning
+other regions when local geographic coverage is available.
 
 Legacy-only country updates apply their selection after the road download
 completes even when the routing catalog reports that country's routes unavailable.
@@ -77,7 +84,7 @@ TANDEM_ROUTING=0 retains the original upstream behavior. The helper adds no
 upstream hook and uses the existing Install/Ready flow with no visual changes.
 Tests redirect road data to `TANDEM_ROAD_MAPS_DIR` and never touch live maps.
 
-Host validation: 27 dedicated ownership/deletion tests, 289 routing tests total,
+Host validation: 35 dedicated ownership/deletion tests, 297 routing tests total,
 and 750 UI tests passed (two skips; four hardware-dependent UI files omitted).
 The SSH device check timed out, so this cleanup has not been exercised on live
 device data.

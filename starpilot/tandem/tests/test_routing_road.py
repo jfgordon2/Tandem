@@ -44,11 +44,7 @@ def test_installed_binary_menu_and_override_use_the_downloaders_footprints(tmp_p
   assert len(ia) == 8 and len(il) == 12 and ia & il == {(40, -92), (42, -92)}
   assert road.regions("nation.US") == {"us_state." + code for code in road.US_STATE_CODES}
   for code in road.US_STATE_CODES:
-    if code in data["us_state"]:
-      assert road.footprint("us_state." + code, data)["us_state." + code]
-    else:
-      with pytest.raises(C.RoutingError):
-        road.footprint("us_state." + code, data)  # unknown downloader coverage cannot authorize deletion
+    assert road.footprint("us_state." + code, data)["us_state." + code]
   custom = tmp_path / "mapd_download_menu.json"
   custom.write_text(json.dumps({"nation": {}, "us_state": {"IA": {
     "bounding_box": {"min_lat": 40, "min_lon": -96, "max_lat": 44, "max_lon": -90},
@@ -68,6 +64,42 @@ def test_unrecognized_binary_cannot_authorize_deletion(tmp_path):
   binary.write_bytes(b"new binary format without a readable region menu")
   with pytest.raises(C.RoutingError, match="data_incompatible"):
     road.menu(binary, tmp_path / "absent")
+
+
+@pytest.mark.parametrize("selection", ["us_state.GU", "us_state.IA,us_state.GU", "nation.US"])
+@pytest.mark.parametrize("null_entry", [False, True])
+def test_missing_guam_menu_entry_uses_local_coverage_and_cleans_other_regions(maps, monkeypatch, selection, null_entry):
+  params, memory = maps
+  native_menu = road.menu()
+  native_menu["us_state"].pop("GU", None)
+  if null_entry:
+    native_menu["us_state"]["GU"] = None
+  monkeypatch.setattr(road, "menu", lambda: native_menu)
+  monkeypatch.setattr(catalog.urllib.request, "urlopen", lambda *_a, **_k: pytest.fail("cleanup used the network"))
+  guam, iowa, foreign = tile(12, 144), tile(40, -96), tile(0, 20)
+  cache(params, "us_state.GU", "us_state.IA", "nation.US")
+  road.apply(selection, lambda: None, memory, params=params)
+  assert guam.read_bytes() == b"legacy tile" and not foreign.exists()
+  assert iowa.exists() == (selection != "us_state.GU")
+  value = load_maps_storage_cache(params.get(road.CACHE))
+  assert not value.selection_updated_at("us_state.GU")  # retention is not proof of a legacy download
+  assert not value.selection_updated_at("nation.US")
+  if "us_state.IA" in road.regions(selection):
+    assert value.selection_updated_at("us_state.IA")
+
+
+def test_guam_fallback_uses_bundled_metadata_when_cached_catalog_lacks_it(monkeypatch):
+  monkeypatch.setattr(catalog, "load", lambda: {"schema": 1, "packages": []})
+  assert road.footprint("us_state.GU", {"us_state": {}, "nation": {}})["us_state.GU"] == {(12, 142), (12, 144)}
+
+
+def test_actual_mapd_definition_takes_precedence_over_the_routing_fallback(monkeypatch):
+  def forbidden(*_):
+    pytest.fail("existing mapd region consulted the fallback")
+  monkeypatch.setattr(road, "_fallback_location", forbidden)
+  data = {"nation": {}, "us_state": {"GU": {"bounding_box": {
+    "min_lat": 12, "min_lon": 144, "max_lat": 16, "max_lon": 148}}}}
+  assert road.footprint("us_state.GU", data)["us_state.GU"] == {(12, 144), (12, 146), (14, 144), (14, 146)}
 
 
 @pytest.mark.parametrize("rows", [None, [], [[41, -94, -92]], [[40, -94, -92], [40, -94, -92]], [[40, -94]], [[40, -94, -98]]])

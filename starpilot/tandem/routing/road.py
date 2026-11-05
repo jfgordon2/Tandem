@@ -1,8 +1,9 @@
 """Retain mapd's archive groups for exactly the committed region selection.
 
-Read the installed downloader's own menu, including its optional override. No
-second region catalog or network lookup is needed. Mapd's 2-degree archives
-contain quarter-degree tiles, shared by every region requesting that archive.
+Read the installed downloader's own menu, including its optional override.
+Missing entries use the existing local routing catalog as a retention guard.
+Mapd's 2-degree archives contain quarter-degree tiles, shared by every region
+requesting that archive. Cleanup never needs a network lookup.
 """
 from __future__ import annotations
 
@@ -100,12 +101,29 @@ def groups(location, *, sparse=True):
   return {(lat, lon) for lat, first, end in rows for lon in range(first, end, 2)}
 
 
+def _fallback_location(region):
+  """Local geographic coverage may protect tiles, never certify a download."""
+  from openpilot.starpilot.tandem.routing import catalog
+  data = catalog.load()  # cached/bundled metadata only; no refresh or network
+  spec = data.get("dataset", {}).get("regions", {}).get(region)
+  if spec is None:
+    # A valid older cached catalog may cover fewer regions than the bundled one.
+    data = catalog.validate(json.loads(Path(catalog.__file__).with_suffix(".json").read_text()))
+    spec = data.get("dataset", {}).get("regions", {}).get(region)
+  if spec is None:
+    raise C.RoutingError("data_incompatible")
+  west, south, east, north = spec["bounds"]
+  return {"bounding_box": {"min_lat": south, "min_lon": west, "max_lat": north, "max_lon": east}}
+
+
 def footprint(selection, data):
   result = {}
   for region in regions(selection):
     try:
       kind, code = region.split(".")
-      result[region] = groups(data[kind][code], sparse=data.get("_download_rows_supported", False))
+      location = data.get(kind, {}).get(code)
+      result[region] = groups(location if location is not None else _fallback_location(region),
+                              sparse=data.get("_download_rows_supported", False))
     except (KeyError, TypeError, ValueError):
       raise C.RoutingError("data_incompatible") from None
   return result
@@ -194,6 +212,7 @@ def apply(selection, gate, memory, *, params=None, paired=False):
   check()
   data = menu()
   wanted = footprint(selection, data)  # resolve every selected region before deleting anything
+  fallback = {region for region in wanted if data.get(region.split(".")[0], {}).get(region.split(".")[1]) is None}
   keep = set().union(*wanted.values())
   if params is None:
     from openpilot.common.params import Params
@@ -205,11 +224,11 @@ def apply(selection, gate, memory, *, params=None, paired=False):
       previous = regions(key)
     except C.RoutingError:
       continue
-    if previous and previous <= wanted.keys():
+    if previous and previous <= wanted.keys() and not previous & fallback:
       retained[key] = entry
     if cache.selection_total_files(key) and cache.selection_updated_at(key):
       covered.update((region, cache.selection_updated_at(key)) for region in previous)
-  for region in wanted.keys() & covered.keys():
+  for region in (wanted.keys() & covered.keys()) - fallback:
     retained.setdefault(region, {"totalFiles": len(wanted[region]), "updatedAt": covered[region], "estimatedAdditionalStorageBytes": 0})
   cache._selections = retained
   cache.mark_unknown()
