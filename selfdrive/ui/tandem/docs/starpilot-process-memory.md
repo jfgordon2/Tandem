@@ -51,8 +51,9 @@ Each step is one drive of at least 20 minutes (growth is clear after 10), parked
      heap, files, shared and device memory, with each kind's growth since a minute into the drive. Report a Problem shows
      it as `starpilot_process 390 MB (+270; heap +265)`. Heap growth is Python objects or a native library's buffers;
      file growth would point at a model or map file being mapped again and again.
-   - **Which code allocated it:** turn on the memory trace (`touch /data/params/.tandem_memory_trace_on`, then restart
-     openpilot), drive once, then remove the file and restart. `starpilot/tandem/memory_trace.py` starts Python's
+   - **Which code allocated it:** switch the device to the `debug` branch, which is `release` plus a memory trace (it is
+     kept off `release`, since it's a diagnostic). Turn it on (`touch /data/params/.tandem_memory_trace_on`, then restart
+     openpilot), drive once, then remove the file, restart, and switch back. `starpilot/tandem/memory_trace.py` starts Python's
      tracemalloc inside the planner's process, from the Tandem module the planner already imports, and also under
      `TANDEM_ONROAD=0`. Each drive gets a report in `/data/tandem/diagnostics/memory/` (the last ten kept): a line a
      minute with RssAnon, RssFile, RssShmem and the memory Python traced, then the 25 lines whose allocations grew most
@@ -77,7 +78,7 @@ PYTHONPATH=/data/openpilot:/data nice -n 19 /usr/local/venv/bin/python selfdrive
 Sizes there are RSS, so compare a process with itself over time. Device › RAM (after a drive above 90%) ranks processes by
 PSS and shows each one's growth since a minute into the drive, so a leaking process stands out there too.
 
-The memory trace's reports are plain text:
+On the `debug` branch, the memory trace's reports are plain text:
 
 ```sh
 ls -t /data/tandem/diagnostics/memory/ | head -3
