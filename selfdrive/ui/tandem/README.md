@@ -10,6 +10,8 @@ The [shared US build](docs/valhalla-us-states.md) adds exact state selections: U
 
 State updates use two transfer workers and two gzip compression threads, with operation-local checksum reuse and independent logical acceptance. Gzip level 6, 128 KiB blocks and the 64 MiB compressor setting remain. See [update speed and verification](docs/valhalla-update-speed.md) for host measurements and pending device checks. This changes no screens or upstream hooks.
 
+The [shared-state progress review](docs/valhalla-map-progress.md) records the proposed progress screens, still awaiting owner approval, and the device-tested fix for idle cleanup racing with installation. The install/check mocks use the owner's fixed-length wording, “All selected regions are installed together.”
+
 | Module | Contents |
 | --- | --- |
 | `fonts.py` | `font(face)`: maps upstream weight identifiers to our Figtree and Noto files, plus ExtraBold and JetBrains Mono. All load on first use without replacing upstream fonts. |

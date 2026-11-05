@@ -86,3 +86,10 @@ is available, use an isolated parked trial to compare download and assembly time
 parent/compressor/decoder RSS and device temperature. Exercise pause, resume and
 cancellation during both transfers and compression, then compare normalized
 route hashes. A supervised routed drive remains the final driving-load check.
+
+Subsequent device follow-up reproduced and fixed an install/idle-cleanup race and
+caught coarse filesystem timestamp behavior in the hash-evidence cache. The
+[progress review](valhalla-map-progress.md) records those checks, a successful
+private Iowa/Illinois install, and seven matching native routes. The new cache
+waits past the checked file's metadata-clock tick before hashing; it does not
+assume that the nanosecond stat API means nanosecond filesystem resolution.

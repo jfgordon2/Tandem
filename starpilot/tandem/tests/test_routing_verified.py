@@ -142,6 +142,35 @@ def test_mutation_during_hash_is_not_recorded_as_verified(tmp_path, monkeypatch)
     verified.Hashes().digest(path)
 
 
+def test_coarse_filesystem_clock_does_not_hide_a_same_tick_write(tmp_path, monkeypatch):
+  path = tmp_path / "coarse-clock"
+  path.write_bytes(b"initial bytes")
+  actual_identity, actual_fstat = verified.identity, os.fstat
+  quantum = 100_000_000  # model a filesystem whose metadata clock ticks at 100 ms
+  def identity(source):
+    value = actual_identity(source)
+    value[3:] = [stamp // quantum * quantum for stamp in value[3:]]
+    return value
+  class CoarseStat:
+    def __init__(self, value):
+      self.value = value
+    def __getattr__(self, name):
+      return getattr(self.value, name)
+    @property
+    def st_ctime_ns(self):
+      return self.value.st_ctime_ns // quantum * quantum
+  monkeypatch.setattr(verified, "identity", identity)
+  monkeypatch.setattr(os, "fstat", lambda fd: CoarseStat(actual_fstat(fd)))
+  original = bundles.digest
+  def digest(source, *args):
+    checksum = original(source, *args)
+    source.write_bytes(b"changed bytes")
+    return checksum
+  monkeypatch.setattr(bundles, "digest", digest)
+  with pytest.raises(C.RoutingError, match="data_incompatible"):
+    verified.Hashes().digest(path)
+
+
 def test_compact_native_payload_preserves_all_guidance_fields():
   raw = response()
   raw["waypoints"] = [{"unused": "x" * 10000}]

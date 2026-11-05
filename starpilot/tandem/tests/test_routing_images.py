@@ -104,6 +104,27 @@ def test_lazy_mount_is_reused_and_kept_while_reader_holds_lease(decoder, tmp_pat
   assert not rows and [c[0] for c in calls] == ["mount", "umount"]
 
 
+def test_idle_cleanup_cannot_remove_an_incoming_directory_before_mount(decoder, monkeypatch):
+  source, logical = make_image(C.root() / "downloads" / "incoming" / "ready")
+  bundle = bundles.verify(source.folder)
+  rows, _ = fake_kernel(monkeypatch, bundle, logical)
+  command = images._command
+  def cleanup_during_mount(args, **kwargs):
+    if args[0] == "mount":
+      # Native.close() can run on the broker thread at exactly this point:
+      # the incoming directory exists, but mountinfo has no entry for it yet.
+      assert images.mount_path(bundle).is_dir() and not rows
+      images.release_unused()
+      assert images.mount_path(bundle).is_dir(), "idle cleanup removed the installer's mount target"
+    return command(args, **kwargs)
+  monkeypatch.setattr(images, "_command", cleanup_during_mount)
+  with images.staged_reader(bundle) as graph:
+    assert graph.read_bytes() == logical
+    images.release_unused()
+    assert rows  # the staged reader's lease still protects the mounted source
+  assert not rows and not images.mount_path(bundle).exists()
+
+
 def test_global_removal_unmounts_before_deleting_image(decoder, tmp_path, monkeypatch):
   from openpilot.starpilot.tandem.routing import maps
   source, logical = make_image(tmp_path / "source")

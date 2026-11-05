@@ -5,6 +5,7 @@ import json
 import math
 import os
 import stat
+import tempfile
 import time
 from pathlib import Path
 
@@ -34,6 +35,23 @@ class Hashes:
     previous = self._checked.get(path)
     if previous and previous[0] == before:
       return previous[1]
+    # The device's filesystem clock can have a coarser tick than st_*_ns
+    # suggests. Start hashing only after the file's ctime tick has passed;
+    # otherwise a same-size write/chmod in that tick could evade identity checks.
+    end = time.monotonic() + 2
+    with tempfile.TemporaryFile(dir=path.parent) as probe:
+      mode = 0o400
+      while True:
+        gate()
+        os.fchmod(probe.fileno(), mode)
+        mode ^= 0o200
+        tick = os.fstat(probe.fileno()).st_ctime_ns
+        before = identity(path)
+        if tick > before[4]:
+          break
+        if time.monotonic() >= end:
+          raise C.RoutingError("data_incompatible")
+        time.sleep(.005)
     checksum = digest(path, gate)
     if identity(path) != before:
       raise C.RoutingError("data_incompatible")

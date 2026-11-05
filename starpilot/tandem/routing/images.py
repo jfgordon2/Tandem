@@ -97,23 +97,40 @@ def require_mounted(bundle) -> Path:
     raise C.RoutingError("data_incompatible") from None
 
 
-def ensure(bundle) -> Path:
-  verified.require(bundle)
-  if not is_image(bundle):
-    return graph_path(bundle)
-  if sys.platform != "linux":
-    raise C.RoutingError("data_incompatible")
-  point = mount_path(bundle)
-  if point in _mounts():
-    return require_mounted(bundle)
+@contextmanager
+def _mount_lock(*, blocking=True):
+  """Serialize directory creation/mount/unmount with cleanup across processes."""
   parent = mount_root().parent
   parent.mkdir(parents=True, exist_ok=True, mode=0o700)
   if parent.is_symlink() or parent.stat().st_uid not in (0, os.getuid()) or parent.stat().st_mode & 0o022:
     raise C.RoutingError("data_incompatible")
   mount_root().mkdir(exist_ok=True, mode=0o700)
   root_stat = mount_root().stat()
-  if (mount_root().is_symlink() or root_stat.st_uid not in (0, os.getuid()) or root_stat.st_mode & 0o022
-      or point.is_symlink()):
+  if mount_root().is_symlink() or root_stat.st_uid not in (0, os.getuid()) or root_stat.st_mode & 0o022:
+    raise C.RoutingError("data_incompatible")
+  path = mount_root() / ".mount.lock"
+  if path.is_symlink():
+    raise C.RoutingError("data_incompatible")
+  with path.open("a") as stream:
+    fcntl.flock(stream, fcntl.LOCK_EX | (0 if blocking else fcntl.LOCK_NB))
+    yield
+
+
+def ensure(bundle) -> Path:
+  verified.require(bundle)
+  if not is_image(bundle):
+    return graph_path(bundle)
+  if sys.platform != "linux":
+    raise C.RoutingError("data_incompatible")
+  with _mount_lock():
+    return _ensure_locked(bundle)
+
+
+def _ensure_locked(bundle):
+  point = mount_path(bundle)
+  if point in _mounts():
+    return require_mounted(bundle)
+  if point.is_symlink():
     raise C.RoutingError("data_incompatible")
   if _staged(bundle):
     point.parent.mkdir(exist_ok=True, mode=0o700)
@@ -130,10 +147,12 @@ def unmount(bundle) -> None:
   """Caller must hold the bundle's exclusive reader lease."""
   if not is_image(bundle):
     return
-  _unmount_point(mount_path(bundle))
+  with _mount_lock():
+    _unmount_point(mount_path(bundle))
 
 
 def _unmount_point(point):
+  # Caller holds the namespace transition lock as well as any bundle lease.
   row = _mounts().get(point)
   if row:
     if row["type"] != "squashfs" or "ro" not in row["options"]:
@@ -145,13 +164,25 @@ def _unmount_point(point):
 
 def unmount_id(identity):
   """Caller holds this ID's exclusive lease, including for a corrupt manifest."""
-  for point in mount_root().glob(f"{identity}-*"):
-    if point.name.rpartition("-")[0] == identity and not point.is_symlink():
-      _unmount_point(point)
+  if mount_root().exists():
+    with _mount_lock():
+      for point in mount_root().glob(f"{identity}-*"):
+        if point.name.rpartition("-")[0] == identity and not point.is_symlink():
+          _unmount_point(point)
 
 
 def release_unused() -> None:
   """Also reclaim orphan mounts after a service restart. Never force an unmount."""
+  if not mount_root().exists():
+    return
+  try:
+    with _mount_lock(blocking=False):
+      _release_unused_locked()
+  except (OSError, C.RoutingError):
+    pass  # a transition owns the namespace; idle cleanup can wait until later
+
+
+def _release_unused_locked():
   from openpilot.starpilot.tandem.routing.bundles import ID
   for point in mount_root().glob("*"):
     identity, separator, generation = point.name.rpartition("-")
@@ -215,7 +246,8 @@ def staged_reader(bundle):
       yield graph_path(bundle)
     finally:
       fcntl.flock(lease, fcntl.LOCK_EX | fcntl.LOCK_NB)
-      _unmount_point(mount_path(bundle))
+      with _mount_lock():
+        _unmount_point(mount_path(bundle))
 
 
 def pack_stream(chunks, size: int, image: Path, gate=lambda: None):
