@@ -1230,110 +1230,110 @@ msgstr "{} mi"
 msgid "{} min · {}"
 msgstr "{}分鐘 · {}"
 
-#: ram.py:41
+#: ram.py:44
 #: settings/window.py:258
 msgid "Driving model"
 msgstr "駕駛模型"
 
-#: ram.py:42
+#: ram.py:45
 msgid "Driver monitoring model"
 msgstr "駕駛人監控模型"
 
-#: ram.py:43
+#: ram.py:46
 msgid "This screen"
 msgstr "此螢幕"
 
-#: ram.py:44
+#: ram.py:47
 msgid "Driving decisions"
 msgstr "駕駛決策"
 
-#: ram.py:45
+#: ram.py:48
 msgid "Steering and speed control"
 msgstr "轉向與速度控制"
 
-#: ram.py:46
+#: ram.py:49
 msgid "Speed planning"
 msgstr "速度規劃"
 
-#: ram.py:47
+#: ram.py:50
 msgid "Radar"
 msgstr "雷達"
 
-#: ram.py:48
+#: ram.py:51
 msgid "Position and heading"
 msgstr "位置與方向"
 
-#: ram.py:49
+#: ram.py:52
 msgid "Car calibration"
 msgstr "車輛校正"
 
-#: ram.py:50
+#: ram.py:53
 msgid "Camera calibration"
 msgstr "鏡頭校正"
 
-#: ram.py:51
+#: ram.py:54
 msgid "Cameras"
 msgstr "鏡頭"
 
-#: ram.py:52
+#: ram.py:55
 msgid "Video recording"
 msgstr "影片錄製"
 
-#: ram.py:53
+#: ram.py:56
 msgid "Drive logging"
 msgstr "行車紀錄"
 
-#: ram.py:54
+#: ram.py:57
 #: settings/device_sections.py:357
 #: settings/search.py:192
 msgid "Uploads"
 msgstr "上傳"
 
-#: ram.py:55
-#: ram.py:56
-#: ram.py:66
+#: ram.py:58
+#: ram.py:59
+#: ram.py:69
 msgid "Remote access"
 msgstr "遠端存取"
 
-#: ram.py:57
+#: ram.py:60
 msgid "Speed limits and curves"
 msgstr "速限與彎道"
 
-#: ram.py:58
-#: ram.py:59
-#: ram.py:60
+#: ram.py:61
+#: ram.py:62
+#: ram.py:63
 msgid "Routing"
 msgstr "路線規劃"
 
-#: ram.py:61
+#: ram.py:64
 msgid "Sounds"
 msgstr "音效"
 
-#: ram.py:62
+#: ram.py:65
 msgid "Car interface"
 msgstr "車輛介面"
 
-#: ram.py:63
+#: ram.py:66
 msgid "Starts and stops the rest"
 msgstr "啟動和停止其他程式"
 
-#: ram.py:64
+#: ram.py:67
 msgid "StarPilot's planning"
 msgstr "StarPilot 規劃"
 
-#: ram.py:65
+#: ram.py:68
 msgid "Speed limit sign reading"
 msgstr "速限標誌辨識"
 
-#: ram.py:67
+#: ram.py:70
 msgid "Power and temperature"
 msgstr "電源與溫度"
 
-#: ram.py:68
+#: ram.py:71
 msgid "Bluetooth remote"
 msgstr "藍牙遙控器"
 
-#: ram.py:69
+#: ram.py:72
 msgid "Car connection"
 msgstr "車輛連線"
 

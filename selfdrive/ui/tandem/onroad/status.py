@@ -365,7 +365,9 @@ def snapshot(ui_state, nav_active: bool = False, limits: LimitWatch | None = Non
   # StarPilot raises greenLight and leadDeparting for a single planner frame, which the UI can miss; the alerts they start
   # are held for seconds, so their names count too (the chip stands in for the hidden banner).
   for service in ("selfdriveState", "starpilotSelfdriveState"):
-    if valid.get(service, False) and sm[service].alertType:
+    # EmptyAlert can retain an old alertType after a hidden turn banner. Only an
+    # actual alert may extend a chip; live planner events above still stand alone.
+    if valid.get(service, False) and str(sm[service].alertSize) != "none" and sm[service].alertType:
       s.events.add(str(sm[service].alertType).split("/", 1)[0])
   if valid.get("deviceState", False):
     s.memory_percent = int(sm["deviceState"].memoryUsagePercent)
