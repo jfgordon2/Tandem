@@ -20,6 +20,13 @@ it; `compile-openpilot` builds binaries and saves a cache; `auto-cache` selects
 Namespace/GitHub caches and changes permissions on a caller-specified directory.
 They remain upstream files for merge compatibility and are not used by maps.
 
+The active map and safety workflows pin current official actions to exact
+commits: Checkout 7.0.1, Setup Python 7.1.0 where needed, Upload Artifact 7.0.2
+and Download Artifact 8.0.2 where needed. Their action metadata declares Node 24.
+The Node 20 warning on the initial resource probe came from Upload Artifact v4;
+the retained safety workflow's old versions have been replaced too. Disabled
+publishers and uninvoked composites retain their upstream versions.
+
 ## Future upstream merges
 
 `tools/workflow-policy.json` records the reviewed contents of every workflow and

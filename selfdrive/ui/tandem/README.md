@@ -97,6 +97,7 @@ Navigation still reports the turn StarPilot actually selected through its option
 | `.github/workflows/compile_starpilot.yaml` | One job-level repository gate keeps this inherited binary-building/branch-pushing workflow inert in Tandem. Also disabled in the repository's Actions settings. Its upstream implementation is retained for merge compatibility. |
 | `.github/workflows/compile_bluescreens.yaml` | The same repository gate and Actions disablement keep the inherited binary/panda build and branch push inert in Tandem. |
 | `.github/workflows/publish_truenas_runner.yaml` | The same repository gate and Actions disablement keep the inherited GHCR image publisher inert in Tandem. |
+| `.github/workflows/fleet_safety.yaml` | Pins the existing read-only controller tests to reviewed Node 24 versions of the official checkout, Python setup and artifact actions. Test commands and triggers remain upstream's. |
 | `README.md` | Fork introduction, documentation links, screenshots and upstream credits. |
 | `selfdrive/ui/layouts/main.py` | Screen factories and sidebar widths from `screens.py`; each factory has an upstream fallback. |
 | `selfdrive/ui/layouts/home.py` | `_show_header()` override; the default is `True`. |
