@@ -52,8 +52,8 @@ Each step is one drive of at least 20 minutes (growth is clear after 10), parked
      it as `starpilot_process 390 MB (+270; heap +265)`. Heap growth is Python objects or a native library's buffers;
      file growth would point at a model or map file being mapped again and again.
    - **Which code allocated it:** switch the device to the `debug` branch, which is `release` plus a memory trace that's
-     on by default there (it's kept off `release`, since it's a diagnostic). Drive once, then switch back. To drive
-     `debug` without it, `touch /data/params/.tandem_memory_trace_off` and restart. `starpilot/tandem/memory_trace.py` starts Python's
+     always on there (it's kept off `release`, since it's a diagnostic). Drive once, then switch back.
+     `starpilot/tandem/memory_trace.py` starts Python's
      tracemalloc inside the planner's process, from the Tandem module the planner already imports, and also under
      `TANDEM_ONROAD=0`. Each drive gets a report in `/data/tandem/diagnostics/memory/` (the last ten kept): a line a
      minute with RssAnon, RssFile, RssShmem and the memory Python traced, then the 25 lines whose allocations grew most
