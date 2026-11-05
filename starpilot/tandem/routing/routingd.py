@@ -5,6 +5,7 @@ from dataclasses import dataclass, field
 import fcntl
 import itertools
 import json
+import math
 import os
 from pathlib import Path
 import queue
@@ -15,7 +16,7 @@ import subprocess
 import threading
 import time
 
-from openpilot.starpilot.tandem.routing import config as C, images
+from openpilot.starpilot.tandem.routing import config as C, demand, images
 from openpilot.starpilot.tandem.routing.bundles import capability, selected
 from openpilot.starpilot.tandem.routing.metrics import memory
 
@@ -137,13 +138,17 @@ class Broker:
     if caller not in ("preview", "navigation", "benchmark"):
       return {"status": "invalid_request"}
     job = Job(1 if caller == "preview" else 0, next(self.sequence), message)
+    deadline = message.get("_deadline", job.deadline)
+    if type(deadline) not in (int, float) or not math.isfinite(deadline):
+      return {"status": "invalid_request"}
+    job.deadline = min(job.deadline, deadline)
     with self.lock:
       self.latest[caller] = job.sequence
     try:
       self.jobs.put_nowait(job)
     except queue.Full:
       return {"status": "busy"}
-    job.ready.wait(C.DEADLINE)
+    job.ready.wait(max(0, job.deadline - time.monotonic()))
     with self.lock:
       if self.latest.get(caller) != job.sequence:
         return {"status": "superseded"}
@@ -226,7 +231,9 @@ class Handler(socketserver.StreamRequestHandler):
       if message.get("action") == "status":
         result = capability()
       elif message.get("action") == "route":
+        demand.wake()
         result = self.server.broker.submit(message)
+        demand.wake()
       elif message.get("action") == "release":
         # A serialized release job is unnecessary: idle release happens within a second offroad.
         self.server.broker.native.last_used = 0
@@ -243,6 +250,10 @@ class Handler(socketserver.StreamRequestHandler):
 
 
 def main():
+  if not C.enabled():
+    return
+  from openpilot.common.params import Params
+  params = Params()
   path = C.socket_path()
   path.parent.mkdir(parents=True, exist_ok=True)
   with (path.parent / "routing.lock").open("a") as lock:
@@ -256,11 +267,21 @@ def main():
     try:
       with Server(str(path), broker) as server:
         path.chmod(0o600)
+        demand.wake()
+        stopping = threading.Event()
         def stop(*_):
-          threading.Thread(target=server.shutdown, daemon=True).start()
+          stopping.set()
         signal.signal(signal.SIGTERM, stop)
         signal.signal(signal.SIGINT, stop)
-        server.serve_forever(poll_interval=0.2)
+        server.timeout = .2
+        refresh_at = 0.0
+        while not stopping.is_set() and C.should_run(params=params):
+          # Keep the idle grace after a trip/download, without a resident
+          # process or filesystem write on an otherwise unused drive.
+          if time.monotonic() >= refresh_at and demand.needed(params):
+            demand.wake()
+            refresh_at = time.monotonic() + 5
+          server.handle_request()
     finally:
       maps_stop.set()
       maps_thread.join(21)

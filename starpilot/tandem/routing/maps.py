@@ -9,16 +9,7 @@ from contextlib import contextmanager, ExitStack
 import fcntl
 
 from openpilot.starpilot.tandem.routing import bundles, catalog, config as C, downloads, images, verified
-
-ACTIVE = {"road", "prepare", "download", "install"}
-
-
-def read(name="map-job.json") -> dict:
-  try:
-    value = json.loads((C.root() / name).read_text())
-    return value if isinstance(value, dict) else {}
-  except (OSError, ValueError):
-    return {}
+from openpilot.starpilot.tandem.routing.demand import ACTIVE_MAP_PHASES as ACTIVE, download_pending as running, read_map as read
 
 
 def request(selection: str, wait_for_road=False) -> str:
@@ -49,11 +40,6 @@ def cancel() -> None:
   identity = read("map-request.json").get("id")
   if identity:
     C.atomic_json(C.root() / "map-cancel.json", {"id": identity})
-
-
-def running() -> bool:
-  job, pending = read(), read("map-request.json")
-  return bool(pending and (job.get("id") != pending.get("id") or job.get("phase") in ACTIVE))
 
 
 @contextmanager

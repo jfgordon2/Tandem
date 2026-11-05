@@ -132,5 +132,11 @@ def atomic_json(path: Path, value) -> None:
       temporary.unlink(missing_ok=True)
 
 
-def should_run(*_args) -> bool:
-  return enabled()
+def should_run(_started=False, params=None, *_args) -> bool:
+  if not enabled():
+    return False
+  from openpilot.starpilot.tandem.routing import demand
+  if params is None:
+    from openpilot.common.params import Params
+    params = Params()
+  return demand.needed(params) or demand.awake()
