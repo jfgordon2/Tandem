@@ -25,7 +25,11 @@ commits: Checkout 7.0.1, Setup Python 7.1.0 where needed, Upload Artifact 7.0.2
 and Download Artifact 8.0.2 where needed. Their action metadata declares Node 24.
 The Node 20 warning on the initial resource probe came from Upload Artifact v4;
 the retained safety workflow's old versions have been replaced too. Disabled
-publishers and uninvoked composites retain their upstream versions.
+publishers and uninvoked composites retain their upstream versions. The
+[updated hosted review](https://github.com/jfgordon2/Tandem/actions/runs/42067280548)
+passed without the Node 20 deprecation warning. Both active workflows' pins and
+the inherited publisher guards are also installed on the default `release`
+branch; the navigation implementation remains on `valhalla`.
 
 ## Future upstream merges
 

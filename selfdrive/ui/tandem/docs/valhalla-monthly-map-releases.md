@@ -102,7 +102,14 @@ only after archival, public-download/route failure gates, and catalog rollback.
 The first hosted trial downloaded/prepared the national input, then stopped at
 draft creation with HTTP 403 because its trigger commit had different workflows
 from the default branch. It changed no public maps. The release-target fix and
-early permission check are covered by regression tests; a full retry is pending.
+early permission check are covered by regression tests. The
+[full retry](https://github.com/jfgordon2/Tandem/actions/runs/42074788709) passed
+draft creation with `target_commitish=release` and is running. Its
+[publication run](https://github.com/jfgordon2/Tandem/actions/runs/42075852466)
+is queued behind it and will recheck the complete plan before publishing.
+The schedule is installed on the default branch. The hosted national build and
+public-download test are still pending; this is not yet a successful end-to-end
+hosted-build report.
 
 GitHub may disable schedules in an inactive public repository after 60 days;
 check the Actions page if an expected monthly release is absent. Retained
