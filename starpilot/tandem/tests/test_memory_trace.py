@@ -77,9 +77,10 @@ def test_follows_onroad_and_offroad(tmp_path, tracing):
   assert calls == ["start", "step", "finish", "start"]
 
 
-def test_off_without_the_marker_and_never_breaks_the_planner(tmp_path, monkeypatch):
+def test_off_with_the_off_marker_and_never_breaks_the_planner(tmp_path, monkeypatch):
   monkeypatch.setenv("TANDEM_PREFS_DIR", str(tmp_path))
   monkeypatch.setattr(M, "_started", False)
+  (tmp_path / M.OFF_MARKER).touch()
   assert not M.start_if_requested()
   from openpilot.starpilot.tandem.navigation import controller_type
 
@@ -91,13 +92,12 @@ def test_off_without_the_marker_and_never_breaks_the_planner(tmp_path, monkeypat
   assert controller_type(Base) is Base                       # a failing diagnostic doesn't stop the planner
 
 
-def test_starts_once_with_the_marker(tmp_path, monkeypatch):
+def test_on_by_default_and_starts_once(tmp_path, monkeypatch):
   monkeypatch.setenv("TANDEM_PREFS_DIR", str(tmp_path))
   monkeypatch.setenv("TANDEM_DIAGNOSTICS_DIR", str(tmp_path / "out"))
   monkeypatch.setattr(M, "_started", False)
   runs = []
   monkeypatch.setattr(M, "run", lambda tracer: runs.append(tracer))
-  (tmp_path / M.MARKER).touch()
   was_tracing = tracemalloc.is_tracing()
   try:
     assert M.start_if_requested() and M.start_if_requested()
