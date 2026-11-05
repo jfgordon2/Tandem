@@ -1,8 +1,7 @@
 """Memory tracing inside the process that runs StarPilot's planner, to find what grows while driving.
 
-This lives only on the debug branch, where it's on by default. A marker file beside the params folder turns it off
-(`touch /data/params/.tandem_memory_trace_off`, then restart); off, it costs one file check when the planner is created.
-On, it starts Python's tracemalloc with one frame per allocation and a background thread that, for each drive:
+This lives only on the debug branch, where it's always on: running that branch is the switch. It starts Python's
+tracemalloc with one frame per allocation and a background thread that, for each drive:
 
 - writes a status line every minute: the process's resident heap (RssAnon), file-backed (RssFile) and shared (RssShmem)
   memory, and the Python memory tracemalloc sees;
@@ -26,7 +25,6 @@ from collections.abc import Callable
 from datetime import datetime
 from pathlib import Path
 
-OFF_MARKER = ".tandem_memory_trace_off"
 KEEP = 10
 TOP = 25
 SHOWN_FROM = 64 * 1024   # growth smaller than this is noise
@@ -36,15 +34,6 @@ CHECK_EVERY = 10.0
 STATUS_FIELDS = ("VmRSS", "RssAnon", "RssFile", "RssShmem")
 
 _started = False
-
-
-def marker_path() -> Path:
-  if os.getenv("TANDEM_PREFS_DIR"):
-    folder = Path(os.environ["TANDEM_PREFS_DIR"])
-  else:
-    from openpilot.common.params import Params
-    folder = Path(Params().get_param_path()).parent
-  return folder / OFF_MARKER
 
 
 def out_dir() -> Path:
@@ -166,14 +155,12 @@ def run(tracer: Tracer, onroad: Callable[[], bool] = _onroad, sleep: Callable[[f
     sleep(CHECK_EVERY)
 
 
-def start_if_requested() -> bool:
-  """Called each time the planner is created; starts tracing once per process unless the off marker is there."""
+def start() -> bool:
+  """Called each time the planner is created; starts tracing once per process."""
   global _started
   if _started:
     return True
   try:
-    if marker_path().is_file():
-      return False
     tracemalloc.start(1)
     threading.Thread(target=run, args=(Tracer(out_dir()),), name="tandem-memory-trace", daemon=True).start()
     _started = True
