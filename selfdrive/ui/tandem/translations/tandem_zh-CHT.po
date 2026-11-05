@@ -208,128 +208,128 @@ msgstr "正在尋找您的臉部"
 msgid "Starting the camera…"
 msgstr "正在啟動攝影機…"
 
-#: forecast.py:37
-#: forecast.py:37
+#: forecast.py:45
+#: forecast.py:45
 #: onroad/status.py:254
 msgid "Fog"
 msgstr "霧"
 
-#: forecast.py:38
-#: forecast.py:40
-#: forecast.py:43
+#: forecast.py:46
+#: forecast.py:48
+#: forecast.py:51
 msgid "Light rain"
 msgstr "小雨"
 
-#: forecast.py:38
-#: forecast.py:38
+#: forecast.py:46
+#: forecast.py:46
 msgid "Drizzle"
 msgstr "毛毛雨"
 
-#: forecast.py:39
-#: forecast.py:39
+#: forecast.py:47
+#: forecast.py:47
 msgid "Freezing drizzle"
 msgstr "凍毛毛雨"
 
-#: forecast.py:40
+#: forecast.py:48
 #: onroad/status.py:251
 #: settings/speed_steering.py:239
 msgid "Rain"
 msgstr "雨"
 
-#: forecast.py:40
-#: forecast.py:43
+#: forecast.py:48
+#: forecast.py:51
 #: onroad/status.py:252
 msgid "Heavy rain"
 msgstr "大雨"
 
-#: forecast.py:41
-#: forecast.py:41
+#: forecast.py:49
+#: forecast.py:49
 msgid "Freezing rain"
 msgstr "凍雨"
 
-#: forecast.py:42
+#: forecast.py:50
 msgid "Light snow"
 msgstr "小雪"
 
-#: forecast.py:42
+#: forecast.py:50
 #: onroad/status.py:253
 #: settings/speed_steering.py:241
 msgid "Snow"
 msgstr "雪"
 
-#: forecast.py:42
-#: forecast.py:44
+#: forecast.py:50
+#: forecast.py:52
 msgid "Heavy snow"
 msgstr "大雪"
 
-#: forecast.py:42
+#: forecast.py:50
 msgid "Fine, icy snow"
 msgstr "細冰雪"
 
-#: forecast.py:43
+#: forecast.py:51
 msgid "Rain showers"
 msgstr "陣雨"
 
-#: forecast.py:44
+#: forecast.py:52
 msgid "Light snow flurries"
 msgstr "小陣雪"
 
-#: forecast.py:45
+#: forecast.py:53
 msgid "Thunderstorm"
 msgstr "雷雨"
 
-#: forecast.py:45
-#: forecast.py:45
+#: forecast.py:53
+#: forecast.py:53
 msgid "Storm with hail"
 msgstr "伴隨冰雹的風暴"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Sunny"
 msgstr "晴"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Clear"
 msgstr "晴朗"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Mostly sunny"
 msgstr "大致晴朗"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Mostly clear"
 msgstr "大致無雲"
 
-#: forecast.py:50
-#: forecast.py:50
+#: forecast.py:58
+#: forecast.py:58
 msgid "Partly cloudy"
 msgstr "局部多雲"
 
-#: forecast.py:51
-#: forecast.py:51
+#: forecast.py:59
+#: forecast.py:59
 msgid "Cloudy"
 msgstr "陰"
 
-#: forecast.py:135
+#: forecast.py:182
 #, python-brace-format
 msgid "{} in {} min"
 msgstr "{1}分鐘後{0}"
 
-#: forecast.py:136
-#: forecast.py:322
+#: forecast.py:183
+#: forecast.py:367
 #, python-brace-format
 msgid "{} until {}"
 msgstr "{}，持續至{}"
 
-#: forecast.py:328
+#: forecast.py:373
 msgid "No rain or snow ahead"
 msgstr "暫無雨雪預報"
 
-#: forecast.py:324
+#: forecast.py:369
 #, python-brace-format
 msgid "{} from {}"
 msgstr "{1}起{0}"
 
-#: forecast.py:324
+#: forecast.py:369
 #, python-brace-format
 msgid " to {}"
 msgstr "至{}"

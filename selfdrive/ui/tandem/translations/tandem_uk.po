@@ -208,128 +208,128 @@ msgstr "Пошук вашого обличчя"
 msgid "Starting the camera…"
 msgstr "Запуск камери…"
 
-#: forecast.py:37
-#: forecast.py:37
+#: forecast.py:45
+#: forecast.py:45
 #: onroad/status.py:254
 msgid "Fog"
 msgstr "Туман"
 
-#: forecast.py:38
-#: forecast.py:40
-#: forecast.py:43
+#: forecast.py:46
+#: forecast.py:48
+#: forecast.py:51
 msgid "Light rain"
 msgstr "Невеликий дощ"
 
-#: forecast.py:38
-#: forecast.py:38
+#: forecast.py:46
+#: forecast.py:46
 msgid "Drizzle"
 msgstr "Мряка"
 
-#: forecast.py:39
-#: forecast.py:39
+#: forecast.py:47
+#: forecast.py:47
 msgid "Freezing drizzle"
 msgstr "Переохолоджена мряка"
 
-#: forecast.py:40
+#: forecast.py:48
 #: onroad/status.py:251
 #: settings/speed_steering.py:239
 msgid "Rain"
 msgstr "Дощ"
 
-#: forecast.py:40
-#: forecast.py:43
+#: forecast.py:48
+#: forecast.py:51
 #: onroad/status.py:252
 msgid "Heavy rain"
 msgstr "Сильний дощ"
 
-#: forecast.py:41
-#: forecast.py:41
+#: forecast.py:49
+#: forecast.py:49
 msgid "Freezing rain"
 msgstr "Крижаний дощ"
 
-#: forecast.py:42
+#: forecast.py:50
 msgid "Light snow"
 msgstr "Невеликий сніг"
 
-#: forecast.py:42
+#: forecast.py:50
 #: onroad/status.py:253
 #: settings/speed_steering.py:241
 msgid "Snow"
 msgstr "Сніг"
 
-#: forecast.py:42
-#: forecast.py:44
+#: forecast.py:50
+#: forecast.py:52
 msgid "Heavy snow"
 msgstr "Сильний сніг"
 
-#: forecast.py:42
+#: forecast.py:50
 msgid "Fine, icy snow"
 msgstr "Дрібний крижаний сніг"
 
-#: forecast.py:43
+#: forecast.py:51
 msgid "Rain showers"
 msgstr "Зливи"
 
-#: forecast.py:44
+#: forecast.py:52
 msgid "Light snow flurries"
 msgstr "Невеликі снігові заряди"
 
-#: forecast.py:45
+#: forecast.py:53
 msgid "Thunderstorm"
 msgstr "Гроза"
 
-#: forecast.py:45
-#: forecast.py:45
+#: forecast.py:53
+#: forecast.py:53
 msgid "Storm with hail"
 msgstr "Гроза з градом"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Sunny"
 msgstr "Сонячно"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Clear"
 msgstr "Ясно"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Mostly sunny"
 msgstr "Переважно сонячно"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Mostly clear"
 msgstr "Переважно ясно"
 
-#: forecast.py:50
-#: forecast.py:50
+#: forecast.py:58
+#: forecast.py:58
 msgid "Partly cloudy"
 msgstr "Мінлива хмарність"
 
-#: forecast.py:51
-#: forecast.py:51
+#: forecast.py:59
+#: forecast.py:59
 msgid "Cloudy"
 msgstr "Хмарно"
 
-#: forecast.py:135
+#: forecast.py:182
 #, python-brace-format
 msgid "{} in {} min"
 msgstr "{} через {} хв"
 
-#: forecast.py:136
-#: forecast.py:322
+#: forecast.py:183
+#: forecast.py:367
 #, python-brace-format
 msgid "{} until {}"
 msgstr "{} до {}"
 
-#: forecast.py:328
+#: forecast.py:373
 msgid "No rain or snow ahead"
 msgstr "Найближчим часом без дощу й снігу"
 
-#: forecast.py:324
+#: forecast.py:369
 #, python-brace-format
 msgid "{} from {}"
 msgstr "{} з {}"
 
-#: forecast.py:324
+#: forecast.py:369
 #, python-brace-format
 msgid " to {}"
 msgstr " до {}"

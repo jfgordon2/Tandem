@@ -38,16 +38,41 @@ def test_light_rain_is_named_and_says_when_it_stops():
   fc = _forecast([LIGHT_RAIN, LIGHT_RAIN, LIGHT_RAIN, CLEAR], offset=-6 * 3600)
   hint = F.heads_up(fc, T0 + 100)
   assert hint.active and hint.label == "Light rain" and hint.icon == "rain"
-  assert hint.text == f"Light rain until {F.clock(T0 + 2700, -6 * 3600)}"
-  assert F.clock(T0 + 2700, -6 * 3600).endswith(("AM", "PM"))
+  assert hint.text == f"Light rain until {F.clock(T0 + 2400, -6 * 3600)}"   # halfway to the dry step (37.5 min), to 5 min
+  assert F.clock(T0 + 2400, -6 * 3600).endswith(("AM", "PM"))
 
 
 def test_upcoming_weather_counts_down_and_past_the_data_has_no_end():
   fc = _forecast([CLEAR, CLEAR, STORM, STORM])
   hint = F.heads_up(fc, T0 + 300)
-  assert not hint.active and hint.minutes == 25 and hint.text == "Thunderstorm in 25 min" and hint.icon == "storm"
-  assert F.heads_up(fc, T0 + 1900).text == "Thunderstorm"       # falling, and still falling at the end of the data
+  # the storm's first step is at +30 min, so it starts halfway from the dry step before: +22.5 min, 17.5 from now
+  assert not hint.active and hint.minutes == 18 and hint.text == "Thunderstorm in 18 min" and hint.icon == "storm"
+  assert F.heads_up(fc, T0 + 1400).text == "Thunderstorm"       # falling, and still falling at the end of the data
   assert F.heads_up(_forecast([CLEAR] * 6 + [SNOW]), T0) is None  # 90 minutes away: not yet
+
+
+def test_each_step_is_the_weather_at_its_moment_so_changes_fall_halfway():
+  fc = _forecast([CLEAR, LIGHT_RAIN, LIGHT_RAIN, CLEAR])   # rain at +15 and +30 min
+  assert F.heads_up(fc, T0 + 400).minutes == 1             # rain from +7.5 min
+  assert F.heads_up(fc, T0 + 500).active                    # ...so it's already falling at +8.3
+  assert F.heads_up(fc, T0 + 2300) is None                  # and over from +37.5 min
+  assert F.event_clock(T0 + 2250, 0) == F.clock(T0 + 2400, 0) and F.event_clock(T0 + 2240, 0) == F.clock(T0 + 2100, 0)
+
+
+def test_a_single_step_of_rain_is_not_announced_ahead_but_shows_while_due():
+  blip = _forecast([CLEAR, CLEAR, LIGHT_RAIN, CLEAR, SNOW, SNOW, CLEAR])
+  hint = F.heads_up(blip, T0)
+  assert hint.label == "Snow" and hint.minutes == 53        # the lone rain step at +30 min is skipped; snow from +52.5
+  assert F.heads_up(blip, T0 + 1800).text.startswith("Light rain until")   # but shows while it's due
+  assert F.Announcer().update(F.heads_up(blip, T0 + 1800), T0 + 1800) == (True, False)   # with no chime
+
+
+def test_refreshes_every_15_minutes_while_weather_is_near():
+  dry, wet = _forecast([CLEAR] * 96), _forecast([CLEAR] * 6 + [LIGHT_RAIN] * 4 + [CLEAR] * 86)   # rain from +82.5 min
+  assert not F.needs_fetch(dry, T0 + 900, 41.6, -93.6) and F.needs_fetch(wet, T0 + 900, 41.6, -93.6)
+  assert not F.needs_fetch(wet, T0 + 899, 41.6, -93.6)
+  later = _forecast([CLEAR] * 10 + [LIGHT_RAIN] * 2 + [CLEAR] * 84)                           # rain from +142.5 min
+  assert not F.needs_fetch(later, T0 + 900, 41.6, -93.6)                                       # more than 2 hours off
 
 
 def test_clock_reads_like_a_dashboard():
@@ -165,14 +190,14 @@ def test_outlook_names_the_coming_snow_and_tints_its_hours():
   codes = [CLEAR] * 4 + [CLEAR] * 7 + [SNOW] * 11 + [CLEAR] * 10   # snow from T0 + 11 steps for 11 steps
   look = F.outlook(_forecast(codes, hours=hours), T0 + 600, metric=False)
   assert look.hazard and look.icon == "snow" and len(look.tiles) == 12
-  assert look.summary == f"Snow from {F.clock(T0 + 11 * 900, 0)} to {F.clock(T0 + 22 * 900, 0)}"
+  assert look.summary == f"Snow from {F.event_clock(T0 + 11 * 900 - 450, 0)} to {F.event_clock(T0 + 22 * 900 - 450, 0)}"
   assert [t.hazard for t in look.tiles[:6]] == [False] * 3 + [True] * 3
   assert look.tiles[0].temp == 34 and look.tiles[0].time == F.hour_label(T0 + 3600, 0)   # °F
 
 
 def test_outlook_says_until_when_it_is_already_falling_and_uses_celsius_when_metric():
   look = F.outlook(_forecast([LIGHT_RAIN] * 3 + [CLEAR] * 60, hours=_hours([(61, 9.6, True)] * 12)), T0 + 100, metric=True)
-  assert look.summary == f"Light rain until {F.clock(T0 + 2700, 0)}" and look.tiles[0].temp == 10
+  assert look.summary == f"Light rain until {F.clock(T0 + 2400, 0)}" and look.tiles[0].temp == 10
 
 
 def test_a_dry_outlook_reads_like_the_sky():

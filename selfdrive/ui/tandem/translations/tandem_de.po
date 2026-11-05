@@ -208,128 +208,128 @@ msgstr "Suche dein Gesicht"
 msgid "Starting the camera…"
 msgstr "Kamera startet…"
 
-#: forecast.py:37
-#: forecast.py:37
+#: forecast.py:45
+#: forecast.py:45
 #: onroad/status.py:254
 msgid "Fog"
 msgstr "Nebel"
 
-#: forecast.py:38
-#: forecast.py:40
-#: forecast.py:43
+#: forecast.py:46
+#: forecast.py:48
+#: forecast.py:51
 msgid "Light rain"
 msgstr "Leichter Regen"
 
-#: forecast.py:38
-#: forecast.py:38
+#: forecast.py:46
+#: forecast.py:46
 msgid "Drizzle"
 msgstr "Nieselregen"
 
-#: forecast.py:39
-#: forecast.py:39
+#: forecast.py:47
+#: forecast.py:47
 msgid "Freezing drizzle"
 msgstr "Gefrierender Nieselregen"
 
-#: forecast.py:40
+#: forecast.py:48
 #: onroad/status.py:251
 #: settings/speed_steering.py:239
 msgid "Rain"
 msgstr "Regen"
 
-#: forecast.py:40
-#: forecast.py:43
+#: forecast.py:48
+#: forecast.py:51
 #: onroad/status.py:252
 msgid "Heavy rain"
 msgstr "Starker Regen"
 
-#: forecast.py:41
-#: forecast.py:41
+#: forecast.py:49
+#: forecast.py:49
 msgid "Freezing rain"
 msgstr "Gefrierender Regen"
 
-#: forecast.py:42
+#: forecast.py:50
 msgid "Light snow"
 msgstr "Leichter Schneefall"
 
-#: forecast.py:42
+#: forecast.py:50
 #: onroad/status.py:253
 #: settings/speed_steering.py:241
 msgid "Snow"
 msgstr "Schnee"
 
-#: forecast.py:42
-#: forecast.py:44
+#: forecast.py:50
+#: forecast.py:52
 msgid "Heavy snow"
 msgstr "Starker Schneefall"
 
-#: forecast.py:42
+#: forecast.py:50
 msgid "Fine, icy snow"
 msgstr "Feiner, eisiger Schnee"
 
-#: forecast.py:43
+#: forecast.py:51
 msgid "Rain showers"
 msgstr "Regenschauer"
 
-#: forecast.py:44
+#: forecast.py:52
 msgid "Light snow flurries"
 msgstr "Leichte Schneeschauer"
 
-#: forecast.py:45
+#: forecast.py:53
 msgid "Thunderstorm"
 msgstr "Gewitter"
 
-#: forecast.py:45
-#: forecast.py:45
+#: forecast.py:53
+#: forecast.py:53
 msgid "Storm with hail"
 msgstr "Gewitter mit Hagel"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Sunny"
 msgstr "Sonnig"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Clear"
 msgstr "Klar"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Mostly sunny"
 msgstr "Überwiegend sonnig"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Mostly clear"
 msgstr "Überwiegend klar"
 
-#: forecast.py:50
-#: forecast.py:50
+#: forecast.py:58
+#: forecast.py:58
 msgid "Partly cloudy"
 msgstr "Teilweise bewölkt"
 
-#: forecast.py:51
-#: forecast.py:51
+#: forecast.py:59
+#: forecast.py:59
 msgid "Cloudy"
 msgstr "Bewölkt"
 
-#: forecast.py:135
+#: forecast.py:182
 #, python-brace-format
 msgid "{} in {} min"
 msgstr "{} in {} Min."
 
-#: forecast.py:136
-#: forecast.py:322
+#: forecast.py:183
+#: forecast.py:367
 #, python-brace-format
 msgid "{} until {}"
 msgstr "{} bis {}"
 
-#: forecast.py:328
+#: forecast.py:373
 msgid "No rain or snow ahead"
 msgstr "Kein Regen oder Schnee in Sicht"
 
-#: forecast.py:324
+#: forecast.py:369
 #, python-brace-format
 msgid "{} from {}"
 msgstr "{} ab {}"
 
-#: forecast.py:324
+#: forecast.py:369
 #, python-brace-format
 msgid " to {}"
 msgstr " bis {}"

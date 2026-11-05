@@ -1,9 +1,14 @@
 """Weather heads-up: the next 24 hours of forecast, so the drive screen can say when rain, snow or storms start and stop.
 
-Open-Meteo (free, no key; StarPilot's weather presets already use it) gives the weather in 15-minute steps (NOAA's HRRR
-in the US). The forecast is kept on the device and fetched again only when it's an hour old or the car is more than
-20 miles from where it was fetched. A failed fetch is retried after a few minutes; the stored forecast keeps working
-meanwhile, up to its 24 hours.
+Open-Meteo (free, no key; StarPilot's weather presets already use it) gives the weather in 15-minute steps (NOAA's model
+in the US). The forecast is kept on the device and fetched again when it's an hour old, every 15 minutes while rain or
+snow is falling or due within two hours, or when the car is more than 20 miles from where it was fetched. A failed fetch
+is retried after a few minutes; the stored forecast keeps working meanwhile, up to its 24 hours.
+
+Each step's code is the weather at that instant (Open-Meteo's weather_code is "instant", not a sum of the 15 minutes
+before), so a step stands for the 7.5 minutes either side of it: weather changes halfway between two steps. A single
+15-minute step of rain between dry ones is a blip in the model, not news: weather still to come needs at least
+MIN_EVENT_S of steps in a row before it's announced, though a blip shows while it's due.
 
 The chip (onroad/status.py) shows "Snow in 12 min" from 15 minutes before it starts, then "Snow until 8:15 PM" while it
 lasts. When an event is first seen within the hour, the chip shows briefly and one soft chime plays.
@@ -25,6 +30,9 @@ from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
 OPEN_METEO_URL = "https://api.open-meteo.com/v1/forecast"
 REFRESH_S = 60 * 60                 # at most once an hour in the same area...
+WEATHER_REFRESH_S = 15 * 60         # ...or every 15 minutes while weather is falling or due within WEATHER_NEAR_S
+WEATHER_NEAR_S = 2 * 60 * 60
+MIN_EVENT_S = 30 * 60               # weather to come is announced only when it lasts at least this long
 MOVED_KM = 20 * 1.609344            # ...unless the car is more than 20 miles from where it was fetched
 RETRY_S = 5 * 60                    # after a failed fetch
 CHECK_S = 30                        # how often the drive screen's tick looks at the location and the setting
@@ -99,10 +107,43 @@ def distance_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
   return 6371.0 * 2 * math.asin(math.sqrt(min(1.0, a)))
 
 
+def weather_near(forecast: Forecast, now: float) -> bool:
+  """Rain, snow, storms or fog falling now or due within WEATHER_NEAR_S: the forecast is worth refreshing more often."""
+  half = forecast.step_s / 2
+  return any(code in HAZARDS and t + half > now and t - half < now + WEATHER_NEAR_S for t, code in forecast.steps)
+
+
 def needs_fetch(forecast: Forecast | None, now: float, lat: float, lon: float) -> bool:
   if forecast is None or not forecast.hours:   # none yet, or stored before the hours were kept
     return True
-  return now - forecast.fetched_at >= REFRESH_S or distance_km(forecast.lat, forecast.lon, lat, lon) > MOVED_KM
+  every = WEATHER_REFRESH_S if weather_near(forecast, now) else REFRESH_S
+  return now - forecast.fetched_at >= every or distance_km(forecast.lat, forecast.lon, lat, lon) > MOVED_KM
+
+
+def runs(forecast: Forecast) -> list[tuple[int, int]]:
+  """Each stretch of hazard steps in a row, as (first index, index after the last)."""
+  found, i, steps = [], 0, forecast.steps
+  while i < len(steps):
+    if steps[i][1] in HAZARDS:
+      j = i
+      while j < len(steps) and steps[j][1] in HAZARDS:
+        j += 1
+      found.append((i, j))
+      i = j
+    else:
+      i += 1
+  return found
+
+
+def _edges(forecast: Forecast, run: tuple[int, int]) -> tuple[float, float | None]:
+  """When a run starts and ends: halfway to the steps either side. None past the end of the data."""
+  half, steps = forecast.step_s / 2, forecast.steps
+  first, after = run
+  return steps[first][0] - half, (steps[after][0] - half if after < len(steps) else None)
+
+
+def _lasting(forecast: Forecast, run: tuple[int, int]) -> bool:
+  return (run[1] - run[0]) * forecast.step_s >= MIN_EVENT_S
 
 
 def hour_label(ts: float, utc_offset: int) -> str:
@@ -115,6 +156,12 @@ def clock(ts: float, utc_offset: int) -> str:
   """8:15 PM, in the forecast place's local time."""
   t = time.gmtime(ts + utc_offset)
   return f"{t.tm_hour % 12 or 12}:{t.tm_min:02d} {'AM' if t.tm_hour < 12 else 'PM'}"
+
+
+def event_clock(ts: float, utc_offset: int) -> str:
+  """When weather starts or stops, to the nearest 5 minutes: halfway between steps falls on 7.5 minutes past, and a
+  forecast isn't that precise."""
+  return clock(math.floor(ts / 300 + 0.5) * 300, utc_offset)
 
 
 @dataclass
@@ -140,19 +187,20 @@ def heads_up(forecast: Forecast | None, now: float) -> HeadsUp | None:
   """What's happening now, or the next hazard within the hour."""
   if forecast is None or not forecast.steps:
     return None
-  steps, dur = forecast.steps, forecast.step_s
-  current = next((i for i, (t, _) in enumerate(steps) if t <= now < t + dur), None)
-  if current is not None and steps[current][1] in HAZARDS:
-    start = current
-    while start > 0 and steps[start - 1][1] in HAZARDS:
-      start -= 1
-    end = next((t for t, code in steps[current:] if code not in HAZARDS), None)
-    label, icon = HAZARDS[steps[current][1]]
-    return HeadsUp(label, icon, steps[start][0], 0, clock(end, forecast.utc_offset) if end is not None else "")
-  for t, code in steps:
-    if now < t <= now + LOOKAHEAD_S and code in HAZARDS:
-      label, icon = HAZARDS[code]
-      return HeadsUp(label, icon, t, max(1, math.ceil((t - now) / 60)))
+  steps, half = forecast.steps, forecast.step_s / 2
+  for run in runs(forecast):
+    start, end = _edges(forecast, run)
+    if end is not None and end <= now:
+      continue
+    if start <= now:   # falling now, the step we're in named by its own strength
+      current = next(i for i in range(*run) if steps[i][0] - half <= now < steps[i][0] + half)
+      label, icon = HAZARDS[steps[current][1]]
+      return HeadsUp(label, icon, int(start), 0, event_clock(end, forecast.utc_offset) if end is not None else "")
+    if start > now + LOOKAHEAD_S:
+      return None
+    if _lasting(forecast, run):
+      label, icon = HAZARDS[steps[run[0]][1]]
+      return HeadsUp(label, icon, int(start), max(1, math.ceil((start - now) / 60)))
   return None
 
 
@@ -292,15 +340,12 @@ def hour_icon(code: int, day: bool) -> str:
 
 def _next_event(forecast: Forecast, now: float, horizon: float) -> tuple[str, str, int, int | None] | None:
   """The first hazard falling now or starting before horizon: (label, icon, start, end or None past the data)."""
-  steps, dur = forecast.steps, forecast.step_s
-  for i, (t, code) in enumerate(steps):
-    if code in HAZARDS and t + dur > now and t < horizon:
-      start = i
-      while start > 0 and steps[start - 1][1] in HAZARDS:
-        start -= 1
-      end = next((s for s, c in steps[i:] if c not in HAZARDS), None)
-      label, icon = HAZARDS[code]
-      return label, icon, steps[start][0], end
+  for run in runs(forecast):
+    start, end = _edges(forecast, run)
+    if (end is not None and end <= now) or start >= horizon or (start > now and not _lasting(forecast, run)):
+      continue
+    label, icon = HAZARDS[forecast.steps[run[0]][1]]
+    return label, icon, int(start), None if end is None else int(end)
   return None
 
 
@@ -319,9 +364,9 @@ def outlook(forecast: Forecast | None, now: float, metric: bool, hours: int = OU
   if event is not None:
     label, icon, start, end = event
     if start <= now:
-      summary = t_("{} until {}", label, clock(end, off)) if end is not None else label
+      summary = t_("{} until {}", label, event_clock(end, off)) if end is not None else label
     else:
-      summary = t_("{} from {}", label, clock(start, off)) + (t_(" to {}", clock(end, off)) if end is not None else "")
+      summary = t_("{} from {}", label, event_clock(start, off)) + (t_(" to {}", event_clock(end, off)) if end is not None else "")
     return Outlook(summary, icon, True, clock(forecast.fetched_at, off), tiles)
   skies = [(code, day) for _, code, _, day in ahead if code in SKY]
   if not skies:

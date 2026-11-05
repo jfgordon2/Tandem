@@ -208,128 +208,128 @@ msgstr "얼굴 찾는 중"
 msgid "Starting the camera…"
 msgstr "카메라 시작 중…"
 
-#: forecast.py:37
-#: forecast.py:37
+#: forecast.py:45
+#: forecast.py:45
 #: onroad/status.py:254
 msgid "Fog"
 msgstr "안개"
 
-#: forecast.py:38
-#: forecast.py:40
-#: forecast.py:43
+#: forecast.py:46
+#: forecast.py:48
+#: forecast.py:51
 msgid "Light rain"
 msgstr "약한 비"
 
-#: forecast.py:38
-#: forecast.py:38
+#: forecast.py:46
+#: forecast.py:46
 msgid "Drizzle"
 msgstr "이슬비"
 
-#: forecast.py:39
-#: forecast.py:39
+#: forecast.py:47
+#: forecast.py:47
 msgid "Freezing drizzle"
 msgstr "어는 이슬비"
 
-#: forecast.py:40
+#: forecast.py:48
 #: onroad/status.py:251
 #: settings/speed_steering.py:239
 msgid "Rain"
 msgstr "비"
 
-#: forecast.py:40
-#: forecast.py:43
+#: forecast.py:48
+#: forecast.py:51
 #: onroad/status.py:252
 msgid "Heavy rain"
 msgstr "많은 비"
 
-#: forecast.py:41
-#: forecast.py:41
+#: forecast.py:49
+#: forecast.py:49
 msgid "Freezing rain"
 msgstr "어는 비"
 
-#: forecast.py:42
+#: forecast.py:50
 msgid "Light snow"
 msgstr "약한 눈"
 
-#: forecast.py:42
+#: forecast.py:50
 #: onroad/status.py:253
 #: settings/speed_steering.py:241
 msgid "Snow"
 msgstr "눈"
 
-#: forecast.py:42
-#: forecast.py:44
+#: forecast.py:50
+#: forecast.py:52
 msgid "Heavy snow"
 msgstr "많은 눈"
 
-#: forecast.py:42
+#: forecast.py:50
 msgid "Fine, icy snow"
 msgstr "잘고 얼어붙은 눈"
 
-#: forecast.py:43
+#: forecast.py:51
 msgid "Rain showers"
 msgstr "소나기"
 
-#: forecast.py:44
+#: forecast.py:52
 msgid "Light snow flurries"
 msgstr "약한 눈보라"
 
-#: forecast.py:45
+#: forecast.py:53
 msgid "Thunderstorm"
 msgstr "뇌우"
 
-#: forecast.py:45
-#: forecast.py:45
+#: forecast.py:53
+#: forecast.py:53
 msgid "Storm with hail"
 msgstr "우박을 동반한 폭풍"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Sunny"
 msgstr "맑음"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Clear"
 msgstr "구름 없음"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Mostly sunny"
 msgstr "대체로 맑음"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Mostly clear"
 msgstr "대체로 구름 없음"
 
-#: forecast.py:50
-#: forecast.py:50
+#: forecast.py:58
+#: forecast.py:58
 msgid "Partly cloudy"
 msgstr "구름 조금"
 
-#: forecast.py:51
-#: forecast.py:51
+#: forecast.py:59
+#: forecast.py:59
 msgid "Cloudy"
 msgstr "흐림"
 
-#: forecast.py:135
+#: forecast.py:182
 #, python-brace-format
 msgid "{} in {} min"
 msgstr "{1}분 후 {0}"
 
-#: forecast.py:136
-#: forecast.py:322
+#: forecast.py:183
+#: forecast.py:367
 #, python-brace-format
 msgid "{} until {}"
 msgstr "{1}까지 {0}"
 
-#: forecast.py:328
+#: forecast.py:373
 msgid "No rain or snow ahead"
 msgstr "당분간 비나 눈 예보 없음"
 
-#: forecast.py:324
+#: forecast.py:369
 #, python-brace-format
 msgid "{} from {}"
 msgstr "{1}부터 {0}"
 
-#: forecast.py:324
+#: forecast.py:369
 #, python-brace-format
 msgid " to {}"
 msgstr " ~ {}"

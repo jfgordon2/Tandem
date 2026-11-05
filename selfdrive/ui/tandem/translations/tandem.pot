@@ -206,128 +206,128 @@ msgstr ""
 msgid "Starting the camera…"
 msgstr ""
 
-#: forecast.py:37
-#: forecast.py:37
+#: forecast.py:45
+#: forecast.py:45
 #: onroad/status.py:254
 msgid "Fog"
 msgstr ""
 
-#: forecast.py:38
-#: forecast.py:40
-#: forecast.py:43
+#: forecast.py:46
+#: forecast.py:48
+#: forecast.py:51
 msgid "Light rain"
 msgstr ""
 
-#: forecast.py:38
-#: forecast.py:38
+#: forecast.py:46
+#: forecast.py:46
 msgid "Drizzle"
 msgstr ""
 
-#: forecast.py:39
-#: forecast.py:39
+#: forecast.py:47
+#: forecast.py:47
 msgid "Freezing drizzle"
 msgstr ""
 
-#: forecast.py:40
+#: forecast.py:48
 #: onroad/status.py:251
 #: settings/speed_steering.py:239
 msgid "Rain"
 msgstr ""
 
-#: forecast.py:40
-#: forecast.py:43
+#: forecast.py:48
+#: forecast.py:51
 #: onroad/status.py:252
 msgid "Heavy rain"
 msgstr ""
 
-#: forecast.py:41
-#: forecast.py:41
+#: forecast.py:49
+#: forecast.py:49
 msgid "Freezing rain"
 msgstr ""
 
-#: forecast.py:42
+#: forecast.py:50
 msgid "Light snow"
 msgstr ""
 
-#: forecast.py:42
+#: forecast.py:50
 #: onroad/status.py:253
 #: settings/speed_steering.py:241
 msgid "Snow"
 msgstr ""
 
-#: forecast.py:42
-#: forecast.py:44
+#: forecast.py:50
+#: forecast.py:52
 msgid "Heavy snow"
 msgstr ""
 
-#: forecast.py:42
+#: forecast.py:50
 msgid "Fine, icy snow"
 msgstr ""
 
-#: forecast.py:43
+#: forecast.py:51
 msgid "Rain showers"
 msgstr ""
 
-#: forecast.py:44
+#: forecast.py:52
 msgid "Light snow flurries"
 msgstr ""
 
-#: forecast.py:45
+#: forecast.py:53
 msgid "Thunderstorm"
 msgstr ""
 
-#: forecast.py:45
-#: forecast.py:45
+#: forecast.py:53
+#: forecast.py:53
 msgid "Storm with hail"
 msgstr ""
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Sunny"
 msgstr ""
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Clear"
 msgstr ""
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Mostly sunny"
 msgstr ""
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Mostly clear"
 msgstr ""
 
-#: forecast.py:50
-#: forecast.py:50
+#: forecast.py:58
+#: forecast.py:58
 msgid "Partly cloudy"
 msgstr ""
 
-#: forecast.py:51
-#: forecast.py:51
+#: forecast.py:59
+#: forecast.py:59
 msgid "Cloudy"
 msgstr ""
 
-#: forecast.py:135
+#: forecast.py:182
 #, python-brace-format
 msgid "{} in {} min"
 msgstr ""
 
-#: forecast.py:136
-#: forecast.py:322
+#: forecast.py:183
+#: forecast.py:367
 #, python-brace-format
 msgid "{} until {}"
 msgstr ""
 
-#: forecast.py:328
+#: forecast.py:373
 msgid "No rain or snow ahead"
 msgstr ""
 
-#: forecast.py:324
+#: forecast.py:369
 #, python-brace-format
 msgid "{} from {}"
 msgstr ""
 
-#: forecast.py:324
+#: forecast.py:369
 #, python-brace-format
 msgid " to {}"
 msgstr ""
