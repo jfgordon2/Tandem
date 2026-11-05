@@ -753,7 +753,7 @@ msgstr "{} s"
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: onroad/developer.py:291
 #: settings/device_sections.py:301
-#: settings/ram.py:29
+#: settings/ram.py:30
 #, python-brace-format
 msgid "{} GB"
 msgstr "{} GB"
@@ -831,7 +831,7 @@ msgstr "GPU"
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: onroad/developer.py:165
-#: settings/ram.py:98
+#: settings/ram.py:110
 #: settings/search.py:30
 msgid "RAM"
 msgstr "RAM"
@@ -1225,126 +1225,126 @@ msgid "Byp"
 msgstr "Byp"
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
-#: onroad/view.py:607
+#: onroad/view.py:609
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
-#: onroad/view.py:607
+#: onroad/view.py:609
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/view.py:608
+#: onroad/view.py:610
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{} دقيقة · {}"
 
-#: ram.py:29
+#: ram.py:41
 #: settings/window.py:258
 msgid "Driving model"
 msgstr "نموذج الذكاء الاصطناعي للقيادة"
 
-#: ram.py:30
+#: ram.py:42
 msgid "Driver monitoring model"
 msgstr "نموذج مراقبة السائق"
 
-#: ram.py:31
+#: ram.py:43
 msgid "This screen"
 msgstr "هذه الشاشة"
 
-#: ram.py:32
+#: ram.py:44
 msgid "Driving decisions"
 msgstr "قرارات القيادة"
 
-#: ram.py:33
+#: ram.py:45
 msgid "Steering and speed control"
 msgstr "التوجيه والسرعة"
 
-#: ram.py:34
+#: ram.py:46
 msgid "Speed planning"
 msgstr "تخطيط السرعة"
 
-#: ram.py:35
+#: ram.py:47
 msgid "Radar"
 msgstr "الرادار"
 
-#: ram.py:36
+#: ram.py:48
 msgid "Position and heading"
 msgstr "الموقع والاتجاه"
 
-#: ram.py:37
+#: ram.py:49
 msgid "Car calibration"
 msgstr "معايرة السيارة"
 
-#: ram.py:38
+#: ram.py:50
 msgid "Camera calibration"
 msgstr "معايرة الكاميرا"
 
-#: ram.py:39
+#: ram.py:51
 msgid "Cameras"
 msgstr "الكاميرات"
 
-#: ram.py:40
+#: ram.py:52
 msgid "Video recording"
 msgstr "تسجيل الفيديو"
 
-#: ram.py:41
+#: ram.py:53
 msgid "Drive logging"
 msgstr "سجل القيادة"
 
-#: ram.py:42
+#: ram.py:54
 #: settings/device_sections.py:357
 #: settings/search.py:192
 msgid "Uploads"
 msgstr "تحميلات"
 
-#: ram.py:43
-#: ram.py:44
-#: ram.py:54
+#: ram.py:55
+#: ram.py:56
+#: ram.py:66
 msgid "Remote access"
 msgstr "الوصول عن بُعد"
 
-#: ram.py:45
+#: ram.py:57
 msgid "Speed limits and curves"
 msgstr "حدود السرعة والمنعطفات"
 
-#: ram.py:46
-#: ram.py:47
-#: ram.py:48
+#: ram.py:58
+#: ram.py:59
+#: ram.py:60
 msgid "Routing"
 msgstr "المسارات"
 
-#: ram.py:49
+#: ram.py:61
 msgid "Sounds"
 msgstr "الأصوات"
 
-#: ram.py:50
+#: ram.py:62
 msgid "Car interface"
 msgstr "واجهة السيارة"
 
-#: ram.py:51
+#: ram.py:63
 msgid "Starts and stops the rest"
 msgstr "يشغّل البقية ويوقفها"
 
-#: ram.py:52
+#: ram.py:64
 msgid "StarPilot's planning"
 msgstr "تخطيط StarPilot"
 
-#: ram.py:53
+#: ram.py:65
 msgid "Speed limit sign reading"
 msgstr "قراءة لافتات حدود السرعة"
 
-#: ram.py:55
+#: ram.py:67
 msgid "Power and temperature"
 msgstr "الطاقة والحرارة"
 
-#: ram.py:56
+#: ram.py:68
 msgid "Bluetooth remote"
 msgstr "جهاز تحكم Bluetooth"
 
-#: ram.py:57
+#: ram.py:69
 msgid "Car connection"
 msgstr "الاتصال بالسيارة"
 
@@ -2748,7 +2748,7 @@ msgstr "أكثر سطوعا"
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: settings/device_sections.py:301
-#: settings/ram.py:29
+#: settings/ram.py:30
 #, python-brace-format
 msgid "{} MB"
 msgstr "{} MB"
@@ -4184,39 +4184,39 @@ msgstr "مفتوح"
 msgid "Automatic"
 msgstr "اوتوماتيك"
 
-#: settings/ram.py:45
+#: settings/ram.py:50
 #, python-brace-format
 msgid "{} · {}%"
 msgstr "{} · {}%"
 
-#: settings/ram.py:38
+#: settings/ram.py:39
 #, python-brace-format
 msgid "Today {}"
 msgstr "اليوم {}"
 
-#: settings/ram.py:40
+#: settings/ram.py:41
 #, python-brace-format
 msgid "Yesterday {}"
 msgstr "أمس {}"
 
-#: settings/ram.py:66
-msgid "Everything else"
-msgstr "كل ما عدا ذلك"
+#: settings/ram.py:73
+msgid "Other processes and the system"
+msgstr "العمليات الأخرى والنظام"
 
-#: settings/ram.py:90
+#: settings/ram.py:102
 #, python-brace-format
 msgid "Now {}% used"
 msgstr "مستخدمة الآن {}%"
 
-#: settings/ram.py:99
-msgid "What was using it at the peak of each drive that ran low. The last three drives are kept."
-msgstr "ما كان يستخدم ذاكرة RAM في ذروة كل رحلة انخفضت فيها. تُحفظ آخر ثلاث رحلات."
+#: settings/ram.py:111
+msgid "What was using it at each drive's peak, and how much it grew since the drive started."
+msgstr "ما كان يستخدم ذاكرة RAM في ذروة كل رحلة، ومقدار نموه منذ بدء الرحلة."
 
-#: settings/ram.py:100
-msgid "Added to Report a Problem. A reboot clears RAM."
-msgstr "يُضاف إلى الإبلاغ عن مشكلة. إعادة التشغيل تُفرغ ذاكرة RAM."
+#: settings/ram.py:113
+msgid "The last three drives are kept and added to Report a Problem. A reboot clears RAM."
+msgstr "تُحفظ آخر ثلاث رحلات وتُضاف إلى الإبلاغ عن مشكلة. إعادة التشغيل تُفرغ ذاكرة RAM."
 
-#: settings/ram.py:97
+#: settings/ram.py:109
 msgid "No drive has run low on RAM yet."
 msgstr "لم تنخفض ذاكرة RAM في أي رحلة بعد."
 

@@ -509,6 +509,8 @@ class EssentialsOnroadView(StarPilotOnroadView):
     self._layers_visible = bool(ui_state.started and self._draw_hud_controls and alert is None and not self._headroom_warning)
     now = time.monotonic()
     current = snapshot(ui_state, self._navigating(), self._limits, now, self._ram)
+    if ui_state.started:
+      self._ram_log.drive(ui_state.started_frame, now)
     if current.low_ram:
       self._ram_log.note(ui_state.started_frame, current.memory_percent)
     if self._navigating():
