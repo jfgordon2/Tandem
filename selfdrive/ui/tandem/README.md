@@ -91,6 +91,7 @@ Navigation still reports the turn StarPilot actually selected through its option
 
 | File | Integration |
 | --- | --- |
+| `.github/workflows/tandem_routing_maps.yaml` | Thin hosted-runner launcher for owned routing-data maintenance tools. It checks out `valhalla`, independent of the device release branch. Resource probes and build/publication logic stay under `starpilot/tandem/routing/tools/`. |
 | `README.md` | Fork introduction, documentation links, screenshots and upstream credits. |
 | `selfdrive/ui/layouts/main.py` | Screen factories and sidebar widths from `screens.py`; each factory has an upstream fallback. |
 | `selfdrive/ui/layouts/home.py` | `_show_header()` override; the default is `True`. |

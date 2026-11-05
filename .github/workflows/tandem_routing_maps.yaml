@@ -1,0 +1,31 @@
+name: Monthly routing maps
+
+on:
+  push:
+    branches: [valhalla]
+    paths:
+      - .github/workflows/tandem_routing_maps.yaml
+      - starpilot/tandem/routing/tools/hosted.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  hosted-resources:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: valhalla
+          persist-credentials: false
+      - name: Measure hosted runner build space
+        run: >-
+          python3 -m openpilot.starpilot.tandem.routing.tools.hosted
+          --prepare --out selfdrive/ui/tandem/tools/out/monthly/resources.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: monthly-map-resources
+          path: selfdrive/ui/tandem/tools/out/monthly/resources.json
+          retention-days: 7
