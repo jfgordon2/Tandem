@@ -196,3 +196,36 @@ def test_pss_sums_a_processes_share_of_each_mapping():
 def test_growth_reads_as_a_signed_size():
   from openpilot.selfdrive.ui.tandem.settings.ram import growth_text
   assert (growth_text(270 * MB), growth_text(-3 * MB), growth_text(0)) == ("+270 MB", "-3 MB", "+0 MB")
+
+
+SMAPS = b"".join((
+  b"00400000-00500000 r-xp 00000000 08:01 12 /data/openpilot/starpilot/lib.so\nRss: 900 kB\nPss: 300 kB\n",
+  b"01000000-02000000 rw-p 00000000 00:00 0 [heap]\nRss: 4096 kB\nPss: 4096 kB\n",
+  b"7f000000-7f100000 rw-p 00000000 00:00 0 \nRss: 1024 kB\nPss: 1024 kB\n",
+  b"7f200000-7f300000 rw-s 00000000 00:05 9 /dev/shm/msgq_modelV2\nRss: 512 kB\nPss: 128 kB\n",
+  b"7f400000-7f500000 rw-s 00000000 00:06 3 /dev/kgsl-3d0\nRss: 256 kB\nPss: 256 kB\n",
+))
+
+
+def test_memory_splits_into_heap_files_shared_and_device():
+  from openpilot.selfdrive.ui.tandem.ram import kind_of, kinds_of
+  assert kinds_of(SMAPS) == {"heap": (4096 + 1024) * 1024, "files": 300 * 1024, "shared": 128 * 1024, "device": 256 * 1024}
+  assert [kind_of(p) for p in (b"", b"[stack]", b"/memfd:capnp (deleted)", b"/dev/ion", b"/usr/lib/libc.so.6")] == \
+    ["heap", "heap", "shared", "device", "files"]
+
+
+def test_snapshots_say_which_kind_of_memory_grew(tmp_path):
+  state = {"sp": 100 * MB, "heap": 60 * MB}
+
+  def read():
+    kinds = {"starpilot_process": {"heap": state["heap"], "files": 30 * MB, "shared": 10 * MB, "device": 0}}
+    return [("starpilot_process", state["sp"])], 3000 * MB, kinds
+  log = RamLog(tmp_path / ".tandem_ram.json", read, lambda: datetime.datetime(2026, 11, 4, 16, 46).timestamp(), background=False)
+  log.drive(1, now=0.0)
+  log.drive(1, now=61.0)                                    # baseline
+  state.update(sp=370 * MB, heap=325 * MB)                  # the leak is in the heap
+  log.note(1, 95)
+  snap = RamLog(tmp_path / ".tandem_ram.json").snapshots()[0]   # as saved
+  assert snap.kinds["starpilot_process"]["heap"] == 325 * MB
+  assert snap.kinds_grew["starpilot_process"] == {"heap": 265 * MB, "files": 0, "shared": 0, "device": 0}
+  assert report_text([snap]) == "Low on RAM 2026-11-04 16:46 95%: starpilot_process 370 MB (+270; heap +265), rest 2630 MB"

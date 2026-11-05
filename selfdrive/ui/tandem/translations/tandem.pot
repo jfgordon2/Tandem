@@ -1123,108 +1123,108 @@ msgstr ""
 msgid "{} min · {}"
 msgstr ""
 
-#: ram.py:41
+#: ram.py:44
 #: settings/window.py:258
 msgid "Driving model"
 msgstr ""
 
-#: ram.py:42
+#: ram.py:45
 msgid "Driver monitoring model"
 msgstr ""
 
-#: ram.py:43
+#: ram.py:46
 msgid "This screen"
 msgstr ""
 
-#: ram.py:44
+#: ram.py:47
 msgid "Driving decisions"
 msgstr ""
 
-#: ram.py:45
+#: ram.py:48
 msgid "Steering and speed control"
 msgstr ""
 
-#: ram.py:46
+#: ram.py:49
 msgid "Speed planning"
 msgstr ""
 
-#: ram.py:47
+#: ram.py:50
 msgid "Radar"
 msgstr ""
 
-#: ram.py:48
+#: ram.py:51
 msgid "Position and heading"
 msgstr ""
 
-#: ram.py:49
+#: ram.py:52
 msgid "Car calibration"
 msgstr ""
 
-#: ram.py:50
+#: ram.py:53
 msgid "Camera calibration"
 msgstr ""
 
-#: ram.py:51
+#: ram.py:54
 msgid "Cameras"
 msgstr ""
 
-#: ram.py:52
+#: ram.py:55
 msgid "Video recording"
 msgstr ""
 
-#: ram.py:53
+#: ram.py:56
 msgid "Drive logging"
 msgstr ""
 
-#: ram.py:54
+#: ram.py:57
 #: settings/device_sections.py:357
 #: settings/search.py:189
 msgid "Uploads"
 msgstr ""
 
-#: ram.py:55
-#: ram.py:56
-#: ram.py:64
+#: ram.py:58
+#: ram.py:59
+#: ram.py:67
 msgid "Remote access"
 msgstr ""
 
-#: ram.py:57
+#: ram.py:60
 msgid "Speed limits and curves"
 msgstr ""
 
-#: ram.py:58
+#: ram.py:61
 msgid "Routing"
 msgstr ""
 
-#: ram.py:59
+#: ram.py:62
 msgid "Sounds"
 msgstr ""
 
-#: ram.py:60
+#: ram.py:63
 msgid "Car interface"
 msgstr ""
 
-#: ram.py:61
+#: ram.py:64
 msgid "Starts and stops the rest"
 msgstr ""
 
-#: ram.py:62
+#: ram.py:65
 msgid "StarPilot's planning"
 msgstr ""
 
-#: ram.py:63
+#: ram.py:66
 msgid "Speed limit sign reading"
 msgstr ""
 
-#: ram.py:65
+#: ram.py:68
 msgid "Power and temperature"
 msgstr ""
 
-#: ram.py:66
+#: ram.py:69
 msgid "Bluetooth remote"
 msgstr ""
 
-#: ram.py:67
+#: ram.py:70
 msgid "Car connection"
 msgstr ""
 

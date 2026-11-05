@@ -35,6 +35,9 @@ TOP = 5    # processes
 BASELINE_AFTER = 60.0   # seconds into a drive, once modeld and the rest have started
 PAUSE = 0.002           # between processes while reading, so the UI thread keeps the GIL most of the time
 PSS = re.compile(rb"^Pss:\s+(\d+) kB", re.M)
+MAPPING = re.compile(rb"^[0-9a-f]+-[0-9a-f]+ \S+ \S+ \S+ \S+ *(.*)$", re.M)
+KINDS = ("heap", "files", "shared", "device")
+KIND_TOP = 8   # processes whose memory is split by kind: the largest, which the top five come from
 
 # What the processes a driver is likely to see do, in plain words. Anything else shows only its name.
 DESCRIPTIONS = {
@@ -76,15 +79,22 @@ class Snapshot:
   rest: int = 0                                                          # bytes used by other processes and the system
   drive: int = 0                                                         # which drive (the UI's started frame)
   grew: dict[str, int] = field(default_factory=dict)                     # top processes' growth since the baseline, if taken
+  kinds: dict[str, dict[str, int]] = field(default_factory=dict)        # top processes' bytes by kind (KINDS)
+  kinds_grew: dict[str, dict[str, int]] = field(default_factory=dict)   # ...and each kind's growth since the baseline
 
   def to_json(self) -> dict:
     return {"when": self.when, "percent": self.percent, "top": [list(t) for t in self.top], "rest": self.rest, "drive": self.drive,
-            "grew": self.grew}
+            "grew": self.grew, "kinds": self.kinds, "kinds_grew": self.kinds_grew}
 
   @staticmethod
   def from_json(d: dict) -> Snapshot:
     return Snapshot(float(d["when"]), int(d["percent"]), [(str(n), int(b)) for n, b in d.get("top", [])], int(d.get("rest", 0)),
-                    int(d.get("drive", 0)), {str(n): int(b) for n, b in d.get("grew", {}).items()})
+                    int(d.get("drive", 0)), {str(n): int(b) for n, b in d.get("grew", {}).items()},
+                    _kinds(d.get("kinds", {})), _kinds(d.get("kinds_grew", {})))
+
+
+def _kinds(value: dict) -> dict[str, dict[str, int]]:
+  return {str(name): {str(k): int(b) for k, b in split.items()} for name, split in value.items()}
 
 
 def pss_of(smaps: bytes) -> int:
@@ -92,13 +102,36 @@ def pss_of(smaps: bytes) -> int:
   return 1024 * sum(int(kb) for kb in PSS.findall(smaps))
 
 
-def read_processes(pause: float = PAUSE) -> tuple[list[tuple[str, int]], int]:
-  """((name, bytes) for every process, largest first; bytes in use). Bytes are PSS where the process's memory map can be
-  read; processes that refuse (root's, about 170 MB of RSS on a device) are left to "other processes and the system".
-  Without /proc (macOS) it falls back to resident size."""
+def kind_of(path: bytes) -> str:
+  """What a mapping holds, from its smaps path: heap (anonymous memory: Python's and native libraries' allocations),
+  files (code, models, map data), shared (shared memory between processes) or device (GPU and other drivers)."""
+  if not path or path.startswith(b"["):
+    return "heap"
+  if path.startswith((b"/dev/shm", b"/memfd:", b"SYSV", b"/dev/ashmem", b"/dev/zero")):
+    return "shared"
+  return "device" if path.startswith(b"/dev/") else "files"
+
+
+def kinds_of(smaps: bytes) -> dict[str, int]:
+  """A process's PSS split by kind_of, in bytes."""
+  split = dict.fromkeys(KINDS, 0)
+  headers = list(MAPPING.finditer(smaps))
+  for i, header in enumerate(headers):
+    body = smaps[header.end():headers[i + 1].start() if i + 1 < len(headers) else len(smaps)]
+    pss = PSS.search(body)
+    if pss:
+      split[kind_of(header.group(1).strip())] += 1024 * int(pss.group(1))
+  return split
+
+
+def read_processes(pause: float = PAUSE) -> tuple[list[tuple[str, int]], int, dict[str, dict[str, int]]]:
+  """((name, bytes) for every process, largest first; bytes in use; the KIND_TOP largest split by kind). Bytes are PSS
+  where the process's memory map can be read; processes that refuse (root's, about 170 MB of RSS on a device) are left to
+  "other processes and the system". Without /proc (macOS) it falls back to resident size, with no split."""
   import psutil
   linux = os.path.isdir("/proc/self")
   sizes: dict[str, int] = {}
+  pids: dict[str, list[int]] = {}
   for p in psutil.process_iter(["pid", "name", "cmdline", "memory_info"]):
     info = p.info
     name = process_name(info.get("name") or "", info.get("cmdline") or [])
@@ -114,8 +147,22 @@ def read_processes(pause: float = PAUSE) -> tuple[list[tuple[str, int]], int]:
     else:
       continue
     sizes[name] = sizes.get(name, 0) + size
+    pids.setdefault(name, []).append(info["pid"])
   vm = psutil.virtual_memory()
-  return sorted(sizes.items(), key=lambda kv: kv[1], reverse=True), int(vm.total - vm.available)
+  ranked = sorted(sizes.items(), key=lambda kv: kv[1], reverse=True)
+  kinds: dict[str, dict[str, int]] = {}
+  for name, _ in ranked[:KIND_TOP] if linux else []:   # a second read, for the few that matter
+    split = dict.fromkeys(KINDS, 0)
+    for pid in pids[name]:
+      try:
+        with open(f"/proc/{pid}/smaps", "rb") as stream:
+          for kind, size in kinds_of(stream.read()).items():
+            split[kind] += size
+      except OSError:
+        continue
+      time.sleep(pause)
+    kinds[name] = split
+  return ranked, int(vm.total - vm.available), kinds
 
 
 def summarize(processes: list[tuple[str, int]], used: int) -> tuple[list[tuple[str, int]], int]:
@@ -123,8 +170,13 @@ def summarize(processes: list[tuple[str, int]], used: int) -> tuple[list[tuple[s
   return top, max(0, used - sum(b for _, b in top))
 
 
+def _reading(result: tuple) -> tuple[list[tuple[str, int]], int, dict[str, dict[str, int]]]:
+  """A read's (processes, used, kinds); readers without the split (tests, macOS) return two values."""
+  return result[0], result[1], result[2] if len(result) > 2 else {}
+
+
 class RamLog:
-  def __init__(self, path: Path, read: Callable[[], tuple[list[tuple[str, int]], int]] = read_processes,
+  def __init__(self, path: Path, read: Callable[[], tuple] = read_processes,
                clock: Callable[[], float] = lambda: datetime.now().timestamp(), background: bool = True):   # wall clock: shown as a date
     self._path = path
     self._read = read
@@ -136,6 +188,7 @@ class RamLog:
     self._peak = 0
     self._started = 0.0                          # monotonic, when this drive was first seen
     self._baseline: dict[str, int] | None = None  # sizes a minute into the drive
+    self._baseline_kinds: dict[str, dict[str, int]] = {}
     self._baseline_busy = False
     self._snapshots: list[Snapshot] | None = None
     self._unseen = False
@@ -156,9 +209,9 @@ class RamLog:
 
   def _take_baseline(self, drive: int) -> None:
     try:
-      sizes = dict(self._read()[0])
+      processes, _, kinds = _reading(self._read())
       if drive == self._drive:
-        self._baseline = sizes
+        self._baseline, self._baseline_kinds = dict(processes), kinds
     except Exception:
       pass
     finally:
@@ -181,10 +234,14 @@ class RamLog:
 
   def _capture(self, drive: int, percent: int) -> None:
     try:
-      top, rest = summarize(*self._read())
-      baseline = self._baseline
+      processes, used, kinds = _reading(self._read())
+      top, rest = summarize(processes, used)
+      baseline, before = self._baseline, self._baseline_kinds
       grew = {} if baseline is None else {name: size - baseline.get(name, 0) for name, size in top}
-      snap = Snapshot(self._clock(), percent, top, rest, drive, grew)
+      split = {name: kinds[name] for name, _ in top if name in kinds}
+      split_grew = {name: {k: b - before[name].get(k, 0) for k, b in split[name].items()}
+                    for name in split if baseline is not None and name in before}
+      snap = Snapshot(self._clock(), percent, top, rest, drive, grew, split, split_grew)
       with self._lock:
         kept = [s for s in self._load() if s.drive != drive or s.when > snap.when]   # this drive's earlier peak gives way
         self._snapshots = ([snap] + kept)[:KEEP]
@@ -230,12 +287,20 @@ class RamLog:
     tmp.replace(self._path)
 
 
+def _growth_note(s: Snapshot, name: str) -> str:
+  """ (+270; heap +265, files +3): growth since the baseline, and the kinds that moved by a megabyte or more."""
+  if name not in s.grew:
+    return ""
+  moved = [f"{k} {b / 2**20:+.0f}" for k, b in s.kinds_grew.get(name, {}).items() if abs(b) >= 2**20]
+  return f" ({s.grew[name] / 2**20:+.0f}" + ("; " + ", ".join(moved) if moved else "") + ")"
+
+
 def report_text(snapshots: list[Snapshot]) -> str:
   """For Report a Problem: one line per drive, in English for the developers."""
   lines = []
   for s in snapshots:
     when = datetime.fromtimestamp(s.when).strftime("%Y-%m-%d %H:%M")
-    procs = ", ".join(f"{n} {b / 2**20:.0f} MB" + (f" ({s.grew[n] / 2**20:+.0f})" if n in s.grew else "") for n, b in s.top)
+    procs = ", ".join(f"{n} {b / 2**20:.0f} MB{_growth_note(s, n)}" for n, b in s.top)
     lines.append(f"Low on RAM {when} {s.percent}%: {procs}, rest {s.rest / 2**20:.0f} MB")
   return "\n".join(lines)
 
