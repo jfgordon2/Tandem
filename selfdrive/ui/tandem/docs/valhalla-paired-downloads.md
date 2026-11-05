@@ -64,7 +64,10 @@ states, then report the routing failure for retry. A failed/cancelled native roa
 download cannot mark a region Ready. LastMapsUpdate is written once all road
 states complete, preserving StarPilot's scheduling semantics. Routing-only
 selection changes still reuse the existing route-only path, avoiding unnecessary
-road downloads.
+road downloads. After verified activation, the shared job prunes legacy road
+archive groups outside the committed selection before reporting Ready. Border
+groups needed by any checked region remain. Deselect-all clears both map sets;
+the same existing selector layout and progress screens are used.
 
 `TANDEM_ROUTING=0`, screen rollback switches, unsupported selections and a broker
 that cannot start use the original updater. Both small upstream guards swallow

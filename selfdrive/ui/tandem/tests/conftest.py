@@ -9,4 +9,5 @@ def tandem_prefs(tmp_path, monkeypatch):
   monkeypatch.setenv("TANDEM_PREFS_DIR", str(folder))
   monkeypatch.setenv("TANDEM_STATE_DIR", str(tmp_path / "state"))
   monkeypatch.setenv("TANDEM_ROUTING_DIR", str(tmp_path / "routing"))
+  monkeypatch.setenv("TANDEM_ROAD_MAPS_DIR", str(tmp_path / "road-maps"))
   return folder

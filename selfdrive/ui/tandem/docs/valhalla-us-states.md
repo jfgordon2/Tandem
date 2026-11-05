@@ -25,17 +25,24 @@ driver interface. The two `valhalla3-regions-*` mocks were approved on November 
 
 Deselecting one state uses the remaining tiles locally, with **zero routing-data
 downloads** when the dataset is unchanged and checksums pass. Deselecting every
-state and choosing Update clears routing images and partial routing downloads;
+state and choosing Update clears routing images, partial routing downloads and
+recognized legacy road tiles;
 it does not run the compressor or install a runtime. The empty selection stays
 in the picker instead of displaying download progress.
 For a nonempty local rebuild, the existing approved Install screen shows download
 complete at 100%, with the region still current. Ready follows verification and
 activation; the percentage does not claim to measure compression progress.
 
-This per-state removal applies to Valhalla routing data. Upstream mapd does not
-provide per-state ownership/deletion for its shared road tiles. Existing road
-data remains until the existing global **Remove maps** / Storage **Delete**
-action removes both datasets. Saved places are retained. No migration of the
+The same Update now removes unneeded legacy road tiles after verified routing
+activation, before the job becomes Ready. It keeps the union of mapd archive
+groups requested by the selected regions, including border/padding groups.
+Recognized leftover legacy archives in `osm/tmp/offline` follow the same rule.
+No retained road tiles are downloaded again for a local selection reduction.
+Old Ready receipts for deselected regions are retired and physical storage is
+recounted. A pre-activation routing failure leaves previous road data intact;
+an interrupted cleanup can leave extra tiles, which the next Update removes.
+The existing global **Remove maps** / Storage **Delete** action still removes
+both datasets. Saved places are retained. No migration of the
 owner's old Iowa / Iowa–Illinois test bundles is required; remove those test
 graphs when switching to the new catalog.
 
@@ -45,6 +52,35 @@ installed data; a newer immutable dataset downloads the required new packs.
 Publishing data is a maintainer operation. The device never builds OSM.
 An ordinary Update with the same states still uses upstream's road-data update
 controller. A changed routing selection can retain already-downloaded road data.
+
+### Legacy tile ownership
+
+Owned `starpilot/tandem/routing/road.py` reads `mapd_download_menu.json` when
+present, otherwise the JSON embedded in the installed `starpilot/navigation/mapd`
+binary. It maps the same rounded 2-degree download archive groups to their
+quarter-degree tile directories. Sparse `download_rows` are honored only when
+the installed binary declares that field; older binaries use bounding boxes.
+The binary is memory-mapped and only a bounded menu slice is decoded. No tile
+contents, second geographic catalog or network request is needed for cleanup.
+
+Cleanup rechecks parked state, cancellation and downloader activity between
+files. Only recognized map tile names under valid grid directories are removed;
+unknown files and symlinks stay untouched. Unreadable or unknown region metadata
+prevents cleanup before files or readiness receipts change. The current embedded
+menu lacks `us_state.GU`; selecting it (including the whole-US expansion) requires
+a corrected mapd menu before cleanup can run. Routing coverage for Guam is
+separate from this legacy metadata limitation.
+
+Legacy-only country updates apply their selection after the road download
+completes even when the routing catalog reports that country's routes unavailable.
+TANDEM_ROUTING=0 retains the original upstream behavior. The helper adds no
+upstream hook and uses the existing Install/Ready flow with no visual changes.
+Tests redirect road data to `TANDEM_ROAD_MAPS_DIR` and never touch live maps.
+
+Host validation: 27 dedicated ownership/deletion tests, 289 routing tests total,
+and 750 UI tests passed (two skips; four hardware-dependent UI files omitted).
+The SSH device check timed out, so this cleanup has not been exercised on live
+device data.
 
 ## Format and memory
 

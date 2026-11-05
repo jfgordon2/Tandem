@@ -190,6 +190,20 @@ def test_shared_state_selection_can_clear_and_update_without_road_downloads(monk
   assert source.progress().phase == "" and not source.progress().active
 
 
+def test_deselect_all_can_clear_legacy_maps_when_no_routing_graph_is_installed(monkeypatch):
+  from openpilot.selfdrive.ui.tandem.settings.map_source import CombinedMaps
+  from openpilot.starpilot.tandem.routing import maps
+  calls = []
+  road = SimpleNamespace(_layout=SimpleNamespace(_params=SimpleNamespace(get=lambda *a, **k: "")),
+                         downloaded=lambda: True, download=lambda: calls.append("road"))
+  source = CombinedMaps(road)
+  source.catalog = {"schema": 2}
+  source.route_ready = set()
+  assert source.can_clear()
+  source.download()
+  assert maps.read("map-request.json")["selection"] == "" and not calls
+
+
 def test_state_picker_does_not_replan_or_read_installed_graphs_on_each_draw(monkeypatch):
   from openpilot.selfdrive.ui.tandem.settings.map_source import CombinedMaps
   from openpilot.starpilot.tandem.routing import bundles, catalog

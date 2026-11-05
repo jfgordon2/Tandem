@@ -4,8 +4,9 @@ The [shared US state implementation](valhalla-us-states.md) replaces the
 original two-state trial bundles. With its
 schema 2 catalog, the checked states are an exact routing selection: Update
 checksums and reuses retained data, downloads missing compatible packs and
-rebuilds one compressed image while parked. Deselect-all clears routing data.
-Per-state road-map deletion remains an upstream mapd limitation. The shared-build
+rebuilds one compressed image while parked. Update also removes unneeded legacy
+road tiles while retaining shared archive groups. Deselect-all clears both sets.
+The shared-build
 document records the new format, publication process and measured device pilot.
 
 The approved revision adds routing policy to Navigation and manages routing graphs through the existing Offline Maps flow. It uses StarPilot's destination store, route model, progress loop, navigation publishers and control decisions. There is no driver-facing package URL or routing-software setup page.
@@ -24,7 +25,7 @@ In **Offline Maps**, select states, U.S. region groups or countries. One downloa
 
 **Weekly and Monthly** reuse `PreferredSchedule` and upstream's existing Sunday / first-of-month eligibility gates. Every eligible road-data update queues the companion routing-data update. The shared job checks the maintained catalog for a newer immutable bundle; it does not rebuild OSM on the car. A new graph must be published by the maintainer before a device can download that update. Both routing policy choices allow scheduled downloads.
 
-**Remove maps** and Storage & Data's **Delete** remove both installed road data and routing graphs, plus partial routing downloads. They retain saved places, selected geographic regions, the schedule and the isolated routing runtime. Unchecking states and choosing Update removes their routing data while retaining tiles needed by checked states. This per-state removal does not delete upstream road tiles, whose ownership mapd does not track by state. Global deletion is blocked while a download or active trip is running; graph leases protect active readers.
+**Remove maps** and Storage & Data's **Delete** remove both installed road data and routing graphs, plus partial routing downloads. They retain saved places, selected geographic regions, the schedule and the isolated routing runtime. Unchecking states and choosing Update removes their unneeded routing and legacy road data while retaining tiles shared with checked regions. Road cleanup uses the installed mapd's download definitions after verified routing activation. Global deletion is blocked while a download or active trip is running; graph leases protect active readers.
 
 ## Download behavior
 
@@ -42,7 +43,7 @@ Parked maintenance checks bundles whose last audit is at least 24 hours old when
 
 Driving graphs exclude roads usable only by pedestrians or cyclists. They retain vehicular access, driveways/parking access, hierarchy, shortcuts and mapped lane/sign/speed-limit data. Platforms, bike-share stations, construction roads, retained OSM node IDs and pedestrian-area traversals are disabled; these were already absent in the earlier build defaults. Source PBFs, build intermediates and elevation/transit datasets are not part of the device download. The known name-consistency penalty difference remains under investigation: the Chicago-to-Des Moines sample chooses a different final approach. An extra enhancement pass lost lane guidance and was rejected. See [size research](valhalla-map-size-research.md) and [compressed-package verification](valhalla-compressed-routing-verification.md).
 
-States can be selected together or one at a time. The checked states are the complete desired selection. Update verifies and reuses retained data from the same dataset, downloads missing shared packs once, and streams one compressed replacement graph while parked. Unchecking a state and updating requires no routing download when the dataset is unchanged and retained data checks out. Selecting the same states together or incrementally produces the same logical graph. Unchecking every state and updating clears routing data without running the compressor.
+States can be selected together or one at a time. The checked states are the complete desired selection. Update verifies and reuses retained data from the same dataset, downloads missing shared packs once, and streams one compressed replacement graph while parked. Unchecking a state and updating requires no routing download when the dataset is unchanged and retained data checks out. Selecting the same states together or incrementally produces the same logical graph. Unchecking every state and updating clears both map sets without running the compressor.
 
 All selected US states use compatible tiles from one native country build. Unselected connecting states are not supplied automatically, so trips crossing absent coverage can fail. Bounding boxes only precheck coverage; interior roads can still be absent or disconnected.
 

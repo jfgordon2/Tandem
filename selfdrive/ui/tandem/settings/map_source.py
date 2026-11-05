@@ -107,7 +107,7 @@ class CombinedMaps:
     return self.road.downloaded() or bool(self.route_ready)
 
   def can_clear(self):
-    return (self.catalog["schema"] == 2 and not catalog.tokens(self.selection()) and bool(self.route_ready)
+    return (self.catalog["schema"] == 2 and not catalog.tokens(self.selection()) and (bool(self.route_ready) or self.road.downloaded())
             and not jobs.running())
 
   def status(self):
@@ -169,7 +169,7 @@ class CombinedMaps:
   def download(self):
     selected = catalog.tokens(self.selection())
     routing_update = (bool(selected) and not selected <= self.route_ready) or (self.catalog["schema"] == 2 and selected != self.route_ready)
-    if selected <= self.road_ready and routing_update:
+    if self.can_clear() or selected <= self.road_ready and routing_update:
       jobs.request(self.selection())  # apply the routing selection without redownloading road data
     else:
       self.road.download()  # existing scheduler hook starts the shared job

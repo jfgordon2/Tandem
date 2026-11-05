@@ -155,6 +155,10 @@ class Manager:
     except C.RoutingError:
       raise C.RoutingError("interrupted") from None
 
+  def prune_road(self, pending):
+    from openpilot.starpilot.tandem.routing import road
+    road.apply(pending["selection"], self.assembly_gate, self.memory, paired=pending.get("paired", False))
+
   def run(self, pending):
     previous = read()
     road_ready = previous.get("id") == pending["id"] and previous.get("road_ready", False)
@@ -185,6 +189,7 @@ class Manager:
       packages, unsupported = catalog.plan(pending["selection"], catalog.load(refresh=True, gate=self.gate))
       self.publish(unsupported=sorted(unsupported))
       if unsupported and any(package.get("kind") == "dataset" for package in packages):
+        self.prune_road(pending)  # completed legacy downloads still follow the requested selection
         raise C.RoutingError("coverage_unavailable")
       if any(package.get("kind") != "dataset" or package["parts"] for package in packages):
         self.prepare(cancelled=lambda: self._setup_cancelled())
@@ -215,6 +220,7 @@ class Manager:
             except C.RoutingError:
               pass  # an active reader's lease wins over background cleanup
         self.publish(regions_ready=sorted(set(self.state["regions_ready"]) | set(package["regions"])))
+      self.prune_road(pending)
       if unsupported:
         raise C.RoutingError("coverage_unavailable")
       self.publish(phase="ready", done=self.state["total"], error="", current_regions=[])
