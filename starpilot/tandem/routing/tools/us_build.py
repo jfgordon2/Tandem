@@ -51,7 +51,8 @@ def territory_polygons(output):
   return result
 
 
-def build_us(output: Path, snapshot: str, identity: str, base_url: str, *, concurrency=4, start=None):
+def build_us(output: Path, snapshot: str, identity: str, base_url: str, *, concurrency=4, start=None,
+             prepared=None, keep_sources=True, scratch_bytes=None):
   if not re.fullmatch("[0-9]{6}", snapshot) or not bundles.ID.fullmatch(identity) or len(identity) > 48:
     raise C.RoutingError("invalid_request")
   if (output / "packages/catalog.json").exists():
@@ -98,8 +99,14 @@ def build_us(output: Path, snapshot: str, identity: str, base_url: str, *, concu
     receipt = {"inputs": signature, "built_at": stamp, "complete": False}
     C.atomic_json(marker, receipt)
   graph = output / "graph/tiles"
+  if prepared is not None:
+    prepared(inputs, receipt)  # archive/verify source inputs before reclaiming them on a hosted VM
+  if not keep_sources:
+    for path, _ in inputs:
+      path.unlink()
   if not receipt["complete"]:
-    if shutil.disk_usage(output).free < origin["bytes"] * 8 + 16 * 1024**3:
+    reserve = origin["bytes"] * 8 + 16 * 1024**3 if scratch_bytes is None else max(32 * 1024**3, scratch_bytes)
+    if shutil.disk_usage(output).free < reserve:
       raise C.RoutingError("no_space")
     print(json.dumps({"stage": "national_graph", "snapshot": snapshot, "concurrency": concurrency}), flush=True)
     graph = build.build_graph(native_sources, output / "graph", concurrency=concurrency, start=start, admin=admin, timezone=timezone)

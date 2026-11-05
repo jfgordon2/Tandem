@@ -11,7 +11,7 @@ upstream setup/build/cache composites.
 | Compile Bluescreens | Manual only. Can build panda firmware and other device binaries, commit changes and push the selected branch. Requests contents write access. | Disabled in Actions settings, with the same repository guard. |
 | Publish TrueNAS Runner Image | Manual only. Builds and publishes a GHCR container image; requests package write access. | Disabled in Actions settings, with the same repository guard. |
 | Fleet controller safety | Manual or pull requests affecting the listed driving/safety paths. Compiles and replays controller tests using temporary params, then uploads test artifacts. Contents read access only. | Retained. No branch push, data release or package publication. |
-| Monthly routing maps | Owned hosted-runner maintenance launcher. At the resource-probe stage it runs only on relevant valhalla pushes or manual dispatch, with contents read access. | Retained. The first probe push ran only this workflow; none of the inherited publishers ran. |
+| Monthly routing maps | Owned monthly/manual data build and publication. Review is read-only; draft/data-release jobs request contents write. Ordinary relevant valhalla pushes run review; a deliberate build-check commit stages drafts only. | Retained. No branch push, device build, GHCR publisher or upstream CI composites. The first probe push ran only this workflow; none of the inherited publishers ran. See the [monthly data guide](valhalla-monthly-map-releases.md). |
 
 The four nested `action.yaml` files are composite actions, not independently
 triggered workflows. `setup` fetches LFS data, uses caches, normalizes checkout

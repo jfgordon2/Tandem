@@ -14,6 +14,8 @@ The [shared-state progress review](docs/valhalla-map-progress.md) records the fi
 
 The [paired-download flow](docs/valhalla-paired-downloads.md) downloads both map sets for one US state before moving to the next. Two routing transfer workers run alongside StarPilot's unchanged road downloader. The approved `valhalla5-paired-*` screens show one overall bar and a percentage per state; the shared Install/Checking screens remain as approved. Shared packs transfer once, and all states become ready after verified activation.
 
+The [monthly data workflow](docs/valhalla-monthly-map-releases.md) builds and checks one US graph on GitHub-hosted Ubuntu, stages immutable source/graph releases, then verifies public downloads before promoting the maintained catalog. The [workflow audit](docs/github-workflows.md) keeps inherited binary/image publishers disabled and requires review of workflow changes.
+
 | Module | Contents |
 | --- | --- |
 | `fonts.py` | `font(face)`: maps upstream weight identifiers to our Figtree and Noto files, plus ExtraBold and JetBrains Mono. All load on first use without replacing upstream fonts. |
