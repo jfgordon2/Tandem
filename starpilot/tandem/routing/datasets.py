@@ -79,7 +79,8 @@ def _cached_bytes(part):
   return min(part["bytes"], present)
 
 
-def install(package, gate=lambda: None, progress=lambda done, total: None, installing=lambda: None, *, pack_gate=None, activity=None):
+def install(package, gate=lambda: None, progress=lambda done, total: None, installing=lambda: None, *,
+            pack_gate=None, activity=None, transfer=None):
   C.require_parked()
   C.root().mkdir(parents=True, exist_ok=True)
   with (C.root() / "dataset-update.lock").open("a") as lock:
@@ -95,10 +96,10 @@ def install(package, gate=lambda: None, progress=lambda done, total: None, insta
     for abandoned in staging.glob("tmp*"):
       if abandoned.is_dir() and not abandoned.is_symlink():
         shutil.rmtree(abandoned)
-    return _install(package, gate, progress, installing, pack_gate=pack_gate, activity=activity)
+    return _install(package, gate, progress, installing, pack_gate=pack_gate, activity=activity, transfer=transfer)
 
 
-def _install(package, gate, progress, installing, *, pack_gate, activity):
+def _install(package, gate, progress, installing, *, pack_gate, activity, transfer):
   C.require_parked()
   dataset, selected = package["dataset"], set(package["regions"])
   if not selected:
@@ -113,6 +114,10 @@ def _install(package, gate, progress, installing, *, pack_gate, activity):
   # Re-plan at execution; a scheduled job may have waited behind another update.
   package = plan(dataset, selected)
   previous = base(dataset)
+  if previous is not None and previous.id == package["id"] and transfer is not None:
+    # A current routing set still needs its paired road update. Check the graph
+    # afterwards so the UI measures the real verification pass after Download.
+    transfer(package, gate, progress)
   if previous is not None:
     try:
       kwargs = {}
@@ -148,7 +153,8 @@ def _install(package, gate, progress, installing, *, pack_gate, activity):
       regions[region] = {"done": done, "total": total, "downloaded": done >= total}
     activity(phase="download", stage="", done=sum(counts.values()), total=package["bytes"], region_progress=regions)
   kwargs = {"parts_progress": report_parts} if activity is not None else {}
-  incoming_parts = downloads.prepare_many(package["missing"], gate, progress, **kwargs)
+  incoming_parts = transfer(package, gate, progress) if transfer is not None else \
+    downloads.prepare_many(package["missing"], gate, progress, **kwargs)
   for part, incoming in zip(package["missing"], incoming_parts, strict=True):
     gate()
     if (incoming.manifest.get("kind") != "tile-part" or incoming.manifest["dataset"]["sha256"] != dataset["sha256"]

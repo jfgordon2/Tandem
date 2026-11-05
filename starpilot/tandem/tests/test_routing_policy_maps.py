@@ -290,7 +290,7 @@ def test_deletion_leases_all_graphs_before_deleting_anything(tmp_path):
   (2, (2026, 12, 1), False, 1), (2, (2026, 12, 2), False, 0),
   (0, (2026, 12, 1), False, 0), (0, (2026, 12, 2), True, 1),
 ])
-@pytest.mark.parametrize("failure", ["none", "import", "call"])
+@pytest.mark.parametrize("failure", ["none", "import", "call", "pair_import", "pair_call"])
 def test_actual_upstream_schedule_starts_both_datasets(monkeypatch, schedule, date, manual, expected, failure):
   # Execute the real update_maps function with transport stand-ins. This tests
   # the actual Weekly/Monthly gates and the hook's position after those gates.
@@ -320,11 +320,21 @@ def test_actual_upstream_schedule_starts_both_datasets(monkeypatch, schedule, da
     events.append(selection)
     if failure == "call":
       raise RuntimeError("routing hook failed")
+  real_import = builtins.__import__
   def import_(name, *args, **kwargs):
     if failure == "import" and name == "openpilot.starpilot.tandem.routing.maps":
       raise ImportError("routing hook unavailable")
-    return builtins.__import__(name, *args, **kwargs)
+    if failure == "pair_import" and name == "openpilot.starpilot.tandem.routing.handoff":
+      raise ImportError("paired coordinator unavailable")
+    return real_import(name, *args, **kwargs)
+  from openpilot.starpilot.tandem.routing import handoff
+  monkeypatch.setattr(handoff, "available", lambda: False)
+  if failure == "pair_call":
+    def failed(*_, **__):
+      raise RuntimeError("paired coordinator failed")
+    monkeypatch.setattr(handoff, "coordinate", failed)
   monkeypatch.setattr(maps, "on_map_download_started", hook)
+  monkeypatch.setattr(builtins, "__import__", import_)
   env = {"_get_maps_storage_cache": lambda _: SimpleNamespace(storage_known=True, storage_bytes=100, maps_present=True,
           selection_estimate_bytes=lambda _: 100), "sanitize_selected_locations_csv": lambda s: s,
     "normalize_schedule_value": int, "selection_key": lambda s: s, "_publish_maps_progress": lambda *a, **k: None,
@@ -334,7 +344,7 @@ def test_actual_upstream_schedule_starts_both_datasets(monkeypatch, schedule, da
     "__builtins__": {**vars(builtins), "__import__": import_}}
   exec(compile(ast.Module(body=[node], type_ignores=[]), str(path), "exec"), env)
   env["update_maps"](datetime.datetime(*date), Params(), Params(), manual)
-  assert events == (["us_state.IA"] * expected if failure != "import" else [])
+  assert events == (["us_state.IA"] * expected if failure not in ("import", "pair_import") else [])
   assert sent == [(0, "us_state.IA")] * expected
 
 

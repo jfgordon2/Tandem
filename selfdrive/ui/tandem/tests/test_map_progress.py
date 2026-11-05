@@ -82,3 +82,41 @@ def test_eta_does_not_carry_a_transfer_rate_into_installation_or_a_retry(monkeyp
   maps.job.update(phase="download", done=0, total=100)
   view._update_state()
   assert view._started[1] == 0
+
+
+def test_paired_progress_combines_both_downloads_while_road_transport_reports_only_one_state():
+  maps = source(Progress(True, 9, 10, "Iowa", (RegionProgress("us_state.IA", 9, 10),)))
+  maps.job = {"paired": True, "selection": "us_state.IA,us_state.IL", "phase": "download", "done": 260, "total": 2000,
+              "current_regions": ["us_state.IA"], "region_progress": {
+                "us_state.IA": {"done": 260, "total": 1000}, "us_state.IL": {"done": 0, "total": 1000}}}
+  progress = maps.progress()
+  assert progress.paired and progress.unit == "regions" and progress.fraction == .13
+  assert [r.fraction for r in progress.regions] == [.26, 0] and progress.current.code == "IA"
+  assert progress.note == "Maps download one region at a time."
+  maps.job.update(done=1180, current_regions=["us_state.IL"], region_progress={
+    "us_state.IA": {"done": 1000, "total": 1000, "downloaded": True}, "us_state.IL": {"done": 180, "total": 1000}})
+  progress = maps.progress()
+  assert progress.fraction == .59 and progress.current.code == "IL"
+  assert progress.regions[0].downloaded and not any(r.finished for r in progress.regions)
+  view = DownloadView(Maps(None, maps))
+  view._update_state()
+  assert view._started is None  # normalized state fractions are not a throughput/time estimate
+  maps.job.update(phase="install", stage="build", done=38, total=100)
+  progress = maps.progress()
+  assert progress.unit == "bytes" and progress.stage == "build" and progress.fraction == .38
+  assert not any(r.finished for r in progress.regions)
+  maps.job.update(phase="ready")
+  progress = maps.progress()
+  assert all(r.finished for r in progress.regions) and all(progress.step_complete(i) for i in range(4))
+  assert progress.note == "All selected regions are ready."
+
+
+def test_new_paired_request_is_shown_at_zero_before_the_worker_acknowledges_it():
+  from openpilot.starpilot.tandem.routing import config as C, handoff
+  C.atomic_json(C.root() / "map-job.json", {"id": "previous", "phase": "ready", "selection": "us_state.IA,us_state.IL"})
+  handoff.enqueue("us_state.IA,us_state.IL", paired=True, road_regions=["us_state.IA", "us_state.IL"])
+  maps = source()
+  maps.tick()
+  progress = maps.progress()
+  assert progress.paired and progress.active and progress.fraction == 0
+  assert [r.fraction for r in progress.regions] == [0, 0] and not any(r.finished for r in progress.regions)

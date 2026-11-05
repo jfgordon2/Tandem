@@ -381,6 +381,13 @@ def update_maps(now, params, params_memory, manual_update=False):
   if maps_downloaded and params.get("LastMapsUpdate") == todays_date and not manual_update:
     return
 
+  try:
+    from openpilot.starpilot.tandem.routing.handoff import coordinate
+    if coordinate(update_maps, now, params, params_memory, maps_selected, todays_date):
+      return
+  except Exception:
+    pass
+
   params_memory.put_bool("DownloadMaps", True)
 
   pm = messaging.PubMaster(["mapdIn"])
@@ -403,7 +410,7 @@ def update_maps(now, params, params_memory, manual_update=False):
 
   msg = messaging.new_message("mapdIn")
   try:
-    from openpilot.starpilot.tandem.routing.maps import on_map_download_started
+    from openpilot.starpilot.tandem.routing.handoff import on_map_download_started
     on_map_download_started(maps_selected)
   except Exception:
     pass

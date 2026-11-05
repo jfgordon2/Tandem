@@ -4,12 +4,12 @@ from __future__ import annotations
 import json
 import threading
 import time
-import uuid
 from contextlib import contextmanager, ExitStack
 import fcntl
 
 from openpilot.starpilot.tandem.routing import bundles, catalog, config as C, downloads, images, verified
 from openpilot.starpilot.tandem.routing.demand import ACTIVE_MAP_PHASES as ACTIVE, download_pending as running, read_map as read
+from openpilot.starpilot.tandem.routing.handoff import enqueue, in_progress
 
 
 def request(selection: str, wait_for_road=False) -> str:
@@ -19,18 +19,16 @@ def request(selection: str, wait_for_road=False) -> str:
     raise C.RoutingError("invalid_request")
   # mapd's published receipt uses epoch seconds, so this comparison must use
   # the same clock. All internal deadlines and rate estimates are monotonic.
-  created = time.time()  # noqa: TID251
-  job = {"id": uuid.uuid4().hex, "selection": selection, "wait_for_road": wait_for_road, "created": created}
   # Enqueue independently of graph installation. Its lock can be held while
   # copying/checksumming a large graph; road-map downloads must not wait for it.
-  C.atomic_json(C.root() / "map-request.json", job)
+  job = enqueue(selection, wait_for_road=wait_for_road)
   return job["id"]
 
 
 def on_map_download_started(selection: str) -> None:
   """Minimal upstream hook after its schedule/gates have accepted an update."""
   try:
-    if C.enabled():
+    if C.enabled() and not in_progress():
       request(selection, wait_for_road=True)
   except Exception:
     pass  # Routing must never break StarPilot's own road-data download.
@@ -66,7 +64,7 @@ def deletion():
       images.unmount_id(folder.name)
       shutil.rmtree(folder)
     shutil.rmtree(C.root() / "downloads", ignore_errors=True)
-    for name in ("active.json", "map-job.json", "map-request.json", "map-cancel.json"):
+    for name in ("active.json", "map-job.json", "map-request.json", "map-cancel.json", "map-road.json"):
       (C.root() / name).unlink(missing_ok=True)
 
 
@@ -182,7 +180,7 @@ class Manager:
           if not observed and time.monotonic() > end:
             raise C.RoutingError("road_download_failed")
           self.stop.wait(.25)
-      self.publish(phase="prepare", road_ready=True)
+      self.publish(phase="prepare", road_ready=not pending.get("paired", False))
       self.gate()
       packages, unsupported = catalog.plan(pending["selection"], catalog.load(refresh=True, gate=self.gate))
       self.publish(unsupported=sorted(unsupported))
@@ -197,6 +195,11 @@ class Manager:
           continue
         self.publish(phase="download", done=0, total=package["bytes"], current_regions=package["regions"])
         kwargs = {"pack_gate": self.assembly_gate, "activity": self.publish} if package.get("kind") == "dataset" else {}
+        if pending.get("paired"):
+          if package.get("kind") != "dataset" or sorted(package["regions"]) != pending["road_regions"]:
+            raise C.RoutingError("coverage_unavailable")
+          from openpilot.starpilot.tandem.routing.paired import Transfers
+          kwargs["transfer"] = Transfers(self).fetch
         installed = self.installer(package, gate=self.gate, progress=lambda done, total: self.publish(done=done, total=total),
                                    installing=lambda: self.publish(phase="install", stage="", done=0, total=0), **kwargs)
         if installed is not None:

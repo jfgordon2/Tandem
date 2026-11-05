@@ -81,6 +81,7 @@ class Progress:
   note: str = ""
   current_regions: tuple[str, ...] = ()
   stage: str = ""
+  paired: bool = False
 
   @property
   def fraction(self) -> float:
@@ -566,7 +567,7 @@ class DownloadView(Component):
   def _update_state(self):
     progress = self._maps.source.progress()
     counter = (progress.phase, progress.unit, progress.total)
-    transfer = progress.active and progress.phase not in ("prepare", "install") and not progress.paused
+    transfer = progress.active and progress.phase not in ("prepare", "install") and not progress.paused and progress.unit != "regions"
     if transfer and progress.total:
       if self._started is None or counter != self._counter or progress.done < self._started[1]:
         self._started = (rl.get_time(), progress.done)
@@ -597,7 +598,7 @@ class DownloadView(Component):
       from openpilot.selfdrive.ui.tandem.routing_status import status_text
       explanation = status_text(progress.error)
     elif progress.phase == "ready":
-      explanation = N_("Both map sets ready")
+      explanation = N_("All maps ready") if progress.paired else N_("Both map sets ready")
     draw.text(line, explanation, T.SIZE_SUBTITLE, T.TEXT_TERTIARY)
     # Percent, bar and steps
     draw.fill(top, T.SURFACE_2, T.RADIUS_PANEL)
@@ -610,7 +611,12 @@ class DownloadView(Component):
       detail = N_("Download complete · Building maps") if progress.stage == "build" else \
         N_("Download complete · Checking maps") if progress.stage == "check" else N_("Download complete · Installing maps")
     elif progress.phase == "ready":
-      detail = N_("Both map sets ready")
+      detail = N_("All maps ready") if progress.paired else N_("Both map sets ready")
+    elif progress.unit == "regions":
+      from openpilot.starpilot.common.maps_catalog import MAP_TOKEN_LABELS
+      current = progress.current
+      detail = t_("{} · {} of {}", MAP_TOKEN_LABELS.get(current.location, current.code),
+                  progress.regions.index(current) + 1, len(progress.regions)) if current else N_("Getting ready")
     elif progress.unit == "bytes" and progress.total:
       detail = t_("Offline routes · {} of {} MiB", round(progress.done / 1024**2), round(progress.total / 1024**2))
     else:
@@ -638,7 +644,10 @@ class DownloadView(Component):
     regions = progress.regions
     finished = sum(r.finished for r in regions)
     caption, tiles, note = column(inner, [draw.line_height(T.SIZE_CAPTION), FILL, draw.line_height(T.SIZE_SUBTITLE)], T.px(12))
-    draw.caption(caption, t_("REGIONS · {} OF {} DONE", finished, len(regions)) if regions else N_("REGIONS"))
+    downloading = progress.paired and progress.phase == "download"
+    downloaded = sum(r.downloaded for r in regions)
+    draw.caption(caption, t_("REGIONS · {} OF {} DOWNLOADED", downloaded, len(regions)) if downloading else
+                 t_("REGIONS · {} OF {} DONE", finished, len(regions)) if regions else N_("REGIONS"))
     current = progress.current
     tile_w = (tiles.width - T.px(10) * (self.COLUMNS - 1)) / self.COLUMNS
     rows = max(1, int((tiles.height + T.px(8)) // T.px(56)))
@@ -677,7 +686,8 @@ class DownloadView(Component):
     draw.icon(rl.Rectangle(note.x, note.y, T.px(18), note.height), "info", T.ACCENT_TEXT, T.px(18))
     message = N_("Paused. Downloads continue when parked on Wi-Fi.") if progress.paused else DOWNLOAD_NOTE
     if progress.phase == "ready":
-      message = N_("Both map sets are ready. Existing saved places stay saved.")
+      message = N_("Maps are ready. Existing saved places stay saved.") if progress.paired else \
+        N_("Both map sets are ready. Existing saved places stay saved.")
     if progress.error:
       from openpilot.selfdrive.ui.tandem.routing_status import status_text
       message = status_text(progress.error)

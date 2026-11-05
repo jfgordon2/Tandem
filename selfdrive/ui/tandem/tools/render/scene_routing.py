@@ -177,6 +177,16 @@ def main(frame, save, out, tap, gui_app):
       source.state = Progress(phase != "ready", round(total * pct / 100), total, "2 regions", regions, phase=phase, unit="bytes",
                               note=note, current_regions=tuple(sorted(source.picked)), stage=stage)
       shot("shared-" + name, prefix="valhalla4")
+    for name, counts, current in (("queued", (0, 0), "us_state.IA"), ("iowa", (260, 0), "us_state.IA"),
+                                  ("illinois", (1000, 180), "us_state.IL"), ("ready", (1000, 1000), None)):
+      ready = name == "ready"
+      regions = tuple(RegionProgress(token, count, 1000, ready, count == 1000)
+                      for token, count in zip(sorted(source.picked), counts, strict=True))
+      source.state = Progress(not ready, sum(counts), 2000, "2 regions", regions,
+                              phase="ready" if ready else "download", unit="regions", paired=True,
+                              current_regions=(current,) if current else (),
+                              note="All selected regions are ready." if ready else "Maps download one region at a time.")
+      shot("paired-" + name, prefix="valhalla5")
     source.state = Progress(False, 0, 0, "")
     window.dismiss()
     from openpilot.selfdrive.ui.tandem.settings.device_sections import confirm, DELETE_MAPS_MESSAGE

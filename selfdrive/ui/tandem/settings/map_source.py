@@ -124,6 +124,19 @@ class CombinedMaps:
       return replace(road, phase="", unit="files")  # local clear stays in the selector, like the existing Remove action
     if job.get("phase") == "cancelled":
       return replace(road, phase="road" if road.active else "", unit="files")
+    if job.get("paired") and job.get("phase") in jobs.ACTIVE | {"failed", "ready"}:
+      selected = sorted(catalog.tokens(job["selection"]))
+      phase = job["phase"]
+      counters = job.get("region_progress", {})
+      regions = tuple(RegionProgress(token, counters.get(token, {}).get("done", 0), counters.get(token, {}).get("total", 1000),
+                                     phase == "ready", counters.get(token, {}).get("downloaded", False)) for token in selected)
+      note = N_("Maps download one region at a time.") if phase == "download" else \
+        N_("All selected regions are installed together.") if phase == "install" else \
+        N_("All selected regions are ready.") if phase == "ready" else ""
+      return Progress(phase in jobs.ACTIVE, job.get("done", 0), job.get("total", 0), self.selection_summary(), regions,
+                      phase=phase, unit="regions" if phase in ("prepare", "download", "failed") else "bytes",
+                      error=job.get("error", ""), paused=job.get("paused", False), note=note,
+                      current_regions=tuple(job.get("current_regions", [])), stage=job.get("stage", ""), paired=True)
     if road.active or job.get("phase") == "road":
       completed = set(job.get("regions_ready", []))
       selected = catalog.tokens(job.get("selection") or self.selection())

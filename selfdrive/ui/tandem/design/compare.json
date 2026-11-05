@@ -649,13 +649,13 @@
     {
       "mock": "valhalla4-shared-queued",
       "title": "Selected regions before progress",
-      "note": "Approved November 4; native device capture matches the layout and counters. Both selected states show 0% before bytes arrive. Shared bytes count once overall. The built screen retains the shared settings header and footer.",
+      "note": "Approved November 4; native device capture matches the layout and counters. Both selected states show 0% before bytes arrive. Shared bytes count once overall. The built screen retains the shared settings header and footer. Paired road/routing updates now use the approved valhalla5 single-bar states; this remains the routing-only reference.",
       "match": true
     },
     {
       "mock": "valhalla4-shared-download",
       "title": "Per-region download progress",
-      "note": "Approved November 4; native device capture matches the layout and counters. Each state shows its own progress through required shared packs; both are visible while downloading. The built screen retains the shared settings header and footer.",
+      "note": "Approved November 4; native device capture matches the layout and counters. Each state shows its own progress through required shared packs; both are visible while downloading. The built screen retains the shared settings header and footer. Paired road/routing updates now use the approved valhalla5 single-bar states; this remains the routing-only reference.",
       "match": true
     },
     {
@@ -673,7 +673,31 @@
     {
       "mock": "valhalla4-shared-ready",
       "title": "Both map sets ready",
-      "note": "Approved November 4; native device capture matches the layout and counters. All four steps, including Ready, and both state tiles have green checks only after verified activation. The built screen retains the shared settings header and footer.",
+      "note": "Approved November 4; native device capture matches the layout and counters. All four steps, including Ready, and both state tiles have green checks only after verified activation. The built screen retains the shared settings header and footer. Paired road/routing updates now use the approved valhalla5 single-bar states; this remains the routing-only reference.",
+      "match": true
+    },
+    {
+      "mock": "valhalla5-paired-queued",
+      "title": "Paired downloads · Starting at 0%",
+      "note": "Approved November 4. All selected regions are visible at 0%; Iowa is current. One bar averages state completion, and a state completes Download only after both map sets finish. Native device capture inspected beside the approved Chromium mock; layout, counters and wording match. The shared settings header/footer are retained.",
+      "match": true
+    },
+    {
+      "mock": "valhalla5-paired-iowa",
+      "title": "Paired downloads · Iowa",
+      "note": "Approved November 4. Iowa shows the slower of its road-file and routing-byte fractions (26% here); Illinois waits at 0%. The single overall bar is 13%. Two routing workers overlap with the current state’s road downloader. Native device capture inspected beside the approved Chromium mock; layout, counters and wording match. The shared settings header/footer are retained.",
+      "match": true
+    },
+    {
+      "mock": "valhalla5-paired-illinois",
+      "title": "Paired downloads · Illinois",
+      "note": "Approved November 4. Both Iowa downloads have finished; Illinois is current at 18%. The single overall bar is 59%. Downloaded states await shared installation before receiving green checks. Native device capture inspected beside the approved Chromium mock; layout, counters and wording match. The shared settings header/footer are retained.",
+      "match": true
+    },
+    {
+      "mock": "valhalla5-paired-ready",
+      "title": "Paired downloads · All maps ready",
+      "note": "Approved November 4. All maps ready uses the approved plain wording. All four steps and every region receive green checks after verified activation. The existing shared Install and Checking states remain unchanged. Native device capture inspected beside the approved Chromium mock; layout, counters and wording match. The shared settings header/footer are retained.",
       "match": true
     }
   ]

@@ -255,10 +255,10 @@ def prepare_many(packages, gate=lambda: None, progress=lambda done, total: None,
 
 
 def install(package: dict, gate=lambda: None, progress=lambda done, total: None, installing=lambda: None, *,
-            activate=True, pack_gate=None, activity=None):
+            activate=True, pack_gate=None, activity=None, transfer=None):
   if package.get("kind") == "dataset":
     from openpilot.starpilot.tandem.routing import datasets
-    return datasets.install(package, gate, progress, installing, pack_gate=pack_gate, activity=activity)
+    return datasets.install(package, gate, progress, installing, pack_gate=pack_gate, activity=activity, transfer=transfer)
   checks = verified.Hashes()
   ready = prepare(package, gate, progress, installing, checks=checks)
   folder = ready.folder.parent
