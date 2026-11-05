@@ -196,128 +196,128 @@ msgstr "มองหาใบหน้าของคุณ"
 msgid "Starting the camera…"
 msgstr "กำลังเริ่มกล้อง..."
 
-#: forecast.py:37
-#: forecast.py:37
+#: forecast.py:45
+#: forecast.py:45
 #: onroad/status.py:226
 msgid "Fog"
 msgstr "หมอก"
 
-#: forecast.py:38
-#: forecast.py:40
-#: forecast.py:43
+#: forecast.py:46
+#: forecast.py:48
+#: forecast.py:51
 msgid "Light rain"
 msgstr "ฝนเล็กน้อย"
 
-#: forecast.py:38
-#: forecast.py:38
+#: forecast.py:46
+#: forecast.py:46
 msgid "Drizzle"
 msgstr "ฝนปรอย"
 
-#: forecast.py:39
-#: forecast.py:39
+#: forecast.py:47
+#: forecast.py:47
 msgid "Freezing drizzle"
 msgstr "ฝนปรอยเยือกแข็ง"
 
-#: forecast.py:40
+#: forecast.py:48
 #: onroad/status.py:223
 #: settings/speed_steering.py:239
 msgid "Rain"
 msgstr "ฝน"
 
-#: forecast.py:40
-#: forecast.py:43
+#: forecast.py:48
+#: forecast.py:51
 #: onroad/status.py:224
 msgid "Heavy rain"
 msgstr "ฝนตกหนัก"
 
-#: forecast.py:41
-#: forecast.py:41
+#: forecast.py:49
+#: forecast.py:49
 msgid "Freezing rain"
 msgstr "ฝนเยือกแข็ง"
 
-#: forecast.py:42
+#: forecast.py:50
 msgid "Light snow"
 msgstr "หิมะเล็กน้อย"
 
-#: forecast.py:42
+#: forecast.py:50
 #: onroad/status.py:225
 #: settings/speed_steering.py:241
 msgid "Snow"
 msgstr "หิมะ"
 
-#: forecast.py:42
-#: forecast.py:44
+#: forecast.py:50
+#: forecast.py:52
 msgid "Heavy snow"
 msgstr "หิมะตกหนัก"
 
-#: forecast.py:42
+#: forecast.py:50
 msgid "Fine, icy snow"
 msgstr "หิมะละเอียดเป็นน้ำแข็ง"
 
-#: forecast.py:43
+#: forecast.py:51
 msgid "Rain showers"
 msgstr "ฝนเป็นช่วงๆ"
 
-#: forecast.py:44
+#: forecast.py:52
 msgid "Light snow flurries"
 msgstr "หิมะโปรยเล็กน้อย"
 
-#: forecast.py:45
+#: forecast.py:53
 msgid "Thunderstorm"
 msgstr "พายุฝนฟ้าคะนอง"
 
-#: forecast.py:45
-#: forecast.py:45
+#: forecast.py:53
+#: forecast.py:53
 msgid "Storm with hail"
 msgstr "พายุลูกเห็บ"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Sunny"
 msgstr "แดดออก"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Clear"
 msgstr "ท้องฟ้าแจ่มใส"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Mostly sunny"
 msgstr "มีแดดเป็นส่วนใหญ่"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Mostly clear"
 msgstr "ท้องฟ้าแจ่มใสเป็นส่วนใหญ่"
 
-#: forecast.py:50
-#: forecast.py:50
+#: forecast.py:58
+#: forecast.py:58
 msgid "Partly cloudy"
 msgstr "มีเมฆบางส่วน"
 
-#: forecast.py:51
-#: forecast.py:51
+#: forecast.py:59
+#: forecast.py:59
 msgid "Cloudy"
 msgstr "มีเมฆมาก"
 
-#: forecast.py:135
+#: forecast.py:182
 #, python-brace-format
 msgid "{} in {} min"
 msgstr "{}ในอีก {} นาที"
 
-#: forecast.py:136
-#: forecast.py:322
+#: forecast.py:183
+#: forecast.py:367
 #, python-brace-format
 msgid "{} until {}"
 msgstr "{}จนถึง {}"
 
-#: forecast.py:328
+#: forecast.py:373
 msgid "No rain or snow ahead"
 msgstr "ไม่มีฝนหรือหิมะข้างหน้า"
 
-#: forecast.py:324
+#: forecast.py:369
 #, python-brace-format
 msgid "{} from {}"
 msgstr "{}ตั้งแต่ {}"
 
-#: forecast.py:324
+#: forecast.py:369
 #, python-brace-format
 msgid " to {}"
 msgstr " ถึง {}"

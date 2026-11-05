@@ -196,128 +196,128 @@ msgstr "Recherche de votre visage"
 msgid "Starting the camera…"
 msgstr "Démarrage de la caméra…"
 
-#: forecast.py:37
-#: forecast.py:37
+#: forecast.py:45
+#: forecast.py:45
 #: onroad/status.py:226
 msgid "Fog"
 msgstr "Brouillard"
 
-#: forecast.py:38
-#: forecast.py:40
-#: forecast.py:43
+#: forecast.py:46
+#: forecast.py:48
+#: forecast.py:51
 msgid "Light rain"
 msgstr "Pluie faible"
 
-#: forecast.py:38
-#: forecast.py:38
+#: forecast.py:46
+#: forecast.py:46
 msgid "Drizzle"
 msgstr "Bruine"
 
-#: forecast.py:39
-#: forecast.py:39
+#: forecast.py:47
+#: forecast.py:47
 msgid "Freezing drizzle"
 msgstr "Bruine verglaçante"
 
-#: forecast.py:40
+#: forecast.py:48
 #: onroad/status.py:223
 #: settings/speed_steering.py:239
 msgid "Rain"
 msgstr "Pluie"
 
-#: forecast.py:40
-#: forecast.py:43
+#: forecast.py:48
+#: forecast.py:51
 #: onroad/status.py:224
 msgid "Heavy rain"
 msgstr "Pluie forte"
 
-#: forecast.py:41
-#: forecast.py:41
+#: forecast.py:49
+#: forecast.py:49
 msgid "Freezing rain"
 msgstr "Pluie verglaçante"
 
-#: forecast.py:42
+#: forecast.py:50
 msgid "Light snow"
 msgstr "Neige faible"
 
-#: forecast.py:42
+#: forecast.py:50
 #: onroad/status.py:225
 #: settings/speed_steering.py:241
 msgid "Snow"
 msgstr "Neige"
 
-#: forecast.py:42
-#: forecast.py:44
+#: forecast.py:50
+#: forecast.py:52
 msgid "Heavy snow"
 msgstr "Neige forte"
 
-#: forecast.py:42
+#: forecast.py:50
 msgid "Fine, icy snow"
 msgstr "Neige fine et glacée"
 
-#: forecast.py:43
+#: forecast.py:51
 msgid "Rain showers"
 msgstr "Averses"
 
-#: forecast.py:44
+#: forecast.py:52
 msgid "Light snow flurries"
 msgstr "Faibles averses de neige"
 
-#: forecast.py:45
+#: forecast.py:53
 msgid "Thunderstorm"
 msgstr "Orage"
 
-#: forecast.py:45
-#: forecast.py:45
+#: forecast.py:53
+#: forecast.py:53
 msgid "Storm with hail"
 msgstr "Orage avec grêle"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Sunny"
 msgstr "Ensoleillé"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Clear"
 msgstr "Ciel dégagé"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Mostly sunny"
 msgstr "Plutôt ensoleillé"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Mostly clear"
 msgstr "Plutôt dégagé"
 
-#: forecast.py:50
-#: forecast.py:50
+#: forecast.py:58
+#: forecast.py:58
 msgid "Partly cloudy"
 msgstr "Partiellement nuageux"
 
-#: forecast.py:51
-#: forecast.py:51
+#: forecast.py:59
+#: forecast.py:59
 msgid "Cloudy"
 msgstr "Nuageux"
 
-#: forecast.py:135
+#: forecast.py:182
 #, python-brace-format
 msgid "{} in {} min"
 msgstr "{} dans {} min"
 
-#: forecast.py:136
-#: forecast.py:322
+#: forecast.py:183
+#: forecast.py:367
 #, python-brace-format
 msgid "{} until {}"
 msgstr "{} jusqu'à {}"
 
-#: forecast.py:328
+#: forecast.py:373
 msgid "No rain or snow ahead"
 msgstr "Pas de pluie ni de neige en vue"
 
-#: forecast.py:324
+#: forecast.py:369
 #, python-brace-format
 msgid "{} from {}"
 msgstr "{} à partir de {}"
 
-#: forecast.py:324
+#: forecast.py:369
 #, python-brace-format
 msgid " to {}"
 msgstr " à {}"
