@@ -42,6 +42,11 @@ class RegionProgress:
   done: int
   total: int
   ready: bool | None = None
+  downloaded: bool = False
+
+  @property
+  def fraction(self) -> float:
+    return max(0.0, min(1.0, self.done / self.total if self.total else float(self.downloaded)))
 
   @property
   def code(self) -> str:
@@ -75,12 +80,17 @@ class Progress:
   paused: bool = False
   note: str = ""
   current_regions: tuple[str, ...] = ()
+  stage: str = ""
 
   @property
   def fraction(self) -> float:
-    if self.phase in ("install", "ready"):
+    if self.phase == "ready":
       return 1.0
-    return self.done / self.total if self.total else 0.0
+    value = max(0.0, self.done / self.total if self.total else 0.0)
+    return min(.99 if self.phase == "install" else 1.0, value)
+
+  def step_complete(self, index: int) -> bool:
+    return index < self.step or self.phase == "ready"
 
   @property
   def step(self) -> int:
@@ -95,9 +105,10 @@ class Progress:
 
   @property
   def current(self) -> RegionProgress | None:
-    if self.current_regions:
-      return next((r for r in self.regions if r.location in self.current_regions and not r.finished), None)
-    return next((r for r in self.regions if not r.finished), None)
+    pending = [r for r in self.regions if not r.finished and (not self.current_regions or r.location in self.current_regions)]
+    if self.phase in ("download", "road", ""):
+      return next((r for r in pending if r.fraction < 1), next(iter(pending), None))
+    return next(iter(pending), None)
 
 
 class MapsSource(Protocol):
@@ -550,13 +561,18 @@ class DownloadView(Component):
     self._dismissed = False
     self._bar = self._child(ProgressBar(lambda: maps.source.progress().fraction))
     self._started: tuple[float, int] | None = None
+    self._counter = None
 
   def _update_state(self):
     progress = self._maps.source.progress()
-    if progress.active and progress.total and self._started is None:
-      self._started = (rl.get_time(), progress.done)
-    elif not progress.active:
+    counter = (progress.phase, progress.unit, progress.total)
+    transfer = progress.active and progress.phase not in ("prepare", "install") and not progress.paused
+    if transfer and progress.total:
+      if self._started is None or counter != self._counter or progress.done < self._started[1]:
+        self._started = (rl.get_time(), progress.done)
+    else:
       self._started = None
+    self._counter = counter
 
   def _render(self, rect: rl.Rectangle):
     from openpilot.selfdrive.ui.tandem.settings.pages import body_rect
@@ -571,7 +587,10 @@ class DownloadView(Component):
     title, line = column(place(words, words.width, T.px(60)), [T.px(34), FILL], T.px(2))
     what = self._maps.source.selection_summary().removesuffix(" selected")   # "13 regions", "Whole U.S. (56 states)"
     heading = t_("{} download stopped", what) if progress.error else t_("{} maps ready", what) if progress.phase == "ready" else \
-      t_("Preparing {} maps", what) if progress.phase == "prepare" else t_("Downloading {}", what)
+      t_("Preparing {} maps", what) if progress.phase == "prepare" else t_("Installing {}", what) if progress.phase == "install" else \
+      t_("Downloading {}", what)
+    if progress.phase == "ready" and len(progress.regions) > 1:
+      heading = t_("{} ready", what)
     draw.text(title, heading, T.font_px(26), T.TEXT, T.FONT_EXTRABOLD)
     explanation = N_("You can leave this screen. It keeps going in the background.")
     if progress.error:
@@ -588,7 +607,8 @@ class DownloadView(Component):
     pw = draw.text(figure, pct, T.font_px(44), T.TEXT, T.FONT_EXTRABOLD)
     left = minutes_left(self._started, rl.get_time(), progress.done, progress.total)
     if progress.phase == "install":
-      detail = N_("Download complete · Installing maps")
+      detail = N_("Download complete · Building maps") if progress.stage == "build" else \
+        N_("Download complete · Checking maps") if progress.stage == "check" else N_("Download complete · Installing maps")
     elif progress.phase == "ready":
       detail = N_("Both map sets ready")
     elif progress.unit == "bytes" and progress.total:
@@ -602,7 +622,7 @@ class DownloadView(Component):
     draw.text(inset(figure, left=pw + T.px(16)), detail, T.font_px(17), T.TEXT_SECONDARY)
     self._bar.render(bar)
     for i, (name, cell) in enumerate(zip(STEPS, row(steps, [FILL] * len(STEPS), T.px(12)), strict=True)):
-      done, now = i < progress.step, i == progress.step
+      done, now = progress.step_complete(i), i == progress.step
       ink = T.SUCCESS_TEXT if done else (T.TEXT if now else T.TEXT_MUTED)
       mark = rl.Rectangle(cell.x, cell.y, T.px(18), cell.height)
       if done:
@@ -631,7 +651,7 @@ class DownloadView(Component):
       draw.text(tile, t_("+{} more", more), T.font_px(15), T.TEXT_TERTIARY, T.FONT_SEMIBOLD, Align.CENTER)
     for i, region in enumerate(regions[start:end]):
       tile = cell(i)
-      is_current = region is current
+      is_current = not region.finished and (region is current or region.location in progress.current_regions)
       if region.finished:
         draw.fill(tile, T.SUCCESS_SURFACE, T.px(12))
         label, ink = region.code, T.SUCCESS_CHIP_TEXT
@@ -643,8 +663,8 @@ class DownloadView(Component):
         draw.fill(tile, T.SURFACE_4, T.px(12))
         label, ink = region.code, T.TEXT_TERTIARY
       extra = ""
-      if is_current and region.total and not progress.error:
-        extra = f"{round(region.done * 100 / region.total)}%"
+      if not region.finished and not progress.error:
+        extra = f"{round((progress.fraction if progress.phase == 'install' else region.fraction) * 100)}%"
       lw = draw.text_width(label, T.font_px(17), T.FONT_BOLD)
       ew = draw.text_width(extra, T.font_px(13), T.FONT_BOLD) + T.px(8) if extra else 0
       cw = T.px(22) if region.finished else 0
@@ -656,6 +676,8 @@ class DownloadView(Component):
         draw.text(rl.Rectangle(x + cw + lw + T.px(8), tile.y, ew, tile.height), extra, T.font_px(13), T.ACCENT_TEXT, T.FONT_BOLD)
     draw.icon(rl.Rectangle(note.x, note.y, T.px(18), note.height), "info", T.ACCENT_TEXT, T.px(18))
     message = N_("Paused. Downloads continue when parked on Wi-Fi.") if progress.paused else DOWNLOAD_NOTE
+    if progress.phase == "ready":
+      message = N_("Both map sets are ready. Existing saved places stay saved.")
     if progress.error:
       from openpilot.selfdrive.ui.tandem.routing_status import status_text
       message = status_text(progress.error)

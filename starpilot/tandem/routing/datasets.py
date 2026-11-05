@@ -79,7 +79,7 @@ def _cached_bytes(part):
   return min(part["bytes"], present)
 
 
-def install(package, gate=lambda: None, progress=lambda done, total: None, installing=lambda: None, *, pack_gate=None):
+def install(package, gate=lambda: None, progress=lambda done, total: None, installing=lambda: None, *, pack_gate=None, activity=None):
   C.require_parked()
   C.root().mkdir(parents=True, exist_ok=True)
   with (C.root() / "dataset-update.lock").open("a") as lock:
@@ -95,10 +95,10 @@ def install(package, gate=lambda: None, progress=lambda done, total: None, insta
     for abandoned in staging.glob("tmp*"):
       if abandoned.is_dir() and not abandoned.is_symlink():
         shutil.rmtree(abandoned)
-    return _install(package, gate, progress, installing, pack_gate=pack_gate)
+    return _install(package, gate, progress, installing, pack_gate=pack_gate, activity=activity)
 
 
-def _install(package, gate, progress, installing, *, pack_gate):
+def _install(package, gate, progress, installing, *, pack_gate, activity):
   C.require_parked()
   dataset, selected = package["dataset"], set(package["regions"])
   if not selected:
@@ -115,7 +115,12 @@ def _install(package, gate, progress, installing, *, pack_gate):
   previous = base(dataset)
   if previous is not None:
     try:
-      previous = B.verify(previous.folder, gate)  # full physical checks before reuse, outside startup
+      kwargs = {}
+      if activity is not None and previous.id == package["id"]:
+        size = sum(r["bytes"] for r in previous.manifest["files"].values())
+        activity(phase="install", stage="check", done=0, total=size)
+        kwargs["physical_progress"] = lambda n, total: activity(phase="install", stage="check", done=n, total=total)
+      previous = B.verify(previous.folder, gate, **kwargs)  # full checks before reuse, outside startup
     except C.RoutingError as error:
       if error.code != "data_incompatible":
         raise
@@ -134,7 +139,16 @@ def _install(package, gate, progress, installing, *, pack_gate):
   old_rows = _checked_index(previous, dataset) if previous else []
   rows = {row["path"]: row for row in old_rows if row["part"] in required}
   sources = {}
-  incoming_parts = downloads.prepare_many(package["missing"], gate, progress)
+  def report_parts(counts):
+    missing = {part["id"]: part["bytes"] for part in package["missing"]}
+    regions = {}
+    for region in sorted(selected):
+      needed = set(dataset["regions"][region]["parts"]) & missing.keys()
+      done, total = sum(counts.get(part, 0) for part in needed), sum(missing[part] for part in needed)
+      regions[region] = {"done": done, "total": total, "downloaded": done >= total}
+    activity(phase="download", stage="", done=sum(counts.values()), total=package["bytes"], region_progress=regions)
+  kwargs = {"parts_progress": report_parts} if activity is not None else {}
+  incoming_parts = downloads.prepare_many(package["missing"], gate, progress, **kwargs)
   for part, incoming in zip(package["missing"], incoming_parts, strict=True):
     gate()
     if (incoming.manifest.get("kind") != "tile-part" or incoming.manifest["dataset"]["sha256"] != dataset["sha256"]
@@ -154,6 +168,8 @@ def _install(package, gate, progress, installing, *, pack_gate):
   if free < _replacement_reserve(dataset, required):
     raise C.RoutingError("no_space")
   installing()
+  if activity is not None:
+    activity(phase="install", stage="build", done=0, total=2 * length)
   check = pack_gate or gate
   staging = C.root() / "downloads" / "assembled"
   staging.mkdir(parents=True, exist_ok=True)
@@ -182,8 +198,11 @@ def _install(package, gate, progress, installing, *, pack_gate):
           if path is None:
             raise C.RoutingError("data_incompatible")
           yield from T.file_chunks(path, original["offset"], original["bytes"])
-        logical = images.pack_stream(T.stream(indexed, read, check), length, ready / "tiles.squashfs", check)
+        kwargs = {"progress": lambda n, _total: activity(phase="install", stage="build", done=n, total=2 * length)} if activity else {}
+        logical = images.pack_stream(T.stream(indexed, read, check), length, ready / "tiles.squashfs", check, **kwargs)
     check()
+    if activity is not None:
+      activity(phase="install", stage="check", done=length, total=2 * length)
     C.atomic_json(ready / "tiles.json", {"schema": 1, "dataset": dataset["sha256"], "tiles": indexed})
     # Set final permissions before hashing, so identity-bound evidence remains
     # valid through acceptance. No ctime changes are excused by the cache.
@@ -202,7 +221,8 @@ def _install(package, gate, progress, installing, *, pack_gate):
     if dataset.get("sources"):
       manifest["sources"] = dataset["sources"]
     C.atomic_json(ready / "manifest.json", manifest)
-    bundle = B.install(ready, consume=True, gate=check, checks=checks)
+    kwargs = {"logical_progress": lambda n, _total: activity(phase="install", stage="check", done=length + n, total=2 * length)} if activity else {}
+    bundle = B.install(ready, consume=True, gate=check, checks=checks, **kwargs)
     check()
     B.activate(bundle.id)
   # Completed parts are only a resumable download cache. Their tiles now live

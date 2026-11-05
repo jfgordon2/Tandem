@@ -16,8 +16,11 @@ from openpilot.starpilot.tandem.routing import config as C, images, verified
 ID = re.compile(r"[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}\Z")
 
 
-def digest(path: Path, gate=lambda: None) -> str:
+def digest(path: Path, gate=lambda: None, *, progress=None) -> str:
   checksum = hashlib.sha256()
+  done, total = 0, path.stat().st_size if progress is not None else 0
+  if progress is not None:
+    progress(0, total)
   with path.open("rb") as stream:
     while True:
       gate()
@@ -25,6 +28,9 @@ def digest(path: Path, gate=lambda: None) -> str:
       if not chunk:
         break
       checksum.update(chunk)
+      done += len(chunk)
+      if progress is not None:
+        progress(done, total)
   return checksum.hexdigest()
 
 
@@ -95,12 +101,14 @@ class Bundle:
     return south <= lat <= north and west <= lon <= east
 
 
-def load(folder: Path, verify: bool = False, gate=lambda: None, *, logical=True, checks=None) -> Bundle:
+def load(folder: Path, verify: bool = False, gate=lambda: None, *, logical=True, checks=None,
+         logical_progress=None, physical_progress=None) -> Bundle:
   try:
     manifest_path = folder / "manifest.json"
     if folder.is_symlink() or manifest_path.is_symlink():
       raise C.RoutingError("data_incompatible")
     data = validate_manifest(json.loads(manifest_path.read_text()))
+    done, total = 0, sum(r["bytes"] for r in data["files"].values())
     for name, record in data["files"].items():
       if not ID.fullmatch(name) or not re.fullmatch(r"[0-9a-f]{64}", record["sha256"]):
         raise C.RoutingError("data_incompatible")
@@ -109,10 +117,16 @@ def load(folder: Path, verify: bool = False, gate=lambda: None, *, logical=True,
         raise C.RoutingError("data_incompatible")
       if path.is_symlink() or not path.is_file() or path.stat().st_size != record["bytes"]:
         raise C.RoutingError("data_incompatible")
-      if verify and (checks.digest(path, gate) if checks else digest(path, gate)) != record["sha256"]:
-        raise C.RoutingError("data_incompatible")
+      if verify:
+        report = (lambda n, _total, baseline=done: physical_progress(baseline + n, total)) if physical_progress else None
+        value = checks.digest(path, gate) if checks else digest(path, gate, **({"progress": report} if report else {}))
+        if value != record["sha256"]:
+          raise C.RoutingError("data_incompatible")
+        done += record["bytes"]
+        if physical_progress is not None:
+          physical_progress(done, total)
     if verify and logical and data["schema"] in (3, 4):
-      images.verify_graph(folder, data, gate)
+      images.verify_graph(folder, data, gate, **({"progress": logical_progress} if logical_progress is not None else {}))
     return Bundle(folder, data, digest(manifest_path, gate))
   except (OSError, ValueError, KeyError, TypeError):
     raise C.RoutingError("data_incompatible") from None
@@ -148,7 +162,7 @@ def routing_bundles() -> list[Bundle]:
   return [bundle for bundle in present if bundle.manifest.get("kind") != "state-set"]
 
 
-def verify(folder: Path, gate=lambda: None, *, checks=None) -> Bundle:
+def verify(folder: Path, gate=lambda: None, *, checks=None, logical_progress=None, physical_progress=None) -> Bundle:
   """Explicit full check; never invoked by the route worker's startup path."""
   C.require_parked()
   bundle = load(folder)
@@ -158,7 +172,8 @@ def verify(folder: Path, gate=lambda: None, *, checks=None) -> Bundle:
       path.chmod(path.stat().st_mode & ~0o222)
   before = verified.files(bundle)
   try:
-    checked = load(folder, verify=True, gate=gate, logical=not bool(verified.read(bundle)), checks=checks)
+    checked = load(folder, verify=True, gate=gate, logical=not bool(verified.read(bundle)), checks=checks,
+                   logical_progress=logical_progress, physical_progress=physical_progress)
     if checked.generation != bundle.generation:
       raise C.RoutingError("data_incompatible")
     for name in (*checked.manifest["files"], "manifest.json"):
@@ -262,9 +277,9 @@ def activate(bundle_id: str) -> Bundle:
   return bundle
 
 
-def install(source: Path, *, consume=False, gate=lambda: None, checks=None) -> Bundle:
+def install(source: Path, *, consume=False, gate=lambda: None, checks=None, logical_progress=None) -> Bundle:
   C.require_parked()
-  bundle = verify(source, gate, checks=checks)
+  bundle = verify(source, gate, checks=checks, logical_progress=logical_progress)
   if consume and not source.resolve().is_relative_to((C.root() / "downloads").resolve()):
     raise C.RoutingError("invalid_request")
   target = C.root() / "bundles" / bundle.id

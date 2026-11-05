@@ -250,7 +250,7 @@ def staged_reader(bundle):
         _unmount_point(mount_path(bundle))
 
 
-def pack_stream(chunks, size: int, image: Path, gate=lambda: None):
+def pack_stream(chunks, size: int, image: Path, gate=lambda: None, *, progress=None):
   """Wrap a streamed native tar in SquashFS; never materialize an expanded file."""
   import tarfile
   from openpilot.starpilot.tandem.routing import tiles
@@ -262,6 +262,9 @@ def pack_stream(chunks, size: int, image: Path, gate=lambda: None):
   command = [tool, "-", str(image.resolve()), "-tar", "-comp", "gzip", "-Xcompression-level", "6", "-b", "131072",
              "-processors", "2", "-mem", "64M", "-noappend", "-no-xattrs", "-no-progress", "-mkfs-time", "0", "-all-time", "0"]
   count, digest = 0, hashlib.sha256()
+  sent = 0
+  if progress is not None:
+    progress(0, size)
   def outer():
     nonlocal count
     yield info.tobuf(format=tarfile.GNU_FORMAT)
@@ -295,6 +298,9 @@ def pack_stream(chunks, size: int, image: Path, gate=lambda: None):
                   deadline = time.monotonic() + 300
                 except BlockingIOError:
                   pass
+            sent += len(block)
+            if progress is not None:
+              progress(min(size, max(0, sent - 512)), size)
         process.stdin.close()
         while process.poll() is None:
           gate()
@@ -322,7 +328,7 @@ def pack_stream(chunks, size: int, image: Path, gate=lambda: None):
   return {"bytes": count, "sha256": digest.hexdigest()}
 
 
-def verify_graph(folder: Path, manifest: dict, gate=lambda: None) -> None:
+def verify_graph(folder: Path, manifest: dict, gate=lambda: None, *, progress=None) -> None:
   """Stream the logical graph once at acceptance, with bounded decoder queues."""
   graph = manifest["graph"]
   tool = shutil.which("unsquashfs")
@@ -331,6 +337,8 @@ def verify_graph(folder: Path, manifest: dict, gate=lambda: None) -> None:
   command = [tool, "-cat", "-no-progress", "-processors", "1", *_queue_options(tool),
              str((folder / graph["file"]).resolve()), "tiles.tar"]
   count, digest = 0, hashlib.sha256()
+  if progress is not None:
+    progress(0, graph["bytes"])
   with subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL) as process:
     try:
       deadline = time.monotonic() + 300
@@ -351,6 +359,8 @@ def verify_graph(folder: Path, manifest: dict, gate=lambda: None) -> None:
           if count > graph["bytes"]:
             raise C.RoutingError("data_incompatible")
           digest.update(block)
+          if progress is not None:
+            progress(count, graph["bytes"])
       if process.wait(timeout=10) or count != graph["bytes"] or digest.hexdigest() != graph["sha256"]:
         raise C.RoutingError("data_incompatible")
     finally:

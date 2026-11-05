@@ -187,9 +187,12 @@ def prepare(package: dict, gate=lambda: None, progress=lambda done, total: None,
   return result
 
 
-def prepare_many(packages, gate=lambda: None, progress=lambda done, total: None):
+def prepare_many(packages, gate=lambda: None, progress=lambda done, total: None, *, parts_progress=None):
   """Two bounded transfers; the owner alone gates, publishes and verifies."""
   if not packages:
+    progress(0, 0)
+    if parts_progress is not None:
+      parts_progress({})
     return []
   if len({part["sha256"] for part in packages}) != len(packages):
     raise C.RoutingError("invalid_request")
@@ -204,10 +207,12 @@ def prepare_many(packages, gate=lambda: None, progress=lambda done, total: None)
     gate()
     permitted.set()
     with mutex:
-      done = sum(counts)
-    if done != reported:
-      progress(done, total)
-      reported = done
+      snapshot = tuple(counts)
+    if snapshot != reported:
+      progress(sum(snapshot), total)
+      if parts_progress is not None:
+        parts_progress({part["id"]: done for part, done in zip(packages, snapshot, strict=True)})
+      reported = snapshot
   def worker_gate():
     while not stopped.is_set():
       if permitted.wait(.1):
@@ -249,10 +254,11 @@ def prepare_many(packages, gate=lambda: None, progress=lambda done, total: None)
     executor.shutdown(wait=True, cancel_futures=True)
 
 
-def install(package: dict, gate=lambda: None, progress=lambda done, total: None, installing=lambda: None, *, activate=True, pack_gate=None):
+def install(package: dict, gate=lambda: None, progress=lambda done, total: None, installing=lambda: None, *,
+            activate=True, pack_gate=None, activity=None):
   if package.get("kind") == "dataset":
     from openpilot.starpilot.tandem.routing import datasets
-    return datasets.install(package, gate, progress, installing, pack_gate=pack_gate)
+    return datasets.install(package, gate, progress, installing, pack_gate=pack_gate, activity=activity)
   checks = verified.Hashes()
   ready = prepare(package, gate, progress, installing, checks=checks)
   folder = ready.folder.parent

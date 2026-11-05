@@ -10,7 +10,7 @@ The [shared US build](docs/valhalla-us-states.md) adds exact state selections: U
 
 State updates use two transfer workers and two gzip compression threads, with operation-local checksum reuse and independent logical acceptance. Gzip level 6, 128 KiB blocks and the 64 MiB compressor setting remain. See [update speed and verification](docs/valhalla-update-speed.md) for host measurements and pending device checks. This changes no screens or upstream hooks.
 
-The [shared-state progress review](docs/valhalla-map-progress.md) records the proposed progress screens, still awaiting owner approval, and the device-tested fix for idle cleanup racing with installation. The install/check mocks use the owner's fixed-length wording, “All selected regions are installed together.”
+The [shared-state progress review](docs/valhalla-map-progress.md) records the five approved progress states and their implementation: separate region download counters, measured shared installation/checking, and a green Ready check after activation. The install/check mocks use the owner's fixed-length wording, “All selected regions are installed together.” It also records the earlier device-tested fix for idle cleanup racing with installation. New map-progress wording has marked English translation fallbacks pending translation.
 
 | Module | Contents |
 | --- | --- |
@@ -222,6 +222,8 @@ These are reached from a row or button, never as a tab:
 `upstream.py` hosts them. `StarPilotPage` opens one StarPilot panel directly, without going through StarPilot's own hub.
 
 ### Where the code differs from the mocks
+
+- **Map updates:** the approved `valhalla4-shared-*` states supersede older progress mocks that showed 100% during installation or left Ready as the current step. Download and install use separate measured percentages; installation stays below 100% until verified activation. Retained regions may show 100% downloaded while awaiting the shared installation. Native captures and comparison notes are recorded in the progress review.
 
 - **Shared US state selection, approved revision 3:** `valhalla3-regions-update` and `valhalla3-regions-empty` were approved before the selector behavior changed. They preserve the existing pane layout and Update action. As with revision 2, built screens keep the shared settings footer and inline page header. An empty local clear remains in the selector. Readiness beyond the measured pilot is illustrative in sample captures. Native desktop captures are compared at `tools/out/us-state-native-compare/index.html`; per-state routing removal preserves road data because upstream mapd has no per-state deletion interface. The two-state connected-bundle limitation described in the historical revision 2 note below is replaced by shared packs for compatible schema 2 datasets.
 

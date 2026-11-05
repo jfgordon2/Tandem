@@ -46,6 +46,12 @@ class CombinedMaps:
       return
     self._updated = time.monotonic()
     self.job = jobs.read()
+    pending = jobs.read("map-request.json")
+    if pending.get("id") and pending["id"] != self.job.get("id"):
+      # The demand-driven broker may still be starting. Never show an old
+      # Ready result while this newly queued update is waiting for its worker.
+      self.job = {**pending, "phase": "road" if pending.get("wait_for_road") else "prepare",
+                  "done": 0, "total": 0, "regions_ready": [], "current_regions": []}
     self.catalog = catalog.load()
     self._plans.clear()
     self.route_ready = catalog.ready_regions()
@@ -120,7 +126,11 @@ class CombinedMaps:
       return replace(road, phase="road" if road.active else "", unit="files")
     if road.active or job.get("phase") == "road":
       completed = set(job.get("regions_ready", []))
-      regions = tuple(replace(r, ready=r.finished and r.location in completed) for r in road.regions)
+      selected = catalog.tokens(job.get("selection") or self.selection())
+      by_region = {r.location: r for r in road.regions}
+      regions = tuple(replace(by_region.get(token, RegionProgress(token, 0, 0)),
+                              ready=token in completed and bool(by_region.get(token) and by_region[token].finished))
+                      for token in sorted(selected | by_region.keys()))
       return replace(road, active=road.active or job.get("phase") == "road", regions=regions, phase="road", unit="files")
     if job.get("phase") not in jobs.ACTIVE | {"failed", "ready"}:
       return road
@@ -129,12 +139,19 @@ class CombinedMaps:
     phase = job["phase"]
     current = set(job.get("current_regions", []))
     ready = set(job.get("regions_ready", []))
-    regions = tuple(RegionProgress(t, done if t in current else 0, total if t in current else 0,
-                                   t in ready or (phase == "ready" and t in self.route_ready)) for t in sorted(selected))
+    counters = job.get("region_progress", {})
+    regions = tuple(RegionProgress(t, counters.get(t, {}).get("done", done if t in current else 0),
+                                   counters.get(t, {}).get("total", total if t in current else 0),
+                                   t in ready or (phase == "ready" and t in self.route_ready),
+                                   counters.get(t, {}).get("downloaded", False)) for t in sorted(selected))
+    note = N_("Road data ready; offline routes downloading.") if phase == "download" else ""
+    if self.catalog["schema"] == 2 and len(selected) > 1:
+      note = N_("Some map data is shared between these states.") if phase == "download" else \
+        N_("All selected regions are installed together.") if phase == "install" else \
+        N_("Road data and offline routes are ready.") if phase == "ready" else ""
     return Progress(phase in jobs.ACTIVE, done, total, self.selection_summary(), regions,
                     phase=phase, unit="bytes", error=job.get("error", ""), paused=job.get("paused", False),
-                    note=N_("Road data ready; offline routes downloading.") if phase == "download" else "",
-                    current_regions=tuple(current))
+                    note=note, current_regions=tuple(current), stage=job.get("stage", ""))
 
   def download(self):
     selected = catalog.tokens(self.selection())

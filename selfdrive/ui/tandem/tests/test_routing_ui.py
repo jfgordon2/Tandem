@@ -129,12 +129,21 @@ def test_routing_keeps_ram_at_lowest_priority():
   assert {c.key for c, _ in stack.update(state, 100, False)} == {"pause_button", "routing"}
 
 
-def test_local_rebuild_keeps_approved_install_progress_without_marking_routes_ready():
+def test_local_rebuild_measures_installation_and_never_marks_it_ready_early():
   from openpilot.selfdrive.ui.tandem.settings.maps import Progress, RegionProgress
   region = RegionProgress("us_state.IA", 0, 0, False)
   progress = Progress(True, 0, 0, "Iowa", (region,), phase="install", unit="bytes", current_regions=(region.location,))
-  assert progress.fraction == 1 and progress.step == 2 and progress.active
+  assert progress.fraction == 0 and progress.step == 2 and progress.active
   assert progress.current is region and not region.finished
+  from dataclasses import replace
+  building = replace(progress, done=38, total=100, stage="build")
+  assert building.fraction == .38 and not building.regions[0].finished
+  assert [building.step_complete(i) for i in range(4)] == [True, True, False, False]
+  checking = replace(building, done=94, stage="check")
+  assert checking.fraction == .94
+  assert replace(checking, done=100).fraction == .99  # activation remains
+  ready = replace(checking, active=False, phase="ready", regions=(replace(region, ready=True),))
+  assert ready.fraction == 1 and ready.regions[0].finished and all(ready.step_complete(i) for i in range(4))
 
 
 def test_shared_maps_adds_missing_routes_without_redownloading_roads():

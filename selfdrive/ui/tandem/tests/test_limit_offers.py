@@ -144,7 +144,7 @@ def test_ram_snapshot_is_recorded_even_while_the_hud_is_hidden(limit_view):
   view._draw_hud_controls = False
   view._navigating = lambda: False
   state.sm.valid.update(selfdriveState=True, deviceState=True)
-  state.sm["selfdriveState"] = SimpleNamespace(alertType="lowMemory/normal")
+  state.sm["selfdriveState"] = SimpleNamespace(alertType="lowMemory/normal", alertSize="small")
   state.sm["deviceState"] = SimpleNamespace(memoryUsagePercent=91)
   view._render_layers()
   assert view._ram.on and not view._layers_visible

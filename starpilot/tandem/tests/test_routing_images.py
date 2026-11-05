@@ -291,10 +291,23 @@ with tarfile.open(fileobj=sys.stdin.buffer,mode='r|') as archive:
   monkeypatch.setattr(images.shutil, "which", lambda _: str(script))
   payload = b"native graph tile" * 65536
   output = tmp_path / "tiles.squashfs"
-  result = images.pack_stream((payload[n:n+65536] for n in range(0, len(payload), 65536)), len(payload), output)
+  progress = []
+  result = images.pack_stream((payload[n:n+65536] for n in range(0, len(payload), 65536)), len(payload), output,
+                             progress=lambda done, total: progress.append((done, total)))
   assert output.read_bytes() == payload
   assert result == {"bytes": len(payload), "sha256": hashlib.sha256(payload).hexdigest()}
   assert not (tmp_path / "tiles.tar").exists()
+  assert progress[0] == (0, len(payload)) and progress[-1] == (len(payload), len(payload))
+  assert [done for done, _ in progress] == sorted(done for done, _ in progress)
+  assert any(0 < done < total for done, total in progress)
+
+
+def test_acceptance_reports_logical_bytes_without_an_extra_decode(decoder, tmp_path):
+  source, logical = make_image(tmp_path / "source")
+  progress = []
+  bundles.install(source.folder, logical_progress=lambda done, total: progress.append((done, total)))
+  assert progress[0] == (0, len(logical)) and progress[-1] == (len(logical), len(logical))
+  assert decoder.log.read_text().splitlines() == ["decode", "decode"]  # source acceptance, then the existing copy acceptance
 
 
 def test_cancelled_stream_terminates_compressor_even_when_its_pipe_is_full(tmp_path, monkeypatch):

@@ -88,12 +88,13 @@ class Manager:
     self._write_at = 0.0
     self._audit_after = 0.0
 
-  def publish(self, **values):
+  def publish(self, *, force=False, **values):
+    transition = any(k in values and values[k] != self.state.get(k) for k in ("phase", "stage", "error", "paused"))
     self.state.update(values)
     now = time.monotonic()
     # Byte progress is hot; persist no more than five times per second except
     # transitions. The job survives UI closure and manager/device restart.
-    if now - self._write_at >= .2 or any(k in values for k in ("phase", "error", "paused")):
+    if force or now - self._write_at >= .2 or transition:
       C.atomic_json(C.root() / "map-job.json", {**self.state, "updated": now})
       self._write_at = now
 
@@ -161,7 +162,7 @@ class Manager:
     road_ready = previous.get("id") == pending["id"] and previous.get("road_ready", False)
     self.state = {**pending, "phase": "road" if pending.get("wait_for_road") else "prepare", "done": 0, "total": 0,
                   "regions_ready": [], "current_regions": [], "error": "", "paused": False}
-    self.publish(phase=self.state["phase"])
+    self.publish(phase=self.state["phase"], force=True)
     try:
       if pending.get("wait_for_road") and not road_ready:
         end = time.monotonic() + 180  # fail explicitly if mapd never starts
@@ -195,9 +196,9 @@ class Manager:
           self.publish(regions_ready=sorted(set(self.state["regions_ready"]) | set(package["regions"])))
           continue
         self.publish(phase="download", done=0, total=package["bytes"], current_regions=package["regions"])
-        kwargs = {"pack_gate": self.assembly_gate} if package.get("kind") == "dataset" else {}
+        kwargs = {"pack_gate": self.assembly_gate, "activity": self.publish} if package.get("kind") == "dataset" else {}
         installed = self.installer(package, gate=self.gate, progress=lambda done, total: self.publish(done=done, total=total),
-                                   installing=lambda: self.publish(phase="install"), **kwargs)
+                                   installing=lambda: self.publish(phase="install", stage="", done=0, total=0), **kwargs)
         if installed is not None:
           # Keep one previous compatible graph for recovery; do not accumulate
           # a full extra graph on every Weekly/Monthly update.

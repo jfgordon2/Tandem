@@ -29,7 +29,8 @@ class SampleMaps(FakeMaps):
     ]
 
   def selection_summary(self):
-    return "Midwest" if "pkg:midwest" in self.picked else "Liechtenstein" if "nation.LI" in self.picked else "Iowa"
+    return "Midwest" if "pkg:midwest" in self.picked else "Liechtenstein" if "nation.LI" in self.picked else \
+      "2 regions" if len(self.picked) == 2 else "Iowa"
 
   def status(self):
     return "All maps ready · Updated today"
@@ -163,6 +164,19 @@ def main(frame, save, out, tap, gui_app):
     source.state = Progress(True, 0, 0, "Iowa", (RegionProgress("us_state.IA", 0, 0, False),),
                             phase="install", unit="bytes", current_regions=("us_state.IA",))
     shot("local-rebuild", prefix="valhalla3")
+    source.picked = {"us_state.IA", "us_state.IL"}
+    for name, phase, stage, pct in (("queued", "download", "", 0), ("download", "download", "", 42),
+                                   ("install", "install", "build", 38), ("check", "install", "check", 94),
+                                   ("ready", "ready", "", 100)):
+      total = 345 * 1024**2
+      region_counts = (64, 35) if name == "download" else (pct, pct)
+      regions = tuple(RegionProgress(token, count, 100, phase == "ready")
+                      for token, count in zip(sorted(source.picked), region_counts, strict=True))
+      note = "Some map data is shared between these states." if phase == "download" else \
+        "All selected regions are installed together." if phase == "install" else "Road data and offline routes are ready."
+      source.state = Progress(phase != "ready", round(total * pct / 100), total, "2 regions", regions, phase=phase, unit="bytes",
+                              note=note, current_regions=tuple(sorted(source.picked)), stage=stage)
+      shot("shared-" + name, prefix="valhalla4")
     source.state = Progress(False, 0, 0, "")
     window.dismiss()
     from openpilot.selfdrive.ui.tandem.settings.device_sections import confirm, DELETE_MAPS_MESSAGE

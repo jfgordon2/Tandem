@@ -41,7 +41,7 @@ def shared(monkeypatch, tmp_path, request):
   # Geometry is a builder dependency, not a device/test-runtime dependency.
   monkeypatch.setitem(sys.modules, "shapely.geometry", SimpleNamespace(box=Rectangle))
   monkeypatch.setattr(states, "polygon", lambda path: Rectangle(*json.loads(path.read_text())))
-  def pack(chunks, size, image, gate=lambda: None):
+  def pack(chunks, size, image, gate=lambda: None, *, progress=None):
     digest, count = hashlib.sha256(), 0
     with image.open("wb") as target:
       target.write(b"fixture:")
@@ -50,6 +50,8 @@ def shared(monkeypatch, tmp_path, request):
         digest.update(chunk)
         count += len(chunk)
         target.write(chunk)
+        if progress is not None:
+          progress(count, size)
     assert count == size
     return {"bytes": count, "sha256": digest.hexdigest()}
   monkeypatch.setattr(images, "pack_stream", pack)
@@ -111,6 +113,56 @@ def update(selection):
   package, missing = catalog.plan(selection)
   assert not missing and len(package) == 1
   return downloads.install(package[0])
+
+
+def test_shared_progress_counts_regions_separately_and_measures_build_and_acceptance(shared):
+  reports = []
+  package = datasets.plan(shared.data["dataset"], ["us_state.IA", "us_state.IL"])
+  def activity(**values):
+    assert not (C.root() / "active.json").exists()  # no Ready result before verified activation
+    reports.append(values)
+  bundle = downloads.install(package, activity=activity)
+  transfers = [r for r in reports if r["phase"] == "download"]
+  assert set(transfers[0]["region_progress"]) == {"us_state.IA", "us_state.IL"}
+  assert all(r["done"] == 0 for r in transfers[0]["region_progress"].values())
+  final = transfers[-1]
+  assert all(r["done"] == r["total"] and r["downloaded"] for r in final["region_progress"].values())
+  assert final["done"] == final["total"] < sum(r["total"] for r in final["region_progress"].values())
+  installs = [r for r in reports if r["phase"] == "install"]
+  length = bundle.manifest["graph"]["bytes"]
+  assert installs[0] == {"phase": "install", "stage": "build", "done": 0, "total": 2 * length}
+  assert {r["stage"] for r in installs} == {"build", "check"}
+  assert [r["done"] for r in installs] == sorted(r["done"] for r in installs)
+  assert installs[-1]["done"] == installs[-1]["total"] == 2 * length
+  assert B.active().generation == bundle.generation
+
+
+def test_retained_state_needs_no_transfer_and_no_op_update_reports_real_checks(shared):
+  update("us_state.IA")
+  reports = []
+  both = datasets.plan(shared.data["dataset"], ["us_state.IA", "us_state.IL"])
+  downloads.install(both, activity=lambda **r: reports.append(r))
+  initial = next(r for r in reports if r["phase"] == "download")
+  assert initial["region_progress"]["us_state.IA"] == {"done": 0, "total": 0, "downloaded": True}
+  assert initial["region_progress"]["us_state.IL"]["total"] > 0
+  shared.requested.clear()
+  reports.clear()
+  downloads.install(both, activity=lambda **r: reports.append(r))
+  assert not shared.requested and {r["stage"] for r in reports} == {"check"}
+  assert reports[0]["done"] == 0 and reports[-1]["done"] == reports[-1]["total"] > 0
+
+
+def test_frequent_measured_progress_keeps_journal_writes_bounded(monkeypatch):
+  from openpilot.starpilot.tandem.routing import maps
+  manager = maps.Manager(None, prepare=lambda **_: None)
+  writes = []
+  monkeypatch.setattr(maps.time, "monotonic", lambda: 10.0)
+  monkeypatch.setattr(C, "atomic_json", lambda _path, value: writes.append(value))
+  for done in range(100):
+    manager.publish(phase="install", stage="build", done=done, total=200)
+  assert len(writes) == 1
+  manager.publish(phase="install", stage="check", done=100, total=200)
+  assert len(writes) == 2 and writes[-1]["stage"] == "check"
 
 
 def test_incremental_states_reuse_border_tiles_and_no_op_update_checks_full_hash(shared, monkeypatch):
@@ -515,9 +567,9 @@ def test_drive_transition_aborts_assembly_and_resumes_without_refetching_packs(s
   parked = [True]
   manager = maps.Manager(None, allowed=lambda: parked[0], prepare=lambda **_: None)
   pack = images.pack_stream
-  def start_drive(chunks, length, output, gate):
+  def start_drive(chunks, length, output, gate, **kwargs):
     parked[0] = False
-    return pack(chunks, length, output, gate)
+    return pack(chunks, length, output, gate, **kwargs)
   monkeypatch.setattr(images, "pack_stream", start_drive)
   maps.request("us_state.IA,us_state.IL")
   pending = maps.read("map-request.json")

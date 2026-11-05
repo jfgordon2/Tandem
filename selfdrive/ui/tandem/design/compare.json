@@ -536,14 +536,14 @@
     {
       "mock": "valhalla2-download-group",
       "title": "Multiple regions, familiar tiles",
-      "note": "Matches the approved progress layout in the native device capture. Keep the current seven-column region grid, completed/current/waiting colors and per-region percentage. A green region means both required map sets are installed; the top percentage describes the labelled download phase. The built screen retains the shared settings footer/page header. Time remaining appears only after a measured download rate exists.",
-      "match": true
+      "note": "Superseded by the approved valhalla4 shared-progress states: per-region transfer counters, measured installation and a completed Ready check. Matches the approved progress layout in the native device capture. Keep the current seven-column region grid, completed/current/waiting colors and per-region percentage. A green region means both required map sets are installed; the top percentage describes the labelled download phase. The built screen retains the shared settings footer/page header. Time remaining appears only after a measured download rate exists.",
+      "match": false
     },
     {
       "mock": "valhalla2-download-install",
       "title": "Install keeps the existing step",
-      "note": "Matches the approved progress layout. Keep Install as step three. Download at 100% is not Ready: the region remains current until its maps are checked and installed. The second capture applies the same approved screen to a local selection rebuild with zero new download bytes. The built screen retains the shared settings footer/page header. Time remaining appears only after a measured download rate exists.",
-      "match": true,
+      "note": "Superseded by the approved valhalla4 shared-progress states: per-region transfer counters, measured installation and a completed Ready check. Matches the approved progress layout. Keep Install as step three. Download at 100% is not Ready: the region remains current until its maps are checked and installed. The second capture applies the same approved screen to a local selection rebuild with zero new download bytes. The built screen retains the shared settings footer/page header. Time remaining appears only after a measured download rate exists.",
+      "match": false,
       "built": ["valhalla2-download-install", "valhalla3-local-rebuild"]
     },
     {
@@ -555,8 +555,8 @@
     {
       "mock": "valhalla2-download-ready",
       "title": "Ready in the same layout",
-      "note": "Matches the approved progress layout in the native device capture. Advance the existing steps to Ready and turn the region green. Done returns to Offline Maps. No new management screen is introduced. The built screen retains the shared settings footer/page header. Time remaining appears only after a measured download rate exists.",
-      "match": true
+      "note": "Superseded by the approved valhalla4 shared-progress states: per-region transfer counters, measured installation and a completed Ready check. Matches the approved progress layout in the native device capture. Advance the existing steps to Ready and turn the region green. Done returns to Offline Maps. No new management screen is introduced. The built screen retains the shared settings footer/page header. Time remaining appears only after a measured download rate exists.",
+      "match": false
     },
     {
       "mock": "valhalla2-remove-region",
@@ -645,6 +645,36 @@
       "title": "Shared US build · Clear the routing selection",
       "note": "Approved empty selection. Update remains available while routes are installed and clears offline routing data. Existing road-map data remains. The built screen retains the existing shared settings footer; local clear returns to the selector rather than showing download progress.",
       "match": false
+    },
+    {
+      "mock": "valhalla4-shared-queued",
+      "title": "Selected regions before progress",
+      "note": "Approved November 4; native device capture matches the layout and counters. Both selected states show 0% before bytes arrive. Shared bytes count once overall. The built screen retains the shared settings header and footer.",
+      "match": true
+    },
+    {
+      "mock": "valhalla4-shared-download",
+      "title": "Per-region download progress",
+      "note": "Approved November 4; native device capture matches the layout and counters. Each state shows its own progress through required shared packs; both are visible while downloading. The built screen retains the shared settings header and footer.",
+      "match": true
+    },
+    {
+      "mock": "valhalla4-shared-install",
+      "title": "Measured shared installation",
+      "note": "Approved November 4; native device capture matches the layout and counters. Installation has its own measured counter. All selected regions are installed together and remain unready until activation. The built screen retains the shared settings header and footer.",
+      "match": true
+    },
+    {
+      "mock": "valhalla4-shared-check",
+      "title": "Measured final verification",
+      "note": "Approved November 4; native device capture matches the layout and counters. The same installation counter advances through logical graph verification. It is capped below 100% until activation. The built screen retains the shared settings header and footer.",
+      "match": true
+    },
+    {
+      "mock": "valhalla4-shared-ready",
+      "title": "Both map sets ready",
+      "note": "Approved November 4; native device capture matches the layout and counters. All four steps, including Ready, and both state tiles have green checks only after verified activation. The built screen retains the shared settings header and footer.",
+      "match": true
     }
   ]
 }
