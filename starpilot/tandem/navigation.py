@@ -15,9 +15,9 @@ EMPTY_TURN = {"active": False, "maneuver": "", "modifier": ""}
 
 def controller_type(base: type[Any]) -> type[Any]:
   """StarPilot's cruise controller, recording the turn it selected; with offline routing, only from a fresh instruction."""
-  try:   # opt-in memory tracing of this process (memory_trace.py), with or without Tandem's hooks
-    from openpilot.starpilot.tandem.memory_trace import start_if_requested
-    start_if_requested()
+  try:   # the debug branch's memory trace of this process (memory_trace.py), with or without Tandem's hooks
+    from openpilot.starpilot.tandem.memory_trace import start
+    start()
   except Exception:
     pass
   if os.getenv("TANDEM_ONROAD", "1") == "0":

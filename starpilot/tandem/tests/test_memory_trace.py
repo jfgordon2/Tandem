@@ -77,30 +77,24 @@ def test_follows_onroad_and_offroad(tmp_path, tracing):
   assert calls == ["start", "step", "finish", "start"]
 
 
-def test_off_with_the_off_marker_and_never_breaks_the_planner(tmp_path, monkeypatch):
-  monkeypatch.setenv("TANDEM_PREFS_DIR", str(tmp_path))
-  monkeypatch.setattr(M, "_started", False)
-  (tmp_path / M.OFF_MARKER).touch()
-  assert not M.start_if_requested()
+def test_a_failing_trace_never_breaks_the_planner(monkeypatch):
   from openpilot.starpilot.tandem.navigation import controller_type
 
   class Base:
     pass
   monkeypatch.setenv("TANDEM_ONROAD", "0")
-  assert controller_type(Base) is Base                       # unchanged with Tandem's hooks off
-  monkeypatch.setattr(M, "start_if_requested", lambda: 1 / 0)
-  assert controller_type(Base) is Base                       # a failing diagnostic doesn't stop the planner
+  monkeypatch.setattr(M, "start", lambda: 1 / 0)
+  assert controller_type(Base) is Base                       # unchanged with Tandem's hooks off, and the error is caught
 
 
-def test_on_by_default_and_starts_once(tmp_path, monkeypatch):
-  monkeypatch.setenv("TANDEM_PREFS_DIR", str(tmp_path))
+def test_starts_once_per_process(tmp_path, monkeypatch):
   monkeypatch.setenv("TANDEM_DIAGNOSTICS_DIR", str(tmp_path / "out"))
   monkeypatch.setattr(M, "_started", False)
   runs = []
   monkeypatch.setattr(M, "run", lambda tracer: runs.append(tracer))
   was_tracing = tracemalloc.is_tracing()
   try:
-    assert M.start_if_requested() and M.start_if_requested()
+    assert M.start() and M.start()
     assert tracemalloc.is_tracing()
   finally:
     if not was_tracing:
