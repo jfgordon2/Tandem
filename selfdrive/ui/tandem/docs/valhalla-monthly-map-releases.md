@@ -16,8 +16,12 @@ date, Actions run ID and attempt, so retries never overwrite another dataset.
 GitHub schedules require the workflow on the default `release` branch. Its
 checkout remains `valhalla`; the offline-navigation implementation stays on its
 separate branch. The build records the actual builder commit in source metadata
-and its publication plan. Data-release tags point at the workflow's authorized
-trigger commit, allowing the built-in token without a workflow-write PAT.
+and its publication plan. Data-release tags use GitHub's default branch; they
+identify data, while the manifest identifies the exact builder. Creating a draft
+omits `target_commitish`, and publishing preserves its target. This avoids
+GitHub's workflow-write permission guard when `valhalla` or an older trigger
+commit has different workflow files. The built-in token needs no workflow-write
+PAT. An empty source draft tests release permissions before the large download.
 
 Manual inputs:
 
@@ -95,7 +99,10 @@ preflight checks, not a guarantee that every future US snapshot fits unchanged.
 Release tests cover full route evidence, repository/tag/manifest/size binding,
 streamed upload recovery, immutable assets, API throttling, source reclamation
 only after archival, public-download/route failure gates, and catalog rollback.
-The full hosted national-build result is recorded after its first trial.
+The first hosted trial downloaded/prepared the national input, then stopped at
+draft creation with HTTP 403 because its trigger commit had different workflows
+from the default branch. It changed no public maps. The release-target fix and
+early permission check are covered by regression tests; a full retry is pending.
 
 GitHub may disable schedules in an inactive public repository after 60 days;
 check the Actions page if an expected monthly release is absent. Retained

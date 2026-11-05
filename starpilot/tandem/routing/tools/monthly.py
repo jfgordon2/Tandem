@@ -58,8 +58,11 @@ class Stage:
     self.tags, self.releases = names(identity), []
 
   def release(self, tag, notes):
-    target = os.environ.get("GITHUB_SHA", self.commit)
-    return self.api.draft(tag, target, self.identity, notes + "\n\nBuild source: " + self.commit + "\n\n" + LICENSE)
+    return self.api.draft(tag, self.identity, notes + "\n\nBuild source: " + self.commit + "\n\n" + LICENSE)
+
+  def prepare(self):
+    # Exercise release permissions before spending time downloading/building.
+    self.release(self.tags["source"], "Reproducible source inputs for " + self.identity)
 
   def sources(self, inputs, build):
     folder = self.output / "source-assets"
@@ -177,6 +180,8 @@ def build(output, snapshot, identity, repository, *, stage=True):
   base = f"https://github.com/{repository}/releases/download/" + names(identity)["bucket"]
   runtime.prepare()
   check_tools(output)
+  if stager:
+    stager.prepare()
   with monitor(output):
     us_build.build_us(output, snapshot, identity, base.format(bucket=0), concurrency=2,
                       prepared=stager.sources if stager else None, keep_sources=False, scratch_bytes=64 * 1024**3)

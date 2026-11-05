@@ -241,6 +241,22 @@ def test_source_chunking_bounds_scratch_and_releases_it_on_interruption(tmp_path
   assert not list(tmp_path.glob("*.part-*")) and source.read_bytes() == b"abcdefg"
 
 
+def test_data_releases_use_default_branch_without_workflow_write_permission(monkeypatch):
+  monkeypatch.setenv("GITHUB_SHA", "a" * 40)
+  api = P.GitHub("test/maps", token="test-only")
+  requests = []
+  monkeypatch.setattr(api, "find", lambda _: None)
+  def request(method, path, body):
+    assert "target_commitish" not in body
+    requests.append((method, path, body))
+    return {"id": 1, "draft": True, "body": body.get("body", "")}
+  monkeypatch.setattr(api, "request", request)
+  release = api.draft("routing-us-trial", "us-driving-trial", "Builder: " + "b" * 40)
+  api.publish({**release, "target_commitish": "c" * 40})
+  assert [row[0] for row in requests] == ["POST", "PATCH"]
+  assert "Builder: " + "b" * 40 in requests[0][2]["body"]
+
+
 def test_source_release_contains_original_auxiliary_and_polygon_inputs(tmp_path):
   sources = tmp_path / "sources"
   sources.mkdir()
@@ -282,6 +298,8 @@ def test_build_stages_drafts_only_after_complete_route_checks(tmp_path, monkeypa
   class Stager:
     def __init__(self, *_):
       pass
+    def prepare(self):
+      calls.append("release permissions")
     def sources(self, *_):
       calls.append("sources archived")
     def graphs(self, *_):
@@ -295,7 +313,7 @@ def test_build_stages_drafts_only_after_complete_route_checks(tmp_path, monkeypa
   monkeypatch.setattr(monthly.check_states, "check", lambda *_: calls.append("all route checks"))
   monkeypatch.setattr(monthly.export, "export", lambda *_, **__: calls.append("checked export"))
   monthly.build(tmp_path / "fresh", "261224", "us-driving-20261224-r1-a1", "test/maps")
-  assert calls == ["runtime", "native tools", "sources archived", "build", "all route checks", "checked export", "graphs staged"]
+  assert calls == ["runtime", "native tools", "release permissions", "sources archived", "build", "all route checks", "checked export", "graphs staged"]
 
 
 def test_route_check_failure_cannot_stage_graphs(tmp_path, monkeypatch):
@@ -303,7 +321,7 @@ def test_route_check_failure_cannot_stage_graphs(tmp_path, monkeypatch):
   monkeypatch.setattr(monthly.subprocess, "check_output", lambda *_, **__: "a" * 40)
   monkeypatch.setattr(monthly.runtime, "prepare", lambda: None)
   monkeypatch.setattr(monthly, "check_tools", lambda _: None)
-  monkeypatch.setattr(monthly.P, "GitHub", lambda *_: SimpleNamespace())
+  monkeypatch.setattr(monthly.P, "GitHub", lambda *_: SimpleNamespace(draft=lambda *_: {}))
   monkeypatch.setattr(monthly.us_build, "build_us", lambda *_, **__: None)
   def fail(*_):
     raise C.RoutingError("data_incompatible")
@@ -312,6 +330,21 @@ def test_route_check_failure_cannot_stage_graphs(tmp_path, monkeypatch):
     pytest.fail("failed routing data reached export/publication")
   monkeypatch.setattr(monthly.export, "export", forbidden)
   with pytest.raises(C.RoutingError):
+    monthly.build(tmp_path / "fresh", "261224", "us-driving-20261224-r1-a1", "test/maps")
+
+
+def test_release_permission_failure_stops_before_national_download(tmp_path, monkeypatch):
+  monkeypatch.setattr(monthly.shutil, "disk_usage", lambda _: SimpleNamespace(free=100 * 1024**3))
+  monkeypatch.setattr(monthly.subprocess, "check_output", lambda *_, **__: "a" * 40)
+  monkeypatch.setattr(monthly.runtime, "prepare", lambda: None)
+  monkeypatch.setattr(monthly, "check_tools", lambda _: None)
+  def denied(*_):
+    raise urllib.error.HTTPError("https://api.github.com", 403, "Forbidden", {}, None)
+  monkeypatch.setattr(monthly.P, "GitHub", lambda *_: SimpleNamespace(draft=denied))
+  def forbidden(*_, **__):
+    pytest.fail("national download started without release permissions")
+  monkeypatch.setattr(monthly.us_build, "build_us", forbidden)
+  with pytest.raises(urllib.error.HTTPError, match="403"):
     monthly.build(tmp_path / "fresh", "261224", "us-driving-20261224-r1-a1", "test/maps")
 
 

@@ -111,12 +111,15 @@ class GitHub:
         return found
       page += 1
 
-  def draft(self, tag, commit, identity, notes):
+  def draft(self, tag, identity, notes):
     marker = "<!-- tandem-routing:" + identity + " -->"
     release = self.find(tag)
     if release is None:
       try:
-        release = self.request("POST", "/releases", {"tag_name": tag, "target_commitish": commit, "name": tag,
+        # Omit target_commitish: GitHub uses its default branch. A builder or
+        # trigger SHA can differ in workflow files and requires workflow-write
+        # permission, which GITHUB_TOKEN deliberately cannot have.
+        release = self.request("POST", "/releases", {"tag_name": tag, "name": tag,
           "body": marker + "\n\n" + notes, "draft": True, "prerelease": True, "make_latest": "false"})
       except urllib.error.HTTPError as error:
         if error.code != 422:
@@ -179,11 +182,10 @@ class GitHub:
 
   def publish(self, release):
     if release["draft"]:
-      # Anchor data tags to the workflow's authorized commit. Actual builder
-      # provenance is recorded separately; no workflow-write PAT is needed.
-      target = os.environ.get("GITHUB_SHA", release.get("target_commitish"))
+      # Preserve the draft's default-branch target. Resending an old SHA can
+      # cross GitHub's workflow permission guard after another workflow edit.
       return self.request("PATCH", f"/releases/{release['id']}",
-                          {"draft": False, "prerelease": True, "make_latest": "false", "target_commitish": target})
+                          {"draft": False, "prerelease": True, "make_latest": "false"})
     return release
 
   def rename(self, asset, name):
