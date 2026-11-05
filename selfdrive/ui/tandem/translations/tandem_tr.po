@@ -196,128 +196,128 @@ msgstr "Yüzünüz aranıyor"
 msgid "Starting the camera…"
 msgstr "Kamera başlatılıyor…"
 
-#: forecast.py:37
-#: forecast.py:37
+#: forecast.py:45
+#: forecast.py:45
 #: onroad/status.py:226
 msgid "Fog"
 msgstr "Sis"
 
-#: forecast.py:38
-#: forecast.py:40
-#: forecast.py:43
+#: forecast.py:46
+#: forecast.py:48
+#: forecast.py:51
 msgid "Light rain"
 msgstr "Hafif yağmur"
 
-#: forecast.py:38
-#: forecast.py:38
+#: forecast.py:46
+#: forecast.py:46
 msgid "Drizzle"
 msgstr "Çiseleme"
 
-#: forecast.py:39
-#: forecast.py:39
+#: forecast.py:47
+#: forecast.py:47
 msgid "Freezing drizzle"
 msgstr "Donan çiseleme"
 
-#: forecast.py:40
+#: forecast.py:48
 #: onroad/status.py:223
 #: settings/speed_steering.py:239
 msgid "Rain"
 msgstr "Yağmur"
 
-#: forecast.py:40
-#: forecast.py:43
+#: forecast.py:48
+#: forecast.py:51
 #: onroad/status.py:224
 msgid "Heavy rain"
 msgstr "Şiddetli yağmur"
 
-#: forecast.py:41
-#: forecast.py:41
+#: forecast.py:49
+#: forecast.py:49
 msgid "Freezing rain"
 msgstr "Donan yağmur"
 
-#: forecast.py:42
+#: forecast.py:50
 msgid "Light snow"
 msgstr "Hafif kar"
 
-#: forecast.py:42
+#: forecast.py:50
 #: onroad/status.py:225
 #: settings/speed_steering.py:241
 msgid "Snow"
 msgstr "Kar"
 
-#: forecast.py:42
-#: forecast.py:44
+#: forecast.py:50
+#: forecast.py:52
 msgid "Heavy snow"
 msgstr "Yoğun kar"
 
-#: forecast.py:42
+#: forecast.py:50
 msgid "Fine, icy snow"
 msgstr "İnce, buzlu kar"
 
-#: forecast.py:43
+#: forecast.py:51
 msgid "Rain showers"
 msgstr "Sağanak yağmur"
 
-#: forecast.py:44
+#: forecast.py:52
 msgid "Light snow flurries"
 msgstr "Hafif kar sağanağı"
 
-#: forecast.py:45
+#: forecast.py:53
 msgid "Thunderstorm"
 msgstr "Gök gürültülü fırtına"
 
-#: forecast.py:45
-#: forecast.py:45
+#: forecast.py:53
+#: forecast.py:53
 msgid "Storm with hail"
 msgstr "Dolulu fırtına"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Sunny"
 msgstr "Güneşli"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Clear"
 msgstr "Açık hava"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Mostly sunny"
 msgstr "Çoğunlukla güneşli"
 
-#: forecast.py:50
+#: forecast.py:58
 msgid "Mostly clear"
 msgstr "Çoğunlukla açık"
 
-#: forecast.py:50
-#: forecast.py:50
+#: forecast.py:58
+#: forecast.py:58
 msgid "Partly cloudy"
 msgstr "Parçalı bulutlu"
 
-#: forecast.py:51
-#: forecast.py:51
+#: forecast.py:59
+#: forecast.py:59
 msgid "Cloudy"
 msgstr "Bulutlu"
 
-#: forecast.py:135
+#: forecast.py:182
 #, python-brace-format
 msgid "{} in {} min"
 msgstr "{1} dk sonra {0}"
 
-#: forecast.py:136
-#: forecast.py:322
+#: forecast.py:183
+#: forecast.py:367
 #, python-brace-format
 msgid "{} until {}"
 msgstr "{1} saatine kadar {0}"
 
-#: forecast.py:328
+#: forecast.py:373
 msgid "No rain or snow ahead"
 msgstr "Yakında yağmur veya kar beklenmiyor"
 
-#: forecast.py:324
+#: forecast.py:369
 #, python-brace-format
 msgid "{} from {}"
 msgstr "{1} itibarıyla {0}"
 
-#: forecast.py:324
+#: forecast.py:369
 #, python-brace-format
 msgid " to {}"
 msgstr " ile {} arası"
