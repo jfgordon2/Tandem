@@ -1,0 +1,41 @@
+{
+  "reviewed": "2026-11-05",
+  "files": {
+    ".github/workflows/auto-cache/action.yaml": {
+      "sha256": "eb85dac939b4617db2db2fabc41b5b1a0a28888ea9d0701790812a5834861916",
+      "review": "Inert composite: Namespace or GitHub cache access and caller-specified cache-directory permission changes. Not used by Tandem maps."
+    },
+    ".github/workflows/compile-openpilot/action.yaml": {
+      "sha256": "bd7d115a7959f5e481d312b6149c307e57ae62dcf2c343e423f5c93d01c93129",
+      "review": "Inert composite: builds native binaries and saves cache. Not used by Tandem maps."
+    },
+    ".github/workflows/compile_bluescreens.yaml": {
+      "sha256": "2b18c2860db56e19ec1a11133916f1f6766fabbde6d67ebd47117ec88e1980d6",
+      "review": "Manual inherited firmware/device build; contents:write and branch push. Disabled via repository gate and Actions settings in Tandem."
+    },
+    ".github/workflows/compile_starpilot.yaml": {
+      "sha256": "a7e9d48d09639407afae095c19e1c2d7bd79e608e021e427b60903c078bfa982",
+      "review": "Manual inherited device build; contents:write and branch push. Disabled via repository gate and Actions settings in Tandem."
+    },
+    ".github/workflows/fleet_safety.yaml": {
+      "sha256": "d44c29be5315a73688f5b15a3fcd7e0a4e92a32fa74c8f1de2465123ed3dc4bd",
+      "review": "Read-only manual/PR controller replay tests; reviewed exact Node 24 official action pins. Uploads test artifacts, with no branch, release or package publisher."
+    },
+    ".github/workflows/publish_truenas_runner.yaml": {
+      "sha256": "f239c2cde81365471e4cef624d56948da78e7817e4674605b5ea58630639d6f6",
+      "review": "Manual inherited GHCR image publisher; packages:write. Disabled via repository gate and Actions settings in Tandem."
+    },
+    ".github/workflows/setup/action.yaml": {
+      "sha256": "e68ac7fe27359db68c8402779cb9892277be65a4e5ddfca6ad59e3c93f559f0c",
+      "review": "Inert composite: LFS fetch, cache, file permission normalization and caller-supplied BUILD command. Not used by Tandem maps."
+    },
+    ".github/workflows/setup-with-retry/action.yaml": {
+      "sha256": "0835c1ef89ea25ed882459912819e1a0c84ca402423faf8d2f748b077e66a9a5",
+      "review": "Inert composite: wraps upstream setup retries. Not used by Tandem maps."
+    },
+    ".github/workflows/tandem_routing_maps.yaml": {
+      "sha256": "148a42f2eba272927439627439d9f4bdf187cf35f46c1f3a983f7a55391695cb",
+      "review": "Owned monthly/manual routing-data build and publication; read-only review job, contents:write only for draft data/release jobs. valhalla pushes perform review only unless explicitly marked [routing-build-check], which stages drafts without publication. No upstream CI composites, branch push or GHCR publication."
+    }
+  }
+}

@@ -1,0 +1,167 @@
+name: Monthly routing maps
+
+on:
+  # Finish before devices' existing first-of-month map update.
+  schedule:
+    - cron: '17 4 26 * *'
+  workflow_dispatch:
+    inputs:
+      snapshot:
+        description: 'Geofabrik snapshot YYMMDD; blank uses two days ago'
+        type: string
+        default: ''
+      publish:
+        description: 'Publish verified data and update the maintained catalog'
+        type: boolean
+        default: false
+      staged_tag:
+        description: 'Optional routing-us-...-catalog draft to publish without rebuilding'
+        type: string
+        default: ''
+  push:
+    branches: [valhalla]
+    paths:
+      - .github/workflows/tandem_routing_maps.yaml
+      - starpilot/tandem/routing/tools/**
+      - starpilot/tandem/tests/test_routing_publication.py
+      - selfdrive/ui/tandem/tools/workflow_policy.py
+      - selfdrive/ui/tandem/tools/workflow-policy.json
+
+permissions:
+  contents: read
+
+concurrency:
+  # Read-only push reviews need not wait behind a multi-hour data build.
+  group: ${{ github.event_name == 'push' && !startsWith(github.event.head_commit.message, '[routing-build-check] ') && format('tandem-routing-review-{0}', github.sha) || 'tandem-monthly-routing-data' }}
+  cancel-in-progress: false
+
+jobs:
+  review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, Node 24
+        with:
+          ref: valhalla
+          persist-credentials: false
+      - name: Check reviewed workflow policy
+        run: python3 selfdrive/ui/tandem/tools/workflow_policy.py
+      - name: Check maintainer script syntax
+        run: |
+          python3 -m compileall -q starpilot/tandem/routing/tools
+          bash -n starpilot/tandem/routing/tools/monthly_bootstrap.sh
+      - name: Record hosted resources
+        run: >-
+          python3 -m openpilot.starpilot.tandem.routing.tools.hosted
+          --out selfdrive/ui/tandem/tools/out/monthly/resources.json
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: monthly-map-resources
+          path: selfdrive/ui/tandem/tools/out/monthly/resources.json
+          retention-days: 7
+          overwrite: true
+
+  build:
+    needs: review
+    if: >-
+      github.repository == 'jfgordon2/Tandem' && inputs.staged_tag == '' &&
+      (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' ||
+       startsWith(github.event.head_commit.message, '[routing-build-check] '))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    permissions:
+      contents: write
+    outputs:
+      commit: ${{ steps.commit.outputs.sha }}
+    env:
+      SNAPSHOT: ${{ inputs.snapshot }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, Node 24
+        with:
+          ref: valhalla
+          persist-credentials: false
+      - name: Pin build source
+        id: commit
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Check reviewed workflow policy
+        run: python3 selfdrive/ui/tandem/tools/workflow_policy.py
+      - name: Reclaim disposable hosted scratch space
+        run: >-
+          python3 -m openpilot.starpilot.tandem.routing.tools.hosted
+          --prepare --out "$RUNNER_TEMP/runner-resources.json"
+      - name: Install pinned off-device tools
+        run: bash starpilot/tandem/routing/tools/monthly_bootstrap.sh "$RUNNER_TEMP/tandem-maps"
+      - name: Test release gates
+        run: >-
+          "$RUNNER_TEMP/tandem-maps/venv/bin/python" -m pytest -q -c /dev/null
+          --confcutdir=starpilot/tandem starpilot/tandem/tests/test_routing_publication.py
+          starpilot/tandem/tests/test_routing_hosted.py
+      - name: Build, check all regions and stage immutable drafts
+        run: >-
+          "$RUNNER_TEMP/tandem-maps/venv/bin/python" -u
+          -m openpilot.starpilot.tandem.routing.tools.monthly build
+          "$RUNNER_TEMP/monthly-routing" --snapshot "$SNAPSHOT"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        if: always()
+        with:
+          name: routing-publication
+          path: |
+            ${{ runner.temp }}/monthly-routing/assets/publication.json
+            ${{ runner.temp }}/monthly-routing/route-equivalence.json
+            ${{ runner.temp }}/monthly-routing/resources.jsonl
+            ${{ runner.temp }}/runner-resources.json
+          retention-days: 7
+          overwrite: true
+
+  publish:
+    needs: [review, build]
+    if: >-
+      always() && github.repository == 'jfgordon2/Tandem' && needs.review.result == 'success' &&
+      (needs.build.result == 'success' || (needs.build.result == 'skipped' && inputs.staged_tag != '')) &&
+      (github.event_name == 'schedule' || inputs.publish == true)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      STAGED_TAG: ${{ inputs.staged_tag }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, Node 24
+        with:
+          ref: ${{ needs.build.outputs.commit || 'valhalla' }}
+          persist-credentials: false
+      - name: Check reviewed workflow policy
+        run: python3 selfdrive/ui/tandem/tools/workflow_policy.py
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        if: inputs.staged_tag == ''
+        with:
+          name: routing-publication
+          path: ${{ runner.temp }}/publication-plan
+      - name: Read an existing checked draft plan
+        if: inputs.staged_tag != ''
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$STAGED_TAG" =~ ^routing-us-[a-z0-9._-]+-catalog$ ]]
+          mkdir -p "$RUNNER_TEMP/publication-plan"
+          gh release download "$STAGED_TAG" --repo "$GITHUB_REPOSITORY" \
+            --pattern publication.json --dir "$RUNNER_TEMP/publication-plan"
+      - name: Install pinned verification tools
+        run: bash starpilot/tandem/routing/tools/monthly_bootstrap.sh "$RUNNER_TEMP/tandem-maps"
+      - name: Publish checked assets, smoke-test public downloads and promote catalog
+        run: |
+          set -euo pipefail
+          mapfile -t plans < <(find "$RUNNER_TEMP/publication-plan" -name publication.json -type f)
+          [[ "${#plans[@]}" == 1 ]]
+          "$RUNNER_TEMP/tandem-maps/venv/bin/python" -u \
+            -m openpilot.starpilot.tandem.routing.tools.monthly publish "${plans[0]}" \
+            --out "$RUNNER_TEMP/published-routing"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        if: always()
+        with:
+          name: routing-publication-result
+          path: ${{ runner.temp }}/published-routing/*.json
+          retention-days: 7
+          overwrite: true

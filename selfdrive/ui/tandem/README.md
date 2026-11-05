@@ -4,6 +4,8 @@ Tandem is this fork of StarPilot. Its design language is **Essentials**: fewer c
 
 To run the real UI on a Mac, follow the [desktop setup guide](docs/mac-desktop.md). `./c3` opens the large UI with Essentials; `./c4` opens upstream's small UI.
 
+The [monthly data workflow](docs/valhalla-monthly-map-releases.md) builds routing data from `valhalla` on GitHub-hosted Ubuntu. This branch holds only its launcher and review policy; the navigation implementation stays separate. The [workflow audit](docs/github-workflows.md) records disabled inherited publishers and the required review of workflow changes.
+
 | Module | Contents |
 | --- | --- |
 | `fonts.py` | `font(face)`: maps upstream weight identifiers to our Figtree and Noto files, plus ExtraBold and JetBrains Mono. All load on first use without replacing upstream fonts. |
@@ -81,6 +83,7 @@ Navigation still reports the turn StarPilot actually selected through its option
 
 | File | Integration |
 | --- | --- |
+| `.github/workflows/tandem_routing_maps.yaml` | Thin hosted-runner launcher for owned routing-data maintenance tools. It checks out `valhalla`, independent of the device release branch. Resource probes and build/publication logic stay under `starpilot/tandem/routing/tools/` on that branch. |
 | `.github/workflows/compile_starpilot.yaml` | One job-level repository gate keeps the inherited binary-building/branch-pushing workflow inert in Tandem. Also disabled in Actions settings; retained upstream code remains available for merge compatibility. |
 | `.github/workflows/compile_bluescreens.yaml` | The same repository gate and Actions disablement keep the inherited binary/panda build and branch push inert in Tandem. |
 | `.github/workflows/publish_truenas_runner.yaml` | The same repository gate and Actions disablement keep the inherited GHCR image publisher inert in Tandem. |
