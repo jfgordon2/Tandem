@@ -10,13 +10,19 @@ stubs.install()
 import pyray as rl
 
 W, H = 2160, 1080
+capture = None
 
 
 def open_window():
+  global capture
   os.environ["SCALE"] = "1"   # captures always use device pixels; do not open an auto-scale query window
   rl.set_trace_log_level(rl.TraceLogLevel.LOG_ERROR)
   rl.set_config_flags(rl.ConfigFlags.FLAG_MSAA_4X_HINT)
   rl.init_window(W, H, "snap")
+  if os.getenv("TANDEM_CAPTURE_TEXTURE") == "1":
+    # The device's physical framebuffer is portrait and has display color transforms.
+    # Capture the landscape drawing target before those panel transforms instead.
+    capture = rl.load_render_texture(W, H)
   load_application()
 
 
@@ -33,13 +39,19 @@ def load_application():
 def frame(draw, events=()):
   gui_app._mouse_events = list(events)
   rl.begin_drawing()
+  if capture is not None:
+    rl.begin_texture_mode(capture)
   rl.clear_background(rl.BLACK)
   draw()
+  if capture is not None:
+    rl.end_texture_mode()
   rl.end_drawing()
 
 
 def save(path):
-  img = rl.load_image_from_screen()
+  img = rl.load_image_from_screen() if capture is None else rl.load_image_from_texture(capture.texture)
+  if capture is not None:
+    rl.image_flip_vertical(img)
   if (img.width, img.height) != (W, H):
     rl.image_resize(img, W, H)
   rl.export_image(img, path)

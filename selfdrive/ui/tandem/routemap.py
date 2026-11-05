@@ -162,7 +162,8 @@ class RouteFetcher:
   GPS position yet, no connection), it asks again every RETRY seconds while the preview is open, keeping the reason up."""
   RETRY = 5.0
 
-  def __init__(self, fetch: Callable[[dict], RoutePlan | str], clock: Callable[[], float] = time.monotonic):
+  def __init__(self, fetch: Callable[[dict], RoutePlan | str], clock: Callable[[], float] = time.monotonic,
+               identity: Callable[[dict], tuple] | None = None, max_age: float | None = None, retry_errors: tuple[str, ...] = ()):
     self._fetch = fetch          # runs in the background: a plan, or the reason there isn't one
     self._clock = clock
     self._lock = threading.Lock()
@@ -170,31 +171,39 @@ class RouteFetcher:
     self._result: RoutePlan | str = ""
     self._busy = False
     self._done_at = 0.0
+    self._identity, self._max_age = identity, max_age
+    self._retry_errors = (NO_FIX, NO_ROUTE, *retry_errors)
+    self._generation = 0
 
   def route(self, place: dict | None) -> tuple[RoutePlan | None, str]:
     if place is None:
       return None, ""
-    key = (place.get("latitude"), place.get("longitude"))
+    key = self._identity(place) if self._identity else (place.get("latitude"), place.get("longitude"))
     with self._lock:
       if key != self._key:
         self._key, self._result = key, FINDING
         self._start(key, place)
-      elif (not self._busy and self._result in (NO_FIX, NO_ROUTE) and self._clock() - self._done_at >= self.RETRY):
+      elif (not self._busy and isinstance(self._result, str) and self._result in self._retry_errors
+            and self._clock() - self._done_at >= self.RETRY):
+        self._start(key, place)
+      elif not self._busy and self._max_age is not None and self._clock() - self._done_at >= self._max_age:
+        self._result = FINDING
         self._start(key, place)
       result = self._result
     return (result, "") if isinstance(result, RoutePlan) else (None, result)
 
   def _start(self, key: tuple, place: dict) -> None:
     self._busy = True
-    threading.Thread(target=self._run, args=(key, dict(place)), daemon=True).start()
+    self._generation += 1
+    threading.Thread(target=self._run, args=(key, self._generation, dict(place)), daemon=True).start()
 
-  def _run(self, key: tuple, place: dict) -> None:
+  def _run(self, key: tuple, generation: int, place: dict) -> None:
     try:
       result = self._fetch(place)
     except Exception:
       result = NO_ROUTE
     with self._lock:
-      if key == self._key:
+      if key == self._key and generation == self._generation:
         self._result, self._busy, self._done_at = result, False, self._clock()
 
 
@@ -212,4 +221,56 @@ def mapbox_route(place: dict) -> RoutePlan | str:
   route = MapboxRouteEngine().fetch_route(token, Coordinate(fix[0], fix[1]), place, fix[2])
   if route is None:
     return NO_ROUTE
+  return RoutePlan(tuple((c.latitude, c.longitude) for c in route.geometry), route.total_distance, route.total_duration)
+
+
+def local_start():
+  from openpilot.common.params import Params
+  try:
+    return start_position(Params(memory=True).get("LastGPSPosition", encoding="utf-8") or "",
+                          Params().get("LastGPSPosition", encoding="utf-8") or "")
+  except (ValueError, TypeError, OverflowError):
+    return None
+
+
+def local_identity(place: dict) -> tuple:
+  from openpilot.common.params import Params
+  from openpilot.starpilot.tandem.routing.bundles import capability
+  state, fix = capability(), local_start()
+  # A roughly 40 m grid avoids planning every GPS tick while rejecting a moved parked preview.
+  start = (round(fix[0] / .0004), round(fix[1] / .0004), round(fix[2] / 15) if fix[2] is not None else None) if fix else None
+  from openpilot.starpilot.tandem.routing.config import policy
+  return (place.get("latitude"), place.get("longitude"), place.get("routeId"), state["status"], state.get("generation"), policy(),
+          Params().get("MapboxSecretKey", encoding="utf-8") or "",
+          start, Params().get("LanguageSetting", encoding="utf-8") or "en")
+
+
+def local_route(place: dict) -> RoutePlan | str:
+  from openpilot.common.params import Params
+  from openpilot.starpilot.tandem.routing import client
+  from openpilot.starpilot.tandem.routing.config import RoutingError
+  from openpilot.starpilot.tandem.routing.normalize import normalize
+  from openpilot.selfdrive.ui.tandem.routing_status import status_text
+  fix = local_start()
+  if fix is None:
+    return NO_FIX
+  try:
+    data = normalize(client.route(fix, place, caller="preview", language=Params().get("LanguageSetting", encoding="utf-8") or "en"))
+    return RoutePlan(tuple((c["latitude"], c["longitude"]) for c in data["geometry"]), data["totalDistance"], data["totalDuration"])
+  except RoutingError as error:
+    return status_text(error.code)
+
+
+def policy_route(place: dict) -> RoutePlan | str:
+  from openpilot.common.params import Params
+  from openpilot.starpilot.navigation.route_engine import Coordinate
+  from openpilot.starpilot.tandem.routing.route_engine import PolicyRouteEngine
+  from openpilot.selfdrive.ui.tandem.routing_status import status_text
+  fix = local_start()
+  if fix is None:
+    return NO_FIX
+  engine = PolicyRouteEngine(caller="preview", language=Params().get("LanguageSetting", encoding="utf-8") or "en")
+  route = engine.fetch_route(Params().get("MapboxSecretKey", encoding="utf-8") or "", Coordinate(*fix[:2]), place, fix[2])
+  if route is None:
+    return status_text(engine.status)
   return RoutePlan(tuple((c.latitude, c.longitude) for c in route.geometry), route.total_distance, route.total_duration)

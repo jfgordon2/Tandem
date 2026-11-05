@@ -34,8 +34,8 @@
       "review": "Inert composite: wraps upstream setup retries. Not used by Tandem maps."
     },
     ".github/workflows/tandem_routing_maps.yaml": {
-      "sha256": "148a42f2eba272927439627439d9f4bdf187cf35f46c1f3a983f7a55391695cb",
-      "review": "Owned monthly/manual routing-data build and publication; read-only review job, contents:write only for draft data/release jobs. valhalla pushes perform review only unless explicitly marked [routing-build-check], which stages drafts without publication. No upstream CI composites, branch push or GHCR publication."
+      "sha256": "569a7528e66f39c03be7af00bc99707396a35a672ead0c4efa69dda2f62fbab8",
+      "review": "Owned monthly/manual routing-data build and publication, pinned to the trigger commit (release for scheduled builds). Read-only review; contents:write only for draft data/release jobs. valhalla pushes perform review only unless explicitly marked [routing-build-check], which stages drafts without publication. No upstream CI composites, branch push or GHCR publication."
     }
   }
 }

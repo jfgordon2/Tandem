@@ -42,7 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, Node 24
         with:
-          ref: valhalla
+          ref: ${{ github.sha }}
           persist-credentials: false
       - name: Check reviewed workflow policy
         run: python3 selfdrive/ui/tandem/tools/workflow_policy.py
@@ -79,7 +79,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, Node 24
         with:
-          ref: valhalla
+          ref: ${{ github.sha }}
           persist-credentials: false
       - name: Pin build source
         id: commit
@@ -130,7 +130,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, Node 24
         with:
-          ref: ${{ needs.build.outputs.commit || 'valhalla' }}
+          ref: ${{ needs.build.outputs.commit || github.sha }}
           persist-credentials: false
       - name: Check reviewed workflow policy
         run: python3 selfdrive/ui/tandem/tools/workflow_policy.py

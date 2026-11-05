@@ -80,5 +80,8 @@ class Steps(Component):
 def mapbox_key_sheet(done: Callable[[], None]):
   from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle
   from openpilot.selfdrive.ui.tandem.overlays import Sheet
-  return Sheet(N_("Add Mapbox keys"), Steps(), subtitle=N_("For place search, routes, and speed limits the maps don't have"),
+  from openpilot.starpilot.tandem.routing.config import policy
+  subtitle = N_("Optional: online search and speed-limit filling") if policy()[0] else \
+    N_("For place search, routes, and speed limits the maps don't have")
+  return Sheet(N_("Add Mapbox keys"), Steps(), subtitle=subtitle,
                actions=[Button(N_("Done"), done, ButtonStyle.PRIMARY)], on_dismiss=done)

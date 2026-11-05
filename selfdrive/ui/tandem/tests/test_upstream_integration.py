@@ -119,6 +119,7 @@ def test_metric_preference_migrates_without_a_compiled_key_and_survives_backups(
 
 
 def test_navigation_observes_the_upstream_choice_and_does_not_change_its_target(monkeypatch):
+  monkeypatch.setenv("TANDEM_ROUTING", "0")  # original progress/control path; policy freshness is tested separately
   monkeypatch.setenv("TANDEM_ONROAD", "1")
   calls = []
 

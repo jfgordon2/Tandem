@@ -93,8 +93,11 @@ ENTRIES: list[Entry] = [
   _place(N_("Navigation"), N_("Home, Work and favorites; slows for turns on a route"), 0, S, 3, "route destination"),
   Entry(N_("Other favorites"), N_("Saved places for Where to?"), 0, S, 3, "destinations"),
   Entry(N_("End Route When Parked"), N_("Clears the destination when you turn off the car"), 0, S, 3),
-  Entry(N_("Mapbox Keys"), N_("Needed for place search and routes"), 0, S, 3, "mapbox key token api secret search routing navigation"),
-  Entry(N_("Offline Maps"), N_("Speed limits and routing without a connection"), 0, S, 3, "download map regions"),
+  Entry(N_("Offline maps only"), N_("Never use online routing"), 0, S, 3, "valhalla strict routing offline navigation"),
+  Entry(N_("Preferred maps (when available)"), N_("Choose which maps to try first, with a fallback"), 0, S, 3,
+        "online offline preference fallback routing"),
+  Entry(N_("Mapbox Keys"), N_("Keys for online search, routes and speed limits"), 0, S, 3, "mapbox key token api secret search routing navigation"),
+  Entry(N_("Offline Maps"), N_("Speed limits and street names without a connection"), 0, S, 3, "download map regions"),
   # Driving › Display
   _place(N_("Display"), N_("The driving screen, theme and startup, and the map"), 0, D),
   Entry(N_("Camera View"), N_("Wide shows more of the road at low speed"), 0, D, 0),
@@ -111,7 +114,7 @@ ENTRIES: list[Entry] = [
   Entry(N_("Startup Message"), N_("The banner when you start the car"), 0, D, 1),
   Entry(N_("Turn-by-Turn on Screen"), N_("Next turn, arrival time and distance while navigating"), 0, D, 2, "navigation"),
   Entry(N_("Speed Limit Sign"), N_("US style, or the round Vienna style used in most other countries"), 0, D, 2, "vienna"),
-  Entry(N_("Offline Maps"), N_("Speed limits and routing without a connection"), 0, D, 2, "download map regions"),
+  Entry(N_("Offline Maps"), N_("Speed limits and street names without a connection"), 0, D, 2, "download map regions"),
   # Driving › Alerts, Driving Model, Vehicle, Assistance
   _place(N_("Alerts"), N_("Volume and the optional chimes"), 0, "alerts", words="sound"),
   _place(N_("Volume"), N_("One volume for everything, or each group on its own"), 0, "alerts", words="loud quiet sound"),

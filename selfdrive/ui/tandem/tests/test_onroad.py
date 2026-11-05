@@ -129,6 +129,32 @@ def test_turn_progress_keeps_existing_chip_priorities(higher_status, expected):
   assert chip_for(Snapshot(events={"turningLeft"}, **higher_status)).key == expected
 
 
+@pytest.mark.parametrize("service, message", [("selfdriveState", log.SelfdriveState),
+                                            ("starpilotSelfdriveState", custom.StarPilotSelfdriveState)])
+def test_hidden_turn_banner_does_not_make_empty_alerts_into_persistent_turn_chips(service, message, monkeypatch):
+  import copy
+  from openpilot.selfdrive.selfdrived import alertmanager, events
+
+  # Reproduce StarPilot's shared EmptyAlert mutation without leaking it to other tests.
+  empty = copy.copy(events.EmptyAlert)
+  monkeypatch.setattr(events, "EmptyAlert", empty)
+  monkeypatch.setattr(alertmanager, "EmptyAlert", empty)
+  turn_events = events.Events(starpilot=True)
+  turn_events.add(custom.StarPilotOnroadEvent.EventName.turningLeft)
+  hidden = turn_events.create_alerts([events.ET.WARNING],
+    [None, None, None, False, 0, None, SimpleNamespace(hide_turning_banner=True)])
+  assert hidden[0] is empty and empty.alert_type == "turningLeft/warning"
+  manager = alertmanager.AlertManager()
+  manager.process_alerts(1000, set())  # no active alert, but EmptyAlert still carries the old type
+  alert = manager.current_alert
+  outgoing = message.new_message(alertType=alert.alert_type, alertSize=alert.alert_size)
+  with message.from_bytes(outgoing.to_bytes()) as received:
+    state = SimpleNamespace(sm=StatusMessages({service: received}), engaged=False, is_metric=False,
+                            always_on_lateral_active=False, starpilot_toggles={})
+    assert str(received.alertSize) == "none" and received.alertType == "turningLeft/warning"
+    assert not snapshot(state).events
+
+
 def test_weather_groups():
   assert [weather_name(i) for i in (211, 501, 502, 601, 741, 800)] == ["Heavy rain", "Rain", "Rain", "Snow", "Fog", ""]
 

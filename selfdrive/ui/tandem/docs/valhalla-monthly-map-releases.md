@@ -13,9 +13,11 @@ device's existing first-of-month download. All four OSM extracts use the same
 dated snapshot, defaulting to two days before the build. IDs include the source
 date, Actions run ID and attempt, so retries never overwrite another dataset.
 
-GitHub schedules require the workflow on the default `release` branch. Its
-checkout remains `valhalla`; the offline-navigation implementation stays on its
-separate branch. The build records the actual builder commit in source metadata
+GitHub schedules run from the default `release` branch and now build its exact
+trigger commit. Manual runs use the selected branch's trigger commit (default
+`release`); `valhalla` push reviews and explicit build checks use that push's
+exact commit. Publication checks out the recorded build commit, or the trigger
+commit when promoting an existing draft. The build records its commit in source metadata
 and its publication plan. Data-release tags use GitHub's default branch; they
 identify data, while the manifest identifies the exact builder. Creating a draft
 omits `target_commitish`, and publishing preserves its target. This avoids

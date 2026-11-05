@@ -303,8 +303,8 @@ def _gb(size: float) -> str:
 
 DELETE_DRIVES_MESSAGE = N_("Every recorded drive and its video is removed. This can't be undone.")
 BACKUP_NAME = N_("Backup {}")   # a backup folder's name as drawn: "Backup 2026-10-24 0910"
-DELETE_MAPS_MESSAGE = N_("Speed limits and curves will need a connection until maps download again. Your regions stay chosen, " +
-                         "so a scheduled update downloads them again.")
+DELETE_MAPS_MESSAGE = N_("Remove offline routes, speed limits and street names from this device. Saved places stay saved. " +
+                         "Your regions stay chosen, so a scheduled update downloads them again.")
 
 
 def delete_maps_row(data: DeviceData, window, height: float | None = None) -> SettingRow:
@@ -461,8 +461,10 @@ class StorageSizes:
 
     try:
       usage = shutil.disk_usage(Path.home() if PC else "/data")
+      from openpilot.starpilot.tandem.routing.config import root as routing_root
       sizes = {"Drives": size("/data/media/0/realdata", "/data/media/0/realdata_HD", "/data/media/0/realdata_konik"),
-                     "Maps": size("/data/media/0/osm/offline"), "Models": size("/data/models"),
+                     "Maps": size("/data/media/0/osm/offline", str(routing_root() / "bundles"), str(routing_root() / "downloads")),
+                     "Models": size("/data/models"),
                      "Total": float(usage.total), "Free": float(usage.free)}
       if generation == self._generation:
         self._sizes = sizes

@@ -36,8 +36,9 @@ def built_image(renders: Path, built) -> Image.Image | None:
   return out
 
 
-def main(renders: Path, out: Path) -> None:
+def main(renders: Path, out: Path, prefix: str = "") -> None:
   entries = json.loads((DESIGN / "compare.json").read_text())["entries"]
+  entries = [e for e in entries if e["mock"].startswith(prefix)]
   (out / "img").mkdir(parents=True, exist_ok=True)
   articles, missing = [], []
   for e in entries:
@@ -85,6 +86,6 @@ mock's size. Green notes match; amber notes say what still differs and why.</p>
 
 
 if __name__ == "__main__":
-  if len(sys.argv) != 3:
+  if len(sys.argv) not in (3, 4):
     sys.exit(__doc__)
-  main(Path(sys.argv[1]), Path(sys.argv[2]))
+  main(Path(sys.argv[1]), Path(sys.argv[2]), sys.argv[3] if len(sys.argv) == 4 else "")

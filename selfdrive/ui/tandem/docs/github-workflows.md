@@ -29,7 +29,10 @@ publishers and uninvoked composites retain their upstream versions. The
 [updated hosted review](https://github.com/jfgordon2/Tandem/actions/runs/42067280548)
 passed without the Node 20 deprecation warning. Both active workflows' pins and
 the inherited publisher guards are also installed on the default `release`
-branch; the navigation implementation remains on `valhalla`.
+branch. The navigation implementation has since been merged into `release`.
+Scheduled map builds use the exact released trigger commit; explicit `valhalla`
+push checks remain pinned to their test commit. The merge does not enable any
+inherited publisher or add another automatic publication trigger.
 
 ## Future upstream merges
 

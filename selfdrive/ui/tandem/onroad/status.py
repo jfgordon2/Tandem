@@ -63,6 +63,7 @@ class Snapshot:
   memory_percent: int = 0                  # RAM in use, from deviceState
   low_ram: bool = False                    # StarPilot raised Low Memory and RAM hasn't yet fallen to RamWatch.CLEAR
   events: set[str] = field(default_factory=set)
+  routing: Chip | None = None
 
 
 def turn_icon(maneuver: str, modifier: str) -> str:
@@ -153,11 +154,38 @@ def chips_for(s: Snapshot) -> list[Chip]:
     out.append(Chip("ready", N_("Ready · tap resume"), ChipTone.WAITING, "play"))
   if s.always_on_lateral and not s.engaged:
     out.append(Chip("steering_only", N_("Steering only"), ChipTone.INFO, "wheel"))
+  if s.routing is not None:
+    out.append(s.routing)  # routing yields to driving reasons; Low on RAM remains last
   # Last, so it's the first to give way when more than MAX apply. StarPilot decides when memory is low (its lowMemory
   # event); this chip stands in for that event's notice. Its disengage and can't-engage forms stay alerts.
   if s.low_ram or "lowMemory" in s.events:
     out.append(Chip("low_memory", t_("Low on RAM · {}% used", s.memory_percent), ChipTone.ALERT, "memory"))
   return out
+
+
+def routing_chip(state: dict | None, now: float, offline_only: bool = False) -> Chip | None:
+  if not isinstance(state, dict):
+    return None
+  code = state.get("status", "")
+  if code in ("idle", "routing", "superseded"):
+    label = N_("Recalculating route") if state.get("active") else N_("Finding route")
+  elif code == "rerouting":
+    label = N_("Recalculating route")
+  elif code == "gps_waiting":
+    label = N_("Waiting for GPS")
+  elif code == "ready":
+    try:
+      fallback = float(state.get("fallback_at", 0))
+    except (ValueError, TypeError):
+      return None
+    if not 0 < fallback <= now <= fallback + 3:
+      return None
+    label = N_("Using offline maps") if state.get("provider") == "offline" else N_("Using online maps")
+    if offline_only and state.get("provider") != "offline":
+      return None
+  else:
+    return Chip("routing", N_("Offline maps unavailable") if offline_only else N_("Route unavailable"), ChipTone.PAUSED, "warning")
+  return Chip("routing", label, ChipTone.INFO, "restart")
 
 
 def chip_for(s: Snapshot) -> Chip | None:
@@ -337,7 +365,9 @@ def snapshot(ui_state, nav_active: bool = False, limits: LimitWatch | None = Non
   # StarPilot raises greenLight and leadDeparting for a single planner frame, which the UI can miss; the alerts they start
   # are held for seconds, so their names count too (the chip stands in for the hidden banner).
   for service in ("selfdriveState", "starpilotSelfdriveState"):
-    if valid.get(service, False) and sm[service].alertType:
+    # EmptyAlert can retain an old alertType after a hidden turn banner. Only an
+    # actual alert may extend a chip; live planner events above still stand alone.
+    if valid.get(service, False) and str(sm[service].alertSize) != "none" and sm[service].alertType:
       s.events.add(str(sm[service].alertType).split("/", 1)[0])
   if valid.get("deviceState", False):
     s.memory_percent = int(sm["deviceState"].memoryUsagePercent)

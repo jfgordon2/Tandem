@@ -10,6 +10,7 @@ from openpilot.common.params import Params
 from opendbc.car.gps import car_gps_available
 from openpilot.system.hardware import HARDWARE, PC, TICI
 from openpilot.system.manager.process import PythonProcess, NativeProcess, DaemonProcess
+from openpilot.starpilot.tandem.routing.config import should_run as run_tandem_routing
 
 WEBCAM = os.getenv("USE_WEBCAM") is not None
 UI_WATCHDOG_MAX_DT = int(os.getenv("UI_WATCHDOG_MAX_DT", "10"))
@@ -235,6 +236,7 @@ procs += [
   PythonProcess("starpilot_process", "starpilot.starpilot_process", always_run),
   PythonProcess("mapd", "starpilot.navigation.mapd_wrapper", run_mapd, nice=19),
   PythonProcess("navigationd", "starpilot.navigation.navigationd", run_navigationd, nice=19),
+  PythonProcess("tandem_routingd", "starpilot.tandem.routing.routingd", run_tandem_routing, nice=19),
   PythonProcess("speed_limit_filler", "starpilot.system.speed_limit_filler", run_speed_limit_filler, nice=19),
   PythonProcess("speed_limit_vision", "starpilot.system.speed_limit_vision", run_speed_limit_vision, nice=19),
   PythonProcess("adj_spot_monitor_vision", "starpilot.system.adj_spot_monitor_vision", run_v_asm, nice=19),

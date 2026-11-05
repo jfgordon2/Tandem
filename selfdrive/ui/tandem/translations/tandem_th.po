@@ -5,177 +5,189 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=(0);\n"
 "X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\n"
 
-#: controls.py:174
+#: controls.py:179
 msgid "On"
 msgstr "เปิด"
 
-#: controls.py:174
-#: controls.py:177
+#: controls.py:179
+#: controls.py:182
 #: settings/device_sections.py:50
 msgid "Off"
 msgstr "ปิด"
 
-#: controls.py:271
+#: controls.py:276
 msgid "RECOMMENDED"
 msgstr "แนะนำ"
 
-#: controls.py:542
+#: controls.py:547
 #: settings/display.py:168
 #: settings/display.py:315
 msgid "Default"
 msgstr "ค่าเริ่มต้น"
 
-#: destinations.py:346
-#: settings/search.py:282
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: destinations.py:664
+msgid "Road data still supplies speed limits"
+msgstr "Road data still supplies speed limits"
+
+#: destinations.py:386
+#: settings/search.py:285
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:688
 msgid "Search"
 msgstr "ค้นหา"
 
-#: destinations.py:359
+#: destinations.py:400
 msgid "Offline maps"
 msgstr "แผนที่ออฟไลน์"
 
-#: destinations.py:480
+#: destinations.py:529
 #: home.py:144
 msgid "Where to?"
 msgstr "ไปที่ไหน?"
 
-#: destinations.py:145
+#: destinations.py:168
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:703
 msgid "Searching…"
 msgstr "กำลังค้นหา…"
 
-#: destinations.py:145
+#: destinations.py:168
 msgid "Looking up places"
 msgstr "กำลังค้นหาสถานที่"
 
-#: destinations.py:147
+#: destinations.py:170
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:713
 msgid "Search unavailable"
 msgstr "การค้นหาไม่พร้อมใช้งาน"
 
-#: destinations.py:149
+#: destinations.py:172
 msgid "Nothing found"
 msgstr "ไม่พบสิ่งใด"
 
-#: destinations.py:149
+#: destinations.py:172
 msgid "Try a different place or address"
 msgstr "ลองใช้สถานที่หรือที่อยู่อื่น"
 
-#: destinations.py:347
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: destinations.py:187
+msgid "This saved place has no coordinates. Search again when online."
+msgstr "This saved place has no coordinates. Search again when online."
+
+#: destinations.py:387
 msgid "Say a place or an address. Tap the mic when you're done."
 msgstr "พูดชื่อสถานที่หรือที่อยู่ แล้วแตะไมโครโฟนเมื่อพูดจบ"
 
-#: destinations.py:382
+#: destinations.py:423
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:643
 msgid "Start"
 msgstr "เริ่มต้น"
 
-#: destinations.py:487
+#: destinations.py:426
+#: settings/maps.py:256
+#: settings/maps.py:230
+msgid "Choose regions"
+msgstr "เลือกภูมิภาค"
+
+#: destinations.py:536
 msgid "Offline maps ready"
 msgstr "แผนที่ออฟไลน์พร้อมแล้ว"
 
-#: destinations.py:546
+#: destinations.py:595
 msgid "Search needs the public Mapbox key · see Settings › Driving › Speed & Steering › Navigation"
 msgstr "การค้นหา ต้องใช้คีย์ Mapbox สาธารณะ · ดูการตั้งค่า > การขับขี่ > ความเร็วและพวงมาลัย > การนำทาง"
 
-#: destinations.py:603
+#: destinations.py:652
 msgid "Arrive"
 msgstr "เวลาถึง"
 
-#: destinations.py:603
+#: destinations.py:652
 msgid "Time"
 msgstr "เวลา"
 
-#: destinations.py:603
+#: destinations.py:652
 #: settings/vehicle.py:228
 #: settings/vehicle.py:229
 msgid "Distance"
 msgstr "ระยะทาง"
 
-#: destinations.py:615
+#: destinations.py:668
 msgid "Slows ahead of turns on the route"
 msgstr "ชะลอความเร็วก่อนถึงทางเลี้ยวบนเส้นทาง"
 
-#: destinations.py:616
-msgid "Uses route speed limits when signs are missing"
-msgstr "ใช้ขีดจำกัดความเร็วของเส้นทางเมื่อไม่มีป้าย"
-
-#: destinations.py:294
+#: destinations.py:334
 msgid "Search for a place or address"
 msgstr "ค้นหาสถานที่หรือที่อยู่"
 
-#: destinations.py:362
+#: destinations.py:403
 msgid "Turns and speed follow the route automatically while navigating"
 msgstr "ปรับการเลี้ยวและความเร็วตามเส้นทางอัตโนมัติขณะนำทาง"
 
-#: destinations.py:509
+#: destinations.py:558
 msgid "RECENT"
 msgstr "ล่าสุด"
 
-#: destinations.py:357
+#: destinations.py:397
 msgid "Add favorite"
 msgstr "เพิ่มรายการโปรด"
 
-#: destinations.py:357
+#: destinations.py:397
 msgid "Search for a place"
 msgstr "ค้นหาสถานที่"
 
-#: destinations.py:502
+#: destinations.py:551
 msgid "ON A ROUTE"
 msgstr "บนเส้นทาง"
 
-#: destinations.py:503
+#: destinations.py:552
 #, python-brace-format
 msgid "To {}"
 msgstr "ถึง {}"
 
-#: destinations.py:506
+#: destinations.py:555
 msgid "FAVORITES"
 msgstr "รายการโปรด"
 
-#: destinations.py:517
+#: destinations.py:566
 msgid "Places you navigate to show up here."
 msgstr "สถานที่ที่คุณนำทางเพื่อแสดงที่นี่"
 
-#: destinations.py:549
+#: destinations.py:598
 msgid "Type a place or address"
 msgstr "พิมพ์สถานที่หรือที่อยู่"
 
-#: destinations.py:549
+#: destinations.py:598
 #, python-brace-format
 msgid "Results show as you type, from {} letters"
 msgstr "ผลลัพธ์ จะแสดงขณะที่คุณพิมพ์ จากตัวอักษร {}"
 
-#: destinations.py:351
-#: settings/speed_steering.py:416
+#: destinations.py:391
+#: settings/speed_steering.py:429
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:778
 msgid "Home"
 msgstr "บ้าน"
 
-#: destinations.py:351
+#: destinations.py:391
 msgid "Set Home"
 msgstr "ตั้งค่าบ้าน"
 
-#: destinations.py:352
+#: destinations.py:392
 msgid "Search for your home address"
 msgstr "ค้นหาที่อยู่บ้านของคุณ"
 
-#: destinations.py:354
-#: settings/speed_steering.py:417
+#: destinations.py:394
+#: settings/speed_steering.py:430
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:780
 msgid "Work"
 msgstr "ที่ทำงาน"
 
-#: destinations.py:354
+#: destinations.py:394
 msgid "Set Work"
 msgstr "ตั้งค่าที่ทำงาน"
 
-#: destinations.py:355
+#: destinations.py:395
 msgid "Search for your work address"
 msgstr "ค้นหาที่อยู่ที่ทำงานของคุณ"
 
-#: destinations.py:504
+#: destinations.py:553
 #: onroad/layers.py:69
 msgid "End route"
 msgstr "สิ้นสุดเส้นทาง"
@@ -198,7 +210,7 @@ msgstr "กำลังเริ่มกล้อง..."
 
 #: forecast.py:45
 #: forecast.py:45
-#: onroad/status.py:226
+#: onroad/status.py:254
 msgid "Fog"
 msgstr "หมอก"
 
@@ -219,14 +231,14 @@ msgid "Freezing drizzle"
 msgstr "ฝนปรอยเยือกแข็ง"
 
 #: forecast.py:48
-#: onroad/status.py:223
+#: onroad/status.py:251
 #: settings/speed_steering.py:239
 msgid "Rain"
 msgstr "ฝน"
 
 #: forecast.py:48
 #: forecast.py:51
-#: onroad/status.py:224
+#: onroad/status.py:252
 msgid "Heavy rain"
 msgstr "ฝนตกหนัก"
 
@@ -240,7 +252,7 @@ msgid "Light snow"
 msgstr "หิมะเล็กน้อย"
 
 #: forecast.py:50
-#: onroad/status.py:225
+#: onroad/status.py:253
 #: settings/speed_steering.py:241
 msgid "Snow"
 msgstr "หิมะ"
@@ -391,7 +403,7 @@ msgstr "อัปเดตพร้อมแล้ว"
 
 #: home.py:147
 #: settings/search.py:24
-#: settings/search.py:213
+#: settings/search.py:216
 msgid "Software"
 msgstr "ซอฟต์แวร์"
 
@@ -506,8 +518,8 @@ msgid "space"
 msgstr "เว้นวรรค"
 
 #: keyboard.py:126
-#: mapbox_help.py:84
-#: settings/alerts.py:165
+#: mapbox_help.py:87
+#: routing_status.py:9
 msgid "Done"
 msgstr "เสร็จ"
 
@@ -566,7 +578,16 @@ msgstr "ใน Galaxy: การนำทางและแผนที่ › �
 msgid "Not added · needed for place search and routes"
 msgstr "ไม่ได้เพิ่ม · จำเป็นสำหรับการค้นหาสถานที่และเส้นทาง"
 
-#: mapbox_help.py:83
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: mapbox_help.py:84
+msgid "Optional: online search and speed-limit filling"
+msgstr "Optional: online search and speed-limit filling"
+
+#: mapbox_help.py:85
+msgid "For place search, routes, and speed limits the maps don't have"
+msgstr "สำหรับการค้นหาสถานที่ เส้นทาง และการจำกัดความเร็ว แผนที่ไม่มี"
+
+#: mapbox_help.py:86
 msgid "Add Mapbox keys"
 msgstr "เพิ่มคีย์ Mapbox"
 
@@ -581,10 +602,6 @@ msgstr "รหัสสาธารณะ เท่านั้น · เส้�
 #: mapbox_help.py:50
 msgid "Secret key only · search needs the public key too"
 msgstr "รหัสลับเท่านั้น · การค้นหาจำเป็นต้องใช้รหัสสาธารณะด้วย"
-
-#: mapbox_help.py:83
-msgid "For place search, routes, and speed limits the maps don't have"
-msgstr "สำหรับการค้นหาสถานที่ เส้นทาง และการจำกัดความเร็ว แผนที่ไม่มี"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
 #: onroad/developer.py:84
@@ -907,115 +924,152 @@ msgstr "กล้อง"
 msgid "Mapbox"
 msgstr "Mapbox"
 
-#: onroad/status.py:121
-#: onroad/status.py:126
+#: onroad/status.py:122
+#: onroad/status.py:127
 msgid "Stopped"
 msgstr "หยุดแล้ว"
 
-#: onroad/status.py:121
+#: onroad/status.py:122
 msgid "Stopping"
 msgstr "กำลังหยุด"
 
-#: onroad/status.py:95
-#: onroad/status.py:107
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: onroad/status.py:171
+#: onroad/status.py:173
+msgid "Recalculating route"
+msgstr "Recalculating route"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: onroad/status.py:171
+msgid "Finding route"
+msgstr "Finding route"
+
+#: onroad/status.py:96
+#: onroad/status.py:108
 msgid "Steering paused"
 msgstr "พักการบังคับเลี้ยว"
 
-#: onroad/status.py:109
+#: onroad/status.py:110
 msgid "Speed control paused"
 msgstr "พักการควบคุมความเร็ว"
 
-#: onroad/status.py:114
+#: onroad/status.py:115
 msgid "Lane change blocked"
 msgstr "เปลี่ยนเลนไม่ได้"
 
-#: onroad/status.py:119
-#: onroad/status.py:149
+#: onroad/status.py:120
+#: onroad/status.py:150
 msgid "Light is green"
 msgstr "ไฟเขียวแล้ว"
 
-#: onroad/status.py:128
+#: onroad/status.py:129
 msgid "Slowing for curve"
 msgstr "ชะลอเข้าโค้ง"
 
-#: onroad/status.py:130
+#: onroad/status.py:131
 msgid "Slowing for turn"
 msgstr "ชะลอเพื่อเลี้ยว"
 
-#: onroad/status.py:133
+#: onroad/status.py:134
 msgid "Turning left"
 msgstr "กำลังเลี้ยวซ้าย"
 
-#: onroad/status.py:137
+#: onroad/status.py:138
 msgid "Slowing for traffic"
 msgstr "ชะลอตามการจราจร"
 
-#: onroad/status.py:139
+#: onroad/status.py:140
 #, python-brace-format
 msgid "Matching limit {}"
 msgstr "กำลังปรับตามขีดจำกัด {}"
 
-#: onroad/status.py:141
+#: onroad/status.py:142
 msgid "Coasting"
 msgstr "ไหลตามแรงเฉื่อย"
 
-#: onroad/status.py:147
+#: onroad/status.py:148
 #, python-brace-format
 msgid "{} · longer gap"
 msgstr "{} · เว้นระยะเพิ่ม"
 
-#: onroad/status.py:151
+#: onroad/status.py:152
 msgid "Car ahead moved"
 msgstr "รถคันหน้าเคลื่อนแล้ว"
 
-#: onroad/status.py:153
+#: onroad/status.py:154
 msgid "Ready · tap resume"
 msgstr "พร้อม · กด Resume"
 
-#: onroad/status.py:155
+#: onroad/status.py:156
 msgid "Steering only"
 msgstr "บังคับเลี้ยวเท่านั้น"
 
-#: onroad/status.py:159
+#: onroad/status.py:162
 #, python-brace-format
 msgid "Low on RAM · {}% used"
 msgstr "RAM เหลือน้อย · ใช้ไป {}%"
 
-#: onroad/status.py:116
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: onroad/status.py:175
+msgid "Waiting for GPS"
+msgstr "Waiting for GPS"
+
+#: onroad/status.py:117
 #, python-brace-format
 msgid "Changing lanes {}"
 msgstr "กำลังเปลี่ยนเลนไปทาง{}"
 
-#: onroad/status.py:123
+#: onroad/status.py:124
 #, python-brace-format
 msgid "{} for stop sign"
 msgstr "{}สำหรับป้ายหยุด"
 
-#: onroad/status.py:135
+#: onroad/status.py:136
 msgid "Turning right"
 msgstr "กำลังเลี้ยวขวา"
 
-#: onroad/status.py:143
+#: onroad/status.py:144
 msgid "Pulse & glide · gliding"
 msgstr "เร่งแล้วไหล · กำลังไหล"
 
-#: onroad/status.py:143
+#: onroad/status.py:144
 msgid "Pulse & glide"
 msgstr "เร่งแล้วไหล"
 
-#: onroad/status.py:101
+#: onroad/status.py:102
 msgid "Steering paused for signal"
 msgstr "พักการบังคับเลี้ยวเมื่อเปิดไฟเลี้ยว"
 
-#: onroad/status.py:103
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: onroad/status.py:183
+msgid "Using offline maps"
+msgstr "Using offline maps"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: onroad/status.py:183
+msgid "Using online maps"
+msgstr "Using online maps"
+
+#: onroad/status.py:104
 msgid "Steering paused after turn"
 msgstr "พักการบังคับเลี้ยวหลังเลี้ยว"
 
-#: onroad/status.py:126
+#: onroad/status.py:127
 msgid "Stopping ahead"
 msgstr "กำลังหยุดข้างหน้า"
 
-#: onroad/status.py:105
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: onroad/status.py:187
+msgid "Offline maps unavailable"
+msgstr "Offline maps unavailable"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: onroad/status.py:187
+#: routing_status.py:34
+msgid "Route unavailable"
+msgstr "Route unavailable"
+
+#: onroad/status.py:106
 #, python-brace-format
 msgid "Steering paused · under {} {}"
 msgstr "พักการบังคับเลี้ยว · ต่ำกว่า {} {}"
@@ -1161,18 +1215,18 @@ msgid "Byp"
 msgstr "Byp"
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
-#: onroad/view.py:580
+#: onroad/view.py:609
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
-#: onroad/view.py:580
+#: onroad/view.py:609
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/view.py:581
+#: onroad/view.py:610
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{} ขั้นต่ำ · {}"
@@ -1232,13 +1286,13 @@ msgstr "บันทึกการขับขี่"
 
 #: ram.py:57
 #: settings/device_sections.py:357
-#: settings/search.py:189
+#: settings/search.py:192
 msgid "Uploads"
 msgstr "การอัปโหลด"
 
 #: ram.py:58
 #: ram.py:59
-#: ram.py:67
+#: ram.py:69
 msgid "Remote access"
 msgstr "การเข้าถึงระยะไกล"
 
@@ -1247,42 +1301,46 @@ msgid "Speed limits and curves"
 msgstr "จำกัดความเร็วและทางโค้ง"
 
 #: ram.py:61
+#: ram.py:62
+#: ram.py:63
 msgid "Routing"
 msgstr "การหาเส้นทาง"
 
-#: ram.py:62
+#: ram.py:64
 msgid "Sounds"
 msgstr "เสียง"
 
-#: ram.py:63
+#: ram.py:65
 msgid "Car interface"
 msgstr "อินเทอร์เฟซรถ"
 
-#: ram.py:64
+#: ram.py:66
 msgid "Starts and stops the rest"
 msgstr "เริ่มและหยุดส่วนอื่น"
 
-#: ram.py:65
+#: ram.py:67
 msgid "StarPilot's planning"
 msgstr "การวางแผนของ StarPilot"
 
-#: ram.py:66
+#: ram.py:68
 msgid "Speed limit sign reading"
 msgstr "การอ่านป้ายจำกัดความเร็ว"
 
-#: ram.py:68
+#: ram.py:70
 msgid "Power and temperature"
 msgstr "พลังงานและอุณหภูมิ"
 
-#: ram.py:69
+#: ram.py:71
 msgid "Bluetooth remote"
 msgstr "รีโมต Bluetooth"
 
-#: ram.py:70
+#: ram.py:72
 msgid "Car connection"
 msgstr "การเชื่อมต่อรถ"
 
 #: routemap.py:154
+#: routing_status.py:7
+#: routing_status.py:8
 msgid "Finding a route…"
 msgstr "กำลังค้นหาเส้นทาง…"
 
@@ -1307,6 +1365,132 @@ msgstr "{} ขั้นต่ำ"
 #, python-brace-format
 msgid "{} h {} min"
 msgstr "{} ชั่วโมง {} นาที"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:10
+msgid "Installation failed. Check the connection and package."
+msgstr "Installation failed. Check the connection and package."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:11
+msgid "Online routing is selected"
+msgstr "Online routing is selected"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:12
+msgid "Offline routing data ready"
+msgstr "Offline routing data ready"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:13
+#: routing_status.py:14
+msgid "Download maps for this region"
+msgstr "Download maps for this region"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:15
+msgid "Routing data needs to be installed again"
+msgstr "Routing data needs to be installed again"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:16
+msgid "This trip needs more routing data"
+msgstr "This trip needs more routing data"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:17
+msgid "No offline route found for this trip"
+msgstr "No offline route found for this trip"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:18
+msgid "Routing is busy. Trying again…"
+msgstr "Routing is busy. Trying again…"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:19
+msgid "The route took too long. Trying again…"
+msgstr "The route took too long. Trying again…"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:20
+msgid "Routing is unavailable. Trying again…"
+msgstr "Routing is unavailable. Trying again…"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:21
+msgid "Routing returned an unusable route"
+msgstr "Routing returned an unusable route"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:22
+msgid "This place has no usable coordinates"
+msgstr "This place has no usable coordinates"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:23
+msgid "Waiting for a fresh GPS fix"
+msgstr "Waiting for a fresh GPS fix"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:24
+msgid "Finding another offline route…"
+msgstr "Finding another offline route…"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:25
+msgid "Park and end the route to change routing data"
+msgstr "Park and end the route to change routing data"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:26
+msgid "There is not enough storage for this package"
+msgstr "There is not enough storage for this package"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:27
+msgid "This package is already installed with different data"
+msgstr "This package is already installed with different data"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:28
+msgid "Installation cancelled"
+msgstr "Installation cancelled"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:29
+msgid "Finding the updated route…"
+msgstr "Finding the updated route…"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:30
+msgid "Map downloads are unavailable. Try again when connected."
+msgstr "Map downloads are unavailable. Try again when connected."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:31
+msgid "Map download failed. Existing maps are kept."
+msgstr "Map download failed. Existing maps are kept."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:32
+msgid "Road data download did not finish. Try again when connected."
+msgstr "Road data download did not finish. Try again when connected."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:33
+msgid "Offline routes are not available for every selected region."
+msgstr "Offline routes are not available for every selected region."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:35
+msgid "Online routing is unavailable"
+msgstr "Online routing is unavailable"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: routing_status.py:40
+msgid "Routing is unavailable"
+msgstr "Routing is unavailable"
 
 #: settings/alerts.py:43
 #: settings/alerts.py:93
@@ -1362,53 +1546,53 @@ msgid "When you need to steer or brake now"
 msgstr "เมื่อคุณต้องการบังคับเลี้ยวหรือเบรกตอนนี้"
 
 #: settings/alerts.py:46
-#: settings/search.py:118
+#: settings/search.py:121
 msgid "Green Light"
 msgstr "ไฟเขียว"
 
 #: settings/alerts.py:46
-#: settings/search.py:118
+#: settings/search.py:121
 msgid "When the light turns green and you are stopped"
 msgstr "เมื่อไฟเปลี่ยนเป็นสีเขียวและคุณถูกหยุด"
 
 #: settings/alerts.py:47
-#: settings/search.py:119
+#: settings/search.py:122
 msgid "Lead Departure"
 msgstr "รถคันหน้าออกตัว"
 
 #: settings/alerts.py:47
-#: settings/search.py:119
+#: settings/search.py:122
 msgid "When the car ahead pulls away"
 msgstr "เมื่อรถคันหน้าออกตัว"
 
 #: settings/alerts.py:48
-#: settings/search.py:120
+#: settings/search.py:123
 msgid "Speed Limit Change"
 msgstr "การเปลี่ยนแปลงขีดจำกัดความเร็ว"
 
 #: settings/alerts.py:48
-#: settings/search.py:120
+#: settings/search.py:123
 msgid "When the posted limit changes"
 msgstr "เมื่อขีดจำกัดที่โพสต์เปลี่ยนแปลง"
 
 #: settings/alerts.py:49
-#: settings/search.py:121
+#: settings/search.py:124
 msgid "Loud Blind Spot"
 msgstr "เสียงเตือนจุดบอดดัง"
 
 #: settings/alerts.py:49
-#: settings/search.py:121
+#: settings/search.py:124
 msgid "Signalling into an occupied lane, even when paused"
 msgstr "ส่งสัญญาณเข้าสู่เลนที่ถูกครอบครองแม้ว่าจะหยุดชั่วคราวก็ตาม"
 
 #: settings/alerts.py:50
 #: settings/search.py:91
-#: settings/search.py:122
+#: settings/search.py:125
 msgid "Weather heads-up"
 msgstr "แจ้งเตือนสภาพอากาศล่วงหน้า"
 
 #: settings/alerts.py:50
-#: settings/search.py:122
+#: settings/search.py:125
 msgid "Once, when rain, snow or storms are coming"
 msgstr "ครั้งหนึ่ง เมื่อฝน หิมะ หรือพายุกำลังมา"
 
@@ -1468,7 +1652,7 @@ msgid "Reset to Normal"
 msgstr "รีเซ็ตเป็นปกติ"
 
 #: settings/alerts.py:173
-#: settings/search.py:117
+#: settings/search.py:120
 msgid "Volume"
 msgstr "ระดับเสียง"
 
@@ -1531,7 +1715,7 @@ msgid "A sound plays in {}…"
 msgstr "มีเสียงเล่นใน {}..."
 
 #: settings/bluetooth_tab.py:54
-#: settings/speed_steering.py:412
+#: settings/speed_steering.py:425
 msgid "Not set"
 msgstr "ไม่ได้ตั้งค่า"
 
@@ -1812,7 +1996,7 @@ msgid "No devices found yet."
 msgstr "ไม่พบอุปกรณ์เลย"
 
 #: settings/bundles.py:43
-#: settings/search.py:106
+#: settings/search.py:109
 msgid "Developer View"
 msgstr "มุมมองนักพัฒนา"
 
@@ -1821,7 +2005,7 @@ msgid "Sidebar with live metrics, CPU, GPU, memory and temperatures, and where s
 msgstr "แถบด้านข้าง พร้อมการวัดสด, CPU, GPU, หน่วยความจำและอุณหภูมิ และที่มาของการจำกัดความเร็ว"
 
 #: settings/bundles.py:47
-#: settings/search.py:107
+#: settings/search.py:110
 msgid "Lead Insights"
 msgstr "ข้อมูลรถคันหน้า"
 
@@ -1836,12 +2020,13 @@ msgid "Tuner Mode"
 msgstr "โหมดปรับละเอียด"
 
 #: settings/bundles.py:52
-#: settings/search.py:139
+#: settings/search.py:142
 msgid "Fine-tuning screens for gas, brake, steering and following"
 msgstr "หน้าปรับละเอียดคันเร่ง เบรก การบังคับเลี้ยวและระยะตามรถ"
 
 #: settings/can_recorder.py:13
-#: settings/maps.py:405
+#: settings/map_source.py:95
+#: settings/maps.py:524
 msgid "Ready"
 msgstr "พร้อม"
 
@@ -1964,7 +2149,7 @@ msgstr "สถานะการทดสอบ"
 
 #: settings/can_recorder.py:71
 #: settings/developer.py:154
-#: settings/search.py:193
+#: settings/search.py:196
 msgid "CAN test recorder"
 msgstr "เครื่องบันทึกทดสอบ CAN"
 
@@ -2050,8 +2235,8 @@ msgstr "การเชื่อมต่อ"
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: settings/connections.py:64
+#: settings/map_source.py:193
 #: settings/network_tab.py:199
-#: settings/search.py:31
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -2063,7 +2248,7 @@ msgstr "เซลลูล่าร์"
 
 #: settings/connections.py:69
 #: settings/search.py:31
-#: settings/search.py:211
+#: settings/search.py:214
 msgid "Car Audio & Devices"
 msgstr "เครื่องเสียงรถยนต์และอุปกรณ์"
 
@@ -2072,7 +2257,7 @@ msgid "openpilot longitudinal control is in alpha for this car and turns off Aut
 msgstr "openpilot การควบคุมตามยาวอยู่ในอัลฟ่าสำหรับรถคันนี้ และปิดระบบเบรกฉุกเฉินอัตโนมัติ (AEB) ระบบครูซคอนโทรลของรถเป็นค่าเริ่มต้น แนะนำให้ใช้โหมดทดลองด้วย openpilot รีสตาร์ทหากรถเปิดอยู่"
 
 #: settings/developer.py:145
-#: settings/search.py:198
+#: settings/search.py:201
 msgid "openpilot Longitudinal (Alpha)"
 msgstr "การควบคุมคันเร่งและเบรกของ openpilot (อัลฟา)"
 
@@ -2103,7 +2288,7 @@ msgstr "เพิ่มกุญแจสาธารณะทุกอันใ
 
 #: settings/developer.py:155
 #: settings/search.py:30
-#: settings/search.py:192
+#: settings/search.py:195
 msgid "Developer"
 msgstr "นักพัฒนา"
 
@@ -2128,7 +2313,7 @@ msgstr "เปิดอยู่"
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: settings/developer.py:148
-#: settings/search.py:194
+#: settings/search.py:197
 msgid "ADB"
 msgstr "ADB"
 
@@ -2138,7 +2323,7 @@ msgstr "เชื่อมต่อผ่าน USB หรือเครือ�
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: settings/developer.py:149
-#: settings/search.py:195
+#: settings/search.py:198
 msgid "SSH"
 msgstr "SSH"
 
@@ -2147,13 +2332,13 @@ msgid "Remote shell access with the keys below"
 msgstr "การเข้าถึงเชลล์ระยะไกลด้วยปุ่มด้านล่าง"
 
 #: settings/developer.py:150
-#: settings/search.py:196
+#: settings/search.py:199
 #: selfdrive/ui/layouts/settings/developer.py:53
 msgid "SSH Keys"
 msgstr "คีย์ SSH"
 
 #: settings/developer.py:151
-#: settings/search.py:197
+#: settings/search.py:200
 #: selfdrive/ui/layouts/settings/developer.py:56
 msgid "Joystick Debug Mode"
 msgstr "โหมดดีบักจอยสติ๊ก"
@@ -2163,18 +2348,18 @@ msgid "Drive openpilot's controls from a joystick. Change it with the car off."
 msgstr "ขับเคลื่อนส่วนควบคุมของ openpilot จากจอยสติ๊ก เปลี่ยนตอนรถดับครับ."
 
 #: settings/developer.py:153
-#: settings/search.py:199
+#: settings/search.py:202
 #: selfdrive/ui/layouts/settings/developer.py:72
 msgid "UI Debug Mode"
 msgstr "โหมดดีบัก UI"
 
 #: settings/developer.py:153
-#: settings/search.py:199
+#: settings/search.py:202
 msgid "Shows touches and the frame rate"
 msgstr "แสดงการสัมผัสและอัตราเฟรม"
 
 #: settings/developer.py:154
-#: settings/search.py:193
+#: settings/search.py:196
 msgid "Record traffic and mark manual lock/unlock actions"
 msgstr "บันทึกการรับส่งข้อมูลและทำเครื่องหมายการดำเนินการล็อค/ปลดล็อคด้วยตนเอง"
 
@@ -2272,7 +2457,7 @@ msgstr "เลิกจับคู่"
 
 #: settings/device.py:264
 #: settings/device.py:107
-#: settings/search.py:168
+#: settings/search.py:171
 msgid "Remote Access"
 msgstr "การเข้าถึงระยะไกล"
 
@@ -2281,7 +2466,7 @@ msgid "Reach this device from the Galaxy web app"
 msgstr "เข้าถึงอุปกรณ์นี้จากเว็บแอป Galaxy"
 
 #: settings/device.py:68
-#: settings/search.py:135
+#: settings/search.py:138
 #: selfdrive/ui/layouts/settings/device.py:152
 msgid "Driver Camera"
 msgstr "กล้องผู้ขับขี่"
@@ -2291,25 +2476,25 @@ msgid "Check that it can see your face. The car must be off."
 msgstr "ตรวจสอบว่าสามารถมองเห็นใบหน้าของคุณได้ รถจะต้องออก"
 
 #: settings/device.py:69
-#: settings/search.py:136
+#: settings/search.py:139
 #: settings/speed_steering.py:368
 msgid "Driver Monitoring"
 msgstr "ตรวจสอบผู้ขับขี่"
 
 #: settings/device.py:69
-#: settings/search.py:136
+#: settings/search.py:139
 msgid "Forget which side of the car the driver sits on"
 msgstr "ลืมไปเลยว่าคนขับนั่งฝั่งไหนของรถ"
 
 #: settings/device.py:92
 #: settings/device.py:92
-#: settings/search.py:175
+#: settings/search.py:178
 msgid "Power Off"
 msgstr "ปิดเครื่อง"
 
 #: settings/device.py:95
 #: settings/device.py:96
-#: settings/search.py:174
+#: settings/search.py:177
 msgid "Restart"
 msgstr "รีสตาร์ท"
 
@@ -2320,7 +2505,7 @@ msgstr "ปรับเทียบใหม่"
 
 #: settings/device.py:226
 #: settings/device.py:114
-#: settings/search.py:171
+#: settings/search.py:174
 msgid "Regulatory"
 msgstr "ระเบียบข้อบังคับ"
 
@@ -2383,7 +2568,7 @@ msgstr "การสอบเทียบ เริ่มต้นใหม่ o
 
 #: settings/device.py:117
 #: settings/search.py:30
-#: settings/search.py:166
+#: settings/search.py:169
 msgid "This Device"
 msgstr "อุปกรณ์นี้"
 
@@ -2425,22 +2610,22 @@ msgid "Your code appears here once you choose a password"
 msgstr "รหัสของคุณจะปรากฏที่นี่เมื่อคุณเลือกรหัสผ่าน"
 
 #: settings/device.py:104
-#: settings/search.py:167
+#: settings/search.py:170
 msgid "Phone App"
 msgstr "แอพโทรศัพท์"
 
 #: settings/device.py:110
-#: settings/search.py:169
+#: settings/search.py:172
 msgid "Camera Calibration"
 msgstr "การปรับเทียบกล้อง"
 
 #: settings/device.py:112
-#: settings/search.py:170
+#: settings/search.py:173
 msgid "How It Works"
 msgstr "มันทำงานอย่างไร"
 
 #: settings/device.py:112
-#: settings/search.py:170
+#: settings/search.py:173
 msgid "Rules, features and limits"
 msgstr "กฎ คุณสมบัติ และข้อจำกัด"
 
@@ -2449,13 +2634,13 @@ msgid "MORE"
 msgstr "เพิ่มเติม"
 
 #: settings/device.py:115
-#: settings/search.py:172
+#: settings/search.py:175
 msgid "Device ID and Serial"
 msgstr "รหัสอุปกรณ์และซีเรียล"
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: settings/device.py:116
-#: settings/search.py:173
+#: settings/search.py:176
 msgid "IMEI"
 msgstr "IMEI"
 
@@ -2492,12 +2677,13 @@ msgstr "ทุกไดรฟ์ที่บันทึกไว้และว
 msgid "Backup {}"
 msgstr "สำรอง {}"
 
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/device_sections.py:306
-msgid "Speed limits and curves will need a connection until maps download again. Your regions stay chosen, so a scheduled update downloads them again."
-msgstr "การจำกัดความเร็วและเส้นโค้งจะต้องเชื่อมต่อจนกว่าแผนที่จะดาวน์โหลดอีกครั้ง ภูมิภาคของคุณยังคงถูกเลือก ดังนั้นการอัปเดตตามกำหนดการจะดาวน์โหลดอีกครั้ง"
+msgid "Remove offline routes, speed limits and street names from this device. Saved places stay saved. Your regions stay chosen, so a scheduled update downloads them again."
+msgstr "Remove offline routes, speed limits and street names from this device. Saved places stay saved. Your regions stay chosen, so a scheduled update downloads them again."
 
 #: settings/device_sections.py:50
-#: settings/maps.py:345
+#: settings/maps.py:444
 msgid "Parked"
 msgstr "จอดอยู่"
 
@@ -2556,17 +2742,17 @@ msgstr "ลบ"
 
 #: settings/device_sections.py:317
 #: settings/display.py:325
-#: settings/maps.py:209
+#: settings/maps.py:244
 msgid "Offline Maps"
 msgstr "แผนที่ออฟไลน์"
 
 #: settings/device_sections.py:337
-#: settings/search.py:186
+#: settings/search.py:189
 msgid "Unused Models"
 msgstr "โมเดล AI ที่ไม่ได้ใช้"
 
 #: settings/device_sections.py:341
-#: settings/search.py:187
+#: settings/search.py:190
 msgid "Record Driver Camera"
 msgstr "บันทึกกล้องผู้ขับขี่"
 
@@ -2575,7 +2761,7 @@ msgid "Saved and uploaded with your drives. Restarts openpilot if the car is on.
 msgstr "บันทึกและอัปโหลดพร้อมกับไดรฟ์ของคุณ รีสตาร์ท openpilot หากรถเปิดอยู่"
 
 #: settings/device_sections.py:343
-#: settings/search.py:188
+#: settings/search.py:191
 msgid "Record Microphone"
 msgstr "บันทึกไมโครโฟน"
 
@@ -2585,13 +2771,13 @@ msgstr "เสียงห้องโดยสารในการบันท
 
 #: settings/device_sections.py:158
 #: settings/device_sections.py:171
-#: settings/search.py:179
+#: settings/search.py:182
 msgid "Language"
 msgstr "ภาษา"
 
 #: settings/device_sections.py:175
 #: settings/search.py:30
-#: settings/search.py:176
+#: settings/search.py:179
 msgid "General"
 msgstr "ทั่วไป"
 
@@ -2615,7 +2801,7 @@ msgid "Models"
 msgstr "รุ่น AI"
 
 #: settings/device_sections.py:313
-#: settings/maps.py:209
+#: settings/maps.py:244
 msgid "Speed limits and curves work without a connection"
 msgstr "การจำกัดความเร็วและเส้นโค้งทำงานได้โดยไม่ต้องเชื่อมต่อ"
 
@@ -2641,7 +2827,7 @@ msgstr[0] "จะลบโมเดลที่ไม่ได้ใช้ {} �
 
 #: settings/device_sections.py:358
 #: settings/search.py:30
-#: settings/search.py:183
+#: settings/search.py:186
 msgid "Storage & Data"
 msgstr "พื้นที่เก็บข้อมูลและข้อมูล"
 
@@ -2654,49 +2840,49 @@ msgid "For menus and alerts"
 msgstr "สำหรับเมนูและการเตือน"
 
 #: settings/device_sections.py:169
-#: settings/search.py:177
+#: settings/search.py:180
 msgid "Units"
 msgstr "หน่วย"
 
 #: settings/device_sections.py:169
-#: settings/search.py:177
+#: settings/search.py:180
 msgid "Speed and distance everywhere"
 msgstr "ความเร็วและระยะทางทุกที่"
 
 #: settings/device_sections.py:170
-#: settings/search.py:178
+#: settings/search.py:181
 #: sidebar.py:148
 msgid "Temperature"
 msgstr "อุณหภูมิ"
 
 #: settings/device_sections.py:170
-#: settings/search.py:178
+#: settings/search.py:181
 msgid "For the weather forecast"
 msgstr "สำหรับการพยากรณ์อากาศ"
 
 #: settings/device_sections.py:172
-#: settings/search.py:180
+#: settings/search.py:183
 msgid "Screen Brightness"
 msgstr "ความสว่างหน้าจอ"
 
 #: settings/device_sections.py:172
-#: settings/search.py:180
+#: settings/search.py:183
 msgid "Auto follows ambient light, day and night"
 msgstr "อัตโนมัติปรับตามแสงรอบข้างทั้งกลางวันและกลางคืน"
 
 #: settings/device_sections.py:174
-#: settings/search.py:181
+#: settings/search.py:184
 msgid "Standby"
 msgstr "สแตนด์บาย"
 
 #: settings/device_sections.py:174
-#: settings/search.py:181
+#: settings/search.py:184
 msgid "Screen sleeps while driving, wakes for alerts"
 msgstr "หน้าจอพักขณะขับรถ ปลุกเมื่อมีการแจ้งเตือน"
 
 #: settings/device_sections.py:194
 #: settings/search.py:30
-#: settings/search.py:182
+#: settings/search.py:185
 msgid "Backups"
 msgstr "การสำรองข้อมูล"
 
@@ -2719,12 +2905,12 @@ msgid "Delete offline maps?"
 msgstr "ลบแผนที่ออฟไลน์หรือไม่"
 
 #: settings/device_sections.py:349
-#: settings/search.py:184
+#: settings/search.py:187
 msgid "Recorded Drives"
 msgstr "ไดรฟ์ที่บันทึกไว้"
 
 #: settings/device_sections.py:349
-#: settings/search.py:184
+#: settings/search.py:187
 msgid "Oldest drives are removed when space runs low"
 msgstr "ไดรฟ์ที่เก่าที่สุดจะถูกลบออกเมื่อพื้นที่เหลือน้อย"
 
@@ -2733,7 +2919,7 @@ msgid "RECORDING & UPLOADS"
 msgstr "การบันทึกและการอัปโหลด"
 
 #: settings/device_sections.py:357
-#: settings/search.py:189
+#: settings/search.py:192
 msgid "Drive logs and video for debugging"
 msgstr "บันทึกและวิดีโอของไดรฟ์ สำหรับการดีบัก"
 
@@ -2926,7 +3112,7 @@ msgstr "หน้าจอขับขี่"
 
 #: settings/display.py:293
 #: settings/display.py:313
-#: settings/search.py:110
+#: settings/search.py:113
 msgid "Boot Logo"
 msgstr "โลโก้บูท"
 
@@ -2965,62 +3151,62 @@ msgid "Whimsy animations cross the road above the bar while you signal; the chev
 msgstr "แอนิเมชั่นแปลก ๆ ข้ามถนนเหนือคานในขณะที่คุณส่งสัญญาณ บั้งตามความเร็วคงอยู่"
 
 #: settings/display.py:267
-#: settings/search.py:100
+#: settings/search.py:103
 msgid "Camera View"
 msgstr "มุมมองกล้อง"
 
 #: settings/display.py:267
-#: settings/search.py:100
+#: settings/search.py:103
 msgid "Wide shows more of the road at low speed"
 msgstr "Wide เผยให้เห็นถนนได้มากขึ้นที่ความเร็วต่ำ"
 
 #: settings/display.py:269
-#: settings/search.py:101
+#: settings/search.py:104
 msgid "Driver Camera in Reverse"
 msgstr "กล้องผู้ขับขี่ขณะถอยหลัง"
 
 #: settings/display.py:269
-#: settings/search.py:101
+#: settings/search.py:104
 msgid "Shows the inside camera while backing up"
 msgstr "แสดงกล้องภายในขณะสำรองข้อมูล"
 
 #: settings/display.py:271
-#: settings/search.py:102
+#: settings/search.py:105
 msgid "Driving Style Banner"
 msgstr "แบนเนอร์สไตล์การขับขี่"
 
 #: settings/display.py:271
-#: settings/search.py:102
+#: settings/search.py:105
 msgid "Shows the current style when it changes"
 msgstr "แสดงสไตล์ปัจจุบันเมื่อมีการเปลี่ยนแปลง"
 
 #: settings/display.py:273
-#: settings/search.py:103
+#: settings/search.py:106
 msgid "Compass"
 msgstr "เข็มทิศ"
 
 #: settings/display.py:273
-#: settings/search.py:103
+#: settings/search.py:106
 msgid "Heading beside the street name, like NE"
 msgstr "มุ่งหน้าข้างชื่อถนน เช่น NE"
 
 #: settings/display.py:274
-#: settings/search.py:104
+#: settings/search.py:107
 msgid "Blind Spot Highlights"
 msgstr "ไฮไลต์จุดบอด"
 
 #: settings/display.py:274
-#: settings/search.py:104
+#: settings/search.py:107
 msgid "Colors the screen edge and lane when a car is beside you"
 msgstr "เติมสีสันให้กับขอบหน้าจอและช่องทางเมื่อมีรถอยู่ข้างๆ คุณ"
 
 #: settings/display.py:276
-#: settings/search.py:105
+#: settings/search.py:108
 msgid "Lead Car Tag"
 msgstr "ป้ายรถคันหน้า"
 
 #: settings/display.py:276
-#: settings/search.py:105
+#: settings/search.py:108
 msgid "Numbers above the car ahead. Off keeps only the bar under it"
 msgstr "เบอร์เหนือรถข้างหน้า ปิดจะเก็บเฉพาะแถบที่อยู่ด้านล่างเท่านั้น"
 
@@ -3031,60 +3217,58 @@ msgstr "ผู้ใช้ขั้นสูง"
 
 #: settings/display.py:294
 #: settings/display.py:313
-#: settings/search.py:110
+#: settings/search.py:113
 msgid "Shown while the device starts up"
 msgstr "แสดงในขณะที่อุปกรณ์เริ่มทำงาน"
 
 #: settings/display.py:301
 #: settings/display.py:311
-#: settings/search.py:108
+#: settings/search.py:111
 msgid "Path Style"
 msgstr "สไตล์พาธ"
 
 #: settings/display.py:306
 #: settings/display.py:312
-#: settings/search.py:109
+#: settings/search.py:112
 msgid "Turn Signal"
 msgstr "ไฟเลี้ยว"
 
 #: settings/display.py:311
-#: settings/search.py:108
+#: settings/search.py:111
 msgid "Color, width and edges as one preset"
 msgstr "สี ความกว้าง และขอบเป็นพรีเซ็ตเดียว"
 
 #: settings/display.py:312
-#: settings/search.py:109
+#: settings/search.py:112
 msgid "Chevrons by the speed, or a whimsical animation"
 msgstr "บั้งตามความเร็วหรือภาพเคลื่อนไหวที่แปลกประหลาด"
 
 #: settings/display.py:314
-#: settings/search.py:111
+#: settings/search.py:114
 msgid "Startup Message"
 msgstr "ข้อความเริ่มต้น"
 
 #: settings/display.py:321
-#: settings/search.py:112
+#: settings/search.py:115
 msgid "Turn-by-Turn on Screen"
 msgstr "เปิด-ต่อ-เลี้ยวบนหน้าจอ"
 
 #: settings/display.py:321
-#: settings/search.py:112
+#: settings/search.py:115
 msgid "Next turn, arrival time and distance while navigating"
 msgstr "เลี้ยวถัดไป เวลาถึง และระยะทางขณะนำทาง"
 
 #: settings/display.py:323
-#: settings/search.py:113
+#: settings/search.py:116
 msgid "Speed Limit Sign"
 msgstr "ป้ายจำกัดความเร็ว"
 
 #: settings/display.py:323
-#: settings/search.py:113
+#: settings/search.py:116
 msgid "US style, or the round Vienna style used in most other countries"
 msgstr "สไตล์ US หรือสไตล์เวียนนาทรงกลมที่ใช้ในประเทศอื่นๆ ส่วนใหญ่"
 
 #: settings/display.py:325
-#: settings/search.py:97
-#: settings/search.py:114
 msgid "Speed limits and routing without a connection"
 msgstr "จำกัดความเร็วและการกำหนดเส้นทางโดยไม่ต้องเชื่อมต่อ"
 
@@ -3131,7 +3315,7 @@ msgid "Sets {} options"
 msgstr "ตั้งค่าตัวเลือก {}"
 
 #: settings/display.py:314
-#: settings/search.py:111
+#: settings/search.py:114
 msgid "The banner when you start the car"
 msgstr "ป้ายประกาศเมื่อคุณสตาร์ทรถ"
 
@@ -3174,7 +3358,7 @@ msgstr "ความเร็วและการบังคับเลี้
 
 #: settings/driving_tab.py:131
 #: settings/search.py:25
-#: settings/search.py:99
+#: settings/search.py:102
 msgid "Display"
 msgstr "จอแสดงผล"
 
@@ -3186,13 +3370,13 @@ msgstr "โมเดลขับขี่"
 
 #: settings/driving_tab.py:136
 #: settings/search.py:26
-#: settings/search.py:125
+#: settings/search.py:128
 msgid "Vehicle"
 msgstr "รถยนต์"
 
 #: settings/driving_tab.py:138
 #: settings/search.py:26
-#: settings/search.py:129
+#: settings/search.py:132
 msgid "Assistance"
 msgstr "การช่วยขับ"
 
@@ -3247,212 +3431,516 @@ msgstr "{} ตัวโปรด"
 msgid " · Not set"
 msgstr " · ไม่ได้ตั้งค่า"
 
-#: settings/maps.py:406
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:209
+msgid "Download selected maps"
+msgstr "Download selected maps"
+
+#. English fallback for new map-selection wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:38
+msgid "None selected"
+msgstr "None selected"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:77
+msgid "Midwest"
+msgstr "Midwest"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:77
+msgid "West"
+msgstr "West"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:77
+msgid "South"
+msgstr "South"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:77
+msgid "Northeast"
+msgstr "Northeast"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:116
+#: settings/maps.py:601
+#: settings/maps.py:614
+msgid "All maps ready"
+msgstr "All maps ready"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:117
+msgid "Choose where you drive"
+msgstr "Choose where you drive"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:160
+msgid "Road data ready; offline routes downloading."
+msgstr "Road data ready; offline routes downloading."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:202
+#: settings/map_source.py:206
+#: settings/maps.py:250
+msgid "Update maps"
+msgstr "Update maps"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:204
+msgid "Download road data"
+msgstr "Download road data"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:208
+#, python-brace-format
+msgid "Download {} MiB"
+msgstr "Download {} MiB"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:85
+msgid "Road data ready"
+msgstr "Road data ready"
+
+#: settings/map_source.py:85
+#: sidebar.py:138
+msgid "Not downloaded"
+msgstr "ไม่ได้ดาวน์โหลด"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:86
+#: settings/maps.py:312
+msgid "Routes ready"
+msgstr "Routes ready"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:93
+msgid "Already downloaded"
+msgstr "Already downloaded"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:94
+msgid "Download missing road data"
+msgstr "Download missing road data"
+
+#. English fallback for new map-selection wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:95
+msgid "Removed on update"
+msgstr "Removed on update"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:98
+msgid "Routing coverage is not available for every selected region."
+msgstr "Routing coverage is not available for every selected region."
+
+#. English fallback for new map-progress wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:133
+msgid "Maps download one region at a time."
+msgstr "Maps download one region at a time."
+
+#. English fallback for approved map-progress wording; translation pending.
+#: settings/map_source.py:162
+msgid "Some map data is shared between these states."
+msgstr "Some map data is shared between these states."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:86
+msgid "Routes not downloaded"
+msgstr "Routes not downloaded"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:86
+msgid "Routes not available yet"
+msgstr "Routes not available yet"
+
+#. English fallback for new map-selection wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:99
+msgid "Updates offline routes to match this selection."
+msgstr "Updates offline routes to match this selection."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:100
+msgid "Downloads all missing map data for this selection."
+msgstr "Downloads all missing map data for this selection."
+
+#. English fallback for approved map-progress wording; translation pending.
+#: settings/map_source.py:134
+#: settings/map_source.py:163
+msgid "All selected regions are installed together."
+msgstr "All selected regions are installed together."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:96
+msgid "Not available for this region"
+msgstr "Not available for this region"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:97
+#: settings/maps.py:264
+#, python-brace-format
+msgid "{} MiB"
+msgstr "{} MiB"
+
+#. English fallback for new map-progress wording; translation pending, as permitted by AGENTS.md.
+#: settings/map_source.py:135
+msgid "All selected regions are ready."
+msgstr "All selected regions are ready."
+
+#. English fallback for approved map-progress wording; translation pending.
+#: settings/map_source.py:164
+msgid "Road data and offline routes are ready."
+msgstr "Road data and offline routes are ready."
+
+#: settings/maps.py:525
 msgid "Pauses if you start driving or lose Wi-Fi, and picks up where it stopped. Keep the device powered."
 msgstr "หยุดชั่วคราวหากคุณเริ่มขับรถหรือสูญเสีย Wi-Fi และไปต่อที่ที่หยุด เปิดเครื่องไว้"
 
-#: settings/maps.py:28
+#: settings/maps.py:29
 msgid "Weekly"
 msgstr "รายสัปดาห์"
 
-#: settings/maps.py:28
+#: settings/maps.py:29
 msgid "Monthly"
 msgstr "รายเดือน"
 
-#: settings/maps.py:405
+#: settings/maps.py:524
 msgid "Prepare"
 msgstr "เตรียมพร้อม"
 
-#: settings/maps.py:405
-#: settings/maps.py:177
-#: settings/maps.py:265
+#: settings/maps.py:524
+#: settings/maps.py:212
+#: settings/maps.py:211
 msgid "Download"
 msgstr "ดาวน์โหลด"
 
-#: settings/maps.py:405
+#: settings/maps.py:524
 msgid "Install"
 msgstr "ติดตั้ง"
 
-#: settings/maps.py:249
+#: settings/maps.py:252
+#: settings/maps.py:217
+msgid "Remove maps"
+msgstr "ลบแผนที่"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:279
+#: settings/speed_steering.py:438
+msgid "Routes, speed limits and street names without a connection"
+msgstr "Routes, speed limits and street names without a connection"
+
+#: settings/maps.py:327
 msgid "U.S. regions"
 msgstr "ภูมิภาคสหรัฐอเมริกา"
 
-#: settings/maps.py:249
+#: settings/maps.py:327
 msgid "U.S. states"
 msgstr "สหรัฐอเมริกา"
 
-#: settings/maps.py:249
+#: settings/maps.py:327
 msgid "Other countries"
 msgstr "ประเทศอื่นๆ"
 
-#: settings/maps.py:371
+#: settings/maps.py:470
 msgid "Park to delete offline maps"
 msgstr "จอดรถเพื่อลบแผนที่ออฟไลน์"
 
-#: settings/maps.py:376
+#: settings/maps.py:475
+#: settings/maps.py:479
 #: settings/model.py:404
 msgid "Wait for the download to finish"
 msgstr "รอให้การดาวน์โหลดเสร็จสิ้น"
 
-#: settings/maps.py:123
+#: settings/maps.py:596
+msgid "You can leave this screen. It keeps going in the background."
+msgstr "ออกจากหน้าจอนี้ได้เลยนะครับ มันยังคงดำเนินต่อไปในเบื้องหลัง"
+
+#: settings/maps.py:154
 msgid "Choose at least one region"
 msgstr "เลือกอย่างน้อยหนึ่งภูมิภาค"
 
-#: settings/maps.py:129
+#: settings/maps.py:162
 msgid "Cancelling…"
 msgstr "กำลังยกเลิก..."
 
-#: settings/maps.py:131
+#: settings/maps.py:164
 #, python-brace-format
 msgid "Downloading {} · {}%"
 msgstr "กำลังดาวน์โหลด {} · {}%"
 
-#: settings/maps.py:132
+#: settings/maps.py:165
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:253
 msgid "Downloaded"
 msgstr "ดาวน์โหลด แล้ว"
 
-#: settings/maps.py:132
+#: settings/maps.py:165
 msgid "Not downloaded yet"
 msgstr "ยังไม่ได้ดาวน์โหลด"
 
-#: settings/maps.py:165
+#: settings/maps.py:198
 #, python-brace-format
 msgid "{} of {} files · {}. Pauses if you drive or lose the connection."
 msgstr "{} ของไฟล์ {} · {} หยุดชั่วคราวหากคุณขับรถหรือขาดการเชื่อมต่อ"
 
-#: settings/maps.py:177
+#: settings/maps.py:212
 msgid "Update now"
 msgstr "อัพเดตทันที"
 
-#: settings/maps.py:461
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:590
 #, python-brace-format
-msgid "Downloading {}"
-msgstr "กำลังดาวน์โหลด {}"
+msgid "{} download stopped"
+msgstr "{} download stopped"
 
-#: settings/maps.py:462
-msgid "You can leave this screen. It keeps going in the background."
-msgstr "ออกจากหน้าจอนี้ได้เลยนะครับ มันยังคงดำเนินต่อไปในเบื้องหลัง"
-
-#: settings/maps.py:470
+#. English fallback for approved map-progress wording; translation pending.
+#: settings/maps.py:594
 #, python-brace-format
-msgid "{} of {} files"
-msgstr "{} ของไฟล์ {}"
+msgid "{} ready"
+msgstr "{} ready"
 
-#: settings/maps.py:470
-msgid "Getting ready"
-msgstr "เตรียมพร้อม"
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:625
+msgid " · Download stopped"
+msgstr " · Download stopped"
 
-#: settings/maps.py:472
+#: settings/maps.py:627
 #, python-brace-format
 msgid " · about {} min left"
 msgstr " · เหลือเวลาอีกประมาณ {} นาที"
 
-#: settings/maps.py:124
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:687
+msgid "Paused. Downloads continue when parked on Wi-Fi."
+msgstr "Paused. Downloads continue when parked on Wi-Fi."
+
+#: settings/maps.py:155
 #, python-brace-format
 msgid "Waiting: {}"
 msgstr "กำลังรอ: {}"
 
-#: settings/maps.py:147
-#: settings/maps.py:439
+#: settings/maps.py:180
+#: settings/maps.py:558
 msgid "Cancel download"
 msgstr "ยกเลิกการดาวน์โหลด"
 
-#: settings/maps.py:182
+#: settings/maps.py:217
 msgid "Park to remove maps"
 msgstr "จอดรถเพื่อลบแผนที่"
 
-#: settings/maps.py:182
-msgid "Remove maps"
-msgstr "ลบแผนที่"
-
-#: settings/maps.py:183
+#: settings/maps.py:218
+#: settings/maps.py:252
 msgid "Remove offline maps?"
 msgstr "ลบแผนที่ออฟไลน์หรือไม่"
 
-#: settings/maps.py:188
+#: settings/maps.py:223
 msgid "YOUR REGIONS"
 msgstr "ภูมิภาคของคุณ"
 
-#: settings/maps.py:189
+#: settings/maps.py:224
 msgid "Change them in Choose regions"
 msgstr "เปลี่ยนในเลือกภูมิภาค"
 
-#: settings/maps.py:199
+#: settings/maps.py:234
+#: settings/maps.py:271
 msgid "Keep up to date"
 msgstr "ติดตามข่าวสารอยู่เสมอ"
 
-#: settings/maps.py:201
+#: settings/maps.py:236
 msgid "Updates download only while parked and online"
 msgstr "อัพเดตดาวน์โหลดเฉพาะในขณะที่จอดและออนไลน์เท่านั้น"
 
-#: settings/maps.py:205
+#: settings/maps.py:240
 msgid "Without maps, speed limits need a connection."
 msgstr "หากไม่มีแผนที่ การจำกัดความเร็วจำเป็นต้องเชื่อมต่อ"
 
-#: settings/maps.py:255
-msgid "Add map regions"
-msgstr "เพิ่มขอบเขตแผนที่"
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:258
+msgid "DOWNLOADED REGIONS"
+msgstr "DOWNLOADED REGIONS"
 
-#: settings/maps.py:255
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:273
+msgid "One schedule for road data and offline routes, while parked on Wi-Fi."
+msgstr "One schedule for road data and offline routes, while parked on Wi-Fi."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:277
+msgid "Updates keep the current maps until the new maps are ready."
+msgstr "Updates keep the current maps until the new maps are ready."
+
+#. English fallback for new map-selection wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:334
+msgid "Pick where you drive. Maps for routes, speed limits and street names."
+msgstr "Pick where you drive. Maps for routes, speed limits and street names."
+
+#: settings/maps.py:335
 msgid "Pick a region, or switch to states for less storage"
 msgstr "เลือกภูมิภาค หรือสลับไปยังสถานะเพื่อให้พื้นที่จัดเก็บน้อยลง"
 
-#: settings/maps.py:256
-#: settings/maps.py:492
+#: settings/maps.py:336
+msgid "Add map regions"
+msgstr "เพิ่มขอบเขตแผนที่"
+
+#: settings/maps.py:337
+#: settings/maps.py:650
 msgid "REGIONS"
 msgstr "ภูมิภาค"
 
-#: settings/maps.py:345
+#: settings/maps.py:368
+msgid "SELECTED"
+msgstr "เลือก แล้ว"
+
+#: settings/maps.py:444
+#: settings/speed_steering.py:420
 #: sidebar.py:94
 msgid "Online"
 msgstr "ออนไลน์"
 
-#: settings/maps.py:492
-#, python-brace-format
-msgid "REGIONS · {} OF {} DONE"
-msgstr "ภูมิภาค · {} ของ {} เสร็จสิ้น"
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:483
+msgid "Park and end the route to remove maps"
+msgstr "Park and end the route to remove maps"
 
-#: settings/maps.py:502
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:559
+msgid "Retry download"
+msgstr "Retry download"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:590
+#, python-brace-format
+msgid "{} maps ready"
+msgstr "{} maps ready"
+
+#. English fallback for approved map-progress wording; translation pending.
+#: settings/maps.py:611
+msgid "Download complete · Building maps"
+msgstr "Download complete · Building maps"
+
+#. English fallback for new map-progress wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:649
+#, python-brace-format
+msgid "REGIONS · {} OF {} DOWNLOADED"
+msgstr "REGIONS · {} OF {} DOWNLOADED"
+
+#: settings/maps.py:660
 #, python-brace-format
 msgid "+{} more"
 msgstr "+{} เพิ่มเติม"
 
-#: settings/maps.py:195
-msgid "Choose regions"
-msgstr "เลือกภูมิภาค"
+#. English fallback for new map-progress wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:689
+msgid "Maps are ready. Existing saved places stay saved."
+msgstr "Maps are ready. Existing saved places stay saved."
 
-#: settings/maps.py:195
+#. English fallback for approved map-progress wording; translation pending.
+#: settings/maps.py:690
+msgid "Both map sets are ready. Existing saved places stay saved."
+msgstr "Both map sets are ready. Existing saved places stay saved."
+
+#: settings/maps.py:230
 msgid "Add or remove states, regions and countries"
 msgstr "เพิ่มหรือลบรัฐ ภูมิภาค และประเทศ"
 
-#: settings/maps.py:204
+#: settings/maps.py:239
+#: settings/maps.py:276
 #: settings/model.py:316
-#: selfdrive/ui/layouts/settings/starpilot/maps.py:363
 msgid "Storage"
 msgstr "อุปกรณ์จัดเก็บข้อมูล"
 
-#: settings/maps.py:312
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:260
+#: settings/maps.py:357
+msgid "Road data"
+msgstr "Road data"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:260
+msgid "Speed limits and street names"
+msgstr "Speed limits and street names"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:264
+#: settings/maps.py:360
+msgid "Offline routes"
+msgstr "Offline routes"
+
+#: settings/maps.py:411
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:583
 msgid "Whole U.S."
 msgstr "ทั่วทั้งสหรัฐอเมริกา"
 
-#: settings/maps.py:312
+#: settings/maps.py:411
 msgid "Every state and territory"
 msgstr "ทุกรัฐและดินแดน"
 
-#: settings/maps.py:270
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:591
+#, python-brace-format
+msgid "Preparing {} maps"
+msgstr "Preparing {} maps"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:601
+#: settings/maps.py:614
+msgid "Both map sets ready"
+msgstr "Both map sets ready"
+
+#. English fallback for approved map-progress wording; translation pending.
+#: settings/maps.py:612
+msgid "Download complete · Checking maps"
+msgstr "Download complete · Checking maps"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:612
+msgid "Download complete · Installing maps"
+msgstr "Download complete · Installing maps"
+
+#: settings/maps.py:650
+#, python-brace-format
+msgid "REGIONS · {} OF {} DONE"
+msgstr "ภูมิภาค · {} ของ {} เสร็จสิ้น"
+
+#: settings/maps.py:352
 #, python-brace-format
 msgid "{}: not yet"
 msgstr "{}: ยังไม่มี"
 
-#: settings/maps.py:274
-msgid "SELECTED"
-msgstr "เลือก แล้ว"
+#. English fallback for approved map-progress wording; translation pending.
+#: settings/maps.py:591
+#, python-brace-format
+msgid "Installing {}"
+msgstr "Installing {}"
 
-#: settings/maps.py:261
+#: settings/maps.py:592
+#, python-brace-format
+msgid "Downloading {}"
+msgstr "กำลังดาวน์โหลด {}"
+
+#. English fallback for new map-progress wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:618
+#, python-brace-format
+msgid "{} · {} of {}"
+msgstr "{} · {} of {}"
+
+#: settings/maps.py:619
+#: settings/maps.py:623
+msgid "Getting ready"
+msgstr "เตรียมพร้อม"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:621
+#, python-brace-format
+msgid "Offline routes · {} of {} MiB"
+msgstr "Offline routes · {} of {} MiB"
+
+#: settings/maps.py:342
 msgid "No regions available."
 msgstr "ไม่มีภูมิภาคที่พร้อมใช้งาน"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/maps.py:623
+#, python-brace-format
+msgid "Road data · {} of {} files"
+msgstr "Road data · {} of {} files"
 
 #: settings/model.py:291
 msgid "The neural network that steers and judges speed"
@@ -3554,7 +4042,7 @@ msgid "Remove unused models"
 msgstr "ลบโมเดลที่ไม่ได้ใช้"
 
 #: settings/model.py:279
-#: settings/search.py:124
+#: settings/search.py:127
 msgid "Use recommended"
 msgstr "ใช้โมเดลที่แนะนำ"
 
@@ -3636,7 +4124,7 @@ msgstr "แก้ไข"
 
 #: settings/network_tab.py:225
 #: settings/network_tab.py:217
-#: settings/search.py:209
+#: settings/search.py:212
 msgid "Roaming, APN and IP address"
 msgstr "ที่อยู่ โรมมิ่ง, APN และ IP"
 
@@ -3651,7 +4139,7 @@ msgstr "ใส่รหัสผ่าน"
 
 #: settings/network_tab.py:106
 #: settings/network_tab.py:213
-#: settings/search.py:206
+#: settings/search.py:209
 msgid "Hotspot name"
 msgstr "ชื่อฮอตสปอต"
 
@@ -3660,32 +4148,32 @@ msgid "A saved network already uses this name"
 msgstr "เครือข่ายที่บันทึกไว้ใช้ชื่อนี้แล้ว"
 
 #: settings/network_tab.py:212
-#: settings/search.py:205
+#: settings/search.py:208
 msgid "Hotspot"
 msgstr "ฮอตสปอต"
 
 #: settings/network_tab.py:212
-#: settings/search.py:205
+#: settings/search.py:208
 msgid "Share this device's connection"
 msgstr "แชร์การเชื่อมต่อของอุปกรณ์นี้"
 
 #: settings/network_tab.py:215
-#: settings/search.py:207
+#: settings/search.py:210
 msgid "Hotspot Password"
 msgstr "รหัสผ่านฮอตสปอต"
 
 #: settings/network_tab.py:215
-#: settings/search.py:207
+#: settings/search.py:210
 msgid "For phones joining this device's hotspot"
 msgstr "สำหรับโทรศัพท์ที่เข้าร่วมฮอตสปอตของอุปกรณ์นี้"
 
 #: settings/network_tab.py:216
-#: settings/search.py:208
+#: settings/search.py:211
 msgid "Save Data"
 msgstr "บันทึกข้อมูล"
 
 #: settings/network_tab.py:216
-#: settings/search.py:208
+#: settings/search.py:211
 msgid "No large uploads on cellular or phone hotspots"
 msgstr "ไม่มีการอัปโหลดขนาดใหญ่บนฮอตสปอตมือถือหรือโทรศัพท์"
 
@@ -3698,7 +4186,7 @@ msgid "Use cellular data outside your carrier's network"
 msgstr "ใช้ข้อมูลเซลลูลาร์นอกเครือข่ายของผู้ให้บริการของคุณ"
 
 #: settings/network_tab.py:224
-#: settings/search.py:202
+#: settings/search.py:205
 msgid "IP Address"
 msgstr "หมายเลขไอพี"
 
@@ -3712,7 +4200,7 @@ msgid "Scanning for networks…"
 msgstr "กำลังสแกนหาเครือข่าย..."
 
 #: settings/network_tab.py:199
-#: settings/search.py:203
+#: settings/search.py:206
 msgid "Join a hidden network"
 msgstr "เข้าร่วมเครือข่ายที่ซ่อนอยู่"
 
@@ -3782,31 +4270,31 @@ msgid "Connections"
 msgstr "การเชื่อมต่อ"
 
 #: settings/search.py:29
-#: settings/search.py:141
+#: settings/search.py:144
 #: settings/tuner.py:330
 msgid "Steering"
 msgstr "การบังคับเลี้ยว"
 
 #: settings/search.py:29
-#: settings/search.py:148
+#: settings/search.py:151
 #: settings/tuner.py:361
 msgid "Gas & Brake"
 msgstr "คันเร่งและเบรก"
 
 #: settings/search.py:29
-#: settings/search.py:156
+#: settings/search.py:159
 #: settings/tuner.py:428
 msgid "Following & Stops"
 msgstr "ระยะตามรถและหยุด"
 
 #: settings/search.py:29
-#: settings/search.py:163
+#: settings/search.py:166
 #: settings/tuner.py:582
 msgid "Bundle Overrides"
 msgstr "ปรับค่าชุด"
 
 #: settings/search.py:30
-#: settings/search.py:191
+#: settings/search.py:194
 #: settings/window.py:330
 msgid "Report a Problem"
 msgstr "รายงานปัญหา"
@@ -3933,7 +4421,7 @@ msgid "Home, Work and favorites; slows for turns on a route"
 msgstr "บ้าน ที่ทำงาน และรายการโปรด; ชะลอการเลี้ยวบนเส้นทาง"
 
 #: settings/search.py:94
-#: settings/speed_steering.py:418
+#: settings/speed_steering.py:431
 msgid "Other favorites"
 msgstr "รายการโปรดอื่นๆ"
 
@@ -3942,548 +4430,577 @@ msgid "Saved places for Where to?"
 msgstr "สถานที่ที่บันทึกไว้สำหรับไปที่ไหน?"
 
 #: settings/search.py:95
-#: settings/speed_steering.py:419
+#: settings/speed_steering.py:432
 msgid "End Route When Parked"
 msgstr "สิ้นสุดเส้นทางเมื่อจอดรถ"
 
 #: settings/search.py:95
-#: settings/speed_steering.py:419
+#: settings/speed_steering.py:432
 msgid "Clears the destination when you turn off the car"
 msgstr "เคลียร์ปลายทางเมื่อคุณดับเครื่อง"
 
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/search.py:96
-#: settings/speed_steering.py:421
+#: settings/speed_steering.py:434
+msgid "Offline maps only"
+msgstr "Offline maps only"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/search.py:96
+msgid "Never use online routing"
+msgstr "Never use online routing"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/search.py:97
+#: settings/speed_steering.py:416
+msgid "Preferred maps (when available)"
+msgstr "Preferred maps (when available)"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/search.py:97
+msgid "Choose which maps to try first, with a fallback"
+msgstr "Choose which maps to try first, with a fallback"
+
+#: settings/search.py:99
+#: settings/speed_steering.py:439
 msgid "Mapbox Keys"
 msgstr "คีย์ Mapbox"
 
-#: settings/search.py:96
-msgid "Needed for place search and routes"
-msgstr "จำเป็นสำหรับการค้นหาสถานที่และเส้นทาง"
-
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/search.py:99
+msgid "Keys for online search, routes and speed limits"
+msgstr "Keys for online search, routes and speed limits"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/search.py:100
+#: settings/search.py:117
+msgid "Speed limits and street names without a connection"
+msgstr "Speed limits and street names without a connection"
+
+#: settings/search.py:102
 msgid "The driving screen, theme and startup, and the map"
 msgstr "หน้าจอการขับขี่ ธีมและสตาร์ทอัพ และแผนที่"
 
-#: settings/search.py:106
+#: settings/search.py:109
 msgid "Side panel with system and controls data"
 msgstr "แผงด้านข้างพร้อมระบบและข้อมูลการควบคุม"
 
-#: settings/search.py:107
+#: settings/search.py:110
 msgid "Distance, gap and speed of the car ahead, plus radar points"
 msgstr "ระยะทาง ช่องว่าง และความเร็วของรถข้างหน้า พร้อมจุดเรดาร์"
 
-#: settings/search.py:116
+#: settings/search.py:119
 msgid "Volume and the optional chimes"
 msgstr "ระดับเสียงและเสียงเตือนเสริม"
 
-#: settings/search.py:117
+#: settings/search.py:120
 msgid "One volume for everything, or each group on its own"
 msgstr "ใช้ระดับเสียงเดียวหรือแยกแต่ละกลุ่ม"
 
-#: settings/search.py:123
+#: settings/search.py:126
 msgid "The model that drives, and downloading others"
 msgstr "โมเดลที่ใช้ขับและการดาวน์โหลดโมเดลอื่น"
 
-#: settings/search.py:124
+#: settings/search.py:127
 msgid "The recommended driving model"
 msgstr "โมเดล AI การขับขี่ที่แนะนำ"
 
-#: settings/search.py:125
+#: settings/search.py:128
 msgid "Your car, its steering wheel buttons and car-specific options"
 msgstr "รถของคุณ ปุ่มบนพวงมาลัย และตัวเลือกเฉพาะของรถ"
 
-#: settings/search.py:126
+#: settings/search.py:129
 #: settings/vehicle.py:194
 msgid "Steering Wheel Buttons"
 msgstr "ปุ่มบนพวงมาลัย"
 
-#: settings/search.py:126
+#: settings/search.py:129
 msgid "What the car's own buttons do while driving"
 msgstr "ปุ่มของรถเองทำหน้าที่อะไรขณะขับขี่"
 
-#: settings/search.py:127
+#: settings/search.py:130
 #: settings/vehicle.py:185
 msgid "Auto-Lock Doors"
 msgstr "ประตูล็อคอัตโนมัติ"
 
-#: settings/search.py:127
+#: settings/search.py:130
 #: settings/vehicle.py:185
 msgid "Locks when you shift out of park"
 msgstr "ล็อกเมื่อเปลี่ยนเกียร์ออกจาก P"
 
-#: settings/search.py:128
+#: settings/search.py:131
 #: settings/vehicle.py:193
 #: settings/vehicle.py:318
 msgid "More for your car"
 msgstr "มากขึ้นเพื่อรถคุณ"
 
-#: settings/search.py:128
+#: settings/search.py:131
 #: settings/vehicle.py:193
 msgid "Features specific to your make and model"
 msgstr "คุณสมบัติเฉพาะยี่ห้อและรุ่นรถของคุณ"
 
-#: settings/search.py:129
+#: settings/search.py:132
 msgid "openpilot's core switches and driver monitoring"
 msgstr "สวิตช์หลักของ openpilot และการตรวจสอบความเอาใจใส่ของผู้ขับขี่รถยนต์"
 
-#: settings/search.py:130
+#: settings/search.py:133
 msgid "Adaptive cruise and lane keeping"
 msgstr "ครูซคอนโทรลแบบแปรผันและรักษาช่องทาง"
 
-#: settings/search.py:131
+#: settings/search.py:134
 #: settings/speed_steering.py:349
 msgid "Disengage on Gas Pedal"
 msgstr "ปิดระบบเมื่อเหยียบคันเร่ง"
 
-#: settings/search.py:131
+#: settings/search.py:134
 #: settings/speed_steering.py:349
 msgid "Pressing the accelerator turns openpilot off"
 msgstr "การกดคันเร่งจะปิด openpilot"
 
-#: settings/search.py:132
+#: settings/search.py:135
 #: settings/speed_steering.py:350
 msgid "Lane Departure Warnings"
 msgstr "คำเตือนการออกนอกเลน"
 
-#: settings/search.py:132
+#: settings/search.py:135
 msgid "Alerts when you drift over a lane line without signaling"
 msgstr "แจ้งเตือนเมื่อคุณเคลื่อนตัวข้ามเส้นเลนโดยไม่มีสัญญาณ"
 
-#: settings/search.py:133
+#: settings/search.py:136
 #: settings/speed_steering.py:351
 msgid "Safe Mode"
 msgstr "เซฟโหมด"
 
-#: settings/search.py:133
+#: settings/search.py:136
 msgid "Stock tuning, the default model and Relaxed"
 msgstr "ค่าปรับโรงงาน โมเดลเริ่มต้นและสไตล์ผ่อนคลาย"
 
-#: settings/search.py:134
+#: settings/search.py:137
 #: settings/speed_steering.py:359
 msgid "Always-On Driver Monitoring"
 msgstr "การตรวจสอบความเอาใจใส่ของผู้ขับขี่รถยนต์แบบเปิดตลอดเวลา"
 
-#: settings/search.py:134
+#: settings/search.py:137
 #: settings/speed_steering.py:359
 msgid "Watches for distraction even when openpilot is off"
 msgstr "นาฬิกาเพื่อสิ่งรบกวนสมาธิแม้ในขณะที่ openpilot ปิดอยู่"
 
-#: settings/search.py:135
+#: settings/search.py:138
 msgid "Check that it can see your face"
 msgstr "ตรวจสอบว่าสามารถมองเห็นใบหน้าของคุณได้"
 
-#: settings/search.py:137
+#: settings/search.py:140
 #: settings/speed_steering.py:363
 msgid "Sentry Mode"
 msgstr "โหมดยาม"
 
-#: settings/search.py:137
+#: settings/search.py:140
 #: settings/speed_steering.py:363
 msgid "Pictures in Galaxy if the parked car is bumped"
 msgstr "รูปภาพใน Galaxy หากรถที่จอดถูกชน"
 
-#: settings/search.py:138
+#: settings/search.py:141
 #: settings/speed_steering.py:365
 msgid "Sensitivity"
 msgstr "ความไว"
 
-#: settings/search.py:138
+#: settings/search.py:141
 #: settings/speed_steering.py:365
 msgid "High notices smaller bumps"
 msgstr "ค่าสูงตรวจพบเนินเล็กลงได้"
 
-#: settings/search.py:141
+#: settings/search.py:144
 msgid "Learned steering values and the controller"
 msgstr "ค่าพวงมาลัยที่เรียนรู้และตัวควบคุม"
 
-#: settings/search.py:142
+#: settings/search.py:145
 #: settings/tuner.py:49
 msgid "Steering Delay"
 msgstr "ความล่าช้าในการบังคับเลี้ยว"
 
-#: settings/search.py:142
+#: settings/search.py:145
 #: settings/tuner.py:49
 msgid "Time from command to wheel response"
 msgstr "เวลาจากคำสั่งไปจนถึงการตอบสนองของล้อ"
 
-#: settings/search.py:143
+#: settings/search.py:146
 #: settings/tuner.py:51
 msgid "Friction"
 msgstr "แรงเสียดทาน"
 
-#: settings/search.py:143
+#: settings/search.py:146
 #: settings/tuner.py:51
 msgid "Extra torque near center"
 msgstr "แรงบิดเสริมใกล้ศูนย์กลาง"
 
-#: settings/search.py:144
+#: settings/search.py:147
 #: settings/tuner.py:53
 msgid "Lateral Acceleration"
 msgstr "การเร่งความเร็วด้านข้าง"
 
-#: settings/search.py:144
+#: settings/search.py:147
 #: settings/tuner.py:53
 msgid "Torque to cornering scaling"
 msgstr "แรงบิดในการเข้าโค้ง"
 
-#: settings/search.py:145
+#: settings/search.py:148
 #: settings/tuner.py:55
 msgid "Kp Factor"
 msgstr "Kp แฟคเตอร์"
 
-#: settings/search.py:145
+#: settings/search.py:148
 #: settings/tuner.py:55
 msgid "Correction strength"
 msgstr "ความแรงในการแก้ไข"
 
-#: settings/search.py:146
+#: settings/search.py:149
 #: settings/tuner.py:328
 msgid "Steering controller"
 msgstr "ตัวควบคุมพวงมาลัย"
 
-#: settings/search.py:146
+#: settings/search.py:149
 msgid "Vehicle default, neural feedforward or torque"
 msgstr "ค่าเริ่มต้นของรถ โครงข่ายประสาท หรือแรงบิด"
 
-#: settings/search.py:148
+#: settings/search.py:151
 msgid "Acceleration and braking profiles and values"
 msgstr "โปรไฟล์และค่าการเร่งความเร็วและการเบรก"
 
-#: settings/search.py:149
+#: settings/search.py:152
 #: settings/tuner.py:356
 msgid "Acceleration Profile"
 msgstr "โปรไฟล์การเร่งความเร็ว"
 
-#: settings/search.py:149
+#: settings/search.py:152
 #: settings/tuner.py:356
 msgid "How quickly the car speeds up"
 msgstr "รถเร่งความเร็วได้เร็วแค่ไหน"
 
-#: settings/search.py:150
+#: settings/search.py:153
 #: settings/tuner.py:358
 msgid "Braking Profile"
 msgstr "โปรไฟล์การเบรก"
 
-#: settings/search.py:150
+#: settings/search.py:153
 #: settings/tuner.py:358
 msgid "How early and firmly it slows down"
 msgstr "ความเร็วช้าลงเร็วแค่ไหน"
 
-#: settings/search.py:151
+#: settings/search.py:154
 #: settings/tuner.py:58
 msgid "Maximum Acceleration"
 msgstr "อัตราเร่งสูงสุด"
 
-#: settings/search.py:151
+#: settings/search.py:154
 #: settings/tuner.py:58
 msgid "The hardest openpilot will accelerate"
 msgstr "openpilot ที่ยากที่สุดจะเร่งความเร็วได้"
 
-#: settings/search.py:152
+#: settings/search.py:155
 #: settings/tuner.py:60
 msgid "Start Acceleration"
 msgstr "เริ่มการเร่งความเร็ว"
 
-#: settings/search.py:152
+#: settings/search.py:155
 #: settings/tuner.py:60
 msgid "How firmly the car pulls away from a stop"
 msgstr "รถจะดึงตัวออกจากจุดจอดได้อย่างมั่นคงเพียงใด"
 
-#: settings/search.py:153
+#: settings/search.py:156
 #: settings/tuner.py:62
 msgid "Stop Acceleration"
 msgstr "หยุดการเร่งความเร็ว"
 
-#: settings/search.py:153
+#: settings/search.py:156
 #: settings/tuner.py:62
 msgid "Braking held while stopped"
 msgstr "เบรกค้างขณะหยุด"
 
-#: settings/search.py:154
+#: settings/search.py:157
 #: settings/tuner.py:64
 msgid "Stopping Rate"
 msgstr "อัตราการหยุด"
 
-#: settings/search.py:154
+#: settings/search.py:157
 #: settings/tuner.py:64
 msgid "How quickly braking builds into a stop"
 msgstr "การเบรกทำให้หยุดได้เร็วแค่ไหน"
 
-#: settings/search.py:155
+#: settings/search.py:158
 #: settings/tuner.py:66
 msgid "Actuator Delay"
 msgstr "ความล่าช้าของแอคชูเอเตอร์"
 
-#: settings/search.py:155
+#: settings/search.py:158
 #: settings/tuner.py:66
 msgid "Time from command to gas or brake response"
 msgstr "เวลาจากคำสั่งจนคันเร่งหรือเบรกตอบสนอง"
 
-#: settings/search.py:156
+#: settings/search.py:159
 msgid "Following gaps and how the car stops"
 msgstr "ระยะตามรถและวิธีหยุดรถ"
 
-#: settings/search.py:157
+#: settings/search.py:160
 msgid "Following Gaps"
 msgstr "ระยะตามรถ"
 
-#: settings/search.py:157
+#: settings/search.py:160
 msgid "Relaxed, Standard, Aggressive and Traffic"
 msgstr "ผ่อนคลาย มาตรฐาน ดุดัน และการจราจรติดขัด"
 
-#: settings/search.py:158
+#: settings/search.py:161
 #: settings/tuner.py:70
 msgid "Lead Detection Sensitivity"
 msgstr "ความไวตรวจจับรถคันหน้า"
 
-#: settings/search.py:158
+#: settings/search.py:161
 #: settings/tuner.py:70
 msgid "Lower notices cars ahead sooner"
 msgstr "ลดการสังเกตรถข้างหน้าเร็วขึ้น"
 
-#: settings/search.py:159
+#: settings/search.py:162
 #: settings/tuner.py:72
 msgid "Stopped Distance"
 msgstr "ระยะทางที่หยุด"
 
-#: settings/search.py:159
+#: settings/search.py:162
 #: settings/tuner.py:72
 msgid "Extra room left behind a stopped car"
 msgstr "มีห้องพิเศษเหลืออยู่หลังรถที่จอดอยู่"
 
-#: settings/search.py:160
+#: settings/search.py:163
 #: settings/tuner.py:422
 msgid "Use Radar for Take-Offs"
 msgstr "ใช้เรดาร์ในการออกตัว"
 
-#: settings/search.py:160
+#: settings/search.py:163
 msgid "Starts moving as soon as the car ahead pulls away"
 msgstr "เริ่มเคลื่อนที่ทันทีที่รถคันหน้าถอยออกไป"
 
-#: settings/search.py:161
+#: settings/search.py:164
 #: settings/tuner.py:424
 msgid "Force Stops at Lights"
 msgstr "แรงหยุดเมื่อมีไฟ"
 
-#: settings/search.py:161
+#: settings/search.py:164
 #: settings/tuner.py:424
 msgid "Comes to a full stop for red lights the model detects"
 msgstr "มาหยุดไฟแดงที่โมเดล AI ตรวจพบ"
 
-#: settings/search.py:162
+#: settings/search.py:165
 #: settings/tuner.py:426
 msgid "Cruise Button Step"
 msgstr "ขั้นปุ่มควบคุมความเร็วคงที่"
 
-#: settings/search.py:162
+#: settings/search.py:165
 #: settings/tuner.py:426
 msgid "How far one press of + or − moves the set speed"
 msgstr "การกด + หรือ - หนึ่งครั้งจะเป็นการเลื่อนความเร็วที่ตั้งไว้"
 
-#: settings/search.py:163
+#: settings/search.py:166
 msgid "Change one option that Developer View or Lead Insights sets"
 msgstr "เปลี่ยนหนึ่งค่าที่มุมมองนักพัฒนาหรือข้อมูลรถคันหน้าตั้งไว้"
 
-#: settings/search.py:164
+#: settings/search.py:167
 msgid "Bar Metrics"
 msgstr "เมตริกแบบแท่ง"
 
-#: settings/search.py:164
+#: settings/search.py:167
 msgid "Up to five values in Developer View's strip"
 msgstr "ได้สูงสุดห้าค่าในแถบมุมมองนักพัฒนา"
 
-#: settings/search.py:166
+#: settings/search.py:169
 msgid "Pairing, remote access, calibration, restart and power"
 msgstr "การจับคู่ การเข้าถึงระยะไกล การสอบเทียบ การรีสตาร์ท และการเปิดเครื่อง"
 
-#: settings/search.py:167
+#: settings/search.py:170
 msgid "comma connect: see drives and change settings on your phone"
 msgstr "comma connect: ดูไดรฟ์และเปลี่ยนการตั้งค่าในโทรศัพท์ของคุณ"
 
-#: settings/search.py:168
+#: settings/search.py:171
 msgid "Galaxy: reach this device from a web browser"
 msgstr "Galaxy: เข้าถึงอุปกรณ์นี้จากเว็บเบราว์เซอร์"
 
-#: settings/search.py:169
+#: settings/search.py:172
 msgid "How the device is mounted"
 msgstr "วิธีการติดตั้งอุปกรณ์"
 
-#: settings/search.py:171
+#: settings/search.py:174
 msgid "Regulatory information"
 msgstr "ข้อมูลกฎข้อบังคับ"
 
-#: settings/search.py:172
+#: settings/search.py:175
 msgid "This device's IDs"
 msgstr "ID ของอุปกรณ์นี้"
 
-#: settings/search.py:173
+#: settings/search.py:176
 msgid "The cellular modem's ID"
 msgstr "ID ของโมเด็มเซลลูลาร์"
 
-#: settings/search.py:174
+#: settings/search.py:177
 msgid "Restart the device"
 msgstr "รีสตาร์ทอุปกรณ์"
 
-#: settings/search.py:175
+#: settings/search.py:178
 msgid "Turn the device off until the car starts"
 msgstr "ปิดเครื่องจนกว่ารถจะสตาร์ท"
 
-#: settings/search.py:176
+#: settings/search.py:179
 msgid "Units, language, brightness and standby"
 msgstr "หน่วย ภาษา ความสว่าง และสแตนด์บาย"
 
-#: settings/search.py:179
+#: settings/search.py:182
 msgid "Menus and alerts"
 msgstr "เมนูและการเตือน"
 
-#: settings/search.py:182
+#: settings/search.py:185
 msgid "Snapshots of your settings"
 msgstr "สแนปช็อตของการตั้งค่าของคุณ"
 
-#: settings/search.py:183
+#: settings/search.py:186
 msgid "What's using space, and recording and uploads"
 msgstr "อะไรใช้พื้นที่ รวมถึงการบันทึกและอัปโหลด"
 
-#: settings/search.py:185
+#: settings/search.py:188
 msgid "Delete downloaded map data"
 msgstr "ลบข้อมูลแผนที่ที่ดาวน์โหลด"
 
-#: settings/search.py:186
+#: settings/search.py:189
 msgid "Downloaded models that aren't in use"
 msgstr "ดาวน์โหลดโมเดล AI ที่ไม่ได้ใช้งาน"
 
-#: settings/search.py:187
+#: settings/search.py:190
 msgid "Saved and uploaded with your drives"
 msgstr "บันทึกและอัปโหลดพร้อมกับไดรฟ์ของคุณ"
 
-#: settings/search.py:188
+#: settings/search.py:191
 msgid "Cabin audio in your drive recordings"
 msgstr "เสียงห้องโดยสารในการบันทึกการขับขี่ของคุณ"
 
-#: settings/search.py:190
+#: settings/search.py:193
 msgid "What was using RAM on drives that ran low"
 msgstr "สิ่งที่ใช้ RAM ในการขับที่ RAM เหลือน้อย"
 
-#: settings/search.py:191
+#: settings/search.py:194
 msgid "Send what happened to the developers"
 msgstr "ส่งสิ่งที่เกิดขึ้นกับนักพัฒนา"
 
-#: settings/search.py:192
+#: settings/search.py:195
 msgid "ADB, SSH and debug modes"
 msgstr "ADB, SSH และโหมดดีบัก"
 
-#: settings/search.py:194
+#: settings/search.py:197
 msgid "Connect over USB or the network"
 msgstr "เชื่อมต่อผ่าน USB หรือเครือข่าย"
 
-#: settings/search.py:195
+#: settings/search.py:198
 msgid "Remote shell access"
 msgstr "การเข้าถึงเชลล์ระยะไกล"
 
-#: settings/search.py:196
+#: settings/search.py:199
 msgid "Adds every public key in a GitHub account"
 msgstr "เพิ่มคีย์สาธารณะทุกรายการในบัญชี GitHub"
 
-#: settings/search.py:197
+#: settings/search.py:200
 msgid "Drive openpilot's controls from a joystick"
 msgstr "ขับเคลื่อนส่วนควบคุมของ openpilot จากจอยสติ๊ก"
 
-#: settings/search.py:198
+#: settings/search.py:201
 msgid "Turns off the car's emergency braking"
 msgstr "ปิดการเบรกฉุกเฉินของรถ"
 
-#: settings/search.py:201
+#: settings/search.py:204
 msgid "Networks nearby, and joining one"
 msgstr "เครือข่ายใกล้เคียงและเข้าร่วมเครือข่ายหนึ่ง"
 
-#: settings/search.py:202
+#: settings/search.py:205
 msgid "This device's local address, beside the connected network"
 msgstr "ที่อยู่ภายในของอุปกรณ์นี้ ข้างเครือข่ายที่เชื่อมต่อ"
 
-#: settings/search.py:203
+#: settings/search.py:206
 msgid "Enter its name and password"
 msgstr "ป้อนชื่อและรหัสผ่าน"
 
-#: settings/search.py:204
+#: settings/search.py:207
 msgid "Hotspot, data use, roaming and APN"
 msgstr "Hotspot การใช้ข้อมูล การโรมมิ่ง และ APN"
 
-#: settings/search.py:206
+#: settings/search.py:209
 msgid "The name phones see when joining this device"
 msgstr "โทรศัพท์ชื่อจะเห็นเมื่อเข้าร่วมอุปกรณ์นี้"
 
-#: settings/search.py:209
+#: settings/search.py:212
 msgid "Roaming, APN and the device's IP address"
 msgstr "การโรมมิ่ง , APN และที่อยู่ IP ของอุปกรณ์"
 
-#: settings/search.py:210
+#: settings/search.py:213
 msgid "A wheel remote's buttons and what they do"
 msgstr "ปุ่มบนรีโมตล้อและการทำงานของปุ่มต่างๆ"
 
-#: settings/search.py:211
+#: settings/search.py:214
 msgid "Car audio for alerts, and pairing devices"
 msgstr "เครื่องเสียงรถยนต์สำหรับการแจ้งเตือนและการจับคู่อุปกรณ์"
 
-#: settings/search.py:213
+#: settings/search.py:216
 msgid "Updates and the release notes"
 msgstr "การอัปเดต และบันทึกประจำรุ่น"
 
-#: settings/search.py:214
+#: settings/search.py:217
 #: settings/software_tab.py:192
 msgid "Automatic Updates"
 msgstr "อัพเดตอัตโนมัติ"
 
-#: settings/search.py:214
+#: settings/search.py:217
 #: settings/software_tab.py:192
 msgid "Download while parked, install when you turn off the car"
 msgstr "ดาวน์โหลดขณะจอด ติดตั้งเมื่อดับเครื่อง"
 
-#: settings/search.py:215
+#: settings/search.py:218
 #: settings/software_tab.py:188
 #: settings/software_tab.py:140
 msgid "Release Channel"
 msgstr "ช่องทางการวางจำหน่าย"
 
-#: settings/search.py:215
+#: settings/search.py:218
 #: settings/software_tab.py:140
 msgid "The branch to download updates from"
 msgstr "สาขาสำหรับดาวน์โหลดอัพเดต"
 
-#: settings/search.py:216
+#: settings/search.py:219
 #: settings/software_tab.py:195
 msgid "Reset Settings"
 msgstr "รีเซ็ตการตั้งค่า"
 
-#: settings/search.py:216
+#: settings/search.py:219
 msgid "Back to the Essentials defaults"
 msgstr "กลับสู่ค่าเริ่มต้นของ Essentials"
 
-#: settings/search.py:217
+#: settings/search.py:220
 #: settings/software_tab.py:169
 #: settings/software_tab.py:198
 msgid "Uninstall"
 msgstr "ถอนการติดตั้ง"
 
-#: settings/search.py:217
+#: settings/search.py:220
 msgid "Remove this software from the device"
 msgstr "ลบซอฟต์แวร์นี้ออกจากอุปกรณ์"
 
-#: settings/search.py:394
-#: settings/search.py:385
+#: settings/search.py:397
+#: settings/search.py:388
 msgid "Search settings"
 msgstr "การตั้งค่าการค้นหา"
 
-#: settings/search.py:283
+#: settings/search.py:286
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "พูดการตั้งค่า เช่น การจำกัดความเร็ว แตะไมโครโฟนเมื่อคุณทำเสร็จแล้ว"
 
-#: settings/search.py:365
-#: settings/search.py:324
+#: settings/search.py:368
+#: settings/search.py:327
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "ไม่มีการตั้งค่าที่ตรงกับ “{}”"
 
-#: settings/search.py:366
+#: settings/search.py:369
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "พิมพ์ชื่อการตั้งค่าหรือสิ่งที่ทำ เช่น ความสว่างหรือการเปลี่ยนเลน"
 
@@ -4781,9 +5298,10 @@ msgstr "สวิตช์หลักของ openpilot"
 msgid "Watches that you're paying attention"
 msgstr "นาฬิกาที่คุณให้ความสนใจ"
 
-#: settings/speed_steering.py:425
-msgid "While a route is active, the car slows for turns and uses route speed limits"
-msgstr "ในขณะที่เส้นทางกำลังทำงานอยู่ รถจะชะลอความเร็วตามโค้งและใช้การจำกัดความเร็วของเส้นทาง"
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/speed_steering.py:442
+msgid "Saved places and the maps used to calculate your route"
+msgstr "Saved places and the maps used to calculate your route"
 
 #: settings/speed_steering.py:138
 msgid "Speed limits off"
@@ -4830,11 +5348,37 @@ msgstr "ใช้ค่าปรับโรงงาน โมเดลเร�
 msgid "WHILE PARKED"
 msgstr "ขณะจอดรถ"
 
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/speed_steering.py:409
+msgid "Optional for online search and speed-limit filling"
+msgstr "Optional for online search and speed-limit filling"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/speed_steering.py:417
+msgid "Used when Offline maps only is off."
+msgstr "Used when Offline maps only is off."
+
+#: settings/speed_steering.py:420
+#: sidebar.py:94
+#: sidebar.py:99
+msgid "Offline"
+msgstr "ออฟไลน์"
+
 #: settings/speed_steering.py:385
 msgid "Saved place"
 msgstr "สถานที่ที่บันทึกไว้"
 
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/speed_steering.py:418
+msgid "Try online first; fall back to downloaded maps."
+msgstr "Try online first; fall back to downloaded maps."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/speed_steering.py:419
+msgid "Try downloaded maps first; fall back to online."
+msgstr "Try downloaded maps first; fall back to online."
+
+#: settings/speed_steering.py:431
 #, python-brace-format
 msgid "{} saved"
 msgstr "บันทึก {} แล้ว"
@@ -4843,23 +5387,33 @@ msgstr "บันทึก {} แล้ว"
 msgid " Restarts openpilot if the car is on."
 msgstr " รีสตาร์ท openpilot หากรถเปิดอยู่"
 
-#: settings/speed_steering.py:412
+#: settings/speed_steering.py:425
 msgid "Change"
 msgstr "เปลี่ยน"
 
-#: settings/speed_steering.py:412
+#: settings/speed_steering.py:425
 msgid "Set"
 msgstr "ชุด"
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/speed_steering.py:434
+msgid "Never use online routing."
+msgstr "Never use online routing."
+
+#. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
+#: settings/speed_steering.py:435
+msgid "Use the preferred maps, with a fallback if needed."
+msgstr "Use the preferred maps, with a fallback if needed."
 
 #: settings/speed_steering.py:225
 msgid "Adjusts acceleration and braking for what you drive"
 msgstr "ปรับอัตราเร่งและการเบรกตามสิ่งที่คุณขับขี่"
 
-#: settings/speed_steering.py:422
+#: settings/speed_steering.py:440
 msgid "How to change"
 msgstr "เปลี่ยนยังไง"
 
-#: settings/speed_steering.py:422
+#: settings/speed_steering.py:440
 msgid "How to add"
 msgstr "วิธีเพิ่ม"
 
@@ -5475,12 +6029,6 @@ msgstr "comma connect"
 msgid "Network"
 msgstr "เครือข่าย"
 
-#: sidebar.py:94
-#: sidebar.py:99
-#: sidebar.py:94
-msgid "Offline"
-msgstr "ออฟไลน์"
-
 #: sidebar.py:59
 msgid "Settings"
 msgstr "การตั้งค่า"
@@ -5504,10 +6052,6 @@ msgstr "อุ่น"
 #: sidebar.py:143
 msgid "Hot"
 msgstr "ฮอต"
-
-#: sidebar.py:138
-msgid "Not downloaded"
-msgstr "ไม่ได้ดาวน์โหลด"
 
 #: voice.py:36
 msgid "Didn't catch that. Tap the mic to try again."

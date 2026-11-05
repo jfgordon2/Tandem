@@ -1,0 +1,3488 @@
+{
+  "schema": 2,
+  "runtime_version": "3.9.1",
+  "dataset": {
+    "id": "us-driving-20261104-v1",
+    "sha256": "12eccd3c52fc25d3059511746114670e2345fa44d857deca93a0830880f02661",
+    "runtime_version": "3.9.1",
+    "profile": "driving",
+    "source": {
+      "url": "https://download.geofabrik.de/north-america/us-261102.osm.pbf",
+      "bytes": 12245522689,
+      "md5": "f848308d793a993c30d4892008521028",
+      "sha256": "cb7432f0516488501b40918d5ee0cca427bb020c7e81381c9a775af1c48a15cd",
+      "retrieved_at": "2026-11-04T18:35:01.615116+00:00"
+    },
+    "built_at": "2026-11-04T18:35:01.615116+00:00",
+    "sources": [
+      {
+        "url": "https://download.geofabrik.de/north-america/us-261102.osm.pbf",
+        "bytes": 12245522689,
+        "md5": "f848308d793a993c30d4892008521028",
+        "sha256": "cb7432f0516488501b40918d5ee0cca427bb020c7e81381c9a775af1c48a15cd",
+        "retrieved_at": "2026-11-04T18:35:01.615116+00:00"
+      },
+      {
+        "url": "https://download.geofabrik.de/australia-oceania/american-oceania-261102.osm.pbf",
+        "bytes": 5384099,
+        "md5": "45c92f1db0866928de2a3f27ebf6626f",
+        "sha256": "38fe01e99b89e744fcc3b3292293d727fe477f7d0ebfa4f844ab264e7240f307",
+        "retrieved_at": "2026-11-04T18:35:01.615116+00:00"
+      },
+      {
+        "url": "https://download.geofabrik.de/north-america/us/puerto-rico-261102.osm.pbf",
+        "bytes": 74272256,
+        "md5": "99d2f13fc9c5dbbedf70691e71f79b93",
+        "sha256": "f1995214f0104e248b17c83069e519015a606c8562312eaba43bf8f64f9ace6e",
+        "retrieved_at": "2026-11-04T18:35:01.615116+00:00"
+      },
+      {
+        "url": "https://download.geofabrik.de/north-america/us/us-virgin-islands-261102.osm.pbf",
+        "bytes": 3122163,
+        "md5": "5af5374cc073bd78db7a41408d6c4838",
+        "sha256": "9b2a9d770173023fc78133dd83a0edf6f9999964e3ee7b3ac8f690bcb4ee91a6",
+        "retrieved_at": "2026-11-04T18:35:01.615116+00:00"
+      },
+      {
+        "url": "https://api.openstreetmap.org/api/0.6/relation/148838/full",
+        "bytes": 31655800,
+        "sha256": "1b77ff83ceb14014312ed2e5f2963124c9983739c57c9edc73a452599484ce5b",
+        "retrieved_at": "2026-11-04T18:20:09.704833+00:00"
+      },
+      {
+        "url": "https://github.com/evansiroky/timezone-boundary-builder/releases/download/2026d/timezones-with-oceans-1970.shapefile.zip",
+        "bytes": 76767667,
+        "sha256": "f9b2f0304772f2a944486da5d13d1740ff9754e76b983f80450b0e4d74131931",
+        "retrieved_at": "2026-11-04T18:20:11.351599+00:00"
+      }
+    ],
+    "attribution": "\u00a9 OpenStreetMap contributors, https://www.openstreetmap.org/copyright (ODbL)",
+    "regions": {
+      "us_state.AK": {
+        "title": "Alaska",
+        "bounds": [
+          -180.0,
+          49.8089,
+          180.0,
+          72.98845
+        ],
+        "parts": [
+          "us-driving-20261104-v1-0fc5eb00379009ef"
+        ]
+      },
+      "us_state.AL": {
+        "title": "Alabama",
+        "bounds": [
+          -88.48389,
+          29.95494,
+          -84.88336,
+          35.00872
+        ],
+        "parts": [
+          "us-driving-20261104-v1-0a8fc8172f361470",
+          "us-driving-20261104-v1-1134e4883248b66c",
+          "us-driving-20261104-v1-208b0d96e9565dbf",
+          "us-driving-20261104-v1-27c7ec0de0d59a36",
+          "us-driving-20261104-v1-3a3edda51e5fbcc8",
+          "us-driving-20261104-v1-89d1b8edd96683cc",
+          "us-driving-20261104-v1-912a00b619e6f75b",
+          "us-driving-20261104-v1-9fff904a7c79b225",
+          "us-driving-20261104-v1-a53e4cec7dcbff4f",
+          "us-driving-20261104-v1-b9b4309b0ac8a410",
+          "us-driving-20261104-v1-be86606c73335dbb",
+          "us-driving-20261104-v1-e544f42696c1cfd5",
+          "us-driving-20261104-v1-e9c65a2e351c7e40",
+          "us-driving-20261104-v1-eece41286e40bfac"
+        ]
+      },
+      "us_state.AR": {
+        "title": "Arkansas",
+        "bounds": [
+          -94.62217,
+          33.0038,
+          -89.63987,
+          36.51585
+        ],
+        "parts": [
+          "us-driving-20261104-v1-025da18d497c782f",
+          "us-driving-20261104-v1-10c97b80db7bbdd5",
+          "us-driving-20261104-v1-226fe9a770996191",
+          "us-driving-20261104-v1-38fffca12ee2e6ba",
+          "us-driving-20261104-v1-3a3edda51e5fbcc8",
+          "us-driving-20261104-v1-478e35142e323ec1",
+          "us-driving-20261104-v1-57cf08a5909c0b19",
+          "us-driving-20261104-v1-6068ccc749d32c26",
+          "us-driving-20261104-v1-730411efdf70ae3f",
+          "us-driving-20261104-v1-7d672fb8406558b8",
+          "us-driving-20261104-v1-913a9fdf45cd9b66",
+          "us-driving-20261104-v1-9b5370299339d1e0",
+          "us-driving-20261104-v1-affd0ca9f5475662",
+          "us-driving-20261104-v1-b3f0250c8e70784f",
+          "us-driving-20261104-v1-ba4075407d25777a",
+          "us-driving-20261104-v1-be86606c73335dbb",
+          "us-driving-20261104-v1-e9ae08abf11ed15f",
+          "us-driving-20261104-v1-ead29c0b0173d4eb",
+          "us-driving-20261104-v1-f751a5850430e29c"
+        ]
+      },
+      "us_state.AS": {
+        "title": "American Samoa",
+        "bounds": [
+          -172.0,
+          -16.0,
+          -167.0,
+          -10.0
+        ],
+        "parts": [
+          "us-driving-20261104-v1-4b454aed77ccbf64"
+        ]
+      },
+      "us_state.AZ": {
+        "title": "Arizona",
+        "bounds": [
+          -114.8224,
+          31.32659,
+          -109.0437,
+          37.00596
+        ],
+        "parts": [
+          "us-driving-20261104-v1-140dd7f3c6ae35c5",
+          "us-driving-20261104-v1-16876716c283b016",
+          "us-driving-20261104-v1-25a7a71a03ca82ce",
+          "us-driving-20261104-v1-37f29992fe731bfe",
+          "us-driving-20261104-v1-4758fa816eae6efb",
+          "us-driving-20261104-v1-7db40a26f753118e",
+          "us-driving-20261104-v1-96acf4dc54c34a03",
+          "us-driving-20261104-v1-c1cf458cc2b51e2e",
+          "us-driving-20261104-v1-c82cd789b7c06a80",
+          "us-driving-20261104-v1-d8a37dff3a541e59",
+          "us-driving-20261104-v1-ee07e443eb8f638b"
+        ]
+      },
+      "us_state.CA": {
+        "title": "California",
+        "bounds": [
+          -125.8935,
+          32.48171,
+          -114.1291,
+          42.01618
+        ],
+        "parts": [
+          "us-driving-20261104-v1-062b8ea5eeab67ce",
+          "us-driving-20261104-v1-2596285992e59ed2",
+          "us-driving-20261104-v1-37f29992fe731bfe",
+          "us-driving-20261104-v1-38a755fde34e292e",
+          "us-driving-20261104-v1-405875aa80605a6b",
+          "us-driving-20261104-v1-5d6e882db8f8ff1f",
+          "us-driving-20261104-v1-615cbd276665110b",
+          "us-driving-20261104-v1-6e85361ab79bb5dd",
+          "us-driving-20261104-v1-7db40a26f753118e",
+          "us-driving-20261104-v1-857828fcb588fcc4",
+          "us-driving-20261104-v1-8cf190ecc41c6dc2",
+          "us-driving-20261104-v1-9958f93e0d1d3747",
+          "us-driving-20261104-v1-a8057ed904efff82",
+          "us-driving-20261104-v1-a9587b099a68651b",
+          "us-driving-20261104-v1-ab8c4d4343cf9927",
+          "us-driving-20261104-v1-bc5ce841b09212fb",
+          "us-driving-20261104-v1-c1cf458cc2b51e2e",
+          "us-driving-20261104-v1-c48059234113546c"
+        ]
+      },
+      "us_state.CO": {
+        "title": "Colorado",
+        "bounds": [
+          -109.0631,
+          36.98943,
+          -102.0355,
+          41.00388
+        ],
+        "parts": [
+          "us-driving-20261104-v1-0bd5f8e036a51f23",
+          "us-driving-20261104-v1-0fea370150f9f04a",
+          "us-driving-20261104-v1-1be3d8dae336f0d9",
+          "us-driving-20261104-v1-2250ef0b787c4fa3",
+          "us-driving-20261104-v1-2ee6d689269ebc7e",
+          "us-driving-20261104-v1-47357b8842250439",
+          "us-driving-20261104-v1-5da8481787ae06b8",
+          "us-driving-20261104-v1-6b14fadc6aed9a4f",
+          "us-driving-20261104-v1-79fe8cc2119d82d8",
+          "us-driving-20261104-v1-7fc84ed0d3729196",
+          "us-driving-20261104-v1-807e849d1ba47544",
+          "us-driving-20261104-v1-8183bf774d827491",
+          "us-driving-20261104-v1-875cdaf135cbb837",
+          "us-driving-20261104-v1-9694842d3e366531",
+          "us-driving-20261104-v1-a29c6a3534c19348",
+          "us-driving-20261104-v1-aa41a7a426693531",
+          "us-driving-20261104-v1-ad30179d7222bbfe",
+          "us-driving-20261104-v1-d8a37dff3a541e59",
+          "us-driving-20261104-v1-eb4f5fa464757613"
+        ]
+      },
+      "us_state.CT": {
+        "title": "Connecticut",
+        "bounds": [
+          -73.72889,
+          40.96401,
+          -71.7853,
+          42.05229
+        ],
+        "parts": [
+          "us-driving-20261104-v1-1e6ab081b0044526",
+          "us-driving-20261104-v1-21b5221305479a67",
+          "us-driving-20261104-v1-239b349d53ea4637",
+          "us-driving-20261104-v1-49e5c9d90dfb23c5",
+          "us-driving-20261104-v1-55014445be43186c",
+          "us-driving-20261104-v1-569c3c1da8ec648a",
+          "us-driving-20261104-v1-84b7a430d67dbaf8",
+          "us-driving-20261104-v1-856298524bd9f739",
+          "us-driving-20261104-v1-91eadc265c0c8eac",
+          "us-driving-20261104-v1-92b04105fa043270",
+          "us-driving-20261104-v1-a30fea2615ac6aed",
+          "us-driving-20261104-v1-aae78a25ea4e109f",
+          "us-driving-20261104-v1-bf95d43e909ddf60",
+          "us-driving-20261104-v1-dd1dbbaea416a09f",
+          "us-driving-20261104-v1-e5a80b56d91fca8f"
+        ]
+      },
+      "us_state.DC": {
+        "title": "District of Columbia",
+        "bounds": [
+          -77.1201,
+          38.79099,
+          -76.90906,
+          38.99603
+        ],
+        "parts": [
+          "us-driving-20261104-v1-1936febe14e46a10",
+          "us-driving-20261104-v1-83917bfa5a18e230",
+          "us-driving-20261104-v1-f687eee9c4f45d19"
+        ]
+      },
+      "us_state.DE": {
+        "title": "Delaware",
+        "bounds": [
+          -75.78974,
+          38.45043,
+          -74.98401,
+          39.84262
+        ],
+        "parts": [
+          "us-driving-20261104-v1-029dcdea90beeeef",
+          "us-driving-20261104-v1-19323896c210de0c",
+          "us-driving-20261104-v1-3855278ddf0419e5",
+          "us-driving-20261104-v1-46aaee872fc3c3bc",
+          "us-driving-20261104-v1-788f59ec376722f6",
+          "us-driving-20261104-v1-7c12404d80bb7427",
+          "us-driving-20261104-v1-ae358b8f28c13346",
+          "us-driving-20261104-v1-b71fb7b68979c465",
+          "us-driving-20261104-v1-e5a80b56d91fca8f"
+        ]
+      },
+      "us_state.FL": {
+        "title": "Florida",
+        "bounds": [
+          -88.46896,
+          24.20031,
+          -79.43702,
+          31.00307
+        ],
+        "parts": [
+          "us-driving-20261104-v1-053e42bb5c0c7af2",
+          "us-driving-20261104-v1-1c0337998929cfb7",
+          "us-driving-20261104-v1-27c7ec0de0d59a36",
+          "us-driving-20261104-v1-65043b14a6dac094",
+          "us-driving-20261104-v1-89d1b8edd96683cc",
+          "us-driving-20261104-v1-912a00b619e6f75b",
+          "us-driving-20261104-v1-b35b38cd55b70db0",
+          "us-driving-20261104-v1-cc54ae95113dc7e9",
+          "us-driving-20261104-v1-d31c0ba4cf86ca43",
+          "us-driving-20261104-v1-ec04cfc85a2ceafc",
+          "us-driving-20261104-v1-f684c1d139f12f82"
+        ]
+      },
+      "us_state.GA": {
+        "title": "Georgia",
+        "bounds": [
+          -85.6068,
+          30.35365,
+          -80.74313,
+          35.00356
+        ],
+        "parts": [
+          "us-driving-20261104-v1-1c0337998929cfb7",
+          "us-driving-20261104-v1-1d70489e3cfdd58f",
+          "us-driving-20261104-v1-2348b08058d02c4e",
+          "us-driving-20261104-v1-27c7ec0de0d59a36",
+          "us-driving-20261104-v1-41dbe8541a4f41a4",
+          "us-driving-20261104-v1-7cd78b6968d3f957",
+          "us-driving-20261104-v1-963450dfc181ccf6",
+          "us-driving-20261104-v1-a53e4cec7dcbff4f",
+          "us-driving-20261104-v1-b35b38cd55b70db0",
+          "us-driving-20261104-v1-b4c763f425213a33",
+          "us-driving-20261104-v1-b88561c90f9fa18a",
+          "us-driving-20261104-v1-b9b4309b0ac8a410",
+          "us-driving-20261104-v1-bb6f4103489cfca6",
+          "us-driving-20261104-v1-bf861cdf28924c59",
+          "us-driving-20261104-v1-c6daf4037a30f014",
+          "us-driving-20261104-v1-e9c65a2e351c7e40",
+          "us-driving-20261104-v1-eb55799f616fdc9e"
+        ]
+      },
+      "us_state.GU": {
+        "title": "Guam",
+        "bounds": [
+          143.0,
+          12.0,
+          146.0,
+          14.0
+        ],
+        "parts": [
+          "us-driving-20261104-v1-d4f5f7173bc29d49",
+          "us-driving-20261104-v1-da3fa76ad24bb766"
+        ]
+      },
+      "us_state.HI": {
+        "title": "Hawaii",
+        "bounds": [
+          -179.5994,
+          15.92097,
+          -142.6511,
+          29.02109
+        ],
+        "parts": [
+          "us-driving-20261104-v1-4198d9cb5e1a0d68"
+        ]
+      },
+      "us_state.IA": {
+        "title": "Iowa",
+        "bounds": [
+          -96.6426,
+          40.37266,
+          -90.13581,
+          43.50182
+        ],
+        "parts": [
+          "us-driving-20261104-v1-1a02e03a83f9ce45",
+          "us-driving-20261104-v1-2f3e5d2608344080",
+          "us-driving-20261104-v1-41393cd7093b1756",
+          "us-driving-20261104-v1-41c419fc530efc81",
+          "us-driving-20261104-v1-5538491d9dc0637b",
+          "us-driving-20261104-v1-5c3d7e3774dc3517",
+          "us-driving-20261104-v1-70fec6d3bfc0f891",
+          "us-driving-20261104-v1-803ab995889f1862",
+          "us-driving-20261104-v1-886adbea0e2d3dc5",
+          "us-driving-20261104-v1-88e776d7bca77d24",
+          "us-driving-20261104-v1-89d2cab87f3c4371",
+          "us-driving-20261104-v1-8f771a6bf2172bbe",
+          "us-driving-20261104-v1-b85c16f8acfd5cfe",
+          "us-driving-20261104-v1-bd7047352613e160",
+          "us-driving-20261104-v1-c258063abcfda987",
+          "us-driving-20261104-v1-cd1db9a1d0ae580b",
+          "us-driving-20261104-v1-dff043d874023f52",
+          "us-driving-20261104-v1-eca942abb3dc0e9e",
+          "us-driving-20261104-v1-f6f6645bf04a1aea"
+        ]
+      },
+      "us_state.ID": {
+        "title": "Idaho",
+        "bounds": [
+          -117.246,
+          41.98306,
+          -111.0431,
+          49.00819
+        ],
+        "parts": [
+          "us-driving-20261104-v1-00ec6f91d2682213",
+          "us-driving-20261104-v1-194b0e1c886775f6",
+          "us-driving-20261104-v1-2232158badafff86",
+          "us-driving-20261104-v1-22be4ff71a2eb5bf",
+          "us-driving-20261104-v1-2596285992e59ed2",
+          "us-driving-20261104-v1-37283c90d48f2a7d",
+          "us-driving-20261104-v1-38e369acc332c1a5",
+          "us-driving-20261104-v1-3e6cab3ed321fe7a",
+          "us-driving-20261104-v1-6631a24633cb1fdd",
+          "us-driving-20261104-v1-8387a2b82371f6d1",
+          "us-driving-20261104-v1-875cdaf135cbb837",
+          "us-driving-20261104-v1-be5cf4584e4c344e",
+          "us-driving-20261104-v1-c08b036457b97a04",
+          "us-driving-20261104-v1-ce311954938c48c7",
+          "us-driving-20261104-v1-d621f3cda09e6f53",
+          "us-driving-20261104-v1-dce3f3d7de8c75f5",
+          "us-driving-20261104-v1-deaba151a2e37025",
+          "us-driving-20261104-v1-e82974d85f6a78c9"
+        ]
+      },
+      "us_state.IL": {
+        "title": "Illinois",
+        "bounds": [
+          -91.51608,
+          36.96731,
+          -87.49264,
+          42.50941
+        ],
+        "parts": [
+          "us-driving-20261104-v1-00d7e8e9b82e9ff4",
+          "us-driving-20261104-v1-10c97b80db7bbdd5",
+          "us-driving-20261104-v1-2f3e5d2608344080",
+          "us-driving-20261104-v1-3a3edda51e5fbcc8",
+          "us-driving-20261104-v1-3b494341c459e365",
+          "us-driving-20261104-v1-5538491d9dc0637b",
+          "us-driving-20261104-v1-595cd82d89dd41aa",
+          "us-driving-20261104-v1-6739e710454844b7",
+          "us-driving-20261104-v1-70fec6d3bfc0f891",
+          "us-driving-20261104-v1-7a7a7fb061950ec4",
+          "us-driving-20261104-v1-88e776d7bca77d24",
+          "us-driving-20261104-v1-9474d73cc7d9f65a",
+          "us-driving-20261104-v1-bb798b0e71c1889c",
+          "us-driving-20261104-v1-bbc5e5663ce28761",
+          "us-driving-20261104-v1-c008acbc05047865",
+          "us-driving-20261104-v1-da815d06d50a7465",
+          "us-driving-20261104-v1-dce57635e6a2119a",
+          "us-driving-20261104-v1-e71881b50680c2d3",
+          "us-driving-20261104-v1-eca942abb3dc0e9e"
+        ]
+      },
+      "us_state.IN": {
+        "title": "Indiana",
+        "bounds": [
+          -88.10327,
+          37.76911,
+          -84.78042,
+          41.76301
+        ],
+        "parts": [
+          "us-driving-20261104-v1-00d7e8e9b82e9ff4",
+          "us-driving-20261104-v1-37f9c65b7313116f",
+          "us-driving-20261104-v1-3a3edda51e5fbcc8",
+          "us-driving-20261104-v1-3b494341c459e365",
+          "us-driving-20261104-v1-3be3af41b84df3e3",
+          "us-driving-20261104-v1-44bbfab02ecb0fac",
+          "us-driving-20261104-v1-5538491d9dc0637b",
+          "us-driving-20261104-v1-595cd82d89dd41aa",
+          "us-driving-20261104-v1-63af63804bbdff49",
+          "us-driving-20261104-v1-677fb4125a56bb67",
+          "us-driving-20261104-v1-6f3592a84386361e",
+          "us-driving-20261104-v1-a374778d8e2fb2e9",
+          "us-driving-20261104-v1-b9b4309b0ac8a410",
+          "us-driving-20261104-v1-be388b3a9e65b601",
+          "us-driving-20261104-v1-da815d06d50a7465"
+        ]
+      },
+      "us_state.KS": {
+        "title": "Kansas",
+        "bounds": [
+          -102.0535,
+          36.99136,
+          -94.58926,
+          40.00375
+        ],
+        "parts": [
+          "us-driving-20261104-v1-0904b2a0d2136d26",
+          "us-driving-20261104-v1-0bd5f8e036a51f23",
+          "us-driving-20261104-v1-0ed58b6072ea9b35",
+          "us-driving-20261104-v1-1ff46e2a75d98d41",
+          "us-driving-20261104-v1-41c419fc530efc81",
+          "us-driving-20261104-v1-6026fa7125819d9d",
+          "us-driving-20261104-v1-79c5364e2b28c688",
+          "us-driving-20261104-v1-7fc84ed0d3729196",
+          "us-driving-20261104-v1-803ab995889f1862",
+          "us-driving-20261104-v1-8183bf774d827491",
+          "us-driving-20261104-v1-83ce494d53db141a",
+          "us-driving-20261104-v1-913a9fdf45cd9b66",
+          "us-driving-20261104-v1-9694842d3e366531",
+          "us-driving-20261104-v1-ad30179d7222bbfe",
+          "us-driving-20261104-v1-e8f2f84fc2f08841",
+          "us-driving-20261104-v1-f10670a6cd8aa1be"
+        ]
+      },
+      "us_state.KY": {
+        "title": "Kentucky",
+        "bounds": [
+          -89.58125,
+          36.49325,
+          -81.95512,
+          39.14831
+        ],
+        "parts": [
+          "us-driving-20261104-v1-006e5ba1903acee4",
+          "us-driving-20261104-v1-0e07f792c9eda29f",
+          "us-driving-20261104-v1-10c97b80db7bbdd5",
+          "us-driving-20261104-v1-19b94b5081bf748c",
+          "us-driving-20261104-v1-28c9b48572a83cff",
+          "us-driving-20261104-v1-3049238ea4857a98",
+          "us-driving-20261104-v1-3a3edda51e5fbcc8",
+          "us-driving-20261104-v1-3b494341c459e365",
+          "us-driving-20261104-v1-4578ddc4973611a3",
+          "us-driving-20261104-v1-63af63804bbdff49",
+          "us-driving-20261104-v1-677fb4125a56bb67",
+          "us-driving-20261104-v1-832c910b8e7fc97b",
+          "us-driving-20261104-v1-904314425c086b2b",
+          "us-driving-20261104-v1-9474d73cc7d9f65a",
+          "us-driving-20261104-v1-b4c763f425213a33",
+          "us-driving-20261104-v1-b6ecdd1fa90024f3",
+          "us-driving-20261104-v1-b9b4309b0ac8a410",
+          "us-driving-20261104-v1-bbc5e5663ce28761",
+          "us-driving-20261104-v1-cc5e8a059f00fca1",
+          "us-driving-20261104-v1-da815d06d50a7465",
+          "us-driving-20261104-v1-f0534d23738d3189",
+          "us-driving-20261104-v1-f45d0930a0f2579c"
+        ]
+      },
+      "us_state.LA": {
+        "title": "Louisiana",
+        "bounds": [
+          -94.04376,
+          28.14452,
+          -88.66684,
+          33.02025
+        ],
+        "parts": [
+          "us-driving-20261104-v1-01f2d752a7586e64",
+          "us-driving-20261104-v1-0b8e5d0f503dbc2f",
+          "us-driving-20261104-v1-208b0d96e9565dbf",
+          "us-driving-20261104-v1-38fffca12ee2e6ba",
+          "us-driving-20261104-v1-3908eea9870beef4",
+          "us-driving-20261104-v1-56f4e55750576e79",
+          "us-driving-20261104-v1-6068ccc749d32c26",
+          "us-driving-20261104-v1-89d1b8edd96683cc",
+          "us-driving-20261104-v1-9b5370299339d1e0",
+          "us-driving-20261104-v1-affd0ca9f5475662",
+          "us-driving-20261104-v1-be86606c73335dbb"
+        ]
+      },
+      "us_state.MA": {
+        "title": "Massachusetts",
+        "bounds": [
+          -73.51096,
+          40.88291,
+          -68.73438,
+          42.88768
+        ],
+        "parts": [
+          "us-driving-20261104-v1-1e6ab081b0044526",
+          "us-driving-20261104-v1-1fb51435c443a486",
+          "us-driving-20261104-v1-21b5221305479a67",
+          "us-driving-20261104-v1-2859a8290869fa01",
+          "us-driving-20261104-v1-49e5c9d90dfb23c5",
+          "us-driving-20261104-v1-55014445be43186c",
+          "us-driving-20261104-v1-569c3c1da8ec648a",
+          "us-driving-20261104-v1-62c0e070e1112c69",
+          "us-driving-20261104-v1-81c719ffd3a84470",
+          "us-driving-20261104-v1-83db1b022101402e",
+          "us-driving-20261104-v1-84b7a430d67dbaf8",
+          "us-driving-20261104-v1-854d52740809da59",
+          "us-driving-20261104-v1-856298524bd9f739",
+          "us-driving-20261104-v1-8d56e8c0596d25a4",
+          "us-driving-20261104-v1-91eadc265c0c8eac",
+          "us-driving-20261104-v1-a30fea2615ac6aed",
+          "us-driving-20261104-v1-ac4cf31dfcd78242",
+          "us-driving-20261104-v1-e5a80b56d91fca8f",
+          "us-driving-20261104-v1-f2e025815afccd1c"
+        ]
+      },
+      "us_state.MD": {
+        "title": "Maryland",
+        "bounds": [
+          -79.48857,
+          37.88396,
+          -74.95408,
+          39.72684
+        ],
+        "parts": [
+          "us-driving-20261104-v1-0ab670349d911904",
+          "us-driving-20261104-v1-19323896c210de0c",
+          "us-driving-20261104-v1-1936febe14e46a10",
+          "us-driving-20261104-v1-22c1c9fbf098649d",
+          "us-driving-20261104-v1-46aaee872fc3c3bc",
+          "us-driving-20261104-v1-54263d2b68ce4ce5",
+          "us-driving-20261104-v1-5c568d2782cf1059",
+          "us-driving-20261104-v1-775efccd1c5814f3",
+          "us-driving-20261104-v1-788f59ec376722f6",
+          "us-driving-20261104-v1-7fdad6e6881e1530",
+          "us-driving-20261104-v1-83917bfa5a18e230",
+          "us-driving-20261104-v1-94d271977ac6e1e6",
+          "us-driving-20261104-v1-ae358b8f28c13346",
+          "us-driving-20261104-v1-ced42c7a09f326cf",
+          "us-driving-20261104-v1-e5a80b56d91fca8f",
+          "us-driving-20261104-v1-f2c9c94c6635d0d6",
+          "us-driving-20261104-v1-f687eee9c4f45d19"
+        ]
+      },
+      "us_state.ME": {
+        "title": "Maine",
+        "bounds": [
+          -71.08891,
+          42.85443,
+          -66.87164,
+          47.46222
+        ],
+        "parts": [
+          "us-driving-20261104-v1-1e6ab081b0044526",
+          "us-driving-20261104-v1-2859a8290869fa01",
+          "us-driving-20261104-v1-5ea840190dc4ebd4",
+          "us-driving-20261104-v1-7e7bf1dd95ae79e9",
+          "us-driving-20261104-v1-93644c93570de668"
+        ]
+      },
+      "us_state.MI": {
+        "title": "Michigan",
+        "bounds": [
+          -90.41981,
+          41.69439,
+          -82.06913,
+          48.35021
+        ],
+        "parts": [
+          "us-driving-20261104-v1-00d7e8e9b82e9ff4",
+          "us-driving-20261104-v1-0e07f792c9eda29f",
+          "us-driving-20261104-v1-2708d3472cf21463",
+          "us-driving-20261104-v1-2a2e6ca656fef6fc",
+          "us-driving-20261104-v1-3400c8640b506a08",
+          "us-driving-20261104-v1-37f9c65b7313116f",
+          "us-driving-20261104-v1-3be3af41b84df3e3",
+          "us-driving-20261104-v1-4628f23f56265b6c",
+          "us-driving-20261104-v1-560ecefb6d5a1b22",
+          "us-driving-20261104-v1-70fec6d3bfc0f891",
+          "us-driving-20261104-v1-771ce2839b035e0c",
+          "us-driving-20261104-v1-8021f32fb9867eaa",
+          "us-driving-20261104-v1-b3ade0f4f1b49253",
+          "us-driving-20261104-v1-c008acbc05047865",
+          "us-driving-20261104-v1-c5b3e8a147b40f00",
+          "us-driving-20261104-v1-da815d06d50a7465"
+        ]
+      },
+      "us_state.MN": {
+        "title": "Minnesota",
+        "bounds": [
+          -97.24987,
+          43.49909,
+          -89.48612,
+          49.40714
+        ],
+        "parts": [
+          "us-driving-20261104-v1-05fd875ad15c00c6",
+          "us-driving-20261104-v1-1b51d8d35fda26a7",
+          "us-driving-20261104-v1-2883eb9d0ed44d2a",
+          "us-driving-20261104-v1-3400c8640b506a08",
+          "us-driving-20261104-v1-41393cd7093b1756",
+          "us-driving-20261104-v1-70fec6d3bfc0f891",
+          "us-driving-20261104-v1-7c3ad0c30413dffe",
+          "us-driving-20261104-v1-838d93004da88221",
+          "us-driving-20261104-v1-b3ade0f4f1b49253",
+          "us-driving-20261104-v1-b85c16f8acfd5cfe",
+          "us-driving-20261104-v1-cd1db9a1d0ae580b",
+          "us-driving-20261104-v1-dff043d874023f52",
+          "us-driving-20261104-v1-e445a389f05303aa"
+        ]
+      },
+      "us_state.MO": {
+        "title": "Missouri",
+        "bounds": [
+          -95.77751,
+          35.99466,
+          -89.0891,
+          40.61664
+        ],
+        "parts": [
+          "us-driving-20261104-v1-10c97b80db7bbdd5",
+          "us-driving-20261104-v1-1a02e03a83f9ce45",
+          "us-driving-20261104-v1-226fe9a770996191",
+          "us-driving-20261104-v1-28c9b48572a83cff",
+          "us-driving-20261104-v1-2f3e5d2608344080",
+          "us-driving-20261104-v1-3321b5e366a8fe04",
+          "us-driving-20261104-v1-3a3edda51e5fbcc8",
+          "us-driving-20261104-v1-41c419fc530efc81",
+          "us-driving-20261104-v1-5538491d9dc0637b",
+          "us-driving-20261104-v1-57cf08a5909c0b19",
+          "us-driving-20261104-v1-6026fa7125819d9d",
+          "us-driving-20261104-v1-730411efdf70ae3f",
+          "us-driving-20261104-v1-8f4df70734473478",
+          "us-driving-20261104-v1-913a9fdf45cd9b66",
+          "us-driving-20261104-v1-ba4075407d25777a",
+          "us-driving-20261104-v1-bb798b0e71c1889c",
+          "us-driving-20261104-v1-bbc5e5663ce28761",
+          "us-driving-20261104-v1-c258063abcfda987",
+          "us-driving-20261104-v1-d86194aa0cc41a5c",
+          "us-driving-20261104-v1-e8f2f84fc2f08841",
+          "us-driving-20261104-v1-f10670a6cd8aa1be"
+        ]
+      },
+      "us_state.MP": {
+        "title": "Northern Mariana Islands",
+        "bounds": [
+          143.0,
+          14.0,
+          147.0,
+          21.623421295
+        ],
+        "parts": [
+          "us-driving-20261104-v1-4809971ca4194a69",
+          "us-driving-20261104-v1-da3fa76ad24bb766"
+        ]
+      },
+      "us_state.MS": {
+        "title": "Mississippi",
+        "bounds": [
+          -91.65857,
+          30.04168,
+          -88.09292,
+          35.00055
+        ],
+        "parts": [
+          "us-driving-20261104-v1-025da18d497c782f",
+          "us-driving-20261104-v1-0a8fc8172f361470",
+          "us-driving-20261104-v1-1134e4883248b66c",
+          "us-driving-20261104-v1-208b0d96e9565dbf",
+          "us-driving-20261104-v1-226fe9a770996191",
+          "us-driving-20261104-v1-3a3edda51e5fbcc8",
+          "us-driving-20261104-v1-478e35142e323ec1",
+          "us-driving-20261104-v1-4b858537eba557d2",
+          "us-driving-20261104-v1-56f4e55750576e79",
+          "us-driving-20261104-v1-6068ccc749d32c26",
+          "us-driving-20261104-v1-b10ec6af16373240",
+          "us-driving-20261104-v1-be86606c73335dbb"
+        ]
+      },
+      "us_state.MT": {
+        "title": "Montana",
+        "bounds": [
+          -116.0518,
+          44.35556,
+          -104.0355,
+          49.00769
+        ],
+        "parts": [
+          "us-driving-20261104-v1-194b0e1c886775f6",
+          "us-driving-20261104-v1-1eab63ce3b72065c",
+          "us-driving-20261104-v1-3bc5862c27ee4b72",
+          "us-driving-20261104-v1-3f9e67f6201854af",
+          "us-driving-20261104-v1-a08671f1bebd936b",
+          "us-driving-20261104-v1-a3c341b3fa8447e8",
+          "us-driving-20261104-v1-a4a364172e0e0724",
+          "us-driving-20261104-v1-be5cf4584e4c344e",
+          "us-driving-20261104-v1-c08b036457b97a04",
+          "us-driving-20261104-v1-cb01aca09c4662f6",
+          "us-driving-20261104-v1-ce311954938c48c7",
+          "us-driving-20261104-v1-d621f3cda09e6f53",
+          "us-driving-20261104-v1-e01fdb516e7d3afc"
+        ]
+      },
+      "us_state.NC": {
+        "title": "North Carolina",
+        "bounds": [
+          -84.32219,
+          33.12992,
+          -73.7396,
+          36.58979
+        ],
+        "parts": [
+          "us-driving-20261104-v1-0ab670349d911904",
+          "us-driving-20261104-v1-0cea69a950d5ef06",
+          "us-driving-20261104-v1-155ba78cbc46e9f4",
+          "us-driving-20261104-v1-1fde8dfc98b9893f",
+          "us-driving-20261104-v1-26c484a2b526388a",
+          "us-driving-20261104-v1-62e3bd47ae7ec4e4",
+          "us-driving-20261104-v1-65355bb1ecae12c9",
+          "us-driving-20261104-v1-775efccd1c5814f3",
+          "us-driving-20261104-v1-8685a25a4e0e8454",
+          "us-driving-20261104-v1-963450dfc181ccf6",
+          "us-driving-20261104-v1-b4c763f425213a33",
+          "us-driving-20261104-v1-b6ecdd1fa90024f3",
+          "us-driving-20261104-v1-b9b4309b0ac8a410",
+          "us-driving-20261104-v1-bb6f4103489cfca6",
+          "us-driving-20261104-v1-bf861cdf28924c59",
+          "us-driving-20261104-v1-c6daf4037a30f014",
+          "us-driving-20261104-v1-d4a09ec2a10e135e",
+          "us-driving-20261104-v1-f5cba8768f402be9"
+        ]
+      },
+      "us_state.ND": {
+        "title": "North Dakota",
+        "bounds": [
+          -104.053,
+          45.93448,
+          -96.55292,
+          49.01671
+        ],
+        "parts": [
+          "us-driving-20261104-v1-2883eb9d0ed44d2a",
+          "us-driving-20261104-v1-3f9e67f6201854af",
+          "us-driving-20261104-v1-41393cd7093b1756",
+          "us-driving-20261104-v1-838d93004da88221",
+          "us-driving-20261104-v1-a3c341b3fa8447e8",
+          "us-driving-20261104-v1-a4a364172e0e0724",
+          "us-driving-20261104-v1-b047e491c7a4d989",
+          "us-driving-20261104-v1-b5e687ee8f99bebf",
+          "us-driving-20261104-v1-e01fdb516e7d3afc",
+          "us-driving-20261104-v1-ff389eb77e499c62"
+        ]
+      },
+      "us_state.NE": {
+        "title": "Nebraska",
+        "bounds": [
+          -104.0575,
+          40.00015,
+          -95.30703,
+          43.00172
+        ],
+        "parts": [
+          "us-driving-20261104-v1-0bd5f8e036a51f23",
+          "us-driving-20261104-v1-0ed58b6072ea9b35",
+          "us-driving-20261104-v1-1a02e03a83f9ce45",
+          "us-driving-20261104-v1-2e31b17d20c227e6",
+          "us-driving-20261104-v1-2ee6d689269ebc7e",
+          "us-driving-20261104-v1-3321b5e366a8fe04",
+          "us-driving-20261104-v1-41393cd7093b1756",
+          "us-driving-20261104-v1-41c419fc530efc81",
+          "us-driving-20261104-v1-46e763793591a2cb",
+          "us-driving-20261104-v1-6026fa7125819d9d",
+          "us-driving-20261104-v1-7fc84ed0d3729196",
+          "us-driving-20261104-v1-803ab995889f1862",
+          "us-driving-20261104-v1-807e849d1ba47544",
+          "us-driving-20261104-v1-8ad562e5977463d5",
+          "us-driving-20261104-v1-8f771a6bf2172bbe",
+          "us-driving-20261104-v1-bd7047352613e160",
+          "us-driving-20261104-v1-bf5800246183993a",
+          "us-driving-20261104-v1-e01fdb516e7d3afc",
+          "us-driving-20261104-v1-ff389eb77e499c62"
+        ]
+      },
+      "us_state.NH": {
+        "title": "New Hampshire",
+        "bounds": [
+          -72.5588,
+          42.69669,
+          -70.48692,
+          45.31002
+        ],
+        "parts": [
+          "us-driving-20261104-v1-1e6ab081b0044526",
+          "us-driving-20261104-v1-21b5221305479a67",
+          "us-driving-20261104-v1-2859a8290869fa01",
+          "us-driving-20261104-v1-569c3c1da8ec648a",
+          "us-driving-20261104-v1-5ea840190dc4ebd4",
+          "us-driving-20261104-v1-62c0e070e1112c69",
+          "us-driving-20261104-v1-7e7bf1dd95ae79e9",
+          "us-driving-20261104-v1-83ae23f04c74c9f1",
+          "us-driving-20261104-v1-84b7a430d67dbaf8",
+          "us-driving-20261104-v1-ac4cf31dfcd78242",
+          "us-driving-20261104-v1-dcbae73ebb925dd8"
+        ]
+      },
+      "us_state.NJ": {
+        "title": "New Jersey",
+        "bounds": [
+          -75.57879,
+          38.75433,
+          -73.67898,
+          41.35807
+        ],
+        "parts": [
+          "us-driving-20261104-v1-06745d887bdad62e",
+          "us-driving-20261104-v1-19323896c210de0c",
+          "us-driving-20261104-v1-2aa84526b25d4dd5",
+          "us-driving-20261104-v1-36c2a6e9140e732b",
+          "us-driving-20261104-v1-3855278ddf0419e5",
+          "us-driving-20261104-v1-7c12404d80bb7427",
+          "us-driving-20261104-v1-92b04105fa043270",
+          "us-driving-20261104-v1-ae358b8f28c13346",
+          "us-driving-20261104-v1-d1d751e7f1bab3e4",
+          "us-driving-20261104-v1-e5a80b56d91fca8f"
+        ]
+      },
+      "us_state.NM": {
+        "title": "New Mexico",
+        "bounds": [
+          -109.0504,
+          31.33043,
+          -102.9979,
+          37.00184
+        ],
+        "parts": [
+          "us-driving-20261104-v1-2250ef0b787c4fa3",
+          "us-driving-20261104-v1-79fe8cc2119d82d8",
+          "us-driving-20261104-v1-90fc8433d2925841",
+          "us-driving-20261104-v1-9694842d3e366531",
+          "us-driving-20261104-v1-a99bb4143f63cea6",
+          "us-driving-20261104-v1-bdea9d7055f9afba",
+          "us-driving-20261104-v1-d1007622a47d79de",
+          "us-driving-20261104-v1-d8a37dff3a541e59",
+          "us-driving-20261104-v1-eb4f5fa464757613",
+          "us-driving-20261104-v1-ee07e443eb8f638b"
+        ]
+      },
+      "us_state.NV": {
+        "title": "Nevada",
+        "bounds": [
+          -120.0074,
+          35.00053,
+          -114.0379,
+          42.00391
+        ],
+        "parts": [
+          "us-driving-20261104-v1-194b0e1c886775f6",
+          "us-driving-20261104-v1-22be4ff71a2eb5bf",
+          "us-driving-20261104-v1-2596285992e59ed2",
+          "us-driving-20261104-v1-2956772f3499132a",
+          "us-driving-20261104-v1-37283c90d48f2a7d",
+          "us-driving-20261104-v1-3801360bae12f97f",
+          "us-driving-20261104-v1-4758fa816eae6efb",
+          "us-driving-20261104-v1-5d6e882db8f8ff1f",
+          "us-driving-20261104-v1-6631a24633cb1fdd",
+          "us-driving-20261104-v1-722b6c9d4b8294d2",
+          "us-driving-20261104-v1-7db40a26f753118e",
+          "us-driving-20261104-v1-bc5ce841b09212fb",
+          "us-driving-20261104-v1-c1cf458cc2b51e2e",
+          "us-driving-20261104-v1-c82cd789b7c06a80",
+          "us-driving-20261104-v1-e82974d85f6a78c9"
+        ]
+      },
+      "us_state.NY": {
+        "title": "New York",
+        "bounds": [
+          -79.76483,
+          40.43922,
+          -71.6608,
+          45.01766
+        ],
+        "parts": [
+          "us-driving-20261104-v1-1936febe14e46a10",
+          "us-driving-20261104-v1-1b58a6142e7ffd93",
+          "us-driving-20261104-v1-21b5221305479a67",
+          "us-driving-20261104-v1-239b349d53ea4637",
+          "us-driving-20261104-v1-2aa84526b25d4dd5",
+          "us-driving-20261104-v1-36c2a6e9140e732b",
+          "us-driving-20261104-v1-55014445be43186c",
+          "us-driving-20261104-v1-6089e7d9759934f3",
+          "us-driving-20261104-v1-689386837ff26612",
+          "us-driving-20261104-v1-6f6d7ae433cf1fab",
+          "us-driving-20261104-v1-720cc386ce2824e6",
+          "us-driving-20261104-v1-81c719ffd3a84470",
+          "us-driving-20261104-v1-856298524bd9f739",
+          "us-driving-20261104-v1-8d56e8c0596d25a4",
+          "us-driving-20261104-v1-92b04105fa043270",
+          "us-driving-20261104-v1-a30fea2615ac6aed",
+          "us-driving-20261104-v1-aae78a25ea4e109f",
+          "us-driving-20261104-v1-d18fbfe32056d368",
+          "us-driving-20261104-v1-e5a80b56d91fca8f"
+        ]
+      },
+      "us_state.OH": {
+        "title": "Ohio",
+        "bounds": [
+          -84.8219,
+          38.40076,
+          -80.50521,
+          42.33584
+        ],
+        "parts": [
+          "us-driving-20261104-v1-006e5ba1903acee4",
+          "us-driving-20261104-v1-0e07f792c9eda29f",
+          "us-driving-20261104-v1-2a2e6ca656fef6fc",
+          "us-driving-20261104-v1-37f9c65b7313116f",
+          "us-driving-20261104-v1-4628f23f56265b6c",
+          "us-driving-20261104-v1-4b0df2fe22612e45",
+          "us-driving-20261104-v1-57e1b60a0a9f18c4",
+          "us-driving-20261104-v1-63af63804bbdff49",
+          "us-driving-20261104-v1-705868f7ab9c2cc8",
+          "us-driving-20261104-v1-7c4dc80d9cca5fce",
+          "us-driving-20261104-v1-b97822c98c445d41",
+          "us-driving-20261104-v1-be388b3a9e65b601",
+          "us-driving-20261104-v1-c1102c61f18117e7",
+          "us-driving-20261104-v1-da815d06d50a7465",
+          "us-driving-20261104-v1-e73ce43aa8d31580",
+          "us-driving-20261104-v1-f0534d23738d3189"
+        ]
+      },
+      "us_state.OK": {
+        "title": "Oklahoma",
+        "bounds": [
+          -103.0078,
+          33.61348,
+          -94.42989,
+          37.00529
+        ],
+        "parts": [
+          "us-driving-20261104-v1-0112abbfce78a312",
+          "us-driving-20261104-v1-1be3d8dae336f0d9",
+          "us-driving-20261104-v1-1ca31cc56471be1b",
+          "us-driving-20261104-v1-2250ef0b787c4fa3",
+          "us-driving-20261104-v1-38fffca12ee2e6ba",
+          "us-driving-20261104-v1-79c5364e2b28c688",
+          "us-driving-20261104-v1-79fe8cc2119d82d8",
+          "us-driving-20261104-v1-7d672fb8406558b8",
+          "us-driving-20261104-v1-8183bf774d827491",
+          "us-driving-20261104-v1-83ce494d53db141a",
+          "us-driving-20261104-v1-90fc8433d2925841",
+          "us-driving-20261104-v1-913a9fdf45cd9b66",
+          "us-driving-20261104-v1-9694842d3e366531",
+          "us-driving-20261104-v1-a19ad6c12b3d9daf",
+          "us-driving-20261104-v1-ba4075407d25777a",
+          "us-driving-20261104-v1-ead29c0b0173d4eb",
+          "us-driving-20261104-v1-f10670a6cd8aa1be"
+        ]
+      },
+      "us_state.OR": {
+        "title": "Oregon",
+        "bounds": [
+          -126.3879,
+          41.9634,
+          -116.4545,
+          46.30349
+        ],
+        "parts": [
+          "us-driving-20261104-v1-22be4ff71a2eb5bf",
+          "us-driving-20261104-v1-2596285992e59ed2",
+          "us-driving-20261104-v1-2956772f3499132a",
+          "us-driving-20261104-v1-38a755fde34e292e",
+          "us-driving-20261104-v1-3e6cab3ed321fe7a",
+          "us-driving-20261104-v1-5d6e882db8f8ff1f",
+          "us-driving-20261104-v1-794380d8ef8168b3",
+          "us-driving-20261104-v1-871da1acb6030449",
+          "us-driving-20261104-v1-c48059234113546c",
+          "us-driving-20261104-v1-d60a5a8bc8cea770",
+          "us-driving-20261104-v1-d621f3cda09e6f53",
+          "us-driving-20261104-v1-dce3f3d7de8c75f5",
+          "us-driving-20261104-v1-e82974d85f6a78c9"
+        ]
+      },
+      "us_state.PA": {
+        "title": "Pennsylvania",
+        "bounds": [
+          -80.52275,
+          39.6644,
+          -74.68761,
+          42.51649
+        ],
+        "parts": [
+          "us-driving-20261104-v1-029dcdea90beeeef",
+          "us-driving-20261104-v1-06745d887bdad62e",
+          "us-driving-20261104-v1-0e07f792c9eda29f",
+          "us-driving-20261104-v1-19323896c210de0c",
+          "us-driving-20261104-v1-1936febe14e46a10",
+          "us-driving-20261104-v1-21b5221305479a67",
+          "us-driving-20261104-v1-36c2a6e9140e732b",
+          "us-driving-20261104-v1-3855278ddf0419e5",
+          "us-driving-20261104-v1-4628f23f56265b6c",
+          "us-driving-20261104-v1-54263d2b68ce4ce5",
+          "us-driving-20261104-v1-7143538fe2ad7ff4",
+          "us-driving-20261104-v1-788f59ec376722f6",
+          "us-driving-20261104-v1-7fdad6e6881e1530",
+          "us-driving-20261104-v1-94d271977ac6e1e6",
+          "us-driving-20261104-v1-c1102c61f18117e7",
+          "us-driving-20261104-v1-c7f801abc79f44c9",
+          "us-driving-20261104-v1-d18fbfe32056d368",
+          "us-driving-20261104-v1-dc06b28f0af81b81",
+          "us-driving-20261104-v1-e5a80b56d91fca8f",
+          "us-driving-20261104-v1-e6fb1a62d0fd59a9",
+          "us-driving-20261104-v1-e73ce43aa8d31580",
+          "us-driving-20261104-v1-f886f2067e065029"
+        ]
+      },
+      "us_state.PR": {
+        "title": "Puerto Rico",
+        "bounds": [
+          -68.31024,
+          17.51573,
+          -65.09262,
+          18.81272
+        ],
+        "parts": [
+          "us-driving-20261104-v1-47293ed7b6312364",
+          "us-driving-20261104-v1-9c51400175d7d74b"
+        ]
+      },
+      "us_state.RI": {
+        "title": "Rhode Island",
+        "bounds": [
+          -71.91456,
+          40.9992,
+          -71.06369,
+          42.01938
+        ],
+        "parts": [
+          "us-driving-20261104-v1-1e6ab081b0044526",
+          "us-driving-20261104-v1-239b349d53ea4637",
+          "us-driving-20261104-v1-33026f3266538445",
+          "us-driving-20261104-v1-49e5c9d90dfb23c5",
+          "us-driving-20261104-v1-55014445be43186c",
+          "us-driving-20261104-v1-569c3c1da8ec648a",
+          "us-driving-20261104-v1-6f6d7ae433cf1fab",
+          "us-driving-20261104-v1-854d52740809da59",
+          "us-driving-20261104-v1-bf95d43e909ddf60"
+        ]
+      },
+      "us_state.SC": {
+        "title": "South Carolina",
+        "bounds": [
+          -83.35622,
+          32.02967,
+          -78.51867,
+          35.2184
+        ],
+        "parts": [
+          "us-driving-20261104-v1-0cea69a950d5ef06",
+          "us-driving-20261104-v1-1c0337998929cfb7",
+          "us-driving-20261104-v1-2287c24cdf460dda",
+          "us-driving-20261104-v1-718791b528422376",
+          "us-driving-20261104-v1-775efccd1c5814f3",
+          "us-driving-20261104-v1-b4c763f425213a33",
+          "us-driving-20261104-v1-bb6f4103489cfca6",
+          "us-driving-20261104-v1-bf861cdf28924c59",
+          "us-driving-20261104-v1-d4a09ec2a10e135e",
+          "us-driving-20261104-v1-eb55799f616fdc9e"
+        ]
+      },
+      "us_state.SD": {
+        "title": "South Dakota",
+        "bounds": [
+          -104.0588,
+          42.47744,
+          -96.43595,
+          45.94831
+        ],
+        "parts": [
+          "us-driving-20261104-v1-03e57318e896b74d",
+          "us-driving-20261104-v1-05fd875ad15c00c6",
+          "us-driving-20261104-v1-2883eb9d0ed44d2a",
+          "us-driving-20261104-v1-3f9e67f6201854af",
+          "us-driving-20261104-v1-41393cd7093b1756",
+          "us-driving-20261104-v1-46e763793591a2cb",
+          "us-driving-20261104-v1-89d2cab87f3c4371",
+          "us-driving-20261104-v1-8ad562e5977463d5",
+          "us-driving-20261104-v1-a08671f1bebd936b",
+          "us-driving-20261104-v1-a3c341b3fa8447e8",
+          "us-driving-20261104-v1-a5d7c2f3b5b0728b",
+          "us-driving-20261104-v1-b047e491c7a4d989",
+          "us-driving-20261104-v1-b85c16f8acfd5cfe",
+          "us-driving-20261104-v1-bd7047352613e160",
+          "us-driving-20261104-v1-cb01aca09c4662f6",
+          "us-driving-20261104-v1-e01fdb516e7d3afc",
+          "us-driving-20261104-v1-ff389eb77e499c62"
+        ]
+      },
+      "us_state.TN": {
+        "title": "Tennessee",
+        "bounds": [
+          -90.31329,
+          34.98269,
+          -81.64416,
+          36.68075
+        ],
+        "parts": [
+          "us-driving-20261104-v1-0a8fc8172f361470",
+          "us-driving-20261104-v1-10c97b80db7bbdd5",
+          "us-driving-20261104-v1-155ba78cbc46e9f4",
+          "us-driving-20261104-v1-226fe9a770996191",
+          "us-driving-20261104-v1-28c9b48572a83cff",
+          "us-driving-20261104-v1-2a97cdfec3cdd7b9",
+          "us-driving-20261104-v1-2ea170760aa16ab1",
+          "us-driving-20261104-v1-3a3edda51e5fbcc8",
+          "us-driving-20261104-v1-41dbe8541a4f41a4",
+          "us-driving-20261104-v1-4578ddc4973611a3",
+          "us-driving-20261104-v1-478e35142e323ec1",
+          "us-driving-20261104-v1-57cf08a5909c0b19",
+          "us-driving-20261104-v1-8685a25a4e0e8454",
+          "us-driving-20261104-v1-963450dfc181ccf6",
+          "us-driving-20261104-v1-a53e4cec7dcbff4f",
+          "us-driving-20261104-v1-b10ec6af16373240",
+          "us-driving-20261104-v1-b4c763f425213a33",
+          "us-driving-20261104-v1-b6ecdd1fa90024f3",
+          "us-driving-20261104-v1-b9b4309b0ac8a410",
+          "us-driving-20261104-v1-bb6f4103489cfca6",
+          "us-driving-20261104-v1-d4a09ec2a10e135e",
+          "us-driving-20261104-v1-eece41286e40bfac",
+          "us-driving-20261104-v1-f45d0930a0f2579c",
+          "us-driving-20261104-v1-f751a5850430e29c",
+          "us-driving-20261104-v1-f96f540dd51ecd32"
+        ]
+      },
+      "us_state.TX": {
+        "title": "Texas",
+        "bounds": [
+          -106.6494,
+          25.69551,
+          -93.01897,
+          36.52145
+        ],
+        "parts": [
+          "us-driving-20261104-v1-2250ef0b787c4fa3",
+          "us-driving-20261104-v1-247b8ee52e4c353e",
+          "us-driving-20261104-v1-3235dadaf06cfceb",
+          "us-driving-20261104-v1-38fffca12ee2e6ba",
+          "us-driving-20261104-v1-3908eea9870beef4",
+          "us-driving-20261104-v1-423ac8cc0224e244",
+          "us-driving-20261104-v1-435a19cea57dd70f",
+          "us-driving-20261104-v1-54ff9c202f682636",
+          "us-driving-20261104-v1-6247a884c4c7c9cf",
+          "us-driving-20261104-v1-837bf4c75d286304",
+          "us-driving-20261104-v1-83ce494d53db141a",
+          "us-driving-20261104-v1-90fc8433d2925841",
+          "us-driving-20261104-v1-91615ec86f3c2f76",
+          "us-driving-20261104-v1-9694842d3e366531",
+          "us-driving-20261104-v1-9b5370299339d1e0",
+          "us-driving-20261104-v1-a19ad6c12b3d9daf",
+          "us-driving-20261104-v1-a99bb4143f63cea6",
+          "us-driving-20261104-v1-b25c15ea9b057832",
+          "us-driving-20261104-v1-b3ee84f59f6098ac",
+          "us-driving-20261104-v1-b3f0250c8e70784f",
+          "us-driving-20261104-v1-ead29c0b0173d4eb"
+        ]
+      },
+      "us_state.UT": {
+        "title": "Utah",
+        "bounds": [
+          -114.0556,
+          36.9963,
+          -109.0394,
+          42.00323
+        ],
+        "parts": [
+          "us-driving-20261104-v1-0939424ba458de30",
+          "us-driving-20261104-v1-194b0e1c886775f6",
+          "us-driving-20261104-v1-2232158badafff86",
+          "us-driving-20261104-v1-25a7a71a03ca82ce",
+          "us-driving-20261104-v1-38e369acc332c1a5",
+          "us-driving-20261104-v1-47357b8842250439",
+          "us-driving-20261104-v1-4758fa816eae6efb",
+          "us-driving-20261104-v1-6631a24633cb1fdd",
+          "us-driving-20261104-v1-722b6c9d4b8294d2",
+          "us-driving-20261104-v1-875cdaf135cbb837",
+          "us-driving-20261104-v1-a29c6a3534c19348",
+          "us-driving-20261104-v1-b3a35362f2209bfa",
+          "us-driving-20261104-v1-c08b036457b97a04",
+          "us-driving-20261104-v1-c1cf458cc2b51e2e",
+          "us-driving-20261104-v1-d8a37dff3a541e59"
+        ]
+      },
+      "us_state.VA": {
+        "title": "Virginia",
+        "bounds": [
+          -83.67841,
+          36.53798,
+          -74.29751,
+          39.46901
+        ],
+        "parts": [
+          "us-driving-20261104-v1-0ab670349d911904",
+          "us-driving-20261104-v1-0e07f792c9eda29f",
+          "us-driving-20261104-v1-155ba78cbc46e9f4",
+          "us-driving-20261104-v1-1936febe14e46a10",
+          "us-driving-20261104-v1-1fde8dfc98b9893f",
+          "us-driving-20261104-v1-2ea170760aa16ab1",
+          "us-driving-20261104-v1-668b6e6fb200a0f2",
+          "us-driving-20261104-v1-67e5f48ac34b2bb6",
+          "us-driving-20261104-v1-775efccd1c5814f3",
+          "us-driving-20261104-v1-7b9ce0c268f0a20b",
+          "us-driving-20261104-v1-83917bfa5a18e230",
+          "us-driving-20261104-v1-904314425c086b2b",
+          "us-driving-20261104-v1-94d271977ac6e1e6",
+          "us-driving-20261104-v1-ac44c5da9beeab19",
+          "us-driving-20261104-v1-ae358b8f28c13346",
+          "us-driving-20261104-v1-b4c763f425213a33",
+          "us-driving-20261104-v1-b6ecdd1fa90024f3",
+          "us-driving-20261104-v1-cc5e8a059f00fca1",
+          "us-driving-20261104-v1-ced42c7a09f326cf",
+          "us-driving-20261104-v1-e5a80b56d91fca8f",
+          "us-driving-20261104-v1-f2c9c94c6635d0d6",
+          "us-driving-20261104-v1-f45d0930a0f2579c"
+        ]
+      },
+      "us_state.VI": {
+        "title": "Virgin Islands",
+        "bounds": [
+          -65.17502,
+          17.28246,
+          -63.95554,
+          18.48596
+        ],
+        "parts": [
+          "us-driving-20261104-v1-9c51400175d7d74b",
+          "us-driving-20261104-v1-d908e2123fa605cf"
+        ]
+      },
+      "us_state.VT": {
+        "title": "Vermont",
+        "bounds": [
+          -73.43943,
+          42.72498,
+          -71.46476,
+          45.02309
+        ],
+        "parts": [
+          "us-driving-20261104-v1-1e6ab081b0044526",
+          "us-driving-20261104-v1-1fb51435c443a486",
+          "us-driving-20261104-v1-21b5221305479a67",
+          "us-driving-20261104-v1-373e5d92d28e476e",
+          "us-driving-20261104-v1-62c0e070e1112c69",
+          "us-driving-20261104-v1-689386837ff26612",
+          "us-driving-20261104-v1-7e7bf1dd95ae79e9",
+          "us-driving-20261104-v1-84b7a430d67dbaf8",
+          "us-driving-20261104-v1-856298524bd9f739",
+          "us-driving-20261104-v1-8d56e8c0596d25a4",
+          "us-driving-20261104-v1-dcbae73ebb925dd8"
+        ]
+      },
+      "us_state.WA": {
+        "title": "Washington",
+        "bounds": [
+          -126.7423,
+          45.53882,
+          -116.9115,
+          49.00708
+        ],
+        "parts": [
+          "us-driving-20261104-v1-22be4ff71a2eb5bf",
+          "us-driving-20261104-v1-3e6cab3ed321fe7a",
+          "us-driving-20261104-v1-579381720dccc794",
+          "us-driving-20261104-v1-6cff4f84361e1b9f",
+          "us-driving-20261104-v1-c48059234113546c",
+          "us-driving-20261104-v1-d60a5a8bc8cea770",
+          "us-driving-20261104-v1-d621f3cda09e6f53",
+          "us-driving-20261104-v1-deaba151a2e37025",
+          "us-driving-20261104-v1-fe37b693bda729ad"
+        ]
+      },
+      "us_state.WI": {
+        "title": "Wisconsin",
+        "bounds": [
+          -92.89089,
+          42.48899,
+          -86.20021,
+          47.41451
+        ],
+        "parts": [
+          "us-driving-20261104-v1-1b51d8d35fda26a7",
+          "us-driving-20261104-v1-3400c8640b506a08",
+          "us-driving-20261104-v1-6739e710454844b7",
+          "us-driving-20261104-v1-68584e8021e3d8f5",
+          "us-driving-20261104-v1-70fec6d3bfc0f891",
+          "us-driving-20261104-v1-731b6336cf481595",
+          "us-driving-20261104-v1-8021f32fb9867eaa",
+          "us-driving-20261104-v1-886adbea0e2d3dc5",
+          "us-driving-20261104-v1-88e776d7bca77d24",
+          "us-driving-20261104-v1-b79e69197eb811c3",
+          "us-driving-20261104-v1-c008acbc05047865",
+          "us-driving-20261104-v1-dff043d874023f52"
+        ]
+      },
+      "us_state.WV": {
+        "title": "West Virginia",
+        "bounds": [
+          -82.64965,
+          37.19858,
+          -77.7141,
+          40.64636
+        ],
+        "parts": [
+          "us-driving-20261104-v1-0e07f792c9eda29f",
+          "us-driving-20261104-v1-1936febe14e46a10",
+          "us-driving-20261104-v1-22c1c9fbf098649d",
+          "us-driving-20261104-v1-4b0df2fe22612e45",
+          "us-driving-20261104-v1-65020be7d5ec1741",
+          "us-driving-20261104-v1-67e5f48ac34b2bb6",
+          "us-driving-20261104-v1-775efccd1c5814f3",
+          "us-driving-20261104-v1-7fdad6e6881e1530",
+          "us-driving-20261104-v1-832c910b8e7fc97b",
+          "us-driving-20261104-v1-904314425c086b2b",
+          "us-driving-20261104-v1-94d271977ac6e1e6",
+          "us-driving-20261104-v1-b4c763f425213a33",
+          "us-driving-20261104-v1-ced42c7a09f326cf",
+          "us-driving-20261104-v1-e73ce43aa8d31580",
+          "us-driving-20261104-v1-f0534d23738d3189",
+          "us-driving-20261104-v1-f886f2067e065029"
+        ]
+      },
+      "us_state.WY": {
+        "title": "Wyoming",
+        "bounds": [
+          -111.0576,
+          40.98339,
+          -103.9413,
+          45.01216
+        ],
+        "parts": [
+          "us-driving-20261104-v1-38e369acc332c1a5",
+          "us-driving-20261104-v1-3bc5862c27ee4b72",
+          "us-driving-20261104-v1-46e763793591a2cb",
+          "us-driving-20261104-v1-47357b8842250439",
+          "us-driving-20261104-v1-5da8481787ae06b8",
+          "us-driving-20261104-v1-781ea1d539fc51a3",
+          "us-driving-20261104-v1-7fc84ed0d3729196",
+          "us-driving-20261104-v1-807e849d1ba47544",
+          "us-driving-20261104-v1-8387a2b82371f6d1",
+          "us-driving-20261104-v1-875cdaf135cbb837",
+          "us-driving-20261104-v1-a08671f1bebd936b",
+          "us-driving-20261104-v1-a3c341b3fa8447e8",
+          "us-driving-20261104-v1-a5d7c2f3b5b0728b",
+          "us-driving-20261104-v1-b3a35362f2209bfa",
+          "us-driving-20261104-v1-be5cf4584e4c344e",
+          "us-driving-20261104-v1-bf5800246183993a",
+          "us-driving-20261104-v1-c08b036457b97a04",
+          "us-driving-20261104-v1-e01fdb516e7d3afc"
+        ]
+      }
+    },
+    "parts": [
+      {
+        "id": "us-driving-20261104-v1-006e5ba1903acee4",
+        "bytes": 19008099,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-006e5ba1903acee4.json",
+        "sha256": "1d37fe1681baa8098bda7008fe1d7efa7389e91da57f3e5a81a969057b5d908c"
+      },
+      {
+        "id": "us-driving-20261104-v1-00d7e8e9b82e9ff4",
+        "bytes": 5538086,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-00d7e8e9b82e9ff4.json",
+        "sha256": "a7c0e189d4d963d1a2214714dbf005fcddac62c287fc9de2c27dd9b9cb03bd42"
+      },
+      {
+        "id": "us-driving-20261104-v1-00ec6f91d2682213",
+        "bytes": 57571158,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-00ec6f91d2682213.json",
+        "sha256": "22f21ff0754a70cb20224c9fd5ab84f84fda8839b5ee1cc6d9086dd20dfd3e2f"
+      },
+      {
+        "id": "us-driving-20261104-v1-0112abbfce78a312",
+        "bytes": 46192692,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-0112abbfce78a312.json",
+        "sha256": "0348e13d0fe334a38d8fea156ccbec4ce5746372a569339af04eaddf90c362b2"
+      },
+      {
+        "id": "us-driving-20261104-v1-01f2d752a7586e64",
+        "bytes": 49569392,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-01f2d752a7586e64.json",
+        "sha256": "386032f9d0a66fd1c1d679299f72ac61b5ac7757532ea94b78713e9165d2eb60"
+      },
+      {
+        "id": "us-driving-20261104-v1-025da18d497c782f",
+        "bytes": 2349648,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-025da18d497c782f.json",
+        "sha256": "cbb5961353f70d3c395489c75d1b4d37d6d0e0295a419e3fc8d146af7669dde5"
+      },
+      {
+        "id": "us-driving-20261104-v1-029dcdea90beeeef",
+        "bytes": 6136303,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-029dcdea90beeeef.json",
+        "sha256": "06c8e89e3d2b62c320ff601d5ebd6601d389dd0305195d94d7bba84f5f74bd1e"
+      },
+      {
+        "id": "us-driving-20261104-v1-03e57318e896b74d",
+        "bytes": 22387838,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-03e57318e896b74d.json",
+        "sha256": "24978f7a8926045cf6411e205024619b470dd7d039bcb9c531fe606d6bb74a68"
+      },
+      {
+        "id": "us-driving-20261104-v1-053e42bb5c0c7af2",
+        "bytes": 46175557,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-053e42bb5c0c7af2.json",
+        "sha256": "ae77efa7820f98c465fae83b323b4c75cd0986ac18ed600a0177a7bdd1223810"
+      },
+      {
+        "id": "us-driving-20261104-v1-05fd875ad15c00c6",
+        "bytes": 1599889,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-05fd875ad15c00c6.json",
+        "sha256": "c08d662189ae70c3389bc3531c2aa0e412de7a8b611c3f7e92f909f34872246b"
+      },
+      {
+        "id": "us-driving-20261104-v1-062b8ea5eeab67ce",
+        "bytes": 40489301,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-062b8ea5eeab67ce.json",
+        "sha256": "90082d1e7553b13fc8d560d7a5f9877fc159f898c3a8df0278beccc73a28e1b0"
+      },
+      {
+        "id": "us-driving-20261104-v1-06745d887bdad62e",
+        "bytes": 35834085,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-06745d887bdad62e.json",
+        "sha256": "b440a1519fe02ac966273a47d5693f60c5f17b8c7bda3e61e9f999de6a7a5f67"
+      },
+      {
+        "id": "us-driving-20261104-v1-0904b2a0d2136d26",
+        "bytes": 47284379,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-0904b2a0d2136d26.json",
+        "sha256": "2ceb943f24f3e4961c34237f6a4bf9970eb9e4e09246e5728be2fa578aead602"
+      },
+      {
+        "id": "us-driving-20261104-v1-0939424ba458de30",
+        "bytes": 53479473,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-0939424ba458de30.json",
+        "sha256": "73bfd7317c80d618ce4ccfe2c20b8561f3c13983a39d9ceedcf03fa7f9439485"
+      },
+      {
+        "id": "us-driving-20261104-v1-0a8fc8172f361470",
+        "bytes": 1864558,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-0a8fc8172f361470.json",
+        "sha256": "03fa2e3ef085b3417cbb4daecd63565c7d5244655341605da401efca088d5be4"
+      },
+      {
+        "id": "us-driving-20261104-v1-0ab670349d911904",
+        "bytes": 319780,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-0ab670349d911904.json",
+        "sha256": "cde4ed68715afc499e11874752c69f7770bec2eff71d341b6b87bdcf6729169b"
+      },
+      {
+        "id": "us-driving-20261104-v1-0b8e5d0f503dbc2f",
+        "bytes": 10922441,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-0b8e5d0f503dbc2f.json",
+        "sha256": "a9a6efe695eeaddddddb39f3745e723f16d4f51755599dccd3bfdceac38eeefb"
+      },
+      {
+        "id": "us-driving-20261104-v1-0bd5f8e036a51f23",
+        "bytes": 356839,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-0bd5f8e036a51f23.json",
+        "sha256": "bc54aea8dcf593d081608a91a9ba65b7afbf7492964d282f1008e894eac9673e"
+      },
+      {
+        "id": "us-driving-20261104-v1-0cea69a950d5ef06",
+        "bytes": 41719665,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-0cea69a950d5ef06.json",
+        "sha256": "ff189f283c7be317b227239a996194a3690040a812cca047d1ecf779bdbeecfd"
+      },
+      {
+        "id": "us-driving-20261104-v1-0e07f792c9eda29f",
+        "bytes": 12099878,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-0e07f792c9eda29f.json",
+        "sha256": "863aea0fb554ba61ee358f6240b5921249e0e06899b07ab8bfdc52ccb461471a"
+      },
+      {
+        "id": "us-driving-20261104-v1-0ed58b6072ea9b35",
+        "bytes": 5531675,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-0ed58b6072ea9b35.json",
+        "sha256": "5478b55dce4df29162968ed81fdeacc030b530b4bafb428a9e29da09305d9cdf"
+      },
+      {
+        "id": "us-driving-20261104-v1-0fc5eb00379009ef",
+        "bytes": 18870607,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-0fc5eb00379009ef.json",
+        "sha256": "796b5d9d5c9c4dc18b03dde946636ff5aa5328e396e5826a832df2618c209465"
+      },
+      {
+        "id": "us-driving-20261104-v1-0fea370150f9f04a",
+        "bytes": 50934289,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-0fea370150f9f04a.json",
+        "sha256": "db3f3e126b7fb1c88d4109ed5c66b2908bfce63a52a4a40e8930834193bb3937"
+      },
+      {
+        "id": "us-driving-20261104-v1-10c97b80db7bbdd5",
+        "bytes": 774437,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-10c97b80db7bbdd5.json",
+        "sha256": "3c65d42d6f6502984fa662f0de5a346b2a57b34630a24f094d44b86e95505556"
+      },
+      {
+        "id": "us-driving-20261104-v1-1134e4883248b66c",
+        "bytes": 6799878,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-1134e4883248b66c.json",
+        "sha256": "c4f570ace02a66b875176af1c48a9a3be721a60682159d0dfe9ae415ead3feec"
+      },
+      {
+        "id": "us-driving-20261104-v1-140dd7f3c6ae35c5",
+        "bytes": 29275175,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-140dd7f3c6ae35c5.json",
+        "sha256": "bbcaeebace654c7cadce3e10888661f1c95bf69c793b6a6a948919e8d514847f"
+      },
+      {
+        "id": "us-driving-20261104-v1-155ba78cbc46e9f4",
+        "bytes": 2191849,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-155ba78cbc46e9f4.json",
+        "sha256": "579226d5aa2bf178250c1c33bd5088620951ab8d993d374fceef10d926eda373"
+      },
+      {
+        "id": "us-driving-20261104-v1-16876716c283b016",
+        "bytes": 50447288,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-16876716c283b016.json",
+        "sha256": "fc52edec5120f2347b03a81a6c2e1ed27a9734683f1123435162569e0fd520b3"
+      },
+      {
+        "id": "us-driving-20261104-v1-19323896c210de0c",
+        "bytes": 4661542,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-19323896c210de0c.json",
+        "sha256": "34a561336f514594a0c1d07afecaaeda4e8247c4b3d1a88332855f548e3b05cf"
+      },
+      {
+        "id": "us-driving-20261104-v1-1936febe14e46a10",
+        "bytes": 15581478,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-1936febe14e46a10.json",
+        "sha256": "863f1d19316c5598f2f7c2d19d693147bebd2e407d4da954fee05559da61ad9b"
+      },
+      {
+        "id": "us-driving-20261104-v1-194b0e1c886775f6",
+        "bytes": 844069,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-194b0e1c886775f6.json",
+        "sha256": "305acc67f142b3b239ecfb1cd2fbda8effc2c0f733df89e70115642e23325ea1"
+      },
+      {
+        "id": "us-driving-20261104-v1-19b94b5081bf748c",
+        "bytes": 54972999,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-19b94b5081bf748c.json",
+        "sha256": "bb462b4f8bfc3bb79b5b26baeb83fcb05486eaa21a229fbdca19e357a7a7577f"
+      },
+      {
+        "id": "us-driving-20261104-v1-1a02e03a83f9ce45",
+        "bytes": 446955,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-1a02e03a83f9ce45.json",
+        "sha256": "b3efeeadc3e0ccccda546d719f8287438dd582c92bc6fb43bf1da0c3a01de258"
+      },
+      {
+        "id": "us-driving-20261104-v1-1b51d8d35fda26a7",
+        "bytes": 20733919,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-1b51d8d35fda26a7.json",
+        "sha256": "a13058821ac89a3606a5cbde71a420828094e2fa7d8c7ce6425352ce5bc425bf"
+      },
+      {
+        "id": "us-driving-20261104-v1-1b58a6142e7ffd93",
+        "bytes": 9631652,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-1b58a6142e7ffd93.json",
+        "sha256": "51f44d4dff28cb5ddd06a48d6af8dd92e9d6707b4588852f0b3b6febad02439c"
+      },
+      {
+        "id": "us-driving-20261104-v1-1be3d8dae336f0d9",
+        "bytes": 337331,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-1be3d8dae336f0d9.json",
+        "sha256": "f8fe9fbd3f27fe3563c3145bd86b34719ff82fa8b2a2d6cd55a434f712eb41ee"
+      },
+      {
+        "id": "us-driving-20261104-v1-1c0337998929cfb7",
+        "bytes": 7663910,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-1c0337998929cfb7.json",
+        "sha256": "35423ab6c19f229b723d4a4cd43f1ab21bf5764f5d99f73eeaf09cb1d7d0385d"
+      },
+      {
+        "id": "us-driving-20261104-v1-1ca31cc56471be1b",
+        "bytes": 46183357,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-1ca31cc56471be1b.json",
+        "sha256": "006341229ef6ea823319097bb021a0daf1abe44aabeec283a4d3b352b6311909"
+      },
+      {
+        "id": "us-driving-20261104-v1-1d70489e3cfdd58f",
+        "bytes": 44871087,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-1d70489e3cfdd58f.json",
+        "sha256": "4badf3ac2c5d106ad056180cfcc9a61f2b61d332da11b52a2b343053515d3442"
+      },
+      {
+        "id": "us-driving-20261104-v1-1e6ab081b0044526",
+        "bytes": 7393574,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-1e6ab081b0044526.json",
+        "sha256": "df211fd2029a42d90dc94e1d3f51d4543f2b39863174a3a74faa70122469116d"
+      },
+      {
+        "id": "us-driving-20261104-v1-1eab63ce3b72065c",
+        "bytes": 50473269,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-1eab63ce3b72065c.json",
+        "sha256": "eff6e4cacbfd0f79ea45c87dfbb484a990fd61b06b9f2499d6c44d0bb211459f"
+      },
+      {
+        "id": "us-driving-20261104-v1-1fb51435c443a486",
+        "bytes": 2089650,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-1fb51435c443a486.json",
+        "sha256": "1af627babbd2ef365fe08f0ce78c61c14c1592c01f683dd3d8a3e80e9d1daf04"
+      },
+      {
+        "id": "us-driving-20261104-v1-1fde8dfc98b9893f",
+        "bytes": 26207922,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-1fde8dfc98b9893f.json",
+        "sha256": "64d54ddd5b785510285d0891b2e9fcbf462087f908ab675ad84dda1f33663519"
+      },
+      {
+        "id": "us-driving-20261104-v1-1ff46e2a75d98d41",
+        "bytes": 21059028,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-1ff46e2a75d98d41.json",
+        "sha256": "ad3af4f4a977a07b4580e766e76a1ba6bbd18ceb83b3217d14109266f0105203"
+      },
+      {
+        "id": "us-driving-20261104-v1-208b0d96e9565dbf",
+        "bytes": 1380645,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-208b0d96e9565dbf.json",
+        "sha256": "ae3a9b0d38a3f4eba05873146d0e32b6d8b10e9ab29ddaee32bd838a99ef59d9"
+      },
+      {
+        "id": "us-driving-20261104-v1-21b5221305479a67",
+        "bytes": 6521126,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-21b5221305479a67.json",
+        "sha256": "6a9766f340b13f4a44423a7c7b87865f0282706f0e72ebcbc7c93ca34f097b36"
+      },
+      {
+        "id": "us-driving-20261104-v1-2232158badafff86",
+        "bytes": 4043242,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-2232158badafff86.json",
+        "sha256": "32b57abeb71b00c5c4f347c4ef0b2652c1898c0f9d09f5a8d10005bc8a90d61f"
+      },
+      {
+        "id": "us-driving-20261104-v1-2250ef0b787c4fa3",
+        "bytes": 69924,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-2250ef0b787c4fa3.json",
+        "sha256": "7fe293cd372946dcfa97f352b4ce512e6d8405c8a38b44d485947829c4ec98e5"
+      },
+      {
+        "id": "us-driving-20261104-v1-226fe9a770996191",
+        "bytes": 3219942,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-226fe9a770996191.json",
+        "sha256": "e850138eac5b136ba634fb3976c058f15bcf6b277dd8e9f3fe45651cbadcd982"
+      },
+      {
+        "id": "us-driving-20261104-v1-2287c24cdf460dda",
+        "bytes": 50689279,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-2287c24cdf460dda.json",
+        "sha256": "1ed22cd0b6ea51b4cf1a530f305c12bbc1e4f2bf1d51554d6d52cf9cfd304664"
+      },
+      {
+        "id": "us-driving-20261104-v1-22be4ff71a2eb5bf",
+        "bytes": 1069349,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-22be4ff71a2eb5bf.json",
+        "sha256": "484a56f21ee33a62113df515fbd4c49d177e78ba09473938c58d86a417184b0d"
+      },
+      {
+        "id": "us-driving-20261104-v1-22c1c9fbf098649d",
+        "bytes": 1954676,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-22c1c9fbf098649d.json",
+        "sha256": "c7d149dadfb4a1d059bb46e91558a9921b0fe79728c2696a5f2522dfcab5769e"
+      },
+      {
+        "id": "us-driving-20261104-v1-2348b08058d02c4e",
+        "bytes": 49066154,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-2348b08058d02c4e.json",
+        "sha256": "249c9bdba4ad117b99e33ec1c9c0471e40a2fab3ae752f734abe08dd294d1bc6"
+      },
+      {
+        "id": "us-driving-20261104-v1-239b349d53ea4637",
+        "bytes": 1159465,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-239b349d53ea4637.json",
+        "sha256": "1b2748bb7d6d6d2a69b150aa074c3e80f55ca23a24d1cc2fefffd76b20c4f2de"
+      },
+      {
+        "id": "us-driving-20261104-v1-247b8ee52e4c353e",
+        "bytes": 51880975,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-247b8ee52e4c353e.json",
+        "sha256": "0b75e9fe54ef70b3a98331ab31520724422e0c48589fb88a2fcb88bb781ac510"
+      },
+      {
+        "id": "us-driving-20261104-v1-2596285992e59ed2",
+        "bytes": 823589,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-2596285992e59ed2.json",
+        "sha256": "7d45b8403866681c7cc82d0b7abb7fb9005f676b6c1e81aef5300c3f2a749968"
+      },
+      {
+        "id": "us-driving-20261104-v1-25a7a71a03ca82ce",
+        "bytes": 6782691,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-25a7a71a03ca82ce.json",
+        "sha256": "48c1cf7dc3788111a94b8770f4c74f872f5476c58ffb0f7788c59aeef70eea87"
+      },
+      {
+        "id": "us-driving-20261104-v1-26c484a2b526388a",
+        "bytes": 49402468,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-26c484a2b526388a.json",
+        "sha256": "b585feab83ba93a6c8f04dd953f2c43b209014c8f8325d8c32fdba4e0d417587"
+      },
+      {
+        "id": "us-driving-20261104-v1-2708d3472cf21463",
+        "bytes": 48252102,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-2708d3472cf21463.json",
+        "sha256": "b3bbaaf63867fd40304930a52fc4b533d5b949cd08ce50d10542db53cd955daa"
+      },
+      {
+        "id": "us-driving-20261104-v1-27c7ec0de0d59a36",
+        "bytes": 12314044,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-27c7ec0de0d59a36.json",
+        "sha256": "77895749e185f4f654ffe35749c2aeaac81f9a4d994a670abf394fc421cbe6a8"
+      },
+      {
+        "id": "us-driving-20261104-v1-2859a8290869fa01",
+        "bytes": 2011624,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-2859a8290869fa01.json",
+        "sha256": "7133672f224b7efe7674c9f3c65fd215b8f95a4c6411ed14290d3961d4ba20a8"
+      },
+      {
+        "id": "us-driving-20261104-v1-2883eb9d0ed44d2a",
+        "bytes": 389607,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-2883eb9d0ed44d2a.json",
+        "sha256": "58be0a75fb4e378cd9989072c6f2cd4862c066126f7b507a8afb6b6976c9e2c7"
+      },
+      {
+        "id": "us-driving-20261104-v1-28c9b48572a83cff",
+        "bytes": 721974,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-28c9b48572a83cff.json",
+        "sha256": "7e809400f20824727a25c5ee7bad2aa7f6b1e9a831aadf989bbe16b8605f54cd"
+      },
+      {
+        "id": "us-driving-20261104-v1-2956772f3499132a",
+        "bytes": 440891,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-2956772f3499132a.json",
+        "sha256": "20c5582a22fc8c18e2f28f96cfce561ac24f86c2a6fe0d7c98f89ce98de8d629"
+      },
+      {
+        "id": "us-driving-20261104-v1-2a2e6ca656fef6fc",
+        "bytes": 10958671,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-2a2e6ca656fef6fc.json",
+        "sha256": "708efd06fe57e84517856e70c96df78a68131a0cd762da9c8a244f4ad837b4f0"
+      },
+      {
+        "id": "us-driving-20261104-v1-2a97cdfec3cdd7b9",
+        "bytes": 38290006,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-2a97cdfec3cdd7b9.json",
+        "sha256": "179c9d89e22a5a1c509d77e9a7f456796d448bda87783560040e99461d3fe1ed"
+      },
+      {
+        "id": "us-driving-20261104-v1-2aa84526b25d4dd5",
+        "bytes": 46860723,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-2aa84526b25d4dd5.json",
+        "sha256": "17edc05dd50b8c922fab98eb2a459218c04b2363e39a6b5b00ac6ec29c5b061a"
+      },
+      {
+        "id": "us-driving-20261104-v1-2e31b17d20c227e6",
+        "bytes": 37312731,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-2e31b17d20c227e6.json",
+        "sha256": "acd5b55ae140183e482a7a1c69253ae2c46b34e2b642489153cd47b0f0e97f2f"
+      },
+      {
+        "id": "us-driving-20261104-v1-2ea170760aa16ab1",
+        "bytes": 4912190,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-2ea170760aa16ab1.json",
+        "sha256": "2ae8312e6167c671ee64aef1a3af1c580391834782749712d2d01cb9e6f3183c"
+      },
+      {
+        "id": "us-driving-20261104-v1-2ee6d689269ebc7e",
+        "bytes": 1834335,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-2ee6d689269ebc7e.json",
+        "sha256": "965c1c92f2d38cabeb2d8fa1b03a804551136a370f1eefde586d446bb19398f8"
+      },
+      {
+        "id": "us-driving-20261104-v1-2f3e5d2608344080",
+        "bytes": 934573,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-2f3e5d2608344080.json",
+        "sha256": "83f58e11fdab88f3ae5283f9fac274b333941d16f92fd9a3a293c7c37aedb5f2"
+      },
+      {
+        "id": "us-driving-20261104-v1-3049238ea4857a98",
+        "bytes": 2822834,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-3049238ea4857a98.json",
+        "sha256": "df8d94477201427c35a8f1404e33145255acbd11f4b68e31e87351fc3b4e7f42"
+      },
+      {
+        "id": "us-driving-20261104-v1-3235dadaf06cfceb",
+        "bytes": 44754990,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-3235dadaf06cfceb.json",
+        "sha256": "78296761def20b76484984ca9d26400dbfb2e7dc4f5146baf5332c6f4be1ee75"
+      },
+      {
+        "id": "us-driving-20261104-v1-33026f3266538445",
+        "bytes": 4633464,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-33026f3266538445.json",
+        "sha256": "801e97e301406001eeaf24fb8385f8ef18194c51b8811512868a2e4469b6c504"
+      },
+      {
+        "id": "us-driving-20261104-v1-3321b5e366a8fe04",
+        "bytes": 283115,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-3321b5e366a8fe04.json",
+        "sha256": "60a99835a9e0ec324486781f719a67ca77844b7a1f27bf9851c53d87c5dd5534"
+      },
+      {
+        "id": "us-driving-20261104-v1-3400c8640b506a08",
+        "bytes": 754340,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-3400c8640b506a08.json",
+        "sha256": "2aa808c8b07484cde1f8a6f7e194b4f5eddc65d07cdb9ba889a98b1a1036b324"
+      },
+      {
+        "id": "us-driving-20261104-v1-36c2a6e9140e732b",
+        "bytes": 14464054,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-36c2a6e9140e732b.json",
+        "sha256": "34af2edacfce389bbdd3d1f99ddcbc1d14dc4c5b611cbba78326fdcc739b8adc"
+      },
+      {
+        "id": "us-driving-20261104-v1-37283c90d48f2a7d",
+        "bytes": 1478740,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-37283c90d48f2a7d.json",
+        "sha256": "d17b13f13488c3cc31ae0fad34d62a52f267d8b91fa563ae6f9485b9c4245c75"
+      },
+      {
+        "id": "us-driving-20261104-v1-373e5d92d28e476e",
+        "bytes": 13598493,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-373e5d92d28e476e.json",
+        "sha256": "b59d9faabd9c70d06861c01fb5c0d27e78da15bd4584abb6f4c53268b0e8d939"
+      },
+      {
+        "id": "us-driving-20261104-v1-37f29992fe731bfe",
+        "bytes": 5865787,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-37f29992fe731bfe.json",
+        "sha256": "f61369b46a6b1ccc6e3cd47a2550ba48165d86edbf4bb2a763fa0208bdb5779f"
+      },
+      {
+        "id": "us-driving-20261104-v1-37f9c65b7313116f",
+        "bytes": 1659369,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-37f9c65b7313116f.json",
+        "sha256": "a49683d89ca585ced0e2e8b66e67fb43e9ef0eb39c2fb649a484700822a4ad74"
+      },
+      {
+        "id": "us-driving-20261104-v1-3801360bae12f97f",
+        "bytes": 47784284,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-3801360bae12f97f.json",
+        "sha256": "ee87369a7c3114134df380a0fc39dfec488b970c6552f96c22f67393fc1bb2b4"
+      },
+      {
+        "id": "us-driving-20261104-v1-3855278ddf0419e5",
+        "bytes": 8819381,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-3855278ddf0419e5.json",
+        "sha256": "e2918f72b27849d49111445498a0a875f23b8829db7f42d34be028872a0ada91"
+      },
+      {
+        "id": "us-driving-20261104-v1-38a755fde34e292e",
+        "bytes": 7634858,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-38a755fde34e292e.json",
+        "sha256": "4af6ec8a3a1642502cc20ed1c52951cdde6392ae9faedeeb0e80c5f588ac3c3b"
+      },
+      {
+        "id": "us-driving-20261104-v1-38e369acc332c1a5",
+        "bytes": 1065837,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-38e369acc332c1a5.json",
+        "sha256": "8edfba66d0da1cf6983469a014d74ae84f587defd5850c29be576fab315cf0af"
+      },
+      {
+        "id": "us-driving-20261104-v1-38fffca12ee2e6ba",
+        "bytes": 6324712,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-38fffca12ee2e6ba.json",
+        "sha256": "873b03184a304a596fe3be30d0833506922c1dd9a48ebbcd0dd3e503470553d7"
+      },
+      {
+        "id": "us-driving-20261104-v1-3908eea9870beef4",
+        "bytes": 9905624,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-3908eea9870beef4.json",
+        "sha256": "fad7a593082f743f1831ce45a121b204bc4118f05787f42c41b6105a89f04063"
+      },
+      {
+        "id": "us-driving-20261104-v1-3a3edda51e5fbcc8",
+        "bytes": 4997414,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-3a3edda51e5fbcc8.json",
+        "sha256": "9982abc21c096a6b7bd06156e2bb40672c654e4ed9c81cf58c61d77b6cef268d"
+      },
+      {
+        "id": "us-driving-20261104-v1-3b494341c459e365",
+        "bytes": 946665,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-3b494341c459e365.json",
+        "sha256": "5d1c2a015742b7dbef6739689a51cfb824daec8a625ab7e060e93dbd07d26ac4"
+      },
+      {
+        "id": "us-driving-20261104-v1-3bc5862c27ee4b72",
+        "bytes": 4321158,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-3bc5862c27ee4b72.json",
+        "sha256": "bc4c0d504876036c37921b6d6fb0f8734b5668135047ddeb16d1d8ac6a327a8c"
+      },
+      {
+        "id": "us-driving-20261104-v1-3be3af41b84df3e3",
+        "bytes": 7977177,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-3be3af41b84df3e3.json",
+        "sha256": "0b7a736740852ffb439e721a26e86499828cc6c29ec4fcf3ba42feeba381a507"
+      },
+      {
+        "id": "us-driving-20261104-v1-3e6cab3ed321fe7a",
+        "bytes": 840746,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-3e6cab3ed321fe7a.json",
+        "sha256": "ed314cd2e31fe2d03faf19aa315bfb51808d2cdadbe171bf497a64aca825ea03"
+      },
+      {
+        "id": "us-driving-20261104-v1-3f9e67f6201854af",
+        "bytes": 33063,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-3f9e67f6201854af.json",
+        "sha256": "15d629bdc9b90f4f456ab35b06cc8f650cb665d15b82c2592287473078ab1689"
+      },
+      {
+        "id": "us-driving-20261104-v1-405875aa80605a6b",
+        "bytes": 51471409,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-405875aa80605a6b.json",
+        "sha256": "26207be05fe8029b27ff2ff354f56f5cac3bc3f1540c7750acd51dc8ba0a5680"
+      },
+      {
+        "id": "us-driving-20261104-v1-41393cd7093b1756",
+        "bytes": 1466661,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-41393cd7093b1756.json",
+        "sha256": "d80826731f4fce0cf0681da27c7538e33aa8daaeaf0482c6eba8bc1030ac2f43"
+      },
+      {
+        "id": "us-driving-20261104-v1-4198d9cb5e1a0d68",
+        "bytes": 12686995,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-4198d9cb5e1a0d68.json",
+        "sha256": "7b343ca347ef6cca827631cbe13d697b7e3c37bed6f00691cf4c1fef30ce450c"
+      },
+      {
+        "id": "us-driving-20261104-v1-41c419fc530efc81",
+        "bytes": 5280232,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-41c419fc530efc81.json",
+        "sha256": "037bd27adbe9832d91819432f30cbb90c9a40ff7d19c2b76ddf35e0fb8bac2e8"
+      },
+      {
+        "id": "us-driving-20261104-v1-41dbe8541a4f41a4",
+        "bytes": 3507063,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-41dbe8541a4f41a4.json",
+        "sha256": "c83b4c5d94a84c4ab0b05e6ca708bd3322ed46767231c9792c3b0d679c968762"
+      },
+      {
+        "id": "us-driving-20261104-v1-423ac8cc0224e244",
+        "bytes": 48653743,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-423ac8cc0224e244.json",
+        "sha256": "1bbe00e27540d6668859713ade42b2b3fb3afef79cb876173eab276bdd2f740b"
+      },
+      {
+        "id": "us-driving-20261104-v1-435a19cea57dd70f",
+        "bytes": 48288232,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-435a19cea57dd70f.json",
+        "sha256": "acb05456ee85ec07dcef5b8d5522a4b19dc2d52cf82dfb22ac79dda3937eb384"
+      },
+      {
+        "id": "us-driving-20261104-v1-44bbfab02ecb0fac",
+        "bytes": 18222465,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-44bbfab02ecb0fac.json",
+        "sha256": "1a500a2cc17e8e332b918c8564ebcc109b68ee11a44583e323b0e348e851c93b"
+      },
+      {
+        "id": "us-driving-20261104-v1-4578ddc4973611a3",
+        "bytes": 15857518,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-4578ddc4973611a3.json",
+        "sha256": "459868062ba66802c7e3113f9fc5035676686d06332ac7176c013e3215bea36d"
+      },
+      {
+        "id": "us-driving-20261104-v1-4628f23f56265b6c",
+        "bytes": 3313957,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-4628f23f56265b6c.json",
+        "sha256": "72955e33d3e87a4020c5419dc67d7029c1b081e779840e3d96993bc29cb44963"
+      },
+      {
+        "id": "us-driving-20261104-v1-46aaee872fc3c3bc",
+        "bytes": 6571661,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-46aaee872fc3c3bc.json",
+        "sha256": "487a4ca0e06248f921b06096351f6b0f8c61eedd90610f0d0d9899bea14b429d"
+      },
+      {
+        "id": "us-driving-20261104-v1-46e763793591a2cb",
+        "bytes": 275303,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-46e763793591a2cb.json",
+        "sha256": "c278066d130f489799f17e7c452a932662bebccff800d41373c62c8877d77963"
+      },
+      {
+        "id": "us-driving-20261104-v1-47293ed7b6312364",
+        "bytes": 24134919,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-47293ed7b6312364.json",
+        "sha256": "f055ff5e43876c36626f967f308ee80875a38321eacd05b8377aa86d5f8d5b37"
+      },
+      {
+        "id": "us-driving-20261104-v1-47357b8842250439",
+        "bytes": 385896,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-47357b8842250439.json",
+        "sha256": "50018b13673a699dfd48f922171af7e4d44c9565a88995a3a7a100ee577f37f6"
+      },
+      {
+        "id": "us-driving-20261104-v1-4758fa816eae6efb",
+        "bytes": 754536,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-4758fa816eae6efb.json",
+        "sha256": "399e3b221c5aa941f29773510947b9891c605dc84e13b6d3d13e071bc5fe279c"
+      },
+      {
+        "id": "us-driving-20261104-v1-478e35142e323ec1",
+        "bytes": 5415991,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-478e35142e323ec1.json",
+        "sha256": "937637d919071266e571ba35c5769ae41a0f91fe65e16900ab9e3321ce5a3801"
+      },
+      {
+        "id": "us-driving-20261104-v1-4809971ca4194a69",
+        "bytes": 583094,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-4809971ca4194a69.json",
+        "sha256": "7e709b7424489e24666a46edc96426a5728cd7547099d4e23cc313313d307aba"
+      },
+      {
+        "id": "us-driving-20261104-v1-49e5c9d90dfb23c5",
+        "bytes": 2154793,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-49e5c9d90dfb23c5.json",
+        "sha256": "fc34c2b56b66714469c98144a203cf2f50763160027af392ce32f60d38076cfb"
+      },
+      {
+        "id": "us-driving-20261104-v1-4b0df2fe22612e45",
+        "bytes": 13037111,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-4b0df2fe22612e45.json",
+        "sha256": "4b4d84755a1ba374bd49d5e24593dd07706162c5b9ace2d17850cc4dc8785bfe"
+      },
+      {
+        "id": "us-driving-20261104-v1-4b454aed77ccbf64",
+        "bytes": 557111,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-4b454aed77ccbf64.json",
+        "sha256": "23166e0df89e85d3efff4f3a747322641d0148418d7f7626ad14a6129732be56"
+      },
+      {
+        "id": "us-driving-20261104-v1-4b858537eba557d2",
+        "bytes": 40285931,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-4b858537eba557d2.json",
+        "sha256": "22ea9d0b9efcf6cfe765bc0f3ea9c2d8c6455c761004e9bc7b9366d94a9a1a66"
+      },
+      {
+        "id": "us-driving-20261104-v1-54263d2b68ce4ce5",
+        "bytes": 16607061,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-54263d2b68ce4ce5.json",
+        "sha256": "9c05ce905a610f2182573c416884388a3aaf66d1dee176d993b43c27e96342a9"
+      },
+      {
+        "id": "us-driving-20261104-v1-54ff9c202f682636",
+        "bytes": 46230673,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-54ff9c202f682636.json",
+        "sha256": "230d2e7e75a7400c702052817e5d0bceba170ebd292d3fd020243b1b6356aff7"
+      },
+      {
+        "id": "us-driving-20261104-v1-55014445be43186c",
+        "bytes": 5325286,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-55014445be43186c.json",
+        "sha256": "1bda4f407c26c6b2c2b9c56f7c22325b75789d1cf99a7e244704457cd88aa441"
+      },
+      {
+        "id": "us-driving-20261104-v1-5538491d9dc0637b",
+        "bytes": 7119142,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-5538491d9dc0637b.json",
+        "sha256": "f94e767368e1c012a4ddc65ec47fc107aadfe4a220cfe72b02702ee9689d1b2a"
+      },
+      {
+        "id": "us-driving-20261104-v1-560ecefb6d5a1b22",
+        "bytes": 46537147,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-560ecefb6d5a1b22.json",
+        "sha256": "882a2472247aceb2abaf1f427f39a709ff6af2fd127d36e56414df4c7b317fa1"
+      },
+      {
+        "id": "us-driving-20261104-v1-569c3c1da8ec648a",
+        "bytes": 8565030,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-569c3c1da8ec648a.json",
+        "sha256": "ba26dbb36b158998caa74c985b57db60d969a7bc75c74898381278b0c961e018"
+      },
+      {
+        "id": "us-driving-20261104-v1-56f4e55750576e79",
+        "bytes": 13599459,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-56f4e55750576e79.json",
+        "sha256": "19728f5a7c93ecf506500c9a8f72c6c2c225d1350fc824a48427b6cbf5b49d31"
+      },
+      {
+        "id": "us-driving-20261104-v1-579381720dccc794",
+        "bytes": 33069859,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-579381720dccc794.json",
+        "sha256": "39cebcb20387286f9d5cce280cdf69e300d56321048dba97131598f4f471f157"
+      },
+      {
+        "id": "us-driving-20261104-v1-57cf08a5909c0b19",
+        "bytes": 934577,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-57cf08a5909c0b19.json",
+        "sha256": "69a70123cb813d14b023fd81d7bedf83d18cdbd54f89521539cfd4b326740d02"
+      },
+      {
+        "id": "us-driving-20261104-v1-57e1b60a0a9f18c4",
+        "bytes": 48387473,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-57e1b60a0a9f18c4.json",
+        "sha256": "20579adae8ca0fe2c1a699474aed88430854b0bd18212f9ee7ebd4586f86c890"
+      },
+      {
+        "id": "us-driving-20261104-v1-595cd82d89dd41aa",
+        "bytes": 22336210,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-595cd82d89dd41aa.json",
+        "sha256": "e81bb2fb6908f2034c5f06addeb2e2b8601ad8c729eea6a5e0381c0a80aaf582"
+      },
+      {
+        "id": "us-driving-20261104-v1-5c3d7e3774dc3517",
+        "bytes": 49056292,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-5c3d7e3774dc3517.json",
+        "sha256": "a5d8e96d86cfd4335195243421f2ee9161acfa4d0bdc5fa0cefa8d950838cb75"
+      },
+      {
+        "id": "us-driving-20261104-v1-5c568d2782cf1059",
+        "bytes": 42504937,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-5c568d2782cf1059.json",
+        "sha256": "0d38d32041b0c3b04631fce6acb70964fdfe0508d04b4a8f4f9ca1155f3cad15"
+      },
+      {
+        "id": "us-driving-20261104-v1-5d6e882db8f8ff1f",
+        "bytes": 3638315,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-5d6e882db8f8ff1f.json",
+        "sha256": "d54cbac7029cb4cb907de62413d50c449e8aa8f005acd736d06d349ba1e34c15"
+      },
+      {
+        "id": "us-driving-20261104-v1-5da8481787ae06b8",
+        "bytes": 8270719,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-5da8481787ae06b8.json",
+        "sha256": "f3cd2b004e5419632ad118323bda50ed5bb5ba2ae60a2838223dfcae13d1c7b8"
+      },
+      {
+        "id": "us-driving-20261104-v1-5ea840190dc4ebd4",
+        "bytes": 10361638,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-5ea840190dc4ebd4.json",
+        "sha256": "9e600bfbf880929f29a6f98a112b96c267be2e0997c70b7e645da8035089ef41"
+      },
+      {
+        "id": "us-driving-20261104-v1-6026fa7125819d9d",
+        "bytes": 328171,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-6026fa7125819d9d.json",
+        "sha256": "8df5d3dce17bab560623c022d26ba0efbe22c5b258ab34598cb51aae1e64259d"
+      },
+      {
+        "id": "us-driving-20261104-v1-6068ccc749d32c26",
+        "bytes": 459239,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-6068ccc749d32c26.json",
+        "sha256": "20e08dcbddbedf8addad295133c4f8d4e7c028c2e6cd5341a4d6d2c420f752a6"
+      },
+      {
+        "id": "us-driving-20261104-v1-6089e7d9759934f3",
+        "bytes": 51382831,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-6089e7d9759934f3.json",
+        "sha256": "66f3c389143e5719166f3eb7b52826ac294d21fd92b8357712e10ebdaba096d3"
+      },
+      {
+        "id": "us-driving-20261104-v1-615cbd276665110b",
+        "bytes": 45897938,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-615cbd276665110b.json",
+        "sha256": "8f4d9f7648af0b59583378cb4a6ad100265b97009c3729a81858ac449f42c751"
+      },
+      {
+        "id": "us-driving-20261104-v1-6247a884c4c7c9cf",
+        "bytes": 43512591,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-6247a884c4c7c9cf.json",
+        "sha256": "23f8adab211cf71ff15eeaee353c7b58b379905eddde018e3e20c7014623e37b"
+      },
+      {
+        "id": "us-driving-20261104-v1-62c0e070e1112c69",
+        "bytes": 614697,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-62c0e070e1112c69.json",
+        "sha256": "c98841e4b46d6e83a13467162cedc2a53c6fe3f0a3c501d67bbdf0c779c25de9"
+      },
+      {
+        "id": "us-driving-20261104-v1-62e3bd47ae7ec4e4",
+        "bytes": 51166715,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-62e3bd47ae7ec4e4.json",
+        "sha256": "318f6fcaff458136d40395d71859fad029ac2c3a16776aac5e561f674bd1ca3c"
+      },
+      {
+        "id": "us-driving-20261104-v1-63af63804bbdff49",
+        "bytes": 9249453,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-63af63804bbdff49.json",
+        "sha256": "72eba428604cd43861118f97787b3b81737ae05dc193add1dd916c0ed3e017ab"
+      },
+      {
+        "id": "us-driving-20261104-v1-65020be7d5ec1741",
+        "bytes": 17285527,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-65020be7d5ec1741.json",
+        "sha256": "6bbcc4d77c530d56e8cdfdefd910a7f094154deb08ae6d39b5af2604736df3f9"
+      },
+      {
+        "id": "us-driving-20261104-v1-65043b14a6dac094",
+        "bytes": 46147659,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-65043b14a6dac094.json",
+        "sha256": "061fb727dc8ff06bafa365c76c3422c67224015ac024fa0dfdeaf2e6fb594222"
+      },
+      {
+        "id": "us-driving-20261104-v1-65355bb1ecae12c9",
+        "bytes": 51270245,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-65355bb1ecae12c9.json",
+        "sha256": "8cf9be3d39fc7dfb184e719d3b508b01577d877c4e74964552914a1d42fbafbf"
+      },
+      {
+        "id": "us-driving-20261104-v1-6631a24633cb1fdd",
+        "bytes": 766631,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-6631a24633cb1fdd.json",
+        "sha256": "04a2d789a1b37c09053bae4be19f3513c2b2d46cba033037e965bf7f00a8a4c4"
+      },
+      {
+        "id": "us-driving-20261104-v1-668b6e6fb200a0f2",
+        "bytes": 17222847,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-668b6e6fb200a0f2.json",
+        "sha256": "aee0f82feb63ba9838eaa41ee479b1e0563e086e75073342ec9f57256e53af94"
+      },
+      {
+        "id": "us-driving-20261104-v1-6739e710454844b7",
+        "bytes": 19156151,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-6739e710454844b7.json",
+        "sha256": "2530ed4a523a62bef7a5d6fa3b2d8389f3f425da57746291fad141cca6974c75"
+      },
+      {
+        "id": "us-driving-20261104-v1-677fb4125a56bb67",
+        "bytes": 25219995,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-677fb4125a56bb67.json",
+        "sha256": "cf3bc0f0a9f2f5f9b78e67f1d2ed3c7aab953bbb49971bcaecf0677ed82e1874"
+      },
+      {
+        "id": "us-driving-20261104-v1-67e5f48ac34b2bb6",
+        "bytes": 20716953,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-67e5f48ac34b2bb6.json",
+        "sha256": "98703b713abf7aa24585025d2ecd35cd8488f38714d9fbe417a619ac185da134"
+      },
+      {
+        "id": "us-driving-20261104-v1-68584e8021e3d8f5",
+        "bytes": 50507456,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-68584e8021e3d8f5.json",
+        "sha256": "fb5feab7c4fe75c7b74e281e6600ca12a87a2b20e6badc599a2229ae1a16d7c8"
+      },
+      {
+        "id": "us-driving-20261104-v1-689386837ff26612",
+        "bytes": 4647896,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-689386837ff26612.json",
+        "sha256": "7dd68652c240c9d65d128573b9e949d3a3893170add82732fd9b5e8848ebcf3d"
+      },
+      {
+        "id": "us-driving-20261104-v1-6b14fadc6aed9a4f",
+        "bytes": 13205092,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-6b14fadc6aed9a4f.json",
+        "sha256": "3095e7b0528adcb80b4fe4d4d3076d52a3e0f63c5ae7ef0448812674db9a7ccb"
+      },
+      {
+        "id": "us-driving-20261104-v1-6cff4f84361e1b9f",
+        "bytes": 51001144,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-6cff4f84361e1b9f.json",
+        "sha256": "0a8789de691a472a264873ff3571c0162b056fc6d122dc392dad4d5837c58e95"
+      },
+      {
+        "id": "us-driving-20261104-v1-6e85361ab79bb5dd",
+        "bytes": 46113435,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-6e85361ab79bb5dd.json",
+        "sha256": "64c84cc7227ee776de9c9f7d541af430d15607207541e5226378041e2a2e1a8c"
+      },
+      {
+        "id": "us-driving-20261104-v1-6f3592a84386361e",
+        "bytes": 47877430,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-6f3592a84386361e.json",
+        "sha256": "0954ef74e27b225e58091f1b3a730cf394f3a884a39368ee59912f7196e22ef9"
+      },
+      {
+        "id": "us-driving-20261104-v1-6f6d7ae433cf1fab",
+        "bytes": 369131,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-6f6d7ae433cf1fab.json",
+        "sha256": "cd46b430dfc35b71430485c0a480c58fda472f645155dcde0e95522ceaa34e8f"
+      },
+      {
+        "id": "us-driving-20261104-v1-705868f7ab9c2cc8",
+        "bytes": 23830087,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-705868f7ab9c2cc8.json",
+        "sha256": "91674d697791ebbfd5a6969a1c177f7ed21f49d2008d3d6b99e981f235b11b21"
+      },
+      {
+        "id": "us-driving-20261104-v1-70fec6d3bfc0f891",
+        "bytes": 7012646,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-70fec6d3bfc0f891.json",
+        "sha256": "c7a7ddfad665f101a4683c936700ec64cde09f8ef7526d942afdabeff87633bd"
+      },
+      {
+        "id": "us-driving-20261104-v1-7143538fe2ad7ff4",
+        "bytes": 52892779,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-7143538fe2ad7ff4.json",
+        "sha256": "f9e972e851a62912202a459779921ce9476950cffeda2e5f41ded9b313c8941f"
+      },
+      {
+        "id": "us-driving-20261104-v1-718791b528422376",
+        "bytes": 24281238,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-718791b528422376.json",
+        "sha256": "128b5bd49bf9620cf9b25f7fd2e78ae220b0793c6a6d056c151f14d0402c13a5"
+      },
+      {
+        "id": "us-driving-20261104-v1-720cc386ce2824e6",
+        "bytes": 50082104,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-720cc386ce2824e6.json",
+        "sha256": "f48aa00f42b9f1b88e1b60926b771b7a6edad701421baac4a407e0fd7e7014ea"
+      },
+      {
+        "id": "us-driving-20261104-v1-722b6c9d4b8294d2",
+        "bytes": 1249366,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-722b6c9d4b8294d2.json",
+        "sha256": "b66c52e9f45b5ce4967da3f81cc90401416bd98aace051228152ecbe795ef994"
+      },
+      {
+        "id": "us-driving-20261104-v1-730411efdf70ae3f",
+        "bytes": 19137274,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-730411efdf70ae3f.json",
+        "sha256": "3b5061e68c4942d11d118809fae48b580eaed8e643a99935cbb9740aa75d2933"
+      },
+      {
+        "id": "us-driving-20261104-v1-731b6336cf481595",
+        "bytes": 49362658,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-731b6336cf481595.json",
+        "sha256": "5cd77fdfb614f5a531137c7c5eb0b99451ff1ca8d63b78bb55c11df983fd2e21"
+      },
+      {
+        "id": "us-driving-20261104-v1-771ce2839b035e0c",
+        "bytes": 47365517,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-771ce2839b035e0c.json",
+        "sha256": "0895aabce63534cf9e784477dda6f7343b7dfa7b420e375e471b4f6a93c4b015"
+      },
+      {
+        "id": "us-driving-20261104-v1-775efccd1c5814f3",
+        "bytes": 12583206,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-775efccd1c5814f3.json",
+        "sha256": "c0ea1aabc837a8aac58d8604c0c86e42347b8068a41b0f45d289b959892d8969"
+      },
+      {
+        "id": "us-driving-20261104-v1-781ea1d539fc51a3",
+        "bytes": 35647754,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-781ea1d539fc51a3.json",
+        "sha256": "0ab13ad57e7567e2bad197c4eb0f5b5c013c4e67d8fe43f7dab5438681ea2e11"
+      },
+      {
+        "id": "us-driving-20261104-v1-788f59ec376722f6",
+        "bytes": 1999145,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-788f59ec376722f6.json",
+        "sha256": "8aa81ab4f948b30f84e16b93711f6a2038a8639e8d410296a433b96ebf494c67"
+      },
+      {
+        "id": "us-driving-20261104-v1-794380d8ef8168b3",
+        "bytes": 57858557,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-794380d8ef8168b3.json",
+        "sha256": "111cbc76f5c38dddf3551250ffb59f1e6e3356467499b5d2f5811e13f3499bd8"
+      },
+      {
+        "id": "us-driving-20261104-v1-79c5364e2b28c688",
+        "bytes": 12249359,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-79c5364e2b28c688.json",
+        "sha256": "2b1fc43b082a1675aa63d8e30068ed0b2b862003f581718b3c1180ce1a67769c"
+      },
+      {
+        "id": "us-driving-20261104-v1-79fe8cc2119d82d8",
+        "bytes": 123371,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-79fe8cc2119d82d8.json",
+        "sha256": "70d882322d416bc52442d76ddb7e20607b62eceb8bf41f15220f813bf950157f"
+      },
+      {
+        "id": "us-driving-20261104-v1-7a7a7fb061950ec4",
+        "bytes": 27806320,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-7a7a7fb061950ec4.json",
+        "sha256": "364549eb6829538a9e3971a930935325c3a10ddf44c9a3f78f510263c4a62786"
+      },
+      {
+        "id": "us-driving-20261104-v1-7b9ce0c268f0a20b",
+        "bytes": 53291955,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-7b9ce0c268f0a20b.json",
+        "sha256": "58e5863a0ac0a1f32ae8ae05819a02c9f6003e54fb803a3908e1e491dbc9e90a"
+      },
+      {
+        "id": "us-driving-20261104-v1-7c12404d80bb7427",
+        "bytes": 1958967,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-7c12404d80bb7427.json",
+        "sha256": "013c02077e01c7181a09117e4f64af5143e414a0aea4d892eeb697234601b396"
+      },
+      {
+        "id": "us-driving-20261104-v1-7c3ad0c30413dffe",
+        "bytes": 47512391,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-7c3ad0c30413dffe.json",
+        "sha256": "41385b8842243fae38d90bd049395090784848c4d68d191525c1dfb3aad26c05"
+      },
+      {
+        "id": "us-driving-20261104-v1-7c4dc80d9cca5fce",
+        "bytes": 46636143,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-7c4dc80d9cca5fce.json",
+        "sha256": "09de6607f5de26d5d0dd9e766d7a6b41be54d1909ecc70f539620122ed79fd36"
+      },
+      {
+        "id": "us-driving-20261104-v1-7cd78b6968d3f957",
+        "bytes": 10766760,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-7cd78b6968d3f957.json",
+        "sha256": "063e28b0de254a8f73ddb09110ba3025827fdb6a2aa034407741416233687932"
+      },
+      {
+        "id": "us-driving-20261104-v1-7d672fb8406558b8",
+        "bytes": 5175893,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-7d672fb8406558b8.json",
+        "sha256": "b6edd9bf69656318a4ed87e21f3800f3a404106b5fe626ca129c613878831493"
+      },
+      {
+        "id": "us-driving-20261104-v1-7db40a26f753118e",
+        "bytes": 1024488,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-7db40a26f753118e.json",
+        "sha256": "9bef7404e78e0f08d605ee8792ebddd630bcac476aeb3df62d19feb8d2e26a4e"
+      },
+      {
+        "id": "us-driving-20261104-v1-7e7bf1dd95ae79e9",
+        "bytes": 414178,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-7e7bf1dd95ae79e9.json",
+        "sha256": "ceee6edf95451ab35f5c3ca5744df769afdcc88d0caa60772ecf5c275e3065f8"
+      },
+      {
+        "id": "us-driving-20261104-v1-7fc84ed0d3729196",
+        "bytes": 860453,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-7fc84ed0d3729196.json",
+        "sha256": "da472271b8baf24d8db47c509737b823e9d8103f1b0324959e1f480c6c4336fc"
+      },
+      {
+        "id": "us-driving-20261104-v1-7fdad6e6881e1530",
+        "bytes": 6112707,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-7fdad6e6881e1530.json",
+        "sha256": "86d86a953f16588603a38b8bbbf3cc4972d7463e61d9afd6d419ca30e9c3eaa1"
+      },
+      {
+        "id": "us-driving-20261104-v1-8021f32fb9867eaa",
+        "bytes": 9581054,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-8021f32fb9867eaa.json",
+        "sha256": "fe2a0c877b99e21d3209af79560efefd62e0b8e1c1fbd3167dec8c419249946d"
+      },
+      {
+        "id": "us-driving-20261104-v1-803ab995889f1862",
+        "bytes": 1937701,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-803ab995889f1862.json",
+        "sha256": "e011b027d2b9965a62a13fe970c1ad2bb04b39486a94ce7432238dd1e5321ae6"
+      },
+      {
+        "id": "us-driving-20261104-v1-807e849d1ba47544",
+        "bytes": 7522111,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-807e849d1ba47544.json",
+        "sha256": "5f342ddc42c923a5c1d568f7bcc729329ad6335bcbd03fa7f76af2a93f134ffe"
+      },
+      {
+        "id": "us-driving-20261104-v1-8183bf774d827491",
+        "bytes": 160231,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-8183bf774d827491.json",
+        "sha256": "3fa1dc1efdc28926f3391057925adefbf86854f57e9aa217d5db338d4ca123ce"
+      },
+      {
+        "id": "us-driving-20261104-v1-81c719ffd3a84470",
+        "bytes": 1360366,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-81c719ffd3a84470.json",
+        "sha256": "5a2c8ff29c356136f4a235f8ca0bcabbe5a36faad70b1f9fb9c0f827d352e732"
+      },
+      {
+        "id": "us-driving-20261104-v1-832c910b8e7fc97b",
+        "bytes": 971830,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-832c910b8e7fc97b.json",
+        "sha256": "0308f971a1ee7586712a4073ade8cbe07b6e15260c05ade754070a3bf1631523"
+      },
+      {
+        "id": "us-driving-20261104-v1-837bf4c75d286304",
+        "bytes": 45714668,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-837bf4c75d286304.json",
+        "sha256": "e8400ac3800ab987530067f3f6c82617377da326bdacd3d1a3669ac38a62fcde"
+      },
+      {
+        "id": "us-driving-20261104-v1-8387a2b82371f6d1",
+        "bytes": 2074438,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-8387a2b82371f6d1.json",
+        "sha256": "2af5564d56df62e62f009b1db150e479a5a5166882efdf9e377f4199387f5c9d"
+      },
+      {
+        "id": "us-driving-20261104-v1-838d93004da88221",
+        "bytes": 6766700,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-838d93004da88221.json",
+        "sha256": "e630df59ce5b00c9c394bcc2e076d2d687e151658fc010ac821e81060d4abfad"
+      },
+      {
+        "id": "us-driving-20261104-v1-83917bfa5a18e230",
+        "bytes": 16437935,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-83917bfa5a18e230.json",
+        "sha256": "943deeb58c760b47296221cb877f483764070eb53c93f4668915112c16ad28ee"
+      },
+      {
+        "id": "us-driving-20261104-v1-83ae23f04c74c9f1",
+        "bytes": 24467135,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-83ae23f04c74c9f1.json",
+        "sha256": "e420a4e522a0fb60afa82d42f08d71dc04cc8656c49b75c7a7bb93d0c27103c2"
+      },
+      {
+        "id": "us-driving-20261104-v1-83ce494d53db141a",
+        "bytes": 3937129,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-83ce494d53db141a.json",
+        "sha256": "0548e7d9d80c35e1b56ce05717e79af81f19223274168ead125ecbd7926d1200"
+      },
+      {
+        "id": "us-driving-20261104-v1-83db1b022101402e",
+        "bytes": 4829876,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-83db1b022101402e.json",
+        "sha256": "cb10d5cdac0c5a4a291ce7facfc33b768dbcafd1013c9b88a6b1a60b0b074975"
+      },
+      {
+        "id": "us-driving-20261104-v1-84b7a430d67dbaf8",
+        "bytes": 2605349,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-84b7a430d67dbaf8.json",
+        "sha256": "88223ad021ed786b4cc4c355802ff94d54eb1073ac25db4b89e1e68ead537f9a"
+      },
+      {
+        "id": "us-driving-20261104-v1-854d52740809da59",
+        "bytes": 15312132,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-854d52740809da59.json",
+        "sha256": "7ba1c80ba5caba691e0fbb67af0be886b45db8ef5d1c495a5ced71378cca506c"
+      },
+      {
+        "id": "us-driving-20261104-v1-856298524bd9f739",
+        "bytes": 2044197,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-856298524bd9f739.json",
+        "sha256": "bdfb87cfd3d79d01635c29286d74ce687845b2f15a51fbdb3de7bcb36063db67"
+      },
+      {
+        "id": "us-driving-20261104-v1-857828fcb588fcc4",
+        "bytes": 50370711,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-857828fcb588fcc4.json",
+        "sha256": "51cced1110402946d42f9f63a1d2448c3067dca33f4b74b2c1524bdb02d43d7b"
+      },
+      {
+        "id": "us-driving-20261104-v1-8685a25a4e0e8454",
+        "bytes": 10551433,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-8685a25a4e0e8454.json",
+        "sha256": "3507e0396eca73367e3cb53b78824a6301eb4294afd7ced311c193feccdba696"
+      },
+      {
+        "id": "us-driving-20261104-v1-871da1acb6030449",
+        "bytes": 30556030,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-871da1acb6030449.json",
+        "sha256": "f58c4246daf73cb66636e50cd7a8c1608f6b56506406c518c4abd391b4cc3030"
+      },
+      {
+        "id": "us-driving-20261104-v1-875cdaf135cbb837",
+        "bytes": 2158885,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-875cdaf135cbb837.json",
+        "sha256": "7275b73c3497beead064dca3e89ebb6e3b89053e5ccfa09afc167b18e9519434"
+      },
+      {
+        "id": "us-driving-20261104-v1-886adbea0e2d3dc5",
+        "bytes": 1766453,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-886adbea0e2d3dc5.json",
+        "sha256": "17b0f9256d8e784317974aa9d89d3a21394be5b309d7e8fd1afa80faad54b5f9"
+      },
+      {
+        "id": "us-driving-20261104-v1-88e776d7bca77d24",
+        "bytes": 1507818,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-88e776d7bca77d24.json",
+        "sha256": "16e867f6b206d908a5ff99860263ea890490d7502a467acfd583218ca80cff84"
+      },
+      {
+        "id": "us-driving-20261104-v1-89d1b8edd96683cc",
+        "bytes": 749861,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-89d1b8edd96683cc.json",
+        "sha256": "1c92b993c89f44756f06e531774816180ea6b9ee66dc96c774cff74074202a78"
+      },
+      {
+        "id": "us-driving-20261104-v1-89d2cab87f3c4371",
+        "bytes": 3093955,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-89d2cab87f3c4371.json",
+        "sha256": "5b9cfdd7156021b4c9cdcc3ffb375842d01c53ee3f8bb764eca5c05c617be406"
+      },
+      {
+        "id": "us-driving-20261104-v1-8ad562e5977463d5",
+        "bytes": 5546870,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-8ad562e5977463d5.json",
+        "sha256": "ab466b4becad895db8bcbcc9c9cd5db88827dc00824c0d6b7a498f526668c5df"
+      },
+      {
+        "id": "us-driving-20261104-v1-8cf190ecc41c6dc2",
+        "bytes": 30553812,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-8cf190ecc41c6dc2.json",
+        "sha256": "6b8db75839dcfa88492d613695848e0366434328aa054f1161f5a06428bc73dd"
+      },
+      {
+        "id": "us-driving-20261104-v1-8d56e8c0596d25a4",
+        "bytes": 315688,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-8d56e8c0596d25a4.json",
+        "sha256": "12a8f554bb2fcb39fb7a32c334e21494871dd95fbabdb63d08fbbff91c6d1d17"
+      },
+      {
+        "id": "us-driving-20261104-v1-8f4df70734473478",
+        "bytes": 45004891,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-8f4df70734473478.json",
+        "sha256": "49c871c3b6ff88b452fbe398b53fef16b5161d83da5691a24180e2a8f4fcb55a"
+      },
+      {
+        "id": "us-driving-20261104-v1-8f771a6bf2172bbe",
+        "bytes": 10705108,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-8f771a6bf2172bbe.json",
+        "sha256": "9aa639c379048b7ad336f7bcea7f7ba0d82fe9ed5a6936259ad34a20b98bff80"
+      },
+      {
+        "id": "us-driving-20261104-v1-904314425c086b2b",
+        "bytes": 3220530,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-904314425c086b2b.json",
+        "sha256": "6449ca96dcb7718e9adbeffacb7bba4b88501916a36c3825cc885890cd302e76"
+      },
+      {
+        "id": "us-driving-20261104-v1-90fc8433d2925841",
+        "bytes": 262830,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-90fc8433d2925841.json",
+        "sha256": "7d48caa1e15a5b1925fc41e8451be2f1e92ff95b85288b27ada955a38b260a9c"
+      },
+      {
+        "id": "us-driving-20261104-v1-912a00b619e6f75b",
+        "bytes": 13640986,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-912a00b619e6f75b.json",
+        "sha256": "6e1dbb2bf82a69f403c81af5145e49720050c3965f47d7bb48eacf60499cce36"
+      },
+      {
+        "id": "us-driving-20261104-v1-913a9fdf45cd9b66",
+        "bytes": 6681064,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-913a9fdf45cd9b66.json",
+        "sha256": "d4adfc8c54225a569d93ee53b4515afa5ad4df57fae7ee754065531c520e4181"
+      },
+      {
+        "id": "us-driving-20261104-v1-91615ec86f3c2f76",
+        "bytes": 42543593,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-91615ec86f3c2f76.json",
+        "sha256": "613f73156c214809eb0cd9007bc0a4e4d00b2101229b5574ac2f2df915dff3a4"
+      },
+      {
+        "id": "us-driving-20261104-v1-91eadc265c0c8eac",
+        "bytes": 10519812,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-91eadc265c0c8eac.json",
+        "sha256": "9041a0cefa1bc833e48a54cac933f69d4b3e5928e598b44e1fac2cfa488833b0"
+      },
+      {
+        "id": "us-driving-20261104-v1-92b04105fa043270",
+        "bytes": 10666473,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-92b04105fa043270.json",
+        "sha256": "eb6b1100f69559af95da3e206ce3e06e22ec9492b782becab4168eab862c84c5"
+      },
+      {
+        "id": "us-driving-20261104-v1-93644c93570de668",
+        "bytes": 35268685,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-93644c93570de668.json",
+        "sha256": "002e0f5a2d918467f4df97297c0f0594ef01f831c42301f876cf7726867ab566"
+      },
+      {
+        "id": "us-driving-20261104-v1-9474d73cc7d9f65a",
+        "bytes": 2508224,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-9474d73cc7d9f65a.json",
+        "sha256": "fd86e748af50d27223e68ae9f25126e84c6d64e7f92ef25a198d6e286d0d8311"
+      },
+      {
+        "id": "us-driving-20261104-v1-94d271977ac6e1e6",
+        "bytes": 5489127,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-94d271977ac6e1e6.json",
+        "sha256": "744f11fd9aee0d3aa7d923249e0cc03fb50c78253dc0813a19341087da9758b6"
+      },
+      {
+        "id": "us-driving-20261104-v1-963450dfc181ccf6",
+        "bytes": 4088298,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-963450dfc181ccf6.json",
+        "sha256": "8bfe891a1dda1f24f4bebe913340987fa618d288ef686f44cf7bdcabe401d855"
+      },
+      {
+        "id": "us-driving-20261104-v1-9694842d3e366531",
+        "bytes": 1528293,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-9694842d3e366531.json",
+        "sha256": "a8fdd1412d2371b4a7c3fc3cf2c97e2da3d615819a63c2b07236b2780103f3f1"
+      },
+      {
+        "id": "us-driving-20261104-v1-96acf4dc54c34a03",
+        "bytes": 47845581,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-96acf4dc54c34a03.json",
+        "sha256": "f060c7094febadee7bf42407acb4afc7a8cab14de5a08726b438930700eebe82"
+      },
+      {
+        "id": "us-driving-20261104-v1-9958f93e0d1d3747",
+        "bytes": 52331207,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-9958f93e0d1d3747.json",
+        "sha256": "a21ac20e113150c0ade275bebf840e567f7458705cf9e6506ea902d689f743db"
+      },
+      {
+        "id": "us-driving-20261104-v1-9b5370299339d1e0",
+        "bytes": 213288,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-9b5370299339d1e0.json",
+        "sha256": "8618e1f45e481c053750f25cfad3e4ee7f8c813eb3fe424b77be9fe5410264d0"
+      },
+      {
+        "id": "us-driving-20261104-v1-9c51400175d7d74b",
+        "bytes": 1795111,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-9c51400175d7d74b.json",
+        "sha256": "f5b67735058ae7517e7b285dc39e2a47fa0b4a04e559ba489532a9a02d0ecd74"
+      },
+      {
+        "id": "us-driving-20261104-v1-9fff904a7c79b225",
+        "bytes": 26354655,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-9fff904a7c79b225.json",
+        "sha256": "f54372f6e1f795e3c2da5b548a1953572b4c52462d7adde869c3c947d0e26f5e"
+      },
+      {
+        "id": "us-driving-20261104-v1-a08671f1bebd936b",
+        "bytes": 156328,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-a08671f1bebd936b.json",
+        "sha256": "3b5d3885c85cdd93efa343e4b286572ea1c54b3bb75589ba6166d1bad4ecb0d7"
+      },
+      {
+        "id": "us-driving-20261104-v1-a19ad6c12b3d9daf",
+        "bytes": 26115532,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-a19ad6c12b3d9daf.json",
+        "sha256": "e7d67a81c26e41d97c4d389804fc546cea19f6405025aba7c76c71d62b643463"
+      },
+      {
+        "id": "us-driving-20261104-v1-a29c6a3534c19348",
+        "bytes": 1678875,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-a29c6a3534c19348.json",
+        "sha256": "c1981e4b4ef2e078bfab4836f146ba3aecf2d63678a94ae9955d21fe1d1b1348"
+      },
+      {
+        "id": "us-driving-20261104-v1-a30fea2615ac6aed",
+        "bytes": 4690412,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-a30fea2615ac6aed.json",
+        "sha256": "0d758d1749311943f6d4ce91698ba2e2763fa532cf2bc7b2b4151fdd52000cff"
+      },
+      {
+        "id": "us-driving-20261104-v1-a374778d8e2fb2e9",
+        "bytes": 44720385,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-a374778d8e2fb2e9.json",
+        "sha256": "7f016c8bc507bc0a21081f40188d7377aa3a2420606f570a2e4157266900a5c6"
+      },
+      {
+        "id": "us-driving-20261104-v1-a3c341b3fa8447e8",
+        "bytes": 20771,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-a3c341b3fa8447e8.json",
+        "sha256": "4240497fae9943036918b2df33622d72343cc15ba5737811f932b6c6e07b8e61"
+      },
+      {
+        "id": "us-driving-20261104-v1-a4a364172e0e0724",
+        "bytes": 1330508,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-a4a364172e0e0724.json",
+        "sha256": "c5b02b0d3cfd7456e49cad7f24d834401c564a6564db603c29cfc4973adc9f41"
+      },
+      {
+        "id": "us-driving-20261104-v1-a53e4cec7dcbff4f",
+        "bytes": 1540585,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-a53e4cec7dcbff4f.json",
+        "sha256": "786578d86bf8aa047e3a3c29965028743a6c4ad5c66b64284706c4dead69b40c"
+      },
+      {
+        "id": "us-driving-20261104-v1-a5d7c2f3b5b0728b",
+        "bytes": 464118,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-a5d7c2f3b5b0728b.json",
+        "sha256": "741401906b4df9ba31bc776d52accebdd59b1369d93629814857b17e2645dcbb"
+      },
+      {
+        "id": "us-driving-20261104-v1-a8057ed904efff82",
+        "bytes": 49147352,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-a8057ed904efff82.json",
+        "sha256": "4e364c432abbbe33d6b90c14cdf18d68b6d22a497c4da8dc81163c8c22cf84fb"
+      },
+      {
+        "id": "us-driving-20261104-v1-a9587b099a68651b",
+        "bytes": 52466727,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-a9587b099a68651b.json",
+        "sha256": "8c735aef73bd365c215390936006403cd25078729194f658d3f3667526d53679"
+      },
+      {
+        "id": "us-driving-20261104-v1-a99bb4143f63cea6",
+        "bytes": 21249427,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-a99bb4143f63cea6.json",
+        "sha256": "150303c14267b9a492219070eba986905775cf32d874c473540c01ca4131d451"
+      },
+      {
+        "id": "us-driving-20261104-v1-aa41a7a426693531",
+        "bytes": 54692485,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-aa41a7a426693531.json",
+        "sha256": "1fb9a715b15ad4b8f0368dc8dbca4bdbb8cf4a1c46e0e3c9ba4e38dc9ed6dba5"
+      },
+      {
+        "id": "us-driving-20261104-v1-aae78a25ea4e109f",
+        "bytes": 25873009,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-aae78a25ea4e109f.json",
+        "sha256": "7a77848812c1018301794cb8c3a9e6ab56568196a137b4cfdcc4b81d92ac4a43"
+      },
+      {
+        "id": "us-driving-20261104-v1-ab8c4d4343cf9927",
+        "bytes": 48866238,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-ab8c4d4343cf9927.json",
+        "sha256": "cd36658540d97f3ad393ba09ac381ba20b36f3904d5f9feb569999f3a2459b39"
+      },
+      {
+        "id": "us-driving-20261104-v1-ac44c5da9beeab19",
+        "bytes": 53918835,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-ac44c5da9beeab19.json",
+        "sha256": "f48b6e93b2f162663c9fb141a803e92280238d35cdb66bdaa0b55c4c903e033b"
+      },
+      {
+        "id": "us-driving-20261104-v1-ac4cf31dfcd78242",
+        "bytes": 18449869,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-ac4cf31dfcd78242.json",
+        "sha256": "bf325f3c720be3589d71305fca5735ee3eb4c5eb4480cff87d0902004eab7291"
+      },
+      {
+        "id": "us-driving-20261104-v1-ad30179d7222bbfe",
+        "bytes": 805641,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-ad30179d7222bbfe.json",
+        "sha256": "90572b5fb642fda62ec8c1134e62dfb9b7833615350d64eca7be46e8d21aabfb"
+      },
+      {
+        "id": "us-driving-20261104-v1-ae358b8f28c13346",
+        "bytes": 1958373,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-ae358b8f28c13346.json",
+        "sha256": "74d6219e2259ec1ffc249b14bdb6aabf971fb134069674957f98301c7360838c"
+      },
+      {
+        "id": "us-driving-20261104-v1-affd0ca9f5475662",
+        "bytes": 1956431,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-affd0ca9f5475662.json",
+        "sha256": "031122ad7e24f0ec7e30db7532c2f3f16487eb2b482d175beccbd2be2b050f86"
+      },
+      {
+        "id": "us-driving-20261104-v1-b047e491c7a4d989",
+        "bytes": 2153409,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-b047e491c7a4d989.json",
+        "sha256": "646801faff4fc5f4e8b4f3098146daddfc8d2638670f19585fc030a7eb100a2c"
+      },
+      {
+        "id": "us-driving-20261104-v1-b10ec6af16373240",
+        "bytes": 17325038,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-b10ec6af16373240.json",
+        "sha256": "ec09546a1f65cdb47df2583705633a55f56f21e82d2d4c8359afa554ccf5f3fb"
+      },
+      {
+        "id": "us-driving-20261104-v1-b25c15ea9b057832",
+        "bytes": 50695323,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-b25c15ea9b057832.json",
+        "sha256": "0274efbdec39770711c7eefdfed1fea7fd0440874c9cc3033873debc441479d6"
+      },
+      {
+        "id": "us-driving-20261104-v1-b35b38cd55b70db0",
+        "bytes": 9953803,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-b35b38cd55b70db0.json",
+        "sha256": "28736faf99a9f1fa8860782d2025927e1b538ee8ab790371f38d0648b32adac0"
+      },
+      {
+        "id": "us-driving-20261104-v1-b3a35362f2209bfa",
+        "bytes": 4250588,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-b3a35362f2209bfa.json",
+        "sha256": "e3cc44227f6c189ff565257bf4a93a1eb05b123770e79022af51eef51dc2f3af"
+      },
+      {
+        "id": "us-driving-20261104-v1-b3ade0f4f1b49253",
+        "bytes": 37538,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-b3ade0f4f1b49253.json",
+        "sha256": "c4031b98daeabacf88a9dd4aeb85d5b111121d374a2f7a98e9801ab96c07073f"
+      },
+      {
+        "id": "us-driving-20261104-v1-b3ee84f59f6098ac",
+        "bytes": 48656000,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-b3ee84f59f6098ac.json",
+        "sha256": "0c8c902c68af3951e1c493393389128fe50335d323646959c032f33a59c707e2"
+      },
+      {
+        "id": "us-driving-20261104-v1-b3f0250c8e70784f",
+        "bytes": 1303021,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-b3f0250c8e70784f.json",
+        "sha256": "0c87ca98b2becc916be0ec48b0e7a909e636e4c557833ca8b8d933bc0efc87a7"
+      },
+      {
+        "id": "us-driving-20261104-v1-b4c763f425213a33",
+        "bytes": 12157222,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-b4c763f425213a33.json",
+        "sha256": "72c8a17a7b82472fc46b15ea0583e20d33a05255659dee4863abd58d2745bd4c"
+      },
+      {
+        "id": "us-driving-20261104-v1-b5e687ee8f99bebf",
+        "bytes": 42981409,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-b5e687ee8f99bebf.json",
+        "sha256": "d8b9a5dfb6d1adbc4926b9b98057691f79945096f2785d2015db364c35a72161"
+      },
+      {
+        "id": "us-driving-20261104-v1-b6ecdd1fa90024f3",
+        "bytes": 1855781,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-b6ecdd1fa90024f3.json",
+        "sha256": "27ce5c761240f0047ffcd66ae833a0477641e80b94e135ba3aa41e0d84e142a9"
+      },
+      {
+        "id": "us-driving-20261104-v1-b71fb7b68979c465",
+        "bytes": 2683571,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-b71fb7b68979c465.json",
+        "sha256": "b7faa315b19c8240bfd831df5a0021b93eb75b9e896bceac41386511319c9d28"
+      },
+      {
+        "id": "us-driving-20261104-v1-b79e69197eb811c3",
+        "bytes": 10022713,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-b79e69197eb811c3.json",
+        "sha256": "8df6eac8daf03aa2f15dfb862593a9a861d6476350b4d2913529ecb41b624003"
+      },
+      {
+        "id": "us-driving-20261104-v1-b85c16f8acfd5cfe",
+        "bytes": 1270445,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-b85c16f8acfd5cfe.json",
+        "sha256": "059c58e18c121aa5892fb849ef1518d9b1d624965340a26051129f5b805fc58d"
+      },
+      {
+        "id": "us-driving-20261104-v1-b88561c90f9fa18a",
+        "bytes": 51796654,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-b88561c90f9fa18a.json",
+        "sha256": "aca561bcc11b981e0e767cb8592a1245f46e45e443dddf934ffda7b9a132a52f"
+      },
+      {
+        "id": "us-driving-20261104-v1-b97822c98c445d41",
+        "bytes": 48886749,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-b97822c98c445d41.json",
+        "sha256": "a1946450b1ed7fea15720f2c87fe3d326926c42e90415463c15014b2f650e9f5"
+      },
+      {
+        "id": "us-driving-20261104-v1-b9b4309b0ac8a410",
+        "bytes": 9953574,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-b9b4309b0ac8a410.json",
+        "sha256": "06d95c36a78f842e92807fb2c373bb25ab6e8377c33bcad1ba8305c17565938f"
+      },
+      {
+        "id": "us-driving-20261104-v1-ba4075407d25777a",
+        "bytes": 549355,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-ba4075407d25777a.json",
+        "sha256": "f0e8c4c66a3012741eac2be5f4f7755e587fce4ca73191dbda53a31e0fb64510"
+      },
+      {
+        "id": "us-driving-20261104-v1-bb6f4103489cfca6",
+        "bytes": 1265957,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-bb6f4103489cfca6.json",
+        "sha256": "4970cca7dae454cdcaa2be4ea34418b8ddc68c6e0a6ef0a282ef975cd798854f"
+      },
+      {
+        "id": "us-driving-20261104-v1-bb798b0e71c1889c",
+        "bytes": 32368504,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-bb798b0e71c1889c.json",
+        "sha256": "e48ed81f45d11f2680a9548112d2fafdb9684284cca5c35d5b9c55d6c9b30858"
+      },
+      {
+        "id": "us-driving-20261104-v1-bbc5e5663ce28761",
+        "bytes": 1168045,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-bbc5e5663ce28761.json",
+        "sha256": "4ebcb6d857bfc94aea4fdca5f6972e32379ea07658321b2bcb59b3471f8d41af"
+      },
+      {
+        "id": "us-driving-20261104-v1-bc5ce841b09212fb",
+        "bytes": 26420936,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-bc5ce841b09212fb.json",
+        "sha256": "433ef12e37e3dcd5eb3cd448794ea65900605fe34227922048297f7881b524a4"
+      },
+      {
+        "id": "us-driving-20261104-v1-bd7047352613e160",
+        "bytes": 1995438,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-bd7047352613e160.json",
+        "sha256": "c37f09f7cfec5dca93acca9f7ba2a33de86721860410247008a3c1fb6e7d9b84"
+      },
+      {
+        "id": "us-driving-20261104-v1-bdea9d7055f9afba",
+        "bytes": 6129717,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-bdea9d7055f9afba.json",
+        "sha256": "0ccbae53989ea28d9e2f3bf082c49a703cf3aeb115825c6a40774fda748c0720"
+      },
+      {
+        "id": "us-driving-20261104-v1-be388b3a9e65b601",
+        "bytes": 6420503,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-be388b3a9e65b601.json",
+        "sha256": "e2346d42c728f3d8b8108c663368cfa7eac8409aa2cc91303df95d1674e41d59"
+      },
+      {
+        "id": "us-driving-20261104-v1-be5cf4584e4c344e",
+        "bytes": 283305,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-be5cf4584e4c344e.json",
+        "sha256": "915e3000f062c6524a54a38ee3225cb866e0ec9bcf963fc6db9acde229180551"
+      },
+      {
+        "id": "us-driving-20261104-v1-be86606c73335dbb",
+        "bytes": 5484838,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-be86606c73335dbb.json",
+        "sha256": "ea260f4f79fefa0aca0fb1715590e7854e1bb0270c5c14d2a83690065736924b"
+      },
+      {
+        "id": "us-driving-20261104-v1-bf5800246183993a",
+        "bytes": 566519,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-bf5800246183993a.json",
+        "sha256": "aa8e16445c4b2973768a20c6cb957dfe7b1b14eeb351cf706ebead3b4a9f8954"
+      },
+      {
+        "id": "us-driving-20261104-v1-bf861cdf28924c59",
+        "bytes": 3974004,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-bf861cdf28924c59.json",
+        "sha256": "e7ebba9d6d5a4623d544239ec727886b41c18aa7df1f486e382db554d30f7788"
+      },
+      {
+        "id": "us-driving-20261104-v1-bf95d43e909ddf60",
+        "bytes": 2109934,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-bf95d43e909ddf60.json",
+        "sha256": "3562ea5c93f216b326343bc763d1635943d137b8eaa97c4342c5af9a348024b1"
+      },
+      {
+        "id": "us-driving-20261104-v1-c008acbc05047865",
+        "bytes": 8233448,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-c008acbc05047865.json",
+        "sha256": "36a6834ac8f8a9f4cb9b70ce8a016df1683b18f8aaaaa5cd73c751aae81e6e29"
+      },
+      {
+        "id": "us-driving-20261104-v1-c08b036457b97a04",
+        "bytes": 966949,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-c08b036457b97a04.json",
+        "sha256": "31287b070b7842b501a8ad6e259c04ba13505c0c222a543147f39d9a28f958f7"
+      },
+      {
+        "id": "us-driving-20261104-v1-c1102c61f18117e7",
+        "bytes": 8050112,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-c1102c61f18117e7.json",
+        "sha256": "a7a161b9949acba835069c047b2f88adf25c1101b51026c2f4ca3b08adf0c933"
+      },
+      {
+        "id": "us-driving-20261104-v1-c1cf458cc2b51e2e",
+        "bytes": 2912549,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-c1cf458cc2b51e2e.json",
+        "sha256": "ce794d9511a077d1e4c1b82eab9a45b57bb6b2fb2edc2bbad58e6ba87ea48422"
+      },
+      {
+        "id": "us-driving-20261104-v1-c258063abcfda987",
+        "bytes": 3206887,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-c258063abcfda987.json",
+        "sha256": "d0666e390c7ba8b83b46fafcf3418463db51254023e65f7dcb86a45a57f36e14"
+      },
+      {
+        "id": "us-driving-20261104-v1-c48059234113546c",
+        "bytes": 3920166,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-c48059234113546c.json",
+        "sha256": "f6f1ca1da546fb48c10d014392caaad62f7d94f9c3a98abd40802af7e4dca4c6"
+      },
+      {
+        "id": "us-driving-20261104-v1-c5b3e8a147b40f00",
+        "bytes": 50635967,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-c5b3e8a147b40f00.json",
+        "sha256": "34b6a97cfb5190940b06bf022340891bc11ef583511edca24d301169790ad9e6"
+      },
+      {
+        "id": "us-driving-20261104-v1-c6daf4037a30f014",
+        "bytes": 2560887,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-c6daf4037a30f014.json",
+        "sha256": "472318c8f488579c80f16d3b09eab714d04d71db77b39dbd7d68f98eb18ecc49"
+      },
+      {
+        "id": "us-driving-20261104-v1-c7f801abc79f44c9",
+        "bytes": 46743750,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-c7f801abc79f44c9.json",
+        "sha256": "f96d484deadfd0141a9ba23efd6dbee357b006441aac1a2924abf316b2896a9e"
+      },
+      {
+        "id": "us-driving-20261104-v1-c82cd789b7c06a80",
+        "bytes": 1308478,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-c82cd789b7c06a80.json",
+        "sha256": "bbebf30b1d82e5f33d0d98a25417da01e4fad42fd00618ab0e25b63923507439"
+      },
+      {
+        "id": "us-driving-20261104-v1-cb01aca09c4662f6",
+        "bytes": 49640,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-cb01aca09c4662f6.json",
+        "sha256": "ad5c4f3001e3e03efff8f59c88212d41eda8effbe9feccb5a5f7e725403e74c5"
+      },
+      {
+        "id": "us-driving-20261104-v1-cc54ae95113dc7e9",
+        "bytes": 48705756,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-cc54ae95113dc7e9.json",
+        "sha256": "91584539098e95156e8fac6c0829086829b014a1bf81cb72702b51a1355c2225"
+      },
+      {
+        "id": "us-driving-20261104-v1-cc5e8a059f00fca1",
+        "bytes": 2659583,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-cc5e8a059f00fca1.json",
+        "sha256": "0840d3b102a9596dd78e9ab88d670b8c367f9f3352de06eb59e18b97024e0991"
+      },
+      {
+        "id": "us-driving-20261104-v1-cd1db9a1d0ae580b",
+        "bytes": 7769483,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-cd1db9a1d0ae580b.json",
+        "sha256": "2be19bbe5d91d5762c074dfbb5f0511d779bb3a73f1c3aa884ee4dc70cdf7bf5"
+      },
+      {
+        "id": "us-driving-20261104-v1-ce311954938c48c7",
+        "bytes": 5311823,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-ce311954938c48c7.json",
+        "sha256": "96bcf04758afca614e249fb50e958c4b1c8e0d4499ac1c862235e86af2196af8"
+      },
+      {
+        "id": "us-driving-20261104-v1-ced42c7a09f326cf",
+        "bytes": 3449326,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-ced42c7a09f326cf.json",
+        "sha256": "f4148d01c0b8f7e36ad62d0129ebe361ffa4cf42e7c181258b78a93652e57a81"
+      },
+      {
+        "id": "us-driving-20261104-v1-d1007622a47d79de",
+        "bytes": 55982926,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-d1007622a47d79de.json",
+        "sha256": "ab1018354ce5578a37812f1c050d859dd418acee62b786c7b6f68adcf49aa36c"
+      },
+      {
+        "id": "us-driving-20261104-v1-d18fbfe32056d368",
+        "bytes": 25966085,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-d18fbfe32056d368.json",
+        "sha256": "eb5e4ceec8b49b9832c1f5918d64ea5b5f6e60e19e9deb7faca6aa7c5025c4e4"
+      },
+      {
+        "id": "us-driving-20261104-v1-d1d751e7f1bab3e4",
+        "bytes": 42894650,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-d1d751e7f1bab3e4.json",
+        "sha256": "d748b94ac9773e032832ba086fba8c84ed5f19c61f7fc02922c00cb9e3acb7a6"
+      },
+      {
+        "id": "us-driving-20261104-v1-d31c0ba4cf86ca43",
+        "bytes": 47609805,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-d31c0ba4cf86ca43.json",
+        "sha256": "155d2704ff1e646768c1a13c7b6cdb1e37924417ba468c2c53d3f810148188fa"
+      },
+      {
+        "id": "us-driving-20261104-v1-d4a09ec2a10e135e",
+        "bytes": 2171173,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-d4a09ec2a10e135e.json",
+        "sha256": "0db3652566e5df888d1d84cced37af324ed5e6b2ff7f7515a33c16d2f1e4c7fb"
+      },
+      {
+        "id": "us-driving-20261104-v1-d4f5f7173bc29d49",
+        "bytes": 1651568,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-d4f5f7173bc29d49.json",
+        "sha256": "f16bece5ab5cac536dcc6daf4391310b60eb822302484e2c8f67df457e362b7b"
+      },
+      {
+        "id": "us-driving-20261104-v1-d60a5a8bc8cea770",
+        "bytes": 34102098,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-d60a5a8bc8cea770.json",
+        "sha256": "31eae90199c15268f16af4ea84a4a69ee16c5b370acd2bad0d18708dc44b48b3"
+      },
+      {
+        "id": "us-driving-20261104-v1-d621f3cda09e6f53",
+        "bytes": 1540389,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-d621f3cda09e6f53.json",
+        "sha256": "e9b78b0cb5e0be49603f6dd5aacf02cac6ad24d527374f095a3c73ca8f272de5"
+      },
+      {
+        "id": "us-driving-20261104-v1-d86194aa0cc41a5c",
+        "bytes": 52636148,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-0/us-driving-20261104-v1-d86194aa0cc41a5c.json",
+        "sha256": "b1966a81b9755e85f65b8b24929b4e3cd9ba91499b0b450904bf47b77e963a3d"
+      },
+      {
+        "id": "us-driving-20261104-v1-d8a37dff3a541e59",
+        "bytes": 1553065,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-d8a37dff3a541e59.json",
+        "sha256": "68e90defe13533b71e7edfe2fbb682440da7edd5bf1c19d59310002225a8f519"
+      },
+      {
+        "id": "us-driving-20261104-v1-d908e2123fa605cf",
+        "bytes": 1500795,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-d908e2123fa605cf.json",
+        "sha256": "ae4b9a96b5bae1b753ab3eaa6ea011fbf5c8356d9f42485e97b98269ecc2c80c"
+      },
+      {
+        "id": "us-driving-20261104-v1-da3fa76ad24bb766",
+        "bytes": 324644,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-da3fa76ad24bb766.json",
+        "sha256": "1b436105d3f74c414a2c5ccbe8eb12cedb4a13760bd05dc1a6c0328589d74f5a"
+      },
+      {
+        "id": "us-driving-20261104-v1-da815d06d50a7465",
+        "bytes": 12488998,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-da815d06d50a7465.json",
+        "sha256": "150a84d8c546a1306a173363c3323f6a610bbb5b285a9a533569de41c44d04fd"
+      },
+      {
+        "id": "us-driving-20261104-v1-dc06b28f0af81b81",
+        "bytes": 4781312,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-dc06b28f0af81b81.json",
+        "sha256": "9a7875a8e5115a53c5c453432ac62589e66753f0351047079360845d13e7dde6"
+      },
+      {
+        "id": "us-driving-20261104-v1-dcbae73ebb925dd8",
+        "bytes": 9334329,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-dcbae73ebb925dd8.json",
+        "sha256": "978a7056b26bf1edf0f64b8fac3a4e3d179c487942393ff257eab985e6e28325"
+      },
+      {
+        "id": "us-driving-20261104-v1-dce3f3d7de8c75f5",
+        "bytes": 7168701,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-dce3f3d7de8c75f5.json",
+        "sha256": "3c3ca0167b76607fcfe5b0bc4d61171d51c12db6ad2d03d697f1128d2eec08a4"
+      },
+      {
+        "id": "us-driving-20261104-v1-dce57635e6a2119a",
+        "bytes": 42860790,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-dce57635e6a2119a.json",
+        "sha256": "3dabecda10e70582d1bb554ac5de6fcf88db39395584922a817618ac63b40b78"
+      },
+      {
+        "id": "us-driving-20261104-v1-dd1dbbaea416a09f",
+        "bytes": 38489089,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-dd1dbbaea416a09f.json",
+        "sha256": "fd6ca0c5a682f8115aed6208032232fa664ae44ef69d07113a7c8b537249d2dc"
+      },
+      {
+        "id": "us-driving-20261104-v1-deaba151a2e37025",
+        "bytes": 5967006,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-deaba151a2e37025.json",
+        "sha256": "a172e510de08780566b6f7614923d6fea4367cd7e124dabf12f5470955508c21"
+      },
+      {
+        "id": "us-driving-20261104-v1-dff043d874023f52",
+        "bytes": 6136887,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-dff043d874023f52.json",
+        "sha256": "baac5fe78c8e5879c726d57f2af45e7c3d0be0bb476853f9a1dc46abae763fef"
+      },
+      {
+        "id": "us-driving-20261104-v1-e01fdb516e7d3afc",
+        "bytes": 635173,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-e01fdb516e7d3afc.json",
+        "sha256": "347fccf9c80f50375e033b427721904d7ba7871d27380abdc584fe1ab20729b2"
+      },
+      {
+        "id": "us-driving-20261104-v1-e445a389f05303aa",
+        "bytes": 49390602,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-e445a389f05303aa.json",
+        "sha256": "b04799bc369cb5bc52d62169db46e06fc15aef93b1a336a13c4f45b34cf96969"
+      },
+      {
+        "id": "us-driving-20261104-v1-e544f42696c1cfd5",
+        "bytes": 51659904,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-e544f42696c1cfd5.json",
+        "sha256": "2a69012c330179623cc8d5e3900a6853edf691a46737bfa7b0be44945ed31270"
+      },
+      {
+        "id": "us-driving-20261104-v1-e5a80b56d91fca8f",
+        "bytes": 21913894,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-e5a80b56d91fca8f.json",
+        "sha256": "4506c3e1c55e54f35cccf9448e65115912004ef784b8fe636ddae4c855c66927"
+      },
+      {
+        "id": "us-driving-20261104-v1-e6fb1a62d0fd59a9",
+        "bytes": 51023309,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-e6fb1a62d0fd59a9.json",
+        "sha256": "8a434fc0e1fbb55775e2c0228678c8046c8f4b5613df7bc4596806b68216298e"
+      },
+      {
+        "id": "us-driving-20261104-v1-e71881b50680c2d3",
+        "bytes": 49444386,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-e71881b50680c2d3.json",
+        "sha256": "3b08e769169d1205aa22c43049f0b233f0b6e7f3cad70e02adf68aaa5cb3c0b5"
+      },
+      {
+        "id": "us-driving-20261104-v1-e73ce43aa8d31580",
+        "bytes": 7820542,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-e73ce43aa8d31580.json",
+        "sha256": "4de939d5f00d5d3f35e9621dd997f5094f2e5a6df7bfbd9fee683173fed54cae"
+      },
+      {
+        "id": "us-driving-20261104-v1-e82974d85f6a78c9",
+        "bytes": 86884,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-e82974d85f6a78c9.json",
+        "sha256": "a69e55fa3e7c4e6ccf73483d28d0c511cb8d9ea7f25dcaf43010e46d081cb436"
+      },
+      {
+        "id": "us-driving-20261104-v1-e8f2f84fc2f08841",
+        "bytes": 25825418,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-e8f2f84fc2f08841.json",
+        "sha256": "583c28f692c26b5eddc1b69daf06d9d1460981c39dfe1893121535cbeb7c2a13"
+      },
+      {
+        "id": "us-driving-20261104-v1-e9ae08abf11ed15f",
+        "bytes": 50631518,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-e9ae08abf11ed15f.json",
+        "sha256": "cb5198680c82bdc130cb5f580774b461a9499aa76fc3d78eed8e9c9fb373b069"
+      },
+      {
+        "id": "us-driving-20261104-v1-e9c65a2e351c7e40",
+        "bytes": 11493702,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-e9c65a2e351c7e40.json",
+        "sha256": "2e7f44a5b573b22358fab5489d99591ace549a68e4261cfb003560a7b51f8361"
+      },
+      {
+        "id": "us-driving-20261104-v1-ead29c0b0173d4eb",
+        "bytes": 90408,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-ead29c0b0173d4eb.json",
+        "sha256": "fc9cabd656bae8a2e23a40e0266c30c69001f73892b7e54979dd806f733f1c61"
+      },
+      {
+        "id": "us-driving-20261104-v1-eb4f5fa464757613",
+        "bytes": 7958065,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-eb4f5fa464757613.json",
+        "sha256": "804580771aa3222369739f7f6ba04ff96a5de94b27b561326b7a6b5ba4b8bd40"
+      },
+      {
+        "id": "us-driving-20261104-v1-eb55799f616fdc9e",
+        "bytes": 22881770,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-eb55799f616fdc9e.json",
+        "sha256": "92601698e3b7dec494bd83e6aa64e394ac0c7c080f4afea5d171982e5c428eab"
+      },
+      {
+        "id": "us-driving-20261104-v1-ec04cfc85a2ceafc",
+        "bytes": 41456319,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-ec04cfc85a2ceafc.json",
+        "sha256": "eed35405b1ff8399d51a8140b3ae19811ee6f366b71e2f93dfba825b0c49d792"
+      },
+      {
+        "id": "us-driving-20261104-v1-eca942abb3dc0e9e",
+        "bytes": 10207168,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-eca942abb3dc0e9e.json",
+        "sha256": "e519ee900f8f52dc0260644882b3e81d8d511b1df3d0ef6cdeec1d36604f2220"
+      },
+      {
+        "id": "us-driving-20261104-v1-ee07e443eb8f638b",
+        "bytes": 5764554,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-ee07e443eb8f638b.json",
+        "sha256": "dbd59c8dfd5abefba3c9e9c1eb9efc1f4ee681679e376ed03e18d2563029ea3a"
+      },
+      {
+        "id": "us-driving-20261104-v1-eece41286e40bfac",
+        "bytes": 7621406,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-eece41286e40bfac.json",
+        "sha256": "0501a3c681abfee6276873a2359f45ea63b45829b0c2c55dcf2937a1fbf7009b"
+      },
+      {
+        "id": "us-driving-20261104-v1-f0534d23738d3189",
+        "bytes": 2138602,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-f0534d23738d3189.json",
+        "sha256": "571610a932c3cfa13ef2bde524c5a3aea336ccdad3ab181127b21d57cede6182"
+      },
+      {
+        "id": "us-driving-20261104-v1-f10670a6cd8aa1be",
+        "bytes": 516393,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-f10670a6cd8aa1be.json",
+        "sha256": "645ced27408f8559bdde551bd608fd2d19d3b4a2069abc783095e199b9de7954"
+      },
+      {
+        "id": "us-driving-20261104-v1-f2c9c94c6635d0d6",
+        "bytes": 34677071,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-f2c9c94c6635d0d6.json",
+        "sha256": "e59ba92432711a1d3c411e3b3e14bbd3339a0200ba8b179285e953644b9c6d35"
+      },
+      {
+        "id": "us-driving-20261104-v1-f2e025815afccd1c",
+        "bytes": 51317200,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-f2e025815afccd1c.json",
+        "sha256": "ecdacaa42273e546bc9d180a2cc59346d667d8fc120e0a8014393d4afa2770fa"
+      },
+      {
+        "id": "us-driving-20261104-v1-f45d0930a0f2579c",
+        "bytes": 2388851,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-f45d0930a0f2579c.json",
+        "sha256": "0affb238ba32d863110e7f9558bcb7968e39433b419dd3118e93125d6a623647"
+      },
+      {
+        "id": "us-driving-20261104-v1-f5cba8768f402be9",
+        "bytes": 34205901,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-f5cba8768f402be9.json",
+        "sha256": "ef88ca8ab08534dc2215444c1f839ed19bd1c877788fb47fc1b88ec7003e2cf2"
+      },
+      {
+        "id": "us-driving-20261104-v1-f684c1d139f12f82",
+        "bytes": 48661165,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-f684c1d139f12f82.json",
+        "sha256": "d1183c4d990e50e5c84c0aa63997d4f2925da2dd6ce316d1c256c1e2e9f6343d"
+      },
+      {
+        "id": "us-driving-20261104-v1-f687eee9c4f45d19",
+        "bytes": 6312234,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-f687eee9c4f45d19.json",
+        "sha256": "033ecd9e2e51f22c5d821cd391568d411a16a674e76cd11d32cf0b3e901c8847"
+      },
+      {
+        "id": "us-driving-20261104-v1-f6f6645bf04a1aea",
+        "bytes": 10164705,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-f6f6645bf04a1aea.json",
+        "sha256": "3c27ab11049c4bdd1132840e54e7afd964c1e896bd3f5be67b7485820d6e3d75"
+      },
+      {
+        "id": "us-driving-20261104-v1-f751a5850430e29c",
+        "bytes": 610991,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-f751a5850430e29c.json",
+        "sha256": "27e49e17e4a6f9d45a8c7f41643c11dce3462b1729b53d6fd74a47e964a1898e"
+      },
+      {
+        "id": "us-driving-20261104-v1-f886f2067e065029",
+        "bytes": 2339896,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-f886f2067e065029.json",
+        "sha256": "77e1063bacb1716690492afa99cce72591020458b067b2afb74f9c35f8697e01"
+      },
+      {
+        "id": "us-driving-20261104-v1-f96f540dd51ecd32",
+        "bytes": 51250439,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-f96f540dd51ecd32.json",
+        "sha256": "9cfa585920a9235b955af729d32f0e501d74c1f2e14aed484730ccce5f7fb8bf"
+      },
+      {
+        "id": "us-driving-20261104-v1-fe37b693bda729ad",
+        "bytes": 51225655,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-fe37b693bda729ad.json",
+        "sha256": "b54394b0100d88472cf2432e0ae5509d7473ee2b7817eb6b5b059e16afd56d84"
+      },
+      {
+        "id": "us-driving-20261104-v1-ff389eb77e499c62",
+        "bytes": 778533,
+        "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-us-20261104-v1-1/us-driving-20261104-v1-ff389eb77e499c62.json",
+        "sha256": "81a6157b9acd40c21cc3fc9d65b908c856623c5a32c4736ada2567023b0feda5"
+      }
+    ]
+  },
+  "packages": []
+}
