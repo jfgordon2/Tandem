@@ -18,8 +18,10 @@ The parked sidebar independently reads device network state.
 | Mock | When shown |
 | --- | --- |
 | `cellular-status-connected` | Cellular page, with a current active cellular data connection. Existing hotspot and Save Data rows stay in place. |
+| `cellular-status-no-signal` | SIM is detected and fresh modem information confirms no cellular service. Show an amber No signal badge while keeping the existing controls. |
 | `cellular-apn-connecting` | After APN submission while its new data connection is being established. Saving a value alone does not count as Connected. |
 | `cellular-apn-connected` | APN panel after a fresh modem report confirms an active cellular data connection; show its address when available. |
+| `cellular-apn-no-signal` | SIM is detected but there is no cellular service. Explain that the APN stays saved; do not suggest it is wrong solely because coverage is absent. |
 | `cellular-apn-not-connected` | Current modem information confirms no active cellular data connection. Suggest checking APN, signal and carrier account without claiming which is at fault. |
 | `cellular-apn-no-sim` | Fresh modem information explicitly reports no SIM. Missing/unavailable telemetry must not be interpreted as an absent SIM. |
 | `cellular-apn-wifi` | Wi-Fi is in use and a cellular data connection has not been confirmed. Wi-Fi internet access does not prove the APN works. |
@@ -29,6 +31,14 @@ The same status belongs in the Cellular header and APN header, updating while
 the page stays open. The APN panel adds a short explanatory line beneath APN and
 labels its address **Cellular IP address**. Carrier APN and IP strings in the
 mocks are examples, not carrier configuration advice.
+
+No signal is distinct from missing SIM, stale status and a failed data connection
+with service present. Zero bars alone do not establish it: an active cellular
+data connection stays Connected with its actual weak signal strength. When
+service returns, status follows the modem's normal connecting/connected states;
+the UI does not clear the APN or add modem resets.
+An explicit no-SIM or no-service report takes precedence over Wi-Fi in use, so
+Wi-Fi cannot hide a known cellular problem.
 
 Connected describes an active modem data connection. These mocks do not claim
 an independent internet reachability test. They add no automatic HTTP probes,
@@ -51,5 +61,5 @@ network resets or new driver setup steps.
 - Add test/render states and comparison entries after approval. Until then these
   screenshots are proposals, not captures of implemented screens.
 
-Open [the review page](index.html) for all states. The seven root HTML mocks have
+Open [the review page](index.html) for all states. The nine root HTML mocks have
 matching screenshots under `design/screenshots/`.

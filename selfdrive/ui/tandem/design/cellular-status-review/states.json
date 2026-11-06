@@ -5,6 +5,11 @@
     "title": "Cellular \u00b7 Connected"
   },
   {
+    "mock": "cellular-status-no-signal",
+    "state": "no-signal",
+    "title": "Cellular \u00b7 No signal"
+  },
+  {
     "mock": "cellular-apn-connected",
     "state": "connected",
     "title": "Roaming, APN and IP address \u00b7 Connected"
@@ -13,6 +18,11 @@
     "mock": "cellular-apn-connecting",
     "state": "connecting",
     "title": "Roaming, APN and IP address \u00b7 Connecting\u2026"
+  },
+  {
+    "mock": "cellular-apn-no-signal",
+    "state": "no-signal",
+    "title": "Roaming, APN and IP address \u00b7 No signal"
   },
   {
     "mock": "cellular-apn-not-connected",
