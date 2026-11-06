@@ -578,6 +578,26 @@ class Badge(Component):
     draw.text(rect, resolve(self._label).upper(), T.SIZE_BADGE, T.ACCENT_INK if self._solid else _TONE_INK[tone], T.FONT_BOLD, Align.CENTER)
 
 
+class StatusBadge(Component):
+  """A sentence-case status with a colored dot (for a live connection)."""
+
+  def __init__(self, label: Bindable[str], tone: Bindable[Tone] = Tone.NEUTRAL):
+    super().__init__()
+    self._label, self._tone = label, tone
+
+  def preferred_size(self, max_width: float) -> tuple[float, float]:
+    return min(max_width, draw.text_width(resolve(self._label), T.font_px(15), T.FONT_SEMIBOLD) + T.px(40)), T.px(34)
+
+  def _render(self, rect: rl.Rectangle):
+    tone = resolve(self._tone)
+    surface, ink = _TONE_COLORS[tone][0], _TONE_INK[tone]
+    draw.fill(rect, surface, T.px(10))
+    content = inset(rect, x=T.px(12))
+    dot, label = row(content, [T.px(8), FILL], T.px(8))
+    draw.fill(place(dot, T.px(8), T.px(8)), ink, T.px(4))
+    draw.text(label, resolve(self._label), T.font_px(15), ink, T.FONT_SEMIBOLD)
+
+
 class Chip(Component):
   """Status chips ("Slowing for curve") and inline statuses ("Offline maps ready")."""
 

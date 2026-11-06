@@ -1,8 +1,8 @@
-# Cellular connection feedback proposal
+# Cellular connection feedback
 
-Mock review, November 6, 2026. Screen code and existing approved mocks are
-unchanged. The owner requested approvals before each UI change; implementation
-waits for review of these new mocks.
+Approved for implementation on November 6, 2026, including the No signal states.
+The nine approved HTML mocks and screenshots are preserved. The implementation
+uses shared Essentials components and adds no upstream hooks.
 
 ## Confirmed gap
 
@@ -13,7 +13,7 @@ acknowledgement or connection transition. `advanced_panel()` currently reads
 `wifi.ipv4_address`, which comes from the active Wi-Fi connection, not the modem.
 The parked sidebar independently reads device network state.
 
-## Proposed states
+## Approved states
 
 | Mock | When shown |
 | --- | --- |
@@ -44,9 +44,9 @@ Connected describes an active modem data connection. These mocks do not claim
 an independent internet reachability test. They add no automatic HTTP probes,
 network resets or new driver setup steps.
 
-## Implementation after approval
+## Implementation
 
-- Use existing `ListPanel` title/subtitle/header-control, `Badge`, rows and text;
+- Use existing `ListPanel` title/subtitle/header-control, a shared `StatusBadge`, rows and text;
   keep the existing settings footer and the APN panel's Back button.
 - Read current modem/device state through an owned, asynchronous status adapter.
   Do not block drawing with D-Bus, AT commands or network checks. Stop page-only
@@ -58,8 +58,14 @@ network resets or new driver setup steps.
   Do not use Wi-Fi signal or address as cellular evidence.
 - Update settings search, mark new driver text for translation, update catalogs
   and verify pseudo-language layout when the screen changes are implemented.
-- Add test/render states and comparison entries after approval. Until then these
-  screenshots are proposals, not captures of implemented screens.
+- Test/render states and comparison entries cover every approved mock. Native
+  captures use sample modem data; live SIM/APN acceptance remains a device check.
+
+The adapter and its state conditions are described in
+[`docs/cellular-status.md`](../../docs/cellular-status.md). The native screens use
+the library's standard row/header geometry and tone palette, as recorded in the
+main README's mock differences. New strings use documented English fallbacks
+until translated. No approved mock was changed during implementation.
 
 Open [the review page](index.html) for all states. The nine root HTML mocks have
 matching screenshots under `design/screenshots/`.

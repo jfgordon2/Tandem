@@ -11,7 +11,7 @@ import pyray as rl
 
 from openpilot.selfdrive.ui.tandem import tokens as T
 from openpilot.selfdrive.ui.tandem.base import Component
-from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, Switch, ValueButton
+from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, StatusBadge, Switch, Tone, ValueButton
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, SettingRow, Text
 from openpilot.selfdrive.ui.tandem.settings.model import Rebuilding
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
@@ -37,10 +37,12 @@ def ask_text(title: str, subtitle: str, current: str, on_done: Callable[[str], N
 
 
 class Network:
-  def __init__(self, wifi, store: SettingsStore, ask: Callable = ask_text):
+  def __init__(self, wifi, store: SettingsStore, ask: Callable = ask_text, cellular=None):
     self.wifi = wifi
     self._store = store
     self._ask = ask
+    from openpilot.starpilot.tandem.cellular import monitor
+    self.cellular = cellular if cellular is not None else getattr(wifi, "cellular_status", None) or monitor()
     wifi.add_callbacks(need_auth=self._need_password)
 
   def tick(self) -> None:
@@ -145,7 +147,9 @@ class Network:
 
   def edit_apn(self) -> None:
     def done(apn: str) -> None:
-      self._store.write({"GsmApn": apn.strip()})
+      previous, apn = self.apn(), apn.strip()
+      self._store.write({"GsmApn": apn})
+      self.cellular.apn_saved(apn, previous)
       self._apply_gsm()
     self._ask(N_("APN"), N_("Leave empty for automatic"), self.apn(), done)
 
@@ -154,6 +158,84 @@ class Network:
 
   def summary(self) -> str:
     return self.wifi.connected_ssid or N_("Not connected")
+
+  def cellular_label(self) -> str:
+    return CELLULAR_LABELS[self.cellular.status().code]
+
+  def cellular_summary(self) -> str:
+    status = self.cellular.status()
+    return "" if status.code == "checking" else CELLULAR_LABELS[status.code]
+
+  def cellular_tone(self) -> Tone:
+    return CELLULAR_TONES.get(self.cellular.status().code, Tone.WARNING)
+
+  def cellular_meta(self, main=False) -> str:
+    status = self.cellular.status()
+    if status.code == "checking" or status.observation is None:
+      return N_("Reading cellular status")
+    if status.code == "no_sim":
+      return N_("Cellular data unavailable")
+    if status.code == "no_signal" and main:
+      return N_("SIM detected · No cellular service")
+    value = status.observation
+    if status.code == "connected" and value.technology:
+      if value.quality is not None:
+        strength = SIGNAL_LABELS[min(3, value.quality // 25)]
+        return t_("{} · {}", value.technology, strength)
+      return value.technology
+    if status.code == "connecting" and value.technology:
+      return t_("SIM detected · {}", value.technology)
+    return N_("SIM detected")
+
+  def cellular_note(self) -> str:
+    return CELLULAR_NOTES[self.cellular.status().code]
+
+  def cellular_note_color(self):
+    return {Tone.SUCCESS: T.SUCCESS_TEXT, Tone.ACCENT: T.ACCENT_TEXT, Tone.NEUTRAL: T.TEXT_TERTIARY}.get(
+      self.cellular_tone(), T.WARNING)
+
+  def cellular_address(self) -> str:
+    status = self.cellular.status()
+    if status.code == "checking":
+      return N_("Checking…")
+    if status.code == "connected":
+      return status.observation.address or N_("Not available")
+    return N_("Not connected")
+
+
+CELLULAR_LABELS = {"connected": N_("Connected"), "connecting": N_("Connecting…"), "not_connected": N_("Not connected"),
+                   "no_sim": N_("No SIM"), "no_signal": N_("No signal"), "wifi": N_("Wi-Fi in use"), "checking": N_("Checking…")}
+CELLULAR_TONES = {"connected": Tone.SUCCESS, "wifi": Tone.ACCENT, "checking": Tone.NEUTRAL}
+CELLULAR_NOTES = {
+  "connected": N_("Cellular data is connected."),
+  "connecting": N_("APN saved. Waiting for a cellular data connection."),
+  "not_connected": N_("Cellular data is not connected. Check your APN, signal and carrier account."),
+  "no_sim": N_("No SIM detected. Insert a SIM to use cellular data."),
+  "no_signal": N_("SIM detected. No cellular service. Your APN is saved."),
+  "wifi": N_("Wi-Fi is connected. Cellular data is not confirmed yet."),
+  "checking": N_("Waiting for current modem status."),
+}
+SIGNAL_LABELS = [N_("Poor signal"), N_("Moderate signal"), N_("Good signal"), N_("Great signal")]
+
+
+class CellularPanel(ListPanel):
+  """Collect modem state only while this panel is visible, including after APN editing."""
+
+  def __init__(self, model, items, *, main=False, **kwargs):
+    self.model = model
+    super().__init__(items, subtitle=lambda: model.cellular_meta(main),
+                     header_control=StatusBadge(model.cellular_label, model.cellular_tone), **kwargs)
+
+  def show_event(self):
+    self.model.cellular.set_active(True, self.model.apn())
+    super().show_event()
+
+  def hide_event(self):
+    super().hide_event()
+    self.model.cellular.set_active(False)
+
+  def _update_state(self):
+    self.model.tick()
 
 
 def _strength_bars(strength: int) -> int:
@@ -208,21 +290,22 @@ def cellular_panel(model: Network, open_advanced: Callable[[], None]) -> ListPan
   edit_name.set_enabled(lambda: model.wifi.tethering_name_ready)
   password = ValueButton(lambda: N_("Edit"), model.edit_hotspot_password)
   password.set_enabled(lambda: not model.wifi.tethering_name_busy)
-  return ListPanel([
+  return CellularPanel(model, [
     SettingRow(N_("Hotspot"), N_("Share this device's connection"), hotspot),
     SettingRow(N_("Hotspot name"), model.hotspot_name_detail, edit_name,
                subtitle_color=lambda: T.DANGER_TEXT if model.wifi.tethering_name_failed else T.ACCENT_TEXT),
     SettingRow(N_("Hotspot Password"), N_("For phones joining this device's hotspot"), password),
     SettingRow(N_("Save Data"), N_("No large uploads on cellular or phone hotspots"), Switch(lambda: model.save_data, model.set_save_data)),
-  ], title=N_("Cellular"), end_divider=True, bottom=SettingRow(N_("Roaming, APN and IP address"), None, on_click=open_advanced))
+  ], main=True, title=N_("Cellular"), end_divider=True, bottom=SettingRow(N_("Roaming, APN and IP address"), None, on_click=open_advanced))
 
 
 def advanced_panel(model: Network) -> ListPanel:
-  return ListPanel([
+  return CellularPanel(model, [
     SettingRow(N_("Roaming"), N_("Use cellular data outside your carrier's network"), Switch(lambda: model.roaming, model.set_roaming)),
     SettingRow(N_("APN"), lambda: model.apn() or N_("Automatic"), ValueButton(lambda: N_("Edit"), model.edit_apn)),
-    SettingRow(N_("IP Address"), lambda: model.wifi.ipv4_address or N_("Not connected")),
-  ], title=N_("Roaming, APN and IP address"))
+    Text(model.cellular_note, T.font_px(15), model.cellular_note_color),
+    SettingRow(N_("Cellular IP address"), model.cellular_address),
+  ], title=N_("Roaming, APN and IP address"), footnote=N_("Status updates automatically while this page is open."))
 
 
 def upstream_wifi():

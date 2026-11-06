@@ -31,7 +31,7 @@ msgid "Road data still supplies speed limits"
 msgstr "Road data still supplies speed limits"
 
 #: destinations.py:386
-#: settings/search.py:285
+#: settings/search.py:286
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:688
 msgid "Search"
 msgstr "Пошук"
@@ -405,7 +405,7 @@ msgstr "Оновлення готове"
 
 #: home.py:147
 #: settings/search.py:24
-#: settings/search.py:216
+#: settings/search.py:217
 msgid "Software"
 msgstr "Програмне забезпечення"
 
@@ -1805,7 +1805,7 @@ msgstr "Видаляє сполучення. Змінюйте, коли авто
 
 #: settings/bluetooth_tab.py:418
 #: settings/bluetooth_tab.py:429
-#: settings/network_tab.py:54
+#: settings/network_tab.py:206
 msgid "Connected"
 msgstr "Підключено"
 
@@ -1939,8 +1939,8 @@ msgid "Plays alerts and chimes"
 msgstr "Відтворює попередження й звуки"
 
 #: settings/bluetooth_tab.py:434
-#: settings/network_tab.py:77
-#: settings/network_tab.py:86
+#: settings/network_tab.py:79
+#: settings/network_tab.py:88
 msgid "Connect"
 msgstr "Підключити"
 
@@ -2044,12 +2044,12 @@ msgid "Recording"
 msgstr "Запис"
 
 #: settings/can_recorder.py:14
-#: settings/network_tab.py:207
+#: settings/network_tab.py:289
 msgid "Saving…"
 msgstr "Збереження…"
 
 #: settings/can_recorder.py:14
-#: settings/network_tab.py:57
+#: settings/network_tab.py:59
 msgid "Saved"
 msgstr "Збережено"
 
@@ -2242,19 +2242,19 @@ msgstr "З'ЄДНАННЯ"
 
 #: settings/connections.py:64
 #: settings/map_source.py:193
-#: settings/network_tab.py:199
+#: settings/network_tab.py:281
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
 #: settings/connections.py:66
-#: settings/network_tab.py:217
+#: settings/network_tab.py:299
 #: settings/search.py:31
 msgid "Cellular"
 msgstr "Мобільна мережа"
 
 #: settings/connections.py:69
 #: settings/search.py:31
-#: settings/search.py:214
+#: settings/search.py:215
 msgid "Car Audio & Devices"
 msgstr "Аудіо авто й пристрої"
 
@@ -2529,6 +2529,7 @@ msgstr "Налаштувати"
 
 #: settings/device.py:353
 #: settings/model.py:130
+#: settings/network_tab.py:202
 msgid "Not available"
 msgstr "Недоступно"
 
@@ -3141,7 +3142,7 @@ msgid "The street name is always shown in the onroad bar. Speed limit sources an
 msgstr "Назва вулиці завжди на панелі водіння. Джерела обмежень і їхній порядок є в режимі тюнінгу."
 
 #: settings/display.py:336
-#: settings/network_tab.py:87
+#: settings/network_tab.py:89
 #: setup.py:99
 msgid "Next"
 msgstr "Далі"
@@ -4082,157 +4083,272 @@ msgstr "Нова модель застосовується в наступній
 msgid "No models here yet."
 msgstr "Моделей поки немає."
 
-#: settings/network_tab.py:56
+#: settings/network_tab.py:206
+#: settings/network_tab.py:58
 msgid "Connecting…"
 msgstr "Підключення…"
 
-#: settings/network_tab.py:76
+#: settings/network_tab.py:206
+#: settings/network_tab.py:203
+#: settings/network_tab.py:160
+msgid "Not connected"
+msgstr "Не підключено"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:207
+msgid "No SIM"
+msgstr "No SIM"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:207
+msgid "No signal"
+msgstr "No signal"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:207
+msgid "Wi-Fi in use"
+msgstr "Wi-Fi in use"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:207
+#: settings/network_tab.py:200
+msgid "Checking…"
+msgstr "Checking…"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:210
+msgid "Cellular data is connected."
+msgstr "Cellular data is connected."
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:211
+msgid "APN saved. Waiting for a cellular data connection."
+msgstr "APN saved. Waiting for a cellular data connection."
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:212
+msgid "Cellular data is not connected. Check your APN, signal and carrier account."
+msgstr "Cellular data is not connected. Check your APN, signal and carrier account."
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:213
+msgid "No SIM detected. Insert a SIM to use cellular data."
+msgstr "No SIM detected. Insert a SIM to use cellular data."
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:214
+msgid "SIM detected. No cellular service. Your APN is saved."
+msgstr "SIM detected. No cellular service. Your APN is saved."
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:215
+msgid "Wi-Fi is connected. Cellular data is not confirmed yet."
+msgstr "Wi-Fi is connected. Cellular data is not confirmed yet."
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:216
+msgid "Waiting for current modem status."
+msgstr "Waiting for current modem status."
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:218
+msgid "Poor signal"
+msgstr "Poor signal"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:218
+msgid "Moderate signal"
+msgstr "Moderate signal"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:218
+msgid "Good signal"
+msgstr "Good signal"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:218
+msgid "Great signal"
+msgstr "Great signal"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:188
+msgid "SIM detected"
+msgstr "SIM detected"
+
+#: settings/network_tab.py:78
 #, python-brace-format
 msgid "for \"{}\""
 msgstr "для «{}»"
 
-#: settings/network_tab.py:87
+#: settings/network_tab.py:89
 msgid "Network name"
 msgstr "Назва мережі"
 
-#: settings/network_tab.py:100
+#: settings/network_tab.py:102
 #, python-brace-format
 msgid "{} · Couldn't save"
 msgstr "{} · не вдалося зберегти"
 
-#: settings/network_tab.py:119
+#: settings/network_tab.py:121
 msgid "Connected devices will need to reconnect."
 msgstr "Підключені пристрої мають підключитися знову."
 
-#: settings/network_tab.py:122
+#: settings/network_tab.py:124
 msgid "Hotspot password"
 msgstr "Пароль точки доступу"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/network_tab.py:150
-#: settings/network_tab.py:223
+#: settings/network_tab.py:154
+#: settings/network_tab.py:305
 msgid "APN"
 msgstr "APN"
 
-#: settings/network_tab.py:150
+#: settings/network_tab.py:154
 msgid "Leave empty for automatic"
 msgstr "Залиште порожнім для автоматичного вибору"
 
-#: settings/network_tab.py:156
-#: settings/network_tab.py:224
-#: sidebar.py:149
-msgid "Not connected"
-msgstr "Не підключено"
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:175
+msgid "Reading cellular status"
+msgstr "Reading cellular status"
 
-#: settings/network_tab.py:209
-#: settings/network_tab.py:207
-#: settings/network_tab.py:223
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:177
+msgid "Cellular data unavailable"
+msgstr "Cellular data unavailable"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:179
+msgid "SIM detected · No cellular service"
+msgstr "SIM detected · No cellular service"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:187
+#, python-brace-format
+msgid "SIM detected · {}"
+msgstr "SIM detected · {}"
+
+#: settings/network_tab.py:291
+#: settings/network_tab.py:289
+#: settings/network_tab.py:305
 msgid "Edit"
 msgstr "Змінити"
 
-#: settings/network_tab.py:225
-#: settings/network_tab.py:217
+#: settings/network_tab.py:308
+#: settings/network_tab.py:299
 #: settings/search.py:212
 msgid "Roaming, APN and IP address"
 msgstr "Роумінг, APN та IP-адреса"
 
-#: settings/network_tab.py:76
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:308
+msgid "Status updates automatically while this page is open."
+msgstr "Status updates automatically while this page is open."
+
+#: settings/network_tab.py:78
 msgid "Wrong password"
 msgstr "Хибний пароль"
 
-#: settings/network_tab.py:76
-#: settings/network_tab.py:85
+#: settings/network_tab.py:78
+#: settings/network_tab.py:87
 msgid "Enter password"
 msgstr "Введіть пароль"
 
-#: settings/network_tab.py:106
-#: settings/network_tab.py:213
+#: settings/network_tab.py:108
+#: settings/network_tab.py:295
 #: settings/search.py:209
 msgid "Hotspot name"
 msgstr "Назва точки доступу"
 
-#: settings/network_tab.py:113
+#: settings/network_tab.py:115
 msgid "A saved network already uses this name"
 msgstr "Збережена мережа вже має таку назву"
 
-#: settings/network_tab.py:212
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:184
+#, python-brace-format
+msgid "{} · {}"
+msgstr "{} · {}"
+
+#: settings/network_tab.py:294
 #: settings/search.py:208
 msgid "Hotspot"
 msgstr "Точка доступу"
 
-#: settings/network_tab.py:212
+#: settings/network_tab.py:294
 #: settings/search.py:208
 msgid "Share this device's connection"
 msgstr "Спільний доступ до інтернету цього пристрою"
 
-#: settings/network_tab.py:215
+#: settings/network_tab.py:297
 #: settings/search.py:210
 msgid "Hotspot Password"
 msgstr "Пароль точки доступу"
 
-#: settings/network_tab.py:215
+#: settings/network_tab.py:297
 #: settings/search.py:210
 msgid "For phones joining this device's hotspot"
 msgstr "Для телефонів, що підключаються до точки доступу"
 
-#: settings/network_tab.py:216
+#: settings/network_tab.py:298
 #: settings/search.py:211
 msgid "Save Data"
 msgstr "Економія трафіку"
 
-#: settings/network_tab.py:216
+#: settings/network_tab.py:298
 #: settings/search.py:211
 msgid "No large uploads on cellular or phone hotspots"
 msgstr "Без великих вивантажень через мобільну мережу чи точку доступу телефона"
 
-#: settings/network_tab.py:222
+#: settings/network_tab.py:304
 msgid "Roaming"
 msgstr "Роумінг"
 
-#: settings/network_tab.py:222
+#: settings/network_tab.py:304
 msgid "Use cellular data outside your carrier's network"
 msgstr "Використовувати мобільні дані поза мережею оператора"
 
-#: settings/network_tab.py:224
-#: settings/search.py:205
-msgid "IP Address"
-msgstr "IP-адреса"
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:307
+#: settings/search.py:213
+msgid "Cellular IP address"
+msgstr "Cellular IP address"
 
-#: settings/network_tab.py:85
+#: settings/network_tab.py:87
 #, python-brace-format
 msgid "for \"{}\", or leave empty for an open network"
 msgstr "для «{}», або залиште порожнім для відкритої мережі"
 
-#: settings/network_tab.py:198
+#: settings/network_tab.py:280
 msgid "Scanning for networks…"
 msgstr "Пошук мереж…"
 
-#: settings/network_tab.py:199
+#: settings/network_tab.py:281
 #: settings/search.py:206
 msgid "Join a hidden network"
 msgstr "Підключитися до прихованої мережі"
 
-#: settings/network_tab.py:110
+#: settings/network_tab.py:112
 msgid "Enter a hotspot name"
 msgstr "Введіть назву точки доступу"
 
-#: settings/network_tab.py:110
+#: settings/network_tab.py:112
 msgid "Name is too long. Use a shorter name."
 msgstr "Назва надто довга. Скоротіть її."
 
-#: settings/network_tab.py:111
+#: settings/network_tab.py:113
 msgid "Use letters, numbers, spaces or punctuation"
 msgstr "Використовуйте літери, цифри, пробіли або розділові знаки"
 
-#: settings/network_tab.py:190
+#: settings/network_tab.py:272
 msgid "Secured"
 msgstr "Захищена"
 
-#: settings/network_tab.py:190
+#: settings/network_tab.py:272
 msgid "Open"
 msgstr "Відкрита"
 
-#: settings/network_tab.py:223
+#: settings/network_tab.py:305
 msgid "Automatic"
 msgstr "Автоматично"
 
@@ -4922,6 +5038,10 @@ msgid "Networks nearby, and joining one"
 msgstr "Мережі поруч і підключення до них"
 
 #: settings/search.py:205
+msgid "IP Address"
+msgstr "IP-адреса"
+
+#: settings/search.py:205
 msgid "This device's local address, beside the connected network"
 msgstr "Локальна адреса пристрою біля підключеної мережі"
 
@@ -4929,86 +5049,93 @@ msgstr "Локальна адреса пристрою біля підключе
 msgid "Enter its name and password"
 msgstr "Введіть назву й пароль"
 
+#. English fallback pending cellular-status translation.
 #: settings/search.py:207
-msgid "Hotspot, data use, roaming and APN"
-msgstr "Точка доступу, трафік, роумінг і APN"
+msgid "Connection status, hotspot, data use, roaming and APN"
+msgstr "Connection status, hotspot, data use, roaming and APN"
 
 #: settings/search.py:209
 msgid "The name phones see when joining this device"
 msgstr "Назва, яку бачать телефони при підключенні"
 
+#. English fallback pending cellular-status translation.
 #: settings/search.py:212
-msgid "Roaming, APN and the device's IP address"
-msgstr "Роумінг, APN та IP-адреса пристрою"
+msgid "Roaming, APN and the cellular IP address"
+msgstr "Roaming, APN and the cellular IP address"
 
+#. English fallback pending cellular-status translation.
 #: settings/search.py:213
+msgid "The modem's mobile data address"
+msgstr "The modem's mobile data address"
+
+#: settings/search.py:214
 msgid "A wheel remote's buttons and what they do"
 msgstr "Кнопки пульта керма та їхні дії"
 
-#: settings/search.py:214
+#: settings/search.py:215
 msgid "Car audio for alerts, and pairing devices"
 msgstr "Аудіо авто для попереджень і сполучення пристроїв"
 
-#: settings/search.py:216
+#: settings/search.py:217
 msgid "Updates and the release notes"
 msgstr "Оновлення й примітки до випуску"
 
-#: settings/search.py:217
+#: settings/search.py:218
 #: settings/software_tab.py:192
 msgid "Automatic Updates"
 msgstr "Автоматичні оновлення"
 
-#: settings/search.py:217
+#: settings/search.py:218
 #: settings/software_tab.py:192
 msgid "Download while parked, install when you turn off the car"
 msgstr "Завантаження на стоянці, встановлення після вимкнення авто"
 
-#: settings/search.py:218
+#: settings/search.py:219
 #: settings/software_tab.py:188
 #: settings/software_tab.py:140
 msgid "Release Channel"
 msgstr "Канал оновлень"
 
-#: settings/search.py:218
+#: settings/search.py:219
 #: settings/software_tab.py:140
 msgid "The branch to download updates from"
 msgstr "Гілка для завантаження оновлень"
 
-#: settings/search.py:219
+#: settings/search.py:220
 #: settings/software_tab.py:195
 msgid "Reset Settings"
 msgstr "Скинути налаштування"
 
-#: settings/search.py:219
+#: settings/search.py:220
 msgid "Back to the Essentials defaults"
 msgstr "Повернути типові налаштування Essentials"
 
-#: settings/search.py:220
+#: settings/search.py:221
 #: settings/software_tab.py:169
 #: settings/software_tab.py:198
 msgid "Uninstall"
 msgstr "Видалити програму"
 
-#: settings/search.py:220
+#: settings/search.py:221
 msgid "Remove this software from the device"
 msgstr "Видалити цю програму з пристрою"
 
-#: settings/search.py:397
-#: settings/search.py:388
+#: settings/search.py:398
+#: settings/search.py:389
 msgid "Search settings"
 msgstr "Пошук налаштувань"
 
-#: settings/search.py:286
+#: settings/search.py:287
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "Назвіть налаштування, наприклад обмеження швидкості. Завершивши, торкніться мікрофона."
 
-#: settings/search.py:368
-#: settings/search.py:327
+#: settings/search.py:369
+#: settings/search.py:328
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "Немає налаштувань за запитом «{}»"
 
-#: settings/search.py:369
+#: settings/search.py:370
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "Введіть назву чи дію, наприклад яскравість або зміна смуги"
 

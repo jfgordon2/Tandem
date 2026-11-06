@@ -122,8 +122,37 @@ class FakeNet:
     self.ssid, self.strength, self.security_type, self.is_tethering = ssid, strength, security_type, is_tethering
 
 
+class FakeCellular:
+  """Deterministic observations for settings tests and renders, with no D-Bus worker."""
+
+  def __init__(self):
+    from openpilot.starpilot.tandem.cellular import Monitor, Observation
+    self.model = Monitor(reader_factory=None, clock=lambda: 0.0)
+    self.value = Observation(sim=True, modem=11, registration=1, technology="LTE", quality=60, connected=True,
+                             address="10.64.12.8", bearer_apn="carrier.apn", auto_config=True, identity=("modem", "bearer", "active"))
+    self.active = False
+    self.calls = []
+
+  def set_active(self, active, apn=None):
+    self.active = active
+    self.calls.append(active)
+    if apn is not None:
+      self.model._target = apn
+
+  def apn_saved(self, apn, previous):
+    from dataclasses import replace
+    self.model.apn_saved(apn, previous)
+    if self.value is not None:
+      self.value = replace(self.value, connected=False, connecting=True)
+
+  def status(self):
+    self.model._observation, self.model._updated = self.value, 0.0 if self.value is not None else None
+    return self.model.status()
+
+
 class FakeWifi:
   def __init__(self):
+    self.cellular_status = FakeCellular()
     self.networks = [FakeNet("Home Wi-Fi", 90), FakeNet("Coffee Shop", 60, 0), FakeNet("Neighbor", 30)]
     self.saved = {"Home Wi-Fi"}
     self.connected_ssid = "Home Wi-Fi"

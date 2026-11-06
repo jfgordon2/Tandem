@@ -16,7 +16,7 @@ class Text(Component):
   """A wrapped block of text: notes, dialog bodies, footnotes."""
   grow_touch_target = False
 
-  def __init__(self, value: Bindable[str], size: int = T.SIZE_SUBTITLE, color: rl.Color = T.TEXT_MUTED, weight=T.FONT,
+  def __init__(self, value: Bindable[str], size: int = T.SIZE_SUBTITLE, color: Bindable[rl.Color] = T.TEXT_MUTED, weight=T.FONT,
                padding: tuple[float, float] = (T.PANEL_HEADER_INSET, T.px(12))):
     super().__init__()
     self._value = value
@@ -31,7 +31,7 @@ class Text(Component):
 
   def _render(self, rect: rl.Rectangle):
     px, py = self._padding
-    draw.paragraph(inset(rect, x=px, y=py), resolve(self._value), self._size, self._color, self._weight)
+    draw.paragraph(inset(rect, x=px, y=py), resolve(self._value), self._size, resolve(self._color), self._weight)
 
 
 class SectionHeader(Component):

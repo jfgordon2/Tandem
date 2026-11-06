@@ -63,7 +63,7 @@ def connections_page(network: Network, open_advanced: Callable[[], None], wheel:
   return SectionPage(N_("CONNECTIONS"), [
     Section(N_("Wi-Fi"), lambda: WhileShown(wifi_panel(network), lambda: network.wifi.set_active(True), lambda: network.wifi.set_active(False)),
             value=network.summary),
-    Section(N_("Cellular"), lambda: cellular_panel(network, open_advanced)),
+    Section(N_("Cellular"), lambda: cellular_panel(network, open_advanced), value=network.cellular_summary),
     Section(N_("Bluetooth Remote"), lambda: WhileShown(wheel_panel(wheel, window), bluetooth_on, bluetooth_off, bt.tick),
             value=lambda: buttons_label(len(wheel.buttons()))),
     Section(N_("Car Audio & Devices"), lambda: WhileShown(devices_panel(bt, window), bluetooth_on, bluetooth_off, bt.tick)),
