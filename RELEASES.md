@@ -1,3 +1,17 @@
+Tandem 2026.11.05
+========================
+* Offline navigation for saved places without a data connection
+* Choose Offline maps only, or prefer online or offline routing with automatic fallback
+* Region updates manage road and routing maps together, reusing current data and keeping shared tiles
+* Download and installation progress track selected regions, with Ready after verification
+* The routing service starts when needed and exits when idle to save memory
+
+Tandem 2026.11.04
+========================
+* Offline maps: choose any US states for offline routing
+* Update your selection to reuse current routing data and remove unchecked states
+* Uncheck every state and choose Update maps to clear offline routing data
+
 Tandem 2026.11.03
 ========================
 * Steering controller: Vehicle default uses StarPilot's normal controller for your car

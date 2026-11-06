@@ -44,6 +44,7 @@ def test_search_address_includes_street_without_repeating_locality(fields, expec
 
 
 def test_tandem_search_client_preserves_results_and_distinguishes_branches(monkeypatch):
+  monkeypatch.setenv("TANDEM_ROUTING", "0")  # this test isolates upstream search normalization
   @dataclass(frozen=True)
   class Result:
     name: str

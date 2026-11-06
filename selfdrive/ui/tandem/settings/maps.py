@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass
+from contextlib import nullcontext
 from typing import Protocol
 
 import pyray as rl
@@ -16,7 +17,7 @@ from openpilot.system.ui.widgets import Widget
 from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.blocks import SPACER, Card, Columns, Grid, IconTitle, Label, Stack, Surface
 from openpilot.selfdrive.ui.tandem.chrome import PageHeader, Sidebar, SidebarItem
-from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, ProgressBar, Segmented
+from openpilot.selfdrive.ui.tandem.controls import Button, ButtonRow, ButtonStyle, ProgressBar, Segmented
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, place, row
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, SettingRow, Text
 from openpilot.selfdrive.ui.tandem.settings.device_sections import DELETE_MAPS_MESSAGE, StorageBar, confirm
@@ -40,6 +41,12 @@ class RegionProgress:
   location: str        # mapd's name for it, e.g. "us_state.ID" or "nation.DE"
   done: int
   total: int
+  ready: bool | None = None
+  downloaded: bool = False
+
+  @property
+  def fraction(self) -> float:
+    return max(0.0, min(1.0, self.done / self.total if self.total else float(self.downloaded)))
 
   @property
   def code(self) -> str:
@@ -51,7 +58,7 @@ class RegionProgress:
 
   @property
   def finished(self) -> bool:
-    return self.total > 0 and self.done >= self.total
+    return self.ready if self.ready is not None else self.total > 0 and self.done >= self.total
 
 
 def region_tiles(details) -> tuple[RegionProgress, ...]:
@@ -67,14 +74,30 @@ class Progress:
   total: int
   location: str
   regions: tuple[RegionProgress, ...] = ()
+  phase: str = ""
+  unit: str = "files"
+  error: str = ""
+  paused: bool = False
+  note: str = ""
+  current_regions: tuple[str, ...] = ()
+  stage: str = ""
+  paired: bool = False
 
   @property
   def fraction(self) -> float:
-    return self.done / self.total if self.total else 0.0
+    if self.phase == "ready":
+      return 1.0
+    value = max(0.0, self.done / self.total if self.total else 0.0)
+    return min(.99 if self.phase == "install" else 1.0, value)
+
+  def step_complete(self, index: int) -> bool:
+    return index < self.step or self.phase == "ready"
 
   @property
   def step(self) -> int:
     """The mock's steps: 0 Prepare (no file count yet), 1 Download, 2 Install (every file in, still finishing), 3 Ready."""
+    if self.phase in ("prepare", "download", "install", "ready", "failed"):
+      return {"prepare": 0, "download": 1, "install": 2, "ready": 3, "failed": 1}[self.phase]
     if not self.active:
       return 3
     if not self.total:
@@ -83,7 +106,10 @@ class Progress:
 
   @property
   def current(self) -> RegionProgress | None:
-    return next((r for r in self.regions if not r.finished), None)
+    pending = [r for r in self.regions if not r.finished and (not self.current_regions or r.location in self.current_regions)]
+    if self.phase in ("download", "road", ""):
+      return next((r for r in pending if r.fraction < 1), next(iter(pending), None))
+    return next(iter(pending), None)
 
 
 class MapsSource(Protocol):
@@ -106,6 +132,10 @@ class MapsSource(Protocol):
 class Maps:
   def __init__(self, store: SettingsStore, source: MapsSource):
     self._store = store
+    from openpilot.starpilot.tandem.routing.config import enabled
+    if isinstance(source, UpstreamMaps) and enabled():
+      from openpilot.selfdrive.ui.tandem.settings.map_source import CombinedMaps
+      source = CombinedMaps(source)
     self.source = source
 
   @property
@@ -116,14 +146,17 @@ class Maps:
     self._store.write({"PreferredSchedule": index})
 
   def ready(self) -> bool:
-    return self.source.has_selection() and all(ok for _, ok in self.source.checks()) and not self.source.progress().active
+    selected = self.source.has_selection() or getattr(self.source, "can_clear", lambda: False)()
+    return selected and all(ok for _, ok in self.source.checks()) and not self.source.progress().active
 
   def blocked_reason(self) -> str:
-    if not self.source.has_selection():
+    if not self.source.has_selection() and not getattr(self.source, "can_clear", lambda: False)():
       return N_("Choose at least one region")
     return next((t_("Waiting: {}", name.lower()) for name, ok in self.source.checks() if not ok), "")
 
   def status(self) -> str:
+    if hasattr(self.source, "status"):
+      return self.source.status()
     progress = self.source.progress()
     if self.source.cancelling():
       return N_("Cancelling…")
@@ -168,6 +201,8 @@ class ProgressCard(Component):
 
 def maps_page(maps: Maps, open_regions: Callable[[], None], sizes: Callable[[], dict[str, float]], window) -> Widget:
   """Your regions on the left, with the download; keeping up to date and storage on the right."""
+  if hasattr(maps.source, "summary"):
+    return combined_maps_page(maps, open_regions, sizes, window)
   def parked() -> bool:
     return dict(maps.source.checks()).get("Parked", False)
 
@@ -210,6 +245,41 @@ def maps_page(maps: Maps, open_regions: Callable[[], None], sizes: Callable[[], 
                     Columns([regions, Stack([schedule, storage], gap=T.px(14), grow=1)], [1.25, 1]))
 
 
+def combined_maps_page(maps, open_regions, sizes, window):
+  source = maps.source
+  update = Button(N_("Update maps"), source.download)
+  update.set_enabled(maps.ready)
+  remove = Button(N_("Remove maps"), lambda: confirm(window, N_("Remove offline maps?"), DELETE_MAPS_MESSAGE, N_("Remove"), source.remove),
+                  ButtonStyle.DANGER_SOFT)
+  remove.set_enabled(lambda: source.downloaded() and not source.progress().active and
+                     dict(source.checks()).get("Parked", False))
+  choose = Button(N_("Choose regions"), open_regions, ButtonStyle.PRIMARY, height=T.px(60))
+  regions = Card([
+    Label(N_("DOWNLOADED REGIONS"), color=T.ACCENT_TEXT, caption=True),
+    IconTitle("map", source.selection_summary, source.status),
+    Surface(SettingRow(N_("Road data"), N_("Speed limits and street names"),
+                       Label(lambda: source.summary()["road"], T.SIZE_SUBTITLE,
+                             lambda: T.SUCCESS_TEXT if source.summary().get("road_ready", True) else T.TEXT_TERTIARY,
+                             T.FONT, fit=True), height=T.px(54)), T.SURFACE_2),
+    Surface(SettingRow(N_("Offline routes"), lambda: t_("{} MiB", round(source.routes_size() / 1024**2)),
+                       Label(lambda: N_("Ready") if source.summary()["route_ready"] else source.summary()["routes"],
+                             T.SIZE_SUBTITLE, lambda: T.SUCCESS_TEXT if source.summary()["route_ready"] else T.ACCENT_TEXT,
+                             T.FONT, fit=True), height=T.px(54)), T.SURFACE_2),
+    ButtonRow([update, remove], height=T.px(44)), SPACER, choose,
+  ], gap=T.px(10), padding=(T.px(20), T.px(18)))
+  schedule = Card([
+    Label(N_("Keep up to date"), T.font_px(18)),
+    Segmented(SCHEDULES, lambda: maps.schedule, maps.set_schedule, height=T.px(52), font_size=T.font_px(16), equal=True),
+    Text(N_("One schedule for road data and offline routes, while parked on Wi-Fi."), T.SIZE_SUBTITLE, T.TEXT_MUTED, T.FONT,
+         padding=(0, 0)),
+  ], padding=(T.px(20), T.px(18)))
+  storage = Card([StorageBar(sizes, heading=N_("Storage"), padding=(0, 0)),
+                  Label(N_("Updates keep the current maps until the new maps are ready."), T.SIZE_SUBTITLE, T.TEXT_MUTED, T.FONT)],
+                  padding=(T.px(20), T.px(18)))
+  return TitledPage(N_("Offline Maps"), N_("Routes, speed limits and street names without a connection"),
+                    Columns([regions, Stack([schedule, storage], gap=T.px(14), grow=1)], [1.25, 1]))
+
+
 class RegionCard(Component):
   """A region to tap on or off; chosen regions have the accent fill and outline."""
 
@@ -224,7 +294,7 @@ class RegionCard(Component):
     return self._maps.source.selected(self._region.token)
 
   def preferred_size(self, max_width: float) -> tuple[float, float]:
-    return max_width, T.px(96)
+    return max_width, T.px(104 if hasattr(self._maps.source, "region_status") else 96)
 
   def _render(self, rect: rl.Rectangle):
     chosen = self.chosen
@@ -234,6 +304,14 @@ class RegionCard(Component):
     elif self.is_pressed:
       draw.pressed(rect, T.px(16))
     body = inset(rect, x=T.px(16), y=T.px(12))
+    if hasattr(self._maps.source, "region_status"):
+      road, routes = self._maps.source.region_status(self._region.token)
+      title, line, routing = column(body, [T.px(23), T.px(19), FILL], T.px(3))
+      draw.text(title, draw.fit(self._region.name, T.font_px(17), T.FONT_BOLD, title.width), T.font_px(17), T.TEXT, T.FONT_BOLD)
+      draw.text(line, road, T.font_px(12), T.TEXT_TERTIARY)
+      draw.paragraph(routing, routes, T.font_px(12), T.SUCCESS_TEXT if routes == N_("Routes ready") else T.TEXT_MUTED,
+                     spacing=1.0, max_lines=2)
+      return
     if not self._region.detail:
       draw.text(body, self._region.name, T.font_px(17), T.TEXT, T.FONT_BOLD)
       return
@@ -252,7 +330,10 @@ class RegionsPage(Component):
     super().__init__()
     self._maps = maps
     self._tab = 0
-    self._header = self._child(PageHeader(N_("Add map regions"), N_("Pick a region, or switch to states for less storage")))
+    def subtitle():
+      return N_("Pick where you drive. Maps for routes, speed limits and street names.") \
+        if getattr(maps.source, "catalog", {}).get("schema") == 2 else N_("Pick a region, or switch to states for less storage")
+    self._header = self._child(PageHeader(N_("Add map regions"), subtitle))
     self._tabs = self._child(Sidebar(N_("REGIONS"), [SidebarItem(t, on_select=lambda i=i: self._select(i)) for i, t in enumerate(self.TABS)],
                                      selected=lambda: self._tab, width=T.px(220)))
 
@@ -262,7 +343,8 @@ class RegionsPage(Component):
                        background=T.BG, dividers=False)
 
     self._list = self._child(Rebuilding(lambda: self._tab, build, maps.source.tick))
-    download = Button(N_("Download"), on_download, ButtonStyle.PRIMARY, height=T.px(60))
+    download = Button(lambda: maps.source.download_label() if hasattr(maps.source, "download_label") else N_("Download"),
+                      on_download, ButtonStyle.PRIMARY, height=T.px(60))
     download.set_enabled(maps.ready)
 
     def check(name: str) -> Label:
@@ -270,13 +352,30 @@ class RegionsPage(Component):
       return Label(lambda: name if ok() else t_("{}: not yet", name), T.font_px(15), lambda: T.TEXT_SECONDARY if ok() else T.WARNING, T.FONT,
                    icon=lambda: "check" if ok() else "warning", icon_color=lambda: T.SUCCESS_TEXT if ok() else T.WARNING)
 
-    self._side = self._child(Card([
-      Label(N_("SELECTED"), color=T.ACCENT_TEXT, caption=True),
-      Text(maps.source.selection_summary, T.font_px(22), T.TEXT, T.FONT_EXTRABOLD, padding=(0, 0)),
-      Stack([check(name) for name, _ in maps.source.checks()], gap=T.px(8)),
-      SPACER,
-      download,
-    ], padding=(T.px(18), T.px(18))))
+    details = []
+    if hasattr(maps.source, "summary"):
+      details = [Label(N_("Road data"), T.font_px(16)),
+                 Label(lambda: maps.source.summary()["road"], T.SIZE_SUBTITLE,
+                       lambda: T.SUCCESS_TEXT if maps.source.summary().get("road_ready", True) else T.TEXT_TERTIARY, T.FONT),
+                 Label(N_("Offline routes"), T.font_px(16)),
+                 Label(lambda: maps.source.summary()["routes"], T.SIZE_SUBTITLE,
+                       lambda: T.ACCENT_TEXT if maps.source.summary().get("available", True) else T.WARNING, T.FONT),
+                 Text(lambda: maps.source.summary()["note"], T.SIZE_SUBTITLE, T.TEXT_TERTIARY, T.FONT, padding=(0, 0))]
+    checks = Stack([check(name) for name, _ in maps.source.checks()], gap=T.px(8))
+    if details:
+      checks = Label(lambda: " · ".join(translate(n) for n, ok in maps.source.checks()) if maps.ready() else maps.blocked_reason(),
+                     T.font_px(15), T.TEXT_SECONDARY, T.FONT, icon="check", icon_color=T.SUCCESS_TEXT)
+    heading = [Label(N_("SELECTED"), color=T.ACCENT_TEXT, caption=True),
+               Text(maps.source.selection_summary, T.font_px(22), T.TEXT, T.FONT_EXTRABOLD, padding=(0, 0))]
+    if details:
+      # Keep the action pinned as in the approved mock; long translations and
+      # large geographic selections scroll only the middle of this summary.
+      items = [Stack(heading, gap=T.px(4)),
+               ListPanel([Stack(details, gap=T.px(12))], background=T.SURFACE_2, dividers=False),
+               Stack([checks, download], gap=T.px(12))]
+      self._side = self._child(Card(items, grow=1, padding=(T.px(18), T.px(18))))
+    else:
+      self._side = self._child(Card([*heading, checks, SPACER, download], padding=(T.px(18), T.px(18))))
 
   def _select(self, index: int) -> None:
     self._tab = index
@@ -374,6 +473,14 @@ def removal_blocked() -> str:
     _memory_params = Params(memory=True)
   if _memory_params.get_bool("DownloadMaps"):
     return N_("Wait for the download to finish")
+  from openpilot.starpilot.tandem.routing import config as C, maps as jobs
+  if C.enabled():
+    if jobs.running():
+      return N_("Wait for the download to finish")
+    try:
+      C.require_parked()
+    except C.RoutingError:
+      return N_("Park and end the route to remove maps")
   return ""
 
 
@@ -389,13 +496,25 @@ def remove_offline_maps(on_done: Callable[[], None] | None = None) -> None:
   from openpilot.starpilot.common.starpilot_variables import MAPS_PATH
 
   def worker():
-    if MAPS_PATH.exists():
-      shutil.rmtree(MAPS_PATH, ignore_errors=True)
-      MAPS_PATH.mkdir(parents=True, exist_ok=True)
-    params = Params()
-    cache = load_maps_storage_cache(params.get(MAPS_STORAGE_CACHE_PARAM, encoding="utf-8") or "")
-    cache.clear()
-    params.put(MAPS_STORAGE_CACHE_PARAM, cache.to_json())
+    from openpilot.starpilot.tandem.routing import config as C, maps as jobs
+    if C.enabled():
+      from openpilot.starpilot.tandem.routing import client
+      try:
+        client.request("release", timeout=2)
+        import time
+        time.sleep(1.2)
+      except C.RoutingError:
+        pass
+    if removal_blocked():
+      return
+    with jobs.deletion() if C.enabled() else nullcontext():
+      if MAPS_PATH.exists():
+        shutil.rmtree(MAPS_PATH)
+        MAPS_PATH.mkdir(parents=True, exist_ok=True)
+      params = Params()
+      cache = load_maps_storage_cache(params.get(MAPS_STORAGE_CACHE_PARAM, encoding="utf-8") or "")
+      cache.clear()
+      params.put(MAPS_STORAGE_CACHE_PARAM, cache.to_json())
     STORAGE.forget()
     if on_done is not None:
       on_done()
@@ -437,15 +556,24 @@ class DownloadView(Component):
     super().__init__()
     self._maps = maps
     self._cancel = self._child(Button(N_("Cancel download"), maps.source.cancel, ButtonStyle.DANGER_SOFT, height=T.px(52)))
+    self._retry = self._child(Button(N_("Retry download"), lambda: getattr(maps.source, "retry", maps.source.download)(),
+                                     ButtonStyle.PRIMARY, height=T.px(52)))
+    self._done = self._child(Button(N_("Done"), lambda: setattr(self, "_dismissed", True), ButtonStyle.PRIMARY, height=T.px(52)))
+    self._dismissed = False
     self._bar = self._child(ProgressBar(lambda: maps.source.progress().fraction))
     self._started: tuple[float, int] | None = None
+    self._counter = None
 
   def _update_state(self):
     progress = self._maps.source.progress()
-    if progress.active and progress.total and self._started is None:
-      self._started = (rl.get_time(), progress.done)
-    elif not progress.active:
+    counter = (progress.phase, progress.unit, progress.total)
+    transfer = progress.active and progress.phase not in ("prepare", "install") and not progress.paused and progress.unit != "regions"
+    if transfer and progress.total:
+      if self._started is None or counter != self._counter or progress.done < self._started[1]:
+        self._started = (rl.get_time(), progress.done)
+    else:
       self._started = None
+    self._counter = counter
 
   def _render(self, rect: rl.Rectangle):
     from openpilot.selfdrive.ui.tandem.settings.pages import body_rect
@@ -453,13 +581,25 @@ class DownloadView(Component):
     body = body_rect(rect)
     header, top, grid = column(body, [T.px(60), T.px(136), FILL], T.px(12))
     # Header: title and line, Cancel at the right
-    w, _ = self._cancel.preferred_size(header.width)
+    action = self._retry if progress.error else self._done if progress.phase == "ready" else self._cancel
+    w, _ = action.preferred_size(header.width)
     words, cancel = row(header, [FILL, w], T.px(14))
-    self._cancel.render(place(cancel, w, T.px(52)))
+    action.render(place(cancel, w, T.px(52)))
     title, line = column(place(words, words.width, T.px(60)), [T.px(34), FILL], T.px(2))
     what = self._maps.source.selection_summary().removesuffix(" selected")   # "13 regions", "Whole U.S. (56 states)"
-    draw.text(title, t_("Downloading {}", what), T.font_px(26), T.TEXT, T.FONT_EXTRABOLD)
-    draw.text(line, N_("You can leave this screen. It keeps going in the background."), T.SIZE_SUBTITLE, T.TEXT_TERTIARY)
+    heading = t_("{} download stopped", what) if progress.error else t_("{} maps ready", what) if progress.phase == "ready" else \
+      t_("Preparing {} maps", what) if progress.phase == "prepare" else t_("Installing {}", what) if progress.phase == "install" else \
+      t_("Downloading {}", what)
+    if progress.phase == "ready" and len(progress.regions) > 1:
+      heading = t_("{} ready", what)
+    draw.text(title, heading, T.font_px(26), T.TEXT, T.FONT_EXTRABOLD)
+    explanation = N_("You can leave this screen. It keeps going in the background.")
+    if progress.error:
+      from openpilot.selfdrive.ui.tandem.routing_status import status_text
+      explanation = status_text(progress.error)
+    elif progress.phase == "ready":
+      explanation = N_("All maps ready") if progress.paired else N_("Both map sets ready")
+    draw.text(line, explanation, T.SIZE_SUBTITLE, T.TEXT_TERTIARY)
     # Percent, bar and steps
     draw.fill(top, T.SURFACE_2, T.RADIUS_PANEL)
     inner = inset(top, x=T.px(22), y=T.px(16))
@@ -467,13 +607,28 @@ class DownloadView(Component):
     pct = f"{round(progress.fraction * 100)}%"
     pw = draw.text(figure, pct, T.font_px(44), T.TEXT, T.FONT_EXTRABOLD)
     left = minutes_left(self._started, rl.get_time(), progress.done, progress.total)
-    detail = t_("{} of {} files", progress.done, progress.total) if progress.total else N_("Getting ready")
-    if left is not None:
+    if progress.phase == "install":
+      detail = N_("Download complete · Building maps") if progress.stage == "build" else \
+        N_("Download complete · Checking maps") if progress.stage == "check" else N_("Download complete · Installing maps")
+    elif progress.phase == "ready":
+      detail = N_("All maps ready") if progress.paired else N_("Both map sets ready")
+    elif progress.unit == "regions":
+      from openpilot.starpilot.common.maps_catalog import MAP_TOKEN_LABELS
+      current = progress.current
+      detail = t_("{} · {} of {}", MAP_TOKEN_LABELS.get(current.location, current.code),
+                  progress.regions.index(current) + 1, len(progress.regions)) if current else N_("Getting ready")
+    elif progress.unit == "bytes" and progress.total:
+      detail = t_("Offline routes · {} of {} MiB", round(progress.done / 1024**2), round(progress.total / 1024**2))
+    else:
+      detail = t_("Road data · {} of {} files", progress.done, progress.total) if progress.total else N_("Getting ready")
+    if progress.error:
+      detail += N_(" · Download stopped")
+    if left is not None and not progress.error and not progress.paused:
       detail += t_(" · about {} min left", left)
     draw.text(inset(figure, left=pw + T.px(16)), detail, T.font_px(17), T.TEXT_SECONDARY)
     self._bar.render(bar)
     for i, (name, cell) in enumerate(zip(STEPS, row(steps, [FILL] * len(STEPS), T.px(12)), strict=True)):
-      done, now = i < progress.step, i == progress.step
+      done, now = progress.step_complete(i), i == progress.step
       ink = T.SUCCESS_TEXT if done else (T.TEXT if now else T.TEXT_MUTED)
       mark = rl.Rectangle(cell.x, cell.y, T.px(18), cell.height)
       if done:
@@ -489,7 +644,10 @@ class DownloadView(Component):
     regions = progress.regions
     finished = sum(r.finished for r in regions)
     caption, tiles, note = column(inner, [draw.line_height(T.SIZE_CAPTION), FILL, draw.line_height(T.SIZE_SUBTITLE)], T.px(12))
-    draw.caption(caption, t_("REGIONS · {} OF {} DONE", finished, len(regions)) if regions else N_("REGIONS"))
+    downloading = progress.paired and progress.phase == "download"
+    downloaded = sum(r.downloaded for r in regions)
+    draw.caption(caption, t_("REGIONS · {} OF {} DOWNLOADED", downloaded, len(regions)) if downloading else
+                 t_("REGIONS · {} OF {} DONE", finished, len(regions)) if regions else N_("REGIONS"))
     current = progress.current
     tile_w = (tiles.width - T.px(10) * (self.COLUMNS - 1)) / self.COLUMNS
     rows = max(1, int((tiles.height + T.px(8)) // T.px(56)))
@@ -502,20 +660,20 @@ class DownloadView(Component):
       draw.text(tile, t_("+{} more", more), T.font_px(15), T.TEXT_TERTIARY, T.FONT_SEMIBOLD, Align.CENTER)
     for i, region in enumerate(regions[start:end]):
       tile = cell(i)
-      is_current = region is current
+      is_current = not region.finished and (region is current or region.location in progress.current_regions)
       if region.finished:
         draw.fill(tile, T.SUCCESS_SURFACE, T.px(12))
         label, ink = region.code, T.SUCCESS_CHIP_TEXT
       elif is_current:
-        draw.fill(tile, T.ACCENT_SELECTED, T.px(12))
-        draw.stroke(tile, T.ACCENT, T.px(12), T.px(2))
+        draw.fill(tile, T.WARNING_SURFACE if progress.error else T.ACCENT_SELECTED, T.px(12))
+        draw.stroke(tile, T.WARNING if progress.error else T.ACCENT, T.px(12), T.px(2))
         label, ink = region.code, T.TEXT
       else:
         draw.fill(tile, T.SURFACE_4, T.px(12))
         label, ink = region.code, T.TEXT_TERTIARY
       extra = ""
-      if is_current and region.total:
-        extra = f"{round(region.done * 100 / region.total)}%"
+      if not region.finished and not progress.error:
+        extra = f"{round((progress.fraction if progress.phase == 'install' else region.fraction) * 100)}%"
       lw = draw.text_width(label, T.font_px(17), T.FONT_BOLD)
       ew = draw.text_width(extra, T.font_px(13), T.FONT_BOLD) + T.px(8) if extra else 0
       cw = T.px(22) if region.finished else 0
@@ -526,7 +684,18 @@ class DownloadView(Component):
       if extra:
         draw.text(rl.Rectangle(x + cw + lw + T.px(8), tile.y, ew, tile.height), extra, T.font_px(13), T.ACCENT_TEXT, T.FONT_BOLD)
     draw.icon(rl.Rectangle(note.x, note.y, T.px(18), note.height), "info", T.ACCENT_TEXT, T.px(18))
-    draw.text(inset(note, left=T.px(28)), DOWNLOAD_NOTE, T.SIZE_SUBTITLE, T.TEXT_SECONDARY)
+    message = N_("Paused. Downloads continue when parked on Wi-Fi.") if progress.paused else DOWNLOAD_NOTE
+    if progress.phase == "ready":
+      message = N_("Maps are ready. Existing saved places stay saved.") if progress.paired else \
+        N_("Both map sets are ready. Existing saved places stay saved.")
+    if progress.error:
+      from openpilot.selfdrive.ui.tandem.routing_status import status_text
+      message = status_text(progress.error)
+    draw.text(inset(note, left=T.px(28)), message, T.SIZE_SUBTITLE, T.WARNING if progress.error else T.TEXT_SECONDARY)
+    if progress.note:
+      note_y = tiles.y + T.px(56) * ((len(regions) + self.COLUMNS - 1) // self.COLUMNS) + T.px(8)
+      if note_y + draw.line_height(T.SIZE_CAPTION) < note.y:
+        draw.text(rl.Rectangle(tiles.x, note_y, tiles.width, T.px(20)), progress.note, T.SIZE_CAPTION, T.TEXT_SECONDARY)
 
 
 class MapsPage(Component):
@@ -541,10 +710,26 @@ class MapsPage(Component):
 
   def show_event(self):
     self._maps.source.refresh()
+    if self._maps.source.progress().phase == "ready":
+      self._download._dismissed = True
     super().show_event()
 
   def _update_state(self):
     self._maps.source.tick()
 
   def _render(self, rect: rl.Rectangle):
-    (self._download if self._maps.source.progress().active else self._page).render(rect)
+    progress = self._maps.source.progress()
+    if progress.active:
+      self._download._dismissed = False
+    visible = progress.active or (progress.error or progress.phase == "ready") and not self._download._dismissed
+    (self._download if visible else self._page).render(rect)
+
+
+def open_maps():
+  """Where to? opens the same settings maps flow as Navigation and Display."""
+  from openpilot.system.ui.lib.application import gui_app
+  from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow
+  window = SettingsWindow()
+  window.set_callbacks(gui_app.pop_widget)
+  gui_app.push_widget(window)
+  window.open_at(0, "maps")

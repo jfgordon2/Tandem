@@ -97,6 +97,8 @@ def main(frame, save, out, tap, gui_app):
   for i, name in enumerate(["driving", "drivingvehicle", "drivingweather", "drivingnav"]):
     win.top.select(i)
     shot(name)
+    if name == "drivingnav":
+      shot("drivingnavrouting")
   win.top._sidebar._footer[0]._click_callback()
   for i, name in enumerate(["tuner", "tunergas", "tunerfollowing", "tunerbundles"]):
     win.top.select(i)
@@ -233,6 +235,6 @@ def main(frame, save, out, tap, gui_app):
   # The other screens have scenes of their own.
   for scene in ("scene_onroad.py", "scene_sidebar.py", "scene_setup.py", "scene_alerts.py", "scene_extras.py", "scene_dev.py",
                 "scene_homealerts.py", "scene_destinations.py", "scene_keyboard.py", "scene_bundlesheet.py", "scene_camera.py",
-                "scene_lead.py", "scene_mapbox.py", "scene_hotspot.py", "scene_can_recorder.py", "scene_bootlogo.py"):
+                "scene_lead.py", "scene_mapbox.py", "scene_hotspot.py", "scene_can_recorder.py", "scene_bootlogo.py", "scene_routing.py"):
     runpy.run_path(os.path.join(os.path.dirname(os.path.abspath(__file__)), scene))["main"](
       frame=frame, save=save, out=out, tap=tap, gui_app=gui_app)

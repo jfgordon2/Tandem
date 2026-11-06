@@ -28,6 +28,15 @@ def controller_type(base):
 
     def _get_nav_turn_control_target(self, v_cruise, sm, starpilot_toggles):
       self.nav_turn_maneuver = self.nav_turn_modifier = ""
+      from openpilot.starpilot.tandem.routing.config import enabled
+      if enabled():
+        self._update_nav_instruction_state()
+        stamp = self._nav_instruction_state.get("updatedAtMonotonic")
+        try:
+          if not 0 <= time.monotonic() - float(stamp) <= 2.5:
+            return 0.0
+        except (TypeError, ValueError, OverflowError):
+          return 0.0
       return super()._get_nav_turn_control_target(v_cruise, sm, starpilot_toggles, on_selected=self._selected_turn)
 
   return TandemCruise

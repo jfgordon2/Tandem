@@ -4,6 +4,18 @@ Tandem is this fork of StarPilot. Its design language is **Essentials**: fewer c
 
 To run the real UI on a Mac, follow the [desktop setup guide](docs/mac-desktop.md). `./c3` opens the large UI with Essentials; `./c4` opens upstream's small UI.
 
+Offline routing supports saved places with coordinates on `release`; `valhalla` remains available for testing. Navigation offers strict **Offline maps only** and an **Online / Offline** preference with fallback. Region downloads, Weekly/Monthly updates and map deletion manage both road data and routing graphs. Driving-only graphs stay compressed in read-only SquashFS images; full verification runs at installation and during parked maintenance, outside route startup. Address search stays online. See the [setup and rollback guide](docs/valhalla-offline-routing.md), [compressed-image and RAM verification](docs/valhalla-verified-startup.md), [device trial report](docs/valhalla-device-trial.md), and [approved mocks](design/valhalla-review/revision-2/index.html). Bench checks used isolated source/data directories. The owner subsequently installed `d4f5c3f8f9` and reported a successful drive with no Low on RAM warning; instrumented driving-load checks remain open.
+
+The [shared US build](docs/valhalla-us-states.md) adds exact state selections: Update reuses checksummed data from the same build, downloads missing packs, removes unchecked routing data and streams one compressed replacement while parked. After verified activation, owned `routing/road.py` also removes legacy road tiles outside the selected regions' mapd archive groups. Shared tiles stay once. Deselect-all clears both sets, including when only road data remains. This requires no additional upstream hooks.
+
+State updates use two transfer workers and two gzip compression threads, with operation-local checksum reuse and independent logical acceptance. Gzip level 6, 128 KiB blocks and the 64 MiB compressor setting remain. See [update speed and verification](docs/valhalla-update-speed.md) for host measurements and pending device checks. This changes no screens or upstream hooks.
+
+The [shared-state progress review](docs/valhalla-map-progress.md) records the five approved progress states and their implementation: separate region download counters, measured shared installation/checking, and a green Ready check after activation. The install/check mocks use the owner's fixed-length wording, “All selected regions are installed together.” It also records the earlier device-tested fix for idle cleanup racing with installation. New map-progress wording has marked English translation fallbacks pending translation.
+
+The [paired-download flow](docs/valhalla-paired-downloads.md) downloads both map sets for one US state before moving to the next. Two routing transfer workers run alongside StarPilot's unchanged road downloader. The approved `valhalla5-paired-*` screens show one overall bar and a percentage per state; the shared Install/Checking screens remain as approved. Shared packs transfer once, and all states become ready after verified activation.
+
+The [monthly data workflow](docs/valhalla-monthly-map-releases.md) builds and checks one US graph on GitHub-hosted Ubuntu, stages immutable source/graph releases, then verifies public downloads before promoting the maintained catalog. The [workflow audit](docs/github-workflows.md) keeps inherited binary/image publishers disabled and requires review of workflow changes.
+
 | Module | Contents |
 | --- | --- |
 | `fonts.py` | `font(face)`: maps upstream weight identifiers to our Figtree and Noto files, plus ExtraBold and JetBrains Mono. All load on first use without replacing upstream fonts. |
@@ -81,6 +93,11 @@ Navigation still reports the turn StarPilot actually selected through its option
 
 | File | Integration |
 | --- | --- |
+| `.github/workflows/tandem_routing_maps.yaml` | Thin hosted-runner launcher for owned routing-data maintenance tools. Scheduled builds use the exact `release` trigger commit; explicit `valhalla` push checks use their test commit. Resource probes and build/publication logic stay under `starpilot/tandem/routing/tools/`. |
+| `.github/workflows/compile_starpilot.yaml` | One job-level repository gate keeps this inherited binary-building/branch-pushing workflow inert in Tandem. Also disabled in the repository's Actions settings. Its upstream implementation is retained for merge compatibility. |
+| `.github/workflows/compile_bluescreens.yaml` | The same repository gate and Actions disablement keep the inherited binary/panda build and branch push inert in Tandem. |
+| `.github/workflows/publish_truenas_runner.yaml` | The same repository gate and Actions disablement keep the inherited GHCR image publisher inert in Tandem. |
+| `.github/workflows/fleet_safety.yaml` | Pins the existing read-only controller tests to reviewed Node 24 versions of the official checkout, Python setup and artifact actions. Test commands and triggers remain upstream's. |
 | `README.md` | Fork introduction, documentation links, screenshots and upstream credits. |
 | `selfdrive/ui/layouts/main.py` | Screen factories and sidebar widths from `screens.py`; each factory has an upstream fallback. |
 | `selfdrive/ui/layouts/home.py` | `_show_header()` override; the default is `True`. |
@@ -95,9 +112,11 @@ Navigation still reports the turn StarPilot actually selected through its option
 | `starpilot/assets/theme_manager.py` | Installs the owned bundled signal assets as regular theme packs at boot. |
 | `starpilot/controls/lib/starpilot_vcruise.py` | Optional `on_selected` navigation-turn observer; unset preserves the original target and state. |
 | `starpilot/controls/starpilot_planner.py` | Selects the owned cruise subclass and publishes its observed turn to the owned snapshot; disabled with `TANDEM_ONROAD=0`. |
+| `starpilot/navigation/navigationd.py` | `_can_fetch_route(token)` defaults to the original nonempty-key gate. `main()` selects the owned policy subclass for Tandem; `TANDEM_ROUTING=0` or any upstream screen switch restores the original daemon. Progress, publishers and message schemas remain upstream's. |
+| `starpilot/common/starpilot_functions.py` | After the existing schedule/date gates, one guarded import/call/early return delegates supported US updates to owned `handoff.coordinate`. It calls the unchanged `update_maps` body for each state through scoped parameter views, preserving the actual selection and keeping its existing worker lock until the paired job finishes. The original companion hook now imports its lightweight wrapper from `handoff`; recursive state calls suppress that companion. Missing broker, disabled routing, unsupported selections or coordinator exceptions fall through to the original downloader. Both upstream guards catch all ordinary exceptions; the owned companion also catches all exceptions. Atomic requests never take the graph install lock. Scheduling, mapd commands and the upstream UI rollback remain intact. |
 | `starpilot/system/bluetooth/daemon.py` | Overridable settings gate, default offroad; selects the owned stationary-Park subclass unless `TANDEM_SETTINGS=0`. |
 | `starpilot/system/wheel_controls/wheel_controlsd.py` | Overridable testing gate, default offroad; `main()` selects the owned test-lifecycle subclass unless `TANDEM_SETTINGS=0`. Public upstream testing/learning functions remain original. |
-| `system/manager/process_config.py` | Starts the wheel service for an owned temporary test request; ignored with `TANDEM_SETTINGS=0`. |
+| `system/manager/process_config.py` | Starts the wheel service for an owned temporary test request; ignored with `TANDEM_SETTINGS=0`. Adds the low-priority `tandem_routingd` process with the owned `config.should_run` demand gate: an active destination, queued/active map job, or a short preview/request wake. The broker exits after two minutes without demand. `TANDEM_ROUTING=0` or any of the four screen switches disables it. The predicate imports no map installer or native worker into manager. Original navigationd/mapd lifecycle predicates remain unchanged. |
 | `starpilot/system/the_galaxy/the_galaxy.py` | Calls the owned signal catalog, validation and effective-selection helpers, retaining the public API routes. Its JSON settings source remains upstream's. |
 | `starpilot/system/starpilot_stats.py` | Fork-wide unattended statistics policy gate. |
 | `system/athena/athenad.py` | Fork-wide unattended diagnostic log/stat forwarding policy gates. |
@@ -125,7 +144,7 @@ The [separation audit](docs/upstream-separation.md) retains the original baselin
 
 ## Branches and merging upstream
 
-Tandem has one branch, `release`, on `jfgordon2/Tandem`. Upstream is StarPilot's `StarPilot` branch on `StarPilotHQ/StarPilot` (firestar5683's repo), which sits on openpilot. Tandem merges upstream rather than rebasing, so `release` keeps its history and pushes never need force.
+Tandem's stable branch is `release` on `jfgordon2/Tandem`; `valhalla` is retained for routing experiments. Upstream is StarPilot's `StarPilot` branch on `StarPilotHQ/StarPilot` (firestar5683's repo), which sits on openpilot. Tandem merges upstream rather than rebasing, so `release` keeps its history and pushes never need force.
 
 Set up once in a clone:
 
@@ -147,8 +166,10 @@ Use the Upstream integration inventory above to review overlapping changes. Owne
 
 After a merge, check the interfaces that can change without a source conflict:
 
+- Run `tools/workflow_policy.py` before pushing. The [workflow review](docs/github-workflows.md) records the inherited publishers disabled in Tandem, the retained read-only safety tests, and the reviewed workflow/action fingerprints. Review every new or changed workflow before accepting its fingerprint; maps do not call upstream CI composites.
 - Run `tests/` and `starpilot/tandem/tests/`, plus `tools/upstream_audit.py --check`. The Galaxy HTTP tests need `tests/requirements.txt`.
 - Check the upstream model, maps, navigation, vehicle and device controller methods used by the owned adapters. Named confirmations must keep their original engagement checks; new confirmation actions must not be auto-approved.
+- Check mapd's embedded/custom download menu, 2-degree archive groups, quarter-degree tile names and `MapsDownloadSizeCache` receipts against `starpilot/tandem/routing/road.py`. Missing native entries use the existing local routing catalog's bounds to retain tiles, including Guam; this never certifies a legacy download. Coverage unknown to both catalogs prevents destructive cleanup. The helper owns removal without editing mapd.
 - Check the optional navigation observer, publisher placement and source-message validity. The snapshot must reflect the target actually binding cruise, including a selected next turn, and expire when the producer stops.
 - Check the alert filter, audio loop/catalog hooks and owned Help steer volume/muting tests; existing alerts keep priority.
 - Check all four screen switches at `0`, each supported mixed configuration, and the normal Tandem screens. Global fonts and shared widgets must retain upstream defaults.
@@ -212,6 +233,14 @@ These are reached from a row or button, never as a tab:
 `upstream.py` hosts them. `StarPilotPage` opens one StarPilot panel directly, without going through StarPilot's own hub.
 
 ### Where the code differs from the mocks
+
+- **Map updates:** the approved `valhalla4-shared-*` states supersede older progress mocks that showed 100% during installation or left Ready as the current step. Download and install use separate measured percentages; installation stays below 100% until verified activation. Retained regions may show 100% downloaded while awaiting the shared installation. Native captures and comparison notes are recorded in the progress review.
+
+- **Shared US state selection, approved revision 3:** `valhalla3-regions-update` and `valhalla3-regions-empty` were approved before the selector behavior changed. They preserve the existing pane layout and Update action. As with revision 2, built screens keep the shared settings footer and inline page header. An empty local clear remains in the selector. Readiness beyond the measured pilot is illustrative in sample captures. Native desktop captures are compared at `tools/out/us-state-native-compare/index.html`. The owner subsequently requested matching legacy removal: the same Update flow now prunes unneeded mapd archive groups, with no screen or wording changes. The two-state connected-bundle limitation described in the historical revision 2 note below is replaced by shared packs for compatible schema 2 datasets.
+
+  Local selection rebuilds reuse the approved `valhalla2-download-install` screen: download stays at 100% while Install and the region remain active. The mock's optional one-region checking sentence is omitted; the existing Install caption covers the operation. `valhalla3-local-rebuild` captures the zero-download case alongside that same approved mock. The comparison page includes it with both approved selectors.
+
+- **Offline routing, approved revision 2:** `valhalla2-*` supersedes the separate routing manager, package-link field and bar-replacement status. Settings retain the shared navigation footer, normal scrolling rows and existing page headers. Navigation’s Offline Maps row describes the shared feature rather than claiming a particular trip is covered; the opened maps page/panes show actual geographic readiness. The Mapbox row retains its configured-key status, with optional wording in strict mode. Storage keeps the existing complete device-storage bar. The existing **Remove maps** / Storage **Delete** action removes all installed road data and routing graphs together; the mock's one-Iowa **Remove region** caption is implemented as this global action because mapd has no per-region deletion/ownership interface. It is explicitly labelled Remove maps and the confirmation covers all downloaded maps. Geographic selections and saved places remain. Per-region deletion of shared mapd tiles is not advertised. Iowa and Illinois routing data is published; other coverage in the mocks is illustrative. Adding Illinois after Iowa downloads a connected Iowa–Illinois graph; incremental shared-tile downloads are not implemented. Download estimates appear only after a measured rate exists. Short reroutes/GPS interruptions retain display-only estimates for at most 20 seconds; actionable stale guidance is cleared immediately. New navigation strings are marked for translation; PO entries explicitly identify English fallbacks pending translation. The comparison uses native raylib captures from an isolated source copy on the comma device, before panel rotation/color transforms, viewed through Chromium. Sample scenes verify device rendering; driving-workload acceptance remains separate.
 
 
 - **Hotspot Edit buttons:** use the shared `ValueButton`, including its chevron, as the other settings editors do.

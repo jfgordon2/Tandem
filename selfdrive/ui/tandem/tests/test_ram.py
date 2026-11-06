@@ -1,7 +1,7 @@
 import datetime
 import json
 
-from openpilot.selfdrive.ui.tandem.ram import RamLog, Snapshot, process_name, report_text
+from openpilot.selfdrive.ui.tandem.ram import DESCRIPTIONS, RamLog, Snapshot, process_name, report_text
 from openpilot.selfdrive.ui.tandem.onroad.status import RamWatch, Snapshot as Status, chips_for
 
 MB = 2**20
@@ -80,6 +80,12 @@ def test_process_names_as_a_device_shows_them():
   assert process_name("python", ["/usr/local/venv/bin/python", "-u", "/usr/comma/magic.py"]) == "magic"
   assert process_name("python", ["/usr/local/venv/bin/python", "-"]) == "python"                    # a script on stdin
   assert process_name("kworker", []) == "kworker"
+
+
+def test_routing_process_names_have_ram_descriptions():
+  assert process_name("starpilot.tandem.routing.routingd", ["starpilot.tandem.routing.routingd"]) == "routingd"
+  assert process_name("python", ["python", "-u", "-m", "openpilot.starpilot.tandem.routing.native_worker"]) == "native_worker"
+  assert DESCRIPTIONS["routingd"] == DESCRIPTIONS["native_worker"] == "Routing"
 
 
 def test_report_lists_each_drive_for_the_developers():
