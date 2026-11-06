@@ -1,3 +1,9 @@
+Tandem 2026.11.06
+========================
+* Live cellular connection and signal status in Cellular and APN settings
+* APN changes show connection progress without leaving the page
+* Cellular settings distinguish no signal, no SIM and Wi-Fi use, and show the cellular IP address
+
 Tandem 2026.11.05
 ========================
 * Offline navigation for saved places without a data connection

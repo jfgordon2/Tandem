@@ -31,7 +31,7 @@ msgid "Road data still supplies speed limits"
 msgstr "Road data still supplies speed limits"
 
 #: destinations.py:386
-#: settings/search.py:285
+#: settings/search.py:286
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:688
 msgid "Search"
 msgstr "ค้นหา"
@@ -403,7 +403,7 @@ msgstr "อัปเดตพร้อมแล้ว"
 
 #: home.py:147
 #: settings/search.py:24
-#: settings/search.py:216
+#: settings/search.py:217
 msgid "Software"
 msgstr "ซอฟต์แวร์"
 
@@ -1800,7 +1800,7 @@ msgstr "ลบการจับคู่ เปลี่ยนตอนรถ�
 
 #: settings/bluetooth_tab.py:418
 #: settings/bluetooth_tab.py:429
-#: settings/network_tab.py:54
+#: settings/network_tab.py:206
 msgid "Connected"
 msgstr "เชื่อมต่อ แล้ว"
 
@@ -1934,8 +1934,8 @@ msgid "Plays alerts and chimes"
 msgstr "เล่นเสียงเตือนและเสียงระฆัง"
 
 #: settings/bluetooth_tab.py:434
-#: settings/network_tab.py:77
-#: settings/network_tab.py:86
+#: settings/network_tab.py:79
+#: settings/network_tab.py:88
 msgid "Connect"
 msgstr "เชื่อมต่อ"
 
@@ -2039,12 +2039,12 @@ msgid "Recording"
 msgstr "การบันทึก"
 
 #: settings/can_recorder.py:14
-#: settings/network_tab.py:207
+#: settings/network_tab.py:289
 msgid "Saving…"
 msgstr "กำลังบันทึก..."
 
 #: settings/can_recorder.py:14
-#: settings/network_tab.py:57
+#: settings/network_tab.py:59
 msgid "Saved"
 msgstr "บันทึกแล้ว"
 
@@ -2236,19 +2236,19 @@ msgstr "การเชื่อมต่อ"
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: settings/connections.py:64
 #: settings/map_source.py:193
-#: settings/network_tab.py:199
+#: settings/network_tab.py:281
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
 #: settings/connections.py:66
-#: settings/network_tab.py:217
+#: settings/network_tab.py:299
 #: settings/search.py:31
 msgid "Cellular"
 msgstr "เซลลูล่าร์"
 
 #: settings/connections.py:69
 #: settings/search.py:31
-#: settings/search.py:214
+#: settings/search.py:215
 msgid "Car Audio & Devices"
 msgstr "เครื่องเสียงรถยนต์และอุปกรณ์"
 
@@ -2523,6 +2523,7 @@ msgstr "การตั้งค่า"
 
 #: settings/device.py:353
 #: settings/model.py:130
+#: settings/network_tab.py:202
 msgid "Not available"
 msgstr "ไม่พร้อมใช้งาน"
 
@@ -3133,7 +3134,7 @@ msgid "The street name is always shown in the onroad bar. Speed limit sources an
 msgstr "ชื่อถนนจะแสดงอยู่ในแถบบนถนนเสมอ แหล่งที่มาของการจำกัดความเร็วและลำดับอยู่ในโหมดการปรับแต่งอย่างละเอียด"
 
 #: settings/display.py:336
-#: settings/network_tab.py:87
+#: settings/network_tab.py:89
 #: setup.py:99
 msgid "Next"
 msgstr "ถัดไป"
@@ -4074,157 +4075,272 @@ msgstr "โมเดล AI ใหม่ใช้กับไดรฟ์ถั�
 msgid "No models here yet."
 msgstr "ยังไม่มีโมเดล AI ที่นี่"
 
-#: settings/network_tab.py:56
+#: settings/network_tab.py:206
+#: settings/network_tab.py:58
 msgid "Connecting…"
 msgstr "กำลังเชื่อมต่อ..."
 
-#: settings/network_tab.py:76
+#: settings/network_tab.py:206
+#: settings/network_tab.py:203
+#: settings/network_tab.py:160
+msgid "Not connected"
+msgstr "ไม่ได้เชื่อมต่อ"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:207
+msgid "No SIM"
+msgstr "No SIM"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:207
+msgid "No signal"
+msgstr "No signal"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:207
+msgid "Wi-Fi in use"
+msgstr "Wi-Fi in use"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:207
+#: settings/network_tab.py:200
+msgid "Checking…"
+msgstr "Checking…"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:210
+msgid "Cellular data is connected."
+msgstr "Cellular data is connected."
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:211
+msgid "APN saved. Waiting for a cellular data connection."
+msgstr "APN saved. Waiting for a cellular data connection."
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:212
+msgid "Cellular data is not connected. Check your APN, signal and carrier account."
+msgstr "Cellular data is not connected. Check your APN, signal and carrier account."
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:213
+msgid "No SIM detected. Insert a SIM to use cellular data."
+msgstr "No SIM detected. Insert a SIM to use cellular data."
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:214
+msgid "SIM detected. No cellular service. Your APN is saved."
+msgstr "SIM detected. No cellular service. Your APN is saved."
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:215
+msgid "Wi-Fi is connected. Cellular data is not confirmed yet."
+msgstr "Wi-Fi is connected. Cellular data is not confirmed yet."
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:216
+msgid "Waiting for current modem status."
+msgstr "Waiting for current modem status."
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:218
+msgid "Poor signal"
+msgstr "Poor signal"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:218
+msgid "Moderate signal"
+msgstr "Moderate signal"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:218
+msgid "Good signal"
+msgstr "Good signal"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:218
+msgid "Great signal"
+msgstr "Great signal"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:188
+msgid "SIM detected"
+msgstr "SIM detected"
+
+#: settings/network_tab.py:78
 #, python-brace-format
 msgid "for \"{}\""
 msgstr "สำหรับ \"{}\""
 
-#: settings/network_tab.py:87
+#: settings/network_tab.py:89
 msgid "Network name"
 msgstr "ชื่อเครือข่าย"
 
-#: settings/network_tab.py:100
+#: settings/network_tab.py:102
 #, python-brace-format
 msgid "{} · Couldn't save"
 msgstr "{} · ไม่สามารถบันทึกได้"
 
-#: settings/network_tab.py:119
+#: settings/network_tab.py:121
 msgid "Connected devices will need to reconnect."
 msgstr "อุปกรณ์ที่เชื่อมต่อจะต้องเชื่อมต่อใหม่"
 
-#: settings/network_tab.py:122
+#: settings/network_tab.py:124
 msgid "Hotspot password"
 msgstr "รหัสผ่านฮอตสปอต"
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
-#: settings/network_tab.py:150
-#: settings/network_tab.py:223
+#: settings/network_tab.py:154
+#: settings/network_tab.py:305
 msgid "APN"
 msgstr "APN"
 
-#: settings/network_tab.py:150
+#: settings/network_tab.py:154
 msgid "Leave empty for automatic"
 msgstr "เว้นว่างไว้เพื่อใช้ระบบอัตโนมัติ"
 
-#: settings/network_tab.py:156
-#: settings/network_tab.py:224
-#: sidebar.py:149
-msgid "Not connected"
-msgstr "ไม่ได้เชื่อมต่อ"
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:175
+msgid "Reading cellular status"
+msgstr "Reading cellular status"
 
-#: settings/network_tab.py:209
-#: settings/network_tab.py:207
-#: settings/network_tab.py:223
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:177
+msgid "Cellular data unavailable"
+msgstr "Cellular data unavailable"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:179
+msgid "SIM detected · No cellular service"
+msgstr "SIM detected · No cellular service"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:187
+#, python-brace-format
+msgid "SIM detected · {}"
+msgstr "SIM detected · {}"
+
+#: settings/network_tab.py:291
+#: settings/network_tab.py:289
+#: settings/network_tab.py:305
 msgid "Edit"
 msgstr "แก้ไข"
 
-#: settings/network_tab.py:225
-#: settings/network_tab.py:217
+#: settings/network_tab.py:308
+#: settings/network_tab.py:299
 #: settings/search.py:212
 msgid "Roaming, APN and IP address"
 msgstr "ที่อยู่ โรมมิ่ง, APN และ IP"
 
-#: settings/network_tab.py:76
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:308
+msgid "Status updates automatically while this page is open."
+msgstr "Status updates automatically while this page is open."
+
+#: settings/network_tab.py:78
 msgid "Wrong password"
 msgstr "รหัสผ่านผิด"
 
-#: settings/network_tab.py:76
-#: settings/network_tab.py:85
+#: settings/network_tab.py:78
+#: settings/network_tab.py:87
 msgid "Enter password"
 msgstr "ใส่รหัสผ่าน"
 
-#: settings/network_tab.py:106
-#: settings/network_tab.py:213
+#: settings/network_tab.py:108
+#: settings/network_tab.py:295
 #: settings/search.py:209
 msgid "Hotspot name"
 msgstr "ชื่อฮอตสปอต"
 
-#: settings/network_tab.py:113
+#: settings/network_tab.py:115
 msgid "A saved network already uses this name"
 msgstr "เครือข่ายที่บันทึกไว้ใช้ชื่อนี้แล้ว"
 
-#: settings/network_tab.py:212
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:184
+#, python-brace-format
+msgid "{} · {}"
+msgstr "{} · {}"
+
+#: settings/network_tab.py:294
 #: settings/search.py:208
 msgid "Hotspot"
 msgstr "ฮอตสปอต"
 
-#: settings/network_tab.py:212
+#: settings/network_tab.py:294
 #: settings/search.py:208
 msgid "Share this device's connection"
 msgstr "แชร์การเชื่อมต่อของอุปกรณ์นี้"
 
-#: settings/network_tab.py:215
+#: settings/network_tab.py:297
 #: settings/search.py:210
 msgid "Hotspot Password"
 msgstr "รหัสผ่านฮอตสปอต"
 
-#: settings/network_tab.py:215
+#: settings/network_tab.py:297
 #: settings/search.py:210
 msgid "For phones joining this device's hotspot"
 msgstr "สำหรับโทรศัพท์ที่เข้าร่วมฮอตสปอตของอุปกรณ์นี้"
 
-#: settings/network_tab.py:216
+#: settings/network_tab.py:298
 #: settings/search.py:211
 msgid "Save Data"
 msgstr "บันทึกข้อมูล"
 
-#: settings/network_tab.py:216
+#: settings/network_tab.py:298
 #: settings/search.py:211
 msgid "No large uploads on cellular or phone hotspots"
 msgstr "ไม่มีการอัปโหลดขนาดใหญ่บนฮอตสปอตมือถือหรือโทรศัพท์"
 
-#: settings/network_tab.py:222
+#: settings/network_tab.py:304
 msgid "Roaming"
 msgstr "โรมมิ่ง"
 
-#: settings/network_tab.py:222
+#: settings/network_tab.py:304
 msgid "Use cellular data outside your carrier's network"
 msgstr "ใช้ข้อมูลเซลลูลาร์นอกเครือข่ายของผู้ให้บริการของคุณ"
 
-#: settings/network_tab.py:224
-#: settings/search.py:205
-msgid "IP Address"
-msgstr "หมายเลขไอพี"
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:307
+#: settings/search.py:213
+msgid "Cellular IP address"
+msgstr "Cellular IP address"
 
-#: settings/network_tab.py:85
+#: settings/network_tab.py:87
 #, python-brace-format
 msgid "for \"{}\", or leave empty for an open network"
 msgstr "สำหรับ \"{}\" หรือเว้นว่างไว้สำหรับเครือข่ายแบบเปิด"
 
-#: settings/network_tab.py:198
+#: settings/network_tab.py:280
 msgid "Scanning for networks…"
 msgstr "กำลังสแกนหาเครือข่าย..."
 
-#: settings/network_tab.py:199
+#: settings/network_tab.py:281
 #: settings/search.py:206
 msgid "Join a hidden network"
 msgstr "เข้าร่วมเครือข่ายที่ซ่อนอยู่"
 
-#: settings/network_tab.py:110
+#: settings/network_tab.py:112
 msgid "Enter a hotspot name"
 msgstr "ป้อนชื่อฮอตสปอต"
 
-#: settings/network_tab.py:110
+#: settings/network_tab.py:112
 msgid "Name is too long. Use a shorter name."
 msgstr "ชื่อยาวเกินไป ใช้ชื่อที่สั้นกว่านี้"
 
-#: settings/network_tab.py:111
+#: settings/network_tab.py:113
 msgid "Use letters, numbers, spaces or punctuation"
 msgstr "ใช้ตัวอักษร ตัวเลข ช่องว่าง หรือเครื่องหมายวรรคตอน"
 
-#: settings/network_tab.py:190
+#: settings/network_tab.py:272
 msgid "Secured"
 msgstr "ปลอดภัยแล้ว"
 
-#: settings/network_tab.py:190
+#: settings/network_tab.py:272
 msgid "Open"
 msgstr "เปิด"
 
-#: settings/network_tab.py:223
+#: settings/network_tab.py:305
 msgid "Automatic"
 msgstr "อัตโนมัติ"
 
@@ -4914,6 +5030,10 @@ msgid "Networks nearby, and joining one"
 msgstr "เครือข่ายใกล้เคียงและเข้าร่วมเครือข่ายหนึ่ง"
 
 #: settings/search.py:205
+msgid "IP Address"
+msgstr "หมายเลขไอพี"
+
+#: settings/search.py:205
 msgid "This device's local address, beside the connected network"
 msgstr "ที่อยู่ภายในของอุปกรณ์นี้ ข้างเครือข่ายที่เชื่อมต่อ"
 
@@ -4921,86 +5041,93 @@ msgstr "ที่อยู่ภายในของอุปกรณ์นี
 msgid "Enter its name and password"
 msgstr "ป้อนชื่อและรหัสผ่าน"
 
+#. English fallback pending cellular-status translation.
 #: settings/search.py:207
-msgid "Hotspot, data use, roaming and APN"
-msgstr "Hotspot การใช้ข้อมูล การโรมมิ่ง และ APN"
+msgid "Connection status, hotspot, data use, roaming and APN"
+msgstr "Connection status, hotspot, data use, roaming and APN"
 
 #: settings/search.py:209
 msgid "The name phones see when joining this device"
 msgstr "โทรศัพท์ชื่อจะเห็นเมื่อเข้าร่วมอุปกรณ์นี้"
 
+#. English fallback pending cellular-status translation.
 #: settings/search.py:212
-msgid "Roaming, APN and the device's IP address"
-msgstr "การโรมมิ่ง , APN และที่อยู่ IP ของอุปกรณ์"
+msgid "Roaming, APN and the cellular IP address"
+msgstr "Roaming, APN and the cellular IP address"
 
+#. English fallback pending cellular-status translation.
 #: settings/search.py:213
+msgid "The modem's mobile data address"
+msgstr "The modem's mobile data address"
+
+#: settings/search.py:214
 msgid "A wheel remote's buttons and what they do"
 msgstr "ปุ่มบนรีโมตล้อและการทำงานของปุ่มต่างๆ"
 
-#: settings/search.py:214
+#: settings/search.py:215
 msgid "Car audio for alerts, and pairing devices"
 msgstr "เครื่องเสียงรถยนต์สำหรับการแจ้งเตือนและการจับคู่อุปกรณ์"
 
-#: settings/search.py:216
+#: settings/search.py:217
 msgid "Updates and the release notes"
 msgstr "การอัปเดต และบันทึกประจำรุ่น"
 
-#: settings/search.py:217
+#: settings/search.py:218
 #: settings/software_tab.py:192
 msgid "Automatic Updates"
 msgstr "อัพเดตอัตโนมัติ"
 
-#: settings/search.py:217
+#: settings/search.py:218
 #: settings/software_tab.py:192
 msgid "Download while parked, install when you turn off the car"
 msgstr "ดาวน์โหลดขณะจอด ติดตั้งเมื่อดับเครื่อง"
 
-#: settings/search.py:218
+#: settings/search.py:219
 #: settings/software_tab.py:188
 #: settings/software_tab.py:140
 msgid "Release Channel"
 msgstr "ช่องทางการวางจำหน่าย"
 
-#: settings/search.py:218
+#: settings/search.py:219
 #: settings/software_tab.py:140
 msgid "The branch to download updates from"
 msgstr "สาขาสำหรับดาวน์โหลดอัพเดต"
 
-#: settings/search.py:219
+#: settings/search.py:220
 #: settings/software_tab.py:195
 msgid "Reset Settings"
 msgstr "รีเซ็ตการตั้งค่า"
 
-#: settings/search.py:219
+#: settings/search.py:220
 msgid "Back to the Essentials defaults"
 msgstr "กลับสู่ค่าเริ่มต้นของ Essentials"
 
-#: settings/search.py:220
+#: settings/search.py:221
 #: settings/software_tab.py:169
 #: settings/software_tab.py:198
 msgid "Uninstall"
 msgstr "ถอนการติดตั้ง"
 
-#: settings/search.py:220
+#: settings/search.py:221
 msgid "Remove this software from the device"
 msgstr "ลบซอฟต์แวร์นี้ออกจากอุปกรณ์"
 
-#: settings/search.py:397
-#: settings/search.py:388
+#: settings/search.py:398
+#: settings/search.py:389
 msgid "Search settings"
 msgstr "การตั้งค่าการค้นหา"
 
-#: settings/search.py:286
+#: settings/search.py:287
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "พูดการตั้งค่า เช่น การจำกัดความเร็ว แตะไมโครโฟนเมื่อคุณทำเสร็จแล้ว"
 
-#: settings/search.py:368
-#: settings/search.py:327
+#: settings/search.py:369
+#: settings/search.py:328
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "ไม่มีการตั้งค่าที่ตรงกับ “{}”"
 
-#: settings/search.py:369
+#: settings/search.py:370
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "พิมพ์ชื่อการตั้งค่าหรือสิ่งที่ทำ เช่น ความสว่างหรือการเปลี่ยนเลน"
 

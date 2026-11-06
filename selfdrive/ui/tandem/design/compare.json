@@ -271,8 +271,9 @@
     {
       "mock": "connectionscellular",
       "title": "Connections › Cellular",
-      "note": "Matches: Hotspot, its current name and Edit button, its password, Save Data, and Roaming, APN and IP address behind one row. Both Edit buttons use the shared value pill, including its chevron. Page ground uses true black (#000000).",
-      "match": true
+      "note": "Superseded by the approved Cellular status variants. Original mock is unchanged; the built page adds live connection feedback.",
+      "match": false,
+      "built": "cellular-status-connected"
     },
     {
       "mock": "connectionsremote",
@@ -544,7 +545,10 @@
       "title": "Install keeps the existing step",
       "note": "Superseded by the approved valhalla4 shared-progress states: per-region transfer counters, measured installation and a completed Ready check. Matches the approved progress layout. Keep Install as step three. Download at 100% is not Ready: the region remains current until its maps are checked and installed. The second capture applies the same approved screen to a local selection rebuild with zero new download bytes. The built screen retains the shared settings footer/page header. Time remaining appears only after a measured download rate exists.",
       "match": false,
-      "built": ["valhalla2-download-install", "valhalla3-local-rebuild"]
+      "built": [
+        "valhalla2-download-install",
+        "valhalla3-local-rebuild"
+      ]
     },
     {
       "mock": "valhalla2-download-failed",
@@ -698,6 +702,60 @@
       "mock": "valhalla5-paired-ready",
       "title": "Paired downloads · All maps ready",
       "note": "Approved November 4. All maps ready uses the approved plain wording. All four steps and every region receive green checks after verified activation. The existing shared Install and Checking states remain unchanged. Native device capture inspected beside the approved Chromium mock; layout, counters and wording match. The shared settings header/footer are retained.",
+      "match": true
+    },
+    {
+      "mock": "cellular-status-connected",
+      "title": "Cellular · Connected",
+      "note": "Approved live Cellular/APN feedback. Matches the status, existing controls, explanatory line and mobile address. Uses shared Essentials colors and native row/header metrics; no changes to the approved mock. Sample modem data only, not a hardware connectivity test.",
+      "match": true
+    },
+    {
+      "mock": "cellular-status-no-signal",
+      "title": "Cellular · No signal",
+      "note": "Approved live Cellular/APN feedback. Matches the status, existing controls, explanatory line and mobile address. Uses shared Essentials colors and native row/header metrics; no changes to the approved mock. Sample modem data only, not a hardware connectivity test.",
+      "match": true
+    },
+    {
+      "mock": "cellular-apn-connected",
+      "title": "Roaming, APN and IP address · Connected",
+      "note": "Approved live Cellular/APN feedback. Matches the status, existing controls, explanatory line and mobile address. Uses shared Essentials colors and native row/header metrics; no changes to the approved mock. Sample modem data only, not a hardware connectivity test.",
+      "match": true
+    },
+    {
+      "mock": "cellular-apn-connecting",
+      "title": "Roaming, APN and IP address · Connecting…",
+      "note": "Approved live Cellular/APN feedback. Matches the status, existing controls, explanatory line and mobile address. Uses shared Essentials colors and native row/header metrics; no changes to the approved mock. Sample modem data only, not a hardware connectivity test.",
+      "match": true
+    },
+    {
+      "mock": "cellular-apn-no-signal",
+      "title": "Roaming, APN and IP address · No signal",
+      "note": "Approved live Cellular/APN feedback. Matches the status, existing controls, explanatory line and mobile address. Uses shared Essentials colors and native row/header metrics; no changes to the approved mock. Sample modem data only, not a hardware connectivity test.",
+      "match": true
+    },
+    {
+      "mock": "cellular-apn-not-connected",
+      "title": "Roaming, APN and IP address · Not connected",
+      "note": "Approved live Cellular/APN feedback. Matches the status, existing controls, explanatory line and mobile address. Uses shared Essentials colors and native row/header metrics; no changes to the approved mock. Sample modem data only, not a hardware connectivity test.",
+      "match": true
+    },
+    {
+      "mock": "cellular-apn-no-sim",
+      "title": "Roaming, APN and IP address · No SIM",
+      "note": "Approved live Cellular/APN feedback. Matches the status, existing controls, explanatory line and mobile address. Uses shared Essentials colors and native row/header metrics; no changes to the approved mock. Sample modem data only, not a hardware connectivity test.",
+      "match": true
+    },
+    {
+      "mock": "cellular-apn-wifi",
+      "title": "Roaming, APN and IP address · Wi-Fi in use",
+      "note": "Approved live Cellular/APN feedback. Matches the status, existing controls, explanatory line and mobile address. Uses shared Essentials colors and native row/header metrics; no changes to the approved mock. Sample modem data only, not a hardware connectivity test.",
+      "match": true
+    },
+    {
+      "mock": "cellular-apn-checking",
+      "title": "Roaming, APN and IP address · Checking…",
+      "note": "Approved live Cellular/APN feedback. Matches the status, existing controls, explanatory line and mobile address. Uses shared Essentials colors and native row/header metrics; no changes to the approved mock. Sample modem data only, not a hardware connectivity test.",
       "match": true
     }
   ]
