@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Onroad larger text, developer view</title>
+</head>
+<body>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7DBBF9}a:hover{color:#A9D3FB}
+</style>
+<style id="street-scroll">
+/* A street name that doesn't fit scrolls: it rests at its start, slides left until its end shows, rests, then fades
+   back to the start. One that fits stays still. With reduced motion it keeps the ellipsis. */
+.street { display: block; flex: 0 1 auto; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.street > span { display: inline-block; }
+.street.scrolls { text-overflow: clip; -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); }
+.street.scrolls > span { padding-right: 28px; animation: street-scroll var(--dur, 10s) ease-in-out infinite; }
+@keyframes street-scroll { 0%, 22% { transform: translateX(0); opacity: 1 } 74%, 94% { transform: translateX(var(--shift)); opacity: 1 } 100% { transform: translateX(var(--shift)); opacity: 0 } }
+@media (prefers-reduced-motion: reduce) { .street.scrolls { text-overflow: ellipsis; -webkit-mask-image: none; mask-image: none; } .street.scrolls > span { animation: none; padding-right: 0; } }
+</style>
+
+<div style="width: 1125px; height: 563px; box-sizing: border-box; background: #000000; padding: 10px; font-family: Figtree, system-ui, sans-serif; color: #F2F5F9; display: flex; gap: 10px;">
+  <div style="flex-grow: 1; min-width: 0; box-sizing: border-box; border: 6px solid #1F9A55; border-radius: 18px; overflow: hidden; position: relative; background: #0F1A24;">
+    <svg width="827" height="531" viewBox="0 0 827 531" style="position: absolute; left: 0; top: 0;" aria-hidden="true">
+      <rect x="0" y="0" width="827" height="230" fill="#0F1A24"></rect>
+      <rect x="0" y="230" width="827" height="301" fill="#132231"></rect>
+      <path d="M392 226 L19 531" stroke="#5C6B7A" stroke-width="5" stroke-linecap="round"></path>
+      <path d="M440 226 L811 531" stroke="#5C6B7A" stroke-width="5" stroke-linecap="round"></path>
+      <path d="M392 226 L40 400" stroke="#33404D" stroke-width="3" stroke-dasharray="10 10"></path>
+      <path d="M440 226 L800 400" stroke="#33404D" stroke-width="3" stroke-dasharray="10 10"></path>
+      <path d="M404 230 L428 230 L567 531 L281 531 Z" fill="#3A73B3" fill-opacity="0.5"></path>
+      <path d="M250 388 Q413 360 576 388" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="9" fill="none" stroke-linecap="round"></path>
+      <path d="M250 388 Q413 360 576 388" pathLength="100" stroke="#FFFFFF" stroke-opacity="0.9" stroke-width="9" fill="none" stroke-linecap="round" stroke-dasharray="14 200" stroke-dashoffset="-50"></path>
+      <circle cx="380" cy="262" r="4" fill="#E9B44C"></circle>
+      <circle cx="452" cy="258" r="4" fill="#E9B44C"></circle>
+      <circle cx="418" cy="270" r="5" fill="#E9B44C"></circle>
+      <circle cx="560" cy="300" r="4" fill="#E9B44C" fill-opacity="0.6"></circle>
+      <circle cx="250" cy="320" r="4" fill="#E9B44C" fill-opacity="0.6"></circle>
+      <rect x="388" y="248" width="58" height="34" rx="6" fill="none" stroke="#F2F5F9" stroke-width="2.5"></rect>
+      <path d="M417 290 L405 304 L429 304 Z" fill="#E9B44C"></path>
+    </svg>
+    <div style="position: absolute; left: 50%; top: 164px; transform: translateX(-50%); background: #0B0D10F0; border: 1px solid #343B45; border-radius: 16px; padding: 8px 16px; display: flex; gap: 18px; font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; white-space: nowrap;">
+      <span>38 m</span><span style="color: #9FAABA;">1.4 s</span><span style="color: #F0B35A;">−2 mph</span>
+    </div>
+    <div style="position: absolute; left: 18px; top: 18px; width: 86px; height: 104px; box-sizing: border-box; border-radius: 10px; background: #FFFFFF; border: 4px solid #0B0D10; outline: 3px solid #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #0B0D10; line-height: 1;">
+      <span style="font-size: 12px; font-weight: 800;">SPEED</span>
+      <span style="font-size: 12px; font-weight: 800;">LIMIT</span>
+      <span style="font-size: 36px; font-weight: 800; margin-top: 3px;">60</span>
+      <span style="font-size: 12px; font-weight: 700; margin-top: 3px; color: #3A4552;">MAP · +3</span>
+    </div>
+    <div style="position: absolute; left: 50%; top: 18px; transform: translateX(-50%); background: #0B0D10E6; border-radius: 26px; padding: 10px 42px; display: flex; flex-direction: column; align-items: center; line-height: 1;">
+      <span style="font-size: 68px; font-weight: 800;">62</span>
+      <span style="font-size: 20px; color: #C9D0DA;">mph</span>
+    </div>
+    <div style="position: absolute; left: 0; right: 0; bottom: 109px; height: 52px; background: #0B0D1099; display: flex; align-items: center; justify-content: space-around; font-family: 'JetBrains Mono', monospace; font-size: 23px; color: #C9D0DA;">
+      <span>accel <b style="color: #F2F5F9;">+0.42</b></span><span>want <b style="color: #F2F5F9;">+0.38</b></span><span>jerk <b style="color: #F2F5F9;">0.6</b></span><span>lat <b style="color: #F2F5F9;">0.9 m/s²</b></span><span>delay <b style="color: #F2F5F9;">0.18 s</b></span>
+    </div>
+    <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 109px; display: flex; align-items: center; gap: 13px; padding: 0 13px;">
+      <button type="button" aria-label="Menu" style="width: 86px; height: 86px; border-radius: 21px; border: 0; background: #1F2328CC; display: flex; align-items: center; justify-content: center;"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#F2F5F9" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 7h14M5 12h14M5 17h14"></path></svg></button>
+      <div style="height: 86px; border-radius: 21px; background: #1F2328CC; display: flex; align-items: center; gap: 3px; padding: 0 5px;">
+        <button type="button" aria-label="Lower max speed" style="font-family: inherit; width: 60px; height: 73px; border: 0; background: transparent; color: #F2F5F9; font-size: 34px;">−</button>
+        <div style="width: 78px; display: flex; flex-direction: column; align-items: center; line-height: 1;">
+          <span style="font-size: 16px; font-weight: 700; letter-spacing: 2px; color: #7DBBF9;">MAX</span>
+          <span style="font-size: 35px; font-weight: 800; margin-top: 4px;">63</span>
+        </div>
+        <button type="button" aria-label="Raise max speed" style="font-family: inherit; width: 60px; height: 73px; border: 0; background: transparent; color: #F2F5F9; font-size: 34px;">+</button>
+      </div>
+      <div style="flex-grow: 1; min-width: 0; height: 86px; border-radius: 21px; background: #1F2328CC; display: flex; align-items: center; justify-content: center; gap: 16px; padding: 0 26px;">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20L10 4M20 20L14 4M12 6v2M12 11v2M12 16v2"></path></svg>
+        <span class="street" style="font-size: 36px; font-weight: 700;"><span>[Current street name]</span></span>
+      </div>
+      <button type="button" aria-label="Disengage" style="width: 86px; height: 86px; border-radius: 21px; border: 0; background: #1F9A55; display: flex; align-items: center; justify-content: center;"><svg width="39" height="39" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="2.5"></circle><path d="M3.5 10.5h6M14.5 10.5h6M12 14.5V21"></path></svg></button>
+    </div>
+  </div>
+  <aside aria-label="Developer sidebar" style="width: 256px; flex-shrink: 0; box-sizing: border-box; background: #13161A; border-radius: 18px; padding: 14px; display: flex; flex-direction: column; gap: 8px; font-family: 'JetBrains Mono', monospace;">
+    <span style="font-family: Figtree, sans-serif; font-size: 17px; font-weight: 700; letter-spacing: 1.6px; color: #7DBBF9;">LEAD</span>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px;">
+      <div style="background: #1E2227; border-radius: 10px; padding: 8px 10px; display: flex; flex-direction: column; gap: 3px;"><span style="font-size: 14px; color: #9FAABA;">distance</span><span style="font-size: 23px; font-weight: 700;">38 m</span></div>
+      <div style="background: #1E2227; border-radius: 10px; padding: 8px 10px; display: flex; flex-direction: column; gap: 3px;"><span style="font-size: 14px; color: #9FAABA;">gap</span><span style="font-size: 23px; font-weight: 700;">1.4 s</span></div>
+      <div style="background: #1E2227; border-radius: 10px; padding: 8px 10px; display: flex; flex-direction: column; gap: 3px;"><span style="font-size: 14px; color: #9FAABA;">rel speed</span><span style="font-size: 23px; font-weight: 700; color: #F0B35A;">−2 mph</span></div>
+      <div style="background: #1E2227; border-radius: 10px; padding: 8px 10px; display: flex; flex-direction: column; gap: 3px;"><span style="font-size: 14px; color: #9FAABA;">source</span><span style="font-size: 23px; font-weight: 700;">radar</span></div>
+    </div>
+    <span style="font-family: Figtree, sans-serif; font-size: 17px; font-weight: 700; letter-spacing: 1.6px; color: #7DBBF9; margin-top: 6px;">DEVICE</span>
+    <div style="display: flex; flex-direction: column; gap: 7px; font-size: 18px;">
+      <div style="display: flex; justify-content: space-between;"><span style="color: #9FAABA;">CPU</span><span>38% · 61°C</span></div>
+      <div style="height: 5px; border-radius: 3px; background: #2A2F36;"><div style="width: 38%; height: 5px; border-radius: 3px; background: #7DBBF9;"></div></div>
+      <div style="display: flex; justify-content: space-between;"><span style="color: #9FAABA;">GPU</span><span>22%</span></div>
+      <div style="height: 5px; border-radius: 3px; background: #2A2F36;"><div style="width: 22%; height: 5px; border-radius: 3px; background: #7DBBF9;"></div></div>
+      <div style="display: flex; justify-content: space-between;"><span style="color: #9FAABA;">RAM</span><span>3.1 GB</span></div>
+      <div style="height: 5px; border-radius: 3px; background: #2A2F36;"><div style="width: 52%; height: 5px; border-radius: 3px; background: #7DBBF9;"></div></div>
+      <div style="display: flex; justify-content: space-between;"><span style="color: #9FAABA;">FPS</span><span>20</span></div>
+    </div>
+    <span style="font-family: Figtree, sans-serif; font-size: 17px; font-weight: 700; letter-spacing: 1.6px; color: #7DBBF9; margin-top: 6px;">CONTROLS</span>
+    <div style="display: flex; flex-direction: column; gap: 7px; font-size: 18px;">
+      <div style="display: flex; justify-content: space-between;"><span style="color: #9FAABA;">curve spd</span><span>idle</span></div>
+      <div style="display: flex; justify-content: space-between;"><span style="color: #9FAABA;">limit src</span><span>map</span></div>
+      <div style="display: flex; justify-content: space-between;"><span style="color: #9FAABA;">lanes L/R</span><span>3.6 / 3.5 m</span></div>
+    </div>
+  </aside>
+</div>
+
+<script>
+// Mock only: measure each street name, and scroll the ones that don't fit at about 40 px a second.
+document.querySelectorAll('.street').forEach((el) => {
+  const shift = el.firstElementChild.scrollWidth - el.clientWidth;
+  if (shift > 1) {
+    el.classList.add('scrolls');
+    el.style.setProperty('--shift', `${-(shift + 28)}px`);
+    el.style.setProperty('--dur', `${(5 + (shift + 28) / 40) / 0.52}s`);
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Onroad larger text, menu</title>
+</head>
+<body>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7DBBF9}a:hover{color:#A9D3FB}
+</style>
+<style id="street-scroll">
+/* A street name that doesn't fit scrolls: it rests at its start, slides left until its end shows, rests, then fades
+   back to the start. One that fits stays still. With reduced motion it keeps the ellipsis. */
+.street { display: block; flex: 0 1 auto; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.street > span { display: inline-block; }
+.street.scrolls { text-overflow: clip; -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); }
+.street.scrolls > span { padding-right: 28px; animation: street-scroll var(--dur, 10s) ease-in-out infinite; }
+@keyframes street-scroll { 0%, 22% { transform: translateX(0); opacity: 1 } 74%, 94% { transform: translateX(var(--shift)); opacity: 1 } 100% { transform: translateX(var(--shift)); opacity: 0 } }
+@media (prefers-reduced-motion: reduce) { .street.scrolls { text-overflow: ellipsis; -webkit-mask-image: none; mask-image: none; } .street.scrolls > span { animation: none; padding-right: 0; } }
+</style>
+<style id="street-scroll">
+/* A street name that doesn't fit scrolls: it rests at its start, slides left until its end shows, rests, then fades
+   back to the start. One that fits stays still. With reduced motion it keeps the ellipsis. */
+.street { display: block; flex: 0 1 auto; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.street > span { display: inline-block; }
+.street.scrolls { text-overflow: clip; -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); }
+.street.scrolls > span { padding-right: 28px; animation: street-scroll var(--dur, 10s) ease-in-out infinite; }
+@keyframes street-scroll { 0%, 22% { transform: translateX(0); opacity: 1 } 74%, 94% { transform: translateX(var(--shift)); opacity: 1 } 100% { transform: translateX(var(--shift)); opacity: 0 } }
+@media (prefers-reduced-motion: reduce) { .street.scrolls { text-overflow: ellipsis; -webkit-mask-image: none; mask-image: none; } .street.scrolls > span { animation: none; padding-right: 0; } }
+</style>
+
+<div style="width: 1125px; height: 563px; box-sizing: border-box; background: #000000; padding: 10px; display: flex; gap: 16px; font-family: Figtree, system-ui, sans-serif; color: #F2F5F9;">
+  <nav aria-label="Menu" style="width: 270px; flex-shrink: 0; display: flex; flex-direction: column; gap: 10px; padding: 8px 0 8px 8px;">
+    <a href="hub.html" aria-label="Settings" style="height: 96px; flex-shrink: 0; border-radius: 18px; background: #1F2328; display: flex; align-items: center; gap: 14px; padding: 0 20px; text-decoration: none; color: #F2F5F9; font-size: 25px; font-weight: 700;">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#F2F5F9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"></path></svg>
+      Settings
+    </a>
+    <div style="flex-grow: 1; background: #13161A; border-radius: 18px; padding: 16px 14px; display: flex; flex-direction: column; gap: 18px;">
+        <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 16px; height: 16px; border-radius: 8px; background: #3FD08A; display: block; flex-shrink: 0;"></span><span style="font-size: 21px; flex-grow: 1; white-space: nowrap;">Network</span><span style="font-size: 19px; color: #AEB6C2; white-space: nowrap;">Wi-Fi</span></div>
+        <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 16px; height: 16px; border-radius: 8px; background: #3FD08A; display: block; flex-shrink: 0;"></span><span style="font-size: 21px; flex-grow: 1; white-space: nowrap;">comma connect</span><span style="font-size: 19px; color: #AEB6C2; white-space: nowrap;">Online</span></div>
+        <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 16px; height: 16px; border-radius: 8px; background: #3FD08A; display: block; flex-shrink: 0;"></span><span style="font-size: 21px; flex-grow: 1; white-space: nowrap;">Temperature</span><span style="font-size: 19px; color: #AEB6C2; white-space: nowrap;">Good</span></div>
+        <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 16px; height: 16px; border-radius: 8px; background: #3FD08A; display: block; flex-shrink: 0;"></span><span style="font-size: 21px; flex-grow: 1; white-space: nowrap;">Vehicle</span><span style="font-size: 19px; color: #AEB6C2; white-space: nowrap;">Connected</span></div>
+        <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 16px; height: 16px; border-radius: 8px; background: #3FD08A; display: block; flex-shrink: 0;"></span><span style="font-size: 21px; flex-grow: 1; white-space: nowrap;">Maps</span><span style="font-size: 19px; color: #AEB6C2; white-space: nowrap;">Up to date</span></div>
+      <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px;">
+        <div style="height: 57px; border-radius: 12px; background: #3A2026; color: #F2A7B1; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 20px; font-weight: 700;"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#F2A7B1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg>Recording audio</div>
+        <button type="button" style="font-family: inherit; height: 78px; border: 0; border-radius: 14px; background: #23272E; color: #F2F5F9; font-size: 22px; font-weight: 700;">Save a clip</button>
+      </div>
+    </div>
+  </nav>
+  <div style="flex-grow: 1; min-width: 0; box-sizing: border-box; border: 6px solid #1F9A55; border-radius: 18px; overflow: hidden; position: relative; background: #0F1A24;">
+    <svg width="807" height="531" viewBox="0 0 1093 531" preserveAspectRatio="none" style="position: absolute; left: 0; top: 0;" aria-hidden="true">
+      <rect x="0" y="0" width="1093" height="230" fill="#0F1A24"></rect>
+      <rect x="0" y="230" width="1093" height="301" fill="#132231"></rect>
+      <path d="M520 226 L116 531" stroke="#5C6B7A" stroke-width="5" stroke-linecap="round"></path>
+      <path d="M576 226 L984 531" stroke="#5C6B7A" stroke-width="5" stroke-linecap="round"></path>
+      <path d="M534 228 L560 228 L729 531 L377 531 Z" fill="#3A73B3" fill-opacity="0.55"></path>
+      <path d="M330 424 Q546 392 762 424" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="10" fill="none" stroke-linecap="round"></path>
+    </svg>
+    <div style="position: absolute; left: 18px; top: 18px; width: 107px; height: 127px; border-radius: 18px; background: #0B0D10; display: flex; align-items: center; justify-content: center;">
+      <div style="width: 81px; height: 101px; box-sizing: border-box; border-radius: 10px; background: #FFFFFF; border: 3px solid #0B0D10; outline: 2px solid #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #0B0D10; line-height: 1;">
+        <span style="font-size: 13px; font-weight: 800;">SPEED</span><span style="font-size: 13px; font-weight: 800;">LIMIT</span><span style="font-size: 42px; font-weight: 800; margin-top: 2px;">60</span>
+      </div>
+    </div>
+    <div aria-label="Driver monitoring: attentive" style="position: absolute; right: 18px; top: 18px; width: 83px; height: 83px; border-radius: 18px; background: #0B0D10; display: flex; align-items: center; justify-content: center;">
+      <div style="width: 65px; height: 65px; box-sizing: border-box; border-radius: 50%; border: 4px solid #3FD08A; display: flex; align-items: center; justify-content: center;"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#F2F5F9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.8"></circle><path d="M5 20.5a7 7 0 0 1 14 0"></path></svg></div>
+    </div>
+    <div style="position: absolute; left: 50%; top: 18px; transform: translateX(-50%); background: #0B0D10E6; border-radius: 26px; padding: 10px 42px; display: flex; flex-direction: column; align-items: center; line-height: 1;">
+      <span style="font-size: 81px; font-weight: 800;">62</span><span style="font-size: 22px; color: #C9D0DA;">mph</span>
+    </div>
+    <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 112px; display: flex; align-items: center; gap: 10px; padding: 0 10px;">
+      <button type="button" aria-label="Close menu" style="width: 92px; height: 92px; flex-shrink: 0; border-radius: 23px; border: 0; background: #2A3441; display: flex; align-items: center; justify-content: center;"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#F2F5F9" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 7h14M5 12h14M5 17h14"></path></svg></button>
+      <div style="height: 92px; flex-shrink: 0; border-radius: 23px; background: #1F2328CC; display: flex; align-items: center; gap: 4px; padding: 0 6px;">
+        <button type="button" aria-label="Lower max speed" style="font-family: inherit; width: 62px; height: 80px; border: 0; background: transparent; color: #F2F5F9; font-size: 36px;">−</button>
+        <div style="width: 83px; display: flex; flex-direction: column; align-items: center; line-height: 1;"><span style="font-size: 16px; font-weight: 700; letter-spacing: 1.4px; color: #7DBBF9;">MAX</span><span style="font-size: 39px; font-weight: 800; margin-top: 3px;">63</span></div>
+        <button type="button" aria-label="Raise max speed" style="font-family: inherit; width: 62px; height: 80px; border: 0; background: transparent; color: #F2F5F9; font-size: 36px;">+</button>
+      </div>
+      <div style="flex-grow: 1; min-width: 0; height: 92px; border-radius: 23px; background: #1F2328CC; display: flex; align-items: center; justify-content: center; gap: 13px; padding: 0 21px;">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;"><path d="M4 20L10 4M20 20L14 4M12 6v2M12 11v2M12 16v2"></path></svg>
+        <span class="street" style="font-size: 36px; font-weight: 700;"><span>[Current street name]</span></span>
+      </div>
+      <button type="button" aria-label="Disengage" style="width: 92px; height: 92px; flex-shrink: 0; border-radius: 23px; border: 0; background: #1F9A55; display: flex; align-items: center; justify-content: center;"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="2.5"></circle><path d="M3.5 10.5h6M14.5 10.5h6M12 14.5V21"></path></svg></button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Mock only: measure each street name, and scroll the ones that don't fit at about 40 px a second.
+document.querySelectorAll('.street').forEach((el) => {
+  const shift = el.firstElementChild.scrollWidth - el.clientWidth;
+  if (shift > 1) {
+    el.classList.add('scrolls');
+    el.style.setProperty('--shift', `${-(shift + 28)}px`);
+    el.style.setProperty('--dur', `${(5 + (shift + 28) / 40) / 0.52}s`);
+  }
+});
+</script>
+</body>
+</html>

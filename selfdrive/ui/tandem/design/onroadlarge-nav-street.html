@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Onroad larger text, navigating, street turn</title>
+</head>
+<body>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7DBBF9}a:hover{color:#A9D3FB}
+</style>
+<style id="street-scroll">
+/* A street name that doesn't fit scrolls: it rests at its start, slides left until its end shows, rests, then fades
+   back to the start. One that fits stays still. With reduced motion it keeps the ellipsis. */
+.street { display: block; flex: 0 1 auto; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.street > span { display: inline-block; }
+.street.scrolls { text-overflow: clip; -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); }
+.street.scrolls > span { padding-right: 28px; animation: street-scroll var(--dur, 10s) ease-in-out infinite; }
+@keyframes street-scroll { 0%, 22% { transform: translateX(0); opacity: 1 } 74%, 94% { transform: translateX(var(--shift)); opacity: 1 } 100% { transform: translateX(var(--shift)); opacity: 0 } }
+@media (prefers-reduced-motion: reduce) { .street.scrolls { text-overflow: ellipsis; -webkit-mask-image: none; mask-image: none; } .street.scrolls > span { animation: none; padding-right: 0; } }
+</style>
+<style id="alternate">
+/* The larger bar's middle takes turns: arrival and time left, then the street name, crossfading. On the device the
+   street's turn lasts until a long name has finished scrolling. */
+.alt-eta { animation: alt-eta 12s ease-in-out infinite; }
+.alt-street { animation: alt-street 12s ease-in-out infinite; }
+@keyframes alt-eta { 0%, 45% { opacity: 1 } 50%, 95% { opacity: 0 } 100% { opacity: 1 } }
+@keyframes alt-street { 0%, 45% { opacity: 0 } 50%, 95% { opacity: 1 } 100% { opacity: 0 } }
+.show-street .alt-eta { animation: none; opacity: 0; }
+.show-street .alt-street { animation: none; opacity: 1; }
+</style>
+
+<div style="width: 1125px; height: 563px; box-sizing: border-box; background: #000000; padding: 10px; font-family: Figtree, system-ui, sans-serif; color: #F2F5F9;">
+  <div style="width: 100%; height: 100%; box-sizing: border-box; border: 6px solid #1F9A55; border-radius: 18px; overflow: hidden; position: relative; background: #0F1A24;">
+    <svg width="1093" height="531" viewBox="0 0 1093 531" style="position: absolute; left: 0; top: 0;" aria-hidden="true">
+      <rect x="0" y="230" width="1093" height="301" fill="#132231"></rect>
+      <path d="M520 226 L116 531" stroke="#5C6B7A" stroke-width="5" stroke-linecap="round"></path>
+      <path d="M576 226 L984 531" stroke="#5C6B7A" stroke-width="5" stroke-linecap="round"></path>
+      <path d="M534 228 L560 228 L729 531 L377 531 Z" fill="#3A73B3" fill-opacity="0.55"></path>
+      <path d="M330 424 Q546 392 762 424" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="10" fill="none" stroke-linecap="round"></path>
+      <path d="M330 424 Q546 392 762 424" pathLength="100" stroke="#FFFFFF" stroke-opacity="0.9" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="14 200" stroke-dashoffset="-50"></path>
+    </svg>
+    <div style="position: absolute; left: 23px; top: 166px; width: 429px; background: #1F2E45; border-radius: 26px; padding: 18px 23px; display: flex; align-items: center; gap: 21px; box-sizing: border-box;">
+      <svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#F2F5F9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 21V11a3 3 0 0 1 3-3h8"></path><path d="M14 4l4 4-4 4"></path></svg>
+      <div style="flex: 1; display: flex; flex-direction: column; gap: 3px; min-width: 0;">
+        <span style="font-size: 39px; font-weight: 800; line-height: 1;">0.4 mi</span>
+        <span class="street" style="font-size: 22px; color: #C9D8EA;"><span>Turn right onto [Street]</span></span>
+      </div>
+    </div>
+    <div style="position: absolute; left: 50%; top: 21px; transform: translateX(-50%); background: #0B0D10E6; border-radius: 29px; padding: 13px 52px; display: flex; flex-direction: column; align-items: center; line-height: 1;">
+      <span style="font-size: 81px; font-weight: 800;">44</span>
+      <span style="font-size: 22px; color: #C9D0DA;">mph</span>
+    </div>
+    <div style="position: absolute; left: 23px; top: 23px; width: 107px; height: 127px; border-radius: 18px; background: #0B0D10; display: flex; align-items: center; justify-content: center;">
+      <div style="width: 81px; height: 101px; box-sizing: border-box; border-radius: 10px; background: #FFFFFF; border: 4px solid #0B0D10; outline: 3px solid #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #0B0D10; line-height: 1;">
+        <span style="font-size: 13px; font-weight: 800;">SPEED</span>
+        <span style="font-size: 13px; font-weight: 800;">LIMIT</span>
+        <span style="font-size: 42px; font-weight: 800; margin-top: 3px;">45</span>
+      </div>
+    </div>
+    <div aria-label="Driver monitoring: attentive" style="position: absolute; right: 23px; top: 23px; width: 83px; height: 83px; border-radius: 18px; background: #0B0D10; display: flex; align-items: center; justify-content: center;">
+      <div style="width: 65px; height: 65px; box-sizing: border-box; border-radius: 50%; border: 4px solid #3FD08A; display: flex; align-items: center; justify-content: center;">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#F2F5F9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.8"></circle><path d="M5 20.5a7 7 0 0 1 14 0"></path></svg>
+      </div>
+    </div>
+    <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 112px; display: flex; align-items: center; gap: 12px; padding: 0 12px;">
+      <button type="button" aria-label="Menu" style="width: 92px; height: 92px; flex-shrink: 0; border-radius: 22px; border: 0; background: #1F2328CC; display: flex; align-items: center; justify-content: center;"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#F2F5F9" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 7h14M5 12h14M5 17h14"></path></svg></button>
+      <div style="height: 92px; flex-shrink: 0; border-radius: 22px; background: #1F2328CC; display: flex; align-items: center; gap: 4px; padding: 0 6px;">
+        <button type="button" aria-label="Lower max speed" style="font-family: inherit; width: 64px; height: 80px; border: 0; background: transparent; color: #F2F5F9; font-size: 36px;">−</button>
+        <div style="width: 88px; display: flex; flex-direction: column; align-items: center; line-height: 1;">
+          <span style="font-size: 15px; font-weight: 700; letter-spacing: 1.6px; color: #7DBBF9;">MAX</span>
+          <span style="font-size: 40px; font-weight: 800; margin-top: 4px;">48</span>
+        </div>
+        <button type="button" aria-label="Raise max speed" style="font-family: inherit; width: 64px; height: 80px; border: 0; background: transparent; color: #F2F5F9; font-size: 36px;">+</button>
+      </div>
+      <div style="flex-grow: 1; min-width: 0; height: 92px; border-radius: 22px; background: #1F2328CC; display: flex; align-items: center; gap: 16px; padding: 0 14px 0 26px;">
+        <div class="alt show-street" style="flex-grow: 1; min-width: 0; display: grid; align-items: center;">
+          <div class="alt-eta" style="grid-area: 1 / 1; display: flex; gap: 30px; min-width: 0;">
+            <div style="display: flex; flex-direction: column; gap: 4px; white-space: nowrap;"><span style="font-size: 15px; font-weight: 700; letter-spacing: 1.6px; color: #8FA0B5;">ARRIVE</span><span style="font-size: 29px; font-weight: 700;">[ETA]</span></div>
+            <div style="display: flex; flex-direction: column; gap: 4px; white-space: nowrap;"><span style="font-size: 15px; font-weight: 700; letter-spacing: 1.6px; color: #8FA0B5;">LEFT</span><span style="font-size: 29px; font-weight: 700;">[min] · [mi]</span></div>
+          </div>
+          <div class="alt-street" style="grid-area: 1 / 1; display: flex; align-items: center; gap: 14px; min-width: 0;">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;"><path d="M4 20L10 4M20 20L14 4M12 6v2M12 11v2M12 16v2"></path></svg>
+            <span class="street" style="font-size: 36px; font-weight: 700;"><span>[Current street name]</span></span>
+          </div>
+        </div>
+        <a href="destinations.html" style="flex-shrink: 0; white-space: nowrap; text-decoration: none; height: 66px; padding: 0 24px; border-radius: 18px; background: #3A2026; color: #F2A7B1; font-size: 22px; font-weight: 700; display: flex; align-items: center;">End route</a>
+      </div>
+      <button type="button" aria-label="Disengage" style="width: 92px; height: 92px; flex-shrink: 0; border-radius: 22px; border: 0; background: #1F9A55; display: flex; align-items: center; justify-content: center;"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="2.5"></circle><path d="M3.5 10.5h6M14.5 10.5h6M12 14.5V21"></path></svg></button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Mock only: measure each street name, and scroll the ones that don't fit at about 40 px a second.
+document.querySelectorAll('.street').forEach((el) => {
+  const shift = el.firstElementChild.scrollWidth - el.clientWidth;
+  if (shift > 1) {
+    el.classList.add('scrolls');
+    el.style.setProperty('--shift', `${-(shift + 28)}px`);
+    el.style.setProperty('--dur', `${(5 + (shift + 28) / 40) / 0.52}s`);
+  }
+});
+</script>
+</body>
+</html>

@@ -13,6 +13,16 @@
 body{margin:0}
 a{color:#7DBBF9}a:hover{color:#A9D3FB}
 </style>
+<style id="street-scroll">
+/* A street name that doesn't fit scrolls: it rests at its start, slides left until its end shows, rests, then fades
+   back to the start. One that fits stays still. With reduced motion it keeps the ellipsis. */
+.street { display: block; flex: 0 1 auto; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.street > span { display: inline-block; }
+.street.scrolls { text-overflow: clip; -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); }
+.street.scrolls > span { padding-right: 28px; animation: street-scroll var(--dur, 10s) ease-in-out infinite; }
+@keyframes street-scroll { 0%, 22% { transform: translateX(0); opacity: 1 } 74%, 94% { transform: translateX(var(--shift)); opacity: 1 } 100% { transform: translateX(var(--shift)); opacity: 0 } }
+@media (prefers-reduced-motion: reduce) { .street.scrolls { text-overflow: ellipsis; -webkit-mask-image: none; mask-image: none; } .street.scrolls > span { animation: none; padding-right: 0; } }
+</style>
 
 <div style="width: 1125px; height: 563px; box-sizing: border-box; background: #000000; padding: 10px; font-family: Figtree, system-ui, sans-serif; color: #F2F5F9; display: flex; gap: 10px;">
   <div style="flex-grow: 1; min-width: 0; box-sizing: border-box; border: 6px solid #1F9A55; border-radius: 18px; overflow: hidden; position: relative; background: #0F1A24;">
@@ -61,8 +71,8 @@ a{color:#7DBBF9}a:hover{color:#A9D3FB}
         <button type="button" aria-label="Raise max speed" style="font-family: inherit; width: 46px; height: 56px; border: 0; background: transparent; color: #F2F5F9; font-size: 26px;">+</button>
       </div>
       <div style="flex-grow: 1; min-width: 0; height: 66px; border-radius: 16px; background: #1F2328CC; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 0 20px;">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20L10 4M20 20L14 4M12 6v2M12 11v2M12 16v2"></path></svg>
-        <span style="font-size: 22px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">[Current street name]</span>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20L10 4M20 20L14 4M12 6v2M12 11v2M12 16v2"></path></svg>
+        <span class="street" style="font-size: 28px; font-weight: 700;"><span>[Current street name]</span></span>
       </div>
       <button type="button" aria-label="Disengage" style="width: 66px; height: 66px; border-radius: 16px; border: 0; background: #1F9A55; display: flex; align-items: center; justify-content: center;"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="2.5"></circle><path d="M3.5 10.5h6M14.5 10.5h6M12 14.5V21"></path></svg></button>
     </div>
@@ -94,5 +104,16 @@ a{color:#7DBBF9}a:hover{color:#A9D3FB}
   </aside>
 </div>
 
+<script>
+// Mock only: measure each street name, and scroll the ones that don't fit at about 40 px a second.
+document.querySelectorAll('.street').forEach((el) => {
+  const shift = el.firstElementChild.scrollWidth - el.clientWidth;
+  if (shift > 1) {
+    el.classList.add('scrolls');
+    el.style.setProperty('--shift', `${-(shift + 28)}px`);
+    el.style.setProperty('--dur', `${(5 + (shift + 28) / 40) / 0.52}s`);
+  }
+});
+</script>
 </body>
 </html>
