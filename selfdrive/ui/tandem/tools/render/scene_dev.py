@@ -1,10 +1,10 @@
 import pyray as rl
 import scene_onroad as O
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
-from openpilot.selfdrive.ui.tandem.onroad.developer import STRIP_GAP, STRIP_H, WIDTH, DevData, Lead, draw_lead_tag, draw_panel, draw_strip
+from openpilot.selfdrive.ui.tandem.onroad.developer import WIDTH, strip_gap, strip_h, DevData, Lead, draw_lead_tag, draw_panel, draw_strip
 from openpilot.selfdrive.ui.tandem.onroad.lead import lead_anchor
 from scene_lead import car, chevron
-from openpilot.selfdrive.ui.tandem.onroad.layers import (DEV_ARC, ArcState, BarState, BAR_HEIGHT, BAR_MARGIN, HeadroomArc, OnroadBar,
+from openpilot.selfdrive.ui.tandem.onroad.layers import (DEV_ARC, ArcState, BarState, bar_height, bar_margin, HeadroomArc, OnroadBar,
                                                          dm_tile, draw_driver_monitor, draw_speed, draw_speed_limit, sign_tile)
 
 
@@ -27,8 +27,8 @@ def main(frame, save, out, tap, gui_app):
     cx = rect.x + rect.width / 2
     car(cx, car_y[0], 120)
     anchor = lead_anchor(chevron(cx, car_y[0], 38))
-    strip = rl.Rectangle(rect.x, rect.y + rect.height - BAR_MARGIN - BAR_HEIGHT - STRIP_GAP - STRIP_H, rect.width, STRIP_H)
-    draw_lead_tag(anchor.x, anchor.y, lead, anchored=True, bounds=rect, floor=strip.y - STRIP_GAP)   # as view._tag_floor
+    strip = rl.Rectangle(rect.x, rect.y + rect.height - bar_margin() - bar_height() - strip_gap() - strip_h(), rect.width, strip_h())
+    draw_lead_tag(anchor.x, anchor.y, lead, anchored=True, bounds=rect, floor=strip.y - strip_gap())   # as view._tag_floor
     draw_strip(strip, data)
     bar.render(rect)
     draw_panel(rl.Rectangle(2160 - WIDTH, 0, WIDTH, 1080), data)

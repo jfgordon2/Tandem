@@ -399,13 +399,13 @@ def test_lane_change_blocked_follows_the_blindspot_banner_it_replaces():
 def test_help_steer_is_a_bottom_warning_card_with_the_arc_above_it():
   import pyray as rl
   from openpilot.selfdrive.ui.tandem.onroad import alerts
-  from openpilot.selfdrive.ui.tandem.onroad.layers import BAR_HEIGHT, BAR_MARGIN, HELP_STEER, HeadroomArc, help_steer_box
+  from openpilot.selfdrive.ui.tandem.onroad.layers import HELP_STEER, HeadroomArc, bar_height, bar_margin, help_steer_box
   road = rl.Rectangle(0, 0, 2130, 1050)
   card = help_steer_box(road)
   same = alerts.box(road, alerts.WARNING, *HELP_STEER)                               # the same box as StarPilot's warnings
   assert (card.x, card.y, card.width, card.height) == (same.x, same.y, same.width, same.height)
-  assert abs(card.y + card.height - (road.y + road.height - alerts.MARGIN)) < 0.01      # along the bottom
-  assert card.y <= road.y + road.height - BAR_MARGIN - BAR_HEIGHT                     # covering the bar's row
+  assert abs(card.y + card.height - (road.y + road.height - alerts.Z.px(alerts.MARGIN_PX))) < 0.01      # along the bottom
+  assert card.y <= road.y + road.height - bar_margin() - bar_height()                     # covering the bar's row
   assert HeadroomArc.ABOVE_CARD > 0                                                   # the arc's ends sit above it
 
 

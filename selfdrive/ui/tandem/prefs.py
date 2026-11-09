@@ -152,6 +152,8 @@ MAX_FOLLOWS_LIMIT = Flag("max_follows_limit", True)   # Speed Limits › MAX fol
 WEATHER_HEADS_UP = Flag("weather_heads_up", True)     # Weather › Weather heads-up (forecast.py)
 LEAD_TAG = Flag("lead_tag", True)                     # Display › Driving Screen › Lead Car Tag (onroad/view.py)
 WEATHER_CHIME = Flag("weather_chime", True)           # Alerts › Chimes › Weather heads-up: its one chime
+LARGER_TEXT = Flag("larger_text", False)              # Display › Driving Screen › Text Size: Larger (onroad/size.py)
+REDUCE_MOTION = Flag("reduce_motion", False)          # Display › Driving Screen › Reduce Motion (onroad/size.py)
 DEVELOPER_STRIP = Text("developer_strip_metrics", legacy="DeveloperStripMetrics")
 TEMPERATURE = Choice("temperature", ("F", "C"))       # General › Temperature; until picked, it follows Units (km/h: °C)
 

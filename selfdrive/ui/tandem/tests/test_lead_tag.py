@@ -267,9 +267,10 @@ def test_tag_never_sinks_below_the_floor_and_drops_the_anchor_there(painted):
 
 
 def test_strip_and_tag_floor_stay_above_the_bar():
-  from openpilot.selfdrive.ui.tandem.onroad.developer import STRIP_GAP, STRIP_H
-  from openpilot.selfdrive.ui.tandem.onroad.layers import BAR_HEIGHT, BAR_MARGIN
-  names = dict(rl=rl, BAR_MARGIN=BAR_MARGIN, BAR_HEIGHT=BAR_HEIGHT, STRIP_GAP=STRIP_GAP, STRIP_H=STRIP_H)
+  from openpilot.selfdrive.ui.tandem.onroad.developer import strip_gap, strip_h
+  from openpilot.selfdrive.ui.tandem.onroad.layers import bar_height, bar_margin
+  names = dict(rl=rl, bar_margin=bar_margin, bar_height=bar_height, strip_gap=strip_gap, strip_h=strip_h)
+  BAR_MARGIN, BAR_HEIGHT, STRIP_GAP, STRIP_H = bar_margin(), bar_height(), strip_gap(), strip_h()
   strip_rect, tag_floor = view_method('_strip_rect', dict(names)), view_method('_tag_floor', dict(names))
   c = rl.Rectangle(0, 0, 2000, 1000)
   bar_top = c.height - BAR_MARGIN - BAR_HEIGHT

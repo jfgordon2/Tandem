@@ -123,12 +123,22 @@ def gradient(x, y, w, h, a, b):
   paint(action)
 
 
+def gradient_h(x, y, w, h, a, b):
+  def action(pen, _):
+    for i in range(max(0, w)):
+      t = i / max(1, w - 1)
+      ink = tuple(round(v + (z - v) * t) for v, z in zip(rgba(a), rgba(b), strict=True))
+      pen.line((x + i, y, x + i, y + h), fill=ink)
+  paint(action)
+
+
 def begin_clip(x, y, w, h):
-  current = (x, y, x + w, y + h)
-  if clips:
-    old = clips[-1]
-    current = max(x, old[0]), max(y, old[1]), min(x + w, old[2]), min(y + h, old[3])
-  clips.append(current)
+  """As raylib's scissor mode: one region at a time, each replacing the last; ending it turns clipping off."""
+  clips[:] = [(x, y, x + w, y + h)]
+
+
+def end_clip():
+  clips.clear()
 
 
 def install():
@@ -166,7 +176,8 @@ def install():
   rl.draw_circle_sector = lambda p, r, start, end, _, c: polygon([p] + [rl.Vector2(p.x + r*math.cos(math.radians(a)),
     p.y + r*math.sin(math.radians(a))) for a in range(round(start), round(end)+1)], c)
   rl.draw_rectangle_gradient_v = gradient
-  rl.begin_scissor_mode, rl.end_scissor_mode = begin_clip, lambda: clips.pop()
+  rl.draw_rectangle_gradient_h = gradient_h
+  rl.begin_scissor_mode, rl.end_scissor_mode = begin_clip, end_clip
 
 
 def frame(render, events=()):

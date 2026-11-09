@@ -52,7 +52,7 @@
     {
       "mock": "display",
       "title": "Display › Driving Screen",
-      "note": "Matches: Camera View, Driver Camera in Reverse, Driving Style Banner, Compass, Blind Spot Highlights and Lead Car Tag, then the power-user bundles. The rows are taller than the mock's, so the panel scrolls to Lead Insights. Page ground uses true black (#000000).",
+      "note": "Matches: Text Size (Standard or Larger) and Reduce Motion first, then Camera View, Driver Camera in Reverse, Driving Style Banner, Compass, Blind Spot Highlights and Lead Car Tag, then the power-user bundles. The rows are taller than the mock's, so the panel scrolls. Page ground uses true black (#000000).",
       "match": true
     },
     {
@@ -302,9 +302,63 @@
     {
       "mock": "onroad",
       "title": "Onroad",
-      "note": "Matches: Essentials' speed with its turn signal, the sign, the chip bottom left and the driver monitor tile top right. The stand-in road stands for the camera. Page ground uses true black (#000000).",
+      "note": "Matches: Essentials' speed with its turn signal, the sign, the chip bottom left and the driver monitor tile top right. The street name and its road icon are 28 px; a name that doesn't fit scrolls (onroad/scroll.py) instead of ending in an ellipsis. The stand-in road stands for the camera. Page ground uses true black (#000000).",
       "match": true,
       "built": "onroad_default"
+    },
+    {
+      "mock": "onroadlarge",
+      "title": "Onroad › Larger text",
+      "match": true,
+      "note": "Text Size: Larger. About 30% larger text, icons and touch targets in the same places (onroad/size.py); two chips stacked. Page ground uses true black (#000000)."
+    },
+    {
+      "mock": "onroadlarge-limit",
+      "title": "Onroad › Larger text, new limit",
+      "match": true,
+      "note": "The offer card is narrowed to end before the speed (405 mock px) with its larger text; its buttons are 72. Page ground uses true black (#000000)."
+    },
+    {
+      "mock": "onroadlarge-nav",
+      "title": "Onroad › Larger text, navigating",
+      "match": true,
+      "note": "Arrival and time left take turns with the street name (6 s, then the street until a long name has scrolled through, at least 4 s), crossfading; the render shows arrival's turn. The turn card's instruction scrolls when it doesn't fit. Page ground uses true black (#000000)."
+    },
+    {
+      "mock": "onroadlarge-nav-street",
+      "title": "Onroad › Larger text, navigating, the street's turn",
+      "match": false,
+      "note": "The same bar in the street's turn; not rendered separately (the render scene shows arrival's turn). Page ground uses true black (#000000)."
+    },
+    {
+      "mock": "onroadlarge-alert",
+      "title": "Onroad › Larger text, warning",
+      "match": false,
+      "note": "Alert sizes grow with Text Size (onroad/alerts.py). Not rendered separately: the warning scene is Help steer at Standard. Page ground uses true black (#000000)."
+    },
+    {
+      "mock": "onroadlarge-ram",
+      "title": "Onroad › Larger text, low RAM",
+      "match": false,
+      "note": "The red chip at the larger size; chips grow with the rest. Not rendered separately. Page ground uses true black (#000000)."
+    },
+    {
+      "mock": "onroadlarge-dev",
+      "title": "Onroad › Larger text, developer view",
+      "match": false,
+      "note": "Everything over the road grows; the sidebar keeps its width with larger text (tiles 64 tall). Not rendered separately. Page ground uses true black (#000000)."
+    },
+    {
+      "mock": "onroadmenu",
+      "title": "Onroad › Menu",
+      "match": false,
+      "note": "The sidebar opened from the bar's menu while driving: Settings, the status card, Save a clip with Recording audio just above it. Not rendered separately. Page ground uses true black (#000000)."
+    },
+    {
+      "mock": "onroadlarge-menu",
+      "title": "Onroad › Larger text, menu",
+      "match": false,
+      "note": "While driving the sidebar's text grows at the same width; its values are 19 px so comma connect · Online fits. Beside the parked home screen it stays Standard. Not rendered separately. Page ground uses true black (#000000)."
     },
     {
       "mock": "gaptag",

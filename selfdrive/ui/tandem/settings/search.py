@@ -100,6 +100,8 @@ ENTRIES: list[Entry] = [
   Entry(N_("Offline Maps"), N_("Speed limits and street names without a connection"), 0, S, 3, "download map regions"),
   # Driving › Display
   _place(N_("Display"), N_("The driving screen, theme and startup, and the map"), 0, D),
+  Entry(N_("Text Size"), N_("Larger text and icons on the driving screen"), 0, D, 0, "font bigger large big read readable zoom"),
+  Entry(N_("Reduce Motion"), N_("Long street names end in … instead of scrolling"), 0, D, 0, "scroll animation accessibility marquee"),
   Entry(N_("Camera View"), N_("Wide shows more of the road at low speed"), 0, D, 0),
   Entry(N_("Driver Camera in Reverse"), N_("Shows the inside camera while backing up"), 0, D, 0),
   Entry(N_("Driving Style Banner"), N_("Shows the current style when it changes"), 0, D, 0),

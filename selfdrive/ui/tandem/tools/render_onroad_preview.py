@@ -321,7 +321,7 @@ def render(args) -> list[Path]:
   init_preview_window("Tandem animation preview")
   from openpilot.selfdrive.ui.tandem.onroad import turn_signals
   from openpilot.selfdrive.ui.tandem.onroad.view import EssentialsOnroadView
-  from openpilot.selfdrive.ui.tandem.onroad.layers import BAR_HEIGHT, BAR_MARGIN, draw_speed
+  from openpilot.selfdrive.ui.tandem.onroad.layers import bar_height, bar_margin, draw_speed
   from openpilot.selfdrive.ui.tandem.onroad import extras
 
   class AnimationPreview(EssentialsOnroadView):
@@ -330,12 +330,12 @@ def render(args) -> list[Path]:
       rl.begin_scissor_mode(int(c.x), int(c.y), int(c.width), int(c.height))
       try:
         self._turn_signals.render(c, ui_state, enabled=self.alert_renderer.will_render()[0] is None,
-                                  bottom_margin=BAR_HEIGHT + BAR_MARGIN + extras.SIGNAL_GAP)
+                                  bottom_margin=bar_height() + bar_margin() + extras.SIGNAL_GAP)
       finally:
         rl.end_scissor_mode()
 
     def _draw_current_speed(self, rect):
-      offset = max(0, rect.height - BAR_HEIGHT - 380) if args.speed_at_bottom else 0
+      offset = max(0, rect.height - bar_height() - 380) if args.speed_at_bottom else 0
       draw_speed(rect, self._hud_renderer.speed, "mph", offset, not args.right or args.hazards, args.right or args.hazards, clock[0])
 
   clock = [1000.0]

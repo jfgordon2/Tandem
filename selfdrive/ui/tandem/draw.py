@@ -195,11 +195,12 @@ def text(rect: rl.Rectangle, value: str, size: int, color: rl.Color, weight: Fac
   return width
 
 
-def caption(rect: rl.Rectangle, value: str, color: rl.Color = T.TEXT_MUTED, h: Align = Align.START, v: Align = Align.CENTER) -> float:
-  """Section labels: small bold capitals with tracking."""
+def caption(rect: rl.Rectangle, value: str, color: rl.Color = T.TEXT_MUTED, h: Align = Align.START, v: Align = Align.CENTER,
+            size: int = T.SIZE_CAPTION) -> float:
+  """Section labels: small bold capitals with tracking. size: a caption drawn larger, as the driving screen's at Larger text."""
   value = uppercase(translate(value))
-  tracking = 0 if arabic.ARABIC.search(value) or any(thai.is_thai(c) for c in value) else T.CAPTION_TRACKING
-  return text(rect, value, T.SIZE_CAPTION, color, T.FONT_BOLD, h, v, tracking=tracking)
+  tracking = 0 if arabic.ARABIC.search(value) or any(thai.is_thai(c) for c in value) else T.CAPTION_TRACKING * size / T.SIZE_CAPTION
+  return text(rect, value, size, color, T.FONT_BOLD, h, v, tracking=tracking)
 
 
 def paragraph_lines(value: str, size: int, weight: Face, width: float) -> list[str]:

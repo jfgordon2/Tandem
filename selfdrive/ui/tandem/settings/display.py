@@ -13,7 +13,7 @@ from openpilot.selfdrive.ui.tandem.blocks import Grid
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, place
 from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, Segmented, Switch, ValueButton
 from openpilot.selfdrive.ui.tandem.overlays import Sheet
-from openpilot.selfdrive.ui.tandem.prefs import LEAD_TAG
+from openpilot.selfdrive.ui.tandem.prefs import LARGER_TEXT, LEAD_TAG, REDUCE_MOTION
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, SectionHeader, SettingRow
 from openpilot.selfdrive.ui.tandem.settings.bundles import DEVELOPER_VIEW, LEAD_INSIGHTS, Bundle
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
@@ -37,6 +37,7 @@ PREVIEW_ROAD = T._hex("132231")   # the picture behind each Turn Signal choice, 
 SIGNAL_STYLES = [SIGNAL_STANDARD] + [(name, slug) for slug, name in WHIMSY_SIGNALS.items()]
 # CameraView values: 0 Auto, 1 Driver, 2 Standard, 3 Wide. Driver is left to upstream's developer screens.
 CAMERA_VIEWS = [(N_("Auto"), 0), (N_("Standard"), 2), (N_("Wide"), 3)]
+TEXT_SIZES = [N_("Standard"), N_("Larger")]   # the driving screen's text, icons and touch targets (onroad/size.py)
 # (BootLogo slug, name). Tandem's is the Essentials default; StarPilot installs it from its boot logos folder like any other.
 TANDEM_LOGO = "tandem"
 BUILT_IN_LOGOS = [(TANDEM_LOGO, N_("Tandem")), ("starpilot", "StarPilot"), ("stock", "comma")]
@@ -127,6 +128,22 @@ class Display:
 
   def set_lead_tag(self, on: bool) -> None:
     LEAD_TAG.set(on)
+
+  @property
+  def text_size(self) -> int:
+    """0 Standard, 1 Larger: about 30% larger text and icons on the driving screen (prefs.LARGER_TEXT)."""
+    return 1 if LARGER_TEXT.get() else 0
+
+  def set_text_size(self, index: int) -> None:
+    LARGER_TEXT.set(index == 1)
+
+  @property
+  def reduce_motion(self) -> bool:
+    """Long street names and turn instructions end in an ellipsis instead of scrolling (prefs.REDUCE_MOTION)."""
+    return REDUCE_MOTION.get()
+
+  def set_reduce_motion(self, on: bool) -> None:
+    REDUCE_MOTION.set(on)
 
   def bundle(self, bundle: Bundle) -> tuple[Callable[[], bool], Callable[[bool], None]]:
     return (lambda: bundle.is_on(self._store)), (lambda on: bundle.set(self._store, on))
@@ -264,6 +281,10 @@ def driving_screen_panel(model: Display, window) -> ListPanel:
   dev_get, dev_set = model.bundle(DEVELOPER_VIEW)
   lead_get, lead_set = model.bundle(LEAD_INSIGHTS)
   return ListPanel([
+    SettingRow(N_("Text Size"), N_("Larger text and icons on the driving screen"),
+               Segmented(TEXT_SIZES, lambda: model.text_size, model.set_text_size)),
+    SettingRow(N_("Reduce Motion"), N_("Long street names end in … instead of scrolling"),
+               Switch(lambda: model.reduce_motion, model.set_reduce_motion)),
     SettingRow(N_("Camera View"), N_("Wide shows more of the road at low speed"),
                Segmented([name for name, _ in CAMERA_VIEWS], lambda: model.camera_view, model.set_camera_view)),
     SettingRow(N_("Driver Camera in Reverse"), N_("Shows the inside camera while backing up"),

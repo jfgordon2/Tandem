@@ -16,6 +16,7 @@ from dataclasses import replace
 import pyray as rl
 
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
+from openpilot.selfdrive.ui.tandem.onroad import size as Z
 from openpilot.selfdrive.ui.tandem.layout import Align, inset, place
 from openpilot.selfdrive.ui.tandem.i18n import translate
 from openpilot.selfdrive.ui.tandem.fonts import face_for, font
@@ -37,10 +38,11 @@ WARNING_LINE = rl.Color(0xF0, 0xDD, 0xBD, 255)
 CRITICAL_FILL = rl.Color(0x2A, 0x0E, 0x12, 245)
 CRITICAL_LINE = rl.Color(0xF5, 0xC6, 0xCB, 255)
 
-MARGIN = T.px(16)
-INFO_PAD, INFO_FONT, INFO_ICON = (T.px(22), T.px(18)), T.font_px(24), T.px(30)
-WARNING_PAD, WARNING_TITLE_FONT, WARNING_LINE_FONT = (T.px(24), T.px(20)), T.font_px(32), T.font_px(22)
-CRITICAL_ICON, CRITICAL_TITLE_FONT, CRITICAL_LINE_FONT = T.px(84), T.font_px(44), T.font_px(24)
+# Sizes in mock px, drawn through onroad/size.py so Larger text (design/onroadlarge-alert.html) grows them too.
+MARGIN_PX = 16
+INFO_PAD_PX, INFO_FONT_PX, INFO_ICON_PX = (22, 18), 24, 30
+WARNING_PAD_PX, WARNING_TITLE_PX, WARNING_LINE_PX = (24, 20), 32, 22
+CRITICAL_ICON_PX, CRITICAL_TITLE_PX, CRITICAL_LINE_PX = 84, 44, 24
 
 
 def level(size: int, status: int, alert_type: str = "") -> str:
@@ -108,11 +110,11 @@ def box(rect: rl.Rectangle, alert_level: str, text1: str, text2: str) -> rl.Rect
   if alert_level == CRITICAL:
     return rect
   if alert_level == WARNING:
-    lines = draw.line_height(WARNING_TITLE_FONT) + (T.px(6) + draw.line_height(WARNING_LINE_FONT) if _clean(text2) else 0)
-    height = WARNING_PAD[1] * 2 + lines
+    lines = draw.line_height(Z.font_px(WARNING_TITLE_PX)) + (Z.px(6) + draw.line_height(Z.font_px(WARNING_LINE_PX)) if _clean(text2) else 0)
+    height = Z.px(WARNING_PAD_PX[1]) * 2 + lines
   else:
-    height = INFO_PAD[1] * 2 + max(INFO_ICON, draw.line_height(INFO_FONT))
-  return rl.Rectangle(rect.x + MARGIN, rect.y + rect.height - MARGIN - height, rect.width - MARGIN * 2, height)
+    height = Z.px(INFO_PAD_PX[1]) * 2 + max(Z.px(INFO_ICON_PX), draw.line_height(Z.font_px(INFO_FONT_PX)))
+  return rl.Rectangle(rect.x + Z.px(MARGIN_PX), rect.y + rect.height - Z.px(MARGIN_PX) - height, rect.width - Z.px(MARGIN_PX) * 2, height)
 
 
 def draw_alert(where: rl.Rectangle, alert_level: str, text1: str, text2: str, opacity: float) -> None:
@@ -121,34 +123,34 @@ def draw_alert(where: rl.Rectangle, alert_level: str, text1: str, text2: str, op
   fade = lambda color: draw.alpha(color, opacity)  # noqa: E731
   if alert_level == CRITICAL:
     draw.fill(where, fade(CRITICAL_FILL))
-    body = inset(where, x=T.px(48))
-    lines = draw.paragraph_lines(text1, CRITICAL_TITLE_FONT, T.FONT_EXTRABOLD, body.width)
-    title_h = draw.line_height(CRITICAL_TITLE_FONT) * 1.1
-    line_h = draw.line_height(CRITICAL_LINE_FONT) if text2 else 0
-    total = CRITICAL_ICON + T.px(16) + title_h * len(lines) + (T.px(14) + line_h if text2 else 0)
+    body = inset(where, x=Z.px(48))
+    lines = draw.paragraph_lines(text1, Z.font_px(CRITICAL_TITLE_PX), T.FONT_EXTRABOLD, body.width)
+    title_h = draw.line_height(Z.font_px(CRITICAL_TITLE_PX)) * 1.1
+    line_h = draw.line_height(Z.font_px(CRITICAL_LINE_PX)) if text2 else 0
+    total = Z.px(CRITICAL_ICON_PX) + Z.px(16) + title_h * len(lines) + (Z.px(14) + line_h if text2 else 0)
     y = where.y + (where.height - total) / 2
-    draw.icon(rl.Rectangle(body.x, y, body.width, CRITICAL_ICON), "wheel", fade(T.TEXT), CRITICAL_ICON)
-    y += CRITICAL_ICON + T.px(16)
+    draw.icon(rl.Rectangle(body.x, y, body.width, Z.px(CRITICAL_ICON_PX)), "wheel", fade(T.TEXT), Z.px(CRITICAL_ICON_PX))
+    y += Z.px(CRITICAL_ICON_PX) + Z.px(16)
     for line in lines:
-      draw.text(rl.Rectangle(body.x, y, body.width, title_h), line, CRITICAL_TITLE_FONT, fade(T.TEXT), T.FONT_EXTRABOLD, Align.CENTER)
+      draw.text(rl.Rectangle(body.x, y, body.width, title_h), line, Z.font_px(CRITICAL_TITLE_PX), fade(T.TEXT), T.FONT_EXTRABOLD, Align.CENTER)
       y += title_h
     if text2:
-      draw.text(rl.Rectangle(body.x, y + T.px(14), body.width, line_h),
-                draw.fit(text2, CRITICAL_LINE_FONT, T.FONT, body.width), CRITICAL_LINE_FONT, fade(CRITICAL_LINE), T.FONT, Align.CENTER)
+      draw.text(rl.Rectangle(body.x, y + Z.px(14), body.width, line_h),
+                draw.fit(text2, Z.font_px(CRITICAL_LINE_PX), T.FONT, body.width), Z.font_px(CRITICAL_LINE_PX), fade(CRITICAL_LINE), T.FONT, Align.CENTER)
     return
   if alert_level == WARNING:
-    draw.fill(where, fade(WARNING_FILL), T.px(20))
-    body = inset(where, x=WARNING_PAD[0], y=WARNING_PAD[1])
-    title = rl.Rectangle(body.x, body.y, body.width, draw.line_height(WARNING_TITLE_FONT))
-    draw.text(title, draw.fit(text1, WARNING_TITLE_FONT, T.FONT_EXTRABOLD, body.width), WARNING_TITLE_FONT, fade(WARNING_TITLE),
+    draw.fill(where, fade(WARNING_FILL), Z.px(20))
+    body = inset(where, x=Z.px(WARNING_PAD_PX[0]), y=Z.px(WARNING_PAD_PX[1]))
+    title = rl.Rectangle(body.x, body.y, body.width, draw.line_height(Z.font_px(WARNING_TITLE_PX)))
+    draw.text(title, draw.fit(text1, Z.font_px(WARNING_TITLE_PX), T.FONT_EXTRABOLD, body.width), Z.font_px(WARNING_TITLE_PX), fade(WARNING_TITLE),
               T.FONT_EXTRABOLD)
     if text2:
-      line = rl.Rectangle(body.x, title.y + title.height + T.px(6), body.width, draw.line_height(WARNING_LINE_FONT))
-      draw.text(line, draw.fit(text2, WARNING_LINE_FONT, T.FONT, body.width), WARNING_LINE_FONT, fade(WARNING_LINE))
+      line = rl.Rectangle(body.x, title.y + title.height + Z.px(6), body.width, draw.line_height(Z.font_px(WARNING_LINE_PX)))
+      draw.text(line, draw.fit(text2, Z.font_px(WARNING_LINE_PX), T.FONT, body.width), Z.font_px(WARNING_LINE_PX), fade(WARNING_LINE))
     return
-  draw.fill(where, fade(INFO_FILL), T.px(20))
-  body = inset(where, x=INFO_PAD[0], y=INFO_PAD[1])
-  draw.icon(place(body, INFO_ICON, INFO_ICON, Align.START), "info", fade(INFO_INK), INFO_ICON)
+  draw.fill(where, fade(INFO_FILL), Z.px(20))
+  body = inset(where, x=Z.px(INFO_PAD_PX[0]), y=Z.px(INFO_PAD_PX[1]))
+  draw.icon(place(body, Z.px(INFO_ICON_PX), Z.px(INFO_ICON_PX), Align.START), "info", fade(INFO_INK), Z.px(INFO_ICON_PX))
   words = " · ".join(t for t in (text1, text2) if t)
-  text = rl.Rectangle(body.x + INFO_ICON + T.px(16), body.y, body.width - INFO_ICON - T.px(16), body.height)
-  draw.text(text, draw.fit(words, INFO_FONT, T.FONT_SEMIBOLD, text.width), INFO_FONT, fade(T.TEXT), T.FONT_SEMIBOLD)
+  text = rl.Rectangle(body.x + Z.px(INFO_ICON_PX) + Z.px(16), body.y, body.width - Z.px(INFO_ICON_PX) - Z.px(16), body.height)
+  draw.text(text, draw.fit(words, Z.font_px(INFO_FONT_PX), T.FONT_SEMIBOLD, text.width), Z.font_px(INFO_FONT_PX), fade(T.TEXT), T.FONT_SEMIBOLD)

@@ -33,12 +33,12 @@ from openpilot.selfdrive.ui.ui_state import ui_state
 from openpilot.system.ui.lib.application import MousePos
 from openpilot.selfdrive.ui.onroad.starpilot.navigation_card import NavigationCardRenderer
 from openpilot.selfdrive.ui.tandem import tokens as T
-from openpilot.selfdrive.ui.tandem.onroad import alerts, extras
-from openpilot.selfdrive.ui.tandem.onroad.developer import STRIP_GAP, STRIP_H, DevData, developer_view_on, draw_lead_tag, draw_strip, lead_of, read
-from openpilot.selfdrive.ui.tandem.onroad.layers import (AT_LIMIT, BAR_HEIGHT, BAR_MARGIN, LIMIT_BORDER_COLOR, LIMIT_LANE_COLOR, ArcState, BarState,
+from openpilot.selfdrive.ui.tandem.onroad import alerts, extras, size as Z
+from openpilot.selfdrive.ui.tandem.onroad.developer import DevData, strip_gap, strip_h, developer_view_on, draw_lead_tag, draw_strip, lead_of, read
+from openpilot.selfdrive.ui.tandem.onroad.layers import (AT_LIMIT, LIMIT_BORDER_COLOR, LIMIT_LANE_COLOR, ArcState, BarState,
                                                          Headroom, HeadroomArc, HelpSteer, ARC, DEV_ARC, LimitCard, LimitOffer, OnroadBar, StatusChip,
                                                          dm_tile, draw_driver_monitor, draw_speed, draw_speed_limit,
-                                                         draw_turn_card, sign_tile, TURN_BELOW_SIGN, TURN_CARD_TOP)
+                                                         draw_turn_card, sign_tile, bar_height, bar_margin, turn_below_sign, turn_card_top)
 from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, LimitWatch, RamWatch, chips_for, routing_chip, snapshot
 from openpilot.selfdrive.ui.tandem.ram import shared_log
 from openpilot.selfdrive.ui.tandem.onroad.limits import LimitFollower, LimitOfferState, OfferChime
@@ -232,7 +232,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
     rl.begin_scissor_mode(int(c.x), int(c.y), int(c.width), int(c.height))
     try:
       self._turn_signals.render(c, ui_state, enabled=self.alert_renderer.will_render()[0] is None,
-                                bottom_margin=BAR_HEIGHT + BAR_MARGIN + extras.SIGNAL_GAP)
+                                bottom_margin=bar_height() + bar_margin() + extras.SIGNAL_GAP)
     finally:
       rl.end_scissor_mode()
 
@@ -258,8 +258,8 @@ class EssentialsOnroadView(StarPilotOnroadView):
     """The turn card stays below whatever holds the top left corner: the new-limit card while it asks, else the sign."""
     if self._offer() is not None:
       box = self._limit.box(self._content_rect)
-      return box.y + box.height - self._content_rect.y + T.px(12)
-    return TURN_BELOW_SIGN if self._posted_limit() is not None else TURN_CARD_TOP
+      return box.y + box.height - self._content_rect.y + Z.px(12)
+    return turn_below_sign() if self._posted_limit() is not None else turn_card_top()
 
   def _posted_limit(self) -> str | None:
     """The limit for the sign, or None when it's hidden: no limit known, or the new-limit card is asking."""
@@ -289,13 +289,13 @@ class EssentialsOnroadView(StarPilotOnroadView):
     """Developer View's metrics strip, just above the bar, or None when it's off."""
     if self._dev is None or not self._dev.strip:
       return None
-    return rl.Rectangle(c.x, c.y + c.height - BAR_MARGIN - BAR_HEIGHT - STRIP_GAP - STRIP_H, c.width, STRIP_H)
+    return rl.Rectangle(c.x, c.y + c.height - bar_margin() - bar_height() - strip_gap() - strip_h(), c.width, strip_h())
 
   def _tag_floor(self) -> float:
     """The lowest a lead tag may sit: above the metrics strip when it's shown, otherwise above the bar."""
     c = self._content_rect
     strip = self._strip_rect(c)
-    return (strip.y if strip is not None else c.y + c.height - BAR_MARGIN - BAR_HEIGHT) - STRIP_GAP
+    return (strip.y if strip is not None else c.y + c.height - bar_margin() - bar_height()) - strip_gap()
 
   def _lead_tag(self, adjacent, chevron, lead_data) -> None:
     """Lead Insights for the lead car: our tag above it. Adjacent cars keep only StarPilot's markers, as in the mock."""
@@ -501,6 +501,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
     extras.draw_stopping_point(ends, label)
 
   def _render_layers(self) -> None:
+    Z.refresh()   # Display › Driving Screen › Text Size and Reduce Motion
     offer = self._offer()   # observe limit changes even when an alert is covering the card
     self._chime_for(offer)
     self._follow_limit()
@@ -528,7 +529,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
     lift = 0.0
     strip = self._strip_rect(c)
     if strip is not None:   # the picked metrics, just above the bar; the chip moves up over it
-      lift = STRIP_H + STRIP_GAP
+      lift = strip_h() + strip_gap()
       draw_strip(strip, self._dev)
     self._chip_view.render(rl.Rectangle(c.x, c.y, c.width, c.height - lift))
     self._limit.render(c)
@@ -537,7 +538,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
   def _render_corner_extras(self, c: rl.Rectangle) -> None:
     """Under the driver monitor tile: the pedal tiles (Lead Insights), then the external-GPU model chip."""
     tile = dm_tile(c)
-    y = tile.y + tile.height + T.px(10)
+    y = tile.y + tile.height + Z.px(10)
     car = ui_state.sm["carState"] if ui_state.sm.valid.get("carState", False) else None
     sp_car = ui_state.sm["starpilotCarState"] if ui_state.sm.valid.get("starpilotCarState", False) else None
     levels = extras.pedal_levels(ui_state.ui_params, car, sp_car)

@@ -46,7 +46,14 @@ class SidebarState:
 
 
 def gear(rect: rl.Rectangle, color: rl.Color, size: float) -> None:
-  draw.icon(rect, "gear", color, T.px(26))
+  draw.icon(rect, "gear", color, size * 26 / 74 / 0.45)   # 26 px at the Settings button's 74
+
+
+def zoom(state: SidebarState) -> float:
+  """Larger text (onroad/size.py) applies while driving: the sidebar opened from the drive screen's menu grows its text at
+  the same width (design/onroadlarge-menu.html); beside the parked home screen it stays as it is."""
+  from openpilot.selfdrive.ui.tandem.onroad import size as Z
+  return Z.zoom() if state.onroad else 1.0
 
 
 class SidebarView(Component):
@@ -62,29 +69,44 @@ class SidebarView(Component):
     self._clip.set_visible(lambda: self._state().onroad)
     self._mic = self._child(Button(N_("Recording audio"), on_microphone, ButtonStyle.DANGER_SOFT, height=T.px(44)))
     self._mic.set_visible(lambda: self._state().recording_audio)
+    self._zoom = 1.0
+
+  def _resize(self, k: float) -> None:
+    """Follow Text Size while driving: buttons keep their size from when they were made."""
+    self._zoom = k
+    px = lambda v: round(T.px(v) * k)  # noqa: E731
+    self._settings.restyle(px(74), px(19), self._settings._padding, T.RADIUS_CARD)
+    self._clip.restyle(px(60), px(17), self._clip._padding, self._clip._radius)
+    self._mic.restyle(px(44), px(15), self._mic._padding, self._mic._radius)
 
   def _render(self, rect: rl.Rectangle):
     state = self._state()
+    k = zoom(state)
+    if k != self._zoom:
+      self._resize(k)
+    px = lambda v: round(T.px(v) * k)  # noqa: E731   text and rows grow; the sidebar's width and margins don't
     draw.fill(rect, T.BG)
     body = inset(rect, left=T.px(18), right=T.px(10), y=T.px(18))
-    top, card = column(body, [T.px(74), FILL], T.px(12))
+    top, card = column(body, [px(74), FILL], T.px(12))
     self._settings.render(top)
 
     draw.fill(card, T.SURFACE_2, T.RADIUS_PANEL)
-    inner = inset(card, x=T.px(18), y=T.px(16))
+    inner = inset(card, x=T.px(18) if k == 1.0 else T.px(14), y=T.px(16))   # the larger mock's card is a little tighter
     y = inner.y
-    row_h = T.px(33)
+    row_h = px(33)
     for status in state.rows:
       line = rl.Rectangle(inner.x, y, inner.width, row_h)
-      dot, text = row(line, [T.px(10), FILL], T.px(14))
-      draw.fill(place(dot, T.px(10), T.px(10)), DOT[status.health], T.px(5))
-      value_w = draw.text(text, status.value, T.font_px(15), T.TEXT_TERTIARY, h=Align.END)
-      draw.text(inset(text, right=value_w + T.px(10)), status.label, T.font_px(16), T.TEXT, T.FONT_MEDIUM)
+      dot, text = row(line, [px(10), FILL], px(14) if k == 1.0 else T.px(14))
+      draw.fill(place(dot, px(10), px(10)), DOT[status.health], px(5))
+      value_w = draw.text(text, status.value, T.font_px(15) if k == 1.0 else T.font_px(19), T.TEXT_TERTIARY, h=Align.END)
+      draw.text(inset(text, right=value_w + T.px(10)), status.label, px(16), T.TEXT, T.FONT_MEDIUM)
       y += row_h
 
-    bottom = rl.Rectangle(inner.x, inner.y + inner.height - T.px(60), inner.width, T.px(60))
+    # Save a clip at the bottom while driving, with Recording audio just above it (design/onroadmenu.html).
+    bottom = rl.Rectangle(inner.x, inner.y + inner.height - px(60), inner.width, px(60))
     if self._mic.is_visible:
-      self._mic.render(rl.Rectangle(inner.x, y + T.px(10), inner.width, T.px(44)))
+      above = bottom.y - T.px(10) - px(44) if self._clip.is_visible else y + T.px(10)
+      self._mic.render(rl.Rectangle(inner.x, above, inner.width, px(44)))
     if self._clip.is_visible:
       self._clip.render(bottom)
 

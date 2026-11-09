@@ -2,7 +2,7 @@ import pyray as rl
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.onroad.layers import (ArcState, BarState, HeadroomArc, HelpSteer, LimitCard, LimitOffer, OnroadBar,
                                                          StatusChip, WORKING, AT_LIMIT, draw_speed, draw_speed_limit, draw_turn_card,
-                                                         sign_tile, dm_tile, draw_driver_monitor, TURN_BELOW_SIGN, TURN_CARD_TOP)
+                                                         sign_tile, dm_tile, draw_driver_monitor, turn_below_sign, turn_card_top)
 from openpilot.selfdrive.ui.tandem.onroad.status import Snapshot, chip_for
 
 W, H = 2160, 1080
@@ -30,7 +30,7 @@ def scene(state, arc, chip, offer=None, help_=False, speed=62, limit="60", turn=
     draw_speed(rect, speed, state.unit, left=signal == 'left', right=signal == 'right', now=0.5)
     sign = bool(limit) and offer is None
     card = LimitCard(lambda: offer, lambda: None, lambda: None)
-    top = (card.box(rect).y + card.box(rect).height - rect.y + T.px(12)) if offer else TURN_BELOW_SIGN if sign else TURN_CARD_TOP
+    top = (card.box(rect).y + card.box(rect).height - rect.y + T.px(12)) if offer else turn_below_sign() if sign else turn_card_top()
     if turn:
       draw_turn_card(rect, *turn, top)
     if sign:
@@ -89,3 +89,23 @@ def main(frame, save, out, tap, gui_app):
     for _ in range(3):
       frame(render)
     save(f"{out}/{name}.png")
+
+  # Text Size: Larger (design/onroadlarge*.html). Scenes are built per shot, so each draws at the size set when it runs.
+  from openpilot.selfdrive.ui.tandem.onroad import size as Z
+  Z.set_text(True)
+  try:
+    larger = {
+      "onroadlarge": scene(BarState(True, True, 63, "mph", "Market Street"), ArcState(0.18, 0.2, True),
+                           [(chip_for(Snapshot(curve_control=True)), 1.0), (chip_for(Snapshot(forecast=("Light rain in 12 min", "rain"))), 1.0)],
+                           signal="left"),
+      "onroadlarge-limit": scene(BarState(True, True, 48, "mph", "Hwy 101"), ArcState(0.2, 0.2, True), None,
+                                 LimitOffer(55, 58, "mph", "Map Data", 8), speed=45),
+      "onroadlarge-nav": scene(BarState(True, True, 48, "mph", "SE Hawthorne Blvd", True, "4:52 PM", "12 min · 8.4 mi"), ArcState(0, 0, False),
+                               None, speed=44, limit="45", turn=("0.4 mi", "Turn right onto Market St", "turn", "right")),
+    }
+    for name, render in larger.items():
+      for _ in range(3):
+        frame(render)
+      save(f"{out}/{name}.png")
+  finally:
+    Z.set_text(False)

@@ -19,6 +19,7 @@ from dataclasses import dataclass
 
 import pyray as rl
 
+from openpilot.selfdrive.ui.tandem.onroad import size as Z
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, row
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_, translate
@@ -26,9 +27,22 @@ from openpilot.selfdrive.ui.tandem.prefs import DEVELOPER_STRIP
 
 PANEL_W = T.px(256)                 # the mock's sidebar
 WIDTH = PANEL_W + T.px(10)          # with its gap from the road view
-STRIP_H = T.px(40)          # as onroaddev.html (was 30)
-STRIP_GAP = T.px(6)         # between the strip and the bar, and the lowest lead tag and whatever it rests on
-STRIP_TEXT = T.font_px(18)  # as onroaddev.html (13 was too small to read while driving)
+
+
+def strip_h() -> int:
+  """As onroaddev.html (was 30); larger with Text Size."""
+  return Z.px(40)
+
+
+def strip_gap() -> int:
+  """Between the strip and the bar, and the lowest lead tag and whatever it rests on."""
+  return Z.px(6)
+
+
+def strip_text() -> int:
+  """As onroaddev.html (13 was too small to read while driving)."""
+  return Z.font_px(18)
+
 TILE_FILL = T._hex("1E2227")
 LABEL = T._hex("9FAABA")
 BAR_INK = T.ACCENT_TEXT
@@ -109,17 +123,21 @@ class DevData:
 
 # ── Drawing ──
 
+def _caption() -> int:
+  return round(T.SIZE_CAPTION * Z.zoom())
+
+
 def _section(rect: rl.Rectangle, y: float, title: str) -> float:
-  h = draw.line_height(T.SIZE_CAPTION)
-  draw.caption(rl.Rectangle(rect.x, y, rect.width, h), title, T.ACCENT_TEXT)
+  h = draw.line_height(_caption())
+  draw.caption(rl.Rectangle(rect.x, y, rect.width, h), title, T.ACCENT_TEXT, size=_caption())
   return y + h + T.px(8)
 
 
 def _pair(rect: rl.Rectangle, y: float, label: str, value: str) -> float:
-  h = draw.line_height(T.font_px(14))
+  h = draw.line_height(Z.font_px(14))
   line = rl.Rectangle(rect.x, y, rect.width, h)
-  draw.text(line, label, T.font_px(14), LABEL, MONO)
-  draw.text(line, value, T.font_px(14), T.TEXT, MONO, Align.END)
+  draw.text(line, label, Z.font_px(14), LABEL, MONO)
+  draw.text(line, value, Z.font_px(14), T.TEXT, MONO, Align.END)
   return y + h + T.px(7)
 
 
@@ -138,7 +156,7 @@ def draw_panel(rect: rl.Rectangle, data: DevData) -> None:
   draw.fill(panel, T._hex("13161A"), T.px(18))
   body = inset(panel, T.px(14))
   y = _section(body, body.y, N_("Lead"))
-  tile_h = T.px(52)
+  tile_h = Z.pick(52, 64)   # taller for the larger text, at the same width
   lead = data.lead
   tiles = [(N_("distance"), lead.distance if lead else "—", None), (N_("gap"), lead.gap if lead else "—", None),
            (N_("rel speed"), lead.rel_speed if lead else "—", T.WARNING if lead and lead.closing else None),
@@ -147,9 +165,9 @@ def draw_panel(rect: rl.Rectangle, data: DevData) -> None:
     for (label, value, ink), cell in zip(tiles[i:i + 2], row(rl.Rectangle(body.x, y, body.width, tile_h), [FILL, FILL], T.px(6)), strict=True):
       draw.fill(cell, TILE_FILL, T.px(10))
       inner = inset(cell, x=T.px(10), y=T.px(7))
-      top, bottom = column(inner, [draw.line_height(T.font_px(11)), FILL], T.px(3))
-      draw.text(top, label, T.font_px(11), LABEL, MONO)
-      draw.text(bottom, draw.fit(value, T.font_px(18), BOLD, bottom.width), T.font_px(18), ink or T.TEXT, BOLD)
+      top, bottom = column(inner, [draw.line_height(Z.font_px(11)), FILL], T.px(3))
+      draw.text(top, label, Z.font_px(11), LABEL, MONO)
+      draw.text(bottom, draw.fit(value, Z.font_px(18), BOLD, bottom.width), Z.font_px(18), ink or T.TEXT, BOLD)
     y += tile_h + T.px(6)
   if data.show_cpu or data.show_temp or data.show_gpu or data.show_ram or data.show_fps:
     y = _section(body, y + T.px(6), N_("Device"))
@@ -179,16 +197,16 @@ def draw_strip(rect: rl.Rectangle, data: DevData) -> None:
   if not parts:
     return
   draw.fill(rect, STRIP_FILL)
-  for (label, value), cell in zip(parts, row(inset(rect, x=T.px(20)), [FILL] * len(parts), T.px(12)), strict=True):
+  for (label, value), cell in zip(parts, row(inset(rect, x=Z.px(20)), [FILL] * len(parts), Z.px(12)), strict=True):
     label = translate(label)
-    gap = draw.text_width(" ", STRIP_TEXT, MONO)   # a layout gap stays between the label and value in right-to-left scripts too
-    vw = draw.text_width(value, STRIP_TEXT, BOLD)
-    label = draw.fit(label, STRIP_TEXT, MONO, max(0, cell.width - gap - vw))
-    lw = draw.text_width(label, STRIP_TEXT, MONO)
+    gap = draw.text_width(" ", strip_text(), MONO)   # a layout gap stays between the label and value in right-to-left scripts too
+    vw = draw.text_width(value, strip_text(), BOLD)
+    label = draw.fit(label, strip_text(), MONO, max(0, cell.width - gap - vw))
+    lw = draw.text_width(label, strip_text(), MONO)
     gap = gap if label else 0
     x = cell.x + (cell.width - lw - gap - vw) / 2
-    draw.text(rl.Rectangle(x, cell.y, lw, cell.height), label, STRIP_TEXT, T.TEXT_SECONDARY, MONO)
-    draw.text(rl.Rectangle(x + lw + gap, cell.y, vw, cell.height), value, STRIP_TEXT, T.TEXT, BOLD)
+    draw.text(rl.Rectangle(x, cell.y, lw, cell.height), label, strip_text(), T.TEXT_SECONDARY, MONO)
+    draw.text(rl.Rectangle(x + lw + gap, cell.y, vw, cell.height), value, strip_text(), T.TEXT, BOLD)
 
 
 def lead_tag_motion(progress: float) -> tuple[float, float, float]:
@@ -207,14 +225,14 @@ def draw_lead_tag(center_x: float, top_y: float, lead: Lead, *, compact: bool = 
   ink = T.WARNING if braking else T.TEXT
   parts = [(value if value is not None else lead.gap, ink, BOLD)] if compact else [
     (lead.distance, T.TEXT, BOLD), (lead.gap, LABEL, BOLD), (lead.rel_speed, T.WARNING if lead.closing else T.TEXT_SECONDARY, BOLD)]
-  size, gap, pad = STRIP_TEXT, T.px(14), T.px(14)   # the metrics strip's size (design/gaptag.html)
+  size, gap, pad = strip_text(), Z.px(14), Z.px(14)   # the metrics strip's size (design/gaptag.html)
   widths = [draw.text_width(text, size, weight) for text, _, weight in parts]
-  w = max(T.px(78) if compact else 0.0, sum(widths) + gap * (len(parts) - 1) + pad * 2)
-  h = T.px(36)
-  box = rl.Rectangle(center_x - w / 2, top_y - h - T.px(14), w, h)
+  w = max(Z.px(78) if compact else 0.0, sum(widths) + gap * (len(parts) - 1) + pad * 2)
+  h = Z.px(36)
+  box = rl.Rectangle(center_x - w / 2, top_y - h - Z.px(14), w, h)
   anchor_alpha, connector, tag_alpha = lead_tag_motion(progress) if anchored else (0.0, 0.0, 1.0)
   if bounds is not None:
-    margin = T.px(8)
+    margin = Z.px(8)
     if not (bounds.x + margin <= center_x <= bounds.x + bounds.width - margin
             and bounds.y + margin <= top_y <= bounds.y + bounds.height - margin):
       return None
@@ -224,21 +242,21 @@ def draw_lead_tag(center_x: float, top_y: float, lead: Lead, *, compact: bool = 
     anchored = False      # the car is at or under the strip or bar: the tag alone, resting on it
   if anchored and anchor_alpha * opacity > 0.01:
     point = rl.Vector2(center_x, top_y)
-    draw.disc(point, T.px(4.2), draw.alpha(TAG_FILL, opacity * anchor_alpha))
-    draw.disc(point, T.px(2.7), draw.alpha(ink, opacity * anchor_alpha))
-  if bounds is not None and (box.y < bounds.y + T.px(8) or w > bounds.width - T.px(16)):
+    draw.disc(point, Z.px(4.2), draw.alpha(TAG_FILL, opacity * anchor_alpha))
+    draw.disc(point, Z.px(2.7), draw.alpha(ink, opacity * anchor_alpha))
+  if bounds is not None and (box.y < bounds.y + Z.px(8) or w > bounds.width - Z.px(16)):
     return None       # keep the anchor when there is no space for a readable tag above it
   if anchored and connector > 0:
-    length = T.px(10) * connector
-    for width, color in ((T.px(4.5), TAG_FILL), (T.px(1.5), ink)):
-      draw.fill(rl.Rectangle(center_x - width / 2, top_y - T.px(3) - length, width, length),
+    length = Z.px(10) * connector
+    for width, color in ((Z.px(4.5), TAG_FILL), (Z.px(1.5), ink)):
+      draw.fill(rl.Rectangle(center_x - width / 2, top_y - Z.px(3) - length, width, length),
                 draw.alpha(color, opacity * anchor_alpha), width / 2)
-    box.y += T.px(4) * (1.0 - tag_alpha)
+    box.y += Z.px(4) * (1.0 - tag_alpha)
   alpha = opacity * tag_alpha
   if alpha <= 0.01:
     return box
-  draw.fill(box, draw.alpha(TAG_FILL, alpha), T.px(11))
-  draw.stroke(box, draw.alpha(T.TRACK, alpha), T.px(11), T.px(1))
+  draw.fill(box, draw.alpha(TAG_FILL, alpha), Z.px(11))
+  draw.stroke(box, draw.alpha(T.TRACK, alpha), Z.px(11), Z.px(1))
   x = box.x + (w - sum(widths)) / 2 if compact else box.x + pad
   for (text, ink, weight), width in zip(parts, widths, strict=True):
     draw.text(rl.Rectangle(x, box.y, width, box.height), text, size, draw.alpha(ink, alpha), weight)
