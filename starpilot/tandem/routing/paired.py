@@ -2,23 +2,33 @@
 from __future__ import annotations
 
 import json
+from typing import TYPE_CHECKING
 
 from openpilot.starpilot.tandem.routing import config as C, downloads
 from openpilot.starpilot.tandem.routing.handoff import road_receipt
 
+if TYPE_CHECKING:
+  from openpilot.starpilot.tandem.routing.bundles import Bundle
+  from openpilot.starpilot.tandem.routing.maps import Manager
+
 
 class Transfers:
-  def __init__(self, manager):
+  """Downloads a dataset's parts alongside StarPilot's road downloader, one region at a time."""
+
+  def __init__(self, manager: Manager) -> None:
     self.manager = manager
 
-  def fetch(self, package, gate, progress):
+  def fetch(self, package: dict, gate: C.Gate, progress: C.Progress) -> list[Bundle]:
+    """Downloads the package's missing parts, region by region, while the road data for each region downloads."""
     manager, dataset = self.manager, package["dataset"]
     regions = sorted(package["regions"])
     missing = {part["id"]: part for part in package["missing"]}
-    counts, incoming, visited, finished = {}, {}, set(), set()
+    counts: dict[str, int] = {}
+    incoming: dict[str, Bundle] = {}
+    visited, finished = set(), set()
     current = None
 
-    def report():
+    def report() -> dict:
       receipt = road_receipt(manager.state["id"])
       if receipt.get("error"):
         raise C.RoutingError(receipt["error"])
@@ -43,7 +53,7 @@ class Transfers:
                       road_ready=set(regions) <= set(receipt["completed"]))
       return receipt
 
-    def check():
+    def check() -> None:
       gate()
       report()
 
@@ -56,7 +66,7 @@ class Transfers:
       manager.publish(force=True)
       parts = [part for part in package["missing"]
                if part["id"] in dataset["regions"][current]["parts"] and part["id"] not in incoming]
-      def part_progress(snapshot):
+      def part_progress(snapshot: dict[str, int]) -> None:
         counts.update(snapshot)
         report()
       prepared = downloads.prepare_many(parts, check, parts_progress=part_progress)

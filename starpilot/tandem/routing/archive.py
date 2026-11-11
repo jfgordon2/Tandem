@@ -6,6 +6,8 @@ from contextlib import contextmanager
 from pathlib import Path
 import shutil
 import subprocess
+from collections.abc import Iterator
+from typing import IO
 
 from openpilot.starpilot.tandem.routing import config as C
 
@@ -23,7 +25,7 @@ def _frame(path: Path, size: int) -> None:
     # Zstandard format specification: frame descriptor, optional window and
     # dictionary ID, then the content size. Our builder always includes size/CRC.
     # https://github.com/facebook/zstd/blob/dev/doc/zstd_compression_format.md
-    def integer(count):
+    def integer(count: int) -> int:
       value = stream.read(count)
       if len(value) != count:
         raise C.RoutingError("data_incompatible")
@@ -63,7 +65,7 @@ def _frame(path: Path, size: int) -> None:
 
 
 @contextmanager
-def _reader(source: Path):
+def _reader(source: Path) -> Iterator[IO[bytes]]:
   try:
     import zstandard as zstd
   except ImportError:
@@ -74,6 +76,8 @@ def _reader(source: Path):
       raise C.RoutingError("data_incompatible") from None
     with subprocess.Popen([decoder, "-q", "-d", "-c", f"-M{WINDOW}", "--", str(source)],
                           stdout=subprocess.PIPE, stderr=subprocess.DEVNULL) as process:
+      if process.stdout is None:   # Popen always gives the pipe asked for; this tells the type checker
+        raise C.RoutingError("data_incompatible") from None
       try:
         yield process.stdout
         if process.wait(timeout=10):
@@ -94,7 +98,15 @@ def _reader(source: Path):
       raise C.RoutingError("data_incompatible") from None
 
 
-def expand(source: Path, target: Path, record: dict, gate=lambda: None) -> None:
+def expand(source: Path, target: Path, record: dict, gate: C.Gate = lambda: None) -> None:
+  """Decompresses one archived file to target, checking its size and checksum.
+
+  Args:
+    source: The zstd archive.
+    target: Where the file goes; written to a .partial file first.
+    record: The file's manifest record (bytes, sha256).
+    gate: Called between chunks to stop.
+  """
   partial = target.with_name(target.name + ".partial")
   try:
     gate()

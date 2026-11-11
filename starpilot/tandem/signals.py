@@ -1,10 +1,17 @@
 """Tandem's animation catalog shared by the UI, theme installer and Galaxy hooks."""
+from __future__ import annotations
+
 import json
 from pathlib import Path
 import re
 import shutil
+from typing import Any, TYPE_CHECKING
+from collections.abc import Callable
 
 from openpilot.common.basedir import BASEDIR
+
+if TYPE_CHECKING:
+  from openpilot.common.params import Params
 
 SIGNAL_PACKS_PATH = Path(BASEDIR) / "selfdrive/ui/tandem/assets/signal_packs"
 
@@ -21,7 +28,7 @@ BUNDLED_SIGNAL_ANIMATIONS = (
 )
 SIGNAL_FRAME_PATTERN = re.compile(r"turn_signal(?:_(\d+))?\.png", re.IGNORECASE)
 
-def installed_packs(folder, normalize):
+def installed_packs(folder: Path, normalize: Callable[[str], str]) -> list[dict]:
   """Downloaded theme packs with PNG signal frames the raylib renderer can draw (GIF-only packs are skipped)."""
   bundled = {slug for slug, _ in BUNDLED_SIGNAL_ANIMATIONS}
   packs_dir = folder / "theme_packs"
@@ -42,9 +49,9 @@ def installed_packs(folder, normalize):
   return sorted(packs, key=lambda option: option["label"].casefold())
 
 
-def options(params, folder, normalize):
+def options(params: Params, folder: Path, normalize: Callable[[str], str]) -> list[dict]:
   """Choices for the Turn Signal Animation dropdown: None, bundled animations, then downloaded packs."""
-  options = [{"value": "stock", "label": "None"}]
+  options: list[dict] = [{"value": "stock", "label": "None"}]
   options += [{"value": slug, "label": label} for slug, label in BUNDLED_SIGNAL_ANIMATIONS]
   options += installed_packs(folder, normalize)
   saved = (params.get(SIGNAL_ANIMATION_PARAM, encoding="utf-8") or "stock").strip()
@@ -53,7 +60,7 @@ def options(params, folder, normalize):
   return options
 
 
-def effective(params):
+def effective(params: Params) -> str:
   """The animation actually in effect: like the device menus, Custom Themes off means none."""
   if not params.get_bool("CustomThemes"):
     return "stock"
@@ -61,14 +68,20 @@ def effective(params):
   return "stock" if saved in ("", "none") else saved
 
 
-def install_packs(folder):
+def install_packs(folder: Path) -> None:
   if SIGNAL_PACKS_PATH.is_dir():
     for pack in sorted(SIGNAL_PACKS_PATH.iterdir()):
       if (pack / "signals").is_dir():
         shutil.copytree(pack / "signals", folder / "theme_packs" / pack.name / "signals", dirs_exist_ok=True)
 
 
-def set_animation(params, key, value, folder, normalize, refresh):
+def set_animation(params: Params, key: str, value: Any, folder: Path, normalize: Callable[[str], str], refresh: Callable[[], None]) -> Any:
+  """Galaxy's setter for the turn signal animation param.
+
+  Returns:
+    None for any other key (Galaxy handles it); else Flask's response: the animation saved (turning on custom themes for
+    one other than stock), or an error for one that isn't available.
+  """
   if key != SIGNAL_ANIMATION_PARAM:
     return None
   from flask import jsonify
@@ -87,8 +100,8 @@ def set_animation(params, key, value, folder, normalize, refresh):
   return jsonify({"message": f"Turn signal animation set to {available[choice]['label']}.", "updated": updated}), 200
 
 
-def catalog(path):
-  entries = json.loads(path.read_text())
+def catalog(path: Path) -> list[dict]:
+  entries: list[dict] = json.loads(path.read_text())
   for section in entries:
     if any(item["key"] == "CustomUI" for item in section["params"]):
       index = next((i + 1 for i, item in enumerate(section["params"]) if item["key"] == "HolidayThemes"), 0)

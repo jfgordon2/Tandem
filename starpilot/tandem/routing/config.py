@@ -3,8 +3,13 @@ from __future__ import annotations
 
 import json
 import os
+from collections.abc import Callable
 from pathlib import Path
 import tempfile
+from typing import Any, TYPE_CHECKING, TypeAlias
+
+if TYPE_CHECKING:
+  from openpilot.common.params import Params
 
 VERSION = "3.9.1"
 PROTOCOL = 1
@@ -13,13 +18,22 @@ DEADLINE = 15.0
 SCREENS = ("TANDEM_SETTINGS", "TANDEM_HOME", "TANDEM_ONROAD", "TANDEM_SIDEBAR")
 
 
+# Long work takes a gate, called between steps, that raises RoutingError to stop (cancelled, no longer parked, ...), and
+# reports progress as (done, total).
+Gate: TypeAlias = Callable[[], None]
+Progress: TypeAlias = Callable[[int, int], None]
+
+
 class RoutingError(Exception):
+  """Why routing can't do something, as a short code the UI explains (data_missing, outside_coverage, ...)."""
+
   def __init__(self, code: str):
     self.code = code
     super().__init__(code)
 
 
 def enabled() -> bool:
+  """Whether offline routing is on: off with any Essentials screen turned off, else TANDEM_ROUTING, else on."""
   if any(os.getenv(name, "1") == "0" for name in SCREENS) or os.getenv("TANDEM_ROUTING") == "0":
     return False
   if os.getenv("TANDEM_ROUTING") == "1":
@@ -35,6 +49,7 @@ def policy_path() -> Path:
 
 
 def policy() -> tuple[bool, str]:
+  """(offline_only, preferred) from the saved policy. An unreadable strict choice stays strict, never enabling online routing."""
   try:
     value = json.loads(policy_path().read_text())
     if type(value.get("offline_only")) is not bool or value.get("preferred") not in ("online", "offline"):
@@ -117,7 +132,8 @@ def require_parked() -> None:
     raise RoutingError("park_to_change")
 
 
-def atomic_json(path: Path, value) -> None:
+def atomic_json(path: Path, value: Any) -> None:
+  """Writes value as JSON atomically (a temporary file, then a rename)."""
   path.parent.mkdir(parents=True, exist_ok=True)
   temporary = None
   try:
@@ -132,7 +148,7 @@ def atomic_json(path: Path, value) -> None:
       temporary.unlink(missing_ok=True)
 
 
-def should_run(_started=False, params=None, *_args) -> bool:
+def should_run(_started: bool = False, params: Params | None = None, *_args: object) -> bool:
   if not enabled():
     return False
   from openpilot.starpilot.tandem.routing import demand

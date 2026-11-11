@@ -13,10 +13,14 @@ import mmap
 import os
 from pathlib import Path
 import re
+from typing import Any, TYPE_CHECKING
 
 from openpilot.starpilot.common.maps_download_progress import load_maps_storage_cache, storage_bytes
 from openpilot.starpilot.common.maps_selection import US_STATE_CODES, normalize_maps_selected
 from openpilot.starpilot.tandem.routing import config as C
+
+if TYPE_CHECKING:
+  from openpilot.common.params import Params
 
 REPO = Path(__file__).resolve().parents[3]
 MENU_START = re.compile(rb'\{\s*"(?:nation|us_state)"\s*:\s*\{')
@@ -25,13 +29,14 @@ ARCHIVE = re.compile(r"(-?\d+)\.tar\.gz(?:\.part)?")
 CACHE = "MapsDownloadSizeCache"
 
 
-def root():
+def root() -> Path:
   # Same on-device location as mapd_wrapper.OFFLINE_ROOT. Private trials/tests
   # can redirect cleanup without touching any live road or routing data.
   return Path(os.getenv("TANDEM_ROAD_MAPS_DIR", "/data/media/0/osm/offline"))
 
 
-def menu(binary=None, override=None):
+def menu(binary: Path | None = None, override: Path | None = None) -> dict:
+  """mapd's download menu: its override file, else the menu embedded in the binary."""
   binary = binary or REPO / "starpilot/navigation/mapd"
   override = override or REPO / "mapd_download_menu.json"
   if override.exists():
@@ -64,7 +69,8 @@ def menu(binary=None, override=None):
   return value
 
 
-def regions(selection):
+def regions(selection: str) -> set[str]:
+  """The region tokens of a selection, a whole country expanded to its states."""
   normalized = normalize_maps_selected(selection)
   if selection and not normalized:
     raise C.RoutingError("invalid_request")
@@ -75,7 +81,7 @@ def regions(selection):
   return result
 
 
-def groups(location, *, sparse=True):
+def groups(location: dict, *, sparse: bool = True) -> set[tuple[int, int]]:
   """Match settings/download.go: adjustedBounds and downloadRows (step 2)."""
   try:
     bounds = location["bounding_box"]
@@ -86,7 +92,7 @@ def groups(location, *, sparse=True):
     a, b, c, d = math.floor(a / 2) * 2, math.floor(b / 2) * 2, math.ceil(c / 2) * 2, math.ceil(d / 2) * 2
   except (KeyError, TypeError, ValueError):
     raise C.RoutingError("data_incompatible") from None
-  rows = location.get("download_rows")
+  rows: Any = location.get("download_rows")   # from the JSON menu: checked below before use
   valid = sparse and isinstance(rows, list) and bool(rows)
   previous = None
   for row in rows if valid else ():
@@ -101,7 +107,7 @@ def groups(location, *, sparse=True):
   return {(lat, lon) for lat, first, end in rows for lon in range(first, end, 2)}
 
 
-def _fallback_location(region):
+def _fallback_location(region: str) -> dict:
   """Local geographic coverage may protect tiles, never certify a download."""
   from openpilot.starpilot.tandem.routing import catalog
   data = catalog.load()  # cached/bundled metadata only; no refresh or network
@@ -116,7 +122,8 @@ def _fallback_location(region):
   return {"bounding_box": {"min_lat": south, "min_lon": west, "max_lat": north, "max_lon": east}}
 
 
-def footprint(selection, data):
+def footprint(selection: str, data: dict) -> dict:
+  """The 2-degree archive groups each region of a selection needs."""
   result = {}
   for region in regions(selection):
     try:
@@ -129,7 +136,7 @@ def footprint(selection, data):
   return result
 
 
-def _group(path, low, high):
+def _group(path: Path, low: int, high: int) -> int | None:
   try:
     number = int(path.name)
     if path.name == str(number) and low <= number < high and number % 2 == 0 and path.is_dir() and not path.is_symlink():
@@ -139,7 +146,7 @@ def _group(path, low, high):
   return None
 
 
-def _tile(path, lat, lon):
+def _tile(path: Path, lat: int, lon: int) -> bool:
   match = TILE.fullmatch(path.name)
   if match is None or path.is_symlink() or not path.is_file():
     return False
@@ -148,7 +155,7 @@ def _tile(path, lat, lon):
           and lat <= a < c <= lat + 2 and lon <= b < d <= lon + 2)
 
 
-def _prune(folder, keep, gate):
+def _prune(folder: Path, keep: set[tuple[int, int]], gate: C.Gate) -> None:
   for latitude in folder.iterdir():
     lat = _group(latitude, -90, 90)
     if lat is None:
@@ -168,7 +175,7 @@ def _prune(folder, keep, gate):
       latitude.rmdir()
 
 
-def _prune_archives(folder, keep, gate):
+def _prune_archives(folder: Path, keep: set[tuple[int, int]], gate: C.Gate) -> None:
   if not folder.exists() or folder.is_symlink() or folder.parent.is_symlink():
     return
   for latitude in folder.iterdir():
@@ -187,7 +194,7 @@ def _prune_archives(folder, keep, gate):
       latitude.rmdir()
 
 
-def apply(selection, gate, memory, *, params=None, paired=False):
+def apply(selection: str, gate: C.Gate, memory: Params, *, params: Params | None = None, paired: bool = False) -> None:
   """After verified activation, remove only unneeded recognized road tiles.
 
   An interruption may leave extra deselected tiles for retry; selected tiles
@@ -199,7 +206,7 @@ def apply(selection, gate, memory, *, params=None, paired=False):
     return
   if folder.is_symlink():
     raise C.RoutingError("data_incompatible")
-  def check():
+  def check() -> None:
     gate()
     C.require_parked()
     if not C.enabled():
@@ -218,7 +225,8 @@ def apply(selection, gate, memory, *, params=None, paired=False):
     from openpilot.common.params import Params
     params = Params()
   cache = load_maps_storage_cache(params.get(CACHE, encoding="utf-8") or "")
-  retained, covered = {}, {}
+  retained: dict = {}
+  covered: dict = {}
   for key, entry in cache._selections.items():
     try:
       previous = regions(key)

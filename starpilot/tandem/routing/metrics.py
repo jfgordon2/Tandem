@@ -5,6 +5,7 @@ from pathlib import Path
 
 
 def memory() -> dict:
+  """This process's peak memory, and its current memory from /proc on Linux."""
   result = {"peak_rss_kib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (1024 if sys.platform == "darwin" else 1)}
   if sys.platform == "linux":
     try:

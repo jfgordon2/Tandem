@@ -11,6 +11,7 @@ import signal
 import resource
 import socket
 import sys
+from pathlib import Path
 
 from openpilot.starpilot.tandem.routing import config as C, images, verified
 from openpilot.starpilot.tandem.routing.bundles import selected as selected_bundle
@@ -18,6 +19,7 @@ from openpilot.starpilot.tandem.routing.metrics import memory
 
 
 def isolate_network() -> str:
+  """Denies socket and connect to this process and its children on Linux. Returns what was enforced."""
   if sys.platform != "linux":
     return "not_enforced_on_desktop"
   machine = platform.machine()
@@ -49,6 +51,7 @@ def isolate_network() -> str:
 
 
 def route_options(message: dict) -> dict:
+  """Valhalla's route options for a request: its start and heading, destination, language and costing."""
   start = message["start"]
   destination = message["destination"]
   lat, lon, heading = start
@@ -72,9 +75,10 @@ def route_options(message: dict) -> dict:
           "filters": {"action": "include", "attributes": ["shape_attributes.speed_limit"]}}
 
 
-def actor_config(graph):
+def actor_config(graph: Path) -> dict:
+  """Valhalla's configuration for the graph at graph, with small caches."""
   from valhalla import get_config
-  config = get_config(tile_dir="", tile_extract=str(graph))
+  config: dict = get_config(tile_dir="", tile_extract=str(graph))
   config["mjolnir"].update(tile_dir="", tile_url="", max_cache_size=64 * 1024**2,
                           use_simple_mem_cache=True, use_lru_mem_cache=False)
   config["mjolnir"]["data_processing"]["scan_tar"] = False
@@ -83,7 +87,7 @@ def actor_config(graph):
   return config
 
 
-def release_heap():
+def release_heap() -> None:
   if sys.platform == "linux":
     try:
       ctypes.CDLL(None).malloc_trim(0)
@@ -91,7 +95,7 @@ def release_heap():
       pass
 
 
-def compact_response(raw):
+def compact_response(raw: dict) -> dict:
   """Keep the existing provider contract, without unused intersection/waypoint trees."""
   if raw.get("code") != "Ok":
     return raw
@@ -105,10 +109,14 @@ def compact_response(raw):
     "legs": [{"steps": steps, "annotation": {"maxspeed": (leg.get("annotation") or {}).get("maxspeed", [])}}]}]}
 
 
-def main():
+def main() -> None:
+  """Answers route requests from stdin, one JSON line each, loading the requested bundle's graph as needed."""
   isolation = isolate_network()
   from valhalla import Actor
   actor = bundle = lease = None
+  result: dict | None = None
+  routed: dict | None = None
+  encoded: str | None = None
   for raw in sys.stdin.buffer:
     try:
       if len(raw) > C.MAX_MESSAGE:

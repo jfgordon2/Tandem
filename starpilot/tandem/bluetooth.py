@@ -9,11 +9,24 @@ import math
 import os
 import threading
 import time
+from typing import Any, TYPE_CHECKING
+from collections.abc import Callable
+
+if TYPE_CHECKING:
+  from cereal.messaging import SubMaster
 
 FRESH_S = 1.0
 
 
-def stationary_park(sm, now: float | None = None) -> bool:
+def stationary_park(sm: SubMaster, now: float | None = None) -> bool:
+  """Whether the car is verifiably parked and stationary, from fresh carState and carControl.
+
+  Messages must be recent by publication time too, since a just-read socket can hold an old, buffered one.
+
+  Args:
+    sm: A SubMaster with carState and carControl.
+    now: The monotonic time; now by default.
+  """
   now = time.monotonic() if now is None else now
   try:
     for service in ("carState", "carControl"):
@@ -32,11 +45,13 @@ def stationary_park(sm, now: float | None = None) -> bool:
 
 class ParkMonitor:
   """One lazy subscriber in the Bluetooth service; no UI or driving processes are modified."""
-  def __init__(self):
-    self._sm = None
+
+  def __init__(self) -> None:
+    self._sm: Any = None   # cereal SubMaster for carState and carControl, made on first use
     self._lock = threading.Lock()
 
   def allowed(self) -> bool:
+    """Whether Bluetooth settings may change now: parked and stationary, by the shared fresh-message check."""
     with self._lock:
       try:
         if self._sm is None:
@@ -54,17 +69,17 @@ class ParkMonitor:
         return False
 
 
-def controller_type(base, monitor_factory=ParkMonitor):
+def controller_type(base: type[Any], monitor_factory: Callable[[], ParkMonitor] = ParkMonitor) -> type[Any]:
   """The upstream UI fallback retains its original ignition-off restriction."""
   if os.getenv("TANDEM_SETTINGS", "1") == "0":
     return base
 
   class ParkedBluetoothController(base):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
       super().__init__(*args, **kwargs)
       self._park_monitor = monitor_factory()
 
-    def _settings_allowed(self, offroad=None) -> bool:
-      return super()._settings_allowed(offroad) or self._park_monitor.allowed()
+    def _settings_allowed(self, offroad: bool | None = None) -> bool:
+      return bool(super()._settings_allowed(offroad) or self._park_monitor.allowed())
 
   return ParkedBluetoothController

@@ -12,29 +12,33 @@ import socket
 import threading
 import time
 import uuid
+from typing import Any, TYPE_CHECKING
 
 from openpilot.starpilot.tandem.routing import config as C, demand
+
+if TYPE_CHECKING:
+  from openpilot.common.params import Params
 
 _scope = threading.local()
 
 
-def in_progress():
+def in_progress() -> bool:
   return getattr(_scope, "active", False)
 
 
-def on_map_download_started(selection):
+def on_map_download_started(selection: str) -> None:
   if not in_progress():
     from openpilot.starpilot.tandem.routing.maps import on_map_download_started as companion
     companion(selection)
 
 
-def enqueue(selection, **values):
+def enqueue(selection: str, **values: Any) -> dict:
   job = {"id": uuid.uuid4().hex, "selection": selection, "created": time.time(), **values}  # noqa: TID251
   C.atomic_json(C.root() / "map-request.json", job)
   return job
 
 
-def available():
+def available() -> bool:
   """Wake/probe before claiming road work; a missing broker leaves mapd alone."""
   if not demand.wake():
     return False
@@ -47,13 +51,14 @@ def available():
         connection.sendall(json.dumps({"protocol": C.PROTOCOL, "id": identity, "action": "status"}).encode() + b"\n")
         with connection.makefile("rb") as stream:
           response = json.loads(stream.readline(65536))
-        return response.get("id") == identity and response.get("protocol") == C.PROTOCOL
+        return bool(response.get("id") == identity and response.get("protocol") == C.PROTOCOL)
     except (OSError, ValueError):
       time.sleep(.05)
   return False
 
 
-def regions_for(selection):
+def regions_for(selection: str) -> list[str]:
+  """The road regions a selection downloads, one per state for a whole country."""
   from openpilot.starpilot.common.maps_selection import normalize_maps_selected
   from openpilot.starpilot.common.maps_catalog import VALID_MAP_TOKENS
   regions = set(filter(None, normalize_maps_selected(selection).split(",")))
@@ -70,18 +75,19 @@ def regions_for(selection):
   return []
 
 
-def road_receipt(identity):
+def road_receipt(identity: str) -> dict:
   value = demand.read_map("map-road.json")
   return value if value.get("id") == identity else {"id": identity, "completed": []}
 
 
-def cancelled(identity, memory):
+def cancelled(identity: str, memory: Params) -> bool:
   return (not C.enabled() or memory.get_bool("CancelDownloadMaps")
           or demand.read_map("map-cancel.json").get("id") == identity
           or demand.read_map("map-request.json").get("id") != identity)
 
 
-def wait_for_road_idle(identity, memory, subscriber=None):
+def wait_for_road_idle(identity: str, memory: Params, subscriber: Any = None) -> bool:
+  """Waits up to 10 seconds for mapd to finish what it's doing, so a new command isn't ignored. False if it doesn't."""
   # mapd ignores new download commands while active. Its cancellation can take
   # longer than the upstream updater's five-second wait (an archive is in flight).
   # Drain that operation before issuing the next command, including after restart.
@@ -101,40 +107,51 @@ def wait_for_road_idle(identity, memory, subscriber=None):
 
 
 class SelectionView:
-  def __init__(self, params, selection):
+  """Params as StarPilot's road downloader sees them, with MapsSelected set to one region."""
+
+  def __init__(self, params: Params, selection: str) -> None:
     self.params, self.selection = params, selection
 
-  def __getattr__(self, name):
+  def __getattr__(self, name: str) -> Any:
     return getattr(self.params, name)
 
-  def get(self, key, *args, **kwargs):
+  def get(self, key: str, *args: Any, **kwargs: Any) -> Any:
     return self.selection if key == "MapsSelected" else self.params.get(key, *args, **kwargs)
 
-  def put(self, key, value):
+  def put(self, key: str, value: Any) -> None:
     if key not in ("MapsSelected", "LastMapsUpdate"):
       self.params.put(key, value)
 
 
 class MemoryView:
-  def __init__(self, memory, identity):
+  """Memory params as the road downloader sees them, so cancelling one region doesn't clear the whole paired job."""
+
+  def __init__(self, memory: Params, identity: str) -> None:
     self.memory, self.identity, self.was_cancelled = memory, identity, False
 
-  def __getattr__(self, name):
+  def __getattr__(self, name: str) -> Any:
     return getattr(self.memory, name)
 
-  def get_bool(self, key):
+  def get_bool(self, key: str) -> bool:
     if key == "CancelDownloadMaps":
       self.was_cancelled |= cancelled(self.identity, self.memory)
       return self.was_cancelled
-    return self.memory.get_bool(key)
+    return bool(self.memory.get_bool(key))
 
-  def remove(self, key):
+  def remove(self, key: str) -> None:
     # Keep the existing ThreadManager lock until the whole paired job finishes.
     if key not in ("DownloadMaps", "CancelDownloadMaps"):
       self.memory.remove(key)
 
 
-def coordinate(updater, now, params, memory, selection, date):
+def coordinate(updater: Any, now: float, params: Params, memory: Params, selection: str, date: str) -> bool:
+  """Runs a paired job from StarPilot's update_maps: road data one region at a time, with the broker's routes.
+
+  StarPilot's road maps always finish, even when routing data fails.
+
+  Returns:
+    True when it handled the download; False to let StarPilot's downloader run as usual.
+  """
   if in_progress() or not C.enabled():
     return False
   regions = regions_for(selection)

@@ -10,6 +10,8 @@ import ipaddress
 from pathlib import Path
 import threading
 import time
+from typing import Any
+from collections.abc import Callable
 
 MM = "org.freedesktop.ModemManager1"
 MODEM = MM + ".Modem"
@@ -25,6 +27,7 @@ APPLY_TIMEOUT = 60.0
 
 @dataclass(frozen=True)
 class Observation:
+  """One reading of the modem and connection: SIM, registration, technology, signal, address and APN."""
   sim: bool | None = None
   modem: int | None = None
   registration: int | None = None
@@ -43,11 +46,13 @@ class Observation:
 
 @dataclass(frozen=True)
 class Status:
+  """The cellular status the settings show: a code (connected, no_sim, ...) and the reading behind it."""
   code: str = "checking"
   observation: Observation | None = None
 
 
-def technology(bits):
+def technology(bits: int) -> str:
+  """The access technology (5G, LTE, 3G or 2G) from ModemManager's AccessTechnologies bits; "" when none is set."""
   if bits & (1 << 15):
     return "5G"
   if bits & ((1 << 14) | (1 << 16) | (1 << 17)):
@@ -59,7 +64,7 @@ def technology(bits):
   return ""
 
 
-def unwrap(value):
+def unwrap(value: Any) -> Any:
   if isinstance(value, tuple) and len(value) == 2 and isinstance(value[0], str):
     return unwrap(value[1])
   if isinstance(value, dict):
@@ -70,10 +75,10 @@ def unwrap(value):
 
 
 class Cancelled(Exception):
-  pass
+  """The page closed while a read was in progress."""
 
 
-def _close(reader):
+def _close(reader: Reader | None) -> None:
   if reader is not None:
     try:
       reader.close()
@@ -82,7 +87,9 @@ def _close(reader):
 
 
 class Reader:
-  def __init__(self, keep=lambda: True):
+  """Reads ModemManager and NetworkManager over the system D-Bus. Read-only."""
+
+  def __init__(self, keep: Callable[[], bool] = lambda: True) -> None:
     from jeepney import DBusAddress, new_method_call
     from jeepney.io.blocking import open_dbus_connection
     from jeepney.low_level import MessageType
@@ -90,7 +97,7 @@ class Reader:
     self.keep = keep
     self.connection = open_dbus_connection(bus="SYSTEM", auth_timeout=2)
 
-  def request(self, bus, path, interface, method, signature=None, body=()):
+  def request(self, bus: str, path: str, interface: str, method: str, signature: str | None = None, body: tuple = ()) -> Any:
     if not self.keep():
       raise Cancelled()
     msg = self.call(self.address(path, bus_name=bus, interface=interface), method, signature, body)
@@ -99,13 +106,14 @@ class Reader:
       raise RuntimeError("Cellular status unavailable")  # never log a D-Bus payload
     return unwrap(reply.body)
 
-  def props(self, bus, path, interface):
-    return self.request(bus, path, "org.freedesktop.DBus.Properties", "GetAll", "s", (interface,))[0]
+  def props(self, bus: str, path: str, interface: str) -> dict:
+    return dict(self.request(bus, path, "org.freedesktop.DBus.Properties", "GetAll", "s", (interface,))[0])
 
-  def close(self):
+  def close(self) -> None:
     self.connection.close()
 
-  def read(self):
+  def read(self) -> Observation:
+    """One observation of the modem (the connected one when there are several), its bearer and NetworkManager's state."""
     objects = self.request(MM, "/org/freedesktop/ModemManager1", "org.freedesktop.DBus.ObjectManager", "GetManagedObjects")[0]
     modems = [(path, interfaces) for path, interfaces in objects.items() if MODEM in interfaces]
     if not modems:
@@ -124,7 +132,8 @@ class Reader:
     quality = min(100, max(0, int(quality))) if recent else None
     nm = self.props(NM, "/org/freedesktop/NetworkManager", NM)
     wifi, connecting, failed = False, state in (7, 10), state in (-1, 2) or gpp.get("RegistrationState") == 3
-    connected, address, bearer_apn, applied_apn, auto_config, identity = False, "", None, None, None, ()
+    connected, address, bearer_apn, applied_apn, auto_config = False, "", None, None, None
+    identity: tuple = ()
     # Bearers need not be exported by ObjectManager (some versions manage only
     # modem objects). Read their properties directly when absent from its reply.
     bearers = [(name, objects.get(name, {}).get(BEARER) or self.props(MM, name, BEARER)) for name in modem.get("Bearers", [])]
@@ -175,22 +184,30 @@ class Reader:
 
 
 class Monitor:
-  def __init__(self, reader_factory=Reader, clock=time.monotonic):
+  """Reads cellular status in the background while the page is open, and judges what it means for the chosen APN."""
+
+  def __init__(self, reader_factory: Callable[..., Reader] | None = Reader, clock: Callable[[], float] = time.monotonic) -> None:
     self.factory, self.clock = reader_factory, clock
     self._lock = threading.RLock()
     self._wake = threading.Event()
-    self._thread = None
+    self._thread: threading.Thread | None = None
     self._active = False
     self._generation = 0
-    self._observation = None
-    self._updated = None
+    self._observation: Observation | None = None
+    self._updated: float | None = None
     self._target = ""
-    self._pending = None
-    self._baseline = ()
+    self._pending: float | None = None
+    self._baseline: tuple = ()
     self._changed_auto = False
     self._saw_down = False
 
-  def set_active(self, active, apn=None):
+  def set_active(self, active: bool, apn: str | None = None) -> None:
+    """Starts or stops reading, as the page shows or hides.
+
+    Args:
+      active: The page is open.
+      apn: The APN the driver chose, when known.
+    """
     with self._lock:
       if apn is not None and apn != self._target:
         self._target = apn
@@ -204,7 +221,8 @@ class Monitor:
         self._thread.start()
       self._wake.set()
 
-  def apn_saved(self, apn, previous):
+  def apn_saved(self, apn: str, previous: str) -> None:
+    """Notes a saved APN, so the status waits for the connection to come back with it instead of trusting the old one."""
     with self._lock:
       self._baseline = self._observation.identity if self._observation else ()
       self._changed_auto = not apn and apn != previous
@@ -214,13 +232,14 @@ class Monitor:
       self._generation += 1
       self._wake.set()
 
-  def status(self):
+  def status(self) -> Status:
+    """The status for the page: checking until a fresh reading, then what it says, judged against the chosen APN."""
     with self._lock:
       now = self.clock()
       pending = self._pending is not None and 0 <= now - self._pending < APPLY_TIMEOUT
-      if self._updated is None or not 0 <= now - self._updated <= FRESH:
-        return Status("connecting" if pending else "checking")
       value = self._observation
+      if value is None or self._updated is None or not 0 <= now - self._updated <= FRESH:
+        return Status("connecting" if pending else "checking")
       if value.sim is False:
         return Status("no_sim", value)
       if value.sim is None or value.modem in (None, 0, 1, 4, 5):
@@ -241,8 +260,11 @@ class Monitor:
         return Status("not_connected", value)
       return Status("wifi" if value.wifi else "not_connected", value)
 
-  def _run(self):
-    reader = None
+  def _run(self) -> None:
+    factory = self.factory
+    if factory is None:   # set_active starts this thread only with a reader
+      return
+    reader: Reader | None = None
     try:
       while True:
         with self._lock:
@@ -252,7 +274,7 @@ class Monitor:
           self._wake.clear()
         try:
           if reader is None:
-            reader = self.factory(lambda: self._active)
+            reader = factory(lambda: self._active)
           value = reader.read()
         except Cancelled:
           continue
@@ -276,5 +298,5 @@ class Monitor:
           self.set_active(True)
 
 
-def monitor():
+def monitor() -> Monitor:
   return Monitor(reader_factory=Reader if Path("/TICI").exists() else None)

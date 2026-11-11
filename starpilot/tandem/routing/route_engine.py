@@ -2,11 +2,16 @@
 from __future__ import annotations
 
 import time
+from typing import Any, TYPE_CHECKING
+from collections.abc import Callable
 
 from openpilot.starpilot.tandem.routing import client
 from openpilot.starpilot.tandem.routing.config import RoutingError
 from openpilot.starpilot.tandem.routing.normalize import normalize
 from openpilot.starpilot.tandem.routing import config as C
+
+if TYPE_CHECKING:
+  from openpilot.starpilot.navigation.route_engine import Coordinate, NavigationRoute
 
 
 class PolicyRouteEngine:
@@ -16,17 +21,20 @@ class PolicyRouteEngine:
   client has a fifteen-second deadline. A failed attempt therefore has a finite
   twenty-second transport budget, with no provider alternation loop.
   """
-  def __init__(self, caller="navigation", language="en", online=None, offline=None, clock=time.monotonic):
+
+  def __init__(self, caller: str = "navigation", language: str = "en", online: Any = None, offline: LocalRouteEngine | None = None,
+               clock: Callable[[], float] = time.monotonic) -> None:
     self.online, self.offline = online, offline or LocalRouteEngine(caller, language)
     self.clock = clock
     self.retry_at = 0.0
     self.status, self.provider, self.fallback_at = "idle", "", 0.0
 
-  def available(self, token):
+  def available(self, token: str) -> bool:
     from openpilot.starpilot.tandem.routing.bundles import capability
     return ("online" in C.provider_order() and bool(token.strip())) or capability()["status"] == "ready"
 
-  def fetch_route(self, token, start, destination, bearing=None):
+  def fetch_route(self, token: str, start: Coordinate, destination: dict[str, Any], bearing: float | None = None) -> NavigationRoute | None:
+    """A route from each provider in the policy's order, stopping at the first that answers; None when none does."""
     if self.clock() < self.retry_at:
       return None
     policy = C.policy()
@@ -67,14 +75,18 @@ class PolicyRouteEngine:
 
 
 class LocalRouteEngine:
-  def __init__(self, caller: str = "navigation", language: str = "en", fetch=None, clock=time.monotonic):
+  """Offline routing as a StarPilot route engine."""
+
+  def __init__(self, caller: str = "navigation", language: str = "en", fetch: Callable[..., dict] | None = None,
+               clock: Callable[[], float] = time.monotonic) -> None:
     self.caller, self.language = caller, language
     self.fetch = fetch or client.route
     self.clock = clock
     self.retry_at = 0.0
     self.status = "idle"
 
-  def fetch_route(self, token, start, destination, bearing=None):
+  def fetch_route(self, token: str, start: Coordinate, destination: dict[str, Any], bearing: float | None = None) -> NavigationRoute | None:
+    """A route from offline routing, or None (always returning, so the caller's fetch thread can finish)."""
     if self.clock() < self.retry_at:
       return None
     self.status = "routing"

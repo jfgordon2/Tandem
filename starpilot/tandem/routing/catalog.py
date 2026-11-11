@@ -24,6 +24,7 @@ def tokens(selection: str) -> set[str]:
 
 
 def validate(data: dict) -> dict:
+  """The catalog, checked for its schema, runtime version and packages. Raises ValueError otherwise."""
   try:
     if type(data["schema"]) is not int or data["schema"] not in (1, 2) or data["runtime_version"] != C.VERSION or not isinstance(data["packages"], list):
       raise ValueError
@@ -59,11 +60,18 @@ def validate(data: dict) -> dict:
 
 
 @lru_cache(maxsize=2)
-def _read(path, identity):
-  return validate(json.loads(path.read_text()))
+def _read(path: Path, identity: tuple[int, ...]) -> dict:
+  """The catalog at path, validated.
+
+  Args:
+    path: The catalog file.
+    identity: The file's stat; it keys the cache, so a changed file is read again.
+  """
+  return dict(validate(json.loads(path.read_text())))
 
 
-def load(refresh=False, gate=lambda: None) -> dict:
+def load(refresh: bool = False, gate: C.Gate = lambda: None) -> dict:
+  """The region catalog: the cached copy, or a fresh download with refresh (the cache serves while the host is unavailable)."""
   cache = C.root() / "catalog.json"
   if refresh:
     gate()
@@ -90,6 +98,14 @@ def load(refresh=False, gate=lambda: None) -> dict:
 
 
 def plan(selection: str, data: dict | None = None) -> tuple[list[dict], set[str]]:
+  """The packages to install for a selection.
+
+  Connected graphs covering several selected regions are preferred; separate graphs can serve separate trips, never a
+  stitched cross-border route.
+
+  Returns:
+    (packages, regions the catalog doesn't cover).
+  """
   remaining, result = tokens(selection), []
   data = data or load()
   if data["schema"] == 2:
@@ -112,6 +128,7 @@ def plan(selection: str, data: dict | None = None) -> tuple[list[dict], set[str]
 
 
 def ready_regions() -> set[str]:
+  """The regions installed, verified routing data covers."""
   result = set()
   known = {p["id"]: p["regions"] for p in load()["packages"]}
   for b in bundles.routing_bundles():

@@ -6,12 +6,25 @@ import errno
 import socket
 import time
 import uuid
+from typing import Any
 
 from openpilot.starpilot.tandem.routing import config as C, demand
 from openpilot.starpilot.tandem.routing.bundles import capability, for_trip, load
 
 
-def request(action: str, *, timeout: float = C.DEADLINE, **payload) -> dict:
+def request(action: str, *, timeout: float = C.DEADLINE, **payload: Any) -> dict:
+  """Sends one request to the routing broker and returns its reply.
+
+  A request is retried only before it's sent: one the broker accepted is never replayed.
+
+  Args:
+    action: The broker action (route, status, ...).
+    timeout: The deadline in seconds.
+    payload: The request's fields.
+
+  Raises:
+    RoutingError: When the broker can't be reached or doesn't answer in time.
+  """
   end = time.monotonic() + timeout
   identity = uuid.uuid4().hex
   message = {"protocol": C.PROTOCOL, "id": identity, "action": action, **payload}
@@ -50,7 +63,7 @@ def request(action: str, *, timeout: float = C.DEADLINE, **payload) -> dict:
       response = json.loads(raw)
       if response.get("id") != identity or response.get("protocol") != C.PROTOCOL:
         raise C.RoutingError("invalid_response")
-      return response
+      return dict(response)
   except TimeoutError:
     raise C.RoutingError("timeout") from None
   except (OSError, ValueError, TypeError, AttributeError):
@@ -58,6 +71,17 @@ def request(action: str, *, timeout: float = C.DEADLINE, **payload) -> dict:
 
 
 def route(start: tuple[float, float, float | None], destination: dict, *, caller: str = "navigation", language: str = "en") -> dict:
+  """A route from offline routing, through the broker.
+
+  Args:
+    start: (latitude, longitude, heading or None).
+    destination: The destination place, with latitude and longitude.
+    caller: "navigation" or "preview"; a preview yields to navigation.
+    language: The instructions' language.
+
+  Raises:
+    RoutingError: Why there's no route (no data, outside coverage, timeout...).
+  """
   state = capability()
   if state["status"] != "ready":
     raise C.RoutingError(state["status"])
@@ -68,4 +92,7 @@ def route(start: tuple[float, float, float | None], destination: dict, *, caller
     raise C.RoutingError(result["status"])
   if load(bundle.folder).generation != result.get("generation") or not C.enabled():
     raise C.RoutingError("superseded")
-  return result["route"]
+  route = result["route"]
+  if not isinstance(route, dict):
+    raise C.RoutingError("invalid_response")
+  return route

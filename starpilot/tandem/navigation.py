@@ -3,13 +3,18 @@ from __future__ import annotations
 
 import os
 import time
+from typing import Any, TYPE_CHECKING
 
 from openpilot.starpilot.tandem.state import NAV_TURN
+
+if TYPE_CHECKING:
+  from cereal.messaging import SubMaster
 
 EMPTY_TURN = {"active": False, "maneuver": "", "modifier": ""}
 
 
-def controller_type(base):
+def controller_type(base: type[Any]) -> type[Any]:
+  """StarPilot's cruise controller, recording the turn it selected; with offline routing, only from a fresh instruction."""
   if os.getenv("TANDEM_ONROAD", "1") == "0":
     return base
 
@@ -17,11 +22,11 @@ def controller_type(base):
     nav_turn_maneuver = ""
     nav_turn_modifier = ""
 
-    def _selected_turn(self, maneuver, modifier):
+    def _selected_turn(self, maneuver: str | None, modifier: str | None) -> None:
       self.nav_turn_maneuver = str(maneuver or "").strip().lower()
       self.nav_turn_modifier = str(modifier or "").strip()
 
-    def _get_nav_turn_control_target(self, v_cruise, sm, starpilot_toggles):
+    def _get_nav_turn_control_target(self, v_cruise: float, sm: SubMaster, starpilot_toggles: Any) -> float:
       self.nav_turn_maneuver = self.nav_turn_modifier = ""
       from openpilot.starpilot.tandem.routing.config import enabled
       if enabled():
@@ -32,12 +37,12 @@ def controller_type(base):
             return 0.0
         except (TypeError, ValueError, OverflowError):
           return 0.0
-      return super()._get_nav_turn_control_target(v_cruise, sm, starpilot_toggles, on_selected=self._selected_turn)
+      return float(super()._get_nav_turn_control_target(v_cruise, sm, starpilot_toggles, on_selected=self._selected_turn))
 
   return TandemCruise
 
 
-def publish_turn(planner, sm) -> None:
+def publish_turn(planner: Any, sm: SubMaster) -> None:
   if os.getenv("TANDEM_ONROAD", "1") == "0":
     return
   cruise = planner.starpilot_vcruise

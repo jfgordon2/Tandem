@@ -14,25 +14,29 @@ import signal
 import subprocess
 import sys
 import time
+from typing import IO
+from collections.abc import Callable
 
 from openpilot.starpilot.tandem.can_recorder import CanSource, OBD_MAX_SECONDS, RecorderError
 
 FINGERPRINT = "CHEVROLET_BOLT_ACC_2022_2023"
 
 
-def supported(info):
+def supported(info: dict) -> bool:
   return info.get("brand") == "gm" and info.get("fingerprint") == FINGERPRINT and info.get("network_location") == "fwdCamera"
 
 
 class NativeGuard:
-  def __init__(self):
+  """The OBD child's guard: true while the car is parked and stationary and the panda's camera-safety setup is unchanged."""
+
+  def __init__(self) -> None:
     from cereal import messaging
     from openpilot.starpilot.tandem.bluetooth import stationary_park
     self._sm = messaging.SubMaster(["carState", "carControl", "pandaStates"])
     self._parked = stationary_park
     self._tx = None
 
-  def __call__(self):
+  def __call__(self) -> bool:
     self._sm.update(0)
     sm = self._sm
     if not self._parked(sm) or not (sm.valid["pandaStates"] and sm.alive["pandaStates"]):
@@ -48,12 +52,13 @@ class NativeGuard:
       return False
     tx = p.canState1.totalTxCnt
     self._tx = tx if self._tx is None else self._tx
-    return tx == self._tx
+    return bool(tx == self._tx)
 
 
 class Routing:
   """Two route selections, with version-checked reads. Panda.connect() is deliberately never called."""
-  def __init__(self):
+
+  def __init__(self) -> None:
     from panda import Panda
     from panda.python.spi import PandaSpiHandle
     self._lock = open("/tmp/tandem-obd-input.lock", "a")
@@ -81,11 +86,13 @@ class Routing:
       self.close()
       raise
 
-  def select(self, obd):
+  def select(self, obd: bool) -> None:
     # Both native pandad and PandaSpiHandle flock /dev/spidev0.0 for each transaction.
+    if self._handle is None:
+      raise RecorderError("obd")
     self._handle.controlWrite(self._panda.REQUEST_OUT, 0xdb, int(obd), 0, b"", timeout=500)
 
-  def close(self):
+  def close(self) -> None:
     try:
       if self._handle is not None:
         self._handle.close()
@@ -93,11 +100,26 @@ class Routing:
       self._lock.close()
 
 
-def watch(stream, emit, guard, factory=Routing, clock=time.monotonic, wait=select.select, maximum=OBD_MAX_SECONDS):
+def watch(stream: IO[str], emit: Callable[[dict], None], guard: Callable[[], bool], factory: Callable[[], Routing] = Routing,
+          clock: Callable[[], float] = time.monotonic, wait: Callable[..., tuple[list, list, list]] = select.select,
+          maximum: float = OBD_MAX_SECONDS) -> None:
+  """The OBD child's loop: selects the spare input, then restores normal routing when the lease ends.
+
+  The lease ends on the parent's EOF, a missed heartbeat, a failed guard or the time limit.
+
+  Args:
+    stream: The parent's heartbeats; EOF ends the lease.
+    emit: Sends a message to the parent.
+    guard: True while it's safe to keep the OBD input.
+    factory: Opens the panda's input routing.
+    clock: The monotonic clock.
+    wait: select.select, for tests.
+    maximum: The longest lease in seconds.
+  """
   link = None
   reason, restored = "obd_guard", True
 
-  def publish(message):
+  def publish(message: dict) -> None:
     try:
       emit(message)
     except (BrokenPipeError, OSError):
@@ -147,32 +169,45 @@ def watch(stream, emit, guard, factory=Routing, clock=time.monotonic, wait=selec
     publish({"closed": True, "restored": restored, "reason": reason})
 
 
+def _pipes(process: subprocess.Popen[str]) -> tuple[IO[str], IO[str]]:
+  """The reader's stdin and stdout. Lease opens both as pipes, so neither is None."""
+  if process.stdin is None or process.stdout is None:
+    raise RecorderError("obd")
+  return process.stdin, process.stdout
+
+
 class Lease:
-  def __init__(self):
-    self.process = None
-    self.ended_reason = None
-    self.restored = None
+  """The parent's side of an OBD lease: the child process that holds the input, and its heartbeat."""
+
+  def __init__(self) -> None:
+    self.process: subprocess.Popen[str] | None = None
+    self.ended_reason: str | None = None
+    self.restored: bool | None = None
     self._beat = 0.
 
-  def open(self):
+  def open(self) -> None:
+    """Starts the child and waits for it to report the input selected."""
     self.process = subprocess.Popen([sys.executable, "-u", "-m", "openpilot.starpilot.tandem.obd"],
                                     stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
                                     text=True, bufsize=1, start_new_session=True)
-    ready, _, _ = select.select([self.process.stdout], [], [], 6)
+    _, stdout = _pipes(self.process)
+    ready, _, _ = select.select([stdout], [], [], 6)
     if not ready:
       self.close()
       raise RecorderError("obd")
-    msg = json.loads(self.process.stdout.readline())
+    msg = json.loads(stdout.readline())
     if not msg.get("ready"):
       self.close()
       raise RecorderError(msg.get("error", "obd"))
 
-  def tick(self):
+  def tick(self) -> None:
+    """Reads the child's messages and sends a heartbeat; notes why the lease ended, if it has."""
     p = self.process
     if p is None or self.ended_reason:
       return
-    while select.select([p.stdout], [], [], 0)[0]:
-      line = p.stdout.readline()
+    stdin, stdout = _pipes(p)
+    while select.select([stdout], [], [], 0)[0]:
+      line = stdout.readline()
       if not line:
         self.ended_reason = "obd_guard"
         break
@@ -183,20 +218,22 @@ class Lease:
         break
     if not self.ended_reason and time.monotonic()-self._beat >= .3:
       try:
-        p.stdin.write("beat\n")
-        p.stdin.flush()
+        stdin.write("beat\n")
+        stdin.flush()
         self._beat = time.monotonic()
       except (BrokenPipeError, OSError):
         self.ended_reason = "obd_guard"
 
-  def close(self):
+  def close(self) -> None:
+    """Ends the lease and waits for the child to report normal routing restored."""
     if self.process is None:
       return
     p, self.process = self.process, None
+    stdin, stdout = _pipes(p)
     try:
-      p.stdin.close()   # EOF makes the independent watchdog restore normal routing
+      stdin.close()   # EOF makes the independent watchdog restore normal routing
       p.wait(timeout=4)
-      for line in p.stdout:
+      for line in stdout:
         msg = json.loads(line)
         if msg.get("closed"):
           self.restored = msg["restored"]
@@ -204,40 +241,42 @@ class Lease:
       # The child has its own 2 s lease timeout, plus bounded SPI retries; don't kill it before cleanup.
       raise RecorderError("obd_restore") from None
     finally:
-      p.stdout.close()
+      stdout.close()
     if self.restored is not True:
       raise RecorderError("obd_restore")
 
 
 class ObdSource(CanSource):
-  def __init__(self, lease_factory=Lease):
+  """The recorder's CAN source over the OBD input, while a lease holds it."""
+
+  def __init__(self, lease_factory: Callable[[], Lease] = Lease) -> None:
     super().__init__()
     self._lease = lease_factory()
-    self.ended_reason = None
+    self.ended_reason: str | None = None
 
-  def allowed(self):
+  def allowed(self) -> bool:
     return self._park.allowed()   # OBD needs fresh live Park, including with the ignition on
 
-  def info(self):
+  def info(self) -> dict:
     info = super().info()
     if not supported(info):
       raise RecorderError("obd")
     return {**info, "obd_bus": 1, "obd_safety": "gm_camera_param_3_no_bus_1_tx"}
 
-  def open(self):
+  def open(self) -> None:
     self._lease.open()
 
-  def poll(self):
+  def poll(self) -> tuple[list[tuple[int, int, int, bytes]], dict | None]:
     self._lease.tick()
     self.ended_reason = self._lease.ended_reason
     return super().poll() if not self.ended_reason else ([], None)
 
-  def close(self):
+  def close(self) -> None:
     self._lease.close()
 
 
 if __name__ == "__main__":
-  def interrupted(signum, frame):
+  def interrupted(signum: int, frame: object) -> None:
     raise RecorderError("obd")
   signal.signal(signal.SIGTERM, interrupted)
   signal.signal(signal.SIGINT, interrupted)

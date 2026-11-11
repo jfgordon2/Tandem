@@ -14,11 +14,16 @@ import subprocess
 import sys
 import tempfile
 import time
+from typing import TYPE_CHECKING
+from collections.abc import Iterable, Iterator
 
 from openpilot.starpilot.tandem.routing import config as C, verified
 
+if TYPE_CHECKING:
+  from openpilot.starpilot.tandem.routing.bundles import Bundle
 
-def is_image(bundle) -> bool:
+
+def is_image(bundle: Bundle) -> bool:
   return bundle.manifest["schema"] in (3, 4)
 
 
@@ -29,26 +34,27 @@ def mount_root() -> Path:
   return Path(os.getenv("TANDEM_ROUTING_MOUNT_DIR", str(default)))
 
 
-def mount_path(bundle) -> Path:
+def mount_path(bundle: Bundle) -> Path:
   if _staged(bundle):
     folder = hashlib.sha256(str(bundle.folder.resolve()).encode()).hexdigest()[:16]
     return mount_root() / "incoming" / f"{bundle.id}-{bundle.generation}-{folder}"
   return mount_root() / f"{bundle.id}-{bundle.generation}"
 
 
-def _staged(bundle):
+def _staged(bundle: Bundle) -> bool:
   return bundle.folder.resolve().is_relative_to((C.root() / "downloads").resolve())
 
 
-def source(bundle) -> Path:
-  return bundle.folder / bundle.manifest["graph"]["file"]
+def source(bundle: Bundle) -> Path:
+  """The bundle's graph file."""
+  return Path(bundle.folder / str(bundle.manifest["graph"]["file"]))
 
 
-def graph_path(bundle) -> Path:
+def graph_path(bundle: Bundle) -> Path:
   return mount_path(bundle) / "tiles.tar" if is_image(bundle) else bundle.folder / "tiles.tar"
 
 
-def _unescape(value):
+def _unescape(value: str) -> str:
   for escaped, char in (("\\040", " "), ("\\011", "\t"), ("\\012", "\n"), ("\\134", "\\")):
     value = value.replace(escaped, char)
   return value
@@ -65,7 +71,7 @@ def _mounts() -> dict:
   return result
 
 
-def _command(arguments, timeout=15):
+def _command(arguments: list[str], timeout: float = 15) -> None:
   prefix = [] if os.geteuid() == 0 else ["sudo", "-n"]
   try:
     subprocess.run([*prefix, *arguments], check=True, timeout=timeout, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -73,11 +79,12 @@ def _command(arguments, timeout=15):
     raise C.RoutingError("data_incompatible") from None
 
 
-def _backing(row):
+def _backing(row: dict) -> Path:
   return Path(_unescape((Path("/sys/dev/block") / row["device"] / "loop/backing_file").read_text().strip()))
 
 
-def require_mounted(bundle) -> Path:
+def require_mounted(bundle: Bundle) -> Path:
+  """The bundle's graph path, mounting its image if it isn't mounted yet."""
   if not is_image(bundle):
     return graph_path(bundle)
   point = mount_path(bundle)
@@ -98,7 +105,7 @@ def require_mounted(bundle) -> Path:
 
 
 @contextmanager
-def _mount_lock(*, blocking=True):
+def _mount_lock(*, blocking: bool = True) -> Iterator[None]:
   """Serialize directory creation/mount/unmount with cleanup across processes."""
   parent = mount_root().parent
   parent.mkdir(parents=True, exist_ok=True, mode=0o700)
@@ -116,7 +123,7 @@ def _mount_lock(*, blocking=True):
     yield
 
 
-def ensure(bundle) -> Path:
+def ensure(bundle: Bundle) -> Path:
   verified.require(bundle)
   if not is_image(bundle):
     return graph_path(bundle)
@@ -126,7 +133,7 @@ def ensure(bundle) -> Path:
     return _ensure_locked(bundle)
 
 
-def _ensure_locked(bundle):
+def _ensure_locked(bundle: Bundle) -> Path:
   point = mount_path(bundle)
   if point in _mounts():
     return require_mounted(bundle)
@@ -143,7 +150,7 @@ def _ensure_locked(bundle):
   return require_mounted(bundle)
 
 
-def unmount(bundle) -> None:
+def unmount(bundle: Bundle) -> None:
   """Caller must hold the bundle's exclusive reader lease."""
   if not is_image(bundle):
     return
@@ -151,7 +158,7 @@ def unmount(bundle) -> None:
     _unmount_point(mount_path(bundle))
 
 
-def _unmount_point(point):
+def _unmount_point(point: Path) -> None:
   # Caller holds the namespace transition lock as well as any bundle lease.
   row = _mounts().get(point)
   if row:
@@ -162,7 +169,7 @@ def _unmount_point(point):
     point.rmdir()
 
 
-def unmount_id(identity):
+def unmount_id(identity: str) -> None:
   """Caller holds this ID's exclusive lease, including for a corrupt manifest."""
   if mount_root().exists():
     with _mount_lock():
@@ -182,7 +189,7 @@ def release_unused() -> None:
     pass  # a transition owns the namespace; idle cleanup can wait until later
 
 
-def _release_unused_locked():
+def _release_unused_locked() -> None:
   from openpilot.starpilot.tandem.routing.bundles import ID
   for point in mount_root().glob("*"):
     identity, separator, generation = point.name.rpartition("-")
@@ -220,7 +227,8 @@ def _release_unused_locked():
 
 
 @contextmanager
-def reader(bundle):
+def reader(bundle: Bundle) -> Iterator[None]:
+  """Holds a shared lease on the bundle while its graph is read, so it isn't removed underneath."""
   with (bundle.folder / ".lease").open("a") as lease:
     try:
       fcntl.flock(lease, fcntl.LOCK_SH | fcntl.LOCK_NB)
@@ -232,7 +240,7 @@ def reader(bundle):
 
 
 @contextmanager
-def staged_reader(bundle):
+def staged_reader(bundle: Bundle) -> Iterator[Path]:
   """One incoming part at a time; its lease also protects crash cleanup."""
   if not _staged(bundle):
     raise C.RoutingError("invalid_request")
@@ -250,7 +258,7 @@ def staged_reader(bundle):
         _unmount_point(mount_path(bundle))
 
 
-def pack_stream(chunks, size: int, image: Path, gate=lambda: None, *, progress=None):
+def pack_stream(chunks: Iterable[bytes], size: int, image: Path, gate: C.Gate = lambda: None, *, progress: C.Progress | None = None) -> dict:
   """Wrap a streamed native tar in SquashFS; never materialize an expanded file."""
   import tarfile
   from openpilot.starpilot.tandem.routing import tiles
@@ -265,7 +273,7 @@ def pack_stream(chunks, size: int, image: Path, gate=lambda: None, *, progress=N
   sent = 0
   if progress is not None:
     progress(0, size)
-  def outer():
+  def outer() -> Iterator[bytes]:
     nonlocal count
     yield info.tobuf(format=tarfile.GNU_FORMAT)
     for block in chunks:
@@ -279,10 +287,13 @@ def pack_stream(chunks, size: int, image: Path, gate=lambda: None, *, progress=N
     yield bytes(tiles.padded(512 + size + 1024, tarfile.RECORDSIZE) - 512 - size)
   try:
     with subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) as process:
+      stdin = process.stdin
+      if stdin is None:   # Popen always gives the pipe asked for; this tells the type checker
+        raise C.RoutingError("worker_failed")
       try:
-        os.set_blocking(process.stdin.fileno(), False)
+        os.set_blocking(stdin.fileno(), False)
         with selectors.DefaultSelector() as selector:
-          selector.register(process.stdin, selectors.EVENT_WRITE)
+          selector.register(stdin, selectors.EVENT_WRITE)
           deadline = time.monotonic() + 300
           for block in outer():
             pending = memoryview(block)
@@ -294,14 +305,14 @@ def pack_stream(chunks, size: int, image: Path, gate=lambda: None, *, progress=N
                 raise C.RoutingError("data_incompatible")
               if selector.select(.2):
                 try:
-                  pending = pending[os.write(process.stdin.fileno(), pending[:tiles.BLOCK]):]
+                  pending = pending[os.write(stdin.fileno(), pending[:tiles.BLOCK]):]
                   deadline = time.monotonic() + 300
                 except BlockingIOError:
                   pass
             sent += len(block)
             if progress is not None:
               progress(min(size, max(0, sent - 512)), size)
-        process.stdin.close()
+        stdin.close()
         while process.poll() is None:
           gate()
           if time.monotonic() > deadline:
@@ -328,7 +339,7 @@ def pack_stream(chunks, size: int, image: Path, gate=lambda: None, *, progress=N
   return {"bytes": count, "sha256": digest.hexdigest()}
 
 
-def verify_graph(folder: Path, manifest: dict, gate=lambda: None, *, progress=None) -> None:
+def verify_graph(folder: Path, manifest: dict, gate: C.Gate = lambda: None, *, progress: C.Progress | None = None) -> None:
   """Stream the logical graph once at acceptance, with bounded decoder queues."""
   graph = manifest["graph"]
   tool = shutil.which("unsquashfs")
@@ -340,10 +351,13 @@ def verify_graph(folder: Path, manifest: dict, gate=lambda: None, *, progress=No
   if progress is not None:
     progress(0, graph["bytes"])
   with subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL) as process:
+    stdout = process.stdout
+    if stdout is None:   # Popen always gives the pipe asked for; this tells the type checker
+      raise C.RoutingError("worker_failed")
     try:
       deadline = time.monotonic() + 300
       with selectors.DefaultSelector() as selector:
-        selector.register(process.stdout, selectors.EVENT_READ)
+        selector.register(stdout, selectors.EVENT_READ)
         while True:
           paused = time.monotonic()
           gate()
@@ -352,7 +366,7 @@ def verify_graph(folder: Path, manifest: dict, gate=lambda: None, *, progress=No
             raise C.RoutingError("timeout")
           if not selector.select(.2):
             continue
-          block = os.read(process.stdout.fileno(), min(256 * 1024, graph["bytes"] - count + 1))
+          block = os.read(stdout.fileno(), min(256 * 1024, graph["bytes"] - count + 1))
           if not block:
             break
           count += len(block)
@@ -374,7 +388,7 @@ def verify_graph(folder: Path, manifest: dict, gate=lambda: None, *, progress=No
 
 
 @lru_cache(maxsize=2)
-def _queue_options(tool):
+def _queue_options(tool: str) -> list[str]:
   try:
     version = subprocess.run([tool, "-version"], capture_output=True, text=True, timeout=10)
   except (OSError, subprocess.SubprocessError):

@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import tempfile
 import time
+from typing import Any
 
 
 def state_dir() -> Path:
@@ -19,10 +20,13 @@ def state_dir() -> Path:
 
 
 class Snapshot:
+  """A small JSON value shared between Tandem's processes through an atomically written file, stamped with the monotonic time."""
+
   def __init__(self, name: str):
     self.name = name
 
-  def write(self, value, now: float | None = None) -> bool:
+  def write(self, value: Any, now: float | None = None) -> bool:
+    """Saves value, stamped with now. False if it couldn't be written."""
     folder = state_dir()
     temporary = None
     try:
@@ -41,7 +45,8 @@ class Snapshot:
         except OSError:
           pass
 
-  def read(self, max_age: float, now: float | None = None):
+  def read(self, max_age: float, now: float | None = None) -> Any:
+    """The saved value, or None when it's missing, unreadable or older than max_age seconds."""
     try:
       record = json.loads((state_dir() / self.name).read_text())
       stamp = float(record["time"])

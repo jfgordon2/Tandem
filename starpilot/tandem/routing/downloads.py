@@ -10,19 +10,41 @@ import shutil
 import threading
 import time
 import urllib.request
+from collections.abc import Callable
+from typing import TYPE_CHECKING
 
 from openpilot.starpilot.tandem.routing import archive, bundles, config as C, verified
 from openpilot.starpilot.tandem.routing.tools.manage import HTTPSRedirect
 
+if TYPE_CHECKING:
+  from openpilot.starpilot.tandem.routing.bundles import Bundle
+  from openpilot.starpilot.tandem.routing.verified import Hashes
 
-def fetch(url: str, target: Path, size: int, checksum: str, gate=lambda: None, progress=lambda done, total: None, *, checks=None, readonly=False):
+
+def fetch(url: str, target: Path, size: int, checksum: str, gate: C.Gate = lambda: None, progress: C.Progress = lambda done, total: None, *,
+          checks: Hashes | None = None, readonly: bool = False) -> None:
+  """Downloads url to target, resuming a partial file, and checks its size and checksum.
+
+  Args:
+    url: An https URL.
+    target: Where the file goes.
+    size: Its expected size.
+    checksum: Its expected SHA-256.
+    gate: Called between chunks to stop.
+    progress: Reports (done, total) bytes.
+    checks: Checksums already taken in this operation, reused.
+    readonly: Make the finished file read-only.
+
+  Raises:
+    RoutingError: When the download fails or doesn't match.
+  """
   if not url.startswith("https://"):
     raise C.RoutingError("data_incompatible")
   gate()
   target.parent.mkdir(parents=True, exist_ok=True)
   if target.is_symlink():
     raise C.RoutingError("data_incompatible")
-  def digest():
+  def digest() -> str:
     if readonly and target.stat().st_mode & 0o222:
       target.chmod(target.stat().st_mode & ~0o222)
     return checks.digest(target, gate) if checks else bundles.digest(target, gate)
@@ -86,6 +108,7 @@ def fetch(url: str, target: Path, size: int, checksum: str, gate=lambda: None, p
 
 @dataclass
 class Pending:
+  """A downloaded package waiting to be installed: its manifest, files, and the checksums taken."""
   package: dict
   data: dict
   ready: Path
@@ -93,7 +116,7 @@ class Pending:
   cached: bool = False
 
 
-def _transfer(package, gate, progress, *, checks=None, reuse=True):
+def _transfer(package: dict, gate: C.Gate, progress: C.Progress, *, checks: Hashes | None = None, reuse: bool = True) -> Pending:
   """Transfer/hash physical files; receipt acceptance and decoding stay serial."""
   checks = checks or verified.Hashes()
   gate()
@@ -152,14 +175,15 @@ def _transfer(package, gate, progress, *, checks=None, reuse=True):
     target = ready / asset
     if (folder / asset).exists() and not target.exists():
       (folder / asset).replace(target)  # resume the previous cache layout too
-    fetch(url, target, transport["bytes"], transport["sha256"], gate,
-          lambda n, _total, baseline=done: progress(baseline + n, total), checks=checks,
+    def report(n: int, _total: int, baseline: int = done) -> None:
+      progress(baseline + n, total)
+    fetch(url, target, transport["bytes"], transport["sha256"], gate, report, checks=checks,
           readonly=data["schema"] in (3, 4) and name == data["graph"]["file"])
     done += transport["bytes"]
   return Pending(package, data, ready, checks)
 
 
-def _finish(pending, gate, installing=lambda: None):
+def _finish(pending: Pending, gate: C.Gate, installing: Callable[[], None] = lambda: None) -> Bundle:
   data, ready = pending.data, pending.ready
   gate()
   installing()
@@ -174,7 +198,9 @@ def _finish(pending, gate, installing=lambda: None):
   return bundles.verify(ready, gate, checks=pending.checks)
 
 
-def prepare(package: dict, gate=lambda: None, progress=lambda done, total: None, installing=lambda: None, *, checks=None):
+def prepare(package: dict, gate: C.Gate = lambda: None, progress: C.Progress = lambda done, total: None, installing: Callable[[], None] = lambda: None, *,
+            checks: Hashes | None = None) -> Bundle:
+  """Downloads and installs one package, returning its bundle."""
   pending = _transfer(package, gate, progress, checks=checks)
   try:
     result = _finish(pending, gate, installing)
@@ -187,7 +213,8 @@ def prepare(package: dict, gate=lambda: None, progress=lambda done, total: None,
   return result
 
 
-def prepare_many(packages, gate=lambda: None, progress=lambda done, total: None, *, parts_progress=None):
+def prepare_many(packages: list[dict], gate: C.Gate = lambda: None, progress: C.Progress = lambda done, total: None, *,
+                 parts_progress: Callable[[dict[str, int]], None] | None = None) -> list[Bundle]:
   """Two bounded transfers; the owner alone gates, publishes and verifies."""
   if not packages:
     progress(0, 0)
@@ -198,10 +225,10 @@ def prepare_many(packages, gate=lambda: None, progress=lambda done, total: None,
     raise C.RoutingError("invalid_request")
   stopped, permitted, mutex = threading.Event(), threading.Event(), threading.Lock()
   counts, total, reported = [0] * len(packages), sum(part["bytes"] for part in packages), None
-  def update(index, done):
+  def update(index: int, done: int) -> None:
     with mutex:
       counts[index] = done
-  def owner_gate():
+  def owner_gate() -> None:
     nonlocal reported
     permitted.clear()
     gate()
@@ -213,7 +240,7 @@ def prepare_many(packages, gate=lambda: None, progress=lambda done, total: None,
       if parts_progress is not None:
         parts_progress({part["id"]: done for part, done in zip(packages, snapshot, strict=True)})
       reported = snapshot
-  def worker_gate():
+  def worker_gate() -> None:
     while not stopped.is_set():
       if permitted.wait(.1):
         if not stopped.is_set():
@@ -222,7 +249,7 @@ def prepare_many(packages, gate=lambda: None, progress=lambda done, total: None,
   owner_gate()
   executor = ThreadPoolExecutor(max_workers=2, thread_name_prefix="routing-download")
   futures, results, remaining = {}, {}, iter(range(len(packages)))
-  def submit(index, *, reuse=True):
+  def submit(index: int, *, reuse: bool = True) -> None:
     futures[executor.submit(_transfer, packages[index], worker_gate,
       lambda done, _total: update(index, done), reuse=reuse)] = index
   try:
@@ -254,8 +281,10 @@ def prepare_many(packages, gate=lambda: None, progress=lambda done, total: None,
     executor.shutdown(wait=True, cancel_futures=True)
 
 
-def install(package: dict, gate=lambda: None, progress=lambda done, total: None, installing=lambda: None, *,
-            activate=True, pack_gate=None, activity=None, transfer=None):
+def install(package: dict, gate: C.Gate = lambda: None, progress: C.Progress = lambda done, total: None, installing: Callable[[], None] = lambda: None, *,
+            activate: bool = True, pack_gate: C.Gate | None = None, activity: Callable[..., None] | None = None,
+            transfer: Callable[[dict, C.Gate, C.Progress], list[Bundle]] | None = None) -> Bundle | None:
+  """Installs a catalog package: a dataset selection, or a single graph bundle, activating it unless asked not to."""
   if package.get("kind") == "dataset":
     from openpilot.starpilot.tandem.routing import datasets
     return datasets.install(package, gate, progress, installing, pack_gate=pack_gate, activity=activity, transfer=transfer)

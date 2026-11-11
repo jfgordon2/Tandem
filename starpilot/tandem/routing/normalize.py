@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import math
+from typing import Any
 
 from openpilot.starpilot.tandem.routing.config import RoutingError
 
@@ -10,13 +11,13 @@ TYPES = {"depart", "arrive", "turn", "continue", "new name", "merge", "on ramp",
 DIRECTIONS = {"none", "straight", "left", "right", "slight left", "slight right", "sharp left", "sharp right", "uturn"}
 
 
-def number(value, *, minimum: float = 0.0) -> float:
+def number(value: Any, *, minimum: float = 0.0) -> float:
   if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value < minimum:
     raise RoutingError("invalid_response")
   return float(value)
 
 
-def coordinate(value) -> dict:
+def coordinate(value: Any) -> dict:
   if not isinstance(value, (list, tuple)) or len(value) != 2:
     raise RoutingError("invalid_response")
   lon, lat = number(value[0], minimum=-180), number(value[1], minimum=-90)
@@ -25,7 +26,8 @@ def coordinate(value) -> dict:
   return {"latitude": lat, "longitude": lon}
 
 
-def banners(raw) -> list:
+def banners(raw: Any) -> list:
+  """The banner instructions, checked and kept to the fields StarPilot reads."""
   result = []
   for banner in raw or []:
     primary = banner["primary"]
@@ -55,6 +57,7 @@ def banners(raw) -> list:
 
 
 def normalize(response: dict) -> dict:
+  """The route StarPilot's navigation reads, from a local response. Raises RoutingError when it's malformed or empty."""
   try:
     if response["code"] != "Ok" or not response["routes"]:
       raise RoutingError("no_route")

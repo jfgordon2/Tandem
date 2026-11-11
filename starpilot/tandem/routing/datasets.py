@@ -8,26 +8,39 @@ import json
 from pathlib import Path
 import shutil
 import tempfile
+from collections.abc import Callable
+from collections.abc import Iterable, Iterator
+from typing import TYPE_CHECKING, Any
 
 from openpilot.starpilot.tandem.routing import bundles as B, config as C, downloads, images, tiles as T, verified
 
+if TYPE_CHECKING:
+  from openpilot.starpilot.tandem.routing.bundles import Bundle
 
-def compatible(bundle, dataset):
+
+def compatible(bundle: Bundle, dataset: dict) -> bool:
   return (bundle.manifest.get("kind") == "state-set" and bundle.manifest.get("dataset", {}).get("id") == dataset["id"]
           and bundle.manifest["dataset"]["sha256"] == dataset["sha256"])
 
 
-def base(dataset):
+def base(dataset: dict) -> Bundle | None:
   candidates = [b for b in B.installed() if compatible(b, dataset) and verified.read(b)]
   return max(candidates, key=lambda b: len(b.manifest["parts"]), default=None)
 
 
-def selection_id(dataset, selected):
+def selection_id(dataset: dict, selected: Iterable[str]) -> str:
   suffix = hashlib.sha256(json.dumps(sorted(selected)).encode()).hexdigest()[:16]
-  return dataset["id"] + "-set-" + suffix
+  return str(dataset["id"]) + "-set-" + suffix
 
 
-def plan(dataset, selected, *, reuse=True):
+def plan(dataset: dict, selected: Iterable[str], *, reuse: bool = True) -> dict:
+  """The package for a selection of regions from one dataset: the parts needed, and which must be downloaded.
+
+  Args:
+    dataset: The catalog's dataset.
+    selected: The region tokens.
+    reuse: Count parts an installed set already has.
+  """
   selected = sorted(selected)
   if not set(selected) <= set(dataset["regions"]):
     raise C.RoutingError("invalid_request")
@@ -39,7 +52,7 @@ def plan(dataset, selected, *, reuse=True):
           "bytes": sum(part["bytes"] for part in missing), "parts": required, "missing": missing, "dataset": dataset}
 
 
-def _checked_index(bundle, dataset):
+def _checked_index(bundle: Bundle, dataset: dict) -> list[dict]:
   index = T.read_index(bundle.folder / "tiles.json", dataset["sha256"])
   allowed = set(bundle.manifest["parts"])
   if any(row["part"] not in allowed or row["offset"] + row["bytes"] > bundle.manifest["graph"]["bytes"] for row in index):
@@ -47,7 +60,7 @@ def _checked_index(bundle, dataset):
   return index
 
 
-def _clear_downloads(keep=None):
+def _clear_downloads(keep: set[str] | None = None) -> None:
   """Caller owns the updater lock; a completed selection needs no input cache."""
   images.release_unused()
   if any(point.is_relative_to(images.mount_root() / "incoming") for point in images._mounts()):
@@ -65,22 +78,37 @@ def _clear_downloads(keep=None):
             path.unlink()
 
 
-def _replacement_reserve(dataset, required):
+def _replacement_reserve(dataset: dict, required: set[str]) -> int:
   estimate = sum(part["bytes"] for part in dataset["parts"] if part["id"] in required)
   return int(estimate * 1.1) + 64 * 1024**2 + 256 * 1024**2
 
 
-def _cached_bytes(part):
+def _cached_bytes(part: dict) -> int:
   folder = C.root() / "downloads" / part["sha256"]
   present = 0
   for name in ("tiles.squashfs", "tiles.json"):
     paths = (folder / name, folder / "ready" / name)
     present += max((path.stat().st_size for path in paths if path.is_file() and not path.is_symlink()), default=0)
-  return min(part["bytes"], present)
+  return int(min(part["bytes"], present))
 
 
-def install(package, gate=lambda: None, progress=lambda done, total: None, installing=lambda: None, *,
-            pack_gate=None, activity=None, transfer=None):
+def install(package: dict, gate: C.Gate = lambda: None, progress: C.Progress = lambda done, total: None, installing: Callable[[], None] = lambda: None, *,
+            pack_gate: C.Gate | None = None, activity: Callable[..., None] | None = None,
+            transfer: Callable[[dict, C.Gate, C.Progress], list[Bundle]] | None = None) -> Bundle | None:
+  """Installs a selection from a dataset, while parked: downloads missing parts, assembles the graph, and activates it.
+
+  Args:
+    package: The selection's package (see plan).
+    gate: Called between steps to stop.
+    progress: Reports download progress.
+    installing: Called when assembly starts.
+    pack_gate: The gate while assembling, if it differs.
+    activity: Reports the job's phase and stage.
+    transfer: Downloads the parts with the road data, region by region (a paired job).
+
+  Returns:
+    The active bundle, or None when the selection is empty and routing data was cleared.
+  """
   C.require_parked()
   C.root().mkdir(parents=True, exist_ok=True)
   with (C.root() / "dataset-update.lock").open("a") as lock:
@@ -99,7 +127,8 @@ def install(package, gate=lambda: None, progress=lambda done, total: None, insta
     return _install(package, gate, progress, installing, pack_gate=pack_gate, activity=activity, transfer=transfer)
 
 
-def _install(package, gate, progress, installing, *, pack_gate, activity, transfer):
+def _install(package: dict, gate: C.Gate, progress: C.Progress, installing: Callable[[], None], *, pack_gate: C.Gate | None,
+             activity: Callable[..., None] | None, transfer: Callable[[dict, C.Gate, C.Progress], list[Bundle]] | None) -> Bundle | None:
   C.require_parked()
   dataset, selected = package["dataset"], set(package["regions"])
   if not selected:
@@ -120,7 +149,7 @@ def _install(package, gate, progress, installing, *, pack_gate, activity, transf
     transfer(package, gate, progress)
   if previous is not None:
     try:
-      kwargs = {}
+      kwargs: dict[str, Any] = {}
       if activity is not None and previous.id == package["id"]:
         size = sum(r["bytes"] for r in previous.manifest["files"].values())
         activity(phase="install", stage="check", done=0, total=size)
@@ -144,7 +173,9 @@ def _install(package, gate, progress, installing, *, pack_gate, activity, transf
   old_rows = _checked_index(previous, dataset) if previous else []
   rows = {row["path"]: row for row in old_rows if row["part"] in required}
   sources = {}
-  def report_parts(counts):
+  def report_parts(counts: dict[str, int]) -> None:
+    if activity is None:
+      return
     missing = {part["id"]: part["bytes"] for part in package["missing"]}
     regions = {}
     for region in sorted(selected):
@@ -190,7 +221,7 @@ def _install(package, gate, progress, installing, *, pack_gate, activity, transf
         old_graph = images.graph_path(previous)
       with ExitStack() as incoming_lease:
         current, graph = None, None
-        def read(row):
+        def read(row: dict) -> Iterator[bytes]:
           nonlocal current, graph
           original = rows[row["path"]]
           if row["part"] in sources:
@@ -238,7 +269,7 @@ def _install(package, gate, progress, installing, *, pack_gate, activity, transf
   return bundle
 
 
-def cleanup(current=None):
+def cleanup(current: Bundle | None = None) -> None:
   """Retire superseded US sets, including deselected states; reader leases win."""
   try:
     current = current or B.active()

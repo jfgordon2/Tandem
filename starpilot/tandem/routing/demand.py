@@ -2,16 +2,20 @@
 from __future__ import annotations
 
 import json
+from typing import TYPE_CHECKING
 
 from openpilot.starpilot.tandem.routing import config as C
 from openpilot.starpilot.tandem.state import Snapshot
+
+if TYPE_CHECKING:
+  from openpilot.common.params import Params
 
 IDLE_SECONDS = 120
 WAKE = Snapshot("routing-wake.json")  # shared memory, so a reboot cannot revive a stale preview
 ACTIVE_MAP_PHASES = {"road", "prepare", "download", "install"}
 
 
-def read_map(name="map-job.json") -> dict:
+def read_map(name: str = "map-job.json") -> dict:
   try:
     value = json.loads((C.root() / name).read_text())
     return value if isinstance(value, dict) else {}
@@ -24,7 +28,7 @@ def download_pending() -> bool:
   return bool(pending.get("id") and (job.get("id") != pending["id"] or job.get("phase") in ACTIVE_MAP_PHASES))
 
 
-def needed(params) -> bool:
+def needed(params: Params) -> bool:
   return bool(params.get("NavDestination")) or download_pending()
 
 

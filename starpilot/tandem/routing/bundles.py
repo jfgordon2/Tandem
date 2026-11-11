@@ -10,13 +10,19 @@ import os
 from pathlib import Path
 import re
 import shutil
+from collections.abc import Iterator
+from typing import TYPE_CHECKING
 
 from openpilot.starpilot.tandem.routing import config as C, images, verified
+
+if TYPE_CHECKING:
+  from openpilot.starpilot.tandem.routing.verified import Hashes
 
 ID = re.compile(r"[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}\Z")
 
 
-def digest(path: Path, gate=lambda: None, *, progress=None) -> str:
+def digest(path: Path, gate: C.Gate = lambda: None, *, progress: C.Progress | None = None) -> str:
+  """The file's SHA-256, read in chunks, calling gate between them and reporting progress."""
   checksum = hashlib.sha256()
   done, total = 0, path.stat().st_size if progress is not None else 0
   if progress is not None:
@@ -88,21 +94,36 @@ def validate_manifest(data: dict) -> dict:
 
 @dataclass(frozen=True)
 class Bundle:
+  """An installed routing graph: its folder, manifest, and generation (the manifest's checksum)."""
   folder: Path
   manifest: dict
   generation: str
 
   @property
   def id(self) -> str:
-    return self.manifest["id"]
+    return str(self.manifest["id"])
 
   def covers(self, lat: float, lon: float) -> bool:
     west, south, east, north = self.manifest["bounds"]
-    return south <= lat <= north and west <= lon <= east
+    return bool(south <= lat <= north and west <= lon <= east)
 
 
-def load(folder: Path, verify: bool = False, gate=lambda: None, *, logical=True, checks=None,
-         logical_progress=None, physical_progress=None) -> Bundle:
+def load(folder: Path, verify: bool = False, gate: C.Gate = lambda: None, *, logical: bool = True, checks: Hashes | None = None,
+         logical_progress: C.Progress | None = None, physical_progress: C.Progress | None = None) -> Bundle:
+  """Loads the bundle in folder, checking its files against the manifest.
+
+  Args:
+    folder: The bundle's folder.
+    verify: Check every file's checksum too, not just its size.
+    gate: Called between steps to stop.
+    logical: With verify, also check the graph image's contents.
+    checks: Checksums already taken in this operation, reused.
+    logical_progress: Reports the graph check's progress.
+    physical_progress: Reports the checksums' progress.
+
+  Raises:
+    RoutingError: data_incompatible when anything doesn't match.
+  """
   try:
     manifest_path = folder / "manifest.json"
     if folder.is_symlink() or manifest_path.is_symlink():
@@ -162,7 +183,8 @@ def routing_bundles() -> list[Bundle]:
   return [bundle for bundle in present if bundle.manifest.get("kind") != "state-set"]
 
 
-def verify(folder: Path, gate=lambda: None, *, checks=None, logical_progress=None, physical_progress=None) -> Bundle:
+def verify(folder: Path, gate: C.Gate = lambda: None, *, checks: Hashes | None = None, logical_progress: C.Progress | None = None,
+           physical_progress: C.Progress | None = None) -> Bundle:
   """Explicit full check; never invoked by the route worker's startup path."""
   C.require_parked()
   bundle = load(folder)
@@ -199,6 +221,7 @@ def verify(folder: Path, gate=lambda: None, *, checks=None, logical_progress=Non
 
 
 def active() -> Bundle:
+  """The bundle active.json selects. Raises RoutingError data_missing when none is, data_incompatible when it's damaged."""
   try:
     selection = json.loads((C.root() / "active.json").read_text())
     if not ID.fullmatch(selection["id"]):
@@ -217,6 +240,7 @@ def active() -> Bundle:
 
 
 def selected(message: dict) -> Bundle:
+  """The bundle a request names, or the active one when it names none."""
   identity = message.get("bundle")
   if identity is None:
     return active()  # existing benchmark/protocol callers
@@ -236,7 +260,8 @@ def selected(message: dict) -> Bundle:
   return bundle
 
 
-def for_trip(start, destination) -> Bundle:
+def for_trip(start: tuple[float, float, float | None], destination: dict) -> Bundle:
+  """A verified bundle covering both ends of a trip. Raises RoutingError when none covers them."""
   candidates = [b for b in routing_bundles() if b.covers(start[0], start[1]) and
                 b.covers(destination["latitude"], destination["longitude"])]
   if not candidates:
@@ -250,7 +275,7 @@ def for_trip(start, destination) -> Bundle:
 
 
 @contextmanager
-def lock():
+def lock() -> Iterator[None]:
   C.root().mkdir(parents=True, exist_ok=True)
   with (C.root() / ".install.lock").open("a") as stream:
     fcntl.flock(stream, fcntl.LOCK_EX)
@@ -258,6 +283,7 @@ def lock():
 
 
 def activate(bundle_id: str) -> Bundle:
+  """Makes an installed, verified bundle the active one, while parked."""
   C.require_parked()
   if not ID.fullmatch(bundle_id):
     raise C.RoutingError("invalid_request")
@@ -277,7 +303,17 @@ def activate(bundle_id: str) -> Bundle:
   return bundle
 
 
-def install(source: Path, *, consume=False, gate=lambda: None, checks=None, logical_progress=None) -> Bundle:
+def install(source: Path, *, consume: bool = False, gate: C.Gate = lambda: None, checks: Hashes | None = None,
+            logical_progress: C.Progress | None = None) -> Bundle:
+  """Installs a downloaded bundle from source, verified, into the bundles folder.
+
+  Args:
+    source: The downloaded bundle's folder.
+    consume: Move the files rather than copy them.
+    gate: Called between steps to stop.
+    checks: Checksums already taken in this operation, reused.
+    logical_progress: Reports the graph check's progress.
+  """
   C.require_parked()
   bundle = verify(source, gate, checks=checks, logical_progress=logical_progress)
   if consume and not source.resolve().is_relative_to((C.root() / "downloads").resolve()):
@@ -335,6 +371,7 @@ def install(source: Path, *, consume=False, gate=lambda: None, checks=None, logi
 
 
 def remove(bundle_id: str) -> None:
+  """Removes an inactive bundle, while parked."""
   C.require_parked()
   if not ID.fullmatch(bundle_id):
     raise C.RoutingError("invalid_request")
@@ -360,6 +397,7 @@ def remove(bundle_id: str) -> None:
 
 
 def capability() -> dict:
+  """Whether offline routing can route now: ready with the generation of the installed data, or the reason it can't."""
   if not C.enabled():
     return {"status": "disabled", "generation": ""}
   if not C.runtime_ready():

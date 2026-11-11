@@ -7,6 +7,8 @@ from pathlib import Path
 import re
 import struct
 import tarfile
+from collections.abc import Callable
+from collections.abc import Iterable, Iterator
 
 from openpilot.starpilot.tandem.routing import config as C
 
@@ -27,17 +29,18 @@ def graph_id(name: str) -> int:
   return number * 8 + level
 
 
-def padded(size, block=512):
+def padded(size: int, block: int = 512) -> int:
   return (size + block - 1) // block * block
 
 
-def header(name, size):
+def header(name: str, size: int) -> bytes:
   info = tarfile.TarInfo(name)
   info.size, info.mode = size, 0o644
   return info.tobuf(format=tarfile.USTAR_FORMAT)
 
 
-def layout(records):
+def layout(records: list[dict]) -> tuple[list[dict], int]:
+  """Where each tile goes in the extract, by part and path, and the extract's size."""
   result, seen = [], set()
   offset = 512 + padded(len(records) * 16)
   for record in sorted(records, key=lambda row: (row["part"], row["path"])):
@@ -52,7 +55,8 @@ def layout(records):
   return result, padded(offset + 1024, tarfile.RECORDSIZE)
 
 
-def read_index(path: Path, dataset: str):
+def read_index(path: Path, dataset: str) -> list[dict]:
+  """A part's tile index, checked against its dataset."""
   try:
     if path.is_symlink() or path.stat().st_size > MAX_INDEX:
       raise ValueError
@@ -73,7 +77,7 @@ def read_index(path: Path, dataset: str):
     raise C.RoutingError("data_incompatible") from None
 
 
-def stream(records, read, gate=lambda: None):
+def stream(records: list[dict], read: Callable[[dict], Iterable[bytes]], gate: C.Gate = lambda: None) -> Iterator[bytes]:
   """Yield a canonical tar; read(row) yields only that tile's bytes."""
   index = b"".join(struct.pack("<QII", row["offset"], graph_id(row["path"]), row["bytes"]) for row in records)
   yield header("index.bin", len(index))
@@ -106,7 +110,8 @@ def stream(records, read, gate=lambda: None):
   yield bytes(padded(written + 1024, tarfile.RECORDSIZE) - written)
 
 
-def file_chunks(path, offset, size):
+def file_chunks(path: Path, offset: int, size: int) -> Iterator[bytes]:
+  """size bytes of path from offset, in bounded chunks."""
   with path.open("rb") as source:
     source.seek(offset)
     while size:

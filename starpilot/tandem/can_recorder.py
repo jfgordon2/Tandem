@@ -12,6 +12,7 @@ import secrets
 import shutil
 import threading
 import time
+from typing import Any
 
 ACTIVE = {"starting", "recording", "saving", "aborting"}
 MAX_SECONDS = 600
@@ -33,6 +34,7 @@ def boot_time_ns() -> int:
 
 @dataclass(frozen=True)
 class RecorderState:
+  """What the recorder is doing: its phase, session, timing, frame count and markers, and why it stopped."""
   phase: str = "idle"
   session: str = ""
   started_ns: int = 0
@@ -49,7 +51,9 @@ class RecorderState:
 
 
 class RecorderError(Exception):
-  def __init__(self, reason):
+  """Why a recording couldn't start or had to stop; reason is the code the page explains."""
+
+  def __init__(self, reason: str) -> None:
     super().__init__(reason)
     self.reason = reason
 
@@ -65,7 +69,7 @@ def default_folder() -> Path:
 class CanSource:
   """Subscribe to pandad's existing feed; this never opens or reconfigures a panda."""
 
-  def __init__(self):
+  def __init__(self) -> None:
     from cereal import messaging
     from openpilot.common.params import Params
     from openpilot.starpilot.tandem.bluetooth import ParkMonitor
@@ -76,7 +80,7 @@ class CanSource:
     self._panda = messaging.sub_sock("pandaStates", conflate=True, timeout=0)
 
   def allowed(self) -> bool:
-    return self._params.get_bool("IsOffroad") or self._park.allowed()
+    return bool(self._params.get_bool("IsOffroad") or self._park.allowed())
 
   def info(self) -> dict:
     return self.info_from_params()
@@ -92,6 +96,7 @@ class CanSource:
     return {}
 
   def poll(self) -> tuple[list[tuple[int, int, int, bytes]], dict | None]:
+    """This poll's CAN frames, and the panda's health when a new pandaStates arrived."""
     health = self._messaging.recv_one_or_none(self._panda)
     state = None
     if health is not None:
@@ -106,6 +111,8 @@ class CanSource:
 
 
 class CanRecorder:
+  """Records a receive-only CAN log with tap markers in the background, from the car's buses or the OBD input."""
+
   def __init__(self, folder: Path | None = None, source: Callable = CanSource, clock_ns: Callable[[], int] = boot_time_ns,
                max_seconds: float = MAX_SECONDS, obd_source: Callable | None = None):
     self._folder = folder
@@ -126,13 +133,21 @@ class CanRecorder:
     with self._lock:
       return self._state
 
-  def _update(self, **values):
+  def _update(self, **values: Any) -> None:
     with self._lock:
       if self._abort_requested.is_set() and "phase" in values:
         values["phase"] = "aborting"
       self._state = replace(self._state, **values)
 
   def start(self, obd: bool = False) -> bool:
+    """Starts a recording.
+
+    Args:
+      obd: Record the OBD input instead of the car's buses.
+
+    Returns:
+      False when a recording is running or a failed one still needs attention.
+    """
     with self._lock:
       if self._state.phase in ACTIVE or self._state.reason in {"delete", "obd_restore"} or (self._thread is not None and self._thread.is_alive()):
         return False
@@ -148,6 +163,14 @@ class CanRecorder:
     return True
 
   def mark(self, kind: str) -> bool:
+    """Marks the log at this moment.
+
+    Args:
+      kind: "lock" or "unlock".
+
+    Returns:
+      False for an unknown kind or when nothing is recording.
+    """
     # Capture the tap time here, before the worker or filesystem can delay the event.
     stamp = self._clock_ns()
     if kind not in {"lock", "unlock"}:
@@ -178,7 +201,7 @@ class CanRecorder:
       self._thread.start()
     return True
 
-  def _discard(self, writer):
+  def _discard(self, writer: threading.Thread | None) -> None:
     if writer is not None:
       writer.join()
     try:
@@ -191,21 +214,23 @@ class CanRecorder:
       with self._lock:
         self._state = replace(self._state, phase="error", reason="delete", ended_ns=self._clock_ns())
 
-  def _run(self):
+  def _run(self) -> None:
     state = self.snapshot()
-    directory = None
+    directory: Path | None = None
     source = None
     metadata = {"version": 1, "clock": CLOCK_NAME, "started_ns": state.started_ns, "session": state.session,
                 "passive": True, "status": "starting", "input": state.input}
 
-    def close_source():
+    def close_source() -> None:
       nonlocal source
       closing, source = source, None
       close = getattr(closing, "close", None)
       if close is not None:
         close()
 
-    def save_metadata():
+    def save_metadata() -> None:
+      if directory is None:
+        return
       temporary = directory / "metadata.tmp"
       temporary.write_text(json.dumps(metadata, indent=2) + "\n")
       temporary.replace(directory / "metadata.json")
@@ -246,7 +271,7 @@ class CanRecorder:
         last_kind, last_marker = "", 0
         power_save = None
 
-        def drain_markers():
+        def drain_markers() -> None:
           nonlocal lock_count, unlock_count, last_kind, last_marker
           while not self._markers.empty():
             marker = self._markers.get_nowait()

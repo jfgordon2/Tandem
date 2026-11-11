@@ -16,8 +16,15 @@ def _module_name(module: str) -> str:
 
 
 def process_name(name: str, cmdline: list[str]) -> str:
-  """The name a process goes by. Manager titles most Python processes with their module (selfdrive.selfdrived.selfdrived);
-  others run as python -m <module> (the UI) or python <script> (manager.py, comma's /usr/comma services)."""
+  """The name a process goes by.
+
+  Manager titles most Python processes with their module (selfdrive.selfdrived.selfdrived), so the module's last part
+  names them.
+
+  Args:
+    name: The process's title.
+    cmdline: Its command line.
+  """
   title = cmdline[0] if cmdline else name
   title = os.path.basename(title.split(" ", 1)[0]) or name
   if title.startswith("python"):

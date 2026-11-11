@@ -15,6 +15,7 @@ import socketserver
 import subprocess
 import threading
 import time
+from typing import Any, IO, cast
 
 from openpilot.starpilot.tandem.routing import config as C, demand, images
 from openpilot.starpilot.tandem.routing.bundles import capability, selected
@@ -23,13 +24,23 @@ from openpilot.starpilot.tandem.routing.metrics import memory
 IDLE_SECONDS = 15
 
 
+def _pipes(process: subprocess.Popen[bytes]) -> tuple[IO[bytes], IO[bytes]]:
+  """The worker's stdin and stdout. Native opens both as pipes, so neither is None."""
+  if process.stdin is None or process.stdout is None:
+    raise OSError("native worker has no pipes")
+  return process.stdin, process.stdout
+
+
 class Native:
-  def __init__(self):
-    self.process = None
+  """The native worker process, started on demand and stopped when idle or when its data changes."""
+
+  def __init__(self) -> None:
+    self.process: subprocess.Popen[bytes] | None = None
     self.last_used = 0.0
     self.retry_at = 0.0
 
-  def close(self):
+  def close(self) -> None:
+    """Stops the worker and releases unused graph images."""
     process, self.process = self.process, None
     if process is not None:
       if process.poll() is None:
@@ -39,14 +50,16 @@ class Native:
       except subprocess.TimeoutExpired:
         process.kill()
         process.wait(timeout=1)
+      stdin, stdout = _pipes(process)
       try:
-        process.stdin.close()
+        stdin.close()
       except OSError:
         pass
-      process.stdout.close()
+      stdout.close()
     images.release_unused()
 
   def call(self, message: dict) -> dict:
+    """Sends a request to the worker, restarting it if it's gone."""
     try:
       if self.process is None or self.process.poll() is not None:
         self.close()
@@ -70,11 +83,12 @@ class Native:
         env = dict(os.environ, PYTHONPATH=os.pathsep.join((str(Path(__file__).resolve().parents[3]), os.getenv("PYTHONPATH", ""))))
         self.process = subprocess.Popen([str(C.runtime_python()), "-u", "-m", "openpilot.starpilot.tandem.routing.native_worker"],
                                         stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, env=env)
+      stdin, stdout = _pipes(self.process)
       pending = memoryview(json.dumps(message, allow_nan=False).encode() + b"\n")
-      os.set_blocking(self.process.stdin.fileno(), False)
+      os.set_blocking(stdin.fileno(), False)
       with selectors.DefaultSelector() as selector:
-        selector.register(self.process.stdin, selectors.EVENT_WRITE)
-        selector.register(self.process.stdout, selectors.EVENT_READ)
+        selector.register(stdin, selectors.EVENT_WRITE)
+        selector.register(stdout, selectors.EVENT_READ)
         end = min(time.monotonic() + C.DEADLINE - 1, message.get("_deadline", float("inf")))
         data = bytearray()
         while time.monotonic() < end:
@@ -82,15 +96,15 @@ class Native:
           if not events:
             break
           for key, _ in events:
-            if key.fileobj is self.process.stdin:
+            if key.fileobj is stdin:
               try:
-                pending = pending[os.write(self.process.stdin.fileno(), pending):]
+                pending = pending[os.write(stdin.fileno(), pending):]
               except BlockingIOError:
                 continue
               if not pending:
-                selector.unregister(self.process.stdin)
+                selector.unregister(stdin)
             else:
-              chunk = os.read(self.process.stdout.fileno(), 65536)
+              chunk = os.read(stdout.fileno(), 65536)
               if not chunk:
                 raise OSError("native worker exited")
               data.extend(chunk)
@@ -114,6 +128,7 @@ class Native:
 
 @dataclass(order=True)
 class Job:
+  """A queued request. Navigation comes before previews, then first come first served."""
   priority: int
   sequence: int
   message: dict = field(compare=False)
@@ -123,17 +138,20 @@ class Job:
 
 
 class Broker:
-  def __init__(self, native=None):
+  """Runs requests one at a time on the native worker; a newer request from the same caller supersedes an older one."""
+
+  def __init__(self, native: Native | None = None) -> None:
     self.native = native or Native()
-    self.jobs = queue.PriorityQueue(maxsize=3)
+    self.jobs: queue.PriorityQueue[Job] = queue.PriorityQueue(maxsize=3)
     self.sequence = itertools.count()
-    self.latest = {}
+    self.latest: dict[str, int] = {}
     self.lock = threading.Lock()
     self.stop = threading.Event()
     self.thread = threading.Thread(target=self.run, daemon=True)
     self.thread.start()
 
-  def submit(self, message):
+  def submit(self, message: dict) -> dict:
+    """Queues a request and waits for its result, or busy, superseded or invalid_request."""
     caller = message.get("caller")
     if caller not in ("preview", "navigation", "benchmark"):
       return {"status": "invalid_request"}
@@ -154,7 +172,8 @@ class Broker:
         return {"status": "superseded"}
     return job.result
 
-  def run(self):
+  def run(self) -> None:
+    """Serves queued requests until stopped, releasing the idle worker."""
     while not self.stop.is_set():
       try:
         job = self.jobs.get(timeout=1)
@@ -185,21 +204,23 @@ class Broker:
       self.jobs.task_done()
     self.native.close()
 
-  def close(self):
+  def close(self) -> None:
     self.stop.set()
     self.thread.join(C.DEADLINE + 2)
 
 
 class Server(socketserver.ThreadingUnixStreamServer):
+  """The broker's Unix socket server, with a few request slots."""
   daemon_threads = True
   request_queue_size = 4
 
-  def __init__(self, address, broker):
+  def __init__(self, address: str, broker: Broker) -> None:
     self.broker = broker
     self.slots = threading.BoundedSemaphore(4)
     super().__init__(address, Handler)
 
-  def process_request(self, request, address):
+  def process_request(self, request: Any, address: Any) -> None:
+    """Handles a request on a thread when a slot is free; drops the connection otherwise."""
     if not self.slots.acquire(blocking=False):
       self.shutdown_request(request)
       return
@@ -209,7 +230,7 @@ class Server(socketserver.ThreadingUnixStreamServer):
       self.slots.release()
       raise
 
-  def process_request_thread(self, request, address):
+  def process_request_thread(self, request: Any, address: Any) -> None:
     try:
       super().process_request_thread(request, address)
     finally:
@@ -217,7 +238,10 @@ class Server(socketserver.ThreadingUnixStreamServer):
 
 
 class Handler(socketserver.StreamRequestHandler):
-  def handle(self):
+  """One request on the socket: a JSON line in, a JSON line out."""
+
+  def handle(self) -> None:
+    """Reads one request line, answers status itself or submits a route to the broker, and writes the reply line."""
     self.connection.settimeout(C.DEADLINE + 1)
     message = {}
     try:
@@ -232,11 +256,11 @@ class Handler(socketserver.StreamRequestHandler):
         result = capability()
       elif message.get("action") == "route":
         demand.wake()
-        result = self.server.broker.submit(message)
+        result = cast(Server, self.server).broker.submit(message)
         demand.wake()
       elif message.get("action") == "release":
         # A serialized release job is unnecessary: idle release happens within a second offroad.
-        self.server.broker.native.last_used = 0
+        cast(Server, self.server).broker.native.last_used = 0
         result = {"status": "ok"}
       else:
         raise ValueError("action")
@@ -249,7 +273,8 @@ class Handler(socketserver.StreamRequestHandler):
       pass
 
 
-def main():
+def main() -> None:
+  """The routing broker process: serves requests on its socket and runs map jobs while should_run says (the idle grace after a trip or download)."""
   if not C.enabled():
     return
   from openpilot.common.params import Params
@@ -269,7 +294,7 @@ def main():
         path.chmod(0o600)
         demand.wake()
         stopping = threading.Event()
-        def stop(*_):
+        def stop(*_: object) -> None:
           stopping.set()
         signal.signal(signal.SIGTERM, stop)
         signal.signal(signal.SIGINT, stop)

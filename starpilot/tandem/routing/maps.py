@@ -6,13 +6,21 @@ import threading
 import time
 from contextlib import contextmanager, ExitStack
 import fcntl
+from typing import Any, TYPE_CHECKING
+from collections.abc import Callable
+from collections.abc import Iterator
 
 from openpilot.starpilot.tandem.routing import bundles, catalog, config as C, downloads, images, verified
 from openpilot.starpilot.tandem.routing.demand import ACTIVE_MAP_PHASES as ACTIVE, download_pending as running, read_map as read
 from openpilot.starpilot.tandem.routing.handoff import enqueue, in_progress
 
+if TYPE_CHECKING:
+  from openpilot.starpilot.tandem.routing.bundles import Bundle
+  from openpilot.common.params import Params
 
-def request(selection: str, wait_for_road=False) -> str:
+
+def request(selection: str, wait_for_road: bool = False) -> str:
+  """Queues a map job for a selection and returns its id. wait_for_road holds routes until the road data is in."""
   original = selection
   selection = catalog.normalize_maps_selected(selection)
   if not selection and (original or catalog.load()["schema"] != 2):
@@ -22,7 +30,7 @@ def request(selection: str, wait_for_road=False) -> str:
   # Enqueue independently of graph installation. Its lock can be held while
   # copying/checksumming a large graph; road-map downloads must not wait for it.
   job = enqueue(selection, wait_for_road=wait_for_road)
-  return job["id"]
+  return str(job["id"])
 
 
 def on_map_download_started(selection: str) -> None:
@@ -41,7 +49,7 @@ def cancel() -> None:
 
 
 @contextmanager
-def deletion():
+def deletion() -> Iterator[None]:
   """Remove routing graphs as part of the existing Delete/Remove maps action.
 
   Retain runtime, geographic selection, saved places, and the shared schedule.
@@ -68,25 +76,30 @@ def deletion():
       (C.root() / name).unlink(missing_ok=True)
 
 
-def remove_all():
+def remove_all() -> None:
   with deletion():
     pass
 
 
 class Manager:
-  def __init__(self, memory, allowed=lambda: True, stop=None, installer=downloads.install, prepare=None):
+  """Runs map jobs one at a time in the background, from the request file, and audits installed data while idle."""
+
+  def __init__(self, memory: Params, allowed: Callable[[], bool] = lambda: True, stop: threading.Event | None = None,
+               installer: Callable[..., Bundle | None] = downloads.install, prepare: Callable[..., Any] | None = None) -> None:
     self.memory, self.allowed = memory, allowed
     self.stop = stop or threading.Event()
     self.installer = installer
     if prepare is None:
-      from openpilot.starpilot.tandem.routing.tools.runtime import prepare
-    self.prepare = prepare
-    self.thread = None
-    self.state = {}
+      from openpilot.starpilot.tandem.routing.tools.runtime import prepare as runtime_prepare
+      prepare = runtime_prepare
+    self.prepare: Callable[..., Any] = prepare
+    self.thread: threading.Thread | None = None
+    self.state: dict = {}
     self._write_at = 0.0
     self._audit_after = 0.0
 
-  def publish(self, *, force=False, **values):
+  def publish(self, *, force: bool = False, **values: Any) -> None:
+    """Updates the job's state; written at most five times a second, except on transitions or with force."""
     transition = any(k in values and values[k] != self.state.get(k) for k in ("phase", "stage", "error", "paused"))
     self.state.update(values)
     now = time.monotonic()
@@ -96,7 +109,8 @@ class Manager:
       C.atomic_json(C.root() / "map-job.json", {**self.state, "updated": now})
       self._write_at = now
 
-  def gate(self):
+  def gate(self) -> None:
+    """Between steps of a job: stops when it's cancelled or replaced, and waits (paused) while it isn't allowed to run."""
     while True:
       if self.stop.is_set():
         raise C.RoutingError("interrupted")
@@ -111,7 +125,8 @@ class Manager:
         self.publish(paused=True)
       self.stop.wait(.25)
 
-  def tick(self):
+  def tick(self) -> None:
+    """Starts the next requested job, or an audit when idle, unless one is running."""
     if self.thread is not None and self.thread.is_alive():
       return
     pending = read("map-request.json")
@@ -125,8 +140,9 @@ class Manager:
     self.thread = threading.Thread(target=self.run, args=(pending,), daemon=True)
     self.thread.start()
 
-  def audit(self):
-    def gate():
+  def audit(self) -> None:
+    """Verifies installed bundles that are due, while parked and idle."""
+    def gate() -> None:
       if self.stop.is_set() or not self.allowed() or running() or not C.enabled():
         raise C.RoutingError("interrupted")
       C.require_parked()
@@ -143,7 +159,7 @@ class Manager:
     except (C.RoutingError, OSError):
       pass  # never run a full scan in a route request or interrupt a map job
 
-  def assembly_gate(self):
+  def assembly_gate(self) -> None:
     """Stop the compressor across a drive; retain downloaded parts for retry."""
     if self.stop.is_set() or not self.allowed():
       raise C.RoutingError("interrupted")
@@ -155,11 +171,12 @@ class Manager:
     except C.RoutingError:
       raise C.RoutingError("interrupted") from None
 
-  def prune_road(self, pending):
+  def prune_road(self, pending: dict) -> None:
     from openpilot.starpilot.tandem.routing import road
     road.apply(pending["selection"], self.assembly_gate, self.memory, paired=pending.get("paired", False))
 
-  def run(self, pending):
+  def run(self, pending: dict) -> None:
+    """Runs a job: plans the packages for its selection, installs them, prunes road data, and records the outcome."""
     previous = read()
     road_ready = previous.get("id") == pending["id"] and previous.get("road_ready", False)
     self.state = {**pending, "phase": "road" if pending.get("wait_for_road") else "prepare", "done": 0, "total": 0,
@@ -237,19 +254,20 @@ class Manager:
       from openpilot.starpilot.tandem.routing.native_worker import release_heap
       release_heap()
 
-  def _setup_cancelled(self):
+  def _setup_cancelled(self) -> bool:
     # Runtime installer already rechecks parked state and cancellation between
     # subprocess polls. Pause at each poll when Wi-Fi is unavailable.
     self.gate()
     return False
 
-  def close(self):
+  def close(self) -> None:
     self.stop.set()
     if self.thread is not None:
       self.thread.join(20)
 
 
-def run(stop: threading.Event):
+def run(stop: threading.Event) -> None:
+  """The map job thread: lets jobs run while parked on Wi-Fi without a destination, until stop is set."""
   from cereal import log
   import cereal.messaging as messaging
   from openpilot.common.params import Params
