@@ -1,15 +1,20 @@
 """Tandem gesture rejection; upstream's scroll panel retains its original behavior."""
+from typing import Any
+
 import pyray as rl
 
 from openpilot.system.ui.lib.scroll_panel2 import GuiScrollPanel2, ScrollState
+from openpilot.system.ui.lib.application import MouseEvent
 
 
 class ScrollPanel(GuiScrollPanel2):
-  def __init__(self, *args, **kwargs):
+  """Upstream's scroll panel, except a touch that scrolled the list doesn't also tap what it lifted over."""
+
+  def __init__(self, *args: Any, **kwargs: Any) -> None:
     super().__init__(*args, **kwargs)
     self._touch_scrolled = False
 
-  def _handle_mouse_event(self, event, bounds, bounds_size, content_size):
+  def _handle_mouse_event(self, event: MouseEvent, bounds: rl.Rectangle, bounds_size: float, content_size: float) -> None:
     if event.left_pressed:
       self._touch_scrolled = False
       self._snap_target = None

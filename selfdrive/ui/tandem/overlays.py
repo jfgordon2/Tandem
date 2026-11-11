@@ -12,6 +12,7 @@ from openpilot.selfdrive.ui.tandem.base import Bindable, Component, resolve, siz
 from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, Glyph, Tone
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, place, row
 from openpilot.selfdrive.ui.tandem.i18n import N_
+from openpilot.system.ui.lib.application import MouseEvent
 
 
 def _ease_out(t: float) -> float:
@@ -33,7 +34,17 @@ class Sheet(Component):
   def __init__(self, title: Bindable[str], body: Widget, subtitle: Bindable[str] | None = None,
                actions: list[Button] | None = None, height: float | None = None, on_dismiss: Callable[[], None] | None = None,
                header: Widget | None = None):
-    """on_dismiss runs when the scrim above the sheet is tapped. header sits left of the actions (e.g. tabs)."""
+    """Makes a sheet.
+
+    Args:
+      title: The sheet's title, or a getter for it.
+      body: What the sheet shows.
+      subtitle: A line under the title.
+      actions: Buttons on the right of the header.
+      height: A fixed height; None fits the body.
+      on_dismiss: Runs when the scrim above the sheet is tapped.
+      header: A widget left of the actions (e.g. tabs).
+    """
     super().__init__()
     self._header = self._child(header) if header is not None else None
     self._on_dismiss = on_dismiss
@@ -57,7 +68,7 @@ class Sheet(Component):
     self._dragged = False
     self._snap: tuple[float, float] | None = None   # (offset, start time) while springing back
 
-  def show_event(self):
+  def show_event(self) -> None:
     super().show_event()
     self._shown_at = rl.get_time()
 
@@ -67,7 +78,7 @@ class Sheet(Component):
     width = rect.width - T.px(52)
     return min(rect.height - T.px(90), T.px(110) + size_of(self._body, width)[1] + T.px(24))
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     t = 1.0 if self._shown_at is None else _ease_out((rl.get_time() - self._shown_at) * 1000 / T.SHEET_MS)
     height = self._sheet_height(rect)
     offset = self._offset()
@@ -124,7 +135,7 @@ class Sheet(Component):
       start = samples[-2]
     return (last[0] - start[0]) / max(last[1] - start[1], 1e-3)
 
-  def _handle_mouse_event(self, mouse_event) -> None:
+  def _handle_mouse_event(self, mouse_event: MouseEvent) -> None:
     if self._on_dismiss is None:
       return
     pos = mouse_event.pos
@@ -186,7 +197,7 @@ class Dialog(Component):
     return T.px(28) * 2 + well + T.px(6) + draw.line_height(T.font_px(26)) + T.px(8) + \
       draw.paragraph_height(resolve(self._message), T.font_px(17), T.FONT, inner, 1.4) + T.px(24) + T.px(64)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, draw.alpha(T.SCRIM, 0.85))
     width = min(rect.width - T.px(80), T.px(520))
     card = place(rect, width, self._card_height(width))
@@ -214,7 +225,7 @@ class Toast(Component):
   """A short confirmation such as "Backup created". Call show(); it fades after TOAST_MS. Not for use while driving."""
   grow_touch_target = False
 
-  def __init__(self):
+  def __init__(self) -> None:
     super().__init__()
     self._message = ""
     self._tone = Tone.SUCCESS
@@ -227,8 +238,8 @@ class Toast(Component):
   def active(self) -> bool:
     return self._shown_at is not None and (rl.get_time() - self._shown_at) * 1000 < T.TOAST_MS
 
-  def _render(self, rect: rl.Rectangle):
-    if not self.active:
+  def _render(self, rect: rl.Rectangle) -> None:
+    if not self.active or self._shown_at is None:
       return
     elapsed = (rl.get_time() - self._shown_at) * 1000
     fade = min(1.0, elapsed / 150, (T.TOAST_MS - elapsed) / 300)

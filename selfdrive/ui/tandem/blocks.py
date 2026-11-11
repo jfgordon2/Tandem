@@ -5,7 +5,7 @@ bottom as in the mocks (flex-grow: 1). A Card is a Stack on a rounded surface. C
 """
 from __future__ import annotations
 
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 
 import pyray as rl
 
@@ -13,17 +13,25 @@ from openpilot.system.ui.widgets import Widget
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Bindable, Component, resolve, size_of
 from openpilot.selfdrive.ui.tandem.layout import Align, Fill, column, inset, place, row
+from openpilot.selfdrive.ui.tandem.fonts import Face
 
-SPACER = None
+SPACER: None = None   # in a Stack, takes up the space left over
 
 
 class Stack(Component):
+  """Widgets in a column, each at its preferred height. Hidden widgets take no room; SPACER (None) items share what's left."""
   grow_touch_target = False
 
-  def __init__(self, items: list[Widget | None], gap: float = T.px(12), grow: int | None = None):
-    """grow: index of an item that takes the leftover height instead of a spacer (a card that fills its column)."""
+  def __init__(self, items: Sequence[Widget | None], gap: float = T.px(12), grow: int | None = None):
+    """Makes a stack.
+
+    Args:
+      items: The widgets, top first. SPACER (None) takes a share of the height left over.
+      gap: The space between items.
+      grow: The index of an item that takes the leftover height instead of a spacer (a card that fills its column).
+    """
     super().__init__()
-    self._items = items
+    self._items = list(items)
     self._grow = grow
     for w in items:
       if w is not None:
@@ -38,7 +46,7 @@ class Stack(Component):
     gaps = max(0, len(self._visible()) - 1) * self._gap
     return max_width, sum(size_of(w, max_width)[1] for w in items) + gaps
 
-  def set_touch_valid_callback(self, touch_callback) -> None:
+  def set_touch_valid_callback(self, touch_callback: Callable[[], bool]) -> None:
     super().set_touch_valid_callback(touch_callback)
     for w in self._items:
       if w is not None:
@@ -50,7 +58,7 @@ class Stack(Component):
       if w is not None:
         w.set_parent_rect(parent_rect)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     items = self._visible()
     grow = self._items[self._grow] if self._grow is not None else None
     heights = [None if w is None or w is grow else size_of(w, rect.width)[1] for w in items]
@@ -68,7 +76,7 @@ class Stack(Component):
 class Card(Stack):
   """A rounded surface holding a stack. tone="accent" is the selected/active card (accent fill and edge)."""
 
-  def __init__(self, items: list[Widget | None], gap: float = T.px(12), padding: tuple[float, float] = (T.px(22), T.px(20)),
+  def __init__(self, items: Sequence[Widget | None], gap: float = T.px(12), padding: tuple[float, float] = (T.px(22), T.px(20)),
                tone: str = "plain", background: rl.Color | None = None, grow: int | None = None):
     super().__init__(items, gap, grow)
     self._padding = padding
@@ -80,7 +88,7 @@ class Card(Stack):
     _, h = super().preferred_size(max_width - px * 2)
     return max_width, h + py * 2
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     accent = self._tone == "accent"
     draw.fill(rect, self._background or (T.ACCENT_SELECTED if accent else T.SURFACE_2), T.RADIUS_PANEL)
     if accent:
@@ -93,17 +101,17 @@ class Columns(Component):
   """Widgets side by side. weights are column widths relative to each other (1, 1.2 ...)."""
   grow_touch_target = False
 
-  def __init__(self, items: list[Widget], weights: list[float] | None = None, gap: float = T.px(14)):
+  def __init__(self, items: Sequence[Widget], weights: Sequence[float] | None = None, gap: float = T.px(14)):
     super().__init__()
     self._items = [self._child(w) for w in items]
-    self._weights = weights or [1.0] * len(items)
+    self._weights = list(weights) if weights else [1.0] * len(items)
     self._gap = gap
 
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     widths = row(rl.Rectangle(0, 0, max_width, 0), [Fill(w) for w in self._weights], self._gap)
     return max_width, max(size_of(w, r.width)[1] for w, r in zip(self._items, widths, strict=True))
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     for w, r in zip(self._items, row(rect, [Fill(x) for x in self._weights], self._gap), strict=True):
       w.render(r)
 
@@ -112,7 +120,7 @@ class Label(Component):
   """One line of text sized to its font: a card's title, a big name, a caption. icon draws a mock icon before it."""
   grow_touch_target = False
 
-  def __init__(self, text: Bindable[str], size: int = T.SIZE_PANEL_TITLE, color: Bindable[rl.Color] = T.TEXT, weight=T.FONT_BOLD,
+  def __init__(self, text: Bindable[str], size: int = T.SIZE_PANEL_TITLE, color: Bindable[rl.Color] = T.TEXT, weight: Face = T.FONT_BOLD,
                caption: bool = False, h: Align = Align.START, icon: Bindable[str | None] = None, icon_color: Bindable[rl.Color] | None = None,
                fit: bool = False):
     """fit: as wide as the text, e.g. "7 settings" beside a panel title."""
@@ -126,7 +134,7 @@ class Label(Component):
     width = draw.text_width(resolve(self._text), size, self._weight) + T.px(2) if self._fit else max_width
     return min(width, max_width), draw.line_height(size)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     name = resolve(self._icon)
     if name:
       size = round(self._size * 1.1)
@@ -143,7 +151,15 @@ class ValueLine(Component):
 
   def __init__(self, label: Bindable[str], value: Bindable[str], on_click: Callable[[], None] | None = None, size: int = T.font_px(16),
                height: float | None = None):
-    """height makes it a finger-sized tile (a filled row with a chevron) instead of a bare line."""
+    """Makes a label and value line.
+
+    Args:
+      label: The name on the left.
+      value: The value on the right, or a getter for it.
+      on_click: Runs on a tap.
+      size: The text size.
+      height: Makes it a finger-sized tile (a filled row with a chevron) instead of a bare line.
+    """
     super().__init__()
     self._label, self._value, self._size, self._height = label, value, size, height
     self.set_click_callback(on_click)
@@ -152,7 +168,7 @@ class ValueLine(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, self._height or draw.line_height(self._size) + T.px(6)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     if self._height:
       draw.fill(rect, T.SURFACE_4, T.px(14))
       if self._click_callback and self.is_pressed:
@@ -184,7 +200,7 @@ class Sized(Component):
     super().set_parent_rect(parent_rect)
     self._content.set_parent_rect(parent_rect)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     self._content.render(rect)
 
 
@@ -205,7 +221,7 @@ class Surface(Component):
     super().set_parent_rect(parent_rect)
     self._content.set_parent_rect(parent_rect)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, self._background, self._radius)
     self._content.render(inset(rect, self._padding) if self._padding else rect)
 
@@ -226,7 +242,7 @@ class Inline(Component):
     super().set_parent_rect(parent_rect)
     self._content.set_parent_rect(parent_rect)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     w, h = size_of(self._content, rect.width)
     self._content.render(place(rect, w, h, self._h))
 
@@ -242,7 +258,7 @@ class IconTitle(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, T.px(60)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     well = rl.Rectangle(rect.x, rect.y, T.px(60), T.px(60))
     draw.fill(well, T.ACCENT_SURFACE, T.px(16))
     draw.icon(well, self._icon, T.ACCENT_TEXT, T.px(28))
@@ -265,7 +281,7 @@ class Field(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, draw.line_height(T.SIZE_SUBTITLE) + T.px(6) + self._height
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     label_h = draw.line_height(T.SIZE_SUBTITLE)
     draw.text(rl.Rectangle(rect.x, rect.y, rect.width, label_h), self._label, T.SIZE_SUBTITLE, T.TEXT_SECONDARY, T.FONT_SEMIBOLD)
     box = rl.Rectangle(rect.x, rect.y + label_h + T.px(6), rect.width, self._height)
@@ -283,7 +299,7 @@ class Grid(Component):
   """Widgets in rows of `columns`, each row as tall as its tallest item (or row_height)."""
   grow_touch_target = False
 
-  def __init__(self, items: list[Widget], columns: int = 2, gap: float = T.px(10), row_height: float | None = None):
+  def __init__(self, items: Sequence[Widget], columns: int = 2, gap: float = T.px(10), row_height: float | None = None):
     super().__init__()
     self._items = [self._child(w) for w in items]
     self._columns, self._gap, self._row_height = columns, gap, row_height
@@ -307,12 +323,12 @@ class Grid(Component):
     for w in self._items:
       w.set_parent_rect(parent_rect)
 
-  def set_touch_valid_callback(self, touch_callback) -> None:
+  def set_touch_valid_callback(self, touch_callback: Callable[[], bool]) -> None:
     super().set_touch_valid_callback(touch_callback)
     for w in self._items:
       w.set_touch_valid_callback(touch_callback)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     w = self._cell_width(rect.width)
     y = rect.y
     for items in self._rows():
@@ -333,7 +349,7 @@ class InfoCard(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, draw.line_height(T.font_px(17)) + T.px(3) + draw.line_height(T.SIZE_SUBTITLE) + T.px(28)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, self._background, T.px(16))
     body = inset(rect, x=T.px(16), y=T.px(14))
     if self._icon:
@@ -358,7 +374,7 @@ class Icon(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return self._size, self._size
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.icon(rect, self._name, self._color if self.enabled else T.TEXT_MUTED, self._size)
 
 
@@ -373,5 +389,5 @@ class Rule(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, T.DIVIDER
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.hline(rect.x, rect.y, rect.width, draw.alpha(T.CONTROL, 0.4) if resolve(self._dim) else T.CONTROL)

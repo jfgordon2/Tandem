@@ -14,13 +14,14 @@ from typing import Any, Protocol
 
 import pyray as rl
 
+from functools import partial
 from openpilot.system.ui.widgets import Widget
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
-from openpilot.selfdrive.ui.tandem.base import Component
+from openpilot.selfdrive.ui.tandem.base import Component, size_of
 from openpilot.selfdrive.ui.tandem.blocks import Icon
 from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, back_glyph
 from openpilot.selfdrive.ui.tandem.keyboard import KeyPad
-from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, grid, inset, place, row
+from openpilot.selfdrive.ui.tandem.layout import FILL, Align, Size, column, grid, inset, place, row
 from openpilot.selfdrive.ui.tandem.routemap import FINDING, NO_FIX, NOT_SET_UP, RouteFetcher, RoutePlan, arrive_text, distance_text, draw_route_map, \
   mapbox_route, time_text
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, SectionHeader, SettingRow, Text
@@ -32,6 +33,11 @@ FIELD_FILL = T._hex("1A1D22")
 ROW = T.px(58)              # the list's rows, as in the mock
 TAG_FILL = rl.Color(0x0B, 0x0D, 0x10, 0xE6)   # back over the map
 DATA_LABEL = T._hex("9FAABA")
+
+
+def star_ink(places: Places, place: dict[str, Any]) -> rl.Color:
+  """The star's color beside a recent place: accent once it's a favorite."""
+  return T.ACCENT_TEXT if places.is_favorite(place) else T.TEXT_TERTIARY
 
 
 def place_name(place: dict[str, Any] | None) -> str:
@@ -88,12 +94,16 @@ class Places(Protocol):
 class UpstreamPlaces:
   """Places backed by StarPilot's navigation controller."""
 
-  def __init__(self):
+  def __init__(self) -> None:
+    self._build()
+
+  def _build(self) -> None:
+    """Makes the navigation controller and route fetcher, local or Mapbox as offline routing is set."""
     from openpilot.selfdrive.ui.layouts.settings.starpilot.navigation import MapboxSearchClient, StarPilotNavigationLayout
 
     class AddressSearchClient(MapboxSearchClient):
       @classmethod
-      def _normalize_result(cls, payload):
+      def _normalize_result(cls, payload: dict) -> Any:
         result = super()._normalize_result(payload)
         if result is None:
           return None
@@ -105,11 +115,11 @@ class UpstreamPlaces:
     if self._local:
       from openpilot.starpilot.tandem.routing.bundles import capability
       class LocalController(StarPilotNavigationLayout):
-        def _routing_available(self):
+        def _routing_available(self) -> bool:
           from openpilot.starpilot.tandem.routing.config import policy
           return enabled() and (capability()["status"] == "ready" or
                                 (not policy()[0] and bool(self._params.get("MapboxSecretKey", encoding="utf-8"))))
-      self._nav = LocalController()
+      self._nav: StarPilotNavigationLayout = LocalController()
     else:
       self._nav = StarPilotNavigationLayout()
     self._nav._search_client = AddressSearchClient()
@@ -126,24 +136,25 @@ class UpstreamPlaces:
 
   def refresh(self) -> None:
     from openpilot.starpilot.tandem.routing.config import enabled
-    if enabled() != self._local:
-      self.__init__()
+    if enabled() != self._local:   # offline routing turned on or off: rebuild with the matching controller
+      self._build()
     self._nav.show_event()
 
-  def active(self):
+  def active(self) -> dict | None:
     return self._nav._active_destination
 
-  def favorites(self):
+  def favorites(self) -> list[dict]:
     from openpilot.starpilot.navigation.destination_store import ordered_favorite_destinations
     return ordered_favorite_destinations(self._nav._favorites)
 
-  def recents(self):
+  def recents(self) -> list[dict]:
     return list(self._nav._recent_destinations)
 
-  def is_favorite(self, place) -> bool:
+  def is_favorite(self, place: dict) -> bool:
     return self._nav._favorite_for_destination(place) is not None
 
-  def toggle_saved(self, place) -> None:
+  def toggle_saved(self, place: dict) -> None:
+    """Saves a place as a favorite, or forgets it when it's one already. A place without coordinates can't be saved."""
     favorite = self._nav._favorite_for_destination(place)
     if favorite is not None:
       self._nav._store.remove_favorite(favorite)
@@ -159,10 +170,11 @@ class UpstreamPlaces:
   def search(self, query: str) -> None:
     self._nav._start_search(query)
 
-  def results(self):
+  def results(self) -> list[tuple[str, str]]:
     return [(r.name, r.subtitle) for r in self._nav._search_results]
 
-  def status(self):
+  def status(self) -> tuple[str, str] | None:
+    """What the search area says instead of results: searching, an error, or nothing found. None when there are results."""
     nav = self._nav
     if nav._search_loading:
       return N_("Searching…"), N_("Looking up places")
@@ -177,7 +189,8 @@ class UpstreamPlaces:
     if 0 <= index < len(results):
       self._nav._select_search_result(results[index])
 
-  def pick(self, place) -> None:
+  def pick(self, place: dict) -> None:
+    """Makes a place the draft destination. A saved place without coordinates is searched for by name instead, when search is available."""
     from openpilot.starpilot.navigation.destination_store import normalize_destination_payload
     self.clear_draft()
     if normalize_destination_payload(place) is None:
@@ -189,14 +202,14 @@ class UpstreamPlaces:
     favorite = self._nav._favorite_for_destination(place)
     self._nav._select_destination(place, favorite)
 
-  def draft(self):
+  def draft(self) -> dict | None:
     return self._nav._draft_destination
 
   def clear_draft(self) -> None:
     self._nav._draft_destination = None
     self._nav._selected_favorite = None
 
-  def saved_as(self):
+  def saved_as(self) -> tuple[bool, bool, bool]:
     nav = self._nav
     favorite = nav._selected_favorite or (nav._favorite_for_destination(nav._draft_destination) if nav._draft_destination else None)
     if favorite is None:
@@ -211,8 +224,8 @@ class UpstreamPlaces:
 
   def can_start(self) -> bool:
     if self._local:
-      return self._nav._routing_available() and self.draft() is not None and self.route()[0] is not None
-    return self._nav._routing_available()
+      return bool(self._nav._routing_available()) and self.draft() is not None and self.route()[0] is not None
+    return bool(self._nav._routing_available())
 
   def can_search(self) -> bool:
     return bool(self._nav._public_mapbox_key())
@@ -227,9 +240,10 @@ class UpstreamPlaces:
     self._nav._cancel_navigation()
 
   def maps_ready(self) -> bool:
+    """Whether maps are ready for routing: offline routing's data when it's on, else StarPilot's downloaded maps."""
     if self._local:
       from openpilot.starpilot.tandem.routing.bundles import capability
-      return capability()["status"] == "ready"
+      return bool(capability()["status"] == "ready")
     try:
       from openpilot.common.params import Params
       from openpilot.starpilot.common.maps_download_progress import MAPS_STORAGE_CACHE_PARAM, load_maps_storage_cache
@@ -237,7 +251,7 @@ class UpstreamPlaces:
     except Exception:
       return False
 
-  def route(self):
+  def route(self) -> tuple[RoutePlan | None, str]:
     if self._local:
       return self._routes.route(self.draft())
     if not self.can_start():
@@ -270,11 +284,11 @@ class Footer(Component):
     self._note = note
     self._action = self._child(action) if action is not None else None
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, T.NAV_BAR)
     draw.hline(rect.x, rect.y, rect.width, T.NAV_BAR_EDGE)
     body = place(inset(rect, x=T.px(16)), rect.width - T.px(32), T.NAV_BUTTON)
-    action_w = self._action.preferred_size(body.width)[0] if self._action is not None and self._action.is_visible else 0
+    action_w = size_of(self._action, body.width)[0] if self._action is not None and self._action.is_visible else 0
     back, note, action = row(body, [T.NAV_BUTTON, FILL, action_w], T.px(10))
     self._back.render(back)
     draw.text(inset(note, left=T.px(10)), draw.fit(self._note(), T.font_px(16), T.FONT, note.width - T.px(10)), T.font_px(16),
@@ -293,7 +307,7 @@ class Tile(Component):
     self._icon, self._title, self._line, self._dashed = icon, title, line, dashed
     self.set_click_callback(on_click)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     empty = self._dashed()
     if empty:
       draw.stroke(rect, T._hex("343B45"), T.px(20), T.px(1))
@@ -323,7 +337,7 @@ class SearchPill(Component):
     self._text = text
     self.set_click_callback(on_click)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, FIELD_FILL, T.px(16))
     draw.stroke(rect, T.TRACK, T.px(16), T.px(1))
     if self.is_pressed:
@@ -345,7 +359,7 @@ class ResultCard(Component):
     self.set_click_callback(lambda: on_pick(index))
     self.set_visible(lambda: index < len(places.results()))
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     results = self._places.results()
     if self._index >= len(results):
       return
@@ -427,7 +441,7 @@ class DestinationsScreen(Component):
 
   # Navigation between views
 
-  def show_event(self):
+  def show_event(self) -> None:
     super().show_event()
     self._places.refresh()
 
@@ -495,7 +509,7 @@ class DestinationsScreen(Component):
     if self._places.start():
       self._on_close()
 
-  def _update_state(self):
+  def _update_state(self) -> None:
     self._places.tick()
     if self._view == SEARCH:
       text = self._keys.text.strip()
@@ -513,7 +527,7 @@ class DestinationsScreen(Component):
 
   # Drawing
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, T.BG)
     {LIST: self._render_list, SEARCH: self._render_search, RESULTS: self._render_results, PREVIEW: self._render_preview}[self._view](rect)
 
@@ -553,14 +567,13 @@ class DestinationsScreen(Component):
                              Button(N_("End route"), places.end_route, ButtonStyle.DANGER_SOFT), leading=Icon("navigate"), height=ROW)]
       if others:
         items.append(SectionHeader(N_("FAVORITES")))
-        items += [SettingRow(place_name(f), place_line(f) or None, on_click=lambda f=f: self._pick(f), leading=Icon("star"),
+        items += [SettingRow(place_name(f), place_line(f) or None, on_click=partial(self._pick, f), leading=Icon("star"),
                              chevron=False, height=ROW) for f in others]
       items.append(SectionHeader(N_("RECENT")))
       if recents:
         items += [SettingRow(place_name(r), place_line(r) or None,
-                             icon_button("star", lambda r=r: places.toggle_saved(r),
-                                         lambda r=r: T.ACCENT_TEXT if places.is_favorite(r) else T.TEXT_TERTIARY),
-                             on_click=lambda r=r: self._pick(r), leading=Icon("recent", color=T.TEXT_MUTED), chevron=False, height=ROW)
+                             icon_button("star", partial(places.toggle_saved, r), partial(star_ink, places, r)),
+                             on_click=partial(self._pick, r), leading=Icon("recent", color=T.TEXT_MUTED), chevron=False, height=ROW)
                   for r in recents]
       else:
         items.append(Text(N_("Places you navigate to show up here.")))
@@ -616,7 +629,7 @@ class DestinationsScreen(Component):
     key = (tuple(results), status)
     if self._results_panel is None or key != self._results_key:
       items: list[Widget] = [Text(f"{status[0]} · {status[1]}")] if status else []
-      items += [SettingRow(name, line or None, on_click=lambda i=i: self._pick_result(i), leading=Icon("pin"), chevron=False, height=ROW)
+      items += [SettingRow(name, line or None, on_click=partial(self._pick_result, i), leading=Icon("pin"), chevron=False, height=ROW)
                 for i, (name, line) in enumerate(results)]
       self._results_panel = self._child(ListPanel(items, header_divider=False))
       self._results_key = key
@@ -654,7 +667,7 @@ class DestinationsScreen(Component):
     basis = [max(draw.text_width(label, T.font_px(13)), draw.text_width(value, T.font_px(22), T.FONT_BOLD)) + T.px(28)
              for label, value in facts]
     spare = (tiles.width - T.px(10) * 2 - sum(basis)) / 3
-    widths = [w + spare for w in basis] if spare > 0 else [FILL] * 3
+    widths: list[Size] = [w + spare for w in basis] if spare > 0 else [FILL] * 3
     for (label, value), cell in zip(facts, row(tiles, widths, T.px(10)), strict=True):
       draw.fill(cell, T.SURFACE_4, T.px(14))
       words = inset(cell, x=T.px(14), y=T.px(12))
@@ -665,11 +678,11 @@ class DestinationsScreen(Component):
     from openpilot.starpilot.tandem.routing.config import policy
     if plan is None and policy()[0] and status not in (FINDING, NO_FIX):
       self._choose_maps.render(place(suggestion, T.px(180), T.px(48), Align.START, Align.CENTER))
-    for cell, words in zip(column(checks, [check_h, check_h], T.px(10)), (N_("Slows ahead of turns on the route"), second), strict=True):
-      icon, text = row(cell, [T.px(18), FILL], T.px(10))
+    for cell, sentence in zip(column(checks, [check_h, check_h], T.px(10)), (N_("Slows ahead of turns on the route"), second), strict=True):
+      icon, sentence_box = row(cell, [T.px(18), FILL], T.px(10))
       draw.icon(icon, "check", T.SUCCESS_TEXT, T.px(18))
-      size = next((z for z in (T.font_px(15), T.font_px(14)) if draw.text_width(words, z) <= text.width), T.font_px(14))
-      draw.text(text, words, size, T.TEXT_SECONDARY)
+      size = next((z for z in (T.font_px(15), T.font_px(14)) if draw.text_width(sentence, z) <= sentence_box.width), T.font_px(14))
+      draw.text(sentence_box, sentence, size, T.TEXT_SECONDARY)
     star, start = row(actions, [T.px(64), FILL], T.px(10))
     self._star.render(star)
     self._start_button.render(start)

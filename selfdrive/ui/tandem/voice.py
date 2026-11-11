@@ -26,6 +26,7 @@ from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, ProgressBar
 from openpilot.selfdrive.ui.tandem.layout import Align, column, inset, place
 from openpilot.selfdrive.ui.tandem.i18n import N_
+from openpilot.system.ui.lib.application import MousePos
 
 WORKER = Path(__file__).resolve().parent / "speech.py"
 BARS = 22                                    # the level meter's bars, newest on the right
@@ -64,7 +65,13 @@ class VoiceTyping:
   """
 
   def __init__(self, on_text: Callable[[str], None], command: list[str] | None = None, style: str = "text"):
-    """style "address" writes the words as an address: digits for a house number, "1st Street" (speech.address_text)."""
+    """Makes a voice typing session.
+
+    Args:
+      on_text: Runs with the words once they're written down.
+      command: The worker's command line; speech.py with --style by default (tests pass a fake).
+      style: "address" writes the words as an address: digits for a house number, "1st Street" (speech.address_text).
+    """
     self._on_text = on_text
     self._command = command or [sys.executable, str(WORKER), "--style", style]
     self._process: subprocess.Popen | None = None
@@ -81,6 +88,7 @@ class VoiceTyping:
     return self.state != "idle"
 
   def start(self) -> None:
+    """Starts listening: launches the speech worker, which downloads the model first when it's missing."""
     self.cancel()
     from openpilot.selfdrive.ui.tandem import speech
     self.state = "listening" if speech.model_ready() else "download"
@@ -108,6 +116,8 @@ class VoiceTyping:
 
   @staticmethod
   def _read(process: subprocess.Popen, lines: queue.Queue) -> None:
+    if process.stdout is None:   # started without stdout=PIPE: nothing to read
+      return
     for line in process.stdout:
       lines.put(line)
     lines.put(None)                          # the worker ended
@@ -138,6 +148,7 @@ class VoiceTyping:
     self.state, self.message = "idle", ""
 
   def update(self) -> None:
+    """Takes in the worker's messages since the last frame and moves the session along (levels, progress, words or an error)."""
     self._seen = time.monotonic()
     if self.state == "message" and time.monotonic() >= self._message_until:
       self.state, self.message = "idle", ""
@@ -192,6 +203,7 @@ class VoicePanel(Component):
     self._mic_rect = rl.Rectangle(0, 0, 0, 0)
 
   def words(self) -> tuple[str, str]:
+    """The voice panel's title and line for the session's state."""
     s = self.session
     if s.state == "download":
       return N_("Getting voice typing ready"), N_("One-time setup for the speech model and voice engine. Everything stays on this device.")
@@ -201,7 +213,7 @@ class VoicePanel(Component):
       return N_("Voice typing"), s.message
     return N_("Listening"), self.hint
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     s = self.session
     s.update()
     draw.fill(rect, T._hex("13161A"))
@@ -254,7 +266,7 @@ class VoicePanel(Component):
       bar = rl.Rectangle(x, meter.y + (meter.height - h) / 2, w, h)
       draw.fill(bar, draw.alpha(T.ACCENT, 0.55 + 0.45 * value), w / 2)
 
-  def _handle_mouse_release(self, mouse_pos) -> None:
+  def _handle_mouse_release(self, mouse_pos: MousePos) -> None:
     super()._handle_mouse_release(mouse_pos)
     if self.session.state == "listening" and rl.check_collision_point_circle(
         mouse_pos, rl.Vector2(self._mic_rect.x + self._mic_rect.width / 2, self._mic_rect.y + self._mic_rect.height / 2),

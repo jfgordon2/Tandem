@@ -1,7 +1,7 @@
 """Setting rows and the panels that stack them."""
 from __future__ import annotations
 
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 
 import pyray as rl
 
@@ -10,13 +10,15 @@ from openpilot.system.ui.widgets import Widget
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Bindable, Component, resolve, size_of
 from openpilot.selfdrive.ui.tandem.layout import Align, column, inset, place
+from openpilot.system.ui.lib.application import MousePos
+from openpilot.selfdrive.ui.tandem.fonts import Face
 
 
 class Text(Component):
   """A wrapped block of text: notes, dialog bodies, footnotes."""
   grow_touch_target = False
 
-  def __init__(self, value: Bindable[str], size: int = T.SIZE_SUBTITLE, color: Bindable[rl.Color] = T.TEXT_MUTED, weight=T.FONT,
+  def __init__(self, value: Bindable[str], size: int = T.SIZE_SUBTITLE, color: Bindable[rl.Color] = T.TEXT_MUTED, weight: Face = T.FONT,
                padding: tuple[float, float] = (T.PANEL_HEADER_INSET, T.px(12))):
     super().__init__()
     self._value = value
@@ -29,7 +31,7 @@ class Text(Component):
     px, py = self._padding
     return max_width, draw.paragraph_height(resolve(self._value), self._size, self._weight, max_width - px * 2) + py * 2
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     px, py = self._padding
     draw.paragraph(inset(rect, x=px, y=py), resolve(self._value), self._size, resolve(self._color), self._weight)
 
@@ -40,7 +42,15 @@ class SectionHeader(Component):
 
   def __init__(self, label: str, color: rl.Color = T.TEXT_MUTED, trailing: Widget | None = None, background: rl.Color | None = None,
                divider: bool = False):
-    """divider: a line under the caption. The mocks leave it out, except over a card's own list (NEARBY)."""
+    """Makes a section caption.
+
+    Args:
+      label: The caption.
+      color: The caption's color.
+      trailing: A widget on the right of the caption (e.g. Scanning…).
+      background: A fill behind the caption.
+      divider: A line under the caption. The mocks leave it out, except over a card's own list (NEARBY).
+    """
     super().__init__()
     self.divider = divider
     self._label = label
@@ -53,7 +63,7 @@ class SectionHeader(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, T.px(40)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     if self._background is not None:
       draw.fill(rect, self._background)
     body = inset(rect, left=T.PANEL_HEADER_INSET, right=T.px(16), top=T.px(12), bottom=T.px(4))
@@ -75,7 +85,20 @@ class SettingRow(Component):
                on_click: Callable[[], None] | None = None, indent: bool = False, height: float | None = None,
                leading: Widget | None = None, subtitle_color: Bindable[rl.Color] = T.TEXT_TERTIARY, chevron: bool | None = None,
                link: tuple[Bindable[str], Callable[[], None]] | None = None):
-    """link: (label, action) drawn after the subtitle in the accent color, e.g. "Sets 11 options"; tapping it runs action."""
+    """Makes a settings row.
+
+    Args:
+      title: The row's name, or a getter for it.
+      subtitle: A line under the title; None or "" leaves it out.
+      control: The widget on the right (a switch, button or value).
+      on_click: Runs when the row itself is tapped.
+      indent: Inset the row under the one above (a dependent setting).
+      height: A fixed height; None sizes the row to its text.
+      leading: A widget before the title, e.g. an icon.
+      subtitle_color: The subtitle's color, or a getter for it.
+      chevron: Draw a chevron on the right; None draws one when the row has on_click.
+      link: (label, action) drawn after the subtitle in the accent color, e.g. "Sets 11 options"; tapping it runs action.
+    """
     super().__init__()
     self._link = link
     self._link_rect: rl.Rectangle | None = None
@@ -95,13 +118,13 @@ class SettingRow(Component):
       if w is not None:
         self._child(w)
 
-  def set_enabled(self, enabled) -> None:
+  def set_enabled(self, enabled: bool | Callable[[], bool]) -> None:
     super().set_enabled(enabled)
     for w in (self._control, self._leading):
       if w is not None:
         w.set_enabled(enabled)
 
-  def set_touch_valid_callback(self, touch_callback) -> None:
+  def set_touch_valid_callback(self, touch_callback: Callable[[], bool]) -> None:
     super().set_touch_valid_callback(touch_callback)
     for w in (self._control, self._leading):
       if w is not None:
@@ -117,17 +140,17 @@ class SettingRow(Component):
     default = T.SUB_ROW_HEIGHT if self._indent else T.ROW_HEIGHT
     return max_width, self._height or default
 
-  def _on_control(self, pos) -> bool:
+  def _on_control(self, pos: MousePos) -> bool:
     return self._control_hit_rect is not None and rl.check_collision_point_rec(pos, self._control_hit_rect)
 
-  def _on_link(self, pos) -> bool:
+  def _on_link(self, pos: MousePos) -> bool:
     return self._link_rect is not None and rl.check_collision_point_rec(pos, self._link_rect)
 
-  def _handle_mouse_press(self, mouse_pos) -> None:
+  def _handle_mouse_press(self, mouse_pos: MousePos) -> None:
     self._press_on_control = self._on_control(mouse_pos)
     self._press_on_link = self._on_link(mouse_pos)
 
-  def _handle_mouse_release(self, mouse_pos) -> None:
+  def _handle_mouse_release(self, mouse_pos: MousePos) -> None:
     on_control = self._press_on_control or self._on_control(mouse_pos)
     self._press_on_control = False
     if self._press_on_link and self._on_link(mouse_pos) and self._link is not None and self.enabled:
@@ -138,7 +161,7 @@ class SettingRow(Component):
     if not on_control:
       super()._handle_mouse_release(mouse_pos)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     if self._indent:
       draw.fill(rect, T.SURFACE_1)
     if self._click_callback and self.is_pressed and self.enabled:
@@ -201,13 +224,13 @@ class ListPanel(Component):
   """
   grow_touch_target = False
 
-  def __init__(self, items: list[Widget], title: Bindable[str] | None = None, subtitle: Bindable[str] | None = None,
+  def __init__(self, items: Sequence[Widget], title: Bindable[str] | None = None, subtitle: Bindable[str] | None = None,
                header_control: Widget | None = None, banner: Widget | None = None, footnote: Bindable[str] | None = None,
                background: rl.Color = T.SURFACE_2, dividers: bool = True, footer: Widget | None = None,
                title_size: int = T.SIZE_PANEL_TITLE, header_divider: bool = True, end_divider: bool | None = None,
                footnote_divider: bool = False, bottom: Widget | None = None):
     super().__init__()
-    self._items = items
+    self._items = list(items)
     self._title = title
     self._subtitle = subtitle
     self._header_control = header_control
@@ -263,7 +286,7 @@ class ListPanel(Component):
       return 0
     return self._height_of(self._footer, width - T.px(28)) + T.px(24)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, self._background, T.RADIUS_PANEL)
     y = rect.y
     if self._title is not None:
@@ -299,9 +322,9 @@ class ListPanel(Component):
 
     rl.begin_scissor_mode(int(viewport.x), int(viewport.y), int(viewport.width), int(viewport.height))
     cy = viewport.y + offset
-    for i, (w, h) in enumerate(zip(visible, heights, strict=True)):
-      w.set_parent_rect(viewport)
-      w.render(rl.Rectangle(viewport.x, cy, viewport.width, h))
+    for i, (child, h) in enumerate(zip(visible, heights, strict=True)):
+      child.set_parent_rect(viewport)
+      child.render(rl.Rectangle(viewport.x, cy, viewport.width, h))
       cy += h
       if lines[i]:
         draw.hline(viewport.x, cy, viewport.width)
@@ -339,7 +362,7 @@ class Banner(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, T.px(52)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, self._background)
     draw.text(inset(rect, x=T.PANEL_HEADER_INSET), resolve(self._message), T.font_px(15), self._color)
 
@@ -354,7 +377,7 @@ class Padded(Component):
     self._x = x
     self._y = y
 
-  def set_touch_valid_callback(self, touch_callback) -> None:
+  def set_touch_valid_callback(self, touch_callback: Callable[[], bool]) -> None:
     super().set_touch_valid_callback(touch_callback)
     self._content.set_touch_valid_callback(touch_callback)
 
@@ -366,7 +389,7 @@ class Padded(Component):
     _, h = size_of(self._content, max_width - self._x * 2)
     return max_width, h + self._y * 2
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     self._content.render(inset(rect, x=self._x, y=self._y))
 
 
@@ -375,9 +398,18 @@ class OptionList(Component):
   grow_touch_target = False
 
   def __init__(self, options: list[str] | list[tuple[str, str]], selected: Bindable[int], on_change: Callable[[int], None],
-               row_height: float = T.px(60), weight=T.FONT_SEMIBOLD, outlined: bool = False, font_size: int = T.SIZE_ROW_TITLE):
-    """outlined marks the choice with an accent outline instead of a check (the Report a Problem list). weight may be a
-    function of the option's title, to pick its face (the language list)."""
+               row_height: float = T.px(60), weight: Face | Callable[[str], Face] = T.FONT_SEMIBOLD, outlined: bool = False, font_size: int = T.SIZE_ROW_TITLE):
+    """Makes an option list.
+
+    Args:
+      options: The titles, or (title, subtitle) pairs.
+      selected: The chosen option's index, or a getter for it.
+      on_change: Runs with the index of a tapped option.
+      row_height: Each row's height.
+      weight: The titles' face, or a function of a title that picks its face (the language list).
+      outlined: Mark the choice with an accent outline instead of a check (the Report a Problem list).
+      font_size: The titles' size.
+    """
     super().__init__()
     self._weight = weight
     self._outlined = outlined
@@ -393,21 +425,21 @@ class OptionList(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, len(self._options) * self._row_height
 
-  def _row_at(self, pos) -> int | None:
+  def _row_at(self, pos: MousePos) -> int | None:
     index = int((pos.y - self._rect.y - self._offset) // self._row_height)
     return index if 0 <= index < len(self._options) and rl.check_collision_point_rec(pos, self._rect) else None
 
-  def _handle_mouse_press(self, mouse_pos) -> None:
+  def _handle_mouse_press(self, mouse_pos: MousePos) -> None:
     self._pressed_row = self._row_at(mouse_pos)
 
-  def _handle_mouse_release(self, mouse_pos) -> None:
+  def _handle_mouse_release(self, mouse_pos: MousePos) -> None:
     super()._handle_mouse_release(mouse_pos)
     hit = self._row_at(mouse_pos)
     if hit is not None and hit == self._pressed_row and self._scroll.is_touch_valid():
       self._on_change(hit)
     self._pressed_row = None
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     content = len(self._options) * self._row_height
     scrolls = content > rect.height + 0.5
     self._offset = self._scroll.update(rect, content) if scrolls else 0.0

@@ -61,6 +61,7 @@ SKY: dict[int, tuple[str, str]] = {0: (N_("Sunny"), N_("Clear")), 1: (N_("Mostly
 
 @dataclass
 class Forecast:
+  """The hourly steps of a fetched forecast, where and when it was fetched; saved to disk as JSON between restarts."""
   steps: list[tuple[int, int]]      # (unix start, WMO code), in order
   step_s: int                       # 900 for 15-minute steps, 3600 for hourly
   fetched_at: float
@@ -166,6 +167,7 @@ def event_clock(ts: float, utc_offset: int) -> str:
 
 @dataclass
 class HeadsUp:
+  """Weather heads-up for the drive screen: what's coming (rain, snow, storms or fog), its icon, and when it starts."""
   label: str                        # "Light rain"
   icon: str                         # rain, snow, storm, fog
   start: int                        # when it starts (unix), for telling events apart
@@ -288,7 +290,8 @@ def fetch_open_meteo(lat: float, lon: float) -> dict | None:
             "forecast_minutely_15": 96, "forecast_hours": 24, "timezone": "auto", "timeformat": "unixtime"}
   request = urllib.request.Request(f"{OPEN_METEO_URL}?{urllib.parse.urlencode(params)}", headers={"User-Agent": "tandem/1.0"})
   with urllib.request.urlopen(request, timeout=10) as response:
-    return json.loads(response.read().decode())
+    data = json.loads(response.read().decode())
+  return data if isinstance(data, dict) else None
 
 
 def where_now(memory: Callable[[str], object], saved: Callable[[str], object]) -> tuple[float, float] | None:
@@ -302,6 +305,8 @@ def last_position(read: Callable[[], object]) -> tuple[float, float] | None:
   try:
     raw = read()
     data = json.loads(raw.decode() if isinstance(raw, bytes) else raw) if isinstance(raw, (str, bytes)) else raw
+    if not isinstance(data, dict):
+      return None
     lat, lon = float(data["latitude"]), float(data["longitude"])
   except (TypeError, ValueError, KeyError):
     return None
@@ -315,6 +320,7 @@ OUTLOOK_HOURS = 12
 
 @dataclass
 class HourTile:
+  """One hour on the parked screen's forecast strip."""
   time: str                         # "3 PM"
   icon: str                         # sun, moon, partly, cloud, rain, snow, storm, fog
   temp: int                         # in the driver's units
@@ -323,6 +329,7 @@ class HourTile:
 
 @dataclass
 class Outlook:
+  """The parked screen's forecast: one line saying what matters, and a tile an hour."""
   summary: str                      # "Light snow from 5:45 to 8:30 PM", or "Mostly sunny"
   icon: str
   hazard: bool
@@ -350,8 +357,17 @@ def _next_event(forecast: Forecast, now: float, horizon: float) -> tuple[str, st
 
 
 def outlook(forecast: Forecast | None, now: float, metric: bool, hours: int = OUTLOOK_HOURS) -> Outlook | None:
-  """The next 12 hours for the parked screen: a tile an hour, and one line saying what matters. None without enough
-  forecast left (fewer than 3 hours ahead). metric: temperatures in °C (prefs.celsius, General › Temperature)."""
+  """The next 12 hours for the parked screen: a tile an hour, and one line saying what matters.
+
+  Args:
+    forecast: The latest forecast, if any.
+    now: The wall-clock time.
+    metric: Temperatures in °C (prefs.celsius, General › Temperature).
+    hours: How many hours to show.
+
+  Returns:
+    The outlook, or None without enough forecast left (fewer than 3 hours ahead).
+  """
   if forecast is None:
     return None
   ahead = [h for h in forecast.hours if h[0] > now][:hours]

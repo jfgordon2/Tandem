@@ -1,7 +1,7 @@
 """Page scaffolding: bottom nav, sidebar, headers, hub tiles, and SettingsPage which assembles a screen."""
 from __future__ import annotations
 
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 
 import pyray as rl
@@ -24,7 +24,15 @@ class BottomNav(Component):
 
   def __init__(self, tabs: list[str], selected: Bindable[int], on_select: Callable[[int], None],
                on_leading: Callable[[], None] | None = None, leading: Bindable[str] = "back"):
-    """leading is "back" or "close"; pass a getter to switch as the user moves deeper."""
+    """Makes the bottom navigation bar.
+
+    Args:
+      tabs: The tab names.
+      selected: The current tab's index, or a getter for it.
+      on_select: Runs with the index of a tapped tab.
+      on_leading: Runs when the leading button is tapped.
+      leading: "back" or "close"; pass a getter to switch as the user moves deeper.
+    """
     super().__init__()
     self._tabs = tabs
     self._selected = selected
@@ -55,7 +63,7 @@ class BottomNav(Component):
       self._on_select(hit)
     self._pressed_tab = None
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, T.NAV_BAR)
     draw.hline(rect.x, rect.y, rect.width, T.NAV_BAR_EDGE)
     body = inset(rect, x=T.px(16))
@@ -72,6 +80,7 @@ class BottomNav(Component):
 
 @dataclass
 class SidebarItem:
+  """One entry in a hub's sidebar: its label, what tapping it opens, and an optional short value or dot on the right."""
   label: str
   on_select: Callable[[], None] | None = None
   value: Bindable[str] | None = None        # short state on the right, e.g. "Car", "Auto"
@@ -85,7 +94,7 @@ class Sidebar(Component):
   grow_touch_target = False
 
   def __init__(self, caption: str, items: list[SidebarItem], selected: Bindable[int], tone: Tone = Tone.ACCENT,
-               footer: list[Widget] | None = None, width: float = T.SIDEBAR_WIDTH):
+               footer: Sequence[Widget] | None = None, width: float = T.SIDEBAR_WIDTH):
     super().__init__()
     self._caption = caption
     self._items = items
@@ -118,11 +127,12 @@ class Sidebar(Component):
   def _handle_mouse_release(self, mouse_pos: MousePos) -> None:
     super()._handle_mouse_release(mouse_pos)
     hit = self._hit(mouse_pos)
-    if hit is not None and hit == self._pressed_item and hit != resolve(self._selected) and self._items[hit].on_select:
-      self._items[hit].on_select()
+    on_select = self._items[hit].on_select if hit is not None else None
+    if hit is not None and hit == self._pressed_item and hit != resolve(self._selected) and on_select is not None:
+      on_select()
     self._pressed_item = None
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     accent = self._tone == Tone.WARNING
     draw.caption(rl.Rectangle(rect.x + T.px(16), rect.y + T.px(8), rect.width, T.px(24)), self._caption,
                  T.WARNING if accent else T.ACCENT_TEXT)
@@ -146,10 +156,10 @@ class Sidebar(Component):
       draw.text(body, item.label, T.SIZE_BODY, T.TEXT if chosen else T.TEXT_SECONDARY, T.FONT_SEMIBOLD)
 
     y = rect.y + rect.height
-    for w in reversed(self._footer):
-      _, h = size_of(w, rect.width)
+    for widget in reversed(self._footer):
+      _, h = size_of(widget, rect.width)
       y -= h
-      w.render(rl.Rectangle(rect.x, y, rect.width, h))
+      widget.render(rl.Rectangle(rect.x, y, rect.width, h))
       y -= T.px(8)
 
 
@@ -169,7 +179,7 @@ class PageHeader(Component):
     trailing = size_of(self._trailing, max_width / 2)[1] if self._trailing is not None else 0
     return max_width, max(T.px(36), trailing)   # the mock's 30 px title at line-height 1.2, or the control's height
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     body = inset(rect, x=T.px(6))
     if self._trailing is not None:
       w, h = size_of(self._trailing, body.width / 2)
@@ -193,7 +203,7 @@ class HubTile(Component):
     self._highlight_line = highlight_line
     self.set_click_callback(on_click)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, T.SURFACE_3, T.RADIUS_PANEL)
     if self.is_pressed:
       draw.pressed(rect, T.RADIUS_PANEL)
@@ -228,7 +238,7 @@ class HubGrid(Component):
     n = len(self._rows)
     return max_width, n * self._tile_height + (n - 1) * T.px(14)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     tiles = iter(self._tiles)
     for count, line in zip(self._rows, column(rect, [self._tile_height] * len(self._rows), T.px(14)), strict=True):
       for cell in row(line, [FILL] * count, T.px(14)):
@@ -250,7 +260,7 @@ class SettingsPage(Component):
     self._sidebar = self._child(sidebar) if sidebar is not None else None
     self._header = self._child(header) if header is not None else None
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, T.BG)
     body = rect
     if self._nav is not None:

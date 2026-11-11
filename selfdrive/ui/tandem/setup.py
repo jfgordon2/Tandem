@@ -8,9 +8,11 @@ from __future__ import annotations
 from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import pyray as rl
 
+from functools import partial
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.controls import SETUP_CARDS, Button, ButtonStyle, ChoiceCards
@@ -18,11 +20,15 @@ from openpilot.selfdrive.ui.tandem.layout import FILL, column, inset, row
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_, translate
 
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.tandem.settings.display import BootLogoSource
+
 MARKER = ".tandem_setup_done"   # beside the params folder, so no new param key (upstream's registry stays untouched)
 
 
 @dataclass(frozen=True)
 class Question:
+  """A first-run question: its param name, its title, the (title, subtitle) choices and the one preselected."""
   name: str
   title: str
   options: list[tuple[str, str]]
@@ -48,8 +54,16 @@ QUESTIONS = [
 
 
 class Setup:
-  def __init__(self, store: SettingsStore, done: Callable[[], None], boot_logos=None):
-    """boot_logos makes the source that installs Tandem's boot logo (the device's; none in tests)."""
+  """The first-run setup: the questions, the answers so far, and applying them."""
+
+  def __init__(self, store: SettingsStore, done: Callable[[], None], boot_logos: Callable[[], BootLogoSource] | None = None):
+    """Makes the setup.
+
+    Args:
+      store: Where settings are written.
+      done: Runs once setup is finished or skipped.
+      boot_logos: Makes the source that installs Tandem's boot logo (the device's; none in tests).
+    """
     self._store = store
     self._done = done
     self._boot_logos = boot_logos
@@ -59,6 +73,10 @@ class Setup:
   @property
   def question(self) -> Question:
     return QUESTIONS[self.step]
+
+  def answer(self, step: int) -> int:
+    """The option picked for question step: the default until the driver picks."""
+    return int(self.answers[step])
 
   def pick(self, index: int) -> None:
     self.answers[self.step] = index
@@ -73,6 +91,7 @@ class Setup:
       self.finish(use_answers=True)
 
   def finish(self, use_answers: bool) -> None:
+    """Applies the Essentials defaults and, unless the driver skipped, their answers; then closes setup."""
     from openpilot.selfdrive.ui.tandem.settings.defaults import apply_essentials
     from openpilot.selfdrive.ui.tandem.settings.speed_steering import SpeedSteering
     with self._store.batch():
@@ -86,12 +105,13 @@ class Setup:
 
 
 class SetupWindow(Component):
+  """The first-run setup screen, drawn as design/setup.html."""
   grow_touch_target = False
 
   def __init__(self, setup: Setup):
     super().__init__()
     self._setup = setup
-    self._cards = [self._child(ChoiceCards(q.options, lambda i=i: setup.answers[i], setup.pick, columns=3, large=SETUP_CARDS))
+    self._cards = [self._child(ChoiceCards(q.options, partial(setup.answer, i), setup.pick, columns=3, large=SETUP_CARDS))
                    for i, q in enumerate(QUESTIONS)]
     self._defaults = self._child(Button(N_("Use defaults"), lambda: setup.finish(use_answers=False), ButtonStyle.GHOST))
     self._back = self._child(Button(N_("Back"), setup.back, ButtonStyle.SECONDARY))
@@ -99,7 +119,7 @@ class SetupWindow(Component):
     self._next = self._child(Button(lambda: N_("Next") if setup.step < len(QUESTIONS) - 1 else N_("Start driving"), setup.next,
                                     ButtonStyle.PRIMARY, weight=T.FONT_EXTRABOLD))
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, T.BG)
     s = self._setup
     body = inset(rect, x=T.px(28), y=T.px(24))

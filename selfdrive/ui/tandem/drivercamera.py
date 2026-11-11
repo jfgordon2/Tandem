@@ -13,6 +13,7 @@ from openpilot.selfdrive.ui.tandem.controls import back_glyph
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, inset, place, row
 from openpilot.selfdrive.ui.tandem.onroad.layers import dm_tile, draw_driver_monitor
 from openpilot.selfdrive.ui.tandem.i18n import N_
+from openpilot.system.ui.widgets import Widget
 
 FACE_FOUND = 0.7            # upstream's face probability for drawing the box
 HINT = N_("Sit as you do to drive. The box should follow your face.")
@@ -28,6 +29,16 @@ def face_box(face_x: float, face_y: float, rect: rl.Rectangle) -> rl.Rectangle:
 
 
 def draw_overlay(rect: rl.Rectangle, starting: bool, face: rl.Rectangle | None, face_alpha: float, watching: bool, attentive: float) -> None:
+  """Draws the driver camera's overlay: the back button, the face box and the status line.
+
+  Args:
+    rect: The camera view.
+    starting: The camera hasn't shown a frame yet.
+    face: Where driver monitoring found a face, if it did.
+    face_alpha: How strongly to draw the face box (it fades as the detection ages).
+    watching: Driver monitoring is running.
+    attentive: Driver monitoring's awareness color, faded from 0 (not fully aware) to 1.
+  """
   if starting:
     draw.fill(rect, T.BG)
     draw.text(rect, N_("Starting the camera…"), T.font_px(24), T.TEXT_SECONDARY, T.FONT_SEMIBOLD, Align.CENTER)
@@ -55,13 +66,13 @@ def draw_overlay(rect: rl.Rectangle, starting: bool, face: rl.Rectangle | None, 
   draw.text(hint, HINT, T.font_px(17), T.TEXT_SECONDARY, T.FONT, Align.CENTER)
 
 
-def driver_camera():
+def driver_camera() -> Widget:
   """Upstream's driver camera with our overlay. Made on demand: its camera stream needs the device's libraries."""
   from openpilot.selfdrive.ui.onroad.driver_camera_dialog import DriverCameraDialog
   from openpilot.selfdrive.ui.ui_state import ui_state
 
   class EssentialsDriverCamera(DriverCameraDialog):
-    def _render(self, rect):
+    def _render(self, rect: rl.Rectangle) -> int:
       super(DriverCameraDialog, self)._render(rect)   # the camera itself (CameraView)
       dm = self.driver_state_renderer
       dm._update_state()

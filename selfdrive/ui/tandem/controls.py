@@ -13,9 +13,12 @@ from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Bindable, Component, resolve
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, grid, inset, place, row
 from openpilot.selfdrive.ui.tandem.i18n import N_
+from openpilot.system.ui.lib.application import MouseEvent
+from openpilot.selfdrive.ui.tandem.fonts import Face
 
 
 class Tone(Enum):
+  """A color family for badges, chips and notes: what kind of news the text carries."""
   ACCENT = "accent"
   NEUTRAL = "neutral"
   SUCCESS = "success"
@@ -43,6 +46,7 @@ def _approach(current: float, target: float, duration_ms: float) -> float:
 # ── Button ──
 
 class ButtonStyle(Enum):
+  """How a button is drawn, from the page's main action (PRIMARY) to a quiet one (GHOST)."""
   PRIMARY = "primary"            # filled accent, the one main action
   SECONDARY = "secondary"        # filled CONTROL
   GHOST = "ghost"                # text only, for links like "Reset to default"
@@ -51,7 +55,7 @@ class ButtonStyle(Enum):
   NAV = "nav"                    # back/close squares and onroad controls
 
 
-_BUTTON_COLORS = {
+_BUTTON_COLORS: dict[ButtonStyle, tuple[rl.Color | None, rl.Color, rl.Color | None]] = {
   ButtonStyle.PRIMARY: (T.ACCENT, T.ACCENT_INK, None),
   ButtonStyle.SECONDARY: (T.CONTROL, T.TEXT, None),
   ButtonStyle.GHOST: (None, T.ACCENT_TEXT, None),
@@ -69,11 +73,23 @@ def back_glyph(rect: rl.Rectangle, color: rl.Color, size: float) -> None:
 
 
 class Button(Component):
+  """A rounded button with a label and, optionally, a leading glyph or a trailing accessory such as a chevron."""
+
   def __init__(self, label: Bindable[str] = "", on_click: Callable[[], None] | None = None, style: ButtonStyle = ButtonStyle.SECONDARY,
                glyph: Glyph | None = None, height: float = T.BUTTON_HEIGHT, width: float | None = None,
                font_size: int = T.SIZE_BUTTON, radius: float = T.RADIUS_CONTROL, accessory: Glyph | None = None,
-               weight=None, padding: float = T.px(18)):
-    """weight overrides the style's weight (e.g. a bold secondary button, as Play sample is in the mock)."""
+               weight: Face | None = None, padding: float = T.px(18)):
+    """Makes a button.
+
+    Args:
+      label: The text, or a getter for it.
+      on_click: Runs on a tap.
+      style: How it's drawn.
+      glyph: An icon before the label.
+      width: A fixed width; None sizes the button to its label.
+      accessory: A glyph after the label, e.g. a chevron on value buttons.
+      weight: Overrides the style's weight (e.g. a bold secondary button, as Play sample is in the mock).
+    """
     super().__init__()
     self._label = label
     self._style = style
@@ -94,12 +110,13 @@ class Button(Component):
       self._weight_override = T.FONT_EXTRABOLD
 
   @property
-  def _weight(self):
+  def _weight(self) -> Face:
     if self._weight_override is not None:
       return self._weight_override
     return T.FONT_BOLD if self._style in (ButtonStyle.PRIMARY, ButtonStyle.DANGER, ButtonStyle.DANGER_SOFT) else T.FONT_SEMIBOLD
 
   def preferred_size(self, max_width: float) -> tuple[float, float]:
+    """The button's size: its fixed width, else its label and glyphs plus padding, no wider than max_width."""
     if self._width is not None:
       return self._width, self._height
     label = resolve(self._label)
@@ -110,7 +127,7 @@ class Button(Component):
     width += (self._height * 0.35 + T.px(8)) if self._accessory else 0
     return min(max_width, width), self._height
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     bg, ink, outline = _BUTTON_COLORS[self._style]
     if not self.enabled:
       bg, ink = (T.CONTROL if bg is not None else None), T.TEXT_MUTED
@@ -159,7 +176,7 @@ class ButtonRow(Component):
       return min(max_width, natural * len(visible) + self._gap * max(0, len(visible) - 1)), self._height
     return max_width, self._height
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     visible = [b for b in self._buttons if b.is_visible]
     for button, cell in zip(visible, row(rect, [FILL] * len(visible), self._gap), strict=True):
       button.render(cell)
@@ -182,7 +199,7 @@ class ToggleButton(Component):
     width = draw.text_width(self._label, T.font_px(16), T.FONT_SEMIBOLD) + T.px(10) + draw.text_width(N_("Off"), T.font_px(14), T.FONT_MEDIUM)
     return min(max_width, width + T.px(32)), self._height
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     on = resolve(self._value)
     draw.fill(rect, T.ACCENT_SURFACE if on else T.SURFACE_3, T.RADIUS_CONTROL)
     if self.is_pressed:
@@ -214,7 +231,16 @@ class ChoiceCards(Component):
 
   def __init__(self, options: list[tuple[str, str]], selected: Bindable[int], on_change: Callable[[int], None],
                columns: int = 2, card_height: float = T.px(92), large: TallCards | None = None):
-    """large: tall cards that fill their rect (first-run setup, Vehicle Profile); " · recommended" in a title becomes a badge."""
+    """Makes a set of choice cards.
+
+    Args:
+      options: (title, subtitle) for each card. " · recommended" at the end of a title becomes a badge.
+      selected: The chosen card's index, or a getter for it.
+      on_change: Runs with the index of a tapped card.
+      columns: Cards per row.
+      card_height: Each card's height, unless large is given.
+      large: Tall cards that fill their rect (first-run setup, Vehicle Profile).
+    """
     super().__init__()
     self._large = large
     self._options = options
@@ -247,7 +273,7 @@ class ChoiceCards(Component):
       self._on_change(hit)
     self._pressed_card = None
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     selected = resolve(self._selected)
     radius = self._large.radius if self._large else T.RADIUS_CARD
     for i, ((title, subtitle), r) in enumerate(zip(self._options, self.card_rects(), strict=True)):
@@ -289,13 +315,15 @@ class ValueButton(Button):
                      accessory=lambda r, c, s: draw.chevron(r, c, s))
 
   @property
-  def _weight(self):
+  def _weight(self) -> Face:
     return T.FONT_BOLD
 
 
 # ── Switch ──
 
 class Switch(Component):
+  """An on/off switch. It shows value and reports a tap through on_change; the caller writes the setting."""
+
   def __init__(self, value: Bindable[bool], on_change: Callable[[bool], None] | None = None,
                width: float = T.SWITCH_WIDTH, height: float = T.SWITCH_HEIGHT):
     super().__init__()
@@ -316,7 +344,7 @@ class Switch(Component):
     if self._on_change:
       self._on_change(not self.value)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     on = self.value
     self._knob = _approach(self._knob, 1.0 if on else 0.0, T.SWITCH_MS)
     track = place(rect, *self._size)
@@ -376,7 +404,7 @@ class Segmented(Component):
           self._on_change(i)
         return
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, T.CONTROL, T.RADIUS_SEGMENT_TRACK)
     for i, (label, r) in enumerate(zip(self._options, self.segment_rects(), strict=True)):
       chosen = i == self.selected
@@ -440,7 +468,7 @@ class Stepper(Component):
       self._apply(self._direction)
     self._direction, self._repeat_at = 0, None
 
-  def _update_state(self):
+  def _update_state(self) -> None:
     if self._repeat_at is not None and not self.is_pressed:
       self._direction, self._repeat_at = 0, None
     elif self._repeat_at is not None and rl.get_time() >= self._repeat_at:
@@ -448,7 +476,7 @@ class Stepper(Component):
       self._repeated = True
       self._repeat_at = rl.get_time() + self.REPEAT_INTERVAL
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, T.CONTROL, T.RADIUS_SEGMENT_TRACK)
     minus_rect, value_rect, plus_rect = self._parts()
     ink = T.TEXT if self.enabled else T.TEXT_MUTED
@@ -510,13 +538,13 @@ class Slider(Component):
     value = self._min + round(t * (self._max - self._min) / self._step) * self._step
     return max(value, self._floor) if self._floor is not None else value
 
-  def _handle_mouse_event(self, mouse_event) -> None:
+  def _handle_mouse_event(self, mouse_event: MouseEvent) -> None:
     if self.is_pressed and mouse_event.left_down:
       new = self.value_at(mouse_event.pos.x)
       if new != self.value:
         self._on_change(new)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     track = self._track()
     draw.fill(track, T.TRACK, track.height / 2)
     start = track.x
@@ -563,7 +591,13 @@ class Badge(Component):
   """ACTIVE / OVERRIDE / DEFAULT / LEARNED labels."""
 
   def __init__(self, label: Bindable[str], tone: Bindable[Tone] = Tone.NEUTRAL, solid: bool = False):
-    """solid fills with the accent itself (the ACTIVE badge on an active card)."""
+    """Makes a badge.
+
+    Args:
+      label: The text, or a getter for it.
+      tone: Its color family, or a getter for it.
+      solid: Fill with the accent itself (the ACTIVE badge on an active card) instead of a tint.
+    """
     super().__init__()
     self._label = label
     self._tone = tone
@@ -572,7 +606,7 @@ class Badge(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return draw.text_width(resolve(self._label).upper(), T.SIZE_BADGE, T.FONT_BOLD) + T.px(20), T.px(26)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     tone = resolve(self._tone)
     draw.fill(rect, T.ACCENT if self._solid else _TONE_COLORS[tone][0], T.RADIUS_BADGE)
     draw.text(rect, resolve(self._label).upper(), T.SIZE_BADGE, T.ACCENT_INK if self._solid else _TONE_INK[tone], T.FONT_BOLD, Align.CENTER)
@@ -588,7 +622,7 @@ class StatusBadge(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return min(max_width, draw.text_width(resolve(self._label), T.font_px(15), T.FONT_SEMIBOLD) + T.px(40)), T.px(34)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     tone = resolve(self._tone)
     surface, ink = _TONE_COLORS[tone][0], _TONE_INK[tone]
     draw.fill(rect, surface, T.px(10))
@@ -614,7 +648,7 @@ class Chip(Component):
     glyph = (self._height * 0.5 + T.px(10)) if self._glyph else 0
     return min(max_width, draw.text_width(resolve(self._label), self._font_size, T.FONT_SEMIBOLD) + glyph + T.px(28)), self._height
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     tone = resolve(self._tone)
     surface, ink = _TONE_COLORS[tone]
     draw.fill(rect, surface, T.px(14))
@@ -627,6 +661,8 @@ class Chip(Component):
 
 
 class ProgressBar(Component):
+  """A thin bar filled from the left to progress (0 to 1)."""
+
   def __init__(self, progress: Bindable[float], color: rl.Color = T.ACCENT, height: float = T.px(10)):
     super().__init__()
     self._progress = progress
@@ -636,7 +672,7 @@ class ProgressBar(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, self._height
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     bar = place(rect, rect.width, self._height, v=Align.CENTER)
     draw.fill(bar, T.TRACK, bar.height / 2)
     done = min(1.0, max(0.0, float(resolve(self._progress))))

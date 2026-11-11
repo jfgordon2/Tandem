@@ -42,6 +42,7 @@ ALERT_TITLES = {
 
 @dataclass(frozen=True)
 class HomeAlert:
+  """An offroad alert as the home screen lists it: its key, its text, and whether it's high severity."""
   key: str
   text: str
   high: bool       # upstream's severity > 0
@@ -68,7 +69,7 @@ class AlertCard(Component):
     body = draw.paragraph_height(self.alert.text, T.font_px(15), T.FONT, self._text_width(max_width), 1.35)
     return max_width, self.PAD * 2 - T.px(2) + title + body + T.px(10)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     card = inset(rect, y=T.px(5))
     fill, edge, ink, icon = ((T._hex("2A1519"), T._hex("5A2A31"), T.DANGER_TEXT, T._hex("E5646F")) if self.alert.high
                              else (T.WARNING_BANNER, T._hex("4A3B22"), T.WARNING_TITLE, T.WARNING))
@@ -96,7 +97,7 @@ class Header(Component):
                                     glyph=back_glyph))
     self._title, self._line, self._caption = title, line, caption
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     back, words = row(rect, [T.px(56), FILL], T.px(14))
     self._back.render(place(back, T.px(56), T.px(56)))
     caption, line = self._caption(), self._line()
@@ -136,7 +137,7 @@ class AlertsView(Component):
       self._key = key
     return self._list
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, T.SURFACE_2, T.RADIUS_PANEL)
     body = inset(rect, x=T.px(20), y=T.px(18))
     footer_h = T.px(52) if self._action.is_visible else 0
@@ -169,7 +170,7 @@ class UpdateView(Component):
       self._key = notes
     return self._list
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, T.SURFACE_2, T.RADIUS_PANEL)
     body = inset(rect, x=T.px(20), y=T.px(18))
     header, notes, footer = column(body, [T.px(60), FILL, T.px(56)], T.px(14))

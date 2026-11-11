@@ -1,9 +1,15 @@
 """The Essentials screens MainLayout creates. Each falls back to upstream's when its variable is "0":
 TANDEM_SETTINGS, TANDEM_HOME, TANDEM_ONROAD, TANDEM_SIDEBAR.
 """
+from __future__ import annotations
+
 import os
+from typing import TYPE_CHECKING
 
 from openpilot.system.ui.widgets import Widget
+
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.onroad.starpilot.developer_sidebar import DeveloperSidebar
 
 
 def _enabled(name: str) -> bool:
@@ -14,6 +20,7 @@ _settings: list = []   # the Essentials settings window, once MainLayout has mad
 
 
 def settings_window() -> Widget:
+  """The settings window MainLayout shows: ours, or StarPilot's with TANDEM_SETTINGS=0."""
   if not _enabled("TANDEM_SETTINGS"):
     _settings.clear()
     from openpilot.selfdrive.ui.layouts.settings.settings import SettingsLayout
@@ -48,7 +55,7 @@ def onroad_view() -> Widget:
   return EssentialsOnroadView()
 
 
-def developer_sidebar():
+def developer_sidebar() -> DeveloperSidebar:
   """StarPilot's developer sidebar (Developer View), drawn as our tiles; TANDEM_ONROAD=0 brings back StarPilot's."""
   if not _enabled("TANDEM_ONROAD"):
     from openpilot.selfdrive.ui.onroad.starpilot.developer_sidebar import DeveloperSidebar

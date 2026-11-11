@@ -19,6 +19,8 @@ def prefs_dir() -> Path:
 
 
 class Flag:
+  """An on/off preference kept as a marker file next to Params: the file exists only while it differs from the default."""
+
   def __init__(self, name: str, default: bool):
     self.name, self.default = name, default
 
@@ -32,6 +34,7 @@ class Flag:
       return self.default
 
   def set(self, on: bool) -> None:
+    """Saves the setting: the marker file is removed at the default and created otherwise. A read-only disk is ignored."""
     marker = self._marker()
     try:
       if on == self.default:
@@ -68,6 +71,7 @@ class Choice:
 
 class Text:
   """A small preference with a one-time read of a legacy param file, without querying its compiled key."""
+
   def __init__(self, name: str, legacy: str | None = None):
     self.name, self.legacy = name, legacy
 
@@ -75,6 +79,7 @@ class Text:
     return prefs_dir() / f".tandem_{self.name}"
 
   def get(self) -> str | None:
+    """The saved text. The first read of an unset preference copies the legacy param's value, if there is one; None if neither exists."""
     try:
       return self._file().read_text()
     except OSError:
@@ -93,6 +98,7 @@ class Text:
     return None
 
   def set(self, value: str) -> None:
+    """Saves the text atomically (a temporary file, then a rename). A read-only disk is ignored."""
     path = self._file()
     temporary = None
     try:
@@ -133,8 +139,15 @@ def save_prefs(backup: Path, folder: Path | None = None) -> None:
 
 
 def restore_prefs(backup: Path, folder: Path | None = None) -> bool:
-  """Make Tandem's settings what the backup saved: a file there is restored, one it lacks goes back to its default.
-  A backup made before Tandem saved its settings leaves the current ones alone (returns False)."""
+  """Makes Tandem's settings what the backup saved: a file there is restored, one it lacks goes back to its default.
+
+  Args:
+    backup: The backup's folder.
+    folder: Where the settings live; the device's own by default.
+
+  Returns:
+    False when the backup was made before Tandem saved its settings, leaving the current ones alone; True otherwise.
+  """
   import shutil
   source = backup / BACKUP_DIR
   if not source.is_dir():

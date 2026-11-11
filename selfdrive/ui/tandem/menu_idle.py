@@ -7,9 +7,13 @@ stack above MainLayout and would stay. This adds one more callback on that same 
 No upstream edit: it registers like MainLayout does and pops back to the bottom of the stack.
 """
 from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+  from openpilot.system.ui.lib.application import GuiApplication
 
 
-def close_overlays(gui_app, driving: bool) -> bool:
+def close_overlays(gui_app: GuiApplication, driving: bool) -> bool:
   """Pop everything above MainLayout (the bottom of the stack) while driving. True when something was closed."""
   stack = getattr(gui_app, "_nav_stack", [])
   if not driving or len(stack) < 2:

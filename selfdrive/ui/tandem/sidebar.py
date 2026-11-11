@@ -14,14 +14,17 @@ import pyray as rl
 
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Component
+from openpilot.system.ui.widgets import Widget
 from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, place, row
 from openpilot.selfdrive.ui.tandem.i18n import N_
+from openpilot.system.ui.lib.application import MousePos
 
 WIDTH = T.px(288)       # the mock's sidebar, including its 18 px margin
 
 
 class Health(Enum):
+  """How a sidebar status row is colored."""
   GOOD = "good"
   WARN = "warn"
   BAD = "bad"
@@ -33,6 +36,7 @@ DOT = {Health.GOOD: T.SUCCESS_BRIGHT, Health.WARN: T.WARNING, Health.BAD: T.DANG
 
 @dataclass
 class Status:
+  """One status row in the sidebar: a label, its value, and how healthy that is."""
   label: str
   value: str
   health: Health
@@ -40,6 +44,7 @@ class Status:
 
 @dataclass
 class SidebarState:
+  """Everything the sidebar draws, read from upstream's state each frame."""
   rows: list[Status] = field(default_factory=list)
   onroad: bool = False
   recording_audio: bool = False
@@ -57,6 +62,7 @@ def zoom(state: SidebarState) -> float:
 
 
 class SidebarView(Component):
+  """The onroad and offroad sidebar drawn as design/sidebar.html: status rows, settings, and the clip and microphone buttons."""
   grow_touch_target = False
 
   def __init__(self, state: Callable[[], SidebarState], on_settings: Callable[[], None], on_clip: Callable[[], None],
@@ -79,7 +85,7 @@ class SidebarView(Component):
     self._clip.restyle(px(60), px(17), self._clip._padding, self._clip._radius)
     self._mic.restyle(px(44), px(15), self._mic._padding, self._mic._radius)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     state = self._state()
     k = zoom(state)
     if k != self._zoom:
@@ -122,21 +128,21 @@ def network_status(kind: str, strength: int) -> Status:
   return Status(N_("Network"), kind, Health.GOOD if strength >= 2 else Health.WARN)
 
 
-def essentials_sidebar():
+def essentials_sidebar() -> Widget:
   """Upstream's Sidebar with the Essentials look. Imported only on the device."""
   from openpilot.selfdrive.ui.layouts.sidebar import Colors, Sidebar
   from openpilot.selfdrive.ui.ui_state import ui_state
 
   class EssentialsSidebar(Sidebar):
-    def __init__(self):
+    def __init__(self) -> None:
       super().__init__()
       self._view = SidebarView(self._state, lambda: self._call(self._on_settings_click), lambda: self._call(self._on_flag_click),
                                lambda: self._call(self._open_settings_callback))
-      self._maps = Status(N_("Maps"), N_("Checking"), Health.OFF)
+      self._maps: Status = Status(N_("Maps"), N_("Checking"), Health.OFF)
       self._maps_checked = -1e9
 
     @staticmethod
-    def _call(callback) -> None:
+    def _call(callback: Callable[[], None] | None) -> None:
       if callback is not None:
         callback()
 
@@ -172,10 +178,10 @@ def essentials_sidebar():
         self._maps_status(),
       ], onroad=bool(ui_state.started), recording_audio=bool(self._recording_audio))
 
-    def _render(self, rect: rl.Rectangle):
+    def _render(self, rect: rl.Rectangle) -> None:
       self._view.render(rect)
 
-    def _handle_mouse_release(self, mouse_pos) -> None:
+    def _handle_mouse_release(self, mouse_pos: MousePos) -> None:
       pass   # the view's buttons handle their own taps
 
   return EssentialsSidebar()

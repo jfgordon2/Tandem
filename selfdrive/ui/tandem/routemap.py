@@ -30,6 +30,7 @@ EMPTY = "–"                 # a fact with no route yet (Figtree has no em dash
 
 @dataclass(frozen=True)
 class RoutePlan:
+  """A route for the preview map: its path as (latitude, longitude) points, its length in meters and time in seconds."""
   path: tuple[tuple[float, float], ...]   # (latitude, longitude) from the start to the destination
   meters: float
   seconds: float
@@ -141,9 +142,17 @@ def gps_fix(raw: str) -> tuple[float, float, float | None] | None:
 
 
 def start_position(live: str, saved: str) -> tuple[float, float, float | None] | None:
-  """Where the route starts: the live fix (memory LastGPSPosition, kept only while the GPS has a fix), else the last
-  position StarPilot saved (persistent LastGPSPosition, written when the car turns off and while parked). Parked
-  indoors there's often no live fix, but the car hasn't moved. The saved heading may be old, so it isn't used."""
+  """Where the route starts: the live fix, else the last position StarPilot saved.
+
+  Parked indoors there's often no live fix, but the car hasn't moved. The saved heading may be old, so it isn't used.
+
+  Args:
+    live: Memory LastGPSPosition, kept only while the GPS has a fix.
+    saved: Persistent LastGPSPosition, written when the car turns off and while parked.
+
+  Returns:
+    (latitude, longitude, heading or None), or None when neither has a position.
+  """
   fix = gps_fix(live)
   if fix is not None:
     return fix
@@ -176,6 +185,7 @@ class RouteFetcher:
     self._generation = 0
 
   def route(self, place: dict | None) -> tuple[RoutePlan | None, str]:
+    """The route to place, or why there isn't one yet. Fetches in the background, again when the place changes or a retryable error has waited RETRY seconds."""
     if place is None:
       return None, ""
     key = self._identity(place) if self._identity else (place.get("latitude"), place.get("longitude"))
@@ -224,7 +234,7 @@ def mapbox_route(place: dict) -> RoutePlan | str:
   return RoutePlan(tuple((c.latitude, c.longitude) for c in route.geometry), route.total_distance, route.total_duration)
 
 
-def local_start():
+def local_start() -> tuple[float, float, float | None] | None:
   from openpilot.common.params import Params
   try:
     return start_position(Params(memory=True).get("LastGPSPosition", encoding="utf-8") or "",
@@ -234,6 +244,7 @@ def local_start():
 
 
 def local_identity(place: dict) -> tuple:
+  """What a local route preview depends on, so the preview refetches when any of it changes (a move of about 40 m counts)."""
   from openpilot.common.params import Params
   from openpilot.starpilot.tandem.routing.bundles import capability
   state, fix = capability(), local_start()
@@ -246,6 +257,7 @@ def local_identity(place: dict) -> tuple:
 
 
 def local_route(place: dict) -> RoutePlan | str:
+  """A route preview from offline routing, or the reason there isn't one."""
   from openpilot.common.params import Params
   from openpilot.starpilot.tandem.routing import client
   from openpilot.starpilot.tandem.routing.config import RoutingError
@@ -262,6 +274,7 @@ def local_route(place: dict) -> RoutePlan | str:
 
 
 def policy_route(place: dict) -> RoutePlan | str:
+  """A route preview from StarPilot's route engine, online or offline as Navigation's preference says, or the reason there isn't one."""
   from openpilot.common.params import Params
   from openpilot.starpilot.navigation.route_engine import Coordinate
   from openpilot.starpilot.tandem.routing.route_engine import PolicyRouteEngine

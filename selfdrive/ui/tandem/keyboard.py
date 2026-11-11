@@ -7,6 +7,7 @@ minimum length, and closing itself with DialogResult. Only the drawing, the key 
 from __future__ import annotations
 
 import time
+from collections.abc import Callable
 from functools import partial
 
 import pyray as rl
@@ -16,8 +17,10 @@ from openpilot.system.ui.widgets import keyboard as upstream
 from openpilot.system.ui.widgets.inputbox import InputBox
 from openpilot.selfdrive.ui.tandem import draw, tokens as T, voice
 from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle
-from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, place, row
+from openpilot.selfdrive.ui.tandem.layout import Size, FILL, Align, column, inset, place, row
 from openpilot.selfdrive.ui.tandem.i18n import N_
+from openpilot.system.ui.lib.application import MousePos
+from openpilot.system.ui.widgets import DialogResult
 
 BACKSPACE, ENTER, SPACE = upstream.BACKSPACE_KEY, upstream.ENTER_KEY, upstream.SPACE_KEY
 SHIFT_OFF, SHIFT_ON, CAPS = upstream.SHIFT_INACTIVE_KEY, upstream.SHIFT_ACTIVE_KEY, upstream.CAPS_LOCK_KEY
@@ -51,18 +54,18 @@ FIELD_FONT = T.font_px(20)
 class _Field(InputBox):
   """Upstream's input box (cursor, masking, taps), drawn on our field: no fill of its own, our text color and size."""
 
-  def _get_font(self):
+  def _get_font(self) -> rl.Font:
     return draw._face(self._get_display_text(), T.FONT)
 
-  def _update_text_offset(self):
+  def _update_text_offset(self) -> None:
     with draw._own_font:
       super()._update_text_offset()
 
-  def _handle_mouse_release(self, mouse_pos):
+  def _handle_mouse_release(self, mouse_pos: MousePos) -> None:
     with draw._own_font:
       super()._handle_mouse_release(mouse_pos)
 
-  def _render(self, rect, *_):
+  def _render(self, rect: rl.Rectangle, *_: object) -> None:
     with draw._own_font:
       super()._render(rect, rl.BLANK, rl.BLANK, T.TEXT, FIELD_FONT)
 
@@ -70,14 +73,14 @@ class _Field(InputBox):
 class _Key(Widget):
   """One key: a rounded cap, a letter, a label or an icon. Pressing darkens it, as the mock's buttons do."""
 
-  def __init__(self, key: str, on_press, keyboard: EssentialsKeyboard):
+  def __init__(self, key: str, on_press: Callable[[], None], keyboard: EssentialsKeyboard):
     super().__init__()
     self.key = key
     self._keyboard = keyboard
     self._multi_touch = True        # as upstream's keys: a second finger can type while the first lifts
     self.set_click_callback(on_press)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     kb, key = self._keyboard, self.key
     ink, weight, size = T.TEXT, T.FONT_MEDIUM, T.font_px(24)
     if key == ENTER:
@@ -113,7 +116,7 @@ class _Eye(Widget):
     self._keyboard = keyboard
     self.set_click_callback(keyboard._eye_button_callback)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     if self.is_pressed:
       draw.pressed(rect, T.px(10))
     draw.icon(rect, "eye" if self._keyboard._password_mode else "eye_off", T.TEXT_TERTIARY, T.px(24))
@@ -123,8 +126,8 @@ class EssentialsKeyboard(upstream.Keyboard):
   """Upstream's keyboard drawn as design/keyboard.html. action names what the blue key does (e.g. "Set up", "Save")."""
 
   def __init__(self, max_text_size: int = 255, min_text_size: int = 0, password_mode: bool = False, show_password_toggle: bool = False,
-               callback=None, action: str = N_("Done"), voice_hint: str = N_("Speak now. Tap the mic when you're done."),
-               voice_style: str = "text"):
+               callback: Callable[[DialogResult], None] | None = None, action: str = N_("Done"),
+               voice_hint: str = N_("Speak now. Tap the mic when you're done."), voice_style: str = "text"):
     super().__init__(max_text_size, min_text_size, password_mode, show_password_toggle, callback)
     self.action = action
     self._title_text, self._subtitle_text = "", ""
@@ -132,7 +135,8 @@ class EssentialsKeyboard(upstream.Keyboard):
     self._cancel = Button(N_("Cancel"), self._cancel_button_callback, ButtonStyle.SECONDARY, height=T.px(56), font_size=T.font_px(17),
                           radius=T.px(14), weight=T.FONT_BOLD, padding=T.px(24))
     keys = {k for rows in LAYOUTS.values() for keys in rows for k in keys} | {CAPS, MIC}
-    self._all_keys = {k: _Key(k, partial(self._key_callback, k), self) for k in keys}
+    # upstream keeps Buttons here; ours are _Key widgets drawn as the mock's keys
+    self._all_keys = {k: _Key(k, partial(self._key_callback, k), self) for k in keys}  # type: ignore[misc]
     self._eye = _Eye(self)
     self._voice = voice.VoiceTyping(self._insert_spoken, style=voice_style)
     self._voice_panel = voice.VoicePanel(self._voice, voice_hint)
@@ -151,27 +155,27 @@ class EssentialsKeyboard(upstream.Keyboard):
     typed = self._input_box.text.rstrip()
     self._input_box.text = (f"{typed} {words}" if typed else words)[:self._max_text_size]
 
-  def _key_callback(self, k):
+  def _key_callback(self, k: str) -> None:
     if k == MIC:
       self._voice.start()
     else:
       super()._key_callback(k)
 
-  def clear(self):
+  def clear(self) -> None:
     self._voice.cancel()
     super().clear()
 
-  def hide_event(self):
+  def hide_event(self) -> None:
     self._voice.cancel()
     super().hide_event()
 
-  def set_title(self, title: str, sub_title: str = ""):
+  def set_title(self, title: str, sub_title: str = "") -> None:
     self._title_text, self._subtitle_text = title, sub_title
 
   def set_action(self, action: str) -> None:
     self.action = action
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, T.BG)
     header, keys = column(rect, [T.px(146), FILL])
     self._render_header(inset(header, left=T.px(16), right=T.px(16), top=T.px(14), bottom=T.px(10)))
@@ -240,7 +244,7 @@ class EssentialsKeyboard(upstream.Keyboard):
         if mic:
           keys, weights = [keys[0], MIC, *keys[1:]], BOTTOM_ROW_MIC
         spare = area.width - gap * (len(keys) - 1)
-        widths = [spare * w / sum(weights) for w in weights]
+        widths: list[Size] = [spare * w / sum(weights) for w in weights]
       else:
         widths = [FILL] * len(keys)
       for key, cell in zip(keys, row(area, widths, gap), strict=True):
@@ -256,13 +260,15 @@ class KeyPad(EssentialsKeyboard):
   """The keyboard as part of a page rather than a screen of its own (destination search): the page draws the field and
   calls render_text and render_keys; the blue key calls on_enter instead of closing anything."""
 
-  def __init__(self, on_enter, action: str, min_text_size: int = 0, max_text_size: int = 255, voice_hint: str | None = None,
+  def __init__(self, on_enter: Callable[[], None], action: str, min_text_size: int = 0, max_text_size: int = 255, voice_hint: str | None = None,
                voice_style: str = "text"):
-    super().__init__(max_text_size, min_text_size, action=action, voice_style=voice_style,
-                     **({"voice_hint": voice_hint} if voice_hint else {}))
+    if voice_hint:
+      super().__init__(max_text_size, min_text_size, action=action, voice_hint=voice_hint, voice_style=voice_style)
+    else:
+      super().__init__(max_text_size, min_text_size, action=action, voice_style=voice_style)
     self._on_enter = on_enter
 
-  def _key_callback(self, k):
+  def _key_callback(self, k: str) -> None:
     if k == ENTER:
       self._on_enter()
     elif k == MIC:

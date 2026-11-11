@@ -5,6 +5,7 @@ only measurement and drawing use the composed glyphs. No shaping library is need
 """
 from __future__ import annotations
 
+from typing import cast
 import functools
 import json
 from pathlib import Path
@@ -35,7 +36,7 @@ def clusters(text: str) -> list[str]:
 
 @functools.cache
 def mapping() -> dict[str, int]:
-  return json.loads(MAPPING.read_text(encoding="utf-8"))
+  return cast("dict[str, int]", json.loads(MAPPING.read_text(encoding="utf-8")))
 
 
 @functools.lru_cache(maxsize=4096)

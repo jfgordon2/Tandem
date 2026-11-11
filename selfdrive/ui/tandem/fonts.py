@@ -15,6 +15,7 @@ from openpilot.system.ui.lib.application import FONT_DIR, FontWeight
 
 
 class ExtraFont(StrEnum):
+  """Fonts Tandem adds to upstream's: Figtree's extra-bold weight and JetBrains Mono for numbers in Developer View."""
   EXTRA_BOLD = "Figtree-ExtraBold.fnt"
   MONO = "JetBrainsMono-Medium.fnt"
   MONO_BOLD = "JetBrainsMono-Bold.fnt"
@@ -22,7 +23,7 @@ class ExtraFont(StrEnum):
 
 Face = FontWeight | ExtraFont
 
-FONT_FILES = {
+FONT_FILES: dict[Face, str] = {
   FontWeight.ROMAN: "Figtree-Regular.fnt",
   FontWeight.MEDIUM: "Figtree-Medium.fnt",
   FontWeight.BOLD: "Figtree-Bold.fnt",
@@ -37,6 +38,7 @@ def font_file(face: Face) -> str:
 
 
 def font(face: Face) -> rl.Font:
+  """The face's font, loaded the first time it's asked for and kept, with mipmaps so scaled text stays smooth."""
   filename = font_file(face)
   if filename not in _loaded:
     with as_file(FONT_DIR) as path:

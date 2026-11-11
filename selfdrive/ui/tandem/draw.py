@@ -88,10 +88,17 @@ def _edge_glow(rect: rl.Rectangle, top: bool, radius: float) -> None:
 
 
 def scroll_glow(rect: rl.Rectangle, offset: float, content: float, round_top: float = 0.0, round_bottom: float = 0.0) -> None:
-  """A soft accent glow at each edge of a scrolling list that has more past it: the top once scrolled down, the bottom
-  while there's more below. offset is the scroll offset (0 or less) and content the list's full height. round_top and
-  round_bottom are the corner radii where the list's edge is also its pane's rounded edge (0 where it meets a header or
-  footer), so the glow spans the pane and follows its corners."""
+  """A soft accent glow at each edge of a scrolling list that has more past it.
+
+  The top glows once the list is scrolled down, the bottom while there's more below.
+
+  Args:
+    rect: The list's visible area.
+    offset: The scroll offset, 0 or less.
+    content: The list's full height.
+    round_top: The corner radius where the list's top is also its pane's rounded edge (0 where it meets a header).
+    round_bottom: The same for the bottom edge (0 where it meets a footer), so the glow follows the pane's corners.
+  """
   if offset < -0.5:
     _edge_glow(rect, True, round_top)
   if content + offset > rect.height + 0.5:
@@ -114,7 +121,7 @@ class _OwnFont:
 
   depth = 0   # nesting-safe: the flag goes back to off only when the outermost use ends
 
-  def __enter__(self):
+  def __enter__(self) -> None:
     if not _OwnFont.depth:
       self._previous_font = application.KEEP_FONT
       self._previous_shapers = application.TEXT_SHAPERS[:]
@@ -122,7 +129,7 @@ class _OwnFont:
     _OwnFont.depth += 1
     application.KEEP_FONT = True
 
-  def __exit__(self, *_):
+  def __exit__(self, *_: object) -> None:
     _OwnFont.depth -= 1
     if not _OwnFont.depth:
       application.KEEP_FONT = self._previous_font

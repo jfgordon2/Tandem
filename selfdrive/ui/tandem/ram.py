@@ -75,6 +75,7 @@ DESCRIPTIONS = {
 
 @dataclass
 class Snapshot:
+  """What was using RAM at a drive's peak: the percent used, the biggest processes, and what grew since early in the drive."""
   when: float                                                            # epoch seconds, at the peak
   percent: int
   top: list[tuple[str, int]] = field(default_factory=list)              # (name, bytes), largest first
@@ -178,6 +179,12 @@ def _reading(result: tuple) -> tuple[list[tuple[str, int]], int, dict[str, dict[
 
 
 class RamLog:
+  """Records what was using RAM at each drive's peak, for Device › RAM.
+
+  The drive screen tells it about each frame the Low on RAM chip shows. It keeps one snapshot per drive, taken at that
+  drive's peak in the background, and saves the last KEEP drives' snapshots to path.
+  """
+
   def __init__(self, path: Path, read: Callable[[], tuple] = read_processes,
                clock: Callable[[], float] = lambda: datetime.now().timestamp(), background: bool = True):   # wall clock: shown as a date
     self._path = path
@@ -219,7 +226,7 @@ class RamLog:
     finally:
       self._baseline_busy = False
 
-  def _run(self, task: Callable, *args) -> None:
+  def _run(self, task: Callable, *args: object) -> None:
     if self._background:
       threading.Thread(target=task, args=args, daemon=True).start()
     else:

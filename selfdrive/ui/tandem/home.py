@@ -6,19 +6,26 @@ space. The offroad alerts and update screen retain upstream's header and navigat
 from __future__ import annotations
 
 from collections.abc import Callable
+from typing import TYPE_CHECKING, cast
 from dataclasses import dataclass
 
 import pyray as rl
 
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Component
+from openpilot.system.ui.widgets import Widget
 from openpilot.selfdrive.ui.tandem.controls import Button
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, place, row
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_, tn_
 
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.tandem.forecast import Outlook
+  from openpilot.selfdrive.ui.tandem.settings.speed_steering import SpeedSteering
+
 
 @dataclass
 class HomeState:
+  """What the parked screen's hero card shows: alert count, ignition, the setup line and the version."""
   alerts: int = 0
   ignition: bool = False
   setup: str = ""              # "Standard style · Matching speed limits · Auto lane change"
@@ -26,7 +33,7 @@ class HomeState:
   version: str = ""            # the short version ("6.7.9"), see short_version
 
 
-def setup_line(speed) -> str:
+def setup_line(speed: SpeedSteering) -> str:
   """e.g. "Standard style · Matching speed limits · Auto lane change"."""
   from openpilot.selfdrive.ui.tandem.settings.speed_steering import STYLES
   lanes = N_("Auto lane change") if speed.lane_changes else N_("Nudge to change lanes")
@@ -45,13 +52,13 @@ class Hero(Component):
   (design/homeweather.html)."""
   grow_touch_target = False
 
-  def __init__(self, state: Callable[[], HomeState], on_alerts: Callable[[], None], forecast: Callable[[], object] = lambda: None):
+  def __init__(self, state: Callable[[], HomeState], on_alerts: Callable[[], None], forecast: Callable[[], Outlook | None] = lambda: None):
     super().__init__()
     self._state = state
     self._forecast = forecast
     self.set_click_callback(lambda: on_alerts() if self._state().alerts else None)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, T.SURFACE_2, T.RADIUS_PANEL)
     caption, headline, ink = readiness(self._state())
     outlook = self._forecast()
@@ -69,7 +76,7 @@ class Hero(Component):
     draw.text(setup, self._state().setup, T.font_px(18), T.TEXT_TERTIARY)
 
   @staticmethod
-  def _render_outlook(rect: rl.Rectangle, outlook) -> None:
+  def _render_outlook(rect: rl.Rectangle, outlook: Outlook) -> None:
     """The line that matters, when it was updated, then a tile an hour; hours with rain or snow tinted as the chips are."""
     t_size, temp_size, glyph_size = T.font_px(15), T.font_px(21), T.px(26)   # read at a glance from the driver's seat
     tile_h = T.px(10) * 2 + draw.line_height(t_size) + T.px(4) + glyph_size + T.px(4) + draw.line_height(temp_size)
@@ -91,7 +98,7 @@ class Hero(Component):
       draw.text(temp, f"{tile.temp}°", temp_size, T.TEXT, T.FONT_BOLD, Align.CENTER)
 
 
-def short_version(description) -> str:
+def short_version(description: bytes | str | None) -> str:
   """The version number from UpdaterCurrentDescription ("6.7.9 / branch / commit / date"): the card has room for it alone."""
   text = description.decode(errors="ignore") if isinstance(description, bytes) else str(description or "")
   return text.split(" / ")[0].strip()
@@ -110,7 +117,7 @@ class Card(Component):
     self._button = self._child(button) if button is not None else None
     self.set_click_callback(on_click)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, T.SURFACE_2, T.RADIUS_PANEL)
     if self.is_pressed:
       draw.pressed(rect, T.RADIUS_PANEL)
@@ -136,7 +143,7 @@ class HomeContent(Component):
   grow_touch_target = False
 
   def __init__(self, state: Callable[[], HomeState], on_alerts: Callable[[], None], on_where_to: Callable[[], None],
-               on_notes: Callable[[], None], on_software: Callable[[], None] = lambda: None, forecast: Callable[[], object] = lambda: None):
+               on_notes: Callable[[], None], on_software: Callable[[], None] = lambda: None, forecast: Callable[[], Outlook | None] = lambda: None):
     """The update card opens the release notes when an update is ready, else Settings › Software (on_software)."""
     super().__init__()
     self._state = state
@@ -149,7 +156,7 @@ class HomeContent(Component):
                                     (t_("Up to date · {}", state().version) if state().version else N_("Up to date")),
                                     lambda: on_notes() if state().update_ready else on_software(), notes))
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     top, bottom = column(rect, [FILL, T.px(100)], T.px(14))
     self._hero.render(top)
     left, right = row(bottom, [FILL, FILL], T.px(14))
@@ -157,7 +164,7 @@ class HomeContent(Component):
     self._update.render(right)
 
 
-def essentials_home():
+def essentials_home() -> Widget:
   """Upstream's HomeLayout with the Essentials home content. Imported only on the device."""
   from openpilot.selfdrive.ui.layouts.home import HomeLayout, HomeLayoutState
   from openpilot.selfdrive.ui.ui_state import ui_state
@@ -167,7 +174,7 @@ def essentials_home():
   from openpilot.selfdrive.ui.tandem.home_alerts import AlertsView, HomeAlert, UpdateView
 
   class EssentialsHome(HomeLayout):
-    def __init__(self):
+    def __init__(self) -> None:
       super().__init__()
       self._speed = SpeedSteering(SettingsStore())
       self._setup_checked = False
@@ -178,12 +185,14 @@ def essentials_home():
       self._update_view = UpdateView(self._new_version, lambda: notes_text(self.update_alert.release_notes), home,
                                      lambda: self.update_alert.reboot_btn._click_callback())
 
-    def _open_software(self):
+    def _open_software(self) -> None:
       """Settings at its Software tab: MainLayout opens settings as home's settings button does, then the tab moves."""
       from openpilot.selfdrive.ui.tandem.screens import show_settings_tab
       from openpilot.selfdrive.ui.tandem.settings.window import Tab
-      if self.settings_callback is not None:
-        self.settings_callback()
+      # Upstream annotates the callback as `callable | None`, which mypy can't read as a type.
+      callback = cast("Callable[[], None] | None", self.settings_callback)
+      if callback is not None:
+        callback()
         show_settings_tab(Tab.SOFTWARE)
 
     def _show_header(self) -> bool:
@@ -192,23 +201,22 @@ def essentials_home():
     def _home_alerts(self) -> list[HomeAlert]:
       return [HomeAlert(a.key, a.text, a.severity > 0) for a in self.offroad_alert.sorted_alerts if a.visible]
 
-    def _alert_action(self):
+    def _alert_action(self) -> tuple[str, Callable[[], None]] | None:
       """Upstream's one footer action, when it shows one."""
       alert = self.offroad_alert
-      if alert.excessive_actuation_btn.is_visible:
-        return N_("Acknowledge excessive actuation"), alert.excessive_actuation_btn._click_callback
-      if alert.snooze_btn.is_visible:
-        return N_("Snooze update"), alert.snooze_btn._click_callback
+      for label, button in ((N_("Acknowledge excessive actuation"), alert.excessive_actuation_btn), (N_("Snooze update"), alert.snooze_btn)):
+        if button.is_visible and button._click_callback is not None:
+          return label, button._click_callback
       return None
 
     def _new_version(self) -> str:
       description = ui_state.ui_params.get("UpdaterNewDescription") or ""
       return description.split(" / ")[0] or N_("A new version")
 
-    def _render_alerts_view(self):
+    def _render_alerts_view(self) -> None:
       self._alerts_view.render(self.content_rect)
 
-    def _render_update_view(self):
+    def _render_update_view(self) -> None:
       self._update_view.render(self.content_rect)
 
     def _state(self) -> HomeState:
@@ -217,7 +225,7 @@ def essentials_home():
                        update_ready=self.update_available,
                        version=short_version(ui_state.ui_params.get("UpdaterCurrentDescription")))
 
-    def _outlook(self):
+    def _outlook(self) -> Outlook | None:
       """The next 12 hours (forecast.py), sharing the drive screen's forecast; none while Weather heads-up is off."""
       from openpilot.selfdrive.ui.tandem.forecast import outlook, shared_service, wall_clock
       from openpilot.selfdrive.ui.tandem.prefs import WEATHER_HEADS_UP
@@ -228,7 +236,7 @@ def essentials_home():
       from openpilot.selfdrive.ui.tandem.prefs import celsius
       return outlook(service.forecast, wall_clock(), celsius(bool(ui_state.is_metric)))   # General › Temperature
 
-    def _render_home_content(self):
+    def _render_home_content(self) -> None:
       if not self._setup_checked:   # first-run setup, as soon as onboarding has closed
         from openpilot.selfdrive.ui.tandem.setup import maybe_show_setup
         self._setup_checked = maybe_show_setup()

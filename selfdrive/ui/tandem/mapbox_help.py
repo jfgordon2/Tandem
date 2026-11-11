@@ -9,6 +9,7 @@ App Keys (classic menu › Tools, /manage_navigation_keys; newer layout: Navigat
 from __future__ import annotations
 
 from collections.abc import Callable
+from typing import TYPE_CHECKING
 
 import pyray as rl
 
@@ -16,6 +17,9 @@ from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, place, row
 from openpilot.selfdrive.ui.tandem.i18n import N_
+
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.tandem.overlays import Sheet
 
 WHERE = N_("Settings › Driving › Speed & Steering › Navigation")
 
@@ -59,7 +63,7 @@ class Steps(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, T.px(128) * 2 + T.px(12) + T.px(14) + draw.line_height(T.font_px(14))
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     grid, _, note = column(rect, [T.px(128) * 2 + T.px(12), T.px(14), draw.line_height(T.font_px(14))])
     rows = column(grid, [FILL, FILL], T.px(12))
     cells = [c for r in rows for c in row(r, [FILL, FILL], T.px(12))]
@@ -77,7 +81,7 @@ class Steps(Component):
     draw.text(place(note, note.width, note.height), self.NOTE, T.font_px(14), T.TEXT_MUTED)
 
 
-def mapbox_key_sheet(done: Callable[[], None]):
+def mapbox_key_sheet(done: Callable[[], None]) -> Sheet:
   from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle
   from openpilot.selfdrive.ui.tandem.overlays import Sheet
   from openpilot.starpilot.tandem.routing.config import policy

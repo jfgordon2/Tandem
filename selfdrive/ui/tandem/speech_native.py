@@ -14,6 +14,11 @@ import subprocess
 import sys
 import tarfile
 import wave
+from collections.abc import Callable
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+  import numpy as np
 
 REVISION = "d1be6fde11ac6e0407606b4e42fe72d34add8037"  # whisper.cpp v1.9.5 (MIT)
 SOURCE_URL = f"https://codeload.github.com/ggml-org/whisper.cpp/tar.gz/{REVISION}"
@@ -33,7 +38,7 @@ def ready(folder: Path) -> bool:
   return os.access(executable(folder), os.X_OK) and (folder / MODEL_NAME).is_file()
 
 
-def prepare(folder: Path, download, progress) -> None:
+def prepare(folder: Path, download: Callable[[str, Path, Callable[[float], None], str | None], None], progress: Callable[[float], None]) -> None:
   """Build once from verified source, without replacing a working executable on failure."""
   folder.mkdir(parents=True, exist_ok=True)
   if not (folder / MODEL_NAME).is_file():
@@ -63,10 +68,21 @@ def prepare(folder: Path, download, progress) -> None:
 
 
 class NativeWhisper:
+  """Whisper through the native whisper.cpp runner (the comma's CPU), started fresh for each transcription."""
+
   def __init__(self, folder: Path):
     self.folder = folder
 
-  def transcribe(self, samples, style: str) -> str:
+  def transcribe(self, samples: np.ndarray, style: str) -> str:
+    """Transcribes the samples with the native runner.
+
+    Args:
+      samples: 16 kHz mono audio, -1 to 1.
+      style: "address" primes the model to write an address; anything else writes plain text.
+
+    Returns:
+      The words heard, or "" when none were.
+    """
     import numpy as np
     # The recorder allows 15 s. Keep that entire window (plus rounding), rather than encoding 30 s of mostly silence.
     # Longer --file diagnostics retain their full context as well.

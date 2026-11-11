@@ -1,7 +1,12 @@
+"""The base every Tandem component builds on: values that can be bound to a getter, and a widget with a preferred size.
+
+Components take a ``Bindable`` wherever a value may change while the screen is up, such as a row's subtitle that reads
+Params, and call ``resolve`` as they draw, so nothing has to be pushed to them.
+"""
 from __future__ import annotations
 
 from collections.abc import Callable
-from typing import TypeVar
+from typing import TypeAlias, TypeVar
 
 import pyray as rl
 
@@ -10,7 +15,7 @@ from openpilot.selfdrive.ui.tandem import tokens as T
 from openpilot.selfdrive.ui.tandem.layout import grow
 
 V = TypeVar("V")
-Bindable = V | Callable[[], V]
+Bindable: TypeAlias = V | Callable[[], V]   # a value, or a function returning it, read each frame
 
 
 def resolve(value: Bindable[V]) -> V:

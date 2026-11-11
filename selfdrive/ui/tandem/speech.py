@@ -21,6 +21,7 @@ builds don't ship tinygrad's examples. The spectrogram and the word list need ne
 """
 from __future__ import annotations
 
+from typing import Any, Literal, no_type_check
 import base64
 import collections
 import hashlib
@@ -83,6 +84,8 @@ if __name__ == "__main__":
     driving_limits()
 
 import numpy as np
+from types import ModuleType
+from collections.abc import Callable, Iterable
 
 RATE = 16000
 N_FFT, HOP, N_MELS = 400, 160, 80
@@ -107,25 +110,25 @@ def model_dir() -> Path:
   return Path("/data/tandem/speech") if Path("/data").is_dir() and os.access("/data", os.W_OK) else Path.home() / ".comma/tandem/speech"
 
 
-def native_backend():
+def native_backend() -> ModuleType | None:
   """The native CPU runner on the comma; keep tinygrad available for diagnostics and PC previews."""
   if os.environ.get("TANDEM_SPEECH_BACKEND", "native" if Path("/TICI").is_file() else "tinygrad") != "native":
     return None
   if __package__:
     from openpilot.selfdrive.ui.tandem import speech_native
   else:
-    import speech_native
+    import speech_native  # type: ignore[no-redef]
   return speech_native
 
 
 def model_ready(folder: Path | None = None) -> bool:
   folder = folder or model_dir()
   if native := native_backend():
-    return native.ready(folder)
+    return bool(native.ready(folder))
   return (folder / "tiny.en.pt").is_file() and (folder / "gpt2.tiktoken").is_file()
 
 
-def say(**message) -> None:
+def say(**message: object) -> None:
   print(json.dumps(message), flush=True)
 
 
@@ -169,12 +172,12 @@ class Endpointer:
 
 def mel_filters(sr: int = RATE, n_fft: int = N_FFT, n_mels: int = N_MELS) -> np.ndarray:
   """librosa's Slaney mel filterbank (what Whisper was trained on), (n_mels, n_fft // 2 + 1)."""
-  def hz_to_mel(f):
+  def hz_to_mel(f: np.ndarray | float) -> np.ndarray:
     f = np.asarray(f, dtype=np.float64)
     lin = f / (200.0 / 3)
     return np.where(f >= 1000.0, 15.0 + np.log(np.maximum(f, 1e-10) / 1000.0) / (np.log(6.4) / 27.0), lin)
 
-  def mel_to_hz(m):
+  def mel_to_hz(m: np.ndarray | float) -> np.ndarray:
     m = np.asarray(m, dtype=np.float64)
     lin = m * (200.0 / 3)
     return np.where(m >= 15.0, 1000.0 * np.exp((np.log(6.4) / 27.0) * (m - 15.0)), lin)
@@ -187,7 +190,7 @@ def mel_filters(sr: int = RATE, n_fft: int = N_FFT, n_mels: int = N_MELS) -> np.
   upper = ramps[2:] / fdiff[1:, None]
   weights = np.maximum(0, np.minimum(lower, upper))
   weights *= (2.0 / (mel_f[2:n_mels + 2] - mel_f[:n_mels]))[:, None]
-  return weights.astype(np.float32)
+  return np.asarray(weights, dtype=np.float32)
 
 
 def log_mel(samples: np.ndarray) -> np.ndarray:
@@ -201,7 +204,7 @@ def log_mel(samples: np.ndarray) -> np.ndarray:
   spec = mel_filters() @ power[:-1].T                                  # (80, 3000)
   logs = np.log10(np.maximum(spec, 1e-10))
   logs = np.maximum(logs, logs.max() - 8.0)
-  return ((logs + 4.0) / 4.0)[None].astype(np.float32)
+  return np.asarray(((logs + 4.0) / 4.0)[None], dtype=np.float32)
 
 
 # ---- words ----
@@ -221,7 +224,7 @@ class Vocab:
     self.no_timestamps = self.sot + 1 + N_LANGUAGES + 5
     self.start_of_prev = self.sot + 1 + N_LANGUAGES + 3     # the text before, to prime the words (50360 for English)
 
-  def decode(self, tokens) -> str:
+  def decode(self, tokens: Iterable[int]) -> str:
     return b"".join(self.pieces.get(int(t), b"") for t in tokens if int(t) < self.eot).decode("utf-8", errors="replace").strip()
 
 
@@ -275,16 +278,18 @@ def address_text(text: str) -> str:
 
 # ---- model (tinygrad examples/whisper.py) ----
 
-def build_model(state):
+@no_type_check   # tinygrad's examples/whisper.py, adapted: kept close to the original rather than typed against tinygrad
+def build_model(state: dict) -> Any:
+  """Tinygrad's Whisper model (examples/whisper.py, adapted), loaded from a checkpoint's state dict."""
   from tinygrad import Tensor, TinyJit, Variable, nn
 
   class Attention:
-    def __init__(self, n_state, n_head, cache=None, max_len=None):
+    def __init__(self, n_state: int, n_head: int, cache: str | None = None, max_len: int | None = None) -> None:
       self.n_head, self.cache, self.max_len = n_head, cache, max_len
       self.query, self.key, self.value, self.out = nn.Linear(n_state, n_state), nn.Linear(n_state, n_state, bias=False), \
         nn.Linear(n_state, n_state), nn.Linear(n_state, n_state)
 
-    def __call__(self, x, xa=None, mask=None, pos=None):
+    def __call__(self, x: Any, xa: Any = None, mask: Any = None, pos: Any = None) -> Any:
       if self.cache == "cross":
         if xa is not None:
           k, v = self.key(xa), self.value(xa)
@@ -313,7 +318,7 @@ def build_model(state):
       return self.out(attn.permute(0, 2, 1, 3).flatten(start_dim=2))
 
   class Block:
-    def __init__(self, n_state, n_head, decoder=False, max_len=None):
+    def __init__(self, n_state: int, n_head: int, decoder: bool = False, max_len: int | None = None) -> None:
       self.attn = Attention(n_state, n_head, "self" if decoder else None, max_len)
       self.attn_ln = nn.LayerNorm(n_state)
       self.cross_attn = Attention(n_state, n_head, "cross") if decoder else None
@@ -321,27 +326,27 @@ def build_model(state):
       self.mlp = [nn.Linear(n_state, n_state * 4), Tensor.gelu, nn.Linear(n_state * 4, n_state)]
       self.mlp_ln = nn.LayerNorm(n_state)
 
-    def __call__(self, x, xa=None, mask=None, pos=None):
+    def __call__(self, x: Any, xa: Any = None, mask: Any = None, pos: Any = None) -> Any:
       x = x + self.attn(self.attn_ln(x), mask=mask, pos=pos)
       if self.cross_attn:
         x = x + self.cross_attn(self.cross_attn_ln(x), xa)
       return (x + self.mlp_ln(x).sequential(self.mlp)).realize()
 
   class Encoder:
-    def __init__(self, n_mels, n_audio_ctx, n_audio_state, n_audio_head, n_audio_layer, **_):
+    def __init__(self, n_mels: int, n_audio_ctx: int, n_audio_state: int, n_audio_head: int, n_audio_layer: int, **_: object) -> None:
       self.conv1 = nn.Conv1d(n_mels, n_audio_state, kernel_size=3, padding=1)
       self.conv2 = nn.Conv1d(n_audio_state, n_audio_state, kernel_size=3, stride=2, padding=1)
       self.blocks = [Block(n_audio_state, n_audio_head) for _ in range(n_audio_layer)]
       self.ln_post = nn.LayerNorm(n_audio_state)
       self.positional_embedding = Tensor.empty(n_audio_ctx, n_audio_state)
 
-    def __call__(self, x):
+    def __call__(self, x: Any) -> Any:
       x = self.conv2(self.conv1(x).gelu()).gelu().permute(0, 2, 1)
       x = (x + self.positional_embedding[:x.shape[1]]).sequential(self.blocks)
       return self.ln_post(x).realize()
 
   class Decoder:
-    def __init__(self, n_vocab, n_text_ctx, n_text_state, n_text_head, n_text_layer, **_):
+    def __init__(self, n_vocab: int, n_text_ctx: int, n_text_state: int, n_text_head: int, n_text_layer: int, **_: object) -> None:
       self.max_len = n_text_ctx
       self.token_embedding = nn.Embedding(n_vocab, n_text_state)
       self.positional_embedding = Tensor.empty(n_text_ctx, n_text_state)
@@ -350,11 +355,11 @@ def build_model(state):
       self.mask = Tensor.full((n_text_ctx, n_text_ctx), -np.inf).triu(1).realize()
       self.jits = collections.defaultdict(lambda: TinyJit(self.forward))
 
-    def __call__(self, x, pos, audio):
+    def __call__(self, x: Any, pos: Any, audio: Any) -> Any:
       bound = Variable("self_attn_cache_len", 1, self.max_len - 1).bind(pos) if pos else 0
       return self.jits[x.shape](x, bound, audio)
 
-    def forward(self, x, pos, audio):
+    def forward(self, x: Any, pos: Any, audio: Any) -> Any:
       # Keep decoder activations in float32 like the encoder's; half-precision reductions fail QCOM kernel verification.
       x = self.token_embedding(x).float() + self.positional_embedding.shrink(((pos, pos + x.shape[-1]), None))
       for block in self.blocks:
@@ -362,7 +367,7 @@ def build_model(state):
       return (self.ln(x) @ self.token_embedding.weight.T).realize()
 
   class Whisper:
-    def __init__(self, dims):
+    def __init__(self, dims: dict) -> None:
       self.encoder, self.decoder = Encoder(**dims), Decoder(**dims)
 
   from tinygrad.nn.state import load_state_dict
@@ -371,18 +376,31 @@ def build_model(state):
   return model
 
 
-def load(folder: Path):
+def load(folder: Path) -> tuple[Any, Vocab | None]:
   if native := native_backend():
     return native.NativeWhisper(folder), None
   from tinygrad.nn.state import torch_load
   return build_model(torch_load(str(folder / "tiny.en.pt"))), Vocab(folder / "gpt2.tiktoken")
 
 
-def transcribe(model, vocab: Vocab, samples: np.ndarray, max_tokens: int = 64, style: str = "text") -> str:
-  """style "address" primes Whisper with ADDRESS_PROMPT and tidies the result with address_text()."""
+def transcribe(model: Any, vocab: Vocab | None, samples: np.ndarray, max_tokens: int = 64, style: str = "text") -> str:
+  """Turns 16 kHz mono samples into text.
+
+  Args:
+    model: The native Whisper, or the tinygrad model from load().
+    vocab: The tokenizer the tinygrad model needs; None with the native backend.
+    samples: The recording, 16 kHz mono float32.
+    max_tokens: The most tokens to decode (tinygrad only).
+    style: "address" primes Whisper with ADDRESS_PROMPT and tidies the result with address_text().
+
+  Returns:
+    The text heard, cleaned up.
+  """
   if native_backend() is not None:
     text = clean(model.transcribe(samples, style))
     return address_text(text) if style == "address" else text
+  if vocab is None:
+    raise ValueError("the tinygrad model needs its vocabulary")
   from tinygrad import Tensor, dtypes
   audio = model.encoder(Tensor(log_mel(samples)))
   prompt = [vocab.start_of_prev, *ADDRESS_PROMPT] if style == "address" else []
@@ -403,7 +421,7 @@ def transcribe(model, vocab: Vocab, samples: np.ndarray, max_tokens: int = 64, s
 
 # ---- first use ----
 
-def download(url: str, dest: Path, on_progress, sha256: str | None = None) -> None:
+def download(url: str, dest: Path, on_progress: Callable[[float], None], sha256: str | None = None) -> None:
   """Fetch url to dest through a .part file, so a cut-off download never looks finished."""
   dest.parent.mkdir(parents=True, exist_ok=True)
   part = dest.with_suffix(dest.suffix + ".part")
@@ -423,9 +441,10 @@ def download(url: str, dest: Path, on_progress, sha256: str | None = None) -> No
 
 
 def fetch_model(folder: Path) -> None:
+  """Downloads what transcription needs (the native runner and model, or tinygrad's model and vocabulary), reporting progress."""
   last = [-1.0]
 
-  def report(share):
+  def report(share: float) -> None:
     if share - last[0] >= 0.01:
       last[0] = share
       say(state="download", progress=round(share, 3))
@@ -442,23 +461,24 @@ def fetch_model(folder: Path) -> None:
 
 # ---- the worker ----
 
-def record(stop: threading.Event, open_stream=None) -> np.ndarray | None:
+def record(stop: threading.Event, open_stream: Callable[[Callable[..., None]], Any] | None = None) -> np.ndarray | None:
   """Listen until the endpointer or a "stop" says so, printing levels. None if no microphone opens."""
   blocks: queue.Queue = queue.Queue()
 
-  def callback(indata, frames, at, status):
+  def callback(indata: np.ndarray, frames: int, at: Any, status: Any) -> None:
     blocks.put(indata[:, 0].copy())
 
   try:
     if open_stream is None:
       import sounddevice as sd
-      def open_stream(cb):
+      def open_stream(cb: Callable[..., None]) -> Any:
         return sd.InputStream(channels=1, samplerate=RATE, blocksize=BLOCK, dtype="float32", callback=cb)
     stream = open_stream(callback)
   except Exception as error:
     traceback.print_exception(error, file=sys.stderr)
     return None
-  heard, ends = [], Endpointer()
+  heard: list[np.ndarray] = []
+  ends = Endpointer()
   opened = time.monotonic()
   with stream:
     say(state="listening")
@@ -485,18 +505,18 @@ class MicdStream:
   """While driving, openpilot's micd has the microphone and publishes what it hears (rawAudioData: 16 kHz int16, 800
   samples a message, the same blocks the recorder uses). Hand those to the recorder as the microphone would."""
 
-  def __init__(self, callback):
+  def __init__(self, callback: Callable[..., None]) -> None:
     from cereal import messaging
     self._sock = messaging.sub_sock("rawAudioData", timeout=100)
     self._callback = callback
     self._running = False
 
-  def __enter__(self):
+  def __enter__(self) -> MicdStream:
     self._running = True
     threading.Thread(target=self._pump, daemon=True).start()
     return self
 
-  def __exit__(self, *_):
+  def __exit__(self, *_: object) -> Literal[False]:
     self._running = False
     return False
 
@@ -512,6 +532,16 @@ class MicdStream:
 
 
 def main(style: str = "text") -> int:
+  """The speech worker: gets the model ready, records until the speaker stops, and prints the words.
+
+  It speaks a line-per-message JSON protocol on stdout (state, level, progress, text or error) that voice.py follows.
+
+  Args:
+    style: "address" for address-style text, else "text".
+
+  Returns:
+    The process's exit status.
+  """
   folder = model_dir()
   if not model_ready(folder):
     try:
@@ -520,9 +550,9 @@ def main(style: str = "text") -> int:
       report_error("download", e)
       return 1
 
-  loaded: dict = {}
+  loaded: dict[str, Any] = {}
 
-  def load_model():
+  def load_model() -> None:
     try:
       loaded["model"] = load(folder)
     except Exception as e:
@@ -533,7 +563,7 @@ def main(style: str = "text") -> int:
 
   stop = threading.Event()
 
-  def watch_stdin():
+  def watch_stdin() -> None:
     for line in sys.stdin:
       if line.strip() == "stop":
         stop.set()
@@ -554,7 +584,8 @@ def main(style: str = "text") -> int:
     report_error("failed", loaded["error"])
     return 1
   try:
-    text = transcribe(*loaded["model"], samples, style=style)
+    model, vocab = loaded["model"]
+    text = transcribe(model, vocab, samples, style=style)
   except Exception as e:
     report_error("failed", e)
     return 1
@@ -575,6 +606,7 @@ if __name__ == "__main__":
     if not model_ready(folder):
       fetch_model(folder)
     style = sys.argv[3] if len(sys.argv) > 3 else "text"   # e.g. --file clip.npy address
-    print(transcribe(*load(folder), np.load(sys.argv[2]), style=style), f"({time.monotonic() - t0:.1f} s)")
+    model, vocab = load(folder)
+    print(transcribe(model, vocab, np.load(sys.argv[2]), style=style), f"({time.monotonic() - t0:.1f} s)")
     sys.exit(0)
   sys.exit(main(sys.argv[2] if len(sys.argv) > 2 and sys.argv[1] == "--style" else "text"))

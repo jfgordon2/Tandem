@@ -23,6 +23,7 @@ import os
 import re
 from collections.abc import Callable
 from pathlib import Path
+from collections.abc import Iterator
 
 CATALOG_DIR = Path(__file__).resolve().parent / "translations"
 CONTEXT = "\x04"   # gettext's separator between a context and its msgid in a catalog key
@@ -36,7 +37,7 @@ class Msg(str):
   """English text marked with a context, so draw-time lookup finds the right translation."""
   context: str | None = None
 
-  def __new__(cls, text: str, context: str | None):
+  def __new__(cls, text: str, context: str | None) -> Msg:
     msg = super().__new__(cls, text)
     msg.context = context
     return msg
@@ -56,14 +57,23 @@ PLURALS: dict[str, Callable[[int], int]] = {
 
 
 def plural_index(code: str, n: int) -> int:
-  return PLURALS.get(code, lambda n: 0 if n == 1 else 1)(n)
+  return int(PLURALS.get(code, lambda n: 0 if n == 1 else 1)(n))
 
 
 class Catalog:
+  """One language's translations: plain text, templates with {} holes, and plural forms."""
+
   def __init__(self, entries: dict[str, str | list[str]], code: str = "en", english_plurals: dict[str, str] | None = None,
                drawn: set[str] | None = None):
-    """drawn: the templates matched against text as it's drawn (StarPilot's, formatted before Tandem sees them); Tandem's
-    own are filled by t_() and tn_(). None matches them all."""
+    """Makes a catalog.
+
+    Args:
+      entries: Catalog key (see key()) to its translation, or to its plural forms.
+      code: The language code, e.g. "fr".
+      english_plurals: Catalog key to its English plural, so text drawn in the plural form still finds its entry.
+      drawn: The templates matched against text as it's drawn (StarPilot's, formatted before Tandem sees them); Tandem's
+        own are filled by t_() and tn_(). None matches them all.
+    """
     self.code = code
     self._english_plurals = {k: (v,) for k, v in (english_plurals or {}).items()}
     self.plurals = {k: v for k, v in entries.items() if isinstance(v, list)}
@@ -71,7 +81,8 @@ class Catalog:
     self.exact = {k: v for k, v in singles.items() if "{}" not in k}
     self.marked = singles   # every key with a translation, templates included, for t_()
     self.folded = {k.casefold(): v for k, v in self.exact.items() if CONTEXT not in k}   # names the code lowercases
-    self.templates = []   # (pattern, translation) for msgids with {} holes, longest first so specific ones win
+    # (pattern, translation) for msgids with {} holes, longest first so specific ones win; a plural has its forms
+    self.templates: list[tuple[re.Pattern[str], str | list[str]]] = []
     for msgid, msgstr in sorted(singles.items(), key=lambda kv: -len(kv[0])):
       if "{}" in msgid and CONTEXT not in msgid and _holes_fit(msgid, msgstr) and msgid.strip("{} ") \
          and (drawn is None or msgid in drawn):
@@ -180,7 +191,7 @@ def drawn_templates(text: str) -> set[str]:
           for fields, flags in _po_entries(text) if fields.get("msgid") and "drawn" in flags}
 
 
-def _po_entries(text: str):
+def _po_entries(text: str) -> Iterator[tuple[dict[str, str], set[str]]]:
   """Read complete PO entries, including continued lines and their flags, without leaking a previous entry's context."""
   fields: dict[str, str] = {}
   flags: set[str] = set()
@@ -222,6 +233,7 @@ def pseudo(text: str) -> str:
 
 
 def load(code: str) -> Catalog:
+  """The catalog for a language code: its .po file, empty when there's none, or the pseudo-language for layout checks."""
   if code == "pseudo":
     entries = parse_po((CATALOG_DIR / "tandem.pot").read_text(encoding="utf-8"))
     out: dict[str, str | list[str]] = {}
@@ -267,7 +279,7 @@ def N_(text: str, context: str | None = None) -> str:
   return Msg(text, context) if context else text
 
 
-def t_(text: str, *values, context: str | None = None) -> str:
+def t_(text: str, *values: object, context: str | None = None) -> str:
   """Marked text built now: its translation, with values in its {} holes."""
   catalog = _catalog()
   if catalog is None:
@@ -275,7 +287,7 @@ def t_(text: str, *values, context: str | None = None) -> str:
   return catalog.template(text, values, context)
 
 
-def tn_(singular: str, plural: str, n: int, *values, context: str | None = None) -> str:
+def tn_(singular: str, plural: str, n: int, *values: object, context: str | None = None) -> str:
   """A count: "{} alert" / "{} alerts" in the forms of the driver's language. values default to (n,)."""
   values = values or (n,)
   catalog = _catalog()

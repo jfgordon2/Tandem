@@ -1,6 +1,7 @@
 """Rectangle math for laying out components. Nothing here draws."""
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
 from enum import IntEnum
 
@@ -8,6 +9,7 @@ import pyray as rl
 
 
 class Align(IntEnum):
+  """Where a box sits along one axis of the rect it's placed in."""
   START = 0
   CENTER = 1
   END = 2
@@ -33,7 +35,7 @@ def inset(rect: rl.Rectangle, amount: float = 0, *, x: float | None = None, y: f
   return rl.Rectangle(rect.x + left, rect.y + top, max(0.0, rect.width - left - right), max(0.0, rect.height - top - bottom))
 
 
-def split(rect: rl.Rectangle, sizes: list[Size], gap: float = 0, horizontal: bool = True) -> list[rl.Rectangle]:
+def split(rect: rl.Rectangle, sizes: Sequence[Size], gap: float = 0, horizontal: bool = True) -> list[rl.Rectangle]:
   """Cut rect into consecutive pieces along one axis. Fixed sizes come first; Fill pieces share what's left."""
   total = rect.width if horizontal else rect.height
   fixed = sum(s for s in sizes if not isinstance(s, Fill))
@@ -52,11 +54,11 @@ def split(rect: rl.Rectangle, sizes: list[Size], gap: float = 0, horizontal: boo
   return rects
 
 
-def row(rect: rl.Rectangle, sizes: list[Size], gap: float = 0) -> list[rl.Rectangle]:
+def row(rect: rl.Rectangle, sizes: Sequence[Size], gap: float = 0) -> list[rl.Rectangle]:
   return split(rect, sizes, gap, horizontal=True)
 
 
-def column(rect: rl.Rectangle, sizes: list[Size], gap: float = 0) -> list[rl.Rectangle]:
+def column(rect: rl.Rectangle, sizes: Sequence[Size], gap: float = 0) -> list[rl.Rectangle]:
   return split(rect, sizes, gap, horizontal=False)
 
 

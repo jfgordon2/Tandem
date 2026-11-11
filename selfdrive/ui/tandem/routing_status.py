@@ -40,7 +40,7 @@ def status_text(code: str) -> str:
   return MESSAGES.get(code, N_("Routing is unavailable"))
 
 
-def display_estimate(state, now):
+def display_estimate(state: dict, now: float) -> tuple[float, float] | None:
   """Validated display-only estimate, with a finite twenty-second grace."""
   try:
     value = state["estimate"]
