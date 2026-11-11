@@ -5,10 +5,14 @@ Panels are created on first show, so screens nobody opens cost nothing at startu
 from __future__ import annotations
 
 from collections.abc import Callable
+from typing import TYPE_CHECKING, cast
 
 import pyray as rl
 
 from openpilot.system.ui.widgets import Widget
+
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.layouts.settings.starpilot.main_panel import StarPilotLayout
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Component
 
@@ -34,24 +38,24 @@ class Hosted(Component):
   def go_back(self) -> None:
     pass
 
-  def show_event(self):
+  def show_event(self) -> None:
     super().show_event()
     self.panel.show_event()
 
-  def hide_event(self):
+  def hide_event(self) -> None:
     super().hide_event()
     if self._panel is not None:
       self._panel.hide_event()
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, T.BG)
     self.panel.render(rect)
 
 
-_starpilot = None
+_starpilot: StarPilotLayout | None = None
 
 
-def starpilot_layout():
+def starpilot_layout() -> StarPilotLayout:
   """StarPilot's settings hub. One instance, as its breadcrumbs find it through StarPilotLayout.active_instance."""
   global _starpilot
   if _starpilot is None:
@@ -61,6 +65,7 @@ def starpilot_layout():
 
 
 def find_leaf(nodes: list[dict], panel: str) -> dict:
+  """The leaf of StarPilot's settings tree for a panel name."""
   for node in nodes:
     if node.get("panel") == panel:
       return node
@@ -87,8 +92,12 @@ class StarPilotPage(Hosted):
     self._opening = False
     self._left = False
 
+  def _star(self) -> StarPilotLayout:
+    """The panel, as the StarPilot layout it is (starpilot_layout() or a stand-in with the same calls in tests)."""
+    return cast("StarPilotLayout", self.panel)
+
   def _leaf(self) -> dict:
-    return find_leaf(type(self.panel).CATEGORIES, self._panel_key)
+    return find_leaf(cast("list[dict]", type(self._star()).CATEGORIES), self._panel_key)
 
   def _on_depth(self, depth: int) -> None:
     self._depth = depth
@@ -96,7 +105,7 @@ class StarPilotPage(Hosted):
       self._left = True
 
   def _open(self) -> None:
-    layout = self.panel
+    layout = self._star()
     leaf = self._leaf()
     if layout._selected_leaf is leaf and self._depth > 0:
       return
@@ -111,14 +120,14 @@ class StarPilotPage(Hosted):
     return self._depth > 1
 
   def go_back(self) -> None:
-    self.panel.navigate_back()
+    self._star().navigate_back()
 
-  def show_event(self):
-    self.panel.set_depth_callback(self._on_depth)
+  def show_event(self) -> None:
+    self._star().set_depth_callback(self._on_depth)
     self._open()
     super().show_event()
 
-  def _update_state(self):
+  def _update_state(self) -> None:
     # Act on a step out of the panel here rather than inside StarPilot's navigation calls.
     if self._left:
       self._left = False

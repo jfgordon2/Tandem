@@ -7,7 +7,7 @@ the Essentials defaults.
 from __future__ import annotations
 
 from collections.abc import Callable
-from typing import Protocol
+from typing import Protocol, TYPE_CHECKING
 
 import pyray as rl
 
@@ -22,8 +22,14 @@ from openpilot.selfdrive.ui.tandem.settings.pages import FillPage
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
+if TYPE_CHECKING:
+  from openpilot.system.ui.widgets import DialogResult
+  from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow
+
 
 class UpdateActions(Protocol):
+  """What the Software tab needs from StarPilot's updater: check, download, install, branches and release notes."""
+
   def tick(self) -> None: ...
   def check_or_download(self) -> None: ...
   def install(self) -> None: ...
@@ -38,6 +44,8 @@ UPDATER_STATES = {"checking": N_("Checking for an update"), "downloading": N_("D
 
 
 class Software:
+  """The Software tab: the version, update state and action, automatic updates and branch."""
+
   def __init__(self, store: SettingsStore, actions: UpdateActions, reset: Callable[[], None]):
     self._store = store
     self.actions = actions
@@ -66,6 +74,7 @@ class Software:
             "available": (N_("Update available"), Tone.ACCENT), "current": (N_("Up to date"), Tone.SUCCESS)}[self.state()]
 
   def status_line(self) -> str:
+    """The update state in a line, under the version."""
     state = self.state()
     if state == "busy":
       return UPDATER_STATES.get(self._store.get_str("UpdaterState"), N_("Updating"))
@@ -119,14 +128,15 @@ def notes_text(html: str) -> str:
   return "\n".join(line for line in lines if line) or N_("No release notes for this version.")
 
 
-def show_notes(model: Software, window) -> None:
+def show_notes(model: Software, window: SettingsWindow) -> None:
   from openpilot.selfdrive.ui.tandem.overlays import Sheet
   paragraphs = [Text(p, T.font_px(17), T.TEXT_SECONDARY) for p in model.actions.release_notes().split("\n") if p.strip()]
   window.present(Sheet(t_("What's new in {}", model.version_parts()[0]), ListPanel(paragraphs, dividers=False, header_divider=False),
                        on_dismiss=window.dismiss))
 
 
-def choose_branch(model: Software, window) -> None:
+def choose_branch(model: Software, window: SettingsWindow) -> None:
+  """Release Channel's picker, offered in Tuner Mode."""
   from openpilot.selfdrive.ui.tandem.overlays import Sheet
   from openpilot.selfdrive.ui.tandem.rows import OptionList
   branches = model.actions.branches()
@@ -141,18 +151,18 @@ def choose_branch(model: Software, window) -> None:
                        on_dismiss=window.dismiss))
 
 
-def uninstall(model: Software, window) -> None:
+def uninstall(model: Software, window: SettingsWindow) -> None:
   """Upstream's three steps in our dialogs: uninstall, then whether to erase everything too, then a last check."""
   from openpilot.selfdrive.ui.tandem import draw
   from openpilot.selfdrive.ui.tandem.overlays import Dialog
   from openpilot.system.ui.widgets import DialogResult
   trash = lambda r, c, s: draw.icon(r, "trash", c, s)  # noqa: E731
 
-  def last(result) -> None:
+  def last(result: DialogResult) -> None:
     window.dismiss()
     model.actions.uninstall(erase=result == DialogResult.CONFIRM)   # as upstream: cancelling here still uninstalls
 
-  def erase(result) -> None:
+  def erase(result: DialogResult) -> None:
     window.dismiss()
     if result == DialogResult.CONFIRM:
       window.present(Dialog(N_("Erase everything?"), N_("Every setting, drive and download is deleted. This can't be undone."), N_("Erase"),
@@ -160,7 +170,7 @@ def uninstall(model: Software, window) -> None:
     else:
       model.actions.uninstall(erase=False)
 
-  def first(result) -> None:
+  def first(result: DialogResult) -> None:
     window.dismiss()
     if result == DialogResult.CONFIRM:
       window.present(Dialog(N_("Factory reset too?"), N_("A factory reset also deletes every setting, drive and download. Skip keeps them."),
@@ -170,7 +180,7 @@ def uninstall(model: Software, window) -> None:
                         tone=Tone.DANGER, glyph=trash))
 
 
-def software_page(model: Software, confirm, window=None) -> Widget:
+def software_page(model: Software, confirm: Callable[[str, str, str, Callable[[], None]], None], window: SettingsWindow) -> Widget:
   """The version and its actions on the left; update settings on the right."""
   action = Button(model.action_label, model.act, ButtonStyle.SECONDARY, height=T.px(56), font_size=T.font_px(17), weight=T.FONT_BOLD)
   action.set_enabled(lambda: model.state() != "busy")
@@ -200,24 +210,25 @@ def software_page(model: Software, confirm, window=None) -> Widget:
 
 
 class SoftwarePage(Component):
+  """The Software tab's page; it keeps the updater's state current while shown."""
   grow_touch_target = False
 
-  def __init__(self, model: Software, confirm, window=None):
+  def __init__(self, model: Software, confirm: Callable[[str, str, str, Callable[[], None]], None], window: SettingsWindow) -> None:
     super().__init__()
     self._model = model
     self._page = self._child(software_page(model, confirm, window))
 
-  def _update_state(self):
+  def _update_state(self) -> None:
     self._model.actions.tick()
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     self._page.render(rect)
 
 
 class UpstreamUpdates:
   """UpdateActions backed by upstream's SoftwareLayout, whose state machine tracks the updater."""
 
-  def __init__(self):
+  def __init__(self) -> None:
     from openpilot.selfdrive.ui.layouts.settings.software import SoftwareLayout
     self._layout = SoftwareLayout()
 

@@ -4,6 +4,8 @@ from __future__ import annotations
 from collections.abc import Callable
 from dataclasses import dataclass
 
+from functools import partial
+from typing import TYPE_CHECKING
 import pyray as rl
 
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
@@ -19,12 +21,16 @@ from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
 from openpilot.selfdrive.ui.tandem.prefs import WEATHER_CHIME
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow
+
 AUTO = 101          # StarPilot's "Auto": the level follows cabin noise
 SAFETY_FLOOR = 25   # StarPilot never plays take-control warnings below this
 
 
 @dataclass(frozen=True)
 class VolumeGroup:
+  """Sounds that share one volume (e.g. engage and disengage chimes), with its quiet, standard and loud levels."""
   name: str
   subtitle: str
   keys: tuple[str, ...]
@@ -54,6 +60,8 @@ OWN_CHIMES = {"WeatherChime": WEATHER_CHIME}
 
 
 class Alerts:
+  """Alerts & Sounds: the volume preset, each group's level, and which chimes play. Reads and writes StarPilot's params."""
+
   def __init__(self, store: SettingsStore, play: Callable[[str], None] | None = None):
     self._store = store
     self._play = play
@@ -138,7 +146,7 @@ class VolumeEditor(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, T.px(92) + self._slider.preferred_height(max_width) + T.px(60) + T.px(32)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     """The value with Play sample and a note beside it, the slider, then a note and Reset to Normal on one row."""
     top, slider, notes = column(rect, [T.px(92), self._slider.preferred_height(rect.width), T.px(48)], T.px(16))
     value, play, note = row(top, [T.px(200), self._play.preferred_size(rect.width)[0], FILL], T.px(28))
@@ -158,7 +166,7 @@ class VolumeEditor(Component):
     self._reset.render(rl.Rectangle(reset.x, reset.y + (reset.height - T.px(44)) / 2, reset.width, T.px(44)))
 
 
-def alerts_page(model: Alerts, window) -> Widget:
+def alerts_page(model: Alerts, window: SettingsWindow) -> Widget:
   """Volume on the left (presets, then each group's level), chimes on the right."""
   def editor(group: VolumeGroup) -> Callable[[], None]:
     return lambda: window.present(Sheet(group.name, VolumeEditor(model, group), subtitle=group.subtitle,
@@ -173,10 +181,10 @@ def alerts_page(model: Alerts, window) -> Widget:
     Label(N_("Volume"), T.font_px(20)),
     Segmented(PRESETS, lambda: model.preset, model.set_preset, height=T.px(64), font_size=T.font_px(18), equal=True),
     # Each group is a finger-sized tile that opens its level editor.
-    Stack([ValueLine(g.name, lambda g=g: model.level_label(g), editor(g), T.font_px(17), height=T.px(48)) for g in GROUPS], gap=T.px(6)),
+    Stack([ValueLine(g.name, partial(model.level_label, g), editor(g), T.font_px(17), height=T.px(48)) for g in GROUPS], gap=T.px(6)),
     Label(note, T.SIZE_SUBTITLE, T.TEXT_MUTED, T.FONT),
   ], gap=T.px(12))
-  chimes = ListPanel([SettingRow(title, subtitle, Switch(lambda k=key: model.chime(k), lambda on, k=key: model.set_chime(k, on)))
+  chimes = ListPanel([SettingRow(title, subtitle, Switch(partial(model.chime, key), partial(model.set_chime, key)))
                       for title, subtitle, key in CHIMES],
                      title=N_("Chimes"), title_size=T.font_px(20), header_divider=False)
   return TitledPage(N_("Alerts"), N_("One volume for everything. Safety warnings never go below 25%."), Columns([volume, chimes]))

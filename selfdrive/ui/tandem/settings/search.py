@@ -9,6 +9,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from dataclasses import dataclass
 
+from functools import partial
 import pyray as rl
 
 from openpilot.system.ui.widgets import Widget
@@ -35,6 +36,7 @@ CARDS = 4   # results shown above the keyboard; Search lists them all
 
 @dataclass(frozen=True)
 class Entry:
+  """One searchable setting: its name, detail, and where it lives (tab, Driving page, section)."""
   name: str
   detail: str
   tab: int
@@ -57,6 +59,7 @@ class Entry:
 
   @property
   def where(self) -> str:
+    """Where the setting lives, as a breadcrumb (e.g. Device › General)."""
     parts = [TABS[self.tab]]
     if self.page is not None:
       parts.append(PAGES[self.page])
@@ -256,7 +259,7 @@ class ResultCard(Component):
     if self._index < len(results):
       on_pick(results[self._index])
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     results = self._results()
     if self._index >= len(results):
       return
@@ -300,7 +303,7 @@ class SettingsSearch(Component):
 
   @property
   def text(self) -> str:
-    return self._keys.text
+    return str(self._keys.text)
 
   def type(self, text: str) -> None:
     self._keys.set_text(text)
@@ -326,7 +329,7 @@ class SettingsSearch(Component):
     results = self.results()
     key = tuple(id(e) for e in results)
     if self._list is None or key != self._list_key:
-      items: list[Widget] = [SettingRow(e.name, e.where, on_click=lambda e=e: self._on_pick(e), leading=Icon("search"))
+      items: list[Widget] = [SettingRow(e.name, e.where, on_click=partial(self._on_pick, e), leading=Icon("search"))
                              for e in results] or [Text(t_("No settings match “{}”", self._keys.text))]
       self._list = self._child(ListPanel(items, header_divider=False))
       self._list_key = key
@@ -349,7 +352,7 @@ class SettingsSearch(Component):
     else:
       draw.text(text, self._keys.text, T.font_px(20), T.TEXT)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, T.BG)
     if not self._typing:
       body = inset(rect, left=T.px(16), right=T.px(16), top=T.px(14), bottom=T.px(14))
@@ -390,7 +393,7 @@ class SearchButton(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return draw.text_width(N_("Search settings"), T.font_px(17), T.FONT_SEMIBOLD) + T.px(18 + 20 + 10 + 18), T.px(46)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, T.SURFACE_2, T.px(14))
     draw.stroke(rect, T.TRACK, T.px(14), T.px(1))
     if self.is_pressed:

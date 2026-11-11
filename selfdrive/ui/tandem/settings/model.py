@@ -27,6 +27,7 @@ from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
 @dataclass(frozen=True)
 class ModelInfo:
+  """A driving model the catalog offers: its key, name, and whether it's installed, picked by the community or needs an eGPU."""
   key: str
   name: str
   installed: bool
@@ -36,6 +37,8 @@ class ModelInfo:
 
 
 class ModelSource(Protocol):
+  """What the model pages need from StarPilot: the models, which is current and recommended, and downloads."""
+
   def refresh(self) -> None: ...
   def tick(self) -> None: ...
   def models(self) -> list[ModelInfo]: ...
@@ -52,6 +55,8 @@ class ModelSource(Protocol):
 
 
 class Models:
+  """Driving › Model: the model in use, the recommended one, and what's downloaded."""
+
   def __init__(self, store: SettingsStore, source: ModelSource):
     self._store = store
     self.source = source
@@ -100,6 +105,11 @@ class Models:
     for model in self.unused():
       self.source.remove(model.key)
 
+  def remove_unused_and_recount(self) -> None:
+    """Removes the unused models, then has Storage & Data measure again."""
+    self.remove_unused()
+    STORAGE.forget()
+
   def summary(self) -> str:
     return N_("Recommended") if self.use_recommended else self.current_name()
 
@@ -140,6 +150,7 @@ class ModelRow(Component):
       self._models.source.download(self._model.key)
 
   def subtitle(self) -> str:
+    """The model card's line: downloading, the recommended model in use, or which model is chosen."""
     status, source = self._models.status(self._model), self._models.source
     return {
       "active": N_("Recommended · On device") if self._model.key == source.recommended_key() else N_("On device"),
@@ -158,12 +169,12 @@ class ModelRow(Component):
     for w in (self._badge, self._use, self._action):
       w.set_parent_rect(parent_rect)
 
-  def set_touch_valid_callback(self, touch_callback) -> None:
+  def set_touch_valid_callback(self, touch_callback: Callable[[], bool]) -> None:
     super().set_touch_valid_callback(touch_callback)
     for w in (self._badge, self._use, self._action):
       w.set_touch_valid_callback(touch_callback)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     status = self._models.status(self._model)
     if status == "active":
       draw.fill(rect, T.ACCENT_SELECTED)
@@ -214,7 +225,7 @@ class Pair(Component):
     for w in self._items:
       w.set_parent_rect(parent_rect)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     self._visible().render(rect)
 
 
@@ -233,7 +244,7 @@ class Rebuilding(Component):
     self._content: Widget | None = None
     self._shown = False
 
-  def show_event(self):
+  def show_event(self) -> None:
     super().show_event()
     self._shown = True
     if self._on_show is not None:
@@ -241,13 +252,13 @@ class Rebuilding(Component):
     if self._content is not None:
       self._content.show_event()
 
-  def hide_event(self):
+  def hide_event(self) -> None:
     super().hide_event()
     self._shown = False
     if self._content is not None:
       self._content.hide_event()
 
-  def _update_state(self):
+  def _update_state(self) -> None:
     if self._tick is not None:
       self._tick()
     key = self._key_fn()
@@ -258,7 +269,7 @@ class Rebuilding(Component):
       if self._shown:
         self._content.show_event()
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     if self._content is not None:
       self._content.render(rect)
 
@@ -308,7 +319,7 @@ class CatalogPage(Component):
       lambda: ListPanel([model_row(models, m) for m in models.tab(self._tab)] or [Text(N_("No models here yet."))]),
       models.source.tick))
     remove = Button(lambda: t_("Remove unused models ({})", len(models.unused())) if models.unused() else N_("Remove unused models"),
-                    lambda: (models.remove_unused(), STORAGE.forget()), height=T.px(46), font_size=T.font_px(15))
+                    models.remove_unused_and_recount, height=T.px(46), font_size=T.font_px(15))
     remove.set_enabled(lambda: bool(models.unused()) and not models.source.removal_blocked())
     note = lambda text: Text(text, T.SIZE_SUBTITLE, T.TEXT_SECONDARY, padding=(0, 0))  # noqa: E731
     self._side = self._child(Stack([
@@ -327,7 +338,7 @@ class CatalogPage(Component):
   def _select(self, index: int) -> None:
     self._tab = index
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     from openpilot.selfdrive.ui.tandem.settings.pages import body_rect
     body = inset(body_rect(rect), top=T.px(2))
     header, content = column(body, [T.px(56), FILL], T.px(14))
@@ -343,8 +354,12 @@ class UpstreamModels:
   """ModelSource backed by StarPilot's driving model screen controller."""
 
   def __init__(self, notify: Callable[[str], None] | None = None):
-    """notify shows a message StarPilot would have shown in its own alert box (e.g. "Cannot download models while
-    driving"); without it the message is dropped."""
+    """Makes the source over StarPilot's driving model layout.
+
+    Args:
+      notify: Shows a message StarPilot would have shown in its own alert box (e.g. "Cannot download models while
+        driving"); without it the message is dropped.
+    """
     from openpilot.selfdrive.ui.layouts.settings.starpilot import driving_model as dm
     self._dm = dm
     from openpilot.selfdrive.ui.tandem.settings.controllers import notice_controller
@@ -378,7 +393,7 @@ class UpstreamModels:
     return self._dm.canonical_model_key(active) or None
 
   def progress(self) -> str:
-    return self._layout.download_progress_text()
+    return str(self._layout.download_progress_text())
 
   def egpu_available(self) -> bool:
     return bool(self._dm.external_gpu_available())

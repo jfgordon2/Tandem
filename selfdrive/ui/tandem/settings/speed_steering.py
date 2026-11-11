@@ -1,5 +1,7 @@
 """Speed & Steering: the everyday driving choices, each one setting several StarPilot params together."""
 from __future__ import annotations
+from collections.abc import Callable
+from typing import TYPE_CHECKING
 
 from openpilot.starpilot.common.accel_profile import ACCELERATION_PROFILES as ACCEL, DECELERATION_PROFILES as DECEL
 from openpilot.system.ui.widgets import Widget
@@ -10,6 +12,9 @@ from openpilot.selfdrive.ui.tandem.rows import ListPanel, Padded, SectionHeader,
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
 from openpilot.selfdrive.ui.tandem.prefs import MAX_FOLLOWS_LIMIT, WEATHER_HEADS_UP
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_, translate
+
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.tandem.settings.live import Live
 
 STYLES = [N_("Relaxed"), N_("Standard"), N_("Sport")]
 SPEED_LIMITS = [N_("Off"), N_("Show"), N_("Match")]
@@ -139,6 +144,7 @@ class SpeedSteering:
 
 
 def everyday_panel(model: SpeedSteering) -> ListPanel:
+  """Driving › Everyday: driving style, speed limits and lane changes."""
   style = SettingRow(N_("Driving Style"), lambda: N_("Relaxed while Safe Mode is on") if model.safe_mode else
                      N_("Sets following gap, acceleration and braking together"), Segmented(STYLES, lambda: model.style, model.set_style))
   style.set_enabled(lambda: not model.safe_mode)
@@ -184,6 +190,8 @@ TRAILER_POUNDS = [2000, 5000, 8000]   # StarPilot's TrailerLoad is in pounds
 
 
 class VehicleProfile:
+  """Driving › Vehicle Profile: the car's profile, towing and trailer load."""
+
   def __init__(self, store: SettingsStore):
     self._store = store
 
@@ -243,6 +251,8 @@ WEATHER_PRESETS = [
 
 
 class Weather:
+  """Driving › Weather: how the car drives in weather, and Weather heads-up."""
+
   def __init__(self, store: SettingsStore):
     self._store = store
 
@@ -270,6 +280,7 @@ class Weather:
 
 
 def weather_panel(model: Weather) -> ListPanel:
+  """Driving › Weather's panel."""
   conditions = [(N_("Fog or low visibility"), N_("Longer following gap"), "fog"), (N_("Rain"), N_("Longer gap, earlier braking"), "rain"),
                 (N_("Heavy rain or storms"), N_("More gap, softer acceleration"), "storm"),
                 (N_("Snow or ice"), N_("Most gap, gentlest starts and stops"), "snow")]
@@ -290,14 +301,16 @@ def weather_panel(model: Weather) -> ListPanel:
 SENTRY_SENSITIVITY = [(N_("Low"), 0.08), (N_("Standard"), 0.04), (N_("High"), 0.02)]
 
 class Assistance:
-  def __init__(self, store: SettingsStore, live):
+  """Driving › Assistance: StarPilot's safety switches, Sentry Mode and driver monitoring."""
+
+  def __init__(self, store: SettingsStore, live: Live) -> None:
     self._store = store
     self._live = live
 
   def get(self, key: str) -> bool:
     return self._store.get_bool(key)
 
-  def setter(self, key: str):
+  def setter(self, key: str) -> Callable[[bool], None]:
     return lambda on: self._store.write({key: on})
 
   def set_safe_mode(self, on: bool) -> None:
@@ -336,7 +349,8 @@ class Assistance:
 
 
 def assistance_panel(model: Assistance) -> ListPanel:
-  def switch(title: str, subtitle: str, key: str, on_change=None, restarts: bool = False) -> SettingRow:
+  """Driving › Assistance's panel."""
+  def switch(title: str, subtitle: str, key: str, on_change: Callable[[bool], None] | None = None, restarts: bool = False) -> SettingRow:
     row = SettingRow(title, translate(subtitle) + (translate(N_(" Restarts openpilot if the car is on.")) if restarts else ""),
                      Switch(lambda: model.get(key), on_change or model.setter(key)))
     if restarts:
@@ -410,7 +424,9 @@ class Navigation:
     return status(self._store.get_str)
 
 
-def navigation_panel(model: Navigation, open_destinations, open_offline_maps, open_mapbox_help=lambda: None) -> ListPanel:
+def navigation_panel(model: Navigation, open_destinations: Callable[[], None], open_offline_maps: Callable[[], None],
+                     open_mapbox_help: Callable[[], None] = lambda: None) -> ListPanel:
+  """Driving › Navigation: Home, Work and other favorites, which maps to use, offline maps and Mapbox keys."""
   from openpilot.starpilot.tandem.routing import config as routing
 
   preferred = SettingRow(N_("Preferred maps (when available)"),
@@ -421,7 +437,7 @@ def navigation_panel(model: Navigation, open_destinations, open_offline_maps, op
               lambda i: routing.set_policy(preferred=("online", "offline")[i]), equal=True))
   preferred.set_enabled(lambda: not routing.policy()[0])
 
-  def place(title: str, icon: str, get) -> SettingRow:
+  def place(title: str, icon: str, get: Callable[[], str | None]) -> SettingRow:
     return SettingRow(title, lambda: get() or N_("Not set"), Button(lambda: N_("Change") if get() else N_("Set"), open_destinations),
                       leading=Icon(icon))
 

@@ -1,5 +1,7 @@
 """The Essentials defaults: what Reset Settings restores. Each line uses the same control a driver would."""
 from __future__ import annotations
+from collections.abc import Callable
+from typing import TYPE_CHECKING
 
 from openpilot.selfdrive.ui.tandem.settings.alerts import Alerts
 from openpilot.selfdrive.ui.tandem.settings.bundles import BUNDLES
@@ -8,10 +10,13 @@ from openpilot.selfdrive.ui.tandem.settings.speed_steering import SpeedSteering,
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
 from openpilot.selfdrive.ui.tandem.settings.tuner import Tuner
 
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.tandem.settings.display import BootLogoSource
+
 SPEED_LIMIT_OFFSET = 3
 
 
-def apply_essentials(store: SettingsStore, boot_logos=None) -> None:
+def apply_essentials(store: SettingsStore, boot_logos: Callable[[], BootLogoSource] | None = None) -> None:
   """Vehicle choices (profile, car, buttons) and device choices (units, Wi-Fi, pairing) are left alone.
 
   boot_logos makes the boot logo source that installs Tandem's logo; without it only the param is set.
@@ -20,7 +25,7 @@ def apply_essentials(store: SettingsStore, boot_logos=None) -> None:
     _apply(store, boot_logos)
 
 
-def _apply(store: SettingsStore, boot_logos=None) -> None:
+def _apply(store: SettingsStore, boot_logos: Callable[[], BootLogoSource] | None = None) -> None:
   speed = SpeedSteering(store)
   speed.set_style(1)                      # Standard
   speed.set_speed_limits(2)               # Match

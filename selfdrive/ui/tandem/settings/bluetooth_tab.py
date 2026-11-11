@@ -8,10 +8,11 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import replace
-from typing import Protocol
+from typing import Protocol, TYPE_CHECKING
 
 import pyray as rl
 
+from functools import partial
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.system.ui.widgets import Widget
 from openpilot.selfdrive.ui.tandem.base import Component
@@ -23,11 +24,18 @@ from openpilot.selfdrive.ui.tandem.rows import ListPanel, OptionList, SectionHea
 from openpilot.selfdrive.ui.tandem.settings.model import Rebuilding
 from openpilot.selfdrive.ui.tandem.settings.favorites import favorite_action_names
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_, tn_
+from openpilot.system.ui.lib.application import MousePos
+
+if TYPE_CHECKING:
+  from openpilot.starpilot.system.bluetooth.protocol import BluetoothDevice, BluetoothStatus
+  from openpilot.system.ui.widgets import DialogResult
+  from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow
 
 LEARN_SECONDS = 20
 
 
 class WheelSource(Protocol):
+  """What the remote's settings need from StarPilot's wheel-controls daemon: its mappings, learning a button, and test presses."""
   favorite_slots: int
   def mappings(self) -> list[dict]: ...
   def action(self, slot: int) -> str | None: ...                 # action key in a mapping slot
@@ -43,6 +51,8 @@ class WheelSource(Protocol):
 
 
 class WheelButtons:
+  """The Bluetooth remote's buttons as the settings show them: each one's action and whether it's pressed right now."""
+
   def __init__(self, source: WheelSource):
     self.source = source
 
@@ -102,20 +112,20 @@ class ActionGrid(Component):
     rows = -(-len(self._actions) // 3)
     return grid(self._rect, 3, rows, T.px(10))[:len(self._actions)]
 
-  def _hit(self, pos) -> int | None:
+  def _hit(self, pos: MousePos) -> int | None:
     return next((i for i, r in enumerate(self._cells()) if rl.check_collision_point_rec(pos, r)), None)
 
-  def _handle_mouse_press(self, mouse_pos) -> None:
+  def _handle_mouse_press(self, mouse_pos: MousePos) -> None:
     self._pressed = self._hit(mouse_pos)
 
-  def _handle_mouse_release(self, mouse_pos) -> None:
+  def _handle_mouse_release(self, mouse_pos: MousePos) -> None:
     super()._handle_mouse_release(mouse_pos)
     hit = self._hit(mouse_pos)
     if hit is not None and hit == self._pressed:
       self._on_change(hit)
     self._pressed = None
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     selected = self._selected()
     for i, ((key, name), r) in enumerate(zip(self._actions, self._cells(), strict=True)):
       chosen = i == selected
@@ -146,13 +156,13 @@ class AssignSheet(Component):
   def _pick(self, index: int) -> None:
     self._action = index
 
-  def show_event(self):
+  def show_event(self) -> None:
     super().show_event()
     if self._slot is not None and not self._started:
       self._started = True
       self._model.source.start_learning(self._slot)
 
-  def _update_state(self):
+  def _update_state(self) -> None:
     learned = self._model.source.status().get("last_learned")
     if learned and learned.get("slot") == self._slot:
       self._learned = learned
@@ -162,7 +172,7 @@ class AssignSheet(Component):
     return self._learned is not None and self._action >= 0
 
   def save(self) -> bool:
-    if not self.ready:
+    if not self.ready or self._learned is None:
       return False
     saved = self._model.source.assign(self._learned["id"], self._model.source.actions()[self._action][0])
     self._error = "" if saved else N_("Remove another button to free an action slot, then try again.")
@@ -174,6 +184,7 @@ class AssignSheet(Component):
       self._model.source.delete(self._learned["id"])
 
   def step_one(self) -> tuple[str, str]:
+    """The add-button sheet's first step: its title and line, from waiting for a press to the button it heard."""
     if self._error:
       return N_("Couldn't assign this button"), self._error
     if self._slot is None:
@@ -186,7 +197,7 @@ class AssignSheet(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, T.px(330)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     detected = self._learned is not None
     card, right = row(rect, [T.px(280), FILL], T.px(16))
     draw.fill(card, T.SUCCESS_CARD if detected else T.SURFACE_1, T.px(20))
@@ -210,20 +221,21 @@ class AssignSheet(Component):
     draw.text(foot, N_("Pulse and glide and driver selfie are in Tuner Mode."), T.SIZE_SUBTITLE, T.TEXT_MUTED)
 
 
-def wheel_panel(model: WheelButtons, window) -> Component:
+def wheel_panel(model: WheelButtons, window: SettingsWindow) -> Component:
+  """Connections › Bluetooth Remote: the remote's buttons and their actions, with Add button."""
   def change(mapping: dict) -> Callable[[], None]:
-    def show():
+    def show() -> None:
       actions = model.source.actions()
       error = ""
 
-      def pick(index: int):
+      def pick(index: int) -> None:
         nonlocal error
         if model.source.assign(mapping["id"], actions[index][0]):
           window.dismiss()
         else:
           error = N_("All action slots are in use. Remove another button first.")
 
-      def remove():
+      def remove() -> None:
         model.source.delete(mapping["id"])
         window.dismiss()
       current = model.source.action(mapping["slot"])
@@ -234,15 +246,15 @@ def wheel_panel(model: WheelButtons, window) -> Component:
                            actions=[Button(N_("Remove"), remove, ButtonStyle.DANGER_SOFT)], on_dismiss=window.dismiss))
     return show
 
-  def add():
+  def add() -> None:
     sheet_body = AssignSheet(model)
 
-    def save():
+    def save() -> None:
       if sheet_body.save():
         window.dismiss()
         model.start_testing()
 
-    def cancel():
+    def cancel() -> None:
       sheet_body.cancel()
       window.dismiss()
     window.present(Sheet(N_("Assign a button"), sheet_body, actions=[Button(N_("Cancel"), cancel), Button(N_("Save"), save, ButtonStyle.PRIMARY)],
@@ -268,7 +280,7 @@ class WheelHeader(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, T.px(76)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     body = inset(rect, left=T.px(20), right=T.px(14))
     well = place(body, T.px(48), T.px(48), Align.START)
     draw.fill(well, T.ACCENT_SURFACE, T.px(14))
@@ -299,7 +311,7 @@ class WheelRow(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, T.px(60)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     pressed = self._model.is_pressed(self._mapping)
     if pressed:
       draw.fill(rect, T.ACCENT_SELECTED)
@@ -331,7 +343,7 @@ class AddButtonRow(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, T.px(58)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     unassigned = self._model.unassigned_pressed()
     if unassigned:
       draw.fill(rect, T.SUCCESS_CARD)
@@ -345,9 +357,11 @@ class AddButtonRow(Component):
 
 
 class BluetoothDevices(Protocol):
+  """What the Bluetooth settings need from StarPilot's Bluetooth manager: devices, pairing, car audio and sound tests."""
+
   def tick(self) -> None: ...
   def set_active(self, active: bool) -> None: ...
-  def status(self): ...
+  def status(self) -> BluetoothStatus: ...
   def select(self, address: str) -> bool: ...      # pairs or connects; True when it's connected and its actions should show
   def test_audio(self, address: str) -> None: ...
   def audio_test_text(self) -> str: ...            # the running test's countdown, result or error
@@ -358,7 +372,7 @@ class BluetoothDevices(Protocol):
   def respond(self, prompt_id: str, accept: bool, value: str = "") -> None: ...
 
 
-def sound_test(bt: BluetoothDevices, address: str, window) -> None:
+def sound_test(bt: BluetoothDevices, address: str, window: SettingsWindow | None) -> None:
   """Upstream's delayed sound test, counted down in our dialog."""
   from openpilot.selfdrive.ui.tandem.overlays import Dialog
   bt.test_audio(address)
@@ -367,7 +381,7 @@ def sound_test(bt: BluetoothDevices, address: str, window) -> None:
                           glyph=lambda r, c, s: draw.icon(r, "volume", c, s)))
 
 
-def pairing_prompt(bt: BluetoothDevices, prompt: dict, window) -> None:
+def pairing_prompt(bt: BluetoothDevices, prompt: dict, window: SettingsWindow) -> None:
   """A device's pairing request in our dialogs (upstream showed its own): a code to confirm, a PIN or passkey to type,
   or a code to read off this screen."""
   from openpilot.system.ui.widgets import DialogResult
@@ -388,17 +402,22 @@ def pairing_prompt(bt: BluetoothDevices, prompt: dict, window) -> None:
                                                      keyboard.text if result == DialogResult.CONFIRM else ""))
     gui_app.push_widget(keyboard)
   else:
-    def done(result) -> None:
+    def done(result: DialogResult) -> None:
       window.dismiss()
       bt.respond(prompt_id, result == DialogResult.CONFIRM)
     message = t_("Check that the device shows {}.", value) if value else N_("The device is asking to pair.")
     window.present(Dialog(t_("Pair with {}?", name), message, N_("Pair"), done, glyph=glyph))
 
 
-def device_sheet(bt: BluetoothDevices, device, window) -> Sheet:
+def device_sheet(bt: BluetoothDevices, device: BluetoothDevice, window: SettingsWindow) -> Sheet:
   """A connected device's actions (upstream showed its option list): car audio, a sound test, disconnect and forget."""
   from openpilot.selfdrive.ui.tandem.controls import Switch
   from openpilot.selfdrive.ui.tandem.settings.device_sections import confirm
+
+  def disconnect(address: str) -> None:
+    bt.disconnect(address)
+    window.dismiss()
+
   offroad = lambda: bt.status().offroad  # noqa: E731
   selected = lambda: bt.status().selected_audio.upper() == device.address.upper()  # noqa: E731
   rows: list[Widget] = []
@@ -412,25 +431,25 @@ def device_sheet(bt: BluetoothDevices, device, window) -> Sheet:
   forget = Button(N_("Forget"), lambda: confirm(window, t_("Forget {}?", device.name), N_("You'll need to pair it again to use it."), N_("Forget"),
                                             lambda: bt.forget(device.address)), ButtonStyle.DANGER_SOFT)
   forget.set_enabled(offroad)
-  rows += [SettingRow(N_("Disconnect"), N_("It reconnects the next time you choose it"), Button(N_("Disconnect"), lambda: (bt.disconnect(device.address),
-                                                                                                              window.dismiss()))),
+  rows += [SettingRow(N_("Disconnect"), N_("It reconnects the next time you choose it"), Button(N_("Disconnect"), partial(disconnect, device.address))),
            SettingRow(N_("Forget"), N_("Removes the pairing. Change it with the car off."), forget)]
   return Sheet(device.name, ListPanel(rows, header_divider=False), subtitle=N_("Connected"),
                actions=[Button(N_("Done"), window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss)
 
 
-def devices_panel(bt: BluetoothDevices, window=None) -> Component:
-  def choose(device) -> None:
+def devices_panel(bt: BluetoothDevices, window: SettingsWindow | None = None) -> Component:
+  """Connections › Car Audio & Devices: the paired car audio, then devices nearby to pair or connect."""
+  def choose(device: BluetoothDevice) -> None:
     if bt.select(device.address) and window is not None:
       window.present(device_sheet(bt, device, window))
 
-  def audio_row(device) -> SettingRow:
+  def audio_row(device: BluetoothDevice) -> SettingRow:
     selected = lambda: bt.status().selected_audio.upper() == device.address.upper()  # noqa: E731
     return SettingRow(device.name, lambda: N_("Plays alerts and chimes") if selected() else (N_("Connected") if device.connected else N_("Paired")),
                       Button(N_("Test sound"), lambda: sound_test(bt, device.address, window)), on_click=lambda: choose(device),
                       chevron=False)
 
-  def nearby_row(device) -> SettingRow:
+  def nearby_row(device: BluetoothDevice) -> SettingRow:
     action = Button(lambda: N_("Connect") if device.paired else N_("Pair"), lambda: choose(device))
     action.set_enabled(lambda: bt.status().offroad)
     return SettingRow(device.name, lambda: N_("Paired") if device.paired else None, action)
@@ -441,14 +460,16 @@ def devices_panel(bt: BluetoothDevices, window=None) -> Component:
     audio = [d for d in status.devices if d.audio and d.paired]
     nearby = [d for d in status.devices if not (d.audio and d.paired) and not d.controller]
     scanning = Label(lambda: N_("Scanning…") if bt.status().discovering else "", T.SIZE_SUBTITLE, T.ACCENT_TEXT, T.FONT, fit=True)
+    audio_rows: list[Widget] = [audio_row(d) for d in audio] or [Text(N_("No car audio paired."))]
+    nearby_rows: list[Widget] = [nearby_row(d) for d in nearby] or [Text(N_("No devices found yet."))]
     return Stack([
-      ListPanel([SectionHeader(N_("CAR AUDIO")), *([audio_row(d) for d in audio] or [Text(N_("No car audio paired."))])]),
+      ListPanel([SectionHeader(N_("CAR AUDIO")), *audio_rows]),
       ListPanel([SectionHeader(N_("NEARBY"), trailing=scanning, divider=True),
-                 *([nearby_row(d) for d in nearby] or [Text(N_("No devices found yet."))])],
+                 *nearby_rows],
                 footnote=N_("Pairing waits until you're parked.")),
     ], gap=T.px(14), grow=1)
 
-  def key():
+  def key() -> tuple[tuple[tuple[str, bool, bool], ...], bool]:
     status = bt.status()
     return tuple((d.address, d.paired, d.connected) for d in status.devices), status.discovering
 
@@ -457,7 +478,7 @@ def devices_panel(bt: BluetoothDevices, window=None) -> Component:
   def tick() -> None:
     prompt = bt.prompt()
     prompt_id = str(prompt.get("id", "")) if prompt else ""
-    if prompt_id and prompt_id != last_prompt[0] and window is not None:
+    if prompt and prompt_id and prompt_id != last_prompt[0] and window is not None:
       pairing_prompt(bt, prompt, window)
     last_prompt[0] = prompt_id
 
@@ -472,7 +493,7 @@ ACTION_NAMES = {"engage_openpilot": N_("Engage"), "disengage_openpilot": N_("Dis
 class UpstreamWheel:
   """WheelSource backed by StarPilot's wheel controls service."""
 
-  def __init__(self):
+  def __init__(self) -> None:
     from openpilot.common.params import Params
     from openpilot.starpilot.common import controller_actions as ca
     from openpilot.starpilot.system.wheel_controls import wheel_controlsd as wc
@@ -495,7 +516,7 @@ class UpstreamWheel:
     return entry.get("key") if entry.get("enabled") else None
 
   def actions(self) -> list[tuple[str, str]]:
-    keys = {o["key"].rsplit(":", 1)[-1]: o["key"] for o in self._ca.CONTROLLER_ACTION_OPTIONS}
+    keys = {str(o["key"]).rsplit(":", 1)[-1]: str(o["key"]) for o in self._ca.CONTROLLER_ACTION_OPTIONS}
     choices = [(keys[suffix], name) for suffix, name in ACTION_NAMES.items() if suffix in keys]
     return choices + [(f"favorite:{i}", name) for i, name in enumerate(favorite_action_names(self._params))]
 
@@ -526,6 +547,15 @@ class UpstreamWheel:
       self._wc.set_controller_action_slot(slot - self.favorite_slots, None, "", self._params)
 
   def assign(self, mapping_id: str, key: str) -> bool:
+    """Gives a button an action.
+
+    Args:
+      mapping_id: The button.
+      key: The action's key; "favorite:N" points it at favorite slot N.
+
+    Returns:
+      False when the button or action isn't known, or no slot is free.
+    """
     mappings = self.mappings()
     mapping = next((m for m in mappings if m["id"] == mapping_id), None)
     names = dict(self.actions())
@@ -555,7 +585,7 @@ class UpstreamWheel:
 class UpstreamBluetooth:
   """BluetoothDevices backed by upstream's manager and its pairing policy; prompts, actions and forget use our dialogs."""
 
-  def __init__(self):
+  def __init__(self) -> None:
     from openpilot.system.ui.lib.bluetooth_manager import BluetoothManager
     self._manager = BluetoothManager()
     self._manager.set_active(False)
@@ -587,13 +617,14 @@ class UpstreamBluetooth:
       self._scan_requested = True
       self._manager.set_scanning(True)   # renew after the daemon's scan window; there is no manual Scan button in our panel
 
-  def prompt(self):
+  def prompt(self) -> dict | None:
     return self._manager.status.prompt
 
   def respond(self, prompt_id: str, accept: bool, value: str = "") -> None:
     self._manager.respond(prompt_id, accept, value)
 
   def set_active(self, active: bool) -> None:
+    """Starts or stops Bluetooth work as the page shows or hides; scanning stops with it."""
     if active == self._active:
       return
     self._active = active
@@ -605,7 +636,7 @@ class UpstreamBluetooth:
     if active:
       self.tick()
 
-  def status(self):
+  def status(self) -> BluetoothStatus:
     status = self._manager.status
     return replace(status, offroad=True) if not status.offroad and self._parked() else status
 

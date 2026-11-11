@@ -6,6 +6,7 @@ scans, with wheel-button testing, while Bluetooth Remote or Car Audio & Devices 
 from __future__ import annotations
 
 from collections.abc import Callable
+from typing import TYPE_CHECKING
 
 import pyray as rl
 
@@ -15,6 +16,9 @@ from openpilot.selfdrive.ui.tandem.settings.bluetooth_tab import BluetoothDevice
 from openpilot.selfdrive.ui.tandem.settings.network_tab import Network, cellular_panel, wifi_panel
 from openpilot.selfdrive.ui.tandem.settings.pages import Section, SectionPage
 from openpilot.selfdrive.ui.tandem.i18n import N_, tn_
+
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow
 
 WIFI, CELLULAR, REMOTE, AUDIO = range(4)
 
@@ -30,18 +34,18 @@ class WhileShown(Component):
     self._on_hide = on_hide
     self._on_tick = on_tick
 
-  def _update_state(self):
+  def _update_state(self) -> None:
     self._on_tick()
 
-  def show_event(self):
+  def show_event(self) -> None:
     self._on_show()
     super().show_event()
 
-  def hide_event(self):
+  def hide_event(self) -> None:
     super().hide_event()
     self._on_hide()
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     self._panel.render(rect)
 
 
@@ -50,7 +54,8 @@ def buttons_label(count: int) -> str:
   return tn_("{} button", "{} buttons", count) if count else ""
 
 
-def connections_page(network: Network, open_advanced: Callable[[], None], wheel: WheelButtons, bt: BluetoothDevices, window) -> SectionPage:
+def connections_page(network: Network, open_advanced: Callable[[], None], wheel: WheelButtons, bt: BluetoothDevices, window: SettingsWindow) -> SectionPage:
+  """The Connections tab: Wi-Fi, cellular, the Bluetooth remote, and car audio, each a section of its sidebar."""
   def bluetooth_on() -> None:
     bt.set_active(True)
     wheel.start_testing()

@@ -6,6 +6,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from enum import IntEnum
+from typing import TYPE_CHECKING
 
 import pyray as rl
 
@@ -29,12 +30,26 @@ from openpilot.selfdrive.ui.tandem.settings.network_tab import Network, advanced
 from openpilot.selfdrive.ui.tandem.settings.software_tab import Software, SoftwarePage
 from openpilot.selfdrive.ui.tandem.settings.driving_tab import driving_hub
 from openpilot.selfdrive.ui.tandem.settings.live import Live
-from openpilot.selfdrive.ui.tandem.settings.pages import PanelPage, Section, SectionPage, can_go_back, go_back
+from openpilot.selfdrive.ui.tandem.settings.pages import HubPage, PanelPage, Section, SectionPage, can_go_back, go_back
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
 from openpilot.selfdrive.ui.tandem.i18n import N_
 
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.tandem.settings.maps import MapsSource
+  from openpilot.selfdrive.ui.tandem.settings.developer import DeveloperSource
+  from openpilot.selfdrive.ui.tandem.settings.display import BootLogoSource
+  from openpilot.selfdrive.ui.tandem.settings.software_tab import UpdateActions
+  from openpilot.selfdrive.ui.tandem.settings.bluetooth_tab import BluetoothDevices, WheelSource
+  from openpilot.selfdrive.ui.tandem.settings.device import Device
+  from openpilot.selfdrive.ui.tandem.settings.device_sections import DeviceData
+  from openpilot.selfdrive.ui.tandem.settings.vehicle import CarCatalog, CarExtras
+  from openpilot.selfdrive.ui.tandem.settings.model import ModelSource
+  from openpilot.selfdrive.ui.tandem.ram import RamLog
+  from openpilot.starpilot.tandem.wifi import WifiManager
+
 
 class Tab(IntEnum):
+  """The settings tabs, left to right."""
   DRIVING = 0
   DEVICE = 1
   CONNECTIONS = 2
@@ -57,69 +72,79 @@ PANEL_TABS = {
 }
 
 
-def _upstream_models(notify=None):
+def _upstream_models(notify: Callable[[str], None] | None = None) -> ModelSource:
   from openpilot.selfdrive.ui.tandem.settings.model import UpstreamModels
   return UpstreamModels(notify)
 
 
-def _upstream_data():
+def _upstream_data() -> DeviceData:
   from openpilot.selfdrive.ui.tandem.settings.device_sections import UpstreamData
   return UpstreamData()
 
 
-def _upstream_device():
+def _upstream_device() -> Device:
   return UpstreamDevice()
 
 
-def _upstream_wifi():
+def _upstream_wifi() -> WifiManager:
   from openpilot.selfdrive.ui.tandem.settings.network_tab import upstream_wifi
   return upstream_wifi()
 
 
-def _upstream_wheel():
+def _upstream_wheel() -> WheelSource:
   from openpilot.selfdrive.ui.tandem.settings.bluetooth_tab import UpstreamWheel
   return UpstreamWheel()
 
 
-def _upstream_bluetooth():
+def _upstream_bluetooth() -> BluetoothDevices:
   from openpilot.selfdrive.ui.tandem.settings.bluetooth_tab import UpstreamBluetooth
   return UpstreamBluetooth()
 
 
-def _upstream_updates():
+def _upstream_updates() -> UpdateActions:
   from openpilot.selfdrive.ui.tandem.settings.software_tab import UpstreamUpdates
   return UpstreamUpdates()
 
 
-def _upstream_boot_logos():
+def _upstream_boot_logos() -> BootLogoSource:
   from openpilot.selfdrive.ui.tandem.settings.display import UpstreamBootLogos
   return UpstreamBootLogos()
 
 
-def _upstream_car_extras():
+def _upstream_car_extras() -> CarExtras:
   from openpilot.selfdrive.ui.tandem.settings.vehicle import UpstreamCarExtras
   return UpstreamCarExtras()
 
 
-def _upstream_developer():
+def _upstream_developer() -> DeveloperSource:
   from openpilot.selfdrive.ui.tandem.settings.developer import UpstreamDeveloper
   return UpstreamDeveloper()
 
 
-def _upstream_maps():
+def _upstream_maps() -> MapsSource:
   from openpilot.selfdrive.ui.tandem.settings.maps import UpstreamMaps
   return UpstreamMaps()
 
 
-def _upstream_cars():
+def _upstream_cars() -> CarCatalog:
   from openpilot.selfdrive.ui.tandem.settings.vehicle import UpstreamCars
   return UpstreamCars()
 
 
 class SettingsWindow(Widget):
-  def __init__(self, store: SettingsStore | None = None, live=None, model_source=None, car_catalog=None, device_data=None,
-               device=None, wifi=None, wheel=None, bluetooth=None, updates=None, maps_source=None, boot_logos=None, developer_source=None,
-               car_extras=None, ram_log=None, ram_now=None):
+  """Tandem's settings window, which MainLayout shows in place of upstream's.
+
+  It keeps a stack of pages per tab, an overlay (a sheet or dialog) above them, and the bottom navigation.
+  """
+
+  def __init__(self, store: SettingsStore | None = None, live: Live | None = None,
+               model_source: Callable[[], ModelSource] | None = None, car_catalog: Callable[[], CarCatalog] | None = None,
+               device_data: Callable[[], DeviceData] | None = None, device: Callable[[], Device] | None = None,
+               wifi: Callable[[], WifiManager] | None = None, wheel: Callable[[], WheelSource] | None = None,
+               bluetooth: Callable[[], BluetoothDevices] | None = None, updates: Callable[[], UpdateActions] | None = None,
+               maps_source: Callable[[], MapsSource] | None = None, boot_logos: Callable[[], BootLogoSource] | None = None,
+               developer_source: Callable[[], DeveloperSource] | None = None, car_extras: Callable[[], CarExtras] | None = None,
+               ram_log: Callable[[], RamLog] | None = None, ram_now: Callable[[], int] | None = None) -> None:
     """The arguments replace device-backed state and StarPilot data in tests; each defaults to the real one."""
     super().__init__()
     self._store = store
@@ -149,26 +174,27 @@ class SettingsWindow(Widget):
 
   # Upstream SettingsLayout interface, used by MainLayout
 
-  def set_callbacks(self, on_close: Callable[[], None]):
+  def set_callbacks(self, on_close: Callable[[], None]) -> None:
     self._close_callback = on_close
 
-  def set_current_panel(self, panel_type) -> None:
+  def set_current_panel(self, panel_type: object) -> None:
     """Open settings at an upstream PanelType, starting that tab from its first page."""
     name = getattr(panel_type, "name", str(panel_type))
     tab = PANEL_TABS.get(name, Tab.DRIVING)
     self._unwind(tab)
-    if name == "DEVELOPER":
-      self._stack(tab)[0].select(DEVELOPER_SECTION)
-    elif name in SECTIONS:
-      self._stack(tab)[0].select(SECTIONS[name])
+    root = self._stack(tab)[0]
+    if isinstance(root, SectionPage) and name == "DEVELOPER":
+      root.select(DEVELOPER_SECTION)
+    elif isinstance(root, SectionPage) and name in SECTIONS:
+      root.select(SECTIONS[name])
     self.select_tab(tab)
 
-  def show_event(self):
+  def show_event(self) -> None:
     super().show_event()
     self._shown = True
     self.top.show_event()
 
-  def hide_event(self):
+  def hide_event(self) -> None:
     super().hide_event()
     self.dismiss()
     self._shown = False
@@ -187,7 +213,7 @@ class SettingsWindow(Widget):
     return self._store
 
   @property
-  def live(self):
+  def live(self) -> Live:
     if self._live is None:
       self._live = Live()
     return self._live
@@ -210,6 +236,7 @@ class SettingsWindow(Widget):
     return self.depth > 1 or can_go_back(self.top)
 
   def select_tab(self, tab: int) -> None:
+    """Switches tab, keeping each tab's stack."""
     self.dismiss()
     if tab == self._tab:
       return
@@ -246,10 +273,19 @@ class SettingsWindow(Widget):
     self._overlay = overlay
     overlay.show_event()
 
-  def dismiss(self) -> None:
+  def dismiss(self, callback: Callable[[], None] | None = None) -> None:
+    """Closes the sheet or dialog over the window, if any.
+
+    Unlike upstream's Widget.dismiss, the window itself stays: it is MainLayout's settings layout, not a pushed widget.
+
+    Args:
+      callback: Called once the overlay is closed, as upstream's dismiss calls it.
+    """
     if self._overlay is not None:
       overlay, self._overlay = self._overlay, None
       overlay.hide_event()
+    if callback is not None:
+      callback()
 
   def notice(self, message: str) -> None:
     """A message from StarPilot (e.g. why a model can't download now) in our dialog, where it showed its own alert box."""
@@ -259,6 +295,7 @@ class SettingsWindow(Widget):
                         glyph=lambda r, c, s: draw.icon(r, "model", c, s)))
 
   def back(self) -> None:
+    """Steps back: closes the overlay, then a page's own level, then a page, then settings."""
     if self._overlay is not None:
       self.dismiss()
     elif can_go_back(self.top):
@@ -269,15 +306,22 @@ class SettingsWindow(Widget):
       self._close_callback()
 
   def open_at(self, tab: int, page: str | None = None, section: int | None = None) -> None:
-    """Open a place in settings from its first page: a tab, then a page the Driving hub opens (its `pages` names), then a
-    section of that page's sidebar. Settings search opens results with it."""
+    """Opens a place in settings from its first page. Settings search opens results with it.
+
+    Args:
+      tab: The tab.
+      page: A page the Driving hub opens (its `pages` names).
+      section: A section of that page's sidebar.
+    """
     self.dismiss()
     self._unwind(tab)
     self.select_tab(tab)
-    if page is not None:
-      self._stack(tab)[0].pages[page]()
-    if section is not None:
-      self.top.select(section)
+    root = self._stack(tab)[0]
+    if page is not None and isinstance(root, HubPage):
+      root.pages[page]()
+    top = self.top
+    if section is not None and isinstance(top, SectionPage):
+      top.select(section)
 
   def _unwind(self, tab: int) -> None:
     stack = self._stack(tab)
@@ -288,7 +332,7 @@ class SettingsWindow(Widget):
         if len(stack) == 1:
           stack[0].show_event()
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     body, nav = column(rect, [FILL, T.NAV_HEIGHT])
     draw.fill(body, T.BG)
     overlay = self._overlay

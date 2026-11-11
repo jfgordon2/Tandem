@@ -7,7 +7,8 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Protocol
+from typing import Protocol, TYPE_CHECKING
+from pathlib import Path
 
 import pyray as rl
 
@@ -24,14 +25,23 @@ from openpilot.system.ui.widgets import DialogResult, Widget
 from openpilot.selfdrive.ui.tandem.prefs import BACKUP_DIR, TEMPERATURE, celsius, restore_prefs, save_prefs
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_, tn_
 
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.tandem.settings.model import Models
+  from openpilot.selfdrive.ui.tandem.ram import RamLog
+  from openpilot.selfdrive.ui.tandem.settings.live import Live
+  from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow
+
 
 @dataclass(frozen=True)
 class Backup:
+  """A settings backup: its folder name and when it was made."""
   name: str
   when: str
 
 
 class DeviceData(Protocol):
+  """What Device › General needs from StarPilot: languages, backups, storage and problem reports."""
+
   def languages(self) -> list[tuple[str, str]]: ...      # (name, code)
   def language(self) -> str: ...                        # current code
   def set_language(self, code: str) -> None: ...
@@ -53,7 +63,9 @@ REPORT_CATEGORIES = [N_("Acceleration felt harsh or jerky"), N_("Braking was too
 
 
 class General:
-  def __init__(self, store: SettingsStore, data: DeviceData, live):
+  """Device › General: units, temperature, language, brightness, standby and backups, written to StarPilot's params."""
+
+  def __init__(self, store: SettingsStore, data: DeviceData, live: Live) -> None:
     self._store = store
     self.data = data
     self._live = live
@@ -123,8 +135,18 @@ class General:
     return self._live.engaged() or self._store.get_bool("RecordFrontLock")
 
 
-def confirm(window, title: str, message: str, label: str, action: Callable[[], None], danger: bool = True, icon: str = "trash") -> None:
-  """A confirm dialog with a mock icon in its well: trash for deleting, restart for replacing settings."""
+def confirm(window: SettingsWindow, title: str, message: str, label: str, action: Callable[[], None], danger: bool = True, icon: str = "trash") -> None:
+  """Asks before an action, in a dialog with a mock icon in its well.
+
+  Args:
+    window: Presents the dialog.
+    title: The question.
+    message: What the action does.
+    label: The confirm button's label.
+    action: Runs on confirm.
+    danger: Draw the confirm button as a danger button.
+    icon: "trash" for deleting, "restart" for replacing settings.
+  """
   def done(result: DialogResult) -> None:
     window.dismiss()
     if result == DialogResult.CONFIRM:
@@ -148,11 +170,11 @@ def picker_languages(languages: list[tuple[str, str]], current: str) -> list[tup
           if code.removeprefix("main_") not in NOVELTY_LANGUAGES or same_language(code, current)]
 
 
-def open_language(data: DeviceData, window) -> None:
+def open_language(data: DeviceData, window: SettingsWindow) -> None:
   """The language sheet, opened from General."""
   languages = picker_languages(data.languages(), data.language())
 
-  def pick(index: int):
+  def pick(index: int) -> None:
     data.set_language(languages[index][1])
     window.dismiss()
   window.present(Sheet(N_("Language"), OptionList([name for name, _ in languages],
@@ -161,8 +183,9 @@ def open_language(data: DeviceData, window) -> None:
                        subtitle=N_("For menus and alerts"), on_dismiss=window.dismiss))
 
 
-def general_panel(model: General, window) -> ListPanel:
-  def language_sheet():
+def general_panel(model: General, window: SettingsWindow) -> ListPanel:
+  """Device › General's panel: units, language, display and standby."""
+  def language_sheet() -> None:
     open_language(model.data, window)
 
   return ListPanel([
@@ -175,7 +198,8 @@ def general_panel(model: General, window) -> ListPanel:
   ], title=N_("General"))
 
 
-def backups_panel(model: General, window) -> Component:
+def backups_panel(model: General, window: SettingsWindow) -> Component:
+  """Device › Backups: make a backup, and restore or delete each one."""
   from openpilot.selfdrive.ui.tandem.settings.model import Rebuilding
 
   def row_for(backup: Backup) -> SettingRow:
@@ -188,9 +212,10 @@ def backups_panel(model: General, window) -> Component:
 
   def build() -> ListPanel:
     backups = model.data.backups()
+    rows: list[Widget] = [row_for(b) for b in backups] or [Text(N_("No backups yet."))]
     return ListPanel([
       SectionHeader(N_("SAVED")),
-      *([row_for(b) for b in backups] or [Text(N_("No backups yet."))]),
+      *rows,
     ], title=N_("Backups"), subtitle=N_("Snapshots of your settings. Drives aren't included."),
        header_control=Button(N_("Back up now"), model.data.create_backup, ButtonStyle.PRIMARY))
 
@@ -198,6 +223,7 @@ def backups_panel(model: General, window) -> Component:
 
 
 class ButtonPair(Component):
+  """Two buttons side by side, sharing the width."""
   grow_touch_target = False
 
   def __init__(self, first: Button, second: Button):
@@ -213,7 +239,7 @@ class ButtonPair(Component):
     for b in self._buttons:
       b.set_parent_rect(parent_rect)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     widths = [b.preferred_size(rect.width)[0] for b in self._buttons]
     for b, r in zip(self._buttons, row(rect, widths, T.px(10)), strict=True):
       b.render(r)
@@ -254,7 +280,7 @@ class StorageBar(Component):
       x += w + T.px(24)
     return lines
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     sizes = self._sizes()
     total = sizes.get("Total") or 1.0
     used = total - sizes.get("Free", 0.0)
@@ -307,7 +333,7 @@ DELETE_MAPS_MESSAGE = N_("Remove offline routes, speed limits and street names f
                          "Your regions stay chosen, so a scheduled update downloads them again.")
 
 
-def delete_maps_row(data: DeviceData, window, height: float | None = None) -> SettingRow:
+def delete_maps_row(data: DeviceData, window: SettingsWindow, height: float | None = None) -> SettingRow:
   """Storage & Data's row for offline maps: Delete, or why it can't be deleted yet."""
   def subtitle() -> str:
     return data.maps_blocked() or N_("Speed limits and curves work without a connection")
@@ -317,13 +343,13 @@ def delete_maps_row(data: DeviceData, window, height: float | None = None) -> Se
   return SettingRow(N_("Offline Maps"), subtitle, delete, height=height)
 
 
-def unused_models_row(models, window) -> SettingRow:
+def unused_models_row(models: Models, window: SettingsWindow) -> SettingRow:
   """Storage & Data's row for downloaded models that aren't in use (never the current or recommended one)."""
   def subtitle() -> str:
     count = len(models.unused())
     blocked = models.source.removal_blocked()
     if blocked and count:
-      return blocked
+      return str(blocked)
     return tn_("{} downloaded model not in use", "{} downloaded models not in use", count) if count else N_("Only the models you use are downloaded")
 
   def remove() -> None:
@@ -331,13 +357,14 @@ def unused_models_row(models, window) -> SettingRow:
     confirm(window, N_("Remove unused models?"),
             tn_("{} model you aren't using is removed. You can download it again from the model catalog.",
                 "{} models you aren't using are removed. You can download them again from the model catalog.", count), N_("Remove"),
-            lambda: (models.remove_unused(), STORAGE.forget()))
+            models.remove_unused_and_recount)
   button = Button(N_("Remove"), remove, ButtonStyle.DANGER_SOFT)
   button.set_enabled(lambda: bool(models.unused()) and not models.source.removal_blocked())
   return SettingRow(N_("Unused Models"), subtitle, button)
 
 
-def storage_panel(model: General, window, models) -> ListPanel:
+def storage_panel(model: General, window: SettingsWindow, models: Models) -> ListPanel:
+  """Device › Storage & Data: what's using space, and deleting drives, maps and unused models."""
   driver = SettingRow(N_("Record Driver Camera"), N_("Saved and uploaded with your drives. Restarts openpilot if the car is on."),
                       Switch(lambda: model.record_driver, model.set_record_driver))
   audio = SettingRow(N_("Record Microphone"), N_("Cabin audio in your drive recordings. Restarts openpilot if the car is on."),
@@ -360,7 +387,9 @@ def storage_panel(model: General, window, models) -> ListPanel:
 
 
 class Report:
-  def __init__(self, data: DeviceData, store: SettingsStore, ram=None):
+  """Report a Problem: the category, details and Discord name; a report includes the last drives that ran low on RAM."""
+
+  def __init__(self, data: DeviceData, store: SettingsStore, ram: RamLog | None = None) -> None:
     self.data = data
     self._store = store
     self._ram = ram   # ram.RamLog: the last drives that ran low go with the report
@@ -373,6 +402,7 @@ class Report:
     return self.category >= 0
 
   def send(self) -> None:
+    """Sends the report with the RAM snapshots, if any, and remembers the Discord name."""
     if not self.ready():
       return
     issue = REPORT_CATEGORIES[self.category] + (f": {self.details}" if self.details else "")
@@ -386,8 +416,9 @@ class Report:
 
 
 def report_panel(report: Report) -> Widget:
+  """Report a Problem's page: pick a category, add details, send."""
   def edit(title: str, get: Callable[[], str], set_: Callable[[str], None]) -> Callable[[], None]:
-    def open_keyboard():
+    def open_keyboard() -> None:
       from openpilot.system.ui.lib.application import gui_app
       from openpilot.selfdrive.ui.tandem.keyboard import EssentialsKeyboard
       keyboard = EssentialsKeyboard(min_text_size=0, action=N_("Save"))
@@ -426,7 +457,7 @@ class StorageSizes:
   forget() re-measures right away after something is deleted."""
   REFRESH = 30.0
 
-  def __init__(self):
+  def __init__(self) -> None:
     self._sizes: dict[str, float] = {}
     self._measuring = False
     self._generation = 0   # bumped by forget(), so a measurement that started before a delete is thrown away
@@ -479,7 +510,7 @@ STORAGE = StorageSizes()
 class UpstreamData:
   """DeviceData the way StarPilot's System screen does it: same folders, same params, same report message."""
 
-  def __init__(self):
+  def __init__(self) -> None:
     from pathlib import Path
     self._Path = Path
     self._backups = Path("/data/toggle_backups")
@@ -506,7 +537,7 @@ class UpstreamData:
     return [Backup(d.name.replace("_", " "), datetime.datetime.fromtimestamp(d.stat().st_mtime).strftime("%b %-d, %Y %-I:%M %p"))
             for d in entries]
 
-  def _dir(self, name: str):
+  def _dir(self, name: str) -> Path:
     return self._backups / name.replace(" ", "_")
 
   def create_backup(self) -> None:
@@ -518,6 +549,7 @@ class UpstreamData:
     save_prefs(target)   # Tandem's own settings live beside the params folder (prefs.py)
 
   def restore_backup(self, name: str) -> None:
+    """Restores a backup over the params folder, renaming legacy keys, then restores Tandem's own settings and reloads StarPilot's toggles."""
     import shutil
     from openpilot.starpilot.common.starpilot_variables import LEGACY_STARPILOT_PARAM_RENAMES, update_starpilot_toggles
     src, params_dir = self._dir(name), self._params_dir
@@ -547,10 +579,11 @@ class UpstreamData:
     return removal_blocked()
 
   def delete_drives(self) -> None:
+    """Deletes every recorded drive in the background."""
     import shutil
     import threading
 
-    def task():
+    def task() -> None:
       for path in ("/data/media/0/realdata/", "/data/media/0/realdata_HD/", "/data/media/0/realdata_konik/"):
         p = self._Path(path)
         if p.exists():

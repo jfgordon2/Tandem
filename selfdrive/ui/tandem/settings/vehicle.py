@@ -7,8 +7,9 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Protocol
+from typing import Protocol, TYPE_CHECKING
 
+from functools import partial
 import pyray as rl
 
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
@@ -24,6 +25,10 @@ from openpilot.selfdrive.ui.tandem.settings.favorites import favorite_action_nam
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
+if TYPE_CHECKING:
+  from openpilot.system.ui.widgets import DialogResult
+  from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow
+
 
 # StarPilot's button action ids, named for what they do.
 ACTION_NAMES = {0: N_("Car default"), 1: N_("Change driving style"), 2: N_("Coast"), 3: N_("Pause steering"), 4: N_("Pause gas and brake"),
@@ -33,12 +38,14 @@ ACTION_NAMES = {0: N_("Car default"), 1: N_("Change driving style"), 2: N_("Coas
 
 @dataclass(frozen=True)
 class CarOption:
+  """A make or model in the car picker."""
   value: str     # CarModel, the fingerprint
   label: str     # CarModelName, e.g. "RAV4 Hybrid 2019-21"
 
 
 @dataclass(frozen=True)
 class WheelButton:
+  """A steering wheel button StarPilot can give an action."""
   name: str
   press: str
   key: str
@@ -46,6 +53,8 @@ class WheelButton:
 
 
 class CarCatalog(Protocol):
+  """What Driving › Vehicle needs from StarPilot: makes, models, actions and the car's buttons."""
+
   def makes(self) -> list[str]: ...
   def models(self, make: str) -> list[CarOption]: ...
   def actions(self, button: WheelButton) -> list[tuple[int, str]]: ...
@@ -54,6 +63,8 @@ class CarCatalog(Protocol):
 
 
 class Vehicle:
+  """Driving › Vehicle: the car (detected or chosen), auto lock, and the wheel buttons' actions."""
+
   def __init__(self, store: SettingsStore, catalog: CarCatalog):
     self._store = store
     self.catalog = catalog
@@ -135,7 +146,7 @@ class CarPicker(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, T.px(330)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     if self._built_for != self._make:
       self._built_for = self._make
       self._model_list = OptionList([o.label for o in self._options()], lambda: self._model, self._pick_model)
@@ -144,14 +155,16 @@ class CarPicker(Component):
       caption, body = column(area, [T.px(28), FILL], T.px(6))
       draw.caption(caption, title)
       draw.fill(body, T.SURFACE_1, T.RADIUS_CARD)
-      widget.render(body)
+      if widget is not None:
+        widget.render(body)
 
 
-def vehicle_page(vehicle: Vehicle, window, open_more: Callable[[], None]) -> Widget:
-  def choose_car():
+def vehicle_page(vehicle: Vehicle, window: SettingsWindow, open_more: Callable[[], None]) -> Widget:
+  """Driving › Vehicle's page: the car, its buttons' actions, and More options."""
+  def choose_car() -> None:
     picker = CarPicker(vehicle)
 
-    def save():
+    def save() -> None:
       if picker.save():
         window.dismiss()
     window.present(Sheet(N_("Choose your car"), picker,
@@ -159,11 +172,11 @@ def vehicle_page(vehicle: Vehicle, window, open_more: Callable[[], None]) -> Wid
                          actions=[Button(N_("Cancel"), window.dismiss), Button(N_("Save"), save, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss))
 
   def pick_action(button: WheelButton) -> Callable[[], None]:
-    def show():
+    def show() -> None:
       actions = vehicle.catalog.actions(button)
       ids = [i for i, _ in actions]
 
-      def select(index: int):
+      def select(index: int) -> None:
         vehicle.set_action(button, ids[index])
         window.dismiss()
       window.present(Sheet(f"{button.name} · {button.press}", OptionList([name for _, name in actions],
@@ -186,7 +199,7 @@ def vehicle_page(vehicle: Vehicle, window, open_more: Callable[[], None]) -> Wid
                                                                                                    vehicle.set_auto_lock))]),
                T.px(76))
   lock.set_visible(vehicle.catalog.has_auto_lock)
-  buttons = [SettingRow(f"{b.name}", b.press, ValueButton(lambda b=b: vehicle.action_name(b), pick_action(b)))
+  buttons = [SettingRow(f"{b.name}", b.press, ValueButton(partial(vehicle.action_name, b), pick_action(b)))
              for b in vehicle.catalog.buttons()]
   wheel = ListPanel([
     *buttons,
@@ -198,7 +211,7 @@ def vehicle_page(vehicle: Vehicle, window, open_more: Callable[[], None]) -> Wid
 class UpstreamCars:
   """CarCatalog backed by StarPilot's fingerprint list, button actions and detected car state."""
 
-  def __init__(self):
+  def __init__(self) -> None:
     from openpilot.selfdrive.ui.layouts.settings.starpilot import vehicle as v
     from openpilot.selfdrive.ui.lib.fingerprint_catalog import get_fingerprint_catalog
     from openpilot.selfdrive.ui.lib.starpilot_state import starpilot_state
@@ -220,10 +233,15 @@ class UpstreamCars:
     else:
       allowed = set(range(9)) | {11, 12, 13} | ({9} if button.key == "LKASButtonControl" else set())
     names = ACTION_NAMES | {11 + i: name for i, name in enumerate(favorite_action_names(self._state.params))}
-    return [(o["id"], names.get(o["id"], o["name"])) for o in self._v.ACTION_OPTIONS
-            if o["id"] in allowed and (longitudinal or not o.get("requires_longitudinal", False))]
+    choices: list[tuple[int, str]] = []
+    for option in self._v.ACTION_OPTIONS:
+      action = int(str(option["id"]))
+      if action in allowed and (longitudinal or not option.get("requires_longitudinal", False)):
+        choices.append((action, str(names.get(action, option["name"]))))
+    return choices
 
   def buttons(self) -> list[WheelButton]:
+    """The car's wheel buttons StarPilot can give actions: Distance, LKAS (not on a Subaru), Cruise main, and Cancel, Mode and Star where the car has them."""
     cs = self._state.car_state
     buttons = [WheelButton(N_("Distance"), N_("Press"), "DistanceButtonControl"),
                WheelButton(N_("Distance"), N_("Long press"), "LongDistanceButtonControl")]
@@ -244,6 +262,7 @@ class UpstreamCars:
 
 @dataclass(frozen=True)
 class CarExtra:
+  """One of StarPilot's car-specific options: its param, title, line and kind."""
   key: str
   title: str
   line: str
@@ -255,6 +274,8 @@ LOCK_TIMES = [(0, N_("Never")), (10, N_("10 s")), (30, N_("30 s")), (60, N_("1 m
 
 
 class CarExtras(Protocol):
+  """What Vehicle › More options needs from StarPilot: the options for this car and their values."""
+
   def extras(self) -> list[CarExtra]: ...
   def value(self, key: str) -> bool: ...
   def toggle(self, key: str) -> None: ...     # upstream's toggle, with its side effects (a restart, a migration)
@@ -263,14 +284,14 @@ class CarExtras(Protocol):
   def set_timer(self, seconds: int) -> None: ...
 
 
-def extras_page(extras: CarExtras, window) -> Widget:
+def extras_page(extras: CarExtras, window: SettingsWindow) -> Widget:
   """More for your car: a switch per option, a timer as a picker; options that restart or flash ask first."""
   from openpilot.selfdrive.ui.tandem.overlays import Dialog
   from openpilot.selfdrive.ui.tandem.controls import Tone
   from openpilot.system.ui.widgets import DialogResult
 
   def ask(title: str, message: str, label: str, then: Callable[[], None], danger: bool = False) -> None:
-    def done(result) -> None:
+    def done(result: DialogResult) -> None:
       window.dismiss()
       if result == DialogResult.CONFIRM:
         then()
@@ -312,7 +333,7 @@ def extras_page(extras: CarExtras, window) -> Widget:
     if extra.kind == "timer":
       rows.append(SettingRow(extra.title, extra.line, ValueButton(timer_label, timer_sheet)))
     else:
-      rows.append(SettingRow(extra.title, extra.line, Switch(lambda k=extra.key: extras.value(k), flipped(extra))))
+      rows.append(SettingRow(extra.title, extra.line, Switch(partial(extras.value, extra.key), flipped(extra))))
   if not rows:
     rows.append(Text(N_("Nothing extra for this car. Everything it supports is on the Vehicle page.")))
   return PanelPage(ListPanel(rows, title=N_("More for your car"), subtitle=N_("Options only some makes and models have")))
@@ -321,7 +342,7 @@ def extras_page(extras: CarExtras, window) -> Widget:
 class UpstreamCarExtras:
   """CarExtras from StarPilot's vehicle screen: the same conditions on the detected car, the same params and handlers."""
 
-  def __init__(self):
+  def __init__(self) -> None:
     from openpilot.selfdrive.ui.layouts.settings.starpilot.vehicle import StarPilotVehicleSettingsLayout
     from openpilot.selfdrive.ui.lib.starpilot_state import starpilot_state
     from openpilot.selfdrive.ui.tandem.settings.controllers import confirmed_controller
@@ -329,6 +350,7 @@ class UpstreamCarExtras:
     self._state = starpilot_state
 
   def extras(self) -> list[CarExtra]:
+    """StarPilot's options that apply to this car."""
     cs, params = self._state.car_state, self._layout._params
     out = [CarExtra("DisableOpenpilotLongitudinal", N_("Use the car's own cruise control"),
                     N_("Turns off openpilot's gas and brake control. openpilot restarts if the car is on."),
@@ -360,7 +382,7 @@ class UpstreamCarExtras:
     return out
 
   def value(self, key: str) -> bool:
-    return self._layout._params.get_bool(key)
+    return bool(self._layout._params.get_bool(key))
 
   def toggle(self, key: str) -> None:
     self._layout.run_confirmed("disable_longitudinal", lambda: self._layout._on_toggle(key))
@@ -369,7 +391,7 @@ class UpstreamCarExtras:
     self._layout.run_confirmed("flash_panda", lambda: self._layout._on_panda_firmware_toggle(key, ""))
 
   def timer(self) -> int:
-    return self._layout._params.get_int("LockDoorsTimer")
+    return int(self._layout._params.get_int("LockDoorsTimer"))
 
   def set_timer(self, seconds: int) -> None:
     self._layout._params.put_int("LockDoorsTimer", int(seconds))

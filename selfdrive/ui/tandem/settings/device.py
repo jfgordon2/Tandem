@@ -7,10 +7,11 @@ carries the same comma connect pairing token.
 from __future__ import annotations
 
 from collections.abc import Callable
-from typing import Protocol
+from typing import Any, Protocol, TYPE_CHECKING, cast
 
 import pyray as rl
 
+from openpilot.selfdrive.ui.tandem.fonts import Face
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.blocks import Card, Columns, Label
@@ -19,8 +20,13 @@ from openpilot.selfdrive.ui.tandem.layout import Align, inset, place
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, SectionHeader, SettingRow
 from openpilot.selfdrive.ui.tandem.i18n import N_
 
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow
+  from openpilot.system.ui.widgets import Widget
+
 
 class Calibration:
+  """The calibration states the device page shows."""
   CALIBRATED = N_("Calibrated")
   CALIBRATING = N_("Calibrating")
   UNKNOWN = N_("Not calibrated yet")
@@ -70,18 +76,29 @@ def driver_monitoring_rows(device: Device, ask: Callable | None = None) -> list[
 
 
 class ThisDevicePanel(ListPanel):
+  """Device › This Device: identity, pairing, remote access, calibration, and restart and power off."""
+
   def __init__(self, device: Device, open_pairing: Callable[[], None] | None = None, open_remote_access: Callable[[], None] | None = None,
                ask: Callable | None = None, open_regulatory: Callable[[], None] | None = None):
-    """open_pairing and open_remote_access show our pages. ask(title, message, label, action, danger,
-    icon) shows our confirm dialog before Restart, Power Off and Recalibrate; the device then runs upstream's action without
-    its own dialog. The driver camera and driver monitoring reset are in Driving › Assistance (driver_monitoring_rows)."""
+    """Makes the panel.
+
+    Args:
+      device: The device's state and actions.
+      open_pairing: Shows the pairing page.
+      open_remote_access: Shows the remote access page.
+      ask: ask(title, message, label, action, danger, icon) shows our confirm dialog before Restart, Power Off and
+        Recalibrate; the device then runs upstream's action without its own dialog. Without it the action runs at once.
+      open_regulatory: Shows the regulatory page.
+
+    The driver camera and driver monitoring reset are in Driving › Assistance (driver_monitoring_rows).
+    """
     self._device = device
     ask = ask or (lambda title, message, label, action, danger, icon: action())
 
-    def asking(title: str, message: str, label: str, action: Callable[[], None], danger: bool = False, icon: str = "restart"):
+    def asking(title: str, message: str, label: str, action: Callable[[], None], danger: bool = False, icon: str = "restart") -> Callable[[], None]:
       return lambda: ask(title, message, label, action, danger, icon)
 
-    def action(label: str, on_click, style: ButtonStyle = ButtonStyle.SECONDARY, offroad_only: bool = False) -> Button:
+    def action(label: str, on_click: Callable[[], None], style: ButtonStyle = ButtonStyle.SECONDARY, offroad_only: bool = False) -> Button:
       button = Button(label, on_click, style)
       if offroad_only:
         button.set_enabled(device.is_offroad)
@@ -117,7 +134,7 @@ class ThisDevicePanel(ListPanel):
     ], title=N_("This Device"), footer=ButtonRow([restart, power_off]))
     regulatory.set_visible(device.show_regulatory)
 
-  def show_event(self):
+  def show_event(self) -> None:
     super().show_event()
     self._device.refresh()
 
@@ -147,7 +164,7 @@ class StepList(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, len(self._steps) * self.ROW + (len(self._steps) - 1) * self.GAP
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     y = rect.y
     for i, (title, line) in enumerate(self._steps):
       well = rl.Rectangle(rect.x, y, T.px(40), T.px(40))
@@ -170,14 +187,14 @@ class CodeTile(Component):
   grow_touch_target = False
   TILE, PAD = T.px(268), T.px(16)
 
-  def __init__(self, code: Callable[[], rl.Texture | None], caption: Callable[[], tuple[str, rl.Color, object]], empty: str):
+  def __init__(self, code: Callable[[], rl.Texture | None], caption: Callable[[], tuple[str, rl.Color, Face]], empty: str):
     super().__init__()
     self._code, self._caption, self._empty = code, caption, empty
 
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, self.TILE + T.px(14) + draw.line_height(T.font_px(15))
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     line_h = draw.line_height(T.font_px(15))
     group = place(rect, self.TILE, self.TILE + T.px(14) + line_h)
     tile = rl.Rectangle(group.x, group.y, self.TILE, self.TILE)
@@ -215,7 +232,7 @@ class HtmlBlock(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, self._html.get_total_height(int(max_width - T.PANEL_HEADER_INSET * 2)) + T.px(24)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     self._html.render(inset(rect, x=T.PANEL_HEADER_INSET, y=T.px(12)))
 
 
@@ -226,7 +243,7 @@ def regulatory_panel() -> ListPanel:
   return ListPanel([HtmlBlock(os.path.join(BASEDIR, REGULATORY_FILE))], title=N_("Regulatory"), header_divider=True)
 
 
-def pairing_page(device: Device):
+def pairing_page(device: Device) -> Widget:
   """Pair the phone app: the steps on the left, the code on the right (design/pairing.html)."""
   from openpilot.selfdrive.ui.tandem.settings.pages import TitledPage
   steps = Card([Label(N_("ON YOUR PHONE"), color=T.ACCENT_TEXT, caption=True), StepList(PAIRING_STEPS)], gap=T.px(22))
@@ -235,7 +252,7 @@ def pairing_page(device: Device):
   return TitledPage(N_("Pair the phone app"), N_("Change settings and see drives from your phone"), Columns([steps, code], [1.25, 1]))
 
 
-def remote_access_page(device: Device, window):
+def remote_access_page(device: Device, window: SettingsWindow) -> Widget:
   """Remote Access (Galaxy): set a password to create the link, then its code; Unpair asks first
   (design/remoteaccess.html, remoteaccessqr.html)."""
   from openpilot.selfdrive.ui.tandem.blocks import SPACER
@@ -255,7 +272,7 @@ def remote_access_page(device: Device, window):
   steps = Card([header, StepList(REMOTE_STEPS, lambda i: i == 0 and ready()),
                 SPACER, set_up, unpair], gap=T.px(22))
 
-  def caption():
+  def caption() -> tuple[str, rl.Color, Face]:
     link = device.remote_access_link()
     if link:
       return link.split("://", 1)[-1], T.ACCENT_TEXT, T.FONT_SEMIBOLD
@@ -267,7 +284,7 @@ def remote_access_page(device: Device, window):
 class UpstreamDevice:
   """Device backed by upstream's DeviceLayout and ui_state. Imported only on the device."""
 
-  def __init__(self):
+  def __init__(self) -> None:
     from openpilot.selfdrive.ui.layouts.settings.device import DeviceLayout
     from openpilot.selfdrive.ui.ui_state import ui_state
     from openpilot.system.hardware import TICI
@@ -280,9 +297,9 @@ class UpstreamDevice:
     self._ids = ""
     self._imei = ""          # read once from the modem, in the background
     self._imei_reading = False
-    self._pairing = None   # upstream PairingDialog, made on first use
-    self._camera = None    # our driver camera, made on first use
-    self._galaxy_qr = None   # (link, upstream GalaxyQRDialog) for the current link
+    self._pairing: Any = None   # upstream PairingDialog, made on first use
+    self._camera: Widget | None = None    # our driver camera, made on first use
+    self._galaxy_qr: tuple[str, Any] | None = None   # (link, upstream GalaxyQRDialog) for the current link
     self.refresh()
 
   def refresh(self) -> None:
@@ -303,7 +320,7 @@ class UpstreamDevice:
     import threading
     import time
 
-    def read():
+    def read() -> None:
       try:
         from openpilot.system.hardware import HARDWARE
         for attempt in range(self.IMEI_TRIES):
@@ -335,25 +352,25 @@ class UpstreamDevice:
     return Calibration.UNKNOWN if status == log.LiveCalibrationData.Status.uncalibrated else Calibration.CALIBRATING
 
   def is_paired(self) -> bool:
-    return self._ui_state.prime_state.is_paired()
+    return bool(self._ui_state.prime_state.is_paired())
 
   def is_offroad(self) -> bool:
-    return self._ui_state.is_offroad()
+    return bool(self._ui_state.is_offroad())
 
   def calibration(self) -> str:
-    return self._calibration
+    return str(self._calibration)
 
   def remote_access_label(self) -> str:
     return N_("Manage") if self._layout._is_galaxy_paired() else N_("Set Up")
 
   def ids(self) -> str:
-    return self._ids
+    return str(self._ids)
 
   def imei(self) -> str:
     return self._imei or N_("Not available")
 
   def show_regulatory(self) -> bool:
-    return self._tici
+    return bool(self._tici)
 
   def pair(self) -> None:
     self._layout._pair_device()
@@ -364,7 +381,7 @@ class UpstreamDevice:
       from openpilot.selfdrive.ui.widgets.pairing_dialog import PairingDialog
       self._pairing = PairingDialog()
     self._pairing._check_qr_refresh()
-    return self._pairing.qr_texture
+    return cast("rl.Texture | None", self._pairing.qr_texture)
 
   def driver_camera(self) -> None:
     """Upstream's camera with our overlay; one instance, as upstream keeps one (it registers a timeout callback)."""
@@ -395,7 +412,7 @@ class UpstreamDevice:
     if self._galaxy_qr is None or self._galaxy_qr[0] != link:
       from openpilot.selfdrive.ui.layouts.settings.device import GalaxyQRDialog
       self._galaxy_qr = (link, GalaxyQRDialog(link))
-    return self._galaxy_qr[1]._qr_texture
+    return cast("rl.Texture | None", self._galaxy_qr[1]._qr_texture)
 
   def set_up_remote_access(self) -> None:
     """Our keyboard with upstream's Galaxy rules (a password, at least 6 characters), then the same files upstream

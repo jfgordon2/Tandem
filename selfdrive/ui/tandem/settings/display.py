@@ -3,8 +3,9 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from pathlib import Path
-from typing import Protocol
+from typing import Protocol, TYPE_CHECKING
 
+from functools import partial
 import pyray as rl
 
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
@@ -19,6 +20,10 @@ from openpilot.selfdrive.ui.tandem.settings.bundles import DEVELOPER_VIEW, LEAD_
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
 from openpilot.selfdrive.ui.tandem.onroad.extras import PATH_COLOR, WHIMSY_SIGNALS
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_
+from openpilot.system.ui.lib.application import MousePos
+
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow
 
 # Path Style -> the path and lane line params it sets. Standard is upstream's path without the acceleration tint.
 # PathColor is Essentials blue (design/leadmarker.html); Rainbow and Acceleration draw their own colors over it.
@@ -48,6 +53,8 @@ BUILT_IN_IMAGES = {TANDEM_LOGO: TANDEM_LOGO_FILE, "starpilot": _STARPILOT_IMAGES
 
 
 class BootLogoSource(Protocol):
+  """StarPilot's boot logos: which are installed, installing Tandem's, and each one's image."""
+
   def installed(self) -> list[tuple[str, str]]: ...   # (slug, name) of each boot logo StarPilot downloaded to the device
   def install_tandem(self) -> None: ...                 # puts Tandem's logo where StarPilot looks for boot logos
   def image(self, slug: str) -> Path | None: ...        # a downloaded logo's file, for its preview
@@ -57,8 +64,15 @@ STARTUP_DEFAULTS = (N_("Be ready to take over at any time"), N_("Always keep han
 
 
 class Display:
+  """Display: path style, turn signal, boot logo, startup message and the driving screen's switches."""
+
   def __init__(self, store: SettingsStore, boot_logos: Callable[[], BootLogoSource] | None = None):
-    """boot_logos makes the boot logo source the first time the picker needs it."""
+    """Makes the model.
+
+    Args:
+      store: Where settings are written.
+      boot_logos: Makes the boot logo source the first time the picker needs it.
+    """
     self._store = store
     self._boot_logos = boot_logos
     self._boot_logo_source: BootLogoSource | None = None
@@ -169,6 +183,10 @@ class Display:
   def boot_logo(self) -> str:
     return self._store.get_str("BootLogo") or "starpilot"
 
+  def is_boot_logo(self, slug: str) -> bool:
+    """Whether slug is the boot logo in use."""
+    return self.boot_logo == slug
+
   def boot_logo_options(self) -> list[tuple[str, str]]:
     """The built-in logos, then those downloaded to the device."""
     installed = self.boot_logos.installed() if self.boot_logos is not None else []
@@ -251,7 +269,7 @@ class BundleGrid(Component):
     rows = self._rows()
     return max_width, rows * self.TILE + (rows - 1) * self.GAP + T.px(16) + draw.line_height(T.SIZE_SUBTITLE)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     items = bundle_items(self._bundle())
     w = (rect.width - self.GAP * (self.COLUMNS - 1)) / self.COLUMNS
     for i, (name, key) in enumerate(items):
@@ -267,7 +285,7 @@ class BundleGrid(Component):
               T.SIZE_SUBTITLE, T.TEXT_SECONDARY)
 
 
-def bundle_sheet(window, start: int = 0) -> Sheet:
+def bundle_sheet(window: SettingsWindow, start: int = 0) -> Sheet:
   """What Developer View and Lead Insights each set, with tabs to switch between them."""
   bundles = [DEVELOPER_VIEW, LEAD_INSIGHTS]
   tab = [start]
@@ -277,7 +295,8 @@ def bundle_sheet(window, start: int = 0) -> Sheet:
                actions=[Button(N_("Done"), window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss, header=tabs)
 
 
-def driving_screen_panel(model: Display, window) -> ListPanel:
+def driving_screen_panel(model: Display, window: SettingsWindow) -> ListPanel:
+  """Display › Driving Screen: text size, and what the drive screen shows, by bundle and by switch."""
   dev_get, dev_set = model.bundle(DEVELOPER_VIEW)
   lead_get, lead_set = model.bundle(LEAD_INSIGHTS)
   return ListPanel([
@@ -303,27 +322,27 @@ def driving_screen_panel(model: Display, window) -> ListPanel:
   ], title=N_("Driving Screen"))
 
 
-def boot_logo_sheet(model: Display, window) -> None:
+def boot_logo_sheet(model: Display, window: SettingsWindow) -> None:
   """Pick a boot logo from previews: the built-in ones, and any StarPilot already downloaded to the device."""
   def pick(slug: str) -> None:
     model.set_boot_logo(slug)
     window.dismiss()
 
-  cards = [LogoCard(name, model.boot_logo_image(slug), lambda s=slug: model.boot_logo == s, lambda s=slug: pick(s))
+  cards = [LogoCard(name, model.boot_logo_image(slug), partial(model.is_boot_logo, slug), partial(pick, slug))
            for slug, name in model.boot_logo_options()]
   window.present(Sheet(N_("Boot Logo"), ListPanel([Grid(cards, columns=4, gap=T.px(14))], background=T.SURFACE_2, dividers=False),
                        subtitle=N_("Shown while the device starts up"),
                        actions=[Button(N_("Done"), window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss))
 
 
-def theme_panel(model: Display, edit_startup_message: Callable[[], None], window=None) -> ListPanel:
+def theme_panel(model: Display, edit_startup_message: Callable[[], None], window: SettingsWindow) -> ListPanel:
   """The customizations: how the path and turn signal look, and what shows at startup."""
-  def path_sheet():
+  def path_sheet() -> None:
     window.present(Sheet(N_("Path Style"), PathStylePicker(lambda: model.path_style, model.set_path_style),
                          subtitle=N_("Sets path color, width, edges and lane lines together"),
                          actions=[Button(N_("Done"), window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss))
 
-  def signal_sheet():
+  def signal_sheet() -> None:
     window.present(Sheet(N_("Turn Signal"), SignalPicker(lambda: model.signal_style, model.set_signal_style),
                          subtitle=N_("Plays beside the speed while a blinker is on"),
                          actions=[Button(N_("Done"), window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss))
@@ -338,6 +357,7 @@ def theme_panel(model: Display, edit_startup_message: Callable[[], None], window
 
 
 def map_panel(model: Display, open_offline_maps: Callable[[], None]) -> ListPanel:
+  """Display › Map: turn-by-turn on screen, and the way to offline maps."""
   return ListPanel([
     SettingRow(N_("Turn-by-Turn on Screen"), N_("Next turn, arrival time and distance while navigating"),
                Switch(lambda: model.turn_by_turn, model.set_turn_by_turn)),
@@ -397,13 +417,13 @@ class SignPicker(Component):
   def _cards(self) -> list[rl.Rectangle]:
     return [rl.Rectangle(self._rect.x + i * (self.CARD_W + T.px(8)), self._rect.y, self.CARD_W, self.CARD_H) for i in range(2)]
 
-  def _handle_mouse_release(self, mouse_pos) -> None:
+  def _handle_mouse_release(self, mouse_pos: MousePos) -> None:
     super()._handle_mouse_release(mouse_pos)
     for i, r in enumerate(self._cards()):
       if rl.check_collision_point_rec(mouse_pos, r) and i != self._selected():
         self._on_change(i)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     for i, r in enumerate(self._cards()):
       chosen = i == self._selected()
       draw.fill(r, T.ACCENT_SELECTED if chosen else T.SURFACE_4, T.px(14))
@@ -488,20 +508,20 @@ class PathStylePicker(Component):
     w = (self._rect.width - self.GAP * (len(PATH_STYLES) - 1)) / len(PATH_STYLES)
     return [rl.Rectangle(self._rect.x + i * (w + self.GAP), self._rect.y, w, T.px(214)) for i in range(len(PATH_STYLES))]
 
-  def _hit(self, pos) -> int | None:
+  def _hit(self, pos: MousePos) -> int | None:
     return next((i for i, r in enumerate(self._cards()) if rl.check_collision_point_rec(pos, r)), None)
 
-  def _handle_mouse_press(self, mouse_pos) -> None:
+  def _handle_mouse_press(self, mouse_pos: MousePos) -> None:
     self._pressed = self._hit(mouse_pos)
 
-  def _handle_mouse_release(self, mouse_pos) -> None:
+  def _handle_mouse_release(self, mouse_pos: MousePos) -> None:
     super()._handle_mouse_release(mouse_pos)
     hit = self._hit(mouse_pos)
     if hit is not None and hit == self._pressed and hit != self._selected():
       self._on_change(hit)
     self._pressed = None
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     selected = self._selected()
     for i, card in enumerate(self._cards()):
       chosen = i == selected
@@ -525,15 +545,15 @@ class SignalThumb:
 
   def __init__(self, slug: str):
     self._slug = slug
-    self._texture = None
+    self._texture: rl.Texture | None = None
     self._loaded = False
 
-  def _load(self):
+  def _load(self) -> None:
     self._loaded = True
-    from openpilot.selfdrive.ui.tandem.onroad.turn_signals import BUNDLED_SIGNAL_PATHS, FRAME_PATTERN
+    from openpilot.selfdrive.ui.tandem.onroad.turn_signals import BUNDLED_SIGNAL_PATHS, FRAME_PATTERN, frame_number
     directory = BUNDLED_SIGNAL_PATHS.get(self._slug)
     frames = sorted((p for p in directory.glob("*") if FRAME_PATTERN.fullmatch(p.name)),
-                    key=lambda p: int(FRAME_PATTERN.fullmatch(p.name)[1] or 0)) if directory is not None and directory.is_dir() else []
+                    key=frame_number) if directory is not None and directory.is_dir() else []
     if not frames:
       return
     image = rl.load_image(str(frames[len(frames) // 2]))
@@ -548,6 +568,7 @@ class SignalThumb:
       rl.unload_image(image)
 
   def draw(self, rect: rl.Rectangle) -> None:
+    """Draws the picker's preview of the path style."""
     if not self._loaded:
       self._load()
     if self._texture is None:
@@ -596,20 +617,20 @@ class SignalPicker(Component):
     y = self._rect.y + self._label_h()
     return [rl.Rectangle(self._rect.x + i * (w + self.GAP), y, w, self.CARD_H) for i in range(n)]
 
-  def _hit(self, pos) -> int | None:
+  def _hit(self, pos: MousePos) -> int | None:
     return next((i for i, r in enumerate(self._cards()) if rl.check_collision_point_rec(pos, r)), None)
 
-  def _handle_mouse_press(self, mouse_pos) -> None:
+  def _handle_mouse_press(self, mouse_pos: MousePos) -> None:
     self._pressed = self._hit(mouse_pos)
 
-  def _handle_mouse_release(self, mouse_pos) -> None:
+  def _handle_mouse_release(self, mouse_pos: MousePos) -> None:
     super()._handle_mouse_release(mouse_pos)
     hit = self._hit(mouse_pos)
     if hit is not None and hit == self._pressed and hit != self._selected():
       self._on_change(hit)
     self._pressed = None
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     selected = self._selected()
     cards = self._cards()
     label = rl.Rectangle(rect.x, rect.y, rect.width, draw.line_height(T.font_px(13)))
@@ -648,7 +669,7 @@ class LogoCard(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, T.px(12) + (max_width - T.px(24)) / 2 + T.px(12) + draw.line_height(T.font_px(18)) + T.px(12)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     chosen = self._chosen()
     draw.fill(rect, T.SURFACE_4, T.px(20))
     if chosen:
@@ -679,7 +700,7 @@ def _logo_texture(path: Path, width: int) -> rl.Texture | None:
     if png is not None:
       # Decoded with Pillow and handed to raylib as PNG: the device's raylib is built without JPEG support, and the
       # built-in logos (Tandem's, StarPilot's and comma's) are JPEGs. Upstream loads emoji the same way.
-      image = rl.load_image_from_memory(".png", png, len(png))
+      image = rl.load_image_from_memory(".png", png, len(png))  # type: ignore[arg-type]   # pyray's stub says str; raylib takes the bytes
       texture = rl.load_texture_from_image(image)
       rl.set_texture_filter(texture, rl.TextureFilter.TEXTURE_FILTER_BILINEAR)
       rl.unload_image(image)
@@ -696,7 +717,7 @@ def _logo_png(path: Path, width: int) -> bytes | None:
       image = image.convert(N_("RGB"))
       if image.height > image.width:
         image = image.rotate(90, expand=True)   # counterclockwise, as raylib's image_rotate_ccw did
-      image = image.resize((width, width // 2), Image.LANCZOS)
+      image = image.resize((width, width // 2), Image.Resampling.LANCZOS)
       out = io.BytesIO()
       image.save(out, N_("PNG"))
       return out.getvalue()
@@ -707,7 +728,7 @@ def _logo_png(path: Path, width: int) -> bytes | None:
 class UpstreamBootLogos:
   """Boot logos as StarPilot keeps them: one file per logo in its themes folder."""
 
-  def __init__(self):
+  def __init__(self) -> None:
     from openpilot.starpilot.common.starpilot_variables import THEME_SAVE_PATH
     self._folder = THEME_SAVE_PATH / "bootlogos"
 
@@ -721,6 +742,7 @@ class UpstreamBootLogos:
     return next((f for f in sorted(self._folder.iterdir()) if f.is_file() and f.stem == slug), None) if self._folder.is_dir() else None
 
   def install_tandem(self) -> None:
+    """Installs Tandem's boot logo into StarPilot's boot logos folder."""
     import shutil
     target = self._folder / f"{TANDEM_LOGO}.jpg"
     try:

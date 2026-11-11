@@ -63,7 +63,7 @@ class ProcessRow(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, ROW_HEIGHT
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     snap = self._snap()
     if self._index > len(snap.top):
       return

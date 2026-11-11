@@ -15,6 +15,7 @@ Values = dict[str, bool | int | float]
 
 @dataclass(frozen=True)
 class Bundle:
+  """A named set of settings turned on and off together (e.g. Developer View): the values for on, and for off."""
   name: str
   description: str
   key: str                      # the param that says whether the bundle is on

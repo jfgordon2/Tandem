@@ -9,6 +9,8 @@ from __future__ import annotations
 from collections.abc import Callable
 from dataclasses import dataclass, field
 
+from functools import partial
+from typing import TYPE_CHECKING
 import pyray as rl
 
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
@@ -22,6 +24,11 @@ from openpilot.selfdrive.ui.tandem.settings.editors import NumberSpec, number_sh
 from openpilot.selfdrive.ui.tandem.settings.speed_steering import STYLE_PARAMS, SpeedSteering
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_
+from openpilot.system.ui.lib.application import MousePos
+
+if TYPE_CHECKING:
+  from openpilot.system.ui.widgets import Widget
+  from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow
 
 DEFAULT, OVERRIDE, LEARNED, FROM_STYLE = N_("Default"), N_("Override"), N_("Learned"), N_("From style")
 _TONES = {DEFAULT: Tone.NEUTRAL, OVERRIDE: Tone.WARNING, LEARNED: Tone.SUCCESS, FROM_STYLE: Tone.ACCENT}
@@ -29,6 +36,7 @@ _TONES = {DEFAULT: Tone.NEUTRAL, OVERRIDE: Tone.WARNING, LEARNED: Tone.SUCCESS, 
 
 @dataclass(frozen=True)
 class Tunable:
+  """One tunable value: its param, title, how it's edited, and its stock and learned counterparts."""
   key: str
   title: str
   subtitle: str
@@ -106,6 +114,8 @@ OVERRIDE_BUNDLES = [DEVELOPER_VIEW, LEAD_INSIGHTS]
 
 
 class Tuner:
+  """Tuner Mode: each tunable value against what Driving Style and Vehicle Profile set, and the overrides."""
+
   def __init__(self, store: SettingsStore):
     self._store = store
     self._speed = SpeedSteering(store)
@@ -255,6 +265,7 @@ class Tuner:
     return self.changed(FOLLOWING) + sum(abs(self.gap(key) - default) > 0.01 for _, key, default in GAPS)
 
   def reset_all(self) -> None:
+    """Puts every tunable value back to what Driving Style and Vehicle Profile set."""
     values: dict = {}
     for t in STEERING + GAS_BRAKE + FOLLOWING:
       values[t.key] = float(self.baseline(t))
@@ -276,13 +287,14 @@ def _changed_label(count: int) -> str:
   return t_("{} changed", count) if count else ""
 
 
-def tunable_row(tuner: Tuner, t: Tunable, window) -> SettingRow:
-  def edit():
+def tunable_row(tuner: Tuner, t: Tunable, window: SettingsWindow) -> SettingRow:
+  """A tunable value's row: its value, FROM STYLE or OVERRIDE, and Edit or Reset."""
+  def edit() -> None:
     window.present(number_sheet(window, t.title, t.subtitle, NumberSpec(t.spec.minimum, t.spec.maximum, t.spec.step, tuner.baseline(t),
                                                                         t.spec.fmt, t.spec.picks),
                                 lambda: tuner.value(t), lambda v: tuner.set_value(t, v)))
 
-  def action():
+  def action() -> None:
     if tuner.status(t) == OVERRIDE:
       tuner.reset(t)
     else:
@@ -313,7 +325,7 @@ class ValueStatus(Component):
     self._badge.set_parent_rect(parent_rect)
     self._button.set_parent_rect(parent_rect)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     button_w = T.px(108)
     value, badge, button = row(rect, [FILL, T.px(96), button_w], T.px(10))
     draw.text(value, self._value(), T.font_px(18), T.TEXT, T.FONT_SEMIBOLD, h=Align.END)
@@ -322,7 +334,7 @@ class ValueStatus(Component):
     self._button.render(rl.Rectangle(button.x, button.y + (button.height - T.px(40)) / 2, button.width, T.px(40)))
 
 
-def steering_panel(tuner: Tuner, window) -> ListPanel:
+def steering_panel(tuner: Tuner, window: SettingsWindow) -> ListPanel:
   return ListPanel([
     *[tunable_row(tuner, t, window) for t in STEERING],
     SettingRow(N_("Steering controller"), lambda: tuner.controller_description,
@@ -330,8 +342,9 @@ def steering_panel(tuner: Tuner, window) -> ListPanel:
   ], title=N_("Steering"), subtitle=N_("Learned values work for most cars. An override replaces the learned value until you reset it."))
 
 
-def gas_brake_panel(tuner: Tuner, window) -> ListPanel:
-  def profile(title: str, subtitle: str, key: str, profiles, get, set_) -> SettingRow:
+def gas_brake_panel(tuner: Tuner, window: SettingsWindow) -> ListPanel:
+  """Tuner Mode › Gas & Brake: the acceleration and braking profiles, then the values."""
+  def profile(title: str, subtitle: str, key: str, profiles: list[tuple[str, int]], get: Callable[[], int], set_: Callable[[int], None]) -> SettingRow:
     """As the mock: the profile, FROM STYLE or OVERRIDE, and Override (a picker) or Reset (back to the style's)."""
     from openpilot.selfdrive.ui.tandem.rows import OptionList
 
@@ -367,7 +380,7 @@ class GapCells(Component):
   grow_touch_target = False
   GAP = T.px(10)
 
-  def __init__(self, tuner: Tuner, window):
+  def __init__(self, tuner: Tuner, window: SettingsWindow) -> None:
     super().__init__()
     self._tuner, self._window = tuner, window
     self._pressed: int | None = None
@@ -380,13 +393,13 @@ class GapCells(Component):
     top = body.y + draw.line_height(T.font_px(17)) + T.px(10)
     return row(rl.Rectangle(body.x, top, body.width, T.px(68)), [FILL] * len(GAPS), self.GAP)
 
-  def _hit(self, pos) -> int | None:
+  def _hit(self, pos: MousePos) -> int | None:
     return next((i for i, cell in enumerate(self._cells(self._rect)) if rl.check_collision_point_rec(pos, cell)), None)
 
-  def _handle_mouse_press(self, mouse_pos) -> None:
+  def _handle_mouse_press(self, mouse_pos: MousePos) -> None:
     self._pressed = self._hit(mouse_pos)
 
-  def _handle_mouse_release(self, mouse_pos) -> None:
+  def _handle_mouse_release(self, mouse_pos: MousePos) -> None:
     super()._handle_mouse_release(mouse_pos)
     hit = self._hit(mouse_pos)
     if hit is not None and hit == self._pressed:
@@ -400,7 +413,7 @@ class GapCells(Component):
                                 NumberSpec(0.5, 3.0, 0.05, default, lambda v: t_("{} s", f"{v:.2f}")),
                                 lambda: tuner.gap(key), lambda v: tuner.set_gap(key, v)))
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     body = inset(rect, x=T.PANEL_HEADER_INSET, y=T.px(14))
     draw.text(rl.Rectangle(body.x, body.y, body.width, draw.line_height(T.font_px(17))), N_("Following gap by style"), T.font_px(17), T.TEXT,
               T.FONT_BOLD)
@@ -415,7 +428,8 @@ class GapCells(Component):
       draw.text(bottom, t_("{} s", f"{value:.2f}"), T.font_px(22), T.WARNING if changed else T.TEXT, T.FONT_BOLD)
 
 
-def following_panel(tuner: Tuner, window) -> ListPanel:
+def following_panel(tuner: Tuner, window: SettingsWindow) -> ListPanel:
+  """Tuner Mode › Following: the following gaps, then the values."""
   return ListPanel([
     GapCells(tuner, window),
     *[tunable_row(tuner, t, window) for t in FOLLOWING],
@@ -450,20 +464,20 @@ class StripPicker(Component):
     return [(k, rl.Rectangle(rect.x + (i % self.COLUMNS) * (w + self.GAP), rect.y + (i // self.COLUMNS) * (self.TILE + self.GAP), w, self.TILE))
             for i, k in enumerate(self._keys)]
 
-  def _hit(self, pos) -> str | None:
+  def _hit(self, pos: MousePos) -> str | None:
     return next((k for k, cell in self._cells(self._rect) if rl.check_collision_point_rec(pos, cell)), None)
 
-  def _handle_mouse_press(self, mouse_pos) -> None:
+  def _handle_mouse_press(self, mouse_pos: MousePos) -> None:
     self._pressed = self._hit(mouse_pos)
 
-  def _handle_mouse_release(self, mouse_pos) -> None:
+  def _handle_mouse_release(self, mouse_pos: MousePos) -> None:
     super()._handle_mouse_release(mouse_pos)
     hit = self._hit(mouse_pos)
     if hit is not None and hit == self._pressed:
       self._tuner.toggle_strip(hit)
     self._pressed = None
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     from openpilot.selfdrive.ui.tandem.onroad.developer import STRIP_MAX, STRIP_METRICS
     picked = self._tuner.strip()
     full = len(picked) >= STRIP_MAX
@@ -484,7 +498,7 @@ class StripPicker(Component):
         draw.check(rl.Rectangle(body.x + body.width - T.px(18), label.y, T.px(18), label.height), T.ACCENT_TEXT, T.px(18))
 
 
-def strip_sheet(tuner: Tuner, window) -> Sheet:
+def strip_sheet(tuner: Tuner, window: SettingsWindow) -> Sheet:
   from openpilot.selfdrive.ui.tandem.onroad.developer import STRIP_MAX
   return Sheet(N_("Bar metrics"), StripPicker(tuner),
                subtitle=lambda: t_("{} of {} picked. They spread evenly across the bar; pick none to hide it.", len(tuner.strip()), STRIP_MAX),
@@ -498,7 +512,7 @@ class BundleOverrides(Component):
   HEADER = T.px(64)
   ROW = T.px(50)
 
-  def __init__(self, tuner: Tuner, window=None):
+  def __init__(self, tuner: Tuner, window: SettingsWindow | None = None) -> None:
     super().__init__()
     self._tuner = tuner
     self._tab = 0
@@ -511,14 +525,14 @@ class BundleOverrides(Component):
       rows = []
       for key in tuner.bundle_items(bundle):
         badge = self._child(Badge(N_("Override"), Tone.WARNING))
-        switch = self._child(Switch(lambda k=key: tuner.switch(k), lambda on, k=key: tuner.set_switch(k, on), width=T.px(52), height=T.px(30)))
+        switch = self._child(Switch(partial(tuner.switch, key), partial(tuner.set_switch, key), width=T.px(52), height=T.px(30)))
         rows.append((key, badge, switch))
       self._items.append(rows)
 
   def _select(self, index: int) -> None:
     self._tab = index
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     tab = self._tab   # once: a tap on the tabs lands while they render below, and the rest of this frame must match
     tuner, bundle = self._tuner, OVERRIDE_BUNDLES[tab]
     draw.fill(rect, T.SURFACE_2, T.RADIUS_PANEL)
@@ -566,7 +580,8 @@ class BundleOverrides(Component):
 RESET_TUNING_MESSAGE = N_("Every Tuner Mode change goes back to its default, in every section and bundle. Your other settings stay as they are.")
 
 
-def tuner_page(tuner: Tuner, window):
+def tuner_page(tuner: Tuner, window: SettingsWindow) -> Widget:
+  """Tuner Mode's page: each section's values and Reset all."""
   from openpilot.selfdrive.ui.tandem.settings.device_sections import confirm
   from openpilot.selfdrive.ui.tandem.settings.pages import Section, SectionPage
 

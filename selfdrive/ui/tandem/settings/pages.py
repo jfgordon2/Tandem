@@ -1,9 +1,10 @@
 """Page shapes the settings window is built from: a hub of tiles, and a sidebar of sections."""
 from __future__ import annotations
 
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 
+from functools import partial
 import pyray as rl
 
 from openpilot.system.ui.widgets import Widget
@@ -34,13 +35,23 @@ class HubPage(Component):
 
   def __init__(self, title: str, subtitle: str, tiles: list[HubTile], rows: list[int] | None = None, strip: Component | None = None,
                trailing: Widget | None = None):
-    """trailing sits at the right of the title (the Search settings button)."""
+    """Makes a hub page.
+
+    Args:
+      title: The page's title.
+      subtitle: The line under it.
+      tiles: The hub's tiles.
+      rows: Tiles per row, top to bottom.
+      strip: A strip under the tiles.
+      trailing: A widget at the right of the title (the Search settings button).
+    """
     super().__init__()
     self._header = self._child(PageHeader(title, subtitle, trailing=trailing, size=T.font_px(30)))
     self._grid = self._child(HubGrid(tiles, rows=rows))
     self._strip = self._child(strip) if strip is not None else None
+    self.pages: dict[str, Callable[[], None]] = {}   # each page the hub opens, by name (settings search opens them)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     body = inset(body_rect(rect), top=T.px(6))   # the hub's 24 px top padding, against 18 on other pages
     sizes = [self._header.preferred_height(body.width), self._grid.preferred_height(body.width)]
     if self._strip is not None:
@@ -56,7 +67,7 @@ class Strip(Component):
   """A tinted bar: caption, a short line, and controls on the right."""
   grow_touch_target = False
 
-  def __init__(self, caption: str, text: str, controls: list[Widget]):
+  def __init__(self, caption: str, text: str, controls: Sequence[Widget]):
     super().__init__()
     self._caption = caption
     self._text = text
@@ -65,7 +76,7 @@ class Strip(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, T.px(60)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     draw.fill(rect, T.SURFACE_1, T.RADIUS_CARD)
     draw.stroke(rect, T.STRIP_EDGE, T.RADIUS_CARD)
     body = inset(rect, left=T.px(20), right=T.px(10), y=T.px(8))
@@ -81,6 +92,7 @@ class Strip(Component):
 
 @dataclass
 class Section:
+  """One entry in a section page's sidebar and the page it opens."""
   label: str
   page: Callable[[], Widget]
   value: Bindable[str] | None = None
@@ -94,14 +106,22 @@ class SectionPage(Component):
   grow_touch_target = False
 
   def __init__(self, caption: str, sections: list[Section], selected: int = 0, tone: Tone = Tone.ACCENT,
-               footer: list[Widget] | None = None):
-    """tone colors the caption and selection (WARNING for Tuner Mode); footer sits at the bottom of the sidebar."""
+               footer: Sequence[Widget] | None = None):
+    """Makes a section page.
+
+    Args:
+      caption: The sidebar's caption.
+      sections: The sidebar's entries.
+      selected: The entry shown first.
+      tone: Colors the caption and selection (WARNING for Tuner Mode).
+      footer: Widgets at the bottom of the sidebar.
+    """
     super().__init__()
     self._sections = sections
     self._pages: dict[int, Widget] = {}
     self._selected = selected
     self._shown = False
-    items = [SidebarItem(s.label, on_select=lambda i=i: self.select(i), value=s.value, value_tone=s.value_tone,
+    items = [SidebarItem(s.label, on_select=partial(self.select, i), value=s.value, value_tone=s.value_tone,
                          visible=s.visible, dot=s.dot) for i, s in enumerate(sections)]
     self._sidebar = self._child(Sidebar(caption, items, selected=lambda: self._selected, tone=tone, footer=footer))
 
@@ -130,22 +150,22 @@ class SectionPage(Component):
   def go_back(self) -> None:
     go_back(self.current)
 
-  def show_event(self):
+  def show_event(self) -> None:
     super().show_event()
     self._shown = True
     self.current.show_event()
 
-  def hide_event(self):
+  def hide_event(self) -> None:
     super().hide_event()
     self._shown = False
     self.current.hide_event()
 
-  def _update_state(self):
+  def _update_state(self) -> None:
     # A section can hide (e.g. Tuner sections when Tuner Mode turns off); fall back to the first one.
     if not resolve(self._sections[self._selected].visible):
       self.select(0)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     side, content = row(body_rect(rect), [T.SIDEBAR_WIDTH, FILL], T.PANEL_GAP)
     self._sidebar.render(inset(side, top=T.px(8)))
     self.current.render(content)
@@ -159,7 +179,7 @@ class PanelPage(Component):
     super().__init__()
     self._panel = self._child(panel)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     self._panel.render(body_rect(rect))
 
 
@@ -172,7 +192,7 @@ class TitledPage(Component):
     self._header = self._child(PageHeader(title, subtitle))
     self._body = self._child(body)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     body = inset(body_rect(rect), top=T.px(2))
     header, content = column(body, [self._header.preferred_height(body.width), FILL], T.px(14))
     self._header.render(header)
@@ -187,5 +207,5 @@ class FillPage(Component):
     super().__init__()
     self._body = self._child(body)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     self._body.render(inset(body_rect(rect), top=T.px(2)))

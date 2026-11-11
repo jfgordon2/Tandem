@@ -6,7 +6,9 @@ from __future__ import annotations
 
 
 class Live:
-  def __init__(self):
+  """The car's live state the settings need: engaged, offroad, and whether openpilot controls speed."""
+
+  def __init__(self) -> None:
     from openpilot.selfdrive.ui.ui_state import ui_state
     self._ui = ui_state
 
@@ -21,6 +23,8 @@ class Live:
 
 
 class FakeLive:
+  """Live state set by hand, for tests and renders."""
+
   def __init__(self, engaged: bool = False, offroad: bool = True, longitudinal: bool = True):
     self.is_engaged, self.is_offroad, self.longitudinal = engaged, offroad, longitudinal
 

@@ -4,6 +4,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from contextlib import contextmanager
 from typing import Any
+from collections.abc import Iterator
 
 
 class SettingsStore:
@@ -22,7 +23,7 @@ class SettingsStore:
     self._pending = False
 
   @contextmanager
-  def batch(self):
+  def batch(self) -> Iterator[None]:
     """Group many writes (e.g. Reset Settings) so the driving processes are signalled once, at the end."""
     self._batching += 1
     try:
@@ -46,7 +47,7 @@ class SettingsStore:
     value = self._cache.get(key, return_default=True)
     return value.decode() if isinstance(value, bytes) else str(value or "")
 
-  def get_json(self, key: str):
+  def get_json(self, key: str) -> Any:
     """JSON params come back parsed; returns None when unset."""
     return self._cache.get(key, return_default=True)
 

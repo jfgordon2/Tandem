@@ -4,6 +4,8 @@ from __future__ import annotations
 from collections.abc import Callable
 from dataclasses import dataclass
 
+from functools import partial
+from typing import TYPE_CHECKING
 import pyray as rl
 
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
@@ -12,10 +14,15 @@ from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, Chip, Sl
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, place, row
 from openpilot.selfdrive.ui.tandem.overlays import Sheet
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_
+from openpilot.system.ui.lib.application import MousePos
+
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow
 
 
 @dataclass(frozen=True)
 class NumberSpec:
+  """How a number setting is edited: its range, step, default, how it's written, and quick picks."""
   minimum: float
   maximum: float
   step: float
@@ -45,14 +52,14 @@ class BigStepper(Stepper):
     return [square(r.x), rl.Rectangle(r.x + self.SQUARE + T.px(24), r.y, self.VALUE_W, r.height),
             square(r.x + r.width - self.SQUARE)]
 
-  def _handle_mouse_press(self, mouse_pos) -> None:
+  def _handle_mouse_press(self, mouse_pos: MousePos) -> None:
     minus_rect, _, plus_rect = self._parts()
     self._direction = -1 if rl.check_collision_point_rec(mouse_pos, minus_rect) else (
       1 if rl.check_collision_point_rec(mouse_pos, plus_rect) else 0)
     self._repeat_at = rl.get_time() + self.REPEAT_DELAY if self._direction else None
     self._repeated = False
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     minus_rect, value_rect, plus_rect = self._parts()
     ink = T.TEXT if self.enabled else T.TEXT_MUTED
     for r, d in ((minus_rect, -1), (plus_rect, 1)):
@@ -73,6 +80,7 @@ class BigStepper(Stepper):
 
 
 class NumberEditor(Component):
+  """A number editor: minus, the value, plus, and the quick picks under them."""
   grow_touch_target = False
 
   def __init__(self, spec: NumberSpec, value: Callable[[], float], on_change: Callable[[float], None]):
@@ -85,7 +93,7 @@ class NumberEditor(Component):
                                       marks=[(s.minimum, s.fmt(s.minimum)), (s.maximum, s.fmt(s.maximum))]))
     self._picks = [self._child(Chip(s.fmt(p), Tone.NEUTRAL, height=T.px(40), font_size=T.font_px(16))) for p in s.picks]
     for chip, pick in zip(self._picks, s.picks, strict=True):
-      chip.set_click_callback(lambda p=pick: on_change(p))
+      chip.set_click_callback(partial(on_change, pick))
     self._reset = self._child(Button(N_("Reset to default"), lambda: on_change(s.default), ButtonStyle.GHOST, weight=T.FONT_BOLD))
 
   def preferred_size(self, max_width: float) -> tuple[float, float]:
@@ -95,7 +103,7 @@ class NumberEditor(Component):
     unit = split_unit(self._spec.fmt(self._spec.default))[1]
     return t_("Steps of {}{}. Hold − or + to move faster.", f"{self._spec.step:g}", ' ' + unit if unit else '')
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     top, slider, bottom = column(rect, [T.px(120), self._slider.preferred_height(rect.width), FILL], T.px(18))
     w, h = self._stepper.preferred_size(rect.width)
     self._stepper.render(rl.Rectangle(top.x + (top.width - w) / 2, top.y, w, h))
@@ -114,7 +122,7 @@ class NumberEditor(Component):
     self._reset.render(reset)
 
 
-def number_sheet(window, title: str, subtitle: str, spec: NumberSpec, value: Callable[[], float],
+def number_sheet(window: SettingsWindow, title: str, subtitle: str, spec: NumberSpec, value: Callable[[], float],
                  on_change: Callable[[float], None]) -> Sheet:
   return Sheet(title, NumberEditor(spec, value, on_change), subtitle=subtitle,
                actions=[Button(N_("Done"), window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss)

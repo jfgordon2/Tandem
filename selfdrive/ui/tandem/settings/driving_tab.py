@@ -2,9 +2,11 @@
 from __future__ import annotations
 
 from collections.abc import Callable
+from typing import TYPE_CHECKING, Generic, TypeVar
 
 import pyray as rl
 
+from functools import partial
 from openpilot.system.ui.widgets import Widget
 from openpilot.selfdrive.ui.tandem.chrome import HubTile
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
@@ -24,13 +26,23 @@ from openpilot.selfdrive.ui.tandem.settings.speed_steering import (Assistance, N
                                                                    vehicle_profile_panel, weather_panel)
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.tandem.settings.search import Entry
+  from openpilot.selfdrive.ui.tandem.settings.bundles import Bundle
+  from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow
 
-class Lazy:
-  def __init__(self, make: Callable):
+
+V = TypeVar("V")
+
+
+class Lazy(Generic[V]):
+  """A model made on first use, so opening Driving doesn't build every page's state."""
+
+  def __init__(self, make: Callable[[], V]):
     self._make = make
-    self._value = None
+    self._value: V | None = None
 
-  def get(self):
+  def get(self) -> V:
     if self._value is None:
       self._value = self._make()
     return self._value
@@ -40,8 +52,8 @@ def chevron_glyph(rect: rl.Rectangle, color: rl.Color, size: float) -> None:
   draw.chevron(rect, color, size)
 
 
-def driving_hub(window) -> Widget:
-  """window provides store, live, push and pop."""
+def driving_hub(window: SettingsWindow) -> Widget:
+  """The Driving tab's hub: its tiles, and the pages each opens. window provides store, live, push and pop."""
   store, live = window.store, window.live
   speed = SpeedSteering(store)
   profile = VehicleProfile(store)
@@ -67,7 +79,10 @@ def driving_hub(window) -> Widget:
     """Where to? over the settings window; its Offline maps button closes it and opens ours."""
     from openpilot.system.ui.lib.application import gui_app
     from openpilot.selfdrive.ui.tandem.destinations import destinations_screen
-    gui_app.push_widget(destinations_screen(gui_app.pop_widget, lambda: (gui_app.pop_widget(), open_maps())))
+    def maps_instead() -> None:
+      gui_app.pop_widget()
+      open_maps()
+    gui_app.push_widget(destinations_screen(gui_app.pop_widget, maps_instead))
 
   def open_mapbox_help() -> None:
     from openpilot.selfdrive.ui.tandem.mapbox_help import mapbox_key_sheet
@@ -76,7 +91,7 @@ def driving_hub(window) -> Widget:
   def tuner() -> bool:
     return TUNER_MODE.is_on(store)
 
-  def set_bundle(bundle, on: bool) -> None:
+  def set_bundle(bundle: Bundle, on: bool) -> None:
     bundle.set(store, on)
     if bundle is TUNER_MODE and on:
       open_tuner()
@@ -115,12 +130,12 @@ def driving_hub(window) -> Widget:
     return store.get_str("CarModelName") or N_("Detected on the first drive")
 
   strip = Strip(N_("POWER USER"), N_("Extra detail and fine tuning, each behind one switch"), [
-    ToggleButton(b.name, lambda b=b: b.is_on(store), lambda on, b=b: set_bundle(b, on)) for b in BUNDLES])
+    ToggleButton(b.name, partial(b.is_on, store), partial(set_bundle, b)) for b in BUNDLES])
 
   def open_search() -> None:
     from openpilot.selfdrive.ui.tandem.settings.search import SettingsSearch
 
-    def pick(entry) -> None:
+    def pick(entry: Entry) -> None:
       window.dismiss()
       window.open_at(entry.tab, entry.page, entry.section)
     window.present(SettingsSearch(tuner, pick, window.dismiss, ram=lambda: bool(window.ram_log().snapshots())))

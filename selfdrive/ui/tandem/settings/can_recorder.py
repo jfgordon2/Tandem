@@ -1,5 +1,7 @@
 """A passive diagnostic page built from the shared settings panels and buttons."""
 from __future__ import annotations
+from collections.abc import Callable
+from typing import TYPE_CHECKING
 
 from openpilot.selfdrive.ui.tandem import tokens as T
 from openpilot.selfdrive.ui.tandem.base import Component
@@ -9,6 +11,10 @@ from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, Padded, Text
 from openpilot.selfdrive.ui.tandem.settings.pages import TitledPage
 from openpilot.starpilot.tandem.can_recorder import ACTIVE, CanRecorder, boot_time_ns
+
+if TYPE_CHECKING:
+  import pyray as rl
+  from openpilot.starpilot.tandem.can_recorder import CanRecorder
 
 PHASES = {"idle": N_("Ready"), "starting": N_("Starting…"), "recording": N_("Recording"),
           "saving": N_("Saving…"), "saved": N_("Saved"), "error": N_("Error"),
@@ -27,9 +33,10 @@ def duration(ns: int) -> str:
 
 
 class CanRecorderPage(Component):
+  """Device › Developer › CAN test recorder: start, mark and stop a logged test drive."""
   grow_touch_target = False
 
-  def __init__(self, recorder=None, allowed=recording_allowed, clock_ns=boot_time_ns):
+  def __init__(self, recorder: CanRecorder | None = None, allowed: Callable[[], bool] = recording_allowed, clock_ns: Callable[[], int] = boot_time_ns) -> None:
     super().__init__()
     self.recorder = recorder if recorder is not None else CanRecorder()
     self._allowed, self._clock_ns = allowed, clock_ns
@@ -41,7 +48,7 @@ class CanRecorderPage(Component):
     self._start.set_enabled(lambda: self.state.phase not in ACTIVE and self.state.reason not in {"delete", "obd_restore"} and self._allowed())
     self._stop = Button(N_("Stop logging"), self.recorder.stop, height=T.px(56), font_size=T.font_px(19), radius=T.px(14))
     self._stop.set_enabled(lambda: self.state.phase in {"starting", "recording"})
-    self._abort = Button(N_("Abort"), self.recorder.abort, ButtonStyle.DANGER_SOFT,
+    self._abort = Button(N_("Abort"), self.abort, ButtonStyle.DANGER_SOFT,
                          height=T.px(44), font_size=T.font_px(16), radius=T.px(14))
     self._abort.set_enabled(lambda: bool(self.state.session) and self.state.phase != "aborting")
     self._mark_lock = self._marker(N_("Mark lock"), "lock")
@@ -70,25 +77,31 @@ class CanRecorderPage(Component):
       header_control=Badge(lambda: PHASES[self.state.phase], lambda: Tone.DANGER if self.state.phase == "error" else Tone.ACCENT))
     self._page = self._child(TitledPage(N_("CAN test recorder"), N_("Device › Developer"), Columns([controls, status], [1.25, 1])))
 
-  def _marker(self, title, kind):
-    button = Button(title, lambda: self.recorder.mark(kind), ButtonStyle.PRIMARY, height=T.px(88), font_size=T.font_px(22),
+  def _marker(self, title: str, kind: str) -> Button:
+    def mark() -> None:
+      self.recorder.mark(kind)
+    button = Button(title, mark, ButtonStyle.PRIMARY, height=T.px(88), font_size=T.font_px(22),
                     radius=T.px(14), weight=T.FONT_EXTRABOLD)
     button.set_enabled(lambda: self.state.phase == "recording")
     return button
 
-  def start(self):
+  def abort(self) -> None:
+    self.recorder.abort()
+
+  def start(self) -> None:
     if self._allowed():
       self.recorder.start(obd=self._obd)
 
-  def set_input(self, index):
+  def set_input(self, index: int) -> None:
     if self.state.phase not in ACTIVE:
       self._obd = bool(index)
 
-  def elapsed(self):
+  def elapsed(self) -> str:
     end = self.state.ended_ns or self._clock_ns()
     return duration(end-self.state.started_ns) if self.state.session else "00:00.000"
 
-  def detail(self):
+  def detail(self) -> str:
+    """The page's explanation of the recorder's state: what went wrong, or what to do next."""
     if self.state.phase == "discarded":
       return N_("Test discarded. Start a new test.")
     if self.state.phase == "error":
@@ -118,12 +131,12 @@ class CanRecorderPage(Component):
       return N_("Waiting for CAN traffic. Some channels sleep with the car off.")
     return N_("No markers yet.") if self._allowed() else N_("Park the car to start a test.")
 
-  def _update_state(self):
+  def _update_state(self) -> None:
     self.state = self.recorder.snapshot()
 
-  def hide_event(self):
+  def hide_event(self) -> None:
     self.recorder.stop("screen_closed")
     super().hide_event()
 
-  def _render(self, rect):
+  def _render(self, rect: rl.Rectangle) -> None:
     self._page.render(rect)

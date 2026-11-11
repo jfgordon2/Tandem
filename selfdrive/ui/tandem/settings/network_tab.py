@@ -6,6 +6,8 @@ so this screen only decides what to show. Tests pass an object with the same met
 from __future__ import annotations
 
 from collections.abc import Callable
+from typing import Any, TYPE_CHECKING, cast
+from collections.abc import Sequence
 
 import pyray as rl
 
@@ -15,7 +17,14 @@ from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, StatusBa
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, SettingRow, Text
 from openpilot.selfdrive.ui.tandem.settings.model import Rebuilding
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
+from openpilot.system.ui.widgets import Widget
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_
+
+if TYPE_CHECKING:
+  from openpilot.system.ui.lib.wifi_manager import MeteredType
+  from openpilot.system.ui.lib.wifi_manager import Network as WifiNetwork
+  from openpilot.starpilot.tandem.cellular import Monitor
+  from openpilot.starpilot.tandem.wifi import WifiManager
 
 MIN_PASSWORD = 8
 OPEN, UNSUPPORTED = 0, 4      # upstream SecurityType values
@@ -37,7 +46,9 @@ def ask_text(title: str, subtitle: str, current: str, on_done: Callable[[str], N
 
 
 class Network:
-  def __init__(self, wifi, store: SettingsStore, ask: Callable = ask_text, cellular=None):
+  """Connections › Wi-Fi and Cellular: networks, the hotspot, roaming and APN, and Save Data."""
+
+  def __init__(self, wifi: WifiManager, store: SettingsStore, ask: Callable = ask_text, cellular: Monitor | None = None) -> None:
     self.wifi = wifi
     self._store = store
     self._ask = ask
@@ -64,7 +75,8 @@ class Network:
     ip = self.wifi.ipv4_address if status == "Connected" else ""
     return f"{status} · {ip}" if ip else status
 
-  def choose(self, network) -> None:
+  def choose(self, network: WifiNetwork) -> None:
+    """Connects to a network: at once when it's saved or open, else after asking for its password."""
     if network.security_type == UNSUPPORTED or self.wifi.connected_ssid == network.ssid:
       return
     if self.wifi.is_connection_saved(network.ssid):
@@ -92,7 +104,7 @@ class Network:
 
   @property
   def hotspot(self) -> bool:
-    return self.wifi.is_tethering_active()
+    return bool(self.wifi.is_tethering_active())
 
   def set_hotspot(self, on: bool) -> None:
     self.wifi.set_tethering_active(on)
@@ -102,6 +114,7 @@ class Network:
     return t_("{} · Couldn't save", name) if self.wifi.tethering_name_failed else name
 
   def edit_hotspot_name(self) -> None:
+    """Asks for a new hotspot name, checks it, and saves it."""
     from openpilot.starpilot.tandem.wifi import name_problem
 
     def ask(current: str, subtitle: str) -> None:
@@ -110,7 +123,7 @@ class Network:
     def done(name: str) -> None:
       problem = name_problem(name)
       error = {"empty": N_("Enter a hotspot name"), "long": N_("Name is too long. Use a shorter name."),
-               "control": N_("Use letters, numbers, spaces or punctuation")}.get(problem, "")
+               "control": N_("Use letters, numbers, spaces or punctuation")}.get(problem or "", "")
       if name != self.wifi.tethering_ssid and self.wifi.is_connection_saved(name):
         error = N_("A saved network already uses this name")
       if error:
@@ -132,7 +145,7 @@ class Network:
     self._store.write({"GsmMetered": on})
     self._apply_gsm()
     if self.wifi.connected_ssid:
-      self.wifi.set_current_network_metered(METERED_YES if on else METERED_NO)
+      self.wifi.set_current_network_metered(cast("MeteredType", METERED_YES if on else METERED_NO))
 
   @property
   def roaming(self) -> bool:
@@ -169,7 +182,8 @@ class Network:
   def cellular_tone(self) -> Tone:
     return CELLULAR_TONES.get(self.cellular.status().code, Tone.WARNING)
 
-  def cellular_meta(self, main=False) -> str:
+  def cellular_meta(self, main: bool = False) -> str:
+    """The cellular panel's line: the technology and signal, or why there's no service."""
     status = self.cellular.status()
     if status.code == "checking" or status.observation is None:
       return N_("Reading cellular status")
@@ -182,7 +196,7 @@ class Network:
       if value.quality is not None:
         strength = SIGNAL_LABELS[min(3, value.quality // 25)]
         return t_("{} · {}", value.technology, strength)
-      return value.technology
+      return str(value.technology)
     if status.code == "connecting" and value.technology:
       return t_("SIM detected · {}", value.technology)
     return N_("SIM detected")
@@ -190,7 +204,7 @@ class Network:
   def cellular_note(self) -> str:
     return CELLULAR_NOTES[self.cellular.status().code]
 
-  def cellular_note_color(self):
+  def cellular_note_color(self) -> rl.Color:
     return {Tone.SUCCESS: T.SUCCESS_TEXT, Tone.ACCENT: T.ACCENT_TEXT, Tone.NEUTRAL: T.TEXT_TERTIARY}.get(
       self.cellular_tone(), T.WARNING)
 
@@ -198,7 +212,7 @@ class Network:
     status = self.cellular.status()
     if status.code == "checking":
       return N_("Checking…")
-    if status.code == "connected":
+    if status.code == "connected" and status.observation is not None:
       return status.observation.address or N_("Not available")
     return N_("Not connected")
 
@@ -221,20 +235,20 @@ SIGNAL_LABELS = [N_("Poor signal"), N_("Moderate signal"), N_("Good signal"), N_
 class CellularPanel(ListPanel):
   """Collect modem state only while this panel is visible, including after APN editing."""
 
-  def __init__(self, model, items, *, main=False, **kwargs):
+  def __init__(self, model: Network, items: Sequence[Widget], *, main: bool = False, **kwargs: Any) -> None:
     self.model = model
     super().__init__(items, subtitle=lambda: model.cellular_meta(main),
                      header_control=StatusBadge(model.cellular_label, model.cellular_tone), **kwargs)
 
-  def show_event(self):
+  def show_event(self) -> None:
     self.model.cellular.set_active(True, self.model.apn())
     super().show_event()
 
-  def hide_event(self):
+  def hide_event(self) -> None:
     super().hide_event()
     self.model.cellular.set_active(False)
 
-  def _update_state(self):
+  def _update_state(self) -> None:
     self.model.tick()
 
 
@@ -254,7 +268,7 @@ class SignalGlyph(Component):
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return T.px(28), T.px(28)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     bars = _strength_bars(self._strength())
     center = rl.Vector2(rect.x + rect.width / 2, rect.y + rect.height * 0.85)
     for i in range(3):
@@ -265,7 +279,8 @@ class SignalGlyph(Component):
 
 
 def wifi_panel(model: Network) -> Component:
-  def network_row(network) -> SettingRow:
+  """Connections › Wi-Fi: the connected network on top, then the rest, each with Forget."""
+  def network_row(network: WifiNetwork) -> SettingRow:
     secured = network.security_type != OPEN
     forget = Button(N_("Forget"), lambda: model.forget(network.ssid), ButtonStyle.GHOST)
     forget.set_visible(lambda: model.wifi.is_connection_saved(network.ssid))
@@ -277,13 +292,14 @@ def wifi_panel(model: Network) -> Component:
 
   def build() -> ListPanel:
     networks = model.networks()
-    rows = [network_row(n) for n in networks] or [Text(N_("Scanning for networks…"))]
+    rows: list[Widget] = [network_row(n) for n in networks] or [Text(N_("Scanning for networks…"))]
     return ListPanel(rows, title=N_("Wi-Fi"), bottom=SettingRow(N_("Join a hidden network"), None, on_click=model.join_hidden))
 
   return Rebuilding(lambda: tuple(n.ssid for n in model.networks()), build, model.tick)
 
 
 def cellular_panel(model: Network, open_advanced: Callable[[], None]) -> ListPanel:
+  """Connections › Cellular: status, roaming, APN and IP address, with Advanced."""
   hotspot = Switch(lambda: model.hotspot, model.set_hotspot)
   hotspot.set_enabled(lambda: not model.wifi.tethering_name_busy)
   edit_name = ValueButton(lambda: N_("Saving…") if model.wifi.tethering_name_busy else N_("Edit"), model.edit_hotspot_name)
@@ -308,7 +324,7 @@ def advanced_panel(model: Network) -> ListPanel:
   ], title=N_("Roaming, APN and IP address"), footnote=N_("Status updates automatically while this page is open."))
 
 
-def upstream_wifi():
+def upstream_wifi() -> WifiManager:
   from openpilot.starpilot.tandem.wifi import WifiManager
   wifi = WifiManager()
   wifi.set_active(False)

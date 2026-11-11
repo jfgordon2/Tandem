@@ -6,7 +6,7 @@ joystick debug, alpha longitudinal (only where the car offers it, with its warni
 from __future__ import annotations
 
 from collections.abc import Callable
-from typing import Protocol
+from typing import Protocol, TYPE_CHECKING
 
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Component
@@ -15,12 +15,19 @@ from openpilot.selfdrive.ui.tandem.rows import ListPanel, SettingRow
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 
+if TYPE_CHECKING:
+  import pyray as rl
+  from openpilot.system.ui.widgets import DialogResult
+  from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow
+
 ALPHA_WARNING = N_("openpilot longitudinal control is in alpha for this car and turns off Automatic Emergency Braking (AEB). " +
                    "The car's own cruise control is the default. Experimental mode is recommended with it. " +
                    "openpilot restarts if the car is on.")
 
 
 class DeveloperSource(Protocol):
+  """What Device › Developer needs from StarPilot: whether the car is offroad or engaged, alpha longitudinal, and SSH keys."""
+
   def offroad(self) -> bool: ...
   def engaged(self) -> bool: ...
   def alpha_available(self) -> bool: ...       # the car offers openpilot longitudinal in alpha
@@ -31,6 +38,8 @@ class DeveloperSource(Protocol):
 
 
 class Developer:
+  """Device › Developer: StarPilot's developer switches, SSH keys and UI debug, written to its params."""
+
   def __init__(self, store: SettingsStore, source: DeveloperSource):
     self.store = store
     self.source = source
@@ -57,6 +66,7 @@ class Developer:
     return self.store.get_str("GithubUsername") if self.store.get_str("GithubSshKeys") else ""
 
   def add_keys(self, username: str) -> None:
+    """Fetches username's SSH keys from GitHub in the background; fetching and error follow it."""
     if not username:
       return
     self.fetching, self.error = True, ""
@@ -75,22 +85,23 @@ class DeveloperPage(Component):
   """The panel, ticking the source so a finished key fetch lands on the UI thread."""
   grow_touch_target = False
 
-  def __init__(self, dev: Developer, window):
+  def __init__(self, dev: Developer, window: SettingsWindow) -> None:
     super().__init__()
     self._dev = dev
     self._panel = self._child(developer_panel(dev, window))
 
-  def _update_state(self):
+  def _update_state(self) -> None:
     self._dev.source.tick()
 
-  def _render(self, rect):
+  def _render(self, rect: rl.Rectangle) -> None:
     self._panel.render(rect)
 
 
-def developer_panel(dev: Developer, window) -> ListPanel:
+def developer_panel(dev: Developer, window: SettingsWindow) -> ListPanel:
+  """Device › Developer's panel: the switches, SSH keys, and the CAN test recorder."""
   recorder = None
 
-  def open_recorder():
+  def open_recorder() -> None:
     nonlocal recorder
     from openpilot.selfdrive.ui.tandem.settings.can_recorder import CanRecorderPage
     from openpilot.starpilot.tandem.can_recorder import CanRecorder
@@ -128,7 +139,7 @@ def developer_panel(dev: Developer, window) -> ListPanel:
     from openpilot.selfdrive.ui.tandem.overlays import Dialog
     from openpilot.system.ui.widgets import DialogResult
 
-    def done(result) -> None:
+    def done(result: DialogResult) -> None:
       window.dismiss()
       if result == DialogResult.CONFIRM:
         dev.set_alpha(True)
@@ -158,7 +169,7 @@ def developer_panel(dev: Developer, window) -> ListPanel:
 class UpstreamDeveloper:
   """DeveloperSource the way upstream's DeveloperLayout does it."""
 
-  def __init__(self):
+  def __init__(self) -> None:
     from openpilot.common.params import Params
     from openpilot.selfdrive.ui.widgets.ssh_key import SshKeyFetcher
     self._params = Params()

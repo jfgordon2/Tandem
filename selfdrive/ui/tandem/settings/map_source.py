@@ -3,21 +3,32 @@ from __future__ import annotations
 
 from dataclasses import replace
 import time
+from typing import Any, TYPE_CHECKING
 
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 from openpilot.starpilot.tandem.routing import bundles, catalog, maps as jobs
 
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.tandem.settings.maps import Progress, Region, UpstreamMaps
+
 
 class CombinedMaps:
-  def __init__(self, road):
+  """StarPilot's mapd download controller combined with Tandem's offline routing jobs, as one maps source.
+
+  Anything not overridden here goes to road (StarPilot's), so the maps page works with either.
+  """
+
+  def __init__(self, road: UpstreamMaps) -> None:
     self.road = road
     self._updated = -1.0
-    self.job, self.road_ready, self.route_ready = {}, set(), set()
+    self.job: dict = {}
+    self.road_ready: set[str] = set()
+    self.route_ready: set[str] = set()
     self.catalog = catalog.load()
-    self._plans = {}
+    self._plans: dict[str, tuple[list[dict], set[str]]] = {}
     self._routes_bytes = 0
 
-  def _plan(self, selection):
+  def _plan(self, selection: str) -> tuple[list[dict], set[str]]:
     # A national plan checks installed manifests. Keep that work out of the
     # 60 Hz drawing path; refresh it with the existing half-second snapshot.
     key = catalog.normalize_maps_selected(selection)
@@ -25,22 +36,23 @@ class CombinedMaps:
       self._plans[key] = catalog.plan(key, self.catalog)
     return self._plans[key]
 
-  def __getattr__(self, name):
+  def __getattr__(self, name: str) -> Any:
     return getattr(self.road, name)
 
-  def selection(self):
+  def selection(self) -> str:
     return self.road._layout._params.get("MapsSelected", encoding="utf-8") or ""
 
-  def selection_summary(self):
+  def selection_summary(self) -> str:
     from openpilot.starpilot.common.maps_catalog import MAP_TOKEN_LABELS
     selected = catalog.tokens(self.selection())
     if not selected and self.catalog["schema"] == 2:
       return N_("None selected")
     if len(selected) == 1:
-      return next(MAP_TOKEN_LABELS.get(t, t) for t in selected)
+      return str(next(MAP_TOKEN_LABELS.get(t, t) for t in selected))
     return self.road.selection_summary()
 
-  def tick(self):
+  def tick(self) -> None:
+    """Refreshes the routing job, catalog and installed routing data, at most twice a second."""
     self.road.tick()
     if time.monotonic() - self._updated < .5:
       return
@@ -64,20 +76,20 @@ class CombinedMaps:
       if cache.selection_total_files(key) > 0 and cache.selection_updated_at(key):
         self.road_ready.update(catalog.tokens(key))
 
-  def refresh(self):
+  def refresh(self) -> None:
     self._updated = -1
     self.road.refresh()
     self.tick()
 
-  def expand(self, token):
+  def expand(self, token: str) -> set[str]:
     spec = self.road._m.REGIONAL_PACKAGES.get(token)
     return set(spec["tokens"]) if spec else catalog.tokens(token)
 
-  def regions(self, tab):
+  def regions(self, tab: int) -> list[Region]:
     names = {"pkg:midwest": N_("Midwest"), "pkg:west": N_("West"), "pkg:south": N_("South"), "pkg:northeast": N_("Northeast")}
     return [replace(region, name=names.get(region.token, region.name)) for region in self.road.regions(tab)]
 
-  def region_status(self, token):
+  def region_status(self, token: str) -> tuple[str, str]:
     selected = self.expand(token)
     ready = bool(selected) and selected <= self.route_ready
     available = set(self.catalog.get("dataset", {}).get("regions", {}))
@@ -85,7 +97,8 @@ class CombinedMaps:
     return (N_("Road data ready") if selected <= self.road_ready else N_("Not downloaded"),
             N_("Routes ready") if ready else N_("Routes not downloaded") if selected and selected <= available else N_("Routes not available yet"))
 
-  def summary(self):
+  def summary(self) -> dict:
+    """The maps page's summary: road data and routes for the selection, and a note on coverage."""
     selected = catalog.tokens(self.selection())
     packages, missing = self._plan(self.selection())
     clear = self.can_clear()
@@ -103,20 +116,21 @@ class CombinedMaps:
       "available": not missing,
     }
 
-  def downloaded(self):
+  def downloaded(self) -> bool:
     return self.road.downloaded() or bool(self.route_ready)
 
-  def can_clear(self):
+  def can_clear(self) -> bool:
     return (self.catalog["schema"] == 2 and not catalog.tokens(self.selection()) and (bool(self.route_ready) or self.road.downloaded())
             and not jobs.running())
 
-  def status(self):
+  def status(self) -> str:
     selected = catalog.tokens(self.selection())
     if selected and selected <= self.road_ready and selected <= self.route_ready:
       return N_("All maps ready")
     return self.summary()["note"] if selected else N_("Choose where you drive")
 
-  def progress(self):
+  def progress(self) -> Progress:
+    """Download progress across both jobs: the paired road-and-routes download, road data alone, or routes alone."""
     from openpilot.selfdrive.ui.tandem.settings.maps import Progress, RegionProgress
     road = self.road.progress()
     job = self.job
@@ -125,11 +139,11 @@ class CombinedMaps:
     if job.get("phase") == "cancelled":
       return replace(road, phase="road" if road.active else "", unit="files")
     if job.get("paired") and job.get("phase") in jobs.ACTIVE | {"failed", "ready"}:
-      selected = sorted(catalog.tokens(job["selection"]))
+      ordered = sorted(catalog.tokens(job["selection"]))
       phase = job["phase"]
       counters = job.get("region_progress", {})
       regions = tuple(RegionProgress(token, counters.get(token, {}).get("done", 0), counters.get(token, {}).get("total", 1000),
-                                     phase == "ready", counters.get(token, {}).get("downloaded", False)) for token in selected)
+                                     phase == "ready", counters.get(token, {}).get("downloaded", False)) for token in ordered)
       note = N_("Maps download one region at a time.") if phase == "download" else \
         N_("All selected regions are installed together.") if phase == "install" else \
         N_("All selected regions are ready.") if phase == "ready" else ""
@@ -166,7 +180,7 @@ class CombinedMaps:
                     phase=phase, unit="bytes", error=job.get("error", ""), paused=job.get("paused", False),
                     note=note, current_regions=tuple(current), stage=job.get("stage", ""))
 
-  def download(self):
+  def download(self) -> None:
     selected = catalog.tokens(self.selection())
     routing_update = (bool(selected) and not selected <= self.route_ready) or (self.catalog["schema"] == 2 and selected != self.route_ready)
     if self.can_clear() or selected <= self.road_ready and routing_update:
@@ -175,27 +189,28 @@ class CombinedMaps:
       self.road.download()  # existing scheduler hook starts the shared job
     self._updated = -1
 
-  def retry(self):
+  def retry(self) -> None:
     jobs.request(self.job.get("selection", self.selection()), wait_for_road=not self.job.get("road_ready", False))
     if not self.job.get("road_ready", False):
       self.road.download()
     self._updated = -1
 
-  def cancel(self):
+  def cancel(self) -> None:
     jobs.cancel()
     if self.road.progress().active:
       self.road.cancel()
 
-  def checks(self):
+  def checks(self) -> list[tuple[str, bool]]:
     from openpilot.selfdrive.ui.ui_state import ui_state
     from cereal import log
     wifi = ui_state.sm.valid.get("deviceState", False) and ui_state.sm["deviceState"].networkType == log.DeviceState.NetworkType.wifi
     return [(name, value) for name, value in self.road.checks() if name != "Online"] + [(N_("Wi-Fi"), bool(wifi))]
 
-  def routes_size(self):
+  def routes_size(self) -> float:
     return self._routes_bytes
 
-  def download_label(self):
+  def download_label(self) -> str:
+    """The download button's label for the selection: what it would download, and how much."""
     selected = catalog.tokens(self.selection())
     packages, missing = self._plan(self.selection())
     if self.can_clear():
