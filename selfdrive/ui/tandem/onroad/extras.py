@@ -44,7 +44,8 @@ RADAR_TEXTURE_CENTER = 11.0   # StarPilot's marker texture is 22 px square
 # ── Turn signal ──
 
 # StarPilot's signal animations Essentials offers as Whimsy, by SignalAnimation slug. Its renderer draws them (view.py).
-WHIMSY_SIGNALS = {"frog": N_("Jumping frog"), "pouncing_cat": N_("Pouncing cat"), "bouncing_ball": N_("Bouncing ball")}
+WHIMSY_SIGNALS = {"frog": N_("Jumping frog"), "pouncing_cat": N_("Pouncing cat"), "bouncing_ball": N_("Bouncing ball"),
+                  "unicorn_rider": N_("Unicorn rider")}
 SIGNAL_GAP = T.px(12)   # between an animation and the bar
 
 

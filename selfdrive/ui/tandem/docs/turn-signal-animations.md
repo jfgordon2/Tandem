@@ -1,8 +1,8 @@
 # Turn-signal animations
 
-Essentials uses its built-in chevrons and offers Frog, Pouncing Cat and Bouncing Ball under Driving > Display > Whimsy. The full bundled catalog is also available through Galaxy's `SignalAnimation` endpoint. The upstream large and small screen settings retain StarPilot's original controls.
+Essentials uses its built-in chevrons and offers Frog, Pouncing Cat, Bouncing Ball and Unicorn Rider under Driving > Display > Whimsy. The full bundled catalog is also available through Galaxy's `SignalAnimation` endpoint. The upstream large and small screen settings retain StarPilot's original controls.
 
-`starpilot/tandem/signals.py` owns the eight-pack catalog, selection validation, effective selection and Galaxy settings catalog entry. Selecting a non-stock pack enables Custom Themes and disables Random Themes, preserving the other saved theme choices. Holiday themes can override the selection. Simple Mode disables custom animations.
+`starpilot/tandem/signals.py` owns the nine-pack catalog, selection validation, effective selection and Galaxy settings catalog entry. Selecting a non-stock pack enables Custom Themes and disables Random Themes, preserving the other saved theme choices. Holiday themes can override the selection. Simple Mode disables custom animations.
 
 | Pack | Frames | Timing | Style |
 | --- | ---: | ---: | --- |
@@ -10,16 +10,17 @@ Essentials uses its built-in chevrons and offers Frog, Pouncing Cat and Bouncing
 | Pouncing Cat | 6 | 125 ms | Travelling |
 | Shooting Star | 6 | 125 ms | Travelling |
 | Bouncing Ball | 40 | 75 ms | Travelling |
+| Unicorn Rider | 20 | 60 ms | Travelling |
 | Sequential | 6 | 125 ms | Static |
 | Flow, Open Flow, Glide | 12 each | 62 ms | Static |
 
 The owned renderer is `selfdrive/ui/tandem/onroad/turn_signals.py`. It reads the blinkers and blind-spot state without requiring engagement or openpilot longitudinal control. Right turns mirror the frames; hazards draw both directions. Full-screen alerts suppress animations; smaller alerts reserve space below them.
 
-Frog stays in StarPilot's `starpilot/assets/holiday_themes/world_frog_day/signals/`. The other seven asset directories live in `selfdrive/ui/tandem/assets/signal_packs/`. The theme manager calls the owned installer at boot to copy them into normal theme packs. The renderer can use bundled frames immediately while theme activation catches up, then prefers the installed copy. Installed PNG packs use numbered frames, an optional `turn_signal_blindspot.png` and `traditional_<milliseconds>` or `static_<milliseconds>` timing markers. GIF-only packs are unsupported.
+Frog stays in StarPilot's `starpilot/assets/holiday_themes/world_frog_day/signals/`. The other eight asset directories live in `selfdrive/ui/tandem/assets/signal_packs/`. The theme manager calls the owned installer at boot to copy them into normal theme packs. The renderer can use bundled frames immediately while theme activation catches up, then prefers the installed copy. Installed PNG packs use numbered frames, an optional `turn_signal_blindspot.png` and `traditional_<milliseconds>` or `static_<milliseconds>` timing markers. GIF-only packs are unsupported.
 
 To add a bundled pack, add its signals directory and metadata in `starpilot/tandem/signals.py`. The renderer and Galaxy derive their catalogs from that module. Update the owned settings picker if it should also appear in Whimsy, its search entry and its mock first.
 
-The asset generators live in `selfdrive/ui/tandem/tools/`: `make_pouncing_cat_signals.py`, `make_shooting_star_signals.py`, `make_sequential_signals.py`, `make_motion_signals.py` and `make_bouncing_ball_signals.py`. Running a generator needs CairoSVG; the runtime renderer does not. Indicator asset geometry is covered by `tests/test_turn_signals.py`.
+The asset generators live in `selfdrive/ui/tandem/tools/`: `make_pouncing_cat_signals.py`, `make_shooting_star_signals.py`, `make_sequential_signals.py`, `make_motion_signals.py`, `make_bouncing_ball_signals.py` and `make_unicorn_rider_signals.py`. Running a generator needs CairoSVG; the runtime renderer does not. Indicator asset geometry is covered by `tests/test_turn_signals.py`.
 
 ## Previewing the assets
 

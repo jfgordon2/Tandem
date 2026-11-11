@@ -384,6 +384,8 @@ BUNDLED_LAYOUTS = {
   "glide": ("static_62", 12, (350, 170)),
   # full screen height so the ball can drop in from the top; narrow because the renderer moves it
   "bouncing_ball": ("traditional_75", 40, (64, 1080)),
+  # a gallop the renderer carries across one frame position at a time, so many short frames
+  "unicorn_rider": ("traditional_60", 20, (350, 500)),
 }
 STATIC_PACKS = ["sequential", "flow", "open_flow", "glide"]
 

@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
-"""Draw "Unicorn Rider" turn-signal frames (350x500, facing left, transparent): a unicorn with a rainbow mane riding a
-galloping triceratops. A four-pose gallop repeats while the renderer carries the frames across the road; the
-blind-spot frame is the pair skidding to a stop in red.
+"""Draw the bundled "Unicorn Rider" turn-signal frames (350x500, facing left, transparent): a unicorn with a rainbow mane
+riding a galloping triceratops (design/signalunicorn.html).
 
-Dev-only dependency: pip install cairosvg
+A four-pose gallop repeats five times while the renderer carries the frames across the road, which it does one frame
+position at a time, so a walking animal needs many frames: 20 at 60 ms crosses in 1.2 s. The raylib renderer mirrors
+them for right turns; the blind-spot image is the pair skidding to a stop in red.
+
+Dev-only dependency: pip install cairosvg. Where the cairo library isn't installed, set CHROME to a headless Chromium
+(e.g. Playwright's chrome-headless-shell) and it renders the frames instead.
 Usage: python selfdrive/ui/tandem/tools/make_unicorn_rider_signals.py [output_dir]
 """
 import math
@@ -11,6 +15,7 @@ import sys
 from pathlib import Path
 
 W, H = 350, 500
+DEFAULT_OUT = Path(__file__).resolve().parents[1] / "assets/signal_packs/unicorn_rider/signals"
 FRAMES = 20          # five gallops across the road
 FRAME_MS = 60        # 1.2 s from one side to the other
 GROUND = 488
@@ -37,7 +42,7 @@ def line(points, color, width, extra=""):
 
 def curve(p0, p1, p2, color, width, extra=""):
   return (f'<path d="M{f(p0[0])},{f(p0[1])} Q{f(p1[0])},{f(p1[1])} {f(p2[0])},{f(p2[1])}" fill="none" stroke="{color}" '
-          f'stroke-width="{width}" stroke-linecap="round" {extra}/>')
+          + f'stroke-width="{width}" stroke-linecap="round" {extra}/>')
 
 
 def leg(hip, angle, length, color, c, width=34):
@@ -61,7 +66,7 @@ def dino(dx, dy, pose, c, alarm):
   # tail
   g += f'<path d="M282,372 Q336,382 348,428 Q318,412 276,412 Z" fill="{c["body"]}"/>'
   # body, belly and back spots
-  g += f'<clipPath id="dbody"><ellipse cx="208" cy="392" rx="98" ry="60"/></clipPath>'
+  g += '<clipPath id="dbody"><ellipse cx="208" cy="392" rx="98" ry="60"/></clipPath>'
   g += f'<ellipse cx="208" cy="392" rx="98" ry="60" fill="{c["body"]}"/>'
   g += f'<g clip-path="url(#dbody)"><ellipse cx="204" cy="446" rx="92" ry="34" fill="{c["belly"]}"/>'
   g += f'<ellipse cx="216" cy="350" rx="80" ry="14" fill="{c["shade"]}" opacity="0.7"/></g>'
@@ -112,7 +117,7 @@ def strands(origin, length, wave, colors, spread, droop, width=9):
 
 def cubic(p0, p1, p2, p3, color, width):
   return (f'<path d="M{f(p0[0])},{f(p0[1])} C{f(p1[0])},{f(p1[1])} {f(p2[0])},{f(p2[1])} {f(p3[0])},{f(p3[1])}" fill="none" '
-          f'stroke="{color}" stroke-width="{width}" stroke-linecap="round"/>')
+          + f'stroke="{color}" stroke-width="{width}" stroke-linecap="round"/>')
 
 
 def mane(poll, withers, wave, colors):
@@ -186,8 +191,8 @@ def unicorn(dx, dy, wave, c, colors, alarm):
 
 def sparkle(x, y, r, color, opacity):
   return (f'<path d="M{f(x)},{f(y - r)} Q{f(x + r * 0.18)},{f(y - r * 0.18)} {f(x + r)},{f(y)} Q{f(x + r * 0.18)},{f(y + r * 0.18)} '
-          f'{f(x)},{f(y + r)} Q{f(x - r * 0.18)},{f(y + r * 0.18)} {f(x - r)},{f(y)} Q{f(x - r * 0.18)},{f(y - r * 0.18)} {f(x)},{f(y - r)} Z" '
-          f'fill="{color}" opacity="{opacity:.2f}"/>')
+          + f'{f(x)},{f(y + r)} Q{f(x - r * 0.18)},{f(y + r * 0.18)} {f(x - r)},{f(y)} Q{f(x - r * 0.18)},{f(y - r * 0.18)} {f(x)},{f(y - r)} Z" '
+          + f'fill="{color}" opacity="{opacity:.2f}"/>')
 
 
 # Four gallop poses: (front far, rear far, front near, rear near) leg swings, and the bodies' bob.
@@ -241,7 +246,7 @@ def render(svg: str, target: Path) -> None:
 
 
 def main() -> None:
-  out = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).parent / "signals"
+  out = Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_OUT
   out.mkdir(parents=True, exist_ok=True)
   for old in out.glob("turn_signal_*.png"):
     old.unlink()

@@ -86,6 +86,13 @@
       "match": true
     },
     {
+      "mock": "signalunicorn",
+      "title": "Unicorn rider turn signal",
+      "built": ["signalpicker", "signal_unicorn_rider"],
+      "note": "Matches: the frames are the mock's own (tools/make_unicorn_rider_signals.py), crossing above the bar and mirrored for right turns; its Whimsy card shows a frame from the middle of the gallop, as the other cards do, where the mock shows the reaching pose.",
+      "match": true
+    },
+    {
       "mock": "alerts",
       "title": "Alerts",
       "note": "Matches: Volume and Chimes side by side. The presets add Auto. Chimes include Weather heads-up. Page ground uses true black (#000000).",

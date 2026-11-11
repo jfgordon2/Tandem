@@ -5,212 +5,212 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=(0);\n"
 "X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\n"
 
-#: controls.py:179
+#: controls.py:196
 msgid "On"
 msgstr "開啟"
 
-#: controls.py:179
-#: controls.py:182
-#: settings/device_sections.py:50
+#: controls.py:196
+#: controls.py:199
+#: settings/device_sections.py:60
 msgid "Off"
 msgstr "關閉"
 
-#: controls.py:276
+#: controls.py:302
 msgid "RECOMMENDED"
 msgstr "建議"
 
-#: controls.py:547
-#: settings/display.py:185
-#: settings/display.py:336
+#: controls.py:575
+#: settings/display.py:203
+#: settings/display.py:355
 msgid "Default"
 msgstr "預設"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: destinations.py:664
+#: destinations.py:677
 msgid "Road data still supplies speed limits"
 msgstr "Road data still supplies speed limits"
 
-#: destinations.py:386
-#: settings/search.py:288
+#: destinations.py:400
+#: settings/search.py:291
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:688
 msgid "Search"
 msgstr "搜尋"
 
-#: destinations.py:400
+#: destinations.py:414
 msgid "Offline maps"
 msgstr "離線地圖"
 
-#: destinations.py:529
-#: home.py:144
+#: destinations.py:543
+#: home.py:151
 msgid "Where to?"
 msgstr "要去哪裡？"
 
-#: destinations.py:168
+#: destinations.py:180
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:703
 msgid "Searching…"
 msgstr "正在搜尋…"
 
-#: destinations.py:168
+#: destinations.py:180
 msgid "Looking up places"
 msgstr "正在尋找地點"
 
-#: destinations.py:170
+#: destinations.py:182
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:713
 msgid "Search unavailable"
 msgstr "無法搜尋"
 
-#: destinations.py:172
+#: destinations.py:184
 msgid "Nothing found"
 msgstr "找不到結果"
 
-#: destinations.py:172
+#: destinations.py:184
 msgid "Try a different place or address"
 msgstr "請嘗試其他地點或地址"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: destinations.py:187
+#: destinations.py:200
 msgid "This saved place has no coordinates. Search again when online."
 msgstr "This saved place has no coordinates. Search again when online."
 
-#: destinations.py:387
+#: destinations.py:401
 msgid "Say a place or an address. Tap the mic when you're done."
 msgstr "請說出地點或地址，說完後點選麥克風。"
 
-#: destinations.py:423
+#: destinations.py:437
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:643
 msgid "Start"
 msgstr "開始"
 
-#: destinations.py:426
-#: settings/maps.py:256
-#: settings/maps.py:230
+#: destinations.py:440
+#: settings/maps.py:279
+#: settings/maps.py:252
 msgid "Choose regions"
 msgstr "選擇地區"
 
-#: destinations.py:536
+#: destinations.py:550
 msgid "Offline maps ready"
 msgstr "離線地圖已就緒"
 
-#: destinations.py:595
+#: destinations.py:608
 msgid "Search needs the public Mapbox key · see Settings › Driving › Speed & Steering › Navigation"
 msgstr "搜尋需要 Mapbox 公開金鑰 · 請前往設定 › 駕駛 › 速度與轉向 › 導航"
 
-#: destinations.py:652
+#: destinations.py:665
 msgid "Arrive"
 msgstr "抵達"
 
-#: destinations.py:652
+#: destinations.py:665
 msgid "Time"
 msgstr "時間"
 
-#: destinations.py:652
-#: settings/vehicle.py:228
-#: settings/vehicle.py:229
+#: destinations.py:665
+#: settings/vehicle.py:246
+#: settings/vehicle.py:247
 msgid "Distance"
 msgstr "距離"
 
-#: destinations.py:668
+#: destinations.py:681
 msgid "Slows ahead of turns on the route"
 msgstr "在路線彎道前減速"
 
-#: destinations.py:334
+#: destinations.py:348
 msgid "Search for a place or address"
 msgstr "搜尋地點或地址"
 
-#: destinations.py:403
+#: destinations.py:417
 msgid "Turns and speed follow the route automatically while navigating"
 msgstr "導航時自動依路線調整轉向與速度"
 
-#: destinations.py:558
+#: destinations.py:572
 msgid "RECENT"
 msgstr "最近"
 
-#: destinations.py:397
+#: destinations.py:411
 msgid "Add favorite"
 msgstr "新增收藏"
 
-#: destinations.py:397
+#: destinations.py:411
 msgid "Search for a place"
 msgstr "搜尋地點"
 
-#: destinations.py:551
+#: destinations.py:565
 msgid "ON A ROUTE"
 msgstr "正在導航"
 
-#: destinations.py:552
+#: destinations.py:566
 #, python-brace-format
 msgid "To {}"
 msgstr "前往{}"
 
-#: destinations.py:555
+#: destinations.py:569
 msgid "FAVORITES"
 msgstr "收藏"
 
-#: destinations.py:566
+#: destinations.py:579
 msgid "Places you navigate to show up here."
 msgstr "導航過的地點會顯示在這裡。"
 
-#: destinations.py:598
+#: destinations.py:611
 msgid "Type a place or address"
 msgstr "輸入地點或地址"
 
-#: destinations.py:598
+#: destinations.py:611
 #, python-brace-format
 msgid "Results show as you type, from {} letters"
 msgstr "輸入至少{}個字元後即時顯示結果"
 
-#: destinations.py:391
-#: settings/speed_steering.py:429
+#: destinations.py:405
+#: settings/speed_steering.py:445
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:778
 msgid "Home"
 msgstr "住家"
 
-#: destinations.py:391
+#: destinations.py:405
 msgid "Set Home"
 msgstr "設定住家地址"
 
-#: destinations.py:392
+#: destinations.py:406
 msgid "Search for your home address"
 msgstr "搜尋住家地址"
 
-#: destinations.py:394
-#: settings/speed_steering.py:430
+#: destinations.py:408
+#: settings/speed_steering.py:446
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:780
 msgid "Work"
 msgstr "公司"
 
-#: destinations.py:394
+#: destinations.py:408
 msgid "Set Work"
 msgstr "設定公司地址"
 
-#: destinations.py:395
+#: destinations.py:409
 msgid "Search for your work address"
 msgstr "搜尋公司地址"
 
-#: destinations.py:553
-#: onroad/layers.py:96
+#: destinations.py:567
+#: onroad/layers.py:97
 msgid "End route"
 msgstr "結束路線"
 
-#: drivercamera.py:18
+#: drivercamera.py:19
 msgid "Sit as you do to drive. The box should follow your face."
 msgstr "請以駕駛時的姿勢坐好，方框應跟隨您的臉部。"
 
-#: drivercamera.py:42
+#: drivercamera.py:53
 msgid "Face found · driver monitoring can see you"
 msgstr "已偵測到臉部 · 駕駛監控可看清您"
 
-#: drivercamera.py:42
+#: drivercamera.py:53
 msgid "Looking for your face"
 msgstr "正在尋找您的臉部"
 
-#: drivercamera.py:33
+#: drivercamera.py:44
 msgid "Starting the camera…"
 msgstr "正在啟動攝影機…"
 
 #: forecast.py:45
 #: forecast.py:45
-#: onroad/status.py:254
+#: onroad/status.py:272
 msgid "Fog"
 msgstr "霧"
 
@@ -231,14 +231,14 @@ msgid "Freezing drizzle"
 msgstr "凍毛毛雨"
 
 #: forecast.py:48
-#: onroad/status.py:251
-#: settings/speed_steering.py:239
+#: onroad/status.py:269
+#: settings/speed_steering.py:247
 msgid "Rain"
 msgstr "雨"
 
 #: forecast.py:48
 #: forecast.py:51
-#: onroad/status.py:252
+#: onroad/status.py:270
 msgid "Heavy rain"
 msgstr "大雨"
 
@@ -252,8 +252,8 @@ msgid "Light snow"
 msgstr "小雪"
 
 #: forecast.py:50
-#: onroad/status.py:253
-#: settings/speed_steering.py:241
+#: onroad/status.py:271
+#: settings/speed_steering.py:249
 msgid "Snow"
 msgstr "雪"
 
@@ -309,116 +309,116 @@ msgstr "局部多雲"
 msgid "Cloudy"
 msgstr "陰"
 
-#: forecast.py:182
+#: forecast.py:184
 #, python-brace-format
 msgid "{} in {} min"
 msgstr "{1}分鐘後{0}"
 
-#: forecast.py:183
-#: forecast.py:367
+#: forecast.py:185
+#: forecast.py:383
 #, python-brace-format
 msgid "{} until {}"
 msgstr "{}，持續至{}"
 
-#: forecast.py:373
+#: forecast.py:389
 msgid "No rain or snow ahead"
 msgstr "暫無雨雪預報"
 
-#: forecast.py:369
+#: forecast.py:385
 #, python-brace-format
 msgid "{} from {}"
 msgstr "{1}起{0}"
 
-#: forecast.py:369
+#: forecast.py:385
 #, python-brace-format
 msgid " to {}"
 msgstr "至{}"
 
-#: home.py:33
+#: home.py:40
 #, python-brace-format
 msgid "{} style · {} · {}"
 msgstr "{}風格 · {} · {}"
 
-#: home.py:32
-#: settings/speed_steering.py:134
+#: home.py:39
+#: settings/speed_steering.py:139
 msgid "Auto lane change"
 msgstr "自動變換車道"
 
-#: home.py:32
-#: settings/speed_steering.py:134
+#: home.py:39
+#: settings/speed_steering.py:139
 msgid "Nudge to change lanes"
 msgstr "輕推方向盤變換車道"
 
-#: home.py:40
+#: home.py:47
 msgid "READY"
 msgstr "就緒"
 
-#: home.py:39
+#: home.py:46
 msgid "NEEDS ATTENTION"
 msgstr "需要處理"
 
-#: home.py:39
+#: home.py:46
 #, python-brace-format
 msgid "Check {} alert"
 msgid_plural "Check {} alerts"
 msgstr[0] "查看{}則警報"
 
-#: home.py:40
+#: home.py:47
 msgid "Press cruise to engage"
 msgstr "按巡航按鈕啟用"
 
-#: home.py:40
+#: home.py:47
 msgid "Start the car to drive"
 msgstr "啟動車輛後即可駕駛"
 
-#: home.py:83
+#: home.py:90
 #, python-brace-format
 msgid "Forecast · updated {}"
 msgstr "預報 · 更新於{}"
 
-#: home.py:145
+#: home.py:152
 msgid "Notes"
 msgstr "說明"
 
-#: home.py:206
+#: home.py:214
 msgid "A new version"
 msgstr "新版本"
 
-#: home.py:144
+#: home.py:151
 msgid "Home · Work · Recent"
 msgstr "住家 · 公司 · 最近"
 
-#: home.py:199
+#: home.py:207
 msgid "Acknowledge excessive actuation"
 msgstr "確認過度控制警報"
 
-#: home.py:201
+#: home.py:207
 msgid "Snooze update"
 msgstr "延後更新"
 
-#: home.py:147
-#: home_alerts.py:158
+#: home.py:154
+#: home_alerts.py:159
 msgid "Update ready"
 msgstr "更新已就緒"
 
-#: home.py:147
-#: settings/search.py:24
-#: settings/search.py:219
+#: home.py:154
+#: settings/search.py:25
+#: settings/search.py:222
 msgid "Software"
 msgstr "軟體"
 
-#: home.py:148
+#: home.py:155
 msgid "Installs when you turn off the car"
 msgstr "關閉車輛時安裝"
 
-#: home.py:149
+#: home.py:156
 #, python-brace-format
 msgid "Up to date · {}"
 msgstr "已是最新 · {}"
 
-#: home.py:149
-#: settings/software_tab.py:66
-#: sidebar.py:158
+#: home.py:156
+#: settings/software_tab.py:74
+#: sidebar.py:164
 msgid "Up to date"
 msgstr "已是最新"
 
@@ -490,420 +490,424 @@ msgstr "駕駛攝影機視野不佳"
 msgid "Excessive actuation"
 msgstr "過度控制"
 
-#: home_alerts.py:180
+#: home_alerts.py:181
 msgid "It also installs on its own when you turn off the car."
 msgstr "關閉車輛時也會自動安裝。"
 
-#: home_alerts.py:159
+#: home_alerts.py:160
 msgid "Restart and update"
 msgstr "重新啟動並更新"
 
-#: home_alerts.py:123
+#: home_alerts.py:124
 #, python-brace-format
 msgid "{} alert"
 msgid_plural "{} alerts"
 msgstr[0] "{}則警報"
 
-#: home_alerts.py:124
+#: home_alerts.py:125
 msgid "openpilot may not start until these are sorted out"
 msgstr "解決這些問題後 openpilot 才可能啟動"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: keyboard.py:41
+#: keyboard.py:44
 msgid "ABC"
 msgstr "ABC"
 
-#: keyboard.py:41
+#: keyboard.py:44
 msgid "space"
 msgstr "空白"
 
-#: keyboard.py:126
-#: mapbox_help.py:87
+#: keyboard.py:129
+#: mapbox_help.py:91
 #: routing_status.py:9
 msgid "Done"
 msgstr "完成"
 
-#: keyboard.py:126
-#: voice.py:185
+#: keyboard.py:130
+#: voice.py:196
 msgid "Speak now. Tap the mic when you're done."
 msgstr "請開始說話，說完後點選麥克風。"
 
-#: keyboard.py:132
-#: overlays.py:163
-#: settings/bluetooth_tab.py:248
+#: keyboard.py:135
+#: overlays.py:174
+#: settings/bluetooth_tab.py:260
 msgid "Cancel"
 msgstr "取消"
 
-#: mapbox_help.py:20
+#: mapbox_help.py:24
 msgid "Settings › Driving › Speed & Steering › Navigation"
 msgstr "設定 › 駕駛 › 速度與轉向 › 導航"
 
-#: mapbox_help.py:57
+#: mapbox_help.py:61
 msgid "The keys stay on this device. Search and routes work as soon as they're saved."
 msgstr "金鑰只儲存在此裝置上。儲存後即可搜尋與規劃路線。"
 
-#: mapbox_help.py:23
+#: mapbox_help.py:27
 msgid "Make a Mapbox account"
 msgstr "建立 Mapbox 帳號"
 
-#: mapbox_help.py:23
+#: mapbox_help.py:27
 msgid "At account.mapbox.com. The free tier covers personal driving."
 msgstr "前往 account.mapbox.com。免費方案可滿足個人駕駛需求。"
 
-#: mapbox_help.py:24
+#: mapbox_help.py:28
 msgid "Get two keys"
 msgstr "取得兩個金鑰"
 
-#: mapbox_help.py:24
+#: mapbox_help.py:28
 msgid "Your default public token (pk.) is there already. Create a token, keep its public scopes, and also check DOWNLOADS:READ so it starts with sk."
 msgstr "預設公開權杖（pk.）已存在。建立權杖，保留公開權限，並勾選 DOWNLOADS:READ，讓它以 sk. 開頭。"
 
-#: mapbox_help.py:26
+#: mapbox_help.py:30
 msgid "Open Galaxy"
 msgstr "開啟 Galaxy"
 
-#: mapbox_help.py:26
+#: mapbox_help.py:30
 msgid "On this device: Device › This Device › Remote Access › Set Up, then open its link on your phone."
 msgstr "在此裝置上前往裝置 › 此裝置 › 遠端存取 › 設定，再用手機開啟連結。"
 
-#: mapbox_help.py:27
+#: mapbox_help.py:31
 msgid "Paste both keys"
 msgstr "貼上兩個金鑰"
 
-#: mapbox_help.py:27
+#: mapbox_help.py:31
 msgid "In Galaxy: Navigation & Maps › App Keys. The public key is for search, the secret one for routes."
 msgstr "在 Galaxy 中前往 Navigation & Maps › App Keys。公開金鑰用於搜尋，私密金鑰用於路線。"
 
-#: mapbox_help.py:51
+#: mapbox_help.py:55
 msgid "Not added · needed for place search and routes"
 msgstr "尚未新增 · 搜尋地點與規劃路線需要金鑰"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: mapbox_help.py:84
+#: mapbox_help.py:88
 msgid "Optional: online search and speed-limit filling"
 msgstr "Optional: online search and speed-limit filling"
 
-#: mapbox_help.py:85
+#: mapbox_help.py:89
 msgid "For place search, routes, and speed limits the maps don't have"
 msgstr "用於搜尋地點、規劃路線及取得地圖缺少的速限"
 
-#: mapbox_help.py:86
+#: mapbox_help.py:90
 msgid "Add Mapbox keys"
 msgstr "新增 Mapbox 金鑰"
 
-#: mapbox_help.py:46
+#: mapbox_help.py:50
 msgid "Added"
 msgstr "已新增"
 
-#: mapbox_help.py:48
+#: mapbox_help.py:52
 msgid "Public key only · routes need the secret key too"
 msgstr "只有公開金鑰 · 路線還需要私密金鑰"
 
-#: mapbox_help.py:50
+#: mapbox_help.py:54
 msgid "Secret key only · search needs the public key too"
 msgstr "只有私密金鑰 · 搜尋還需要公開金鑰"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
-#: onroad/developer.py:98
-#: onroad/developer.py:313
+#: onroad/developer.py:106
+#: onroad/developer.py:325
 msgid "idle"
 msgstr "待命"
 
-#: onroad/developer.py:99
-#: onroad/developer.py:163
+#: onroad/developer.py:107
+#: onroad/developer.py:171
 msgid "none"
 msgstr "無"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:104
+#: onroad/developer.py:112
 msgid "0.0 m/s²"
 msgstr "0.0 m/s²"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:105
+#: onroad/developer.py:113
 msgid "0.00 s"
 msgstr "0.00 s"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
-#: onroad/developer.py:56
+#: onroad/developer.py:62
 msgid "accel"
 msgstr "加速度"
 
-#: onroad/developer.py:56
+#: onroad/developer.py:62
 msgid "Acceleration now"
 msgstr "目前加速度"
 
 #. Requested acceleration, not a desire; short label in Developer View. Machine draft, needs native review.
-#: onroad/developer.py:57
+#: onroad/developer.py:63
 msgid "want"
 msgstr "目標"
 
-#: onroad/developer.py:57
+#: onroad/developer.py:63
 msgid "Acceleration openpilot asks for"
 msgstr "openpilot 要求的加速度"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
-#: onroad/developer.py:58
+#: onroad/developer.py:64
 msgid "jerk"
 msgstr "加加速度"
 
-#: onroad/developer.py:58
+#: onroad/developer.py:64
 msgid "Planned jerk"
 msgstr "規劃加加速度"
 
 #. Lateral acceleration, not latitude; short label in Developer View. Machine draft, needs native review.
-#: onroad/developer.py:59
+#: onroad/developer.py:65
 msgid "lat"
 msgstr "橫向"
 
-#: onroad/developer.py:59
+#: onroad/developer.py:65
 msgid "Lateral acceleration"
 msgstr "橫向加速度"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
-#: onroad/developer.py:60
+#: onroad/developer.py:66
 msgid "delay"
 msgstr "延遲"
 
-#: onroad/developer.py:60
+#: onroad/developer.py:66
 msgid "Steering delay"
 msgstr "轉向延遲"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
-#: onroad/developer.py:61
+#: onroad/developer.py:67
 msgid "steer"
 msgstr "轉向"
 
-#: onroad/developer.py:61
+#: onroad/developer.py:67
 msgid "Steering wheel angle"
 msgstr "方向盤角度"
 
-#: onroad/developer.py:62
+#: onroad/developer.py:68
 msgid "torque"
 msgstr "扭力"
 
-#: onroad/developer.py:62
+#: onroad/developer.py:68
 msgid "Steering torque used"
 msgstr "使用的轉向扭力"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
-#: onroad/developer.py:63
+#: onroad/developer.py:69
 msgid "danger"
 msgstr "風險"
 
-#: onroad/developer.py:63
+#: onroad/developer.py:69
 msgid "Following danger factor"
 msgstr "跟車風險係數"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
-#: onroad/developer.py:64
+#: onroad/developer.py:70
 msgid "ratio"
 msgstr "傳動比"
 
-#: onroad/developer.py:64
+#: onroad/developer.py:70
 msgid "Steer ratio"
 msgstr "轉向比"
 
-#: onroad/developer.py:158
+#: onroad/developer.py:166
 msgid "Lead"
 msgstr "前車"
 
-#: onroad/developer.py:186
+#: onroad/developer.py:194
 msgid "Controls"
 msgstr "控制"
 
-#: onroad/developer.py:187
+#: onroad/developer.py:195
 msgid "curve spd"
 msgstr "彎道速度"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:278
-#: onroad/extras.py:215
-#: onroad/lead.py:97
+#: onroad/developer.py:286
+#: onroad/extras.py:236
+#: onroad/lead.py:116
 #, python-brace-format
 msgid "{} m"
 msgstr "{} m"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:278
-#: onroad/extras.py:215
-#: onroad/lead.py:97
+#: onroad/developer.py:286
+#: onroad/extras.py:236
+#: onroad/lead.py:116
 #, python-brace-format
 msgid "{} ft"
 msgstr "{} ft"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:280
-#: onroad/developer.py:333
-#: onroad/lead.py:108
+#: onroad/developer.py:288
+#: onroad/developer.py:345
+#: onroad/lead.py:127
 #, python-brace-format
 msgid "{} s"
 msgstr "{} s"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:309
-#: settings/device_sections.py:301
+#: onroad/developer.py:321
+#: settings/device_sections.py:327
 #: settings/ram.py:30
 #, python-brace-format
 msgid "{} GB"
 msgstr "{} GB"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:331
+#: onroad/developer.py:343
 #, python-brace-format
 msgid "{} m/s²"
 msgstr "{} m/s²"
 
-#: onroad/developer.py:161
+#: onroad/developer.py:169
 msgid "distance"
 msgstr "距離"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
-#: onroad/developer.py:161
+#: onroad/developer.py:169
 msgid "gap"
 msgstr "時距"
 
-#: onroad/developer.py:162
+#: onroad/developer.py:170
 msgid "rel speed"
 msgstr "相對速度"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
-#: onroad/developer.py:163
+#: onroad/developer.py:171
 msgid "source"
 msgstr "來源"
 
-#: onroad/developer.py:173
-#: settings/search.py:24
-#: settings/window.py:44
+#: onroad/developer.py:181
+#: settings/search.py:25
+#: settings/window.py:59
 msgid "Device"
 msgstr "裝置"
 
-#: onroad/developer.py:189
+#: onroad/developer.py:197
 msgid "limit src"
 msgstr "速限來源"
 
-#: onroad/developer.py:191
+#: onroad/developer.py:199
 msgid "lanes L/R"
 msgstr "左/右車道"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
-#: onroad/developer.py:281
+#: onroad/developer.py:289
 msgid "radar"
 msgstr "雷達"
 
-#: onroad/developer.py:281
+#: onroad/developer.py:289
 msgid "vision"
 msgstr "視覺辨識"
 
-#: onroad/developer.py:313
+#: onroad/developer.py:325
 #, python-brace-format
 msgid "active · {} {}"
 msgstr "運作中 · {} {}"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: onroad/developer.py:185
+#: onroad/developer.py:193
 msgid "FPS"
 msgstr "FPS"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: onroad/developer.py:177
+#: onroad/developer.py:185
 msgid "CPU"
 msgstr "CPU"
 
-#: onroad/developer.py:177
+#: onroad/developer.py:185
 msgid "Temp"
 msgstr "溫度"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: onroad/developer.py:181
+#: onroad/developer.py:189
 msgid "GPU"
 msgstr "GPU"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: onroad/developer.py:183
+#: onroad/developer.py:191
 #: settings/ram.py:110
-#: settings/search.py:30
+#: settings/search.py:31
 msgid "RAM"
 msgstr "RAM"
 
-#: onroad/extras.py:42
+#: onroad/extras.py:47
 msgid "Jumping frog"
 msgstr "跳躍青蛙"
 
-#: onroad/extras.py:42
+#: onroad/extras.py:47
 msgid "Pouncing cat"
 msgstr "撲跳小貓"
 
-#: onroad/extras.py:42
+#: onroad/extras.py:47
 msgid "Bouncing ball"
 msgstr "彈跳小球"
 
-#: onroad/extras.py:148
+#: onroad/extras.py:48
+msgid "Unicorn rider"
+msgstr "獨角獸騎士"
+
+#: onroad/extras.py:168
 msgid "Loading model"
 msgstr "正在載入模型"
 
-#: onroad/extras.py:149
+#: onroad/extras.py:169
 msgid "Big model"
 msgstr "大型模型"
 
-#: onroad/extras.py:150
+#: onroad/extras.py:170
 msgid "Big model failed"
 msgstr "大型模型失敗"
 
-#: onroad/extras.py:151
+#: onroad/extras.py:171
 msgid "Small model in use"
 msgstr "正在使用小型模型"
 
-#: onroad/layers.py:432
+#: onroad/layers.py:451
 msgid "Help steer"
 msgstr "請協助轉向"
 
-#: onroad/layers.py:432
+#: onroad/layers.py:451
 msgid "Steering is at its limit for this curve"
 msgstr "轉向已達此彎道的極限"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: onroad/layers.py:145
+#: onroad/layers.py:146
 msgid "MAX"
 msgstr "MAX"
 
-#: onroad/layers.py:516
+#: onroad/layers.py:536
 #, python-brace-format
 msgid "New limit {}"
 msgstr "新速限{}"
 
-#: onroad/layers.py:517
+#: onroad/layers.py:537
 msgid "Slow down"
 msgstr "減速"
 
-#: onroad/layers.py:517
+#: onroad/layers.py:537
 msgid "Speed up"
 msgstr "加速"
 
-#: onroad/layers.py:518
+#: onroad/layers.py:538
 #, python-brace-format
 msgid "{} to {} {}?"
 msgstr "{}至{} {}？"
 
-#: onroad/layers.py:519
+#: onroad/layers.py:539
 #, python-brace-format
 msgid "From {} · ignored in {} s"
 msgstr "來源：{} · {}秒後忽略"
 
-#: onroad/layers.py:212
+#: onroad/layers.py:213
 msgid "ARRIVE"
 msgstr "抵達"
 
-#: onroad/layers.py:212
+#: onroad/layers.py:213
 msgid "LEFT"
 msgstr "剩餘"
 
-#: onroad/layers.py:489
-#: settings/speed_steering.py:15
+#: onroad/layers.py:509
+#: settings/speed_steering.py:20
 msgid "Match"
 msgstr "依速限調整"
 
-#: onroad/layers.py:491
+#: onroad/layers.py:511
 msgid "Ignore"
 msgstr "忽略"
 
@@ -923,152 +927,152 @@ msgstr "視覺辨識"
 msgid "Mapbox"
 msgstr "Mapbox"
 
-#: onroad/status.py:122
-#: onroad/status.py:127
+#: onroad/status.py:129
+#: onroad/status.py:134
 msgid "Stopped"
 msgstr "已停車"
 
-#: onroad/status.py:122
+#: onroad/status.py:129
 msgid "Stopping"
 msgstr "正在停車"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: onroad/status.py:171
-#: onroad/status.py:173
+#: onroad/status.py:189
+#: onroad/status.py:191
 msgid "Recalculating route"
 msgstr "Recalculating route"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: onroad/status.py:171
+#: onroad/status.py:189
 msgid "Finding route"
 msgstr "Finding route"
 
-#: onroad/status.py:96
-#: onroad/status.py:108
+#: onroad/status.py:103
+#: onroad/status.py:115
 msgid "Steering paused"
 msgstr "轉向已暫停"
 
-#: onroad/status.py:110
+#: onroad/status.py:117
 msgid "Speed control paused"
 msgstr "速度控制已暫停"
 
-#: onroad/status.py:115
+#: onroad/status.py:122
 msgid "Lane change blocked"
 msgstr "無法變換車道"
 
-#: onroad/status.py:120
-#: onroad/status.py:150
+#: onroad/status.py:127
+#: onroad/status.py:157
 msgid "Light is green"
 msgstr "綠燈已亮"
 
-#: onroad/status.py:129
+#: onroad/status.py:136
 msgid "Slowing for curve"
 msgstr "正為彎道減速"
 
-#: onroad/status.py:131
+#: onroad/status.py:138
 msgid "Slowing for turn"
 msgstr "正為轉彎減速"
 
-#: onroad/status.py:134
+#: onroad/status.py:141
 msgid "Turning left"
 msgstr "正在左轉"
 
-#: onroad/status.py:138
+#: onroad/status.py:145
 msgid "Slowing for traffic"
 msgstr "正因車流減速"
 
-#: onroad/status.py:140
+#: onroad/status.py:147
 #, python-brace-format
 msgid "Matching limit {}"
 msgstr "正依速限{}調整"
 
-#: onroad/status.py:142
+#: onroad/status.py:149
 msgid "Coasting"
 msgstr "正在滑行"
 
-#: onroad/status.py:148
+#: onroad/status.py:155
 #, python-brace-format
 msgid "{} · longer gap"
 msgstr "{} · 增加車距"
 
-#: onroad/status.py:152
+#: onroad/status.py:159
 msgid "Car ahead moved"
 msgstr "前車已起步"
 
-#: onroad/status.py:154
+#: onroad/status.py:161
 msgid "Ready · tap resume"
 msgstr "就緒 · 按恢復按鈕"
 
-#: onroad/status.py:156
+#: onroad/status.py:163
 msgid "Steering only"
 msgstr "僅控制轉向"
 
-#: onroad/status.py:162
+#: onroad/status.py:169
 #, python-brace-format
 msgid "Low on RAM · {}% used"
 msgstr "記憶體不足 · 已用 {}%"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: onroad/status.py:175
+#: onroad/status.py:193
 msgid "Waiting for GPS"
 msgstr "Waiting for GPS"
 
-#: onroad/status.py:117
+#: onroad/status.py:124
 #, python-brace-format
 msgid "Changing lanes {}"
 msgstr "正在向{}變換車道"
 
-#: onroad/status.py:124
+#: onroad/status.py:131
 #, python-brace-format
 msgid "{} for stop sign"
 msgstr "{}，前方為停車標誌"
 
-#: onroad/status.py:136
+#: onroad/status.py:143
 msgid "Turning right"
 msgstr "正在右轉"
 
-#: onroad/status.py:144
+#: onroad/status.py:151
 msgid "Pulse & glide · gliding"
 msgstr "加速與滑行 · 正在滑行"
 
-#: onroad/status.py:144
+#: onroad/status.py:151
 msgid "Pulse & glide"
 msgstr "加速與滑行"
 
-#: onroad/status.py:102
+#: onroad/status.py:109
 msgid "Steering paused for signal"
 msgstr "轉向因方向燈暫停"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: onroad/status.py:183
+#: onroad/status.py:201
 msgid "Using offline maps"
 msgstr "Using offline maps"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: onroad/status.py:183
+#: onroad/status.py:201
 msgid "Using online maps"
 msgstr "Using online maps"
 
-#: onroad/status.py:104
+#: onroad/status.py:111
 msgid "Steering paused after turn"
 msgstr "轉彎後轉向暫停"
 
-#: onroad/status.py:127
+#: onroad/status.py:134
 msgid "Stopping ahead"
 msgstr "前方即將停車"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: onroad/status.py:187
+#: onroad/status.py:205
 msgid "Offline maps unavailable"
 msgstr "Offline maps unavailable"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: onroad/status.py:187
+#: onroad/status.py:205
 #: routing_status.py:34
 msgid "Route unavailable"
 msgstr "Route unavailable"
 
-#: onroad/status.py:106
+#: onroad/status.py:113
 #, python-brace-format
 msgid "Steering paused · under {} {}"
 msgstr "轉向暫停 · 低於{} {}"
@@ -1214,24 +1218,24 @@ msgid "Byp"
 msgstr "Byp"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:610
+#: onroad/view.py:628
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:610
+#: onroad/view.py:628
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/view.py:611
+#: onroad/view.py:629
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{}分鐘 · {}"
 
 #: ram.py:44
-#: settings/window.py:258
+#: settings/window.py:294
 msgid "Driving model"
 msgstr "駕駛模型"
 
@@ -1284,8 +1288,8 @@ msgid "Drive logging"
 msgstr "行車紀錄"
 
 #: ram.py:57
-#: settings/device_sections.py:357
-#: settings/search.py:194
+#: settings/device_sections.py:384
+#: settings/search.py:197
 msgid "Uploads"
 msgstr "上傳"
 
@@ -1337,30 +1341,30 @@ msgstr "藍牙遙控器"
 msgid "Car connection"
 msgstr "車輛連線"
 
-#: routemap.py:154
+#: routemap.py:163
 #: routing_status.py:7
 #: routing_status.py:8
 msgid "Finding a route…"
 msgstr "正在尋找路線…"
 
-#: routemap.py:155
+#: routemap.py:164
 msgid "Needs a GPS fix to plan the route"
 msgstr "規劃路線需要 GPS 定位"
 
-#: routemap.py:156
+#: routemap.py:165
 msgid "Couldn't find a route. Check the connection."
 msgstr "找不到路線，請檢查連線。"
 
-#: routemap.py:157
+#: routemap.py:166
 msgid "Routes need the secret Mapbox key: see Settings › Driving › Speed & Steering › Navigation"
 msgstr "路線需要 Mapbox 私密金鑰：請前往設定 › 駕駛 › 速度與轉向 › 導航"
 
-#: routemap.py:50
+#: routemap.py:51
 #, python-brace-format
 msgid "{} min"
 msgstr "{}分鐘"
 
-#: routemap.py:50
+#: routemap.py:51
 #, python-brace-format
 msgid "{} h {} min"
 msgstr "{}小時{}分鐘"
@@ -1491,2876 +1495,2876 @@ msgstr "Online routing is unavailable"
 msgid "Routing is unavailable"
 msgstr "Routing is unavailable"
 
-#: settings/alerts.py:43
-#: settings/alerts.py:93
-#: settings/alerts.py:146
+#: settings/alerts.py:49
+#: settings/alerts.py:101
+#: settings/alerts.py:154
 msgid "Auto"
 msgstr "自動"
 
-#: settings/alerts.py:43
-#: settings/alerts.py:130
+#: settings/alerts.py:49
+#: settings/alerts.py:138
 msgid "Quiet"
 msgstr "低音量"
 
-#: settings/alerts.py:43
-#: settings/alerts.py:130
+#: settings/alerts.py:49
+#: settings/alerts.py:138
 msgid "Normal"
 msgstr "一般"
 
-#: settings/alerts.py:43
-#: settings/alerts.py:130
+#: settings/alerts.py:49
+#: settings/alerts.py:138
 msgid "Loud"
 msgstr "高音量"
 
-#: settings/alerts.py:36
+#: settings/alerts.py:42
 msgid "Engage and disengage chimes"
 msgstr "啟用與退出提示音"
 
-#: settings/alerts.py:36
+#: settings/alerts.py:42
 msgid "When openpilot turns on or off"
 msgstr "openpilot 開啟或關閉時"
 
-#: settings/alerts.py:37
+#: settings/alerts.py:43
 msgid "Prompts and reminders"
 msgstr "提示與提醒"
 
-#: settings/alerts.py:37
+#: settings/alerts.py:43
 msgid "Gentle nudges, like steering below its minimum speed"
 msgstr "輕柔提醒，例如低於最低轉向速度時"
 
-#: settings/alerts.py:39
+#: settings/alerts.py:45
 msgid "Driver attention"
 msgstr "駕駛注意力"
 
-#: settings/alerts.py:39
+#: settings/alerts.py:45
 msgid "The chime that asks you to look at the road"
 msgstr "提醒您看路的提示音"
 
-#: settings/alerts.py:41
+#: settings/alerts.py:47
 msgid "Take control warnings"
 msgstr "接管警告"
 
-#: settings/alerts.py:41
+#: settings/alerts.py:47
 msgid "When you need to steer or brake now"
 msgstr "需要立即轉向或煞車時"
 
-#: settings/alerts.py:46
-#: settings/search.py:123
+#: settings/alerts.py:52
+#: settings/search.py:126
 msgid "Green Light"
 msgstr "綠燈"
 
-#: settings/alerts.py:46
-#: settings/search.py:123
+#: settings/alerts.py:52
+#: settings/search.py:126
 msgid "When the light turns green and you are stopped"
 msgstr "停車時號誌變綠"
 
-#: settings/alerts.py:47
-#: settings/search.py:124
+#: settings/alerts.py:53
+#: settings/search.py:127
 msgid "Lead Departure"
 msgstr "前車起步"
 
-#: settings/alerts.py:47
-#: settings/search.py:124
+#: settings/alerts.py:53
+#: settings/search.py:127
 msgid "When the car ahead pulls away"
 msgstr "前車駛離時"
 
-#: settings/alerts.py:48
-#: settings/search.py:125
+#: settings/alerts.py:54
+#: settings/search.py:128
 msgid "Speed Limit Change"
 msgstr "速限變更"
 
-#: settings/alerts.py:48
-#: settings/search.py:125
+#: settings/alerts.py:54
+#: settings/search.py:128
 msgid "When the posted limit changes"
 msgstr "標示速限變更時"
 
-#: settings/alerts.py:49
-#: settings/search.py:126
+#: settings/alerts.py:55
+#: settings/search.py:129
 msgid "Loud Blind Spot"
 msgstr "響亮盲點警報"
 
-#: settings/alerts.py:49
-#: settings/search.py:126
+#: settings/alerts.py:55
+#: settings/search.py:129
 msgid "Signalling into an occupied lane, even when paused"
 msgstr "向有車的車道打方向燈時，即使已暫停"
 
-#: settings/alerts.py:50
-#: settings/search.py:91
-#: settings/search.py:127
+#: settings/alerts.py:56
+#: settings/search.py:94
+#: settings/search.py:130
 msgid "Weather heads-up"
 msgstr "天氣預警"
 
-#: settings/alerts.py:50
-#: settings/search.py:127
+#: settings/alerts.py:56
+#: settings/search.py:130
 msgid "Once, when rain, snow or storms are coming"
 msgstr "雨雪或風暴來臨前提醒一次"
 
-#: settings/alerts.py:182
-#: settings/driving_tab.py:132
-#: settings/search.py:25
+#: settings/alerts.py:190
+#: settings/driving_tab.py:147
+#: settings/search.py:26
 msgid "Alerts"
 msgstr "警報"
 
-#: settings/alerts.py:182
+#: settings/alerts.py:190
 msgid "One volume for everything. Safety warnings never go below 25%."
 msgstr "所有聲音使用相同音量。安全警告音量不會低於 25%。"
 
-#: settings/alerts.py:100
+#: settings/alerts.py:108
 msgid "Custom volume"
 msgstr "自訂音量"
 
-#: settings/alerts.py:100
+#: settings/alerts.py:108
 #, python-brace-format
 msgid "{} volume"
 msgstr "{}音量"
 
-#: settings/alerts.py:104
+#: settings/alerts.py:112
 msgid "No extra chimes"
 msgstr "無額外提示音"
 
-#: settings/alerts.py:153
+#: settings/alerts.py:161
 msgid "Plays through your car speakers if they're connected."
 msgstr "若已連接車輛喇叭，將透過它播放。"
 
-#: settings/alerts.py:157
+#: settings/alerts.py:165
 msgid "Changing a level sets the Alert Volume preset to Custom."
 msgstr "調整任一音量會將警報音量預設改為自訂。"
 
-#: settings/alerts.py:169
+#: settings/alerts.py:177
 msgid "Auto follows cabin noise. Tap a level to set it yourself."
 msgstr "自動模式依車內噪音調整。點選音量可手動設定。"
 
-#: settings/alerts.py:170
+#: settings/alerts.py:178
 msgid "Custom levels. Pick a preset to reset them."
 msgstr "已自訂音量。選擇預設可重設。"
 
-#: settings/alerts.py:170
+#: settings/alerts.py:178
 msgid "Tap a level to fine-tune it."
 msgstr "點選音量可微調。"
 
-#: settings/alerts.py:181
+#: settings/alerts.py:189
 msgid "Chimes"
 msgstr "提示音"
 
-#: settings/alerts.py:124
+#: settings/alerts.py:132
 msgid "Play sample"
 msgstr "播放範例"
 
-#: settings/alerts.py:131
+#: settings/alerts.py:139
 msgid "Reset to Normal"
 msgstr "重設為一般"
 
-#: settings/alerts.py:173
-#: settings/search.py:122
+#: settings/alerts.py:181
+#: settings/search.py:125
 msgid "Volume"
 msgstr "音量"
 
-#: settings/alerts.py:129
+#: settings/alerts.py:137
 #, python-brace-format
 msgid "Minimum {}% for safety alerts"
 msgstr "安全警報最低音量為{}%"
 
-#: settings/bluetooth_tab.py:468
+#: settings/bluetooth_tab.py:489
 msgid "Engage"
 msgstr "啟用"
 
-#: settings/bluetooth_tab.py:468
+#: settings/bluetooth_tab.py:489
 msgid "Disengage"
 msgstr "退出"
 
-#: settings/bluetooth_tab.py:468
-#: settings/vehicle.py:29
+#: settings/bluetooth_tab.py:489
+#: settings/vehicle.py:34
 msgid "Change driving style"
 msgstr "變更駕駛風格"
 
-#: settings/bluetooth_tab.py:469
+#: settings/bluetooth_tab.py:490
 msgid "Screen off / on"
 msgstr "關閉/開啟螢幕"
 
-#: settings/bluetooth_tab.py:469
-#: settings/vehicle.py:30
-#: sidebar.py:68
+#: settings/bluetooth_tab.py:490
+#: settings/vehicle.py:35
+#: sidebar.py:74
 msgid "Save a clip"
 msgstr "儲存片段"
 
-#: settings/bluetooth_tab.py:469
-#: settings/vehicle.py:30
+#: settings/bluetooth_tab.py:490
+#: settings/vehicle.py:35
 msgid "Always-on steering"
 msgstr "持續轉向"
 
-#: settings/bluetooth_tab.py:469
-#: settings/vehicle.py:29
+#: settings/bluetooth_tab.py:490
+#: settings/vehicle.py:34
 msgid "Coast"
 msgstr "滑行"
 
-#: settings/bluetooth_tab.py:276
+#: settings/bluetooth_tab.py:288
 msgid "Press any button to find it"
 msgstr "按任意按鈕以辨識"
 
-#: settings/bluetooth_tab.py:310
+#: settings/bluetooth_tab.py:322
 #, python-brace-format
 msgid "Button {}"
 msgstr "按鈕{}"
 
-#: settings/bluetooth_tab.py:412
-#: settings/bluetooth_tab.py:417
-#: settings/bluetooth_tab.py:412
+#: settings/bluetooth_tab.py:431
+#: settings/bluetooth_tab.py:435
+#: settings/bluetooth_tab.py:431
 msgid "Forget"
 msgstr "忘記"
 
-#: settings/bluetooth_tab.py:656
+#: settings/bluetooth_tab.py:687
 #, python-brace-format
 msgid "A sound plays in {}…"
 msgstr "{}後播放聲音…"
 
-#: settings/bluetooth_tab.py:54
-#: settings/speed_steering.py:425
+#: settings/bluetooth_tab.py:64
+#: settings/speed_steering.py:441
 msgid "Not set"
 msgstr "未設定"
 
-#: settings/bluetooth_tab.py:72
+#: settings/bluetooth_tab.py:82
 msgid "No remote connected"
 msgstr "未連接遙控器"
 
-#: settings/bluetooth_tab.py:79
+#: settings/bluetooth_tab.py:89
 #, python-brace-format
 msgid "{} wheel button"
 msgid_plural "{} wheel buttons"
 msgstr[0] "{}個方向盤按鈕"
 
-#: settings/bluetooth_tab.py:79
+#: settings/bluetooth_tab.py:89
 msgid "No wheel buttons"
 msgstr "無方向盤按鈕"
 
-#: settings/bluetooth_tab.py:168
+#: settings/bluetooth_tab.py:178
 msgid "Remove another button to free an action slot, then try again."
 msgstr "移除其他按鈕以空出操作欄位，再重試。"
 
-#: settings/bluetooth_tab.py:184
+#: settings/bluetooth_tab.py:195
 #, python-brace-format
 msgid "{} detected"
 msgstr "已偵測到{}"
 
-#: settings/bluetooth_tab.py:184
+#: settings/bluetooth_tab.py:195
 msgid "Press a different button on the remote to change it."
 msgstr "按遙控器上的其他按鈕來變更。"
 
-#: settings/bluetooth_tab.py:199
+#: settings/bluetooth_tab.py:210
 msgid "STEP 1 · PRESS IT"
 msgstr "第 1 步 · 按下按鈕"
 
-#: settings/bluetooth_tab.py:205
+#: settings/bluetooth_tab.py:216
 #, python-brace-format
 msgid "Listening stops after {} s."
 msgstr "{}秒後停止偵聽。"
 
-#: settings/bluetooth_tab.py:208
+#: settings/bluetooth_tab.py:219
 msgid "STEP 2 · CHOOSE WHAT IT DOES"
 msgstr "第 2 步 · 選擇操作"
 
-#: settings/bluetooth_tab.py:210
+#: settings/bluetooth_tab.py:221
 msgid "Pulse and glide and driver selfie are in Tuner Mode."
 msgstr "加速與滑行及駕駛自拍位於調校模式。"
 
-#: settings/bluetooth_tab.py:287
-#: settings/connections.py:67
-#: settings/search.py:31
+#: settings/bluetooth_tab.py:299
+#: settings/connections.py:72
+#: settings/search.py:32
 msgid "Bluetooth Remote"
 msgstr "藍牙遙控器"
 
-#: settings/bluetooth_tab.py:343
+#: settings/bluetooth_tab.py:355
 msgid "That button isn't assigned yet. Tap to add it."
 msgstr "此按鈕尚未指派操作。點選可新增。"
 
-#: settings/bluetooth_tab.py:343
+#: settings/bluetooth_tab.py:355
 msgid "Add a button"
 msgstr "新增按鈕"
 
-#: settings/bluetooth_tab.py:376
+#: settings/bluetooth_tab.py:390
 msgid "Bluetooth device"
 msgstr "藍牙裝置"
 
-#: settings/bluetooth_tab.py:408
+#: settings/bluetooth_tab.py:427
 msgid "Test"
 msgstr "測試"
 
-#: settings/bluetooth_tab.py:415
-#: settings/bluetooth_tab.py:415
+#: settings/bluetooth_tab.py:434
+#: settings/bluetooth_tab.py:434
 msgid "Disconnect"
 msgstr "中斷連線"
 
-#: settings/bluetooth_tab.py:415
+#: settings/bluetooth_tab.py:434
 msgid "It reconnects the next time you choose it"
 msgstr "下次選擇時會重新連接"
 
-#: settings/bluetooth_tab.py:417
+#: settings/bluetooth_tab.py:435
 msgid "Removes the pairing. Change it with the car off."
 msgstr "移除配對。請在車輛關閉時變更。"
 
-#: settings/bluetooth_tab.py:418
-#: settings/bluetooth_tab.py:429
-#: settings/network_tab.py:206
+#: settings/bluetooth_tab.py:436
+#: settings/bluetooth_tab.py:448
+#: settings/network_tab.py:220
 msgid "Connected"
 msgstr "已連接"
 
-#: settings/bluetooth_tab.py:648
+#: settings/bluetooth_tab.py:679
 #, python-brace-format
 msgid "The test didn't play: {}"
 msgstr "測試未播放：{}"
 
-#: settings/bluetooth_tab.py:651
+#: settings/bluetooth_tab.py:682
 msgid "Playing now. You should hear it through the car."
 msgstr "正在播放，您應該能從車輛聽到聲音。"
 
-#: settings/bluetooth_tab.py:653
+#: settings/bluetooth_tab.py:684
 msgid "Done. If you didn't hear it, check the car's volume and audio source."
 msgstr "已完成。若未聽到聲音，請檢查車輛音量與音源。"
 
-#: settings/bluetooth_tab.py:655
+#: settings/bluetooth_tab.py:686
 msgid "Getting ready…"
 msgstr "正在準備…"
 
-#: settings/bluetooth_tab.py:178
+#: settings/bluetooth_tab.py:189
 msgid "Couldn't assign this button"
 msgstr "無法指派此按鈕"
 
-#: settings/bluetooth_tab.py:180
+#: settings/bluetooth_tab.py:191
 msgid "All button slots are in use"
 msgstr "所有按鈕欄位均已使用"
 
-#: settings/bluetooth_tab.py:180
+#: settings/bluetooth_tab.py:191
 msgid "Remove a button to add another."
 msgstr "移除一個按鈕後才能新增另一個。"
 
-#: settings/bluetooth_tab.py:183
+#: settings/bluetooth_tab.py:194
 msgid "Press the button on your remote"
 msgstr "按下遙控器上的按鈕"
 
-#: settings/bluetooth_tab.py:183
+#: settings/bluetooth_tab.py:194
 #, python-brace-format
 msgid "Listening{}."
 msgstr "正在偵聽{}。"
 
-#: settings/bluetooth_tab.py:248
+#: settings/bluetooth_tab.py:260
 msgid "Assign a button"
 msgstr "指派按鈕"
 
-#: settings/bluetooth_tab.py:254
+#: settings/bluetooth_tab.py:266
 msgid "Buttons don't run their actions while this screen is open."
 msgstr "此畫面開啟時，按鈕不會執行其操作。"
 
-#: settings/bluetooth_tab.py:318
+#: settings/bluetooth_tab.py:330
 msgid "PRESSED"
 msgstr "已按下"
 
-#: settings/bluetooth_tab.py:366
+#: settings/bluetooth_tab.py:380
 msgid "Sound test"
 msgstr "聲音測試"
 
-#: settings/bluetooth_tab.py:380
+#: settings/bluetooth_tab.py:394
 #, python-brace-format
 msgid "Pairing with {}"
 msgstr "正在與{}配對"
 
-#: settings/bluetooth_tab.py:386
+#: settings/bluetooth_tab.py:400
 #, python-brace-format
 msgid "Enter the {} for {}"
 msgstr "輸入{1}的{0}"
 
-#: settings/bluetooth_tab.py:386
+#: settings/bluetooth_tab.py:400
 msgid "It's shown on the device, or in its manual"
 msgstr "顯示於裝置上或其說明書中"
 
-#: settings/bluetooth_tab.py:394
+#: settings/bluetooth_tab.py:408
 #, python-brace-format
 msgid "Check that the device shows {}."
 msgstr "請確認裝置顯示{}。"
 
-#: settings/bluetooth_tab.py:394
+#: settings/bluetooth_tab.py:408
 msgid "The device is asking to pair."
 msgstr "裝置正在要求配對。"
 
-#: settings/bluetooth_tab.py:410
+#: settings/bluetooth_tab.py:429
 msgid "Alerts and Chimes"
 msgstr "警報與提示音"
 
-#: settings/bluetooth_tab.py:410
+#: settings/bluetooth_tab.py:429
 msgid "Play openpilot's sounds through this device. Change it with the car off."
 msgstr "透過此裝置播放 openpilot 的聲音。請在車輛關閉時變更。"
 
-#: settings/bluetooth_tab.py:411
+#: settings/bluetooth_tab.py:430
 msgid "Sound Test"
 msgstr "聲音測試"
 
-#: settings/bluetooth_tab.py:411
+#: settings/bluetooth_tab.py:430
 msgid "Plays a sound through the car after a short countdown"
 msgstr "短暫倒數後透過車輛播放聲音"
 
-#: settings/bluetooth_tab.py:412
+#: settings/bluetooth_tab.py:431
 #, python-brace-format
 msgid "Forget {}?"
 msgstr "忘記{}？"
 
-#: settings/bluetooth_tab.py:412
+#: settings/bluetooth_tab.py:431
 msgid "You'll need to pair it again to use it."
 msgstr "需要重新配對才能使用。"
 
-#: settings/bluetooth_tab.py:430
+#: settings/bluetooth_tab.py:449
 msgid "Test sound"
 msgstr "測試聲音"
 
-#: settings/bluetooth_tab.py:224
+#: settings/bluetooth_tab.py:236
 msgid "All action slots are in use. Remove another button first."
 msgstr "所有操作欄位均已使用。請先移除其他按鈕。"
 
-#: settings/bluetooth_tab.py:380
+#: settings/bluetooth_tab.py:394
 msgid "Follow the steps on the device."
 msgstr "請依裝置上的步驟操作。"
 
-#: settings/bluetooth_tab.py:385
-#: settings/bluetooth_tab.py:395
-#: settings/bluetooth_tab.py:434
+#: settings/bluetooth_tab.py:399
+#: settings/bluetooth_tab.py:409
+#: settings/bluetooth_tab.py:453
 msgid "Pair"
 msgstr "配對"
 
-#: settings/bluetooth_tab.py:395
+#: settings/bluetooth_tab.py:409
 #, python-brace-format
 msgid "Pair with {}?"
 msgstr "與{}配對？"
 
-#: settings/bluetooth_tab.py:429
+#: settings/bluetooth_tab.py:448
 msgid "Plays alerts and chimes"
 msgstr "播放警報與提示音"
 
-#: settings/bluetooth_tab.py:434
-#: settings/network_tab.py:79
-#: settings/network_tab.py:88
+#: settings/bluetooth_tab.py:453
+#: settings/network_tab.py:91
+#: settings/network_tab.py:100
 msgid "Connect"
 msgstr "連接"
 
-#: settings/bluetooth_tab.py:436
-#: settings/bluetooth_tab.py:429
-#: settings/device.py:233
+#: settings/bluetooth_tab.py:455
+#: settings/bluetooth_tab.py:448
+#: settings/device.py:250
 msgid "Paired"
 msgstr "已配對"
 
-#: settings/bluetooth_tab.py:443
+#: settings/bluetooth_tab.py:462
 msgid "Scanning…"
 msgstr "正在掃描…"
 
-#: settings/bluetooth_tab.py:183
+#: settings/bluetooth_tab.py:463
+msgid "No car audio paired."
+msgstr "未配對車輛音響。"
+
+#: settings/bluetooth_tab.py:464
+msgid "No devices found yet."
+msgstr "尚未找到裝置。"
+
+#: settings/bluetooth_tab.py:194
 #, python-brace-format
 msgid " · {} s left"
 msgstr " · 剩餘{}秒"
 
-#: settings/bluetooth_tab.py:230
+#: settings/bluetooth_tab.py:242
 msgid "Button"
 msgstr "按鈕"
 
-#: settings/bluetooth_tab.py:448
+#: settings/bluetooth_tab.py:469
 msgid "Pairing waits until you're parked."
 msgstr "停車後才能配對。"
 
-#: settings/bluetooth_tab.py:248
-#: settings/device_sections.py:393
-#: settings/display.py:373
+#: settings/bluetooth_tab.py:260
+#: settings/device_sections.py:424
+#: settings/display.py:393
 msgid "Save"
 msgstr "儲存"
 
-#: settings/bluetooth_tab.py:445
+#: settings/bluetooth_tab.py:466
 msgid "CAR AUDIO"
 msgstr "車輛音響"
 
-#: settings/bluetooth_tab.py:446
+#: settings/bluetooth_tab.py:467
 msgid "NEARBY"
 msgstr "附近"
 
-#: settings/bluetooth_tab.py:233
-#: settings/vehicle.py:172
+#: settings/bluetooth_tab.py:245
+#: settings/vehicle.py:185
 msgid "What this button does while driving"
 msgstr "此按鈕在駕駛時的操作"
 
-#: settings/bluetooth_tab.py:234
-#: settings/developer.py:144
-#: settings/device_sections.py:335
+#: settings/bluetooth_tab.py:246
+#: settings/developer.py:155
+#: settings/device_sections.py:361
 msgid "Remove"
 msgstr "移除"
 
-#: settings/bluetooth_tab.py:445
-msgid "No car audio paired."
-msgstr "未配對車輛音響。"
-
-#: settings/bluetooth_tab.py:447
-msgid "No devices found yet."
-msgstr "尚未找到裝置。"
-
-#: settings/bundles.py:43
-#: settings/search.py:111
+#: settings/bundles.py:44
+#: settings/search.py:114
 msgid "Developer View"
 msgstr "開發者檢視"
 
-#: settings/bundles.py:43
+#: settings/bundles.py:44
 msgid "Sidebar with live metrics, CPU, GPU, memory and temperatures, and where speed limits come from"
 msgstr "顯示即時指標、CPU、GPU、記憶體、溫度與速限來源的側欄"
 
-#: settings/bundles.py:47
-#: settings/search.py:112
+#: settings/bundles.py:48
+#: settings/search.py:115
 msgid "Lead Insights"
 msgstr "前車資訊"
 
-#: settings/bundles.py:47
+#: settings/bundles.py:48
 msgid "Distance and speed of the car ahead, radar tracks, stopping point, adjacent paths and pedals"
 msgstr "前車距離與速度、雷達軌跡、停車點、相鄰路徑與踏板"
 
-#: settings/bundles.py:52
-#: settings/driving_tab.py:91
-#: settings/search.py:25
+#: settings/bundles.py:53
+#: settings/driving_tab.py:106
+#: settings/search.py:26
 msgid "Tuner Mode"
 msgstr "調校模式"
 
-#: settings/bundles.py:52
-#: settings/search.py:144
+#: settings/bundles.py:53
+#: settings/search.py:147
 msgid "Fine-tuning screens for gas, brake, steering and following"
 msgstr "微調油門、煞車、轉向與跟車的畫面"
 
-#: settings/can_recorder.py:13
-#: settings/map_source.py:95
-#: settings/maps.py:524
+#: settings/can_recorder.py:19
+#: settings/map_source.py:108
+#: settings/maps.py:549
 msgid "Ready"
 msgstr "就緒"
 
-#: settings/can_recorder.py:13
+#: settings/can_recorder.py:19
 msgid "Starting…"
 msgstr "正在啟動…"
 
-#: settings/can_recorder.py:13
+#: settings/can_recorder.py:19
 msgid "Recording"
 msgstr "正在錄製"
 
-#: settings/can_recorder.py:14
-#: settings/network_tab.py:289
+#: settings/can_recorder.py:20
+#: settings/network_tab.py:305
 msgid "Saving…"
 msgstr "正在儲存…"
 
-#: settings/can_recorder.py:14
-#: settings/network_tab.py:59
+#: settings/can_recorder.py:20
+#: settings/network_tab.py:70
 msgid "Saved"
 msgstr "已儲存"
 
-#: settings/can_recorder.py:14
-#: sidebar.py:116
+#: settings/can_recorder.py:20
+#: sidebar.py:122
 msgid "Error"
 msgstr "錯誤"
 
-#: settings/can_recorder.py:15
+#: settings/can_recorder.py:21
 msgid "Discarding…"
 msgstr "正在捨棄…"
 
-#: settings/can_recorder.py:15
+#: settings/can_recorder.py:21
 msgid "Discarded"
 msgstr "已捨棄"
 
-#: settings/can_recorder.py:40
+#: settings/can_recorder.py:47
 msgid "Start logging"
 msgstr "開始記錄"
 
-#: settings/can_recorder.py:42
+#: settings/can_recorder.py:49
 msgid "Stop logging"
 msgstr "停止記錄"
 
-#: settings/can_recorder.py:44
+#: settings/can_recorder.py:51
 msgid "Abort"
 msgstr "中止"
 
-#: settings/can_recorder.py:47
+#: settings/can_recorder.py:54
 msgid "Mark lock"
 msgstr "標記上鎖"
 
-#: settings/can_recorder.py:48
+#: settings/can_recorder.py:55
 msgid "Mark unlock"
 msgstr "標記解鎖"
 
-#: settings/can_recorder.py:57
+#: settings/can_recorder.py:64
 msgid "OBD frames"
 msgstr "OBD 訊框"
 
-#: settings/can_recorder.py:93
+#: settings/can_recorder.py:106
 msgid "Test discarded. Start a new test."
 msgstr "測試已捨棄。請開始新測試。"
 
-#: settings/can_recorder.py:103
+#: settings/can_recorder.py:116
 msgid "Couldn't save the log. Check storage and try again."
 msgstr "無法儲存記錄。請檢查儲存空間後重試。"
 
-#: settings/can_recorder.py:105
+#: settings/can_recorder.py:118
 msgid "Saved: the car is no longer parked."
 msgstr "已儲存：車輛不再處於停車狀態。"
 
-#: settings/can_recorder.py:107
+#: settings/can_recorder.py:120
 msgid "Saved: storage is running low."
 msgstr "已儲存：儲存空間不足。"
 
-#: settings/can_recorder.py:109
+#: settings/can_recorder.py:122
 msgid "Saved: the recording limit was reached."
 msgstr "已儲存：已達錄製上限。"
 
-#: settings/can_recorder.py:111
+#: settings/can_recorder.py:124
 msgid "Saved: OBD test ended and normal input restored."
 msgstr "已儲存：OBD 測試結束，正常輸入已恢復。"
 
-#: settings/can_recorder.py:114
+#: settings/can_recorder.py:127
 #, python-brace-format
 msgid "Last marker: {} at {}"
 msgstr "最後標記：{}，時間{}"
 
-#: settings/can_recorder.py:116
+#: settings/can_recorder.py:129
 msgid "Waiting for OBD traffic. Check the RJ45 cable."
 msgstr "正在等待 OBD 通訊。請檢查 RJ45 纜線。"
 
-#: settings/can_recorder.py:118
+#: settings/can_recorder.py:131
 msgid "Waiting for CAN traffic. Some channels sleep with the car off."
 msgstr "正在等待 CAN 通訊。車輛關閉時部分通道會休眠。"
 
-#: settings/can_recorder.py:119
+#: settings/can_recorder.py:132
 msgid "No markers yet."
 msgstr "尚無標記。"
 
-#: settings/can_recorder.py:119
-#: settings/can_recorder.py:102
+#: settings/can_recorder.py:132
+#: settings/can_recorder.py:115
 msgid "Park the car to start a test."
 msgstr "停車後才能開始測試。"
 
-#: settings/can_recorder.py:38
+#: settings/can_recorder.py:45
 msgid "Camera"
 msgstr "攝影機"
 
-#: settings/can_recorder.py:38
+#: settings/can_recorder.py:45
 msgid "OBD"
 msgstr "OBD"
 
-#: settings/can_recorder.py:56
+#: settings/can_recorder.py:63
 msgid "Test controls"
 msgstr "測試控制"
 
-#: settings/can_recorder.py:69
+#: settings/can_recorder.py:76
 msgid "Test status"
 msgstr "測試狀態"
 
-#: settings/can_recorder.py:71
-#: settings/developer.py:154
-#: settings/search.py:198
+#: settings/can_recorder.py:78
+#: settings/developer.py:165
+#: settings/search.py:201
 msgid "CAN test recorder"
 msgstr "CAN 測試記錄器"
 
-#: settings/can_recorder.py:71
+#: settings/can_recorder.py:78
 msgid "Device › Developer"
 msgstr "裝置 › 開發者"
 
-#: settings/can_recorder.py:96
+#: settings/can_recorder.py:109
 msgid "Couldn't delete the log. Try Abort again."
 msgstr "無法刪除記錄。請再次選擇中止。"
 
-#: settings/can_recorder.py:98
+#: settings/can_recorder.py:111
 msgid "Couldn't restore the input. Restart the device before another test."
 msgstr "無法恢復輸入。下次測試前請重新啟動裝置。"
 
-#: settings/can_recorder.py:100
-#: settings/can_recorder.py:102
+#: settings/can_recorder.py:113
+#: settings/can_recorder.py:115
 msgid "OBD needs the RJ45 cable and this Bolt on, in Park."
 msgstr "OBD 需要 RJ45 纜線，並將此 Bolt 啟動後排入 P 檔。"
 
-#: settings/can_recorder.py:113
+#: settings/can_recorder.py:126
 msgid "Lock"
 msgstr "上鎖"
 
-#: settings/can_recorder.py:113
+#: settings/can_recorder.py:126
 msgid "Unlock"
 msgstr "解鎖"
 
-#: settings/can_recorder.py:50
+#: settings/can_recorder.py:57
 msgid "Tap a marker, then press the car's lock control."
 msgstr "點選標記，再按車輛的上鎖按鈕。"
 
-#: settings/can_recorder.py:60
+#: settings/can_recorder.py:67
 msgid "Elapsed"
 msgstr "經過時間"
 
-#: settings/can_recorder.py:61
+#: settings/can_recorder.py:68
 msgid "CAN frames"
 msgstr "CAN 訊框"
 
-#: settings/can_recorder.py:63
+#: settings/can_recorder.py:70
 msgid "Lock markers"
 msgstr "上鎖標記"
 
-#: settings/can_recorder.py:64
+#: settings/can_recorder.py:71
 msgid "Unlock markers"
 msgstr "解鎖標記"
 
-#: settings/can_recorder.py:68
+#: settings/can_recorder.py:75
 msgid "Full and focused logs stay on this device."
 msgstr "完整記錄與篩選記錄儲存在此裝置上。"
 
-#: settings/can_recorder.py:51
+#: settings/can_recorder.py:58
 msgid "Input"
 msgstr "輸入"
 
-#: settings/can_recorder.py:54
+#: settings/can_recorder.py:61
 msgid "Abort deletes this test. OBD stops after 2 minutes."
 msgstr "中止會刪除此測試。OBD 在 2 分鐘後停止。"
 
-#: settings/can_recorder.py:55
+#: settings/can_recorder.py:62
 msgid "Stops after 10 minutes. Abort deletes this test."
 msgstr "10 分鐘後停止。中止會刪除此測試。"
 
-#: settings/can_recorder.py:66
+#: settings/can_recorder.py:73
 #, python-brace-format
 msgid "Log: {}"
 msgstr "記錄：{}"
 
-#: settings/can_recorder.py:66
+#: settings/can_recorder.py:73
 msgid "Start logging to create a new test log."
 msgstr "開始記錄以建立新測試記錄。"
 
-#: settings/connections.py:50
+#: settings/connections.py:54
 #, python-brace-format
 msgid "{} button"
 msgid_plural "{} buttons"
 msgstr[0] "{}個按鈕"
 
-#: settings/connections.py:63
+#: settings/connections.py:68
 msgid "CONNECTIONS"
 msgstr "連線"
 
-#: settings/connections.py:64
-#: settings/map_source.py:193
-#: settings/network_tab.py:281
+#: settings/connections.py:69
+#: settings/map_source.py:207
+#: settings/network_tab.py:296
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
-#: settings/connections.py:66
-#: settings/network_tab.py:299
-#: settings/search.py:31
+#: settings/connections.py:71
+#: settings/network_tab.py:315
+#: settings/search.py:32
 msgid "Cellular"
 msgstr "行動網路"
 
-#: settings/connections.py:69
-#: settings/search.py:31
-#: settings/search.py:217
+#: settings/connections.py:74
+#: settings/search.py:32
+#: settings/search.py:220
 msgid "Car Audio & Devices"
 msgstr "車輛音響與裝置"
 
-#: settings/developer.py:18
+#: settings/developer.py:23
 msgid "openpilot longitudinal control is in alpha for this car and turns off Automatic Emergency Braking (AEB). The car's own cruise control is the default. Experimental mode is recommended with it. openpilot restarts if the car is on."
 msgstr "此車的 openpilot 縱向控制處於 Alpha 階段，會關閉自動緊急煞車（AEB）。預設使用車輛內建巡航控制。建議搭配實驗模式使用。車輛開啟時 openpilot 會重新啟動。"
 
-#: settings/developer.py:145
-#: settings/search.py:203
+#: settings/developer.py:156
+#: settings/search.py:206
 msgid "openpilot Longitudinal (Alpha)"
 msgstr "openpilot 縱向控制（Alpha）"
 
-#: settings/developer.py:145
+#: settings/developer.py:156
 msgid "Turns off the car's emergency braking. Off while engaged."
 msgstr "關閉車輛緊急煞車。啟用駕駛輔助時無法變更。"
 
-#: settings/developer.py:106
+#: settings/developer.py:117
 msgid "GitHub username"
 msgstr "GitHub 使用者名稱"
 
-#: settings/developer.py:106
+#: settings/developer.py:117
 msgid "Your own account only: every public key in it gets SSH access"
 msgstr "僅限您自己的帳號：其中所有公開金鑰都會取得 SSH 存取權限"
 
-#: settings/developer.py:118
+#: settings/developer.py:129
 msgid "Getting keys from GitHub…"
 msgstr "正在從 GitHub 取得金鑰…"
 
-#: settings/developer.py:122
+#: settings/developer.py:133
 #, python-brace-format
 msgid "Keys from GitHub user {}"
 msgstr "GitHub 使用者{}的金鑰"
 
-#: settings/developer.py:122
+#: settings/developer.py:133
 msgid "Adds every public key in a GitHub account. Never use someone else's."
 msgstr "新增 GitHub 帳號中的所有公開金鑰。切勿使用他人的帳號。"
 
-#: settings/developer.py:155
-#: settings/search.py:30
-#: settings/search.py:197
+#: settings/developer.py:166
+#: settings/search.py:31
+#: settings/search.py:200
 msgid "Developer"
 msgstr "開發者"
 
-#: settings/developer.py:155
+#: settings/developer.py:166
 msgid "openpilot's developer options. They're only here with Tuner Mode on."
 msgstr "openpilot 開發者選項，僅在調校模式開啟時顯示。"
 
-#: settings/developer.py:105
-#: settings/developer.py:144
+#: settings/developer.py:116
+#: settings/developer.py:155
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:662
 msgid "Add"
 msgstr "新增"
 
-#: settings/developer.py:135
+#: settings/developer.py:146
 msgid "Turn on alpha longitudinal?"
 msgstr "開啟 Alpha 縱向控制？"
 
-#: settings/developer.py:135
-#: settings/vehicle.py:290
+#: settings/developer.py:146
+#: settings/vehicle.py:311
 msgid "Turn On"
 msgstr "開啟"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/developer.py:148
-#: settings/search.py:199
+#: settings/developer.py:159
+#: settings/search.py:202
 msgid "ADB"
 msgstr "ADB"
 
-#: settings/developer.py:148
+#: settings/developer.py:159
 msgid "Connect over USB or the network (docs.comma.ai). Change it with the car off."
 msgstr "透過 USB 或網路連接（docs.comma.ai）。請在車輛關閉時變更。"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/developer.py:149
-#: settings/search.py:200
+#: settings/developer.py:160
+#: settings/search.py:203
 msgid "SSH"
 msgstr "SSH"
 
-#: settings/developer.py:149
+#: settings/developer.py:160
 msgid "Remote shell access with the keys below"
 msgstr "使用以下金鑰遠端存取終端機"
 
-#: settings/developer.py:150
-#: settings/search.py:201
+#: settings/developer.py:161
+#: settings/search.py:204
 #: selfdrive/ui/layouts/settings/developer.py:53
 msgid "SSH Keys"
 msgstr "SSH 金鑰"
 
-#: settings/developer.py:151
-#: settings/search.py:202
+#: settings/developer.py:162
+#: settings/search.py:205
 #: selfdrive/ui/layouts/settings/developer.py:56
 msgid "Joystick Debug Mode"
 msgstr "搖桿除錯模式"
 
-#: settings/developer.py:151
+#: settings/developer.py:162
 msgid "Drive openpilot's controls from a joystick. Change it with the car off."
 msgstr "透過搖桿控制 openpilot。請在車輛關閉時變更。"
 
-#: settings/developer.py:153
-#: settings/search.py:204
+#: settings/developer.py:164
+#: settings/search.py:207
 #: selfdrive/ui/layouts/settings/developer.py:72
 msgid "UI Debug Mode"
 msgstr "介面除錯模式"
 
-#: settings/developer.py:153
-#: settings/search.py:204
+#: settings/developer.py:164
+#: settings/search.py:207
 msgid "Shows touches and the frame rate"
 msgstr "顯示觸控與影格率"
 
-#: settings/developer.py:154
-#: settings/search.py:198
+#: settings/developer.py:165
+#: settings/search.py:201
 msgid "Record traffic and mark manual lock/unlock actions"
 msgstr "記錄通訊並標記手動上鎖/解鎖操作"
 
-#: settings/developer.py:144
+#: settings/developer.py:155
 msgid "Adding…"
 msgstr "正在新增…"
 
-#: settings/device.py:24
+#: settings/device.py:30
 msgid "Calibrated"
 msgstr "已校正"
 
-#: settings/device.py:25
+#: settings/device.py:31
 #: selfdrive/selfdrived/events.py:1496
 msgid "Calibrating"
 msgstr "正在校正"
 
-#: settings/device.py:26
+#: settings/device.py:32
 msgid "Not calibrated yet"
 msgstr "尚未校正"
 
-#: settings/device.py:61
+#: settings/device.py:67
 msgid "Preview"
 msgstr "預覽"
 
-#: settings/device.py:63
-#: settings/device.py:64
-#: settings/software_tab.py:196
+#: settings/device.py:69
+#: settings/device.py:70
+#: settings/software_tab.py:206
 msgid "Reset"
 msgstr "重設"
 
-#: settings/device.py:126
+#: settings/device.py:143
 msgid "Open connect.comma.ai"
 msgstr "開啟 connect.comma.ai"
 
-#: settings/device.py:126
+#: settings/device.py:143
 msgid "Bookmark it to your home screen to use it like an app"
 msgstr "加入主畫面即可像 App 一樣使用"
 
-#: settings/device.py:127
+#: settings/device.py:144
 msgid "Tap Add new device"
 msgstr "點選 Add new device"
 
-#: settings/device.py:127
+#: settings/device.py:144
 msgid "Sign in first if it asks"
 msgstr "如提示登入，請先登入"
 
-#: settings/device.py:128
-#: settings/device.py:132
+#: settings/device.py:145
+#: settings/device.py:149
 msgid "Scan the code"
 msgstr "掃描 QR 碼"
 
-#: settings/device.py:128
+#: settings/device.py:145
 msgid "The Phone App row shows Paired when it's done"
 msgstr "完成後，手機 App 一欄會顯示已配對"
 
-#: settings/device.py:131
+#: settings/device.py:148
 msgid "Choose a password"
 msgstr "選擇密碼"
 
-#: settings/device.py:131
+#: settings/device.py:148
 msgid "At least 6 characters. Galaxy asks for it when you sign in"
 msgstr "至少 6 個字元，登入 Galaxy 時需要輸入"
 
-#: settings/device.py:132
+#: settings/device.py:149
 msgid "It opens this device's page in Galaxy"
 msgstr "在 Galaxy 中開啟此裝置的頁面"
 
-#: settings/device.py:133
+#: settings/device.py:150
 msgid "Bookmark the page"
 msgstr "將此頁面加入書籤"
 
-#: settings/device.py:133
+#: settings/device.py:150
 msgid "The link stays the same until you unpair"
 msgstr "取消配對前連結保持不變"
 
-#: settings/device.py:235
+#: settings/device.py:252
 msgid "Pair the phone app"
 msgstr "配對手機 App"
 
-#: settings/device.py:235
+#: settings/device.py:252
 msgid "Change settings and see drives from your phone"
 msgstr "透過手機變更設定與查看行程"
 
-#: settings/device.py:245
-#: settings/device.py:410
+#: settings/device.py:262
+#: settings/device.py:427
 msgctxt "action"
 msgid "Set up"
 msgstr "設定"
 
-#: settings/device.py:248
-#: settings/device.py:249
+#: settings/device.py:265
+#: settings/device.py:266
 #: selfdrive/ui/layouts/settings/device.py:335
 msgid "Unpair"
 msgstr "取消配對"
 
-#: settings/device.py:264
-#: settings/device.py:107
-#: settings/search.py:173
+#: settings/device.py:281
+#: settings/device.py:124
+#: settings/search.py:176
 msgid "Remote Access"
 msgstr "遠端存取"
 
-#: settings/device.py:264
+#: settings/device.py:281
 msgid "Reach this device from the Galaxy web app"
 msgstr "透過 Galaxy 網頁 App 存取此裝置"
 
-#: settings/device.py:68
-#: settings/search.py:140
+#: settings/device.py:74
+#: settings/search.py:143
 #: selfdrive/ui/layouts/settings/device.py:152
 msgid "Driver Camera"
 msgstr "駕駛攝影機"
 
-#: settings/device.py:68
+#: settings/device.py:74
 msgid "Check that it can see your face. The car must be off."
 msgstr "檢查能否看清您的臉部。車輛必須關閉。"
 
-#: settings/device.py:69
-#: settings/search.py:141
-#: settings/speed_steering.py:368
+#: settings/device.py:75
+#: settings/search.py:144
+#: settings/speed_steering.py:382
 msgid "Driver Monitoring"
 msgstr "駕駛監控"
 
-#: settings/device.py:69
-#: settings/search.py:141
+#: settings/device.py:75
+#: settings/search.py:144
 msgid "Forget which side of the car the driver sits on"
 msgstr "清除駕駛位於車輛哪一側的記錄"
 
-#: settings/device.py:92
-#: settings/device.py:92
-#: settings/search.py:180
+#: settings/device.py:109
+#: settings/device.py:109
+#: settings/search.py:183
 msgid "Power Off"
 msgstr "關機"
 
-#: settings/device.py:95
-#: settings/device.py:96
-#: settings/search.py:179
+#: settings/device.py:112
+#: settings/device.py:113
+#: settings/search.py:182
 msgid "Restart"
 msgstr "重新啟動"
 
-#: settings/device.py:97
-#: settings/device.py:99
+#: settings/device.py:114
+#: settings/device.py:116
 msgid "Recalibrate"
 msgstr "重新校正"
 
-#: settings/device.py:226
-#: settings/device.py:114
-#: settings/search.py:176
+#: settings/device.py:243
+#: settings/device.py:131
+#: settings/search.py:179
 msgid "Regulatory"
 msgstr "法規資訊"
 
-#: settings/device.py:262
+#: settings/device.py:279
 msgid "Choosing a password creates this device's link"
 msgstr "選擇密碼後會建立此裝置的連結"
 
-#: settings/device.py:347
+#: settings/device.py:364
 msgid "Manage"
 msgstr "管理"
 
-#: settings/device.py:347
+#: settings/device.py:364
 msgid "Set Up"
 msgstr "設定"
 
-#: settings/device.py:353
-#: settings/model.py:130
-#: settings/network_tab.py:202
+#: settings/device.py:370
+#: settings/model.py:140
+#: settings/network_tab.py:216
 msgid "Not available"
 msgstr "無法使用"
 
-#: settings/device.py:423
+#: settings/device.py:440
 msgid "Choose a Galaxy password"
 msgstr "選擇 Galaxy 密碼"
 
-#: settings/device.py:423
+#: settings/device.py:440
 msgid "At least 6 characters. Galaxy asks for it when you sign in."
 msgstr "至少 6 個字元，登入 Galaxy 時需要輸入。"
 
-#: settings/device.py:63
+#: settings/device.py:69
 msgid "Reset driver monitoring?"
 msgstr "重設駕駛監控？"
 
-#: settings/device.py:64
+#: settings/device.py:70
 msgid "It forgets which side of the car the driver sits on and learns it again on the next drive."
 msgstr "將清除駕駛所在側的記錄，並在下次駕駛時重新學習。"
 
-#: settings/device.py:92
+#: settings/device.py:109
 msgid "Power off?"
 msgstr "關機？"
 
-#: settings/device.py:92
+#: settings/device.py:109
 msgid "The device stays off until the car starts again."
 msgstr "車輛再次啟動前裝置會保持關閉。"
 
-#: settings/device.py:95
+#: settings/device.py:112
 msgid "Restart the device?"
 msgstr "重新啟動裝置？"
 
-#: settings/device.py:95
+#: settings/device.py:112
 msgid "openpilot shuts down and starts again. This takes about a minute."
 msgstr "openpilot 將關閉後重新啟動，約需一分鐘。"
 
-#: settings/device.py:97
+#: settings/device.py:114
 msgid "Recalibrate the camera?"
 msgstr "重新校正攝影機？"
 
-#: settings/device.py:98
+#: settings/device.py:115
 msgid "Calibration starts over. openpilot relearns how the device is mounted over your next few minutes of driving."
 msgstr "校正會重新開始，openpilot 將在接下來幾分鐘的駕駛中重新學習裝置安裝位置。"
 
-#: settings/device.py:117
-#: settings/search.py:30
-#: settings/search.py:171
+#: settings/device.py:134
+#: settings/search.py:31
+#: settings/search.py:174
 msgid "This Device"
 msgstr "此裝置"
 
-#: settings/device.py:232
+#: settings/device.py:249
 msgid "ON YOUR PHONE"
 msgstr "在手機上"
 
-#: settings/device.py:233
+#: settings/device.py:250
 msgid "A new code every 5 minutes"
 msgstr "每 5 分鐘產生新代碼"
 
-#: settings/device.py:234
+#: settings/device.py:251
 msgid "Getting a code…"
 msgstr "正在取得代碼…"
 
-#: settings/device.py:248
+#: settings/device.py:265
 msgid "Unpair from Galaxy?"
 msgstr "取消與 Galaxy 的配對？"
 
-#: settings/device.py:248
+#: settings/device.py:265
 msgid "The link stops working. Setting up again makes a new one."
 msgstr "連結將失效，重新設定會產生新連結。"
 
-#: settings/device.py:252
+#: settings/device.py:269
 msgid "Set up · protected by your password"
 msgstr "已設定 · 受密碼保護"
 
-#: settings/device.py:252
+#: settings/device.py:269
 msgid "Not set up"
 msgstr "未設定"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/device.py:254
+#: settings/device.py:271
 msgid "GALAXY"
 msgstr "GALAXY"
 
-#: settings/device.py:263
+#: settings/device.py:280
 msgid "Your code appears here once you choose a password"
 msgstr "選擇密碼後，代碼會顯示在這裡"
 
-#: settings/device.py:104
-#: settings/search.py:172
+#: settings/device.py:121
+#: settings/search.py:175
 msgid "Phone App"
 msgstr "手機 App"
 
-#: settings/device.py:110
-#: settings/search.py:174
+#: settings/device.py:127
+#: settings/search.py:177
 msgid "Camera Calibration"
 msgstr "攝影機校正"
 
-#: settings/device.py:112
-#: settings/search.py:175
+#: settings/device.py:129
+#: settings/search.py:178
 msgid "How It Works"
 msgstr "運作方式"
 
-#: settings/device.py:112
-#: settings/search.py:175
+#: settings/device.py:129
+#: settings/search.py:178
 msgid "Rules, features and limits"
 msgstr "規則、功能與限制"
 
-#: settings/device.py:113
+#: settings/device.py:130
 msgid "MORE"
 msgstr "更多"
 
-#: settings/device.py:115
-#: settings/search.py:177
+#: settings/device.py:132
+#: settings/search.py:180
 msgid "Device ID and Serial"
 msgstr "裝置 ID 與序號"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/device.py:116
-#: settings/search.py:178
+#: settings/device.py:133
+#: settings/search.py:181
 msgid "IMEI"
 msgstr "IMEI"
 
-#: settings/device.py:112
+#: settings/device.py:129
 msgid "Review"
 msgstr "檢視"
 
-#: settings/device.py:105
+#: settings/device.py:122
 msgid "comma connect · Paired"
 msgstr "comma connect · 已配對"
 
-#: settings/device.py:105
+#: settings/device.py:122
 msgid "comma connect · see drives and change settings on your phone"
 msgstr "comma connect · 在手機上查看行程並變更設定"
 
-#: settings/device.py:107
+#: settings/device.py:124
 msgid "Galaxy · Set up"
 msgstr "Galaxy · 已設定"
 
-#: settings/device.py:107
+#: settings/device.py:124
 msgid "Galaxy · reach this device from a web browser"
 msgstr "Galaxy · 透過瀏覽器存取此裝置"
 
-#: settings/device.py:114
+#: settings/device.py:131
 msgid "View"
 msgstr "檢視"
 
-#: settings/device_sections.py:304
+#: settings/device_sections.py:330
 msgid "Every recorded drive and its video is removed. This can't be undone."
 msgstr "所有行程記錄及其影片都將刪除。此操作無法復原。"
 
-#: settings/device_sections.py:305
+#: settings/device_sections.py:331
 #, python-brace-format, drawn
 msgid "Backup {}"
 msgstr "備份{}"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/device_sections.py:306
+#: settings/device_sections.py:332
 msgid "Remove offline routes, speed limits and street names from this device. Saved places stay saved. Your regions stay chosen, so a scheduled update downloads them again."
 msgstr "Remove offline routes, speed limits and street names from this device. Saved places stay saved. Your regions stay chosen, so a scheduled update downloads them again."
 
-#: settings/device_sections.py:50
-#: settings/maps.py:444
+#: settings/device_sections.py:60
+#: settings/maps.py:469
 msgid "Parked"
 msgstr "已停車"
 
-#: settings/device_sections.py:50
+#: settings/device_sections.py:60
 msgid "Always"
 msgstr "一律"
 
-#: settings/device_sections.py:51
+#: settings/device_sections.py:61
 msgid "Acceleration felt harsh or jerky"
 msgstr "加速生硬或頓挫"
 
-#: settings/device_sections.py:51
+#: settings/device_sections.py:61
 msgid "Braking was too sudden"
 msgstr "煞車過於突然"
 
-#: settings/device_sections.py:51
+#: settings/device_sections.py:61
 msgid "It disengaged when I didn't expect it"
 msgstr "意外退出"
 
-#: settings/device_sections.py:52
+#: settings/device_sections.py:62
 msgid "It felt slow to respond"
 msgstr "反應遲緩"
 
-#: settings/device_sections.py:52
+#: settings/device_sections.py:62
 msgid "An alert was unclear"
 msgstr "警報不清楚"
 
-#: settings/device_sections.py:52
+#: settings/device_sections.py:62
 msgid "My steering wheel buttons aren't working"
 msgstr "方向盤按鈕無法使用"
 
-#: settings/device_sections.py:52
+#: settings/device_sections.py:62
 msgid "Something else"
 msgstr "其他問題"
 
-#: settings/device_sections.py:49
+#: settings/device_sections.py:59
 msgid "Dimmer"
 msgstr "調暗"
 
-#: settings/device_sections.py:49
+#: settings/device_sections.py:59
 msgid "Brighter"
 msgstr "調亮"
 
-#: settings/device_sections.py:301
+#: settings/device_sections.py:327
 #: settings/ram.py:30
 #, python-brace-format
 msgid "{} MB"
 msgstr "{} MB"
 
-#: settings/device_sections.py:314
-#: settings/device_sections.py:185
-#: settings/device_sections.py:314
+#: settings/device_sections.py:340
+#: settings/device_sections.py:209
+#: settings/device_sections.py:340
 msgid "Delete"
 msgstr "刪除"
 
-#: settings/device_sections.py:317
-#: settings/display.py:346
-#: settings/maps.py:244
+#: settings/device_sections.py:343
+#: settings/display.py:366
+#: settings/maps.py:266
 msgid "Offline Maps"
 msgstr "離線地圖"
 
-#: settings/device_sections.py:337
-#: settings/search.py:191
+#: settings/device_sections.py:363
+#: settings/search.py:194
 msgid "Unused Models"
 msgstr "未使用的模型"
 
-#: settings/device_sections.py:341
-#: settings/search.py:192
+#: settings/device_sections.py:368
+#: settings/search.py:195
 msgid "Record Driver Camera"
 msgstr "錄製駕駛攝影機"
 
-#: settings/device_sections.py:341
+#: settings/device_sections.py:368
 msgid "Saved and uploaded with your drives. Restarts openpilot if the car is on."
 msgstr "隨行程儲存並上傳。車輛開啟時會重新啟動 openpilot。"
 
-#: settings/device_sections.py:343
-#: settings/search.py:193
+#: settings/device_sections.py:370
+#: settings/search.py:196
 msgid "Record Microphone"
 msgstr "錄製麥克風"
 
-#: settings/device_sections.py:343
+#: settings/device_sections.py:370
 msgid "Cabin audio in your drive recordings. Restarts openpilot if the car is on."
 msgstr "在行程記錄中錄製車內聲音。車輛開啟時會重新啟動 openpilot。"
 
-#: settings/device_sections.py:158
-#: settings/device_sections.py:171
-#: settings/search.py:184
+#: settings/device_sections.py:180
+#: settings/device_sections.py:194
+#: settings/search.py:187
 msgid "Language"
 msgstr "語言"
 
-#: settings/device_sections.py:175
-#: settings/search.py:30
-#: settings/search.py:181
+#: settings/device_sections.py:198
+#: settings/search.py:31
+#: settings/search.py:184
 msgid "General"
 msgstr "一般"
 
-#: settings/device_sections.py:182
-#: settings/device_sections.py:183
+#: settings/device_sections.py:206
+#: settings/device_sections.py:207
 msgid "Restore"
 msgstr "還原"
 
-#: settings/device_sections.py:226
+#: settings/device_sections.py:252
 msgid "Drives"
 msgstr "行程"
 
-#: settings/device_sections.py:226
-#: sidebar.py:135
-#: sidebar.py:156
+#: settings/device_sections.py:252
+#: sidebar.py:141
+#: sidebar.py:162
 msgid "Maps"
 msgstr "地圖"
 
-#: settings/device_sections.py:226
+#: settings/device_sections.py:252
 msgid "Models"
 msgstr "模型"
 
-#: settings/device_sections.py:313
-#: settings/maps.py:244
+#: settings/device_sections.py:339
+#: settings/maps.py:266
 msgid "Speed limits and curves work without a connection"
 msgstr "速限與彎道功能無須連網"
 
-#: settings/device_sections.py:327
+#: settings/device_sections.py:353
 #, python-brace-format
 msgid "{} downloaded model not in use"
 msgid_plural "{} downloaded models not in use"
 msgstr[0] "{}個已下載但未使用的模型"
 
-#: settings/device_sections.py:327
+#: settings/device_sections.py:353
 msgid "Only the models you use are downloaded"
 msgstr "只下載了您使用的模型"
 
-#: settings/device_sections.py:331
+#: settings/device_sections.py:357
 msgid "Remove unused models?"
 msgstr "移除未使用的模型？"
 
-#: settings/device_sections.py:332
+#: settings/device_sections.py:358
 #, python-brace-format
 msgid "{} model you aren't using is removed. You can download it again from the model catalog."
 msgid_plural "{} models you aren't using are removed. You can download them again from the model catalog."
 msgstr[0] "將移除{}個未使用的模型。您可從模型目錄重新下載。"
 
-#: settings/device_sections.py:358
-#: settings/search.py:30
-#: settings/search.py:188
+#: settings/device_sections.py:385
+#: settings/search.py:31
+#: settings/search.py:191
 msgid "Storage & Data"
 msgstr "儲存空間與資料"
 
-#: settings/device_sections.py:359
+#: settings/device_sections.py:386
 msgid "High-quality recording, logging and error logs are in Tuner Mode."
 msgstr "高品質錄製、記錄與錯誤記錄位於調校模式。"
 
-#: settings/device_sections.py:161
+#: settings/device_sections.py:183
 msgid "For menus and alerts"
 msgstr "用於選單與警報"
 
-#: settings/device_sections.py:169
-#: settings/search.py:182
+#: settings/device_sections.py:192
+#: settings/search.py:185
 msgid "Units"
 msgstr "單位"
 
-#: settings/device_sections.py:169
-#: settings/search.py:182
+#: settings/device_sections.py:192
+#: settings/search.py:185
 msgid "Speed and distance everywhere"
 msgstr "所有位置的速度與距離單位"
 
-#: settings/device_sections.py:170
-#: settings/search.py:183
-#: sidebar.py:170
+#: settings/device_sections.py:193
+#: settings/search.py:186
+#: sidebar.py:176
 msgid "Temperature"
 msgstr "溫度"
 
-#: settings/device_sections.py:170
-#: settings/search.py:183
+#: settings/device_sections.py:193
+#: settings/search.py:186
 msgid "For the weather forecast"
 msgstr "用於天氣預報"
 
-#: settings/device_sections.py:172
-#: settings/search.py:185
+#: settings/device_sections.py:195
+#: settings/search.py:188
 msgid "Screen Brightness"
 msgstr "螢幕亮度"
 
-#: settings/device_sections.py:172
-#: settings/search.py:185
+#: settings/device_sections.py:195
+#: settings/search.py:188
 msgid "Auto follows ambient light, day and night"
 msgstr "自動模式日夜依環境亮度調整"
 
-#: settings/device_sections.py:174
-#: settings/search.py:186
+#: settings/device_sections.py:197
+#: settings/search.py:189
 msgid "Standby"
 msgstr "待機"
 
-#: settings/device_sections.py:174
-#: settings/search.py:186
+#: settings/device_sections.py:197
+#: settings/search.py:189
 msgid "Screen sleeps while driving, wakes for alerts"
 msgstr "駕駛時螢幕休眠，出現警報時喚醒"
 
-#: settings/device_sections.py:194
-#: settings/search.py:30
-#: settings/search.py:187
+#: settings/device_sections.py:219
+#: settings/search.py:31
+#: settings/search.py:190
 msgid "Backups"
 msgstr "備份"
 
-#: settings/device_sections.py:194
+#: settings/device_sections.py:219
 msgid "Snapshots of your settings. Drives aren't included."
 msgstr "設定快照，不包含行程。"
 
-#: settings/device_sections.py:266
+#: settings/device_sections.py:292
 #, python-brace-format
 msgid "{} of {}"
 msgstr "{} / {}"
 
-#: settings/device_sections.py:268
+#: settings/device_sections.py:294
 #, python-brace-format
 msgid "{} of {} used"
 msgstr "已使用{} / {}"
 
-#: settings/device_sections.py:314
+#: settings/device_sections.py:340
 msgid "Delete offline maps?"
 msgstr "刪除離線地圖？"
 
-#: settings/device_sections.py:349
-#: settings/search.py:189
+#: settings/device_sections.py:376
+#: settings/search.py:192
 msgid "Recorded Drives"
 msgstr "已錄製的行程"
 
-#: settings/device_sections.py:349
-#: settings/search.py:189
+#: settings/device_sections.py:376
+#: settings/search.py:192
 msgid "Oldest drives are removed when space runs low"
 msgstr "空間不足時刪除最早的行程"
 
-#: settings/device_sections.py:354
+#: settings/device_sections.py:381
 msgid "RECORDING & UPLOADS"
 msgstr "錄製與上傳"
 
-#: settings/device_sections.py:357
-#: settings/search.py:194
+#: settings/device_sections.py:384
+#: settings/search.py:197
 msgid "Drive logs and video for debugging"
 msgstr "用於除錯的行程記錄與影片"
 
-#: settings/device_sections.py:394
+#: settings/device_sections.py:425
 msgid "Optional"
 msgstr "選填"
 
-#: settings/device_sections.py:404
+#: settings/device_sections.py:435
 msgid "Sent. Thank you!"
 msgstr "已傳送，謝謝！"
 
-#: settings/device_sections.py:404
+#: settings/device_sections.py:435
 msgid "Send report"
 msgstr "傳送回報"
 
-#: settings/device_sections.py:412
+#: settings/device_sections.py:443
 msgid "Details (optional)"
 msgstr "詳細資訊（選填）"
 
-#: settings/device_sections.py:412
+#: settings/device_sections.py:443
 msgid "Where and when it happened"
 msgstr "發生地點與時間"
 
-#: settings/device_sections.py:414
+#: settings/device_sections.py:445
 msgid "Discord name (optional)"
 msgstr "Discord 名稱（選填）"
 
-#: settings/device_sections.py:414
+#: settings/device_sections.py:445
 msgid "So we can follow up"
 msgstr "方便後續聯絡"
 
-#: settings/device_sections.py:182
+#: settings/device_sections.py:206
 msgid "Restore this backup?"
 msgstr "還原此備份？"
 
-#: settings/device_sections.py:182
+#: settings/device_sections.py:206
 #, python-brace-format
 msgid "Your current settings are replaced with {}."
 msgstr "目前設定將被{}取代。"
 
-#: settings/device_sections.py:185
+#: settings/device_sections.py:209
 msgid "Delete this backup?"
 msgstr "刪除此備份？"
 
-#: settings/device_sections.py:185
+#: settings/device_sections.py:209
 #, python-brace-format
 msgid "{} can't be recovered."
 msgstr "{}將無法復原。"
 
-#: settings/device_sections.py:192
-msgid "SAVED"
-msgstr "已儲存"
-
-#: settings/device_sections.py:195
-msgid "Back up now"
-msgstr "立即備份"
-
-#: settings/device_sections.py:350
-msgid "Delete all"
-msgstr "全部刪除"
-
-#: settings/device_sections.py:408
-msgid "What happened?"
-msgstr "發生了什麼？"
-
-#: settings/device_sections.py:413
-msgid "Details"
-msgstr "詳細資訊"
-
-#: settings/device_sections.py:415
-msgid "Discord name"
-msgstr "Discord 名稱"
-
-#: settings/device_sections.py:350
-msgid "Delete all drives?"
-msgstr "刪除所有行程？"
-
-#: settings/device_sections.py:193
+#: settings/device_sections.py:215
 msgid "No backups yet."
 msgstr "尚無備份。"
 
-#: settings/display.py:35
+#: settings/device_sections.py:217
+msgid "SAVED"
+msgstr "已儲存"
+
+#: settings/device_sections.py:220
+msgid "Back up now"
+msgstr "立即備份"
+
+#: settings/device_sections.py:377
+msgid "Delete all"
+msgstr "全部刪除"
+
+#: settings/device_sections.py:439
+msgid "What happened?"
+msgstr "發生了什麼？"
+
+#: settings/device_sections.py:444
+msgid "Details"
+msgstr "詳細資訊"
+
+#: settings/device_sections.py:446
+msgid "Discord name"
+msgstr "Discord 名稱"
+
+#: settings/device_sections.py:377
+msgid "Delete all drives?"
+msgstr "刪除所有行程？"
+
 #: settings/display.py:40
-#: settings/display.py:28
+#: settings/display.py:45
+#: settings/display.py:33
 msgid "Standard"
 msgstr "標準"
 
-#: settings/display.py:40
+#: settings/display.py:45
 msgid "Larger"
 msgstr "較大"
 
-#: settings/display.py:56
+#: settings/display.py:63
 #: selfdrive/selfdrived/events.py:551
 msgid "Be ready to take over at any time"
 msgstr "隨時準備接管車輛"
 
-#: settings/display.py:56
+#: settings/display.py:63
 #: selfdrive/selfdrived/events.py:211
 msgid "Always keep hands on wheel and eyes on road"
 msgstr "隨時雙手握住方向盤，眼睛注視道路"
 
-#: settings/display.py:226
+#: settings/display.py:244
 msgid "Developer UI"
 msgstr "開發者介面"
 
-#: settings/display.py:226
+#: settings/display.py:244
 msgid "Controls metrics bar"
 msgstr "控制指標列"
 
-#: settings/display.py:226
+#: settings/display.py:244
 msgid "Developer widgets"
 msgstr "開發者小工具"
 
-#: settings/display.py:227
+#: settings/display.py:245
 msgid "Side panel with system and controls data."
 msgstr "顯示系統與控制資料的側面板。"
 
-#: settings/display.py:228
+#: settings/display.py:246
 msgid "Distance, gap and speed of the car ahead, plus radar points."
 msgstr "前車距離、時距、速度與雷達點。"
 
-#: settings/display.py:28
+#: settings/display.py:33
 msgid "The usual path and lane lines"
 msgstr "一般路徑與車道線"
 
-#: settings/display.py:29
+#: settings/display.py:34
 msgid "Thin"
 msgstr "纖細"
 
-#: settings/display.py:29
+#: settings/display.py:34
 msgid "A narrower path and lighter lines"
 msgstr "更窄的路徑與更細的線條"
 
-#: settings/display.py:30
+#: settings/display.py:35
 msgid "Rainbow"
 msgstr "彩虹"
 
-#: settings/display.py:30
+#: settings/display.py:35
 msgid "A rainbow path"
 msgstr "彩虹路徑"
 
-#: settings/display.py:31
+#: settings/display.py:36
 msgid "Acceleration"
 msgstr "加速度"
 
-#: settings/display.py:31
+#: settings/display.py:36
 msgid "Green when speeding up, amber when slowing"
 msgstr "加速時綠色，減速時琥珀色"
 
-#: settings/display.py:39
+#: settings/display.py:44
 msgid "Wide"
 msgstr "廣角"
 
-#: settings/display.py:43
+#: settings/display.py:48
 msgid "Tandem"
 msgstr "Tandem"
 
-#: settings/display.py:223
+#: settings/display.py:241
 #, python-brace-format
 msgid "{} path"
 msgstr "{}路徑"
 
-#: settings/display.py:379
+#: settings/display.py:399
 msgid "Startup Message: first line"
 msgstr "啟動訊息：第一行"
 
-#: settings/display.py:220
+#: settings/display.py:238
 msgid "Style banner shown"
 msgstr "顯示風格橫幅"
 
-#: settings/display.py:220
+#: settings/display.py:238
 msgid "Style banner hidden"
 msgstr "隱藏風格橫幅"
 
-#: settings/display.py:266
+#: settings/display.py:284
 msgid "Switching off turns these back off. To change one on its own, turn on Tuner Mode."
 msgstr "關閉後這些選項也會關閉。若要個別變更，請開啟調校模式。"
 
-#: settings/display.py:275
+#: settings/display.py:293
 #, python-brace-format
 msgid "{} sets"
 msgstr "{}設定的選項"
 
-#: settings/display.py:276
+#: settings/display.py:294
 msgid "One switch for the details most drivers never need"
 msgstr "一個開關控制多數駕駛無須關注的細節"
 
-#: settings/display.py:303
-#: settings/driving_tab.py:109
-#: settings/search.py:28
+#: settings/display.py:322
+#: settings/driving_tab.py:124
+#: settings/search.py:29
 msgid "Driving Screen"
 msgstr "駕駛畫面"
 
-#: settings/display.py:314
-#: settings/display.py:334
-#: settings/search.py:115
+#: settings/display.py:333
+#: settings/display.py:353
+#: settings/search.py:118
 msgid "Boot Logo"
 msgstr "開機標誌"
 
-#: settings/display.py:337
-#: settings/driving_tab.py:110
-#: settings/search.py:28
+#: settings/display.py:356
+#: settings/driving_tab.py:125
+#: settings/search.py:29
 msgid "Theme & Startup"
 msgstr "主題與啟動"
 
-#: settings/display.py:347
-#: settings/driving_tab.py:111
-#: settings/search.py:28
+#: settings/display.py:367
+#: settings/driving_tab.py:126
+#: settings/search.py:29
 msgid "Map"
 msgstr "地圖"
 
-#: settings/display.py:348
+#: settings/display.py:368
 msgid "The street name is always shown in the onroad bar. Speed limit sources and their order are in Tuner Mode."
 msgstr "道路名稱一律顯示在駕駛列中。速限來源及其優先順序位於調校模式。"
 
-#: settings/display.py:357
-#: settings/network_tab.py:89
-#: setup.py:99
+#: settings/display.py:377
+#: settings/network_tab.py:101
+#: setup.py:119
 msgid "Next"
 msgstr "下一步"
 
-#: settings/display.py:363
+#: settings/display.py:383
 msgid "Leave empty for the default"
 msgstr "留空使用預設值"
 
-#: settings/display.py:519
+#: settings/display.py:539
 msgid "Acceleration tints the path green when speeding up and amber when slowing. Each value can be changed in Tuner Mode."
 msgstr "加速度樣式在加速時將路徑染成綠色，減速時染成琥珀色。各項數值可在調校模式變更。"
 
-#: settings/display.py:636
+#: settings/display.py:657
 msgid "Whimsy animations cross the road above the bar while you signal; the chevrons by the speed stay."
 msgstr "打方向燈時，趣味動畫會穿過列上方的道路，速度旁的箭頭仍保留。"
 
-#: settings/display.py:284
-#: settings/search.py:103
+#: settings/display.py:303
+#: settings/search.py:106
 msgid "Text Size"
 msgstr "文字大小"
 
-#: settings/display.py:284
-#: settings/search.py:103
+#: settings/display.py:303
+#: settings/search.py:106
 msgid "Larger text and icons on the driving screen"
 msgstr "駕駛畫面上的文字和圖示更大"
 
-#: settings/display.py:286
-#: settings/search.py:104
+#: settings/display.py:305
+#: settings/search.py:107
 msgid "Reduce Motion"
 msgstr "減少動態效果"
 
-#: settings/display.py:286
-#: settings/search.py:104
+#: settings/display.py:305
+#: settings/search.py:107
 msgid "Long street names end in … instead of scrolling"
 msgstr "較長的街道名稱以 … 結尾，不再捲動"
 
-#: settings/display.py:288
-#: settings/search.py:105
+#: settings/display.py:307
+#: settings/search.py:108
 msgid "Camera View"
 msgstr "攝影機視角"
 
-#: settings/display.py:288
-#: settings/search.py:105
+#: settings/display.py:307
+#: settings/search.py:108
 msgid "Wide shows more of the road at low speed"
 msgstr "廣角在低速時顯示更多路面"
 
-#: settings/display.py:290
-#: settings/search.py:106
+#: settings/display.py:309
+#: settings/search.py:109
 msgid "Driver Camera in Reverse"
 msgstr "倒車時顯示駕駛攝影機"
 
-#: settings/display.py:290
-#: settings/search.py:106
+#: settings/display.py:309
+#: settings/search.py:109
 msgid "Shows the inside camera while backing up"
 msgstr "倒車時顯示車內攝影機"
 
-#: settings/display.py:292
-#: settings/search.py:107
+#: settings/display.py:311
+#: settings/search.py:110
 msgid "Driving Style Banner"
 msgstr "駕駛風格橫幅"
 
-#: settings/display.py:292
-#: settings/search.py:107
+#: settings/display.py:311
+#: settings/search.py:110
 msgid "Shows the current style when it changes"
 msgstr "風格變更時顯示目前風格"
 
-#: settings/display.py:294
-#: settings/search.py:108
+#: settings/display.py:313
+#: settings/search.py:111
 msgid "Compass"
 msgstr "指南針"
 
-#: settings/display.py:294
-#: settings/search.py:108
+#: settings/display.py:313
+#: settings/search.py:111
 msgid "Heading beside the street name, like NE"
 msgstr "在道路名稱旁顯示方位，例如 NE"
 
-#: settings/display.py:295
-#: settings/search.py:109
+#: settings/display.py:314
+#: settings/search.py:112
 msgid "Blind Spot Highlights"
 msgstr "盲點標示"
 
-#: settings/display.py:295
-#: settings/search.py:109
+#: settings/display.py:314
+#: settings/search.py:112
 msgid "Colors the screen edge and lane when a car is beside you"
 msgstr "旁邊有車時為螢幕邊緣與車道著色"
 
-#: settings/display.py:297
-#: settings/search.py:110
+#: settings/display.py:316
+#: settings/search.py:113
 msgid "Lead Car Tag"
 msgstr "前車標籤"
 
-#: settings/display.py:297
-#: settings/search.py:110
+#: settings/display.py:316
+#: settings/search.py:113
 msgid "Numbers above the car ahead. Off keeps only the bar under it"
 msgstr "前車上方的數值。關閉後僅保留其下方的條形標記"
 
-#: settings/display.py:298
-#: settings/driving_tab.py:117
+#: settings/display.py:317
+#: settings/driving_tab.py:132
 msgid "POWER USER"
 msgstr "進階使用者"
 
-#: settings/display.py:315
 #: settings/display.py:334
-#: settings/search.py:115
+#: settings/display.py:353
+#: settings/search.py:118
 msgid "Shown while the device starts up"
 msgstr "裝置啟動時顯示"
 
-#: settings/display.py:322
-#: settings/display.py:332
-#: settings/search.py:113
+#: settings/display.py:341
+#: settings/display.py:351
+#: settings/search.py:116
 msgid "Path Style"
 msgstr "路徑樣式"
 
-#: settings/display.py:327
-#: settings/display.py:333
-#: settings/search.py:114
+#: settings/display.py:346
+#: settings/display.py:352
+#: settings/search.py:117
 msgid "Turn Signal"
 msgstr "方向燈"
 
-#: settings/display.py:332
-#: settings/search.py:113
+#: settings/display.py:351
+#: settings/search.py:116
 msgid "Color, width and edges as one preset"
 msgstr "一個預設同時設定顏色、寬度與邊緣"
 
-#: settings/display.py:333
-#: settings/search.py:114
+#: settings/display.py:352
+#: settings/search.py:117
 msgid "Chevrons by the speed, or a whimsical animation"
 msgstr "速度旁的箭頭或趣味動畫"
 
-#: settings/display.py:335
-#: settings/search.py:116
+#: settings/display.py:354
+#: settings/search.py:119
 msgid "Startup Message"
 msgstr "啟動訊息"
 
-#: settings/display.py:342
-#: settings/search.py:117
+#: settings/display.py:362
+#: settings/search.py:120
 msgid "Turn-by-Turn on Screen"
 msgstr "螢幕轉向指引"
 
-#: settings/display.py:342
-#: settings/search.py:117
+#: settings/display.py:362
+#: settings/search.py:120
 msgid "Next turn, arrival time and distance while navigating"
 msgstr "導航時顯示下次轉彎、抵達時間與距離"
 
-#: settings/display.py:344
-#: settings/search.py:118
+#: settings/display.py:364
+#: settings/search.py:121
 msgid "Speed Limit Sign"
 msgstr "速限標誌"
 
-#: settings/display.py:344
-#: settings/search.py:118
+#: settings/display.py:364
+#: settings/search.py:121
 msgid "US style, or the round Vienna style used in most other countries"
 msgstr "美式，或多數其他國家使用的維也納圓形樣式"
 
-#: settings/display.py:346
+#: settings/display.py:366
 msgid "Speed limits and routing without a connection"
 msgstr "無須連網即可使用速限與路線"
 
-#: settings/display.py:374
+#: settings/display.py:394
 msgid "Startup Message: second line"
 msgstr "啟動訊息：第二行"
 
-#: settings/display.py:554
-#: settings/display.py:665
+#: settings/display.py:575
+#: settings/display.py:686
 msgid "No preview"
 msgstr "無預覽"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/display.py:616
+#: settings/display.py:637
 msgid "ESSENTIALS"
 msgstr "ESSENTIALS"
 
-#: settings/display.py:616
+#: settings/display.py:637
 msgid "WHIMSY"
 msgstr "趣味"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/display.py:696
+#: settings/display.py:717
 msgid "RGB"
 msgstr "RGB"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/display.py:701
+#: settings/display.py:722
 msgid "PNG"
 msgstr "PNG"
 
-#: settings/display.py:323
+#: settings/display.py:342
 msgid "Sets path color, width, edges and lane lines together"
 msgstr "同時設定路徑顏色、寬度、邊緣與車道線"
 
-#: settings/display.py:328
+#: settings/display.py:347
 msgid "Plays beside the speed while a blinker is on"
 msgstr "方向燈開啟時在速度旁播放"
 
-#: settings/display.py:300
-#: settings/display.py:302
+#: settings/display.py:319
+#: settings/display.py:321
 #, python-brace-format
 msgid "Sets {} options"
 msgstr "設定{}個選項"
 
-#: settings/display.py:335
-#: settings/search.py:116
+#: settings/display.py:354
+#: settings/search.py:119
 msgid "The banner when you start the car"
 msgstr "啟動車輛時的橫幅"
 
-#: settings/display.py:336
+#: settings/display.py:355
 msgid "Custom"
 msgstr "自訂"
 
-#: settings/driving_tab.py:117
+#: settings/driving_tab.py:132
 msgid "Extra detail and fine tuning, each behind one switch"
 msgstr "額外細節與微調功能，各由一個開關控制"
 
-#: settings/driving_tab.py:129
-#: settings/search.py:24
-#: settings/window.py:44
+#: settings/driving_tab.py:144
+#: settings/search.py:25
+#: settings/window.py:59
 msgid "Driving"
 msgstr "駕駛"
 
-#: settings/driving_tab.py:129
+#: settings/driving_tab.py:144
 msgid "Good defaults are on. Change only what matters to you."
 msgstr "良好的預設已開啟，只需變更您在意的選項。"
 
-#: settings/driving_tab.py:93
+#: settings/driving_tab.py:108
 msgid "SPEED & STEERING"
 msgstr "速度與轉向"
 
-#: settings/driving_tab.py:108
+#: settings/driving_tab.py:123
 msgid "DISPLAY"
 msgstr "顯示"
 
-#: settings/driving_tab.py:115
-#: settings/vehicle.py:62
+#: settings/driving_tab.py:130
+#: settings/vehicle.py:73
 msgid "Detected on the first drive"
 msgstr "首次駕駛時偵測"
 
-#: settings/driving_tab.py:130
-#: settings/search.py:25
-#: settings/search.py:77
+#: settings/driving_tab.py:145
+#: settings/search.py:26
+#: settings/search.py:80
 msgid "Speed & Steering"
 msgstr "速度與轉向"
 
-#: settings/driving_tab.py:131
-#: settings/search.py:25
-#: settings/search.py:102
+#: settings/driving_tab.py:146
+#: settings/search.py:26
+#: settings/search.py:105
 msgid "Display"
 msgstr "顯示"
 
-#: settings/driving_tab.py:134
-#: settings/model.py:291
-#: settings/search.py:25
+#: settings/driving_tab.py:149
+#: settings/model.py:302
+#: settings/search.py:26
 msgid "Driving Model"
 msgstr "駕駛模型"
 
-#: settings/driving_tab.py:136
-#: settings/search.py:26
-#: settings/search.py:130
+#: settings/driving_tab.py:151
+#: settings/search.py:27
+#: settings/search.py:133
 msgid "Vehicle"
 msgstr "車輛"
 
-#: settings/driving_tab.py:138
-#: settings/search.py:26
-#: settings/search.py:134
+#: settings/driving_tab.py:153
+#: settings/search.py:27
+#: settings/search.py:137
 msgid "Assistance"
 msgstr "駕駛輔助"
 
-#: settings/driving_tab.py:94
-#: settings/search.py:27
-#: settings/speed_steering.py:175
+#: settings/driving_tab.py:109
+#: settings/search.py:28
+#: settings/speed_steering.py:181
 msgid "Everyday"
 msgstr "日常"
 
-#: settings/driving_tab.py:95
-#: settings/search.py:27
-#: settings/search.py:88
+#: settings/driving_tab.py:110
+#: settings/search.py:28
+#: settings/search.py:91
 msgid "Vehicle Profile"
 msgstr "車輛設定檔"
 
-#: settings/driving_tab.py:96
-#: settings/search.py:27
-#: settings/search.py:90
+#: settings/driving_tab.py:111
+#: settings/search.py:28
+#: settings/search.py:93
 msgid "Weather"
 msgstr "天氣"
 
-#: settings/driving_tab.py:97
-#: settings/search.py:27
-#: settings/search.py:93
+#: settings/driving_tab.py:112
+#: settings/search.py:28
+#: settings/search.py:96
 msgid "Navigation"
 msgstr "導航"
 
-#: settings/driving_tab.py:136
+#: settings/driving_tab.py:151
 #, python-brace-format
 msgid "{} profile · {}"
 msgstr "{}設定檔 · {}"
 
-#: settings/editors.py:96
+#: settings/editors.py:104
 #, python-brace-format
 msgid "Steps of {}{}. Hold − or + to move faster."
 msgstr "每次調整{}{}。長按 − 或 + 可加快調整。"
 
-#: settings/editors.py:89
+#: settings/editors.py:97
 msgid "Reset to default"
 msgstr "重設為預設值"
 
-#: settings/editors.py:106
+#: settings/editors.py:114
 msgid "Quick picks"
 msgstr "快速選擇"
 
-#: settings/favorites.py:9
+#: settings/favorites.py:17
 #, python-brace-format
 msgid "Favorite {}"
 msgstr "收藏{}"
 
-#: settings/favorites.py:11
+#: settings/favorites.py:19
 msgid " · Not set"
 msgstr " · 未設定"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:209
+#: settings/map_source.py:224
 msgid "Download selected maps"
 msgstr "Download selected maps"
 
 #. English fallback for new map-selection wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:38
+#: settings/map_source.py:49
 msgid "None selected"
 msgstr "None selected"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:77
+#: settings/map_source.py:89
 msgid "Midwest"
 msgstr "Midwest"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:77
+#: settings/map_source.py:89
 msgid "West"
 msgstr "West"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:77
+#: settings/map_source.py:89
 msgid "South"
 msgstr "South"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:77
+#: settings/map_source.py:89
 msgid "Northeast"
 msgstr "Northeast"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:116
-#: settings/maps.py:601
-#: settings/maps.py:614
+#: settings/map_source.py:129
+#: settings/maps.py:640
+#: settings/maps.py:653
 msgid "All maps ready"
 msgstr "All maps ready"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:117
+#: settings/map_source.py:130
 msgid "Choose where you drive"
 msgstr "Choose where you drive"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:160
+#: settings/map_source.py:174
 msgid "Road data ready; offline routes downloading."
 msgstr "Road data ready; offline routes downloading."
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:202
-#: settings/map_source.py:206
-#: settings/maps.py:250
+#: settings/map_source.py:217
+#: settings/map_source.py:221
+#: settings/maps.py:273
 msgid "Update maps"
 msgstr "Update maps"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:204
+#: settings/map_source.py:219
 msgid "Download road data"
 msgstr "Download road data"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:208
+#: settings/map_source.py:223
 #, python-brace-format
 msgid "Download {} MiB"
 msgstr "Download {} MiB"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:85
+#: settings/map_source.py:97
 msgid "Road data ready"
 msgstr "Road data ready"
 
-#: settings/map_source.py:85
-#: sidebar.py:160
+#: settings/map_source.py:97
+#: sidebar.py:166
 msgid "Not downloaded"
 msgstr "未下載"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:86
-#: settings/maps.py:312
+#: settings/map_source.py:98
+#: settings/maps.py:335
 msgid "Routes ready"
 msgstr "Routes ready"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:93
+#: settings/map_source.py:106
 msgid "Already downloaded"
 msgstr "Already downloaded"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:94
+#: settings/map_source.py:107
 msgid "Download missing road data"
 msgstr "Download missing road data"
 
 #. English fallback for new map-selection wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:95
+#: settings/map_source.py:108
 msgid "Removed on update"
 msgstr "Removed on update"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:98
+#: settings/map_source.py:111
 msgid "Routing coverage is not available for every selected region."
 msgstr "Routing coverage is not available for every selected region."
 
 #. English fallback for new map-progress wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:133
+#: settings/map_source.py:147
 msgid "Maps download one region at a time."
 msgstr "Maps download one region at a time."
 
 #. English fallback for approved map-progress wording; translation pending.
-#: settings/map_source.py:162
+#: settings/map_source.py:176
 msgid "Some map data is shared between these states."
 msgstr "Some map data is shared between these states."
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:86
+#: settings/map_source.py:98
 msgid "Routes not downloaded"
 msgstr "Routes not downloaded"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:86
+#: settings/map_source.py:98
 msgid "Routes not available yet"
 msgstr "Routes not available yet"
 
 #. English fallback for new map-selection wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:99
+#: settings/map_source.py:112
 msgid "Updates offline routes to match this selection."
 msgstr "Updates offline routes to match this selection."
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:100
+#: settings/map_source.py:113
 msgid "Downloads all missing map data for this selection."
 msgstr "Downloads all missing map data for this selection."
 
 #. English fallback for approved map-progress wording; translation pending.
-#: settings/map_source.py:134
-#: settings/map_source.py:163
+#: settings/map_source.py:148
+#: settings/map_source.py:177
 msgid "All selected regions are installed together."
 msgstr "All selected regions are installed together."
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:96
+#: settings/map_source.py:109
 msgid "Not available for this region"
 msgstr "Not available for this region"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:97
-#: settings/maps.py:264
+#: settings/map_source.py:110
+#: settings/maps.py:287
 #, python-brace-format
 msgid "{} MiB"
 msgstr "{} MiB"
 
 #. English fallback for new map-progress wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:135
+#: settings/map_source.py:149
 msgid "All selected regions are ready."
 msgstr "All selected regions are ready."
 
 #. English fallback for approved map-progress wording; translation pending.
-#: settings/map_source.py:164
+#: settings/map_source.py:178
 msgid "Road data and offline routes are ready."
 msgstr "Road data and offline routes are ready."
 
-#: settings/maps.py:525
+#: settings/maps.py:550
 msgid "Pauses if you start driving or lose Wi-Fi, and picks up where it stopped. Keep the device powered."
 msgstr "開始駕駛或 Wi-Fi 中斷時暫停，之後從中斷處繼續。請保持裝置供電。"
 
-#: settings/maps.py:29
+#: settings/maps.py:35
 msgid "Weekly"
 msgstr "每週"
 
-#: settings/maps.py:29
+#: settings/maps.py:35
 msgid "Monthly"
 msgstr "每月"
 
-#: settings/maps.py:524
+#: settings/maps.py:549
 msgid "Prepare"
 msgstr "準備"
 
-#: settings/maps.py:524
-#: settings/maps.py:212
-#: settings/maps.py:211
+#: settings/maps.py:549
+#: settings/maps.py:234
+#: settings/maps.py:233
 msgid "Download"
 msgstr "下載"
 
-#: settings/maps.py:524
+#: settings/maps.py:549
 msgid "Install"
 msgstr "安裝"
 
-#: settings/maps.py:252
-#: settings/maps.py:217
+#: settings/maps.py:275
+#: settings/maps.py:239
 msgid "Remove maps"
 msgstr "移除地圖"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:279
-#: settings/speed_steering.py:438
+#: settings/maps.py:302
+#: settings/speed_steering.py:454
 msgid "Routes, speed limits and street names without a connection"
 msgstr "Routes, speed limits and street names without a connection"
 
-#: settings/maps.py:327
+#: settings/maps.py:350
 msgid "U.S. regions"
 msgstr "美國區域"
 
-#: settings/maps.py:327
+#: settings/maps.py:350
 msgid "U.S. states"
 msgstr "美國各州"
 
-#: settings/maps.py:327
+#: settings/maps.py:350
 msgid "Other countries"
 msgstr "其他國家"
 
-#: settings/maps.py:470
+#: settings/maps.py:495
 msgid "Park to delete offline maps"
 msgstr "停車後才能刪除離線地圖"
 
-#: settings/maps.py:475
-#: settings/maps.py:479
-#: settings/model.py:404
+#: settings/maps.py:500
+#: settings/maps.py:504
+#: settings/model.py:419
 msgid "Wait for the download to finish"
 msgstr "請等待下載完成"
 
-#: settings/maps.py:596
+#: settings/maps.py:635
 msgid "You can leave this screen. It keeps going in the background."
 msgstr "可離開此畫面，下載會在背景繼續。"
 
-#: settings/maps.py:154
+#: settings/maps.py:175
 msgid "Choose at least one region"
 msgstr "請至少選擇一個地區"
 
-#: settings/maps.py:162
+#: settings/maps.py:184
 msgid "Cancelling…"
 msgstr "正在取消…"
 
-#: settings/maps.py:164
+#: settings/maps.py:186
 #, python-brace-format
 msgid "Downloading {} · {}%"
 msgstr "正在下載{} · {}%"
 
-#: settings/maps.py:165
+#: settings/maps.py:187
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:253
 msgid "Downloaded"
 msgstr "已下載"
 
-#: settings/maps.py:165
+#: settings/maps.py:187
 msgid "Not downloaded yet"
 msgstr "尚未下載"
 
-#: settings/maps.py:198
+#: settings/maps.py:220
 #, python-brace-format
 msgid "{} of {} files · {}. Pauses if you drive or lose the connection."
 msgstr "{} / {}個檔案 · {}。駕駛或斷網時暫停。"
 
-#: settings/maps.py:212
+#: settings/maps.py:234
 msgid "Update now"
 msgstr "立即更新"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:590
+#: settings/maps.py:629
 #, python-brace-format
 msgid "{} download stopped"
 msgstr "{} download stopped"
 
 #. English fallback for approved map-progress wording; translation pending.
-#: settings/maps.py:594
+#: settings/maps.py:633
 #, python-brace-format
 msgid "{} ready"
 msgstr "{} ready"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:625
+#: settings/maps.py:664
 msgid " · Download stopped"
 msgstr " · Download stopped"
 
-#: settings/maps.py:627
+#: settings/maps.py:666
 #, python-brace-format
 msgid " · about {} min left"
 msgstr " · 約剩{}分鐘"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:687
+#: settings/maps.py:726
 msgid "Paused. Downloads continue when parked on Wi-Fi."
 msgstr "Paused. Downloads continue when parked on Wi-Fi."
 
-#: settings/maps.py:155
+#: settings/maps.py:176
 #, python-brace-format
 msgid "Waiting: {}"
 msgstr "正在等待：{}"
 
-#: settings/maps.py:180
-#: settings/maps.py:558
+#: settings/maps.py:202
+#: settings/maps.py:597
 msgid "Cancel download"
 msgstr "取消下載"
 
-#: settings/maps.py:217
+#: settings/maps.py:239
 msgid "Park to remove maps"
 msgstr "停車後才能移除地圖"
 
-#: settings/maps.py:218
-#: settings/maps.py:252
+#: settings/maps.py:240
+#: settings/maps.py:275
 msgid "Remove offline maps?"
 msgstr "移除離線地圖？"
 
-#: settings/maps.py:223
+#: settings/maps.py:245
 msgid "YOUR REGIONS"
 msgstr "您的地區"
 
-#: settings/maps.py:224
+#: settings/maps.py:246
 msgid "Change them in Choose regions"
 msgstr "在選擇地區中變更"
 
-#: settings/maps.py:234
-#: settings/maps.py:271
+#: settings/maps.py:256
+#: settings/maps.py:294
 msgid "Keep up to date"
 msgstr "保持最新"
 
-#: settings/maps.py:236
+#: settings/maps.py:258
 msgid "Updates download only while parked and online"
 msgstr "僅在停車並連網時下載更新"
 
-#: settings/maps.py:240
+#: settings/maps.py:262
 msgid "Without maps, speed limits need a connection."
 msgstr "沒有地圖時，速限功能需要連網。"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:258
+#: settings/maps.py:281
 msgid "DOWNLOADED REGIONS"
 msgstr "DOWNLOADED REGIONS"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:273
+#: settings/maps.py:296
 msgid "One schedule for road data and offline routes, while parked on Wi-Fi."
 msgstr "One schedule for road data and offline routes, while parked on Wi-Fi."
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:277
+#: settings/maps.py:300
 msgid "Updates keep the current maps until the new maps are ready."
 msgstr "Updates keep the current maps until the new maps are ready."
 
 #. English fallback for new map-selection wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:334
+#: settings/maps.py:357
 msgid "Pick where you drive. Maps for routes, speed limits and street names."
 msgstr "Pick where you drive. Maps for routes, speed limits and street names."
 
-#: settings/maps.py:335
+#: settings/maps.py:358
 msgid "Pick a region, or switch to states for less storage"
 msgstr "選擇區域，或改選各州以節省空間"
 
-#: settings/maps.py:336
+#: settings/maps.py:359
 msgid "Add map regions"
 msgstr "新增地圖地區"
 
-#: settings/maps.py:337
-#: settings/maps.py:650
+#: settings/maps.py:360
+#: settings/maps.py:689
 msgid "REGIONS"
 msgstr "地區"
 
-#: settings/maps.py:368
+#: settings/maps.py:392
 msgid "SELECTED"
 msgstr "已選取"
 
-#: settings/maps.py:444
-#: settings/speed_steering.py:420
-#: sidebar.py:116
+#: settings/maps.py:469
+#: settings/speed_steering.py:436
+#: sidebar.py:122
 msgid "Online"
 msgstr "線上"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:483
+#: settings/maps.py:508
 msgid "Park and end the route to remove maps"
 msgstr "Park and end the route to remove maps"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:559
+#: settings/maps.py:598
 msgid "Retry download"
 msgstr "Retry download"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:590
+#: settings/maps.py:629
 #, python-brace-format
 msgid "{} maps ready"
 msgstr "{} maps ready"
 
 #. English fallback for approved map-progress wording; translation pending.
-#: settings/maps.py:611
+#: settings/maps.py:650
 msgid "Download complete · Building maps"
 msgstr "Download complete · Building maps"
 
 #. English fallback for new map-progress wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:649
+#: settings/maps.py:688
 #, python-brace-format
 msgid "REGIONS · {} OF {} DOWNLOADED"
 msgstr "REGIONS · {} OF {} DOWNLOADED"
 
-#: settings/maps.py:660
+#: settings/maps.py:699
 #, python-brace-format
 msgid "+{} more"
 msgstr "另有{}項"
 
 #. English fallback for new map-progress wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:689
+#: settings/maps.py:728
 msgid "Maps are ready. Existing saved places stay saved."
 msgstr "Maps are ready. Existing saved places stay saved."
 
 #. English fallback for approved map-progress wording; translation pending.
-#: settings/maps.py:690
+#: settings/maps.py:729
 msgid "Both map sets are ready. Existing saved places stay saved."
 msgstr "Both map sets are ready. Existing saved places stay saved."
 
-#: settings/maps.py:230
+#: settings/maps.py:252
 msgid "Add or remove states, regions and countries"
 msgstr "新增或移除州、區域與國家"
 
-#: settings/maps.py:239
-#: settings/maps.py:276
-#: settings/model.py:316
+#: settings/maps.py:261
+#: settings/maps.py:299
+#: settings/model.py:327
 msgid "Storage"
 msgstr "儲存空間"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:260
-#: settings/maps.py:357
+#: settings/maps.py:283
+#: settings/maps.py:381
 msgid "Road data"
 msgstr "Road data"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:260
+#: settings/maps.py:283
 msgid "Speed limits and street names"
 msgstr "Speed limits and street names"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:264
-#: settings/maps.py:360
+#: settings/maps.py:287
+#: settings/maps.py:384
 msgid "Offline routes"
 msgstr "Offline routes"
 
-#: settings/maps.py:411
+#: settings/maps.py:435
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:583
 msgid "Whole U.S."
 msgstr "全美"
 
-#: settings/maps.py:411
+#: settings/maps.py:435
 msgid "Every state and territory"
 msgstr "所有州與屬地"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:591
+#: settings/maps.py:630
 #, python-brace-format
 msgid "Preparing {} maps"
 msgstr "Preparing {} maps"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:601
-#: settings/maps.py:614
+#: settings/maps.py:640
+#: settings/maps.py:653
 msgid "Both map sets ready"
 msgstr "Both map sets ready"
 
 #. English fallback for approved map-progress wording; translation pending.
-#: settings/maps.py:612
+#: settings/maps.py:651
 msgid "Download complete · Checking maps"
 msgstr "Download complete · Checking maps"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:612
+#: settings/maps.py:651
 msgid "Download complete · Installing maps"
 msgstr "Download complete · Installing maps"
 
-#: settings/maps.py:650
+#: settings/maps.py:689
 #, python-brace-format
 msgid "REGIONS · {} OF {} DONE"
 msgstr "地區 · 已完成{} / {}"
 
-#: settings/maps.py:352
+#: settings/maps.py:375
 #, python-brace-format
 msgid "{}: not yet"
 msgstr "{}：尚未完成"
 
 #. English fallback for approved map-progress wording; translation pending.
-#: settings/maps.py:591
+#: settings/maps.py:630
 #, python-brace-format
 msgid "Installing {}"
 msgstr "Installing {}"
 
-#: settings/maps.py:592
+#: settings/maps.py:631
 #, python-brace-format
 msgid "Downloading {}"
 msgstr "正在下載{}"
 
 #. English fallback for new map-progress wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:618
+#: settings/maps.py:657
 #, python-brace-format
 msgid "{} · {} of {}"
 msgstr "{} · {} of {}"
 
-#: settings/maps.py:619
-#: settings/maps.py:623
+#: settings/maps.py:658
+#: settings/maps.py:662
 msgid "Getting ready"
 msgstr "正在準備"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:621
+#: settings/maps.py:660
 #, python-brace-format
 msgid "Offline routes · {} of {} MiB"
 msgstr "Offline routes · {} of {} MiB"
 
-#: settings/maps.py:342
+#: settings/maps.py:365
 msgid "No regions available."
 msgstr "沒有可用地區。"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:623
+#: settings/maps.py:662
 #, python-brace-format
 msgid "Road data · {} of {} files"
 msgstr "Road data · {} of {} files"
 
-#: settings/model.py:291
+#: settings/model.py:302
 msgid "The neural network that steers and judges speed"
 msgstr "負責轉向與判斷速度的神經網路"
 
-#: settings/model.py:299
+#: settings/model.py:310
 msgid "All models"
 msgstr "所有模型"
 
-#: settings/model.py:299
+#: settings/model.py:310
 msgid "Community picks"
 msgstr "社群推薦"
 
-#: settings/model.py:299
-#: settings/model.py:147
-#: settings/model.py:145
+#: settings/model.py:310
+#: settings/model.py:158
+#: settings/model.py:156
 msgid "On device"
 msgstr "裝置上"
 
-#: settings/model.py:64
+#: settings/model.py:69
 msgid "Default model"
 msgstr "預設模型"
 
-#: settings/model.py:104
+#: settings/model.py:114
 msgid "Recommended"
 msgstr "建議"
 
-#: settings/model.py:108
-#: sidebar.py:156
+#: settings/model.py:118
+#: sidebar.py:162
 msgid "Downloading"
 msgstr "正在下載"
 
-#: settings/model.py:109
+#: settings/model.py:119
 msgid "Updates automatically"
 msgstr "自動更新"
 
-#: settings/model.py:109
+#: settings/model.py:119
 msgid "Chosen by you"
 msgstr "由您選擇"
 
-#: settings/model.py:130
-#: settings/model.py:127
+#: settings/model.py:140
+#: settings/model.py:137
 msgid "Use"
 msgstr "使用"
 
-#: settings/model.py:283
+#: settings/model.py:294
 msgid "Browse all"
 msgstr "瀏覽全部"
 
-#: settings/model.py:336
+#: settings/model.py:347
 msgid "Driving models"
 msgstr "駕駛模型"
 
-#: settings/model.py:402
+#: settings/model.py:417
 msgid "Park to remove models"
 msgstr "停車後才能移除模型"
 
-#: settings/model.py:126
-#: settings/model.py:274
+#: settings/model.py:136
+#: settings/model.py:285
 msgid "ACTIVE"
 msgstr "使用中"
 
-#: settings/model.py:146
+#: settings/model.py:157
 #, python-brace-format
 msgid "Downloading · {}"
 msgstr "正在下載 · {}"
 
-#: settings/model.py:148
+#: settings/model.py:159
 msgid "Needs an eGPU"
 msgstr "需要 eGPU"
 
-#: settings/model.py:145
+#: settings/model.py:156
 msgid "Recommended · On device"
 msgstr "建議 · 裝置上"
 
-#: settings/model.py:149
+#: settings/model.py:160
 msgid "Community pick"
 msgstr "社群推薦"
 
-#: settings/model.py:149
+#: settings/model.py:160
 msgid "Available to download"
 msgstr "可供下載"
 
-#: settings/model.py:285
+#: settings/model.py:296
 msgid "OTHER MODELS"
 msgstr "其他模型"
 
-#: settings/model.py:287
+#: settings/model.py:298
 msgid "Available when Use recommended is off. Model randomizer and blacklist are in Tuner Mode."
 msgstr "關閉使用建議模型後可選。模型隨機選擇與封鎖清單位於調校模式。"
 
-#: settings/model.py:310
+#: settings/model.py:321
 #, python-brace-format
 msgid "Remove unused models ({})"
 msgstr "移除未使用的模型（{}）"
 
-#: settings/model.py:310
+#: settings/model.py:321
 msgid "Remove unused models"
 msgstr "移除未使用的模型"
 
-#: settings/model.py:279
-#: settings/search.py:129
+#: settings/model.py:290
+#: settings/search.py:132
 msgid "Use recommended"
 msgstr "使用建議模型"
 
-#: settings/model.py:279
+#: settings/model.py:290
 msgid "Turn off to pick your own"
 msgstr "關閉後自行選擇"
 
-#: settings/model.py:276
+#: settings/model.py:287
 msgid "Chosen for your car. Swaps to newer recommended models automatically."
 msgstr "為您的車輛選擇，自動切換到更新的建議模型。"
 
-#: settings/model.py:277
+#: settings/model.py:288
 msgid "Picked by you"
 msgstr "由您選擇"
 
-#: settings/model.py:320
+#: settings/model.py:331
 msgid "GOOD TO KNOW"
 msgstr "提醒事項"
 
-#: settings/model.py:321
+#: settings/model.py:332
 msgid "One download at a time, paused while driving."
 msgstr "一次下載一個，駕駛時暫停。"
 
-#: settings/model.py:322
+#: settings/model.py:333
 msgid "A new model applies on your next drive."
 msgstr "新模型將在下次駕駛時生效。"
 
-#: settings/model.py:308
+#: settings/model.py:319
 msgid "No models here yet."
 msgstr "暫無模型。"
 
-#: settings/network_tab.py:206
-#: settings/network_tab.py:58
+#: settings/network_tab.py:220
+#: settings/network_tab.py:69
 msgid "Connecting…"
 msgstr "正在連接…"
 
-#: settings/network_tab.py:206
-#: settings/network_tab.py:203
-#: settings/network_tab.py:160
+#: settings/network_tab.py:220
+#: settings/network_tab.py:217
+#: settings/network_tab.py:173
 msgid "Not connected"
 msgstr "未連接"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:207
+#: settings/network_tab.py:221
 msgid "No SIM"
 msgstr "No SIM"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:207
+#: settings/network_tab.py:221
 msgid "No signal"
 msgstr "No signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:207
+#: settings/network_tab.py:221
 msgid "Wi-Fi in use"
 msgstr "Wi-Fi in use"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:207
-#: settings/network_tab.py:200
+#: settings/network_tab.py:221
+#: settings/network_tab.py:214
 msgid "Checking…"
 msgstr "Checking…"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:210
+#: settings/network_tab.py:224
 msgid "Cellular data is connected."
 msgstr "Cellular data is connected."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:211
+#: settings/network_tab.py:225
 msgid "APN saved. Waiting for a cellular data connection."
 msgstr "APN saved. Waiting for a cellular data connection."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:212
+#: settings/network_tab.py:226
 msgid "Cellular data is not connected. Check your APN, signal and carrier account."
 msgstr "Cellular data is not connected. Check your APN, signal and carrier account."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:213
+#: settings/network_tab.py:227
 msgid "No SIM detected. Insert a SIM to use cellular data."
 msgstr "No SIM detected. Insert a SIM to use cellular data."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:214
+#: settings/network_tab.py:228
 msgid "SIM detected. No cellular service. Your APN is saved."
 msgstr "SIM detected. No cellular service. Your APN is saved."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:215
+#: settings/network_tab.py:229
 msgid "Wi-Fi is connected. Cellular data is not confirmed yet."
 msgstr "Wi-Fi is connected. Cellular data is not confirmed yet."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:216
+#: settings/network_tab.py:230
 msgid "Waiting for current modem status."
 msgstr "Waiting for current modem status."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:218
+#: settings/network_tab.py:232
 msgid "Poor signal"
 msgstr "Poor signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:218
+#: settings/network_tab.py:232
 msgid "Moderate signal"
 msgstr "Moderate signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:218
+#: settings/network_tab.py:232
 msgid "Good signal"
 msgstr "Good signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:218
+#: settings/network_tab.py:232
 msgid "Great signal"
 msgstr "Great signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:188
+#: settings/network_tab.py:202
 msgid "SIM detected"
 msgstr "SIM detected"
 
-#: settings/network_tab.py:78
+#: settings/network_tab.py:90
 #, python-brace-format
 msgid "for \"{}\""
 msgstr "用於「{}」"
 
-#: settings/network_tab.py:89
+#: settings/network_tab.py:101
 msgid "Network name"
 msgstr "網路名稱"
 
-#: settings/network_tab.py:102
+#: settings/network_tab.py:114
 #, python-brace-format
 msgid "{} · Couldn't save"
 msgstr "{} · 無法儲存"
 
-#: settings/network_tab.py:121
+#: settings/network_tab.py:134
 msgid "Connected devices will need to reconnect."
 msgstr "已連接的裝置需要重新連接。"
 
-#: settings/network_tab.py:124
+#: settings/network_tab.py:137
 msgid "Hotspot password"
 msgstr "熱點密碼"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/network_tab.py:154
-#: settings/network_tab.py:305
+#: settings/network_tab.py:167
+#: settings/network_tab.py:321
 msgid "APN"
 msgstr "APN"
 
-#: settings/network_tab.py:154
+#: settings/network_tab.py:167
 msgid "Leave empty for automatic"
 msgstr "留空自動設定"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:175
+#: settings/network_tab.py:189
 msgid "Reading cellular status"
 msgstr "Reading cellular status"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:177
+#: settings/network_tab.py:191
 msgid "Cellular data unavailable"
 msgstr "Cellular data unavailable"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:179
+#: settings/network_tab.py:193
 msgid "SIM detected · No cellular service"
 msgstr "SIM detected · No cellular service"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:187
+#: settings/network_tab.py:201
 #, python-brace-format
 msgid "SIM detected · {}"
 msgstr "SIM detected · {}"
 
-#: settings/network_tab.py:291
-#: settings/network_tab.py:289
+#: settings/network_tab.py:307
 #: settings/network_tab.py:305
+#: settings/network_tab.py:321
 msgid "Edit"
 msgstr "編輯"
 
-#: settings/network_tab.py:308
-#: settings/network_tab.py:299
-#: settings/search.py:214
+#: settings/network_tab.py:324
+#: settings/network_tab.py:315
+#: settings/search.py:217
 msgid "Roaming, APN and IP address"
 msgstr "漫遊、APN 與 IP 位址"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:308
+#: settings/network_tab.py:324
 msgid "Status updates automatically while this page is open."
 msgstr "Status updates automatically while this page is open."
 
-#: settings/network_tab.py:78
+#: settings/network_tab.py:90
 msgid "Wrong password"
 msgstr "密碼錯誤"
 
-#: settings/network_tab.py:78
-#: settings/network_tab.py:87
+#: settings/network_tab.py:90
+#: settings/network_tab.py:99
 msgid "Enter password"
 msgstr "輸入密碼"
 
-#: settings/network_tab.py:108
-#: settings/network_tab.py:295
-#: settings/search.py:211
+#: settings/network_tab.py:121
+#: settings/network_tab.py:311
+#: settings/search.py:214
 msgid "Hotspot name"
 msgstr "熱點名稱"
 
-#: settings/network_tab.py:115
+#: settings/network_tab.py:128
 msgid "A saved network already uses this name"
 msgstr "已儲存的網路已使用此名稱"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:184
+#: settings/network_tab.py:198
 #, python-brace-format
 msgid "{} · {}"
 msgstr "{} · {}"
 
-#: settings/network_tab.py:294
-#: settings/search.py:210
+#: settings/network_tab.py:310
+#: settings/search.py:213
 msgid "Hotspot"
 msgstr "熱點"
 
-#: settings/network_tab.py:294
-#: settings/search.py:210
+#: settings/network_tab.py:310
+#: settings/search.py:213
 msgid "Share this device's connection"
 msgstr "分享此裝置的連線"
 
-#: settings/network_tab.py:297
-#: settings/search.py:212
+#: settings/network_tab.py:313
+#: settings/search.py:215
 msgid "Hotspot Password"
 msgstr "熱點密碼"
 
-#: settings/network_tab.py:297
-#: settings/search.py:212
+#: settings/network_tab.py:313
+#: settings/search.py:215
 msgid "For phones joining this device's hotspot"
 msgstr "供連接此裝置熱點的手機使用"
 
-#: settings/network_tab.py:298
-#: settings/search.py:213
+#: settings/network_tab.py:314
+#: settings/search.py:216
 msgid "Save Data"
 msgstr "節省流量"
 
-#: settings/network_tab.py:298
-#: settings/search.py:213
+#: settings/network_tab.py:314
+#: settings/search.py:216
 msgid "No large uploads on cellular or phone hotspots"
 msgstr "行動網路或手機熱點不上傳大型檔案"
 
-#: settings/network_tab.py:304
+#: settings/network_tab.py:320
 msgid "Roaming"
 msgstr "漫遊"
 
-#: settings/network_tab.py:304
+#: settings/network_tab.py:320
 msgid "Use cellular data outside your carrier's network"
 msgstr "在電信業者網路以外使用行動數據"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:307
-#: settings/search.py:215
+#: settings/network_tab.py:323
+#: settings/search.py:218
 msgid "Cellular IP address"
 msgstr "Cellular IP address"
 
-#: settings/network_tab.py:87
+#: settings/network_tab.py:99
 #, python-brace-format
 msgid "for \"{}\", or leave empty for an open network"
 msgstr "用於「{}」，開放網路可留空"
 
-#: settings/network_tab.py:280
+#: settings/network_tab.py:295
 msgid "Scanning for networks…"
 msgstr "正在掃描網路…"
 
-#: settings/network_tab.py:281
-#: settings/search.py:208
+#: settings/network_tab.py:296
+#: settings/search.py:211
 msgid "Join a hidden network"
 msgstr "加入隱藏網路"
 
-#: settings/network_tab.py:112
+#: settings/network_tab.py:125
 msgid "Enter a hotspot name"
 msgstr "輸入熱點名稱"
 
-#: settings/network_tab.py:112
+#: settings/network_tab.py:125
 msgid "Name is too long. Use a shorter name."
 msgstr "名稱過長，請縮短。"
 
-#: settings/network_tab.py:113
+#: settings/network_tab.py:126
 msgid "Use letters, numbers, spaces or punctuation"
 msgstr "使用字母、數字、空白或標點"
 
-#: settings/network_tab.py:272
+#: settings/network_tab.py:287
 msgid "Secured"
 msgstr "加密"
 
-#: settings/network_tab.py:272
+#: settings/network_tab.py:287
 msgid "Open"
 msgstr "開放"
 
-#: settings/network_tab.py:305
+#: settings/network_tab.py:321
 msgid "Automatic"
 msgstr "自動"
 
@@ -4400,1849 +4404,1849 @@ msgstr "保留最近三次行程，並附在問題回報中。重新開機可釋
 msgid "No drive has run low on RAM yet."
 msgstr "還沒有行程出現記憶體不足。"
 
-#: settings/search.py:24
-#: settings/window.py:44
+#: settings/search.py:25
+#: settings/window.py:59
 msgid "Connections"
 msgstr "連線"
 
-#: settings/search.py:29
-#: settings/search.py:146
-#: settings/tuner.py:330
+#: settings/search.py:30
+#: settings/search.py:149
+#: settings/tuner.py:342
 msgid "Steering"
 msgstr "轉向"
 
-#: settings/search.py:29
-#: settings/search.py:153
-#: settings/tuner.py:361
+#: settings/search.py:30
+#: settings/search.py:156
+#: settings/tuner.py:374
 msgid "Gas & Brake"
 msgstr "油門與煞車"
 
-#: settings/search.py:29
-#: settings/search.py:161
-#: settings/tuner.py:428
+#: settings/search.py:30
+#: settings/search.py:164
+#: settings/tuner.py:442
 msgid "Following & Stops"
 msgstr "跟車與停車"
 
-#: settings/search.py:29
-#: settings/search.py:168
-#: settings/tuner.py:582
+#: settings/search.py:30
+#: settings/search.py:171
+#: settings/tuner.py:597
 msgid "Bundle Overrides"
 msgstr "組合設定覆寫"
 
-#: settings/search.py:30
-#: settings/search.py:196
-#: settings/window.py:330
+#: settings/search.py:31
+#: settings/search.py:199
+#: settings/window.py:374
 msgid "Report a Problem"
 msgstr "回報問題"
 
-#: settings/search.py:77
-#: settings/speed_steering.py:175
+#: settings/search.py:80
+#: settings/speed_steering.py:181
 msgid "Driving style, speed limits, lane changes and steering"
 msgstr "駕駛風格、速限、變換車道與轉向"
 
-#: settings/search.py:78
-#: settings/speed_steering.py:142
+#: settings/search.py:81
+#: settings/speed_steering.py:148
 msgid "Driving Style"
 msgstr "駕駛風格"
 
-#: settings/search.py:78
-#: settings/speed_steering.py:143
+#: settings/search.py:81
+#: settings/speed_steering.py:149
 msgid "Sets following gap, acceleration and braking together"
 msgstr "同時設定跟車距離、加速與煞車"
 
-#: settings/search.py:79
-#: settings/speed_steering.py:161
+#: settings/search.py:82
+#: settings/speed_steering.py:167
 msgid "Speed Limits"
 msgstr "速限"
 
-#: settings/search.py:79
-#: settings/speed_steering.py:161
+#: settings/search.py:82
+#: settings/speed_steering.py:167
 msgid "Match sets cruise to the posted limit"
 msgstr "依速限調整會將巡航速度設為標示速限"
 
-#: settings/search.py:80
-#: settings/speed_steering.py:145
+#: settings/search.py:83
+#: settings/speed_steering.py:151
 msgid "Offset"
 msgstr "偏移量"
 
-#: settings/search.py:80
-#: settings/speed_steering.py:145
+#: settings/search.py:83
+#: settings/speed_steering.py:151
 msgid "Added to every matched limit"
 msgstr "加到每個採用的速限上"
 
-#: settings/search.py:81
-#: settings/speed_steering.py:148
+#: settings/search.py:84
+#: settings/speed_steering.py:154
 msgid "Higher limits"
 msgstr "速限提高"
 
-#: settings/search.py:81
-#: settings/speed_steering.py:148
+#: settings/search.py:84
+#: settings/speed_steering.py:154
 msgid "When a posted limit goes up"
 msgstr "標示速限提高時"
 
-#: settings/search.py:82
-#: settings/speed_steering.py:151
+#: settings/search.py:85
+#: settings/speed_steering.py:157
 msgid "Lower limits"
 msgstr "速限降低"
 
-#: settings/search.py:82
-#: settings/speed_steering.py:151
+#: settings/search.py:85
+#: settings/speed_steering.py:157
 msgid "When a posted limit goes down"
 msgstr "標示速限降低時"
 
-#: settings/search.py:83
-#: settings/speed_steering.py:154
+#: settings/search.py:86
+#: settings/speed_steering.py:160
 msgid "MAX follows limits"
 msgstr "MAX 依速限調整"
 
-#: settings/search.py:83
-#: settings/speed_steering.py:154
+#: settings/search.py:86
+#: settings/speed_steering.py:160
 msgid "Each new limit sets MAX, so it slows promptly for lower ones"
 msgstr "每個新速限都設定 MAX，速限降低時會及時減速"
 
-#: settings/search.py:85
-#: settings/speed_steering.py:167
+#: settings/search.py:88
+#: settings/speed_steering.py:173
 msgid "Lane Changes"
 msgstr "變換車道"
 
-#: settings/search.py:85
+#: settings/search.py:88
 msgid "Nudge or Auto"
 msgstr "輕推或自動"
 
-#: settings/search.py:86
-#: settings/speed_steering.py:169
+#: settings/search.py:89
+#: settings/speed_steering.py:175
 msgid "Smart Slowdowns"
 msgstr "智慧減速"
 
-#: settings/search.py:86
-#: settings/speed_steering.py:169
+#: settings/search.py:89
+#: settings/speed_steering.py:175
 msgid "Slows for curves, stop lights and stopped traffic on its own"
 msgstr "自動為彎道、號誌與停止的車流減速"
 
-#: settings/search.py:87
-#: settings/speed_steering.py:171
+#: settings/search.py:90
+#: settings/speed_steering.py:177
 msgid "Always-On Steering"
 msgstr "持續轉向"
 
-#: settings/search.py:87
+#: settings/search.py:90
 msgid "Keeps steering with cruise off"
 msgstr "巡航關閉後仍維持轉向"
 
-#: settings/search.py:88
+#: settings/search.py:91
 msgid "Car, SUV, truck or towing"
 msgstr "轎車、SUV、卡車或拖曳"
 
-#: settings/search.py:89
-#: settings/speed_steering.py:219
+#: settings/search.py:92
+#: settings/speed_steering.py:227
 msgid "Trailer Load"
 msgstr "拖車負重"
 
-#: settings/search.py:89
-#: settings/speed_steering.py:219
+#: settings/search.py:92
+#: settings/speed_steering.py:227
 msgid "Weight of a loaded trailer"
 msgstr "滿載拖車的重量"
 
-#: settings/search.py:90
-#: settings/speed_steering.py:282
+#: settings/search.py:93
+#: settings/speed_steering.py:293
 msgid "Drives more cautiously in bad conditions, using local weather"
 msgstr "依當地天氣，在惡劣條件下更謹慎駕駛"
 
-#: settings/search.py:91
-#: settings/speed_steering.py:279
+#: settings/search.py:94
+#: settings/speed_steering.py:290
 msgid "Warns before rain, snow or storms start, and says when they should stop"
 msgstr "雨雪或風暴開始前提醒，並告知預計結束時間"
 
-#: settings/search.py:93
+#: settings/search.py:96
 msgid "Home, Work and favorites; slows for turns on a route"
 msgstr "住家、公司與收藏；為路線轉彎減速"
 
-#: settings/search.py:94
-#: settings/speed_steering.py:431
+#: settings/search.py:97
+#: settings/speed_steering.py:447
 msgid "Other favorites"
 msgstr "其他收藏"
 
-#: settings/search.py:94
+#: settings/search.py:97
 msgid "Saved places for Where to?"
 msgstr "供「要去哪裡？」使用的已儲存地點"
 
-#: settings/search.py:95
-#: settings/speed_steering.py:432
+#: settings/search.py:98
+#: settings/speed_steering.py:448
 msgid "End Route When Parked"
 msgstr "停車後結束路線"
 
-#: settings/search.py:95
-#: settings/speed_steering.py:432
+#: settings/search.py:98
+#: settings/speed_steering.py:448
 msgid "Clears the destination when you turn off the car"
 msgstr "關閉車輛時清除目的地"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/search.py:96
-#: settings/speed_steering.py:434
+#: settings/search.py:99
+#: settings/speed_steering.py:450
 msgid "Offline maps only"
 msgstr "Offline maps only"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/search.py:96
+#: settings/search.py:99
 msgid "Never use online routing"
 msgstr "Never use online routing"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/search.py:97
-#: settings/speed_steering.py:416
+#: settings/search.py:100
+#: settings/speed_steering.py:432
 msgid "Preferred maps (when available)"
 msgstr "Preferred maps (when available)"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/search.py:97
+#: settings/search.py:100
 msgid "Choose which maps to try first, with a fallback"
 msgstr "Choose which maps to try first, with a fallback"
 
-#: settings/search.py:99
-#: settings/speed_steering.py:439
+#: settings/search.py:102
+#: settings/speed_steering.py:455
 msgid "Mapbox Keys"
 msgstr "Mapbox 金鑰"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/search.py:99
+#: settings/search.py:102
 msgid "Keys for online search, routes and speed limits"
 msgstr "Keys for online search, routes and speed limits"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/search.py:100
-#: settings/search.py:119
+#: settings/search.py:103
+#: settings/search.py:122
 msgid "Speed limits and street names without a connection"
 msgstr "Speed limits and street names without a connection"
 
-#: settings/search.py:102
+#: settings/search.py:105
 msgid "The driving screen, theme and startup, and the map"
 msgstr "駕駛畫面、主題、啟動與地圖"
 
-#: settings/search.py:111
+#: settings/search.py:114
 msgid "Side panel with system and controls data"
 msgstr "顯示系統與控制資料的側面板"
 
-#: settings/search.py:112
+#: settings/search.py:115
 msgid "Distance, gap and speed of the car ahead, plus radar points"
 msgstr "前車距離、時距、速度與雷達點"
 
-#: settings/search.py:121
+#: settings/search.py:124
 msgid "Volume and the optional chimes"
 msgstr "音量與選用提示音"
 
-#: settings/search.py:122
+#: settings/search.py:125
 msgid "One volume for everything, or each group on its own"
 msgstr "所有聲音共用音量，或按群組分別設定"
 
-#: settings/search.py:128
+#: settings/search.py:131
 msgid "The model that drives, and downloading others"
 msgstr "用於駕駛的模型及下載其他模型"
 
-#: settings/search.py:129
+#: settings/search.py:132
 msgid "The recommended driving model"
 msgstr "建議的駕駛模型"
 
-#: settings/search.py:130
+#: settings/search.py:133
 msgid "Your car, its steering wheel buttons and car-specific options"
 msgstr "您的車輛、方向盤按鈕與車型專屬選項"
 
-#: settings/search.py:131
-#: settings/vehicle.py:194
+#: settings/search.py:134
+#: settings/vehicle.py:207
 msgid "Steering Wheel Buttons"
 msgstr "方向盤按鈕"
 
-#: settings/search.py:131
+#: settings/search.py:134
 msgid "What the car's own buttons do while driving"
 msgstr "車輛原有按鈕在駕駛時的操作"
 
-#: settings/search.py:132
-#: settings/vehicle.py:185
+#: settings/search.py:135
+#: settings/vehicle.py:198
 msgid "Auto-Lock Doors"
 msgstr "自動鎖車門"
 
-#: settings/search.py:132
-#: settings/vehicle.py:185
+#: settings/search.py:135
+#: settings/vehicle.py:198
 msgid "Locks when you shift out of park"
 msgstr "排離 P 檔時上鎖"
 
-#: settings/search.py:133
-#: settings/vehicle.py:193
-#: settings/vehicle.py:318
+#: settings/search.py:136
+#: settings/vehicle.py:206
+#: settings/vehicle.py:339
 msgid "More for your car"
 msgstr "更多車輛功能"
 
-#: settings/search.py:133
-#: settings/vehicle.py:193
+#: settings/search.py:136
+#: settings/vehicle.py:206
 msgid "Features specific to your make and model"
 msgstr "品牌與車型專屬功能"
 
-#: settings/search.py:134
+#: settings/search.py:137
 msgid "openpilot's core switches and driver monitoring"
 msgstr "openpilot 核心開關與駕駛監控"
 
-#: settings/search.py:135
+#: settings/search.py:138
 msgid "Adaptive cruise and lane keeping"
 msgstr "主動式定速巡航與車道維持"
 
-#: settings/search.py:136
-#: settings/speed_steering.py:349
+#: settings/search.py:139
+#: settings/speed_steering.py:363
 msgid "Disengage on Gas Pedal"
 msgstr "踩油門時退出"
 
-#: settings/search.py:136
-#: settings/speed_steering.py:349
+#: settings/search.py:139
+#: settings/speed_steering.py:363
 msgid "Pressing the accelerator turns openpilot off"
 msgstr "踩下油門踏板會關閉 openpilot"
 
-#: settings/search.py:137
-#: settings/speed_steering.py:350
+#: settings/search.py:140
+#: settings/speed_steering.py:364
 msgid "Lane Departure Warnings"
 msgstr "車道偏離警告"
 
-#: settings/search.py:137
+#: settings/search.py:140
 msgid "Alerts when you drift over a lane line without signaling"
 msgstr "未打方向燈越過車道線時警告"
 
-#: settings/search.py:138
-#: settings/speed_steering.py:351
+#: settings/search.py:141
+#: settings/speed_steering.py:365
 msgid "Safe Mode"
 msgstr "安全模式"
 
-#: settings/search.py:138
+#: settings/search.py:141
 msgid "Stock tuning, the default model and Relaxed"
 msgstr "原廠調校、預設模型與舒適風格"
 
-#: settings/search.py:139
-#: settings/speed_steering.py:359
+#: settings/search.py:142
+#: settings/speed_steering.py:373
 msgid "Always-On Driver Monitoring"
 msgstr "持續駕駛監控"
 
-#: settings/search.py:139
-#: settings/speed_steering.py:359
+#: settings/search.py:142
+#: settings/speed_steering.py:373
 msgid "Watches for distraction even when openpilot is off"
 msgstr "openpilot 關閉時也監控分心情況"
 
-#: settings/search.py:140
+#: settings/search.py:143
 msgid "Check that it can see your face"
 msgstr "檢查能否看清您的臉部"
 
-#: settings/search.py:142
-#: settings/speed_steering.py:363
+#: settings/search.py:145
+#: settings/speed_steering.py:377
 msgid "Sentry Mode"
 msgstr "哨兵模式"
 
-#: settings/search.py:142
-#: settings/speed_steering.py:363
+#: settings/search.py:145
+#: settings/speed_steering.py:377
 msgid "Pictures in Galaxy if the parked car is bumped"
 msgstr "停放車輛受到碰撞時可在 Galaxy 查看照片"
 
-#: settings/search.py:143
-#: settings/speed_steering.py:365
+#: settings/search.py:146
+#: settings/speed_steering.py:379
 msgid "Sensitivity"
 msgstr "靈敏度"
 
-#: settings/search.py:143
-#: settings/speed_steering.py:365
+#: settings/search.py:146
+#: settings/speed_steering.py:379
 msgid "High notices smaller bumps"
 msgstr "高靈敏度可偵測更輕微的碰撞"
 
-#: settings/search.py:146
+#: settings/search.py:149
 msgid "Learned steering values and the controller"
 msgstr "已學習的轉向參數與控制器"
 
-#: settings/search.py:147
-#: settings/tuner.py:49
+#: settings/search.py:150
+#: settings/tuner.py:57
 msgid "Steering Delay"
 msgstr "轉向延遲"
 
-#: settings/search.py:147
-#: settings/tuner.py:49
+#: settings/search.py:150
+#: settings/tuner.py:57
 msgid "Time from command to wheel response"
 msgstr "從指令到方向盤反應的時間"
 
-#: settings/search.py:148
-#: settings/tuner.py:51
+#: settings/search.py:151
+#: settings/tuner.py:59
 msgid "Friction"
 msgstr "摩擦"
 
-#: settings/search.py:148
-#: settings/tuner.py:51
+#: settings/search.py:151
+#: settings/tuner.py:59
 msgid "Extra torque near center"
 msgstr "接近中立位置時的額外扭力"
 
-#: settings/search.py:149
-#: settings/tuner.py:53
+#: settings/search.py:152
+#: settings/tuner.py:61
 msgid "Lateral Acceleration"
 msgstr "橫向加速度"
 
-#: settings/search.py:149
-#: settings/tuner.py:53
+#: settings/search.py:152
+#: settings/tuner.py:61
 msgid "Torque to cornering scaling"
 msgstr "扭力與過彎加速度的比例"
 
-#: settings/search.py:150
-#: settings/tuner.py:55
+#: settings/search.py:153
+#: settings/tuner.py:63
 msgid "Kp Factor"
 msgstr "Kp 係數"
 
-#: settings/search.py:150
-#: settings/tuner.py:55
+#: settings/search.py:153
+#: settings/tuner.py:63
 msgid "Correction strength"
 msgstr "修正強度"
 
-#: settings/search.py:151
-#: settings/tuner.py:328
+#: settings/search.py:154
+#: settings/tuner.py:340
 msgid "Steering controller"
 msgstr "轉向控制器"
 
-#: settings/search.py:151
+#: settings/search.py:154
 msgid "Vehicle default, neural feedforward or torque"
 msgstr "車輛預設、神經網路前饋或扭矩"
 
-#: settings/search.py:153
+#: settings/search.py:156
 msgid "Acceleration and braking profiles and values"
 msgstr "加速與煞車設定檔及數值"
 
-#: settings/search.py:154
-#: settings/tuner.py:356
+#: settings/search.py:157
+#: settings/tuner.py:369
 msgid "Acceleration Profile"
 msgstr "加速設定檔"
 
-#: settings/search.py:154
-#: settings/tuner.py:356
+#: settings/search.py:157
+#: settings/tuner.py:369
 msgid "How quickly the car speeds up"
 msgstr "車輛加速的快慢"
 
-#: settings/search.py:155
-#: settings/tuner.py:358
+#: settings/search.py:158
+#: settings/tuner.py:371
 msgid "Braking Profile"
 msgstr "煞車設定檔"
 
-#: settings/search.py:155
-#: settings/tuner.py:358
+#: settings/search.py:158
+#: settings/tuner.py:371
 msgid "How early and firmly it slows down"
 msgstr "減速開始時間與強度"
 
-#: settings/search.py:156
-#: settings/tuner.py:58
+#: settings/search.py:159
+#: settings/tuner.py:66
 msgid "Maximum Acceleration"
 msgstr "最大加速度"
 
-#: settings/search.py:156
-#: settings/tuner.py:58
+#: settings/search.py:159
+#: settings/tuner.py:66
 msgid "The hardest openpilot will accelerate"
 msgstr "openpilot 允許的最強加速"
 
-#: settings/search.py:157
-#: settings/tuner.py:60
+#: settings/search.py:160
+#: settings/tuner.py:68
 msgid "Start Acceleration"
 msgstr "起步加速度"
 
-#: settings/search.py:157
-#: settings/tuner.py:60
+#: settings/search.py:160
+#: settings/tuner.py:68
 msgid "How firmly the car pulls away from a stop"
 msgstr "從靜止起步時的加速強度"
 
-#: settings/search.py:158
-#: settings/tuner.py:62
+#: settings/search.py:161
+#: settings/tuner.py:70
 msgid "Stop Acceleration"
 msgstr "停車加速度"
 
-#: settings/search.py:158
-#: settings/tuner.py:62
+#: settings/search.py:161
+#: settings/tuner.py:70
 msgid "Braking held while stopped"
 msgstr "停車時維持的煞車力"
 
-#: settings/search.py:159
-#: settings/tuner.py:64
+#: settings/search.py:162
+#: settings/tuner.py:72
 msgid "Stopping Rate"
 msgstr "停車煞車增長率"
 
-#: settings/search.py:159
-#: settings/tuner.py:64
+#: settings/search.py:162
+#: settings/tuner.py:72
 msgid "How quickly braking builds into a stop"
 msgstr "直至停車時煞車力增加的快慢"
 
-#: settings/search.py:160
-#: settings/tuner.py:66
+#: settings/search.py:163
+#: settings/tuner.py:74
 msgid "Actuator Delay"
 msgstr "致動器延遲"
 
-#: settings/search.py:160
-#: settings/tuner.py:66
+#: settings/search.py:163
+#: settings/tuner.py:74
 msgid "Time from command to gas or brake response"
 msgstr "從指令到油門或煞車反應的時間"
 
-#: settings/search.py:161
+#: settings/search.py:164
 msgid "Following gaps and how the car stops"
 msgstr "跟車距離與停車方式"
 
-#: settings/search.py:162
+#: settings/search.py:165
 msgid "Following Gaps"
 msgstr "跟車距離"
 
-#: settings/search.py:162
+#: settings/search.py:165
 msgid "Relaxed, Standard, Aggressive and Traffic"
 msgstr "舒適、標準、積極與壅塞"
 
-#: settings/search.py:163
-#: settings/tuner.py:70
+#: settings/search.py:166
+#: settings/tuner.py:78
 msgid "Lead Detection Sensitivity"
 msgstr "前車偵測靈敏度"
 
-#: settings/search.py:163
-#: settings/tuner.py:70
+#: settings/search.py:166
+#: settings/tuner.py:78
 msgid "Lower notices cars ahead sooner"
 msgstr "越低越早偵測到前車"
 
-#: settings/search.py:164
-#: settings/tuner.py:72
+#: settings/search.py:167
+#: settings/tuner.py:80
 msgid "Stopped Distance"
 msgstr "停車距離"
 
-#: settings/search.py:164
-#: settings/tuner.py:72
+#: settings/search.py:167
+#: settings/tuner.py:80
 msgid "Extra room left behind a stopped car"
 msgstr "停車時與前車保留的額外空間"
 
-#: settings/search.py:165
-#: settings/tuner.py:422
+#: settings/search.py:168
+#: settings/tuner.py:436
 msgid "Use Radar for Take-Offs"
 msgstr "起步時使用雷達"
 
-#: settings/search.py:165
+#: settings/search.py:168
 msgid "Starts moving as soon as the car ahead pulls away"
 msgstr "前車起步後立即跟隨"
 
-#: settings/search.py:166
-#: settings/tuner.py:424
+#: settings/search.py:169
+#: settings/tuner.py:438
 msgid "Force Stops at Lights"
 msgstr "紅燈強制停車"
 
-#: settings/search.py:166
-#: settings/tuner.py:424
+#: settings/search.py:169
+#: settings/tuner.py:438
 msgid "Comes to a full stop for red lights the model detects"
 msgstr "在模型偵測到的紅燈前完全停車"
 
-#: settings/search.py:167
-#: settings/tuner.py:426
+#: settings/search.py:170
+#: settings/tuner.py:440
 msgid "Cruise Button Step"
 msgstr "巡航按鈕調整幅度"
 
-#: settings/search.py:167
-#: settings/tuner.py:426
+#: settings/search.py:170
+#: settings/tuner.py:440
 msgid "How far one press of + or − moves the set speed"
 msgstr "每次按 + 或 − 時設定速度的變化量"
 
-#: settings/search.py:168
+#: settings/search.py:171
 msgid "Change one option that Developer View or Lead Insights sets"
 msgstr "個別變更開發者檢視或前車資訊設定的選項"
 
-#: settings/search.py:169
+#: settings/search.py:172
 msgid "Bar Metrics"
 msgstr "列指標"
 
-#: settings/search.py:169
+#: settings/search.py:172
 msgid "Up to five values in Developer View's strip"
 msgstr "開發者檢視列中最多五項數值"
 
-#: settings/search.py:171
+#: settings/search.py:174
 msgid "Pairing, remote access, calibration, restart and power"
 msgstr "配對、遠端存取、校正、重新啟動與電源"
 
-#: settings/search.py:172
+#: settings/search.py:175
 msgid "comma connect: see drives and change settings on your phone"
 msgstr "comma connect：在手機上查看行程與變更設定"
 
-#: settings/search.py:173
+#: settings/search.py:176
 msgid "Galaxy: reach this device from a web browser"
 msgstr "Galaxy：透過瀏覽器存取此裝置"
 
-#: settings/search.py:174
+#: settings/search.py:177
 msgid "How the device is mounted"
 msgstr "裝置安裝方式"
 
-#: settings/search.py:176
+#: settings/search.py:179
 msgid "Regulatory information"
 msgstr "法規資訊"
 
-#: settings/search.py:177
+#: settings/search.py:180
 msgid "This device's IDs"
 msgstr "此裝置的識別碼"
 
-#: settings/search.py:178
+#: settings/search.py:181
 msgid "The cellular modem's ID"
 msgstr "行動網路數據機識別碼"
 
-#: settings/search.py:179
+#: settings/search.py:182
 msgid "Restart the device"
 msgstr "重新啟動裝置"
 
-#: settings/search.py:180
+#: settings/search.py:183
 msgid "Turn the device off until the car starts"
 msgstr "關閉裝置，直到車輛啟動"
 
-#: settings/search.py:181
+#: settings/search.py:184
 msgid "Units, language, brightness and standby"
 msgstr "單位、語言、亮度與待機"
 
-#: settings/search.py:184
+#: settings/search.py:187
 msgid "Menus and alerts"
 msgstr "選單與警報"
 
-#: settings/search.py:187
+#: settings/search.py:190
 msgid "Snapshots of your settings"
 msgstr "設定快照"
 
-#: settings/search.py:188
+#: settings/search.py:191
 msgid "What's using space, and recording and uploads"
 msgstr "空間使用、錄製與上傳"
 
-#: settings/search.py:190
+#: settings/search.py:193
 msgid "Delete downloaded map data"
 msgstr "刪除已下載的地圖資料"
 
-#: settings/search.py:191
+#: settings/search.py:194
 msgid "Downloaded models that aren't in use"
 msgstr "已下載但未使用的模型"
 
-#: settings/search.py:192
+#: settings/search.py:195
 msgid "Saved and uploaded with your drives"
 msgstr "隨行程儲存並上傳"
 
-#: settings/search.py:193
+#: settings/search.py:196
 msgid "Cabin audio in your drive recordings"
 msgstr "行程記錄中的車內聲音"
 
-#: settings/search.py:195
+#: settings/search.py:198
 msgid "What was using RAM on drives that ran low"
 msgstr "記憶體不足的行程中佔用記憶體的程式"
 
-#: settings/search.py:196
+#: settings/search.py:199
 msgid "Send what happened to the developers"
 msgstr "向開發者傳送問題經過"
 
-#: settings/search.py:197
+#: settings/search.py:200
 msgid "ADB, SSH and debug modes"
 msgstr "ADB、SSH 與除錯模式"
 
-#: settings/search.py:199
+#: settings/search.py:202
 msgid "Connect over USB or the network"
 msgstr "透過 USB 或網路連接"
 
-#: settings/search.py:200
+#: settings/search.py:203
 msgid "Remote shell access"
 msgstr "遠端終端機存取"
 
-#: settings/search.py:201
+#: settings/search.py:204
 msgid "Adds every public key in a GitHub account"
 msgstr "新增 GitHub 帳號中的所有公開金鑰"
 
-#: settings/search.py:202
+#: settings/search.py:205
 msgid "Drive openpilot's controls from a joystick"
 msgstr "透過搖桿控制 openpilot"
 
-#: settings/search.py:203
+#: settings/search.py:206
 msgid "Turns off the car's emergency braking"
 msgstr "關閉車輛緊急煞車"
 
-#: settings/search.py:206
+#: settings/search.py:209
 msgid "Networks nearby, and joining one"
 msgstr "附近網路與連接"
 
-#: settings/search.py:207
+#: settings/search.py:210
 msgid "IP Address"
 msgstr "IP 位址"
 
-#: settings/search.py:207
+#: settings/search.py:210
 msgid "This device's local address, beside the connected network"
 msgstr "此裝置的區域位址，顯示於已連接網路旁"
 
-#: settings/search.py:208
+#: settings/search.py:211
 msgid "Enter its name and password"
 msgstr "輸入其名稱與密碼"
 
 #. English fallback pending cellular-status translation.
-#: settings/search.py:209
+#: settings/search.py:212
 msgid "Connection status, hotspot, data use, roaming and APN"
 msgstr "Connection status, hotspot, data use, roaming and APN"
 
-#: settings/search.py:211
+#: settings/search.py:214
 msgid "The name phones see when joining this device"
 msgstr "手機連接此裝置時顯示的名稱"
 
 #. English fallback pending cellular-status translation.
-#: settings/search.py:214
+#: settings/search.py:217
 msgid "Roaming, APN and the cellular IP address"
 msgstr "Roaming, APN and the cellular IP address"
 
 #. English fallback pending cellular-status translation.
-#: settings/search.py:215
+#: settings/search.py:218
 msgid "The modem's mobile data address"
 msgstr "The modem's mobile data address"
 
-#: settings/search.py:216
+#: settings/search.py:219
 msgid "A wheel remote's buttons and what they do"
 msgstr "方向盤遙控器的按鈕及其操作"
 
-#: settings/search.py:217
+#: settings/search.py:220
 msgid "Car audio for alerts, and pairing devices"
 msgstr "警報用車輛音響與裝置配對"
 
-#: settings/search.py:219
+#: settings/search.py:222
 msgid "Updates and the release notes"
 msgstr "更新與版本說明"
 
-#: settings/search.py:220
-#: settings/software_tab.py:192
+#: settings/search.py:223
+#: settings/software_tab.py:202
 msgid "Automatic Updates"
 msgstr "自動更新"
 
-#: settings/search.py:220
-#: settings/software_tab.py:192
+#: settings/search.py:223
+#: settings/software_tab.py:202
 msgid "Download while parked, install when you turn off the car"
 msgstr "停車時下載，關閉車輛時安裝"
 
-#: settings/search.py:221
-#: settings/software_tab.py:188
-#: settings/software_tab.py:140
+#: settings/search.py:224
+#: settings/software_tab.py:198
+#: settings/software_tab.py:150
 msgid "Release Channel"
 msgstr "更新頻道"
 
-#: settings/search.py:221
-#: settings/software_tab.py:140
+#: settings/search.py:224
+#: settings/software_tab.py:150
 msgid "The branch to download updates from"
 msgstr "下載更新所用的分支"
 
-#: settings/search.py:222
-#: settings/software_tab.py:195
+#: settings/search.py:225
+#: settings/software_tab.py:205
 msgid "Reset Settings"
 msgstr "重設設定"
 
-#: settings/search.py:222
+#: settings/search.py:225
 msgid "Back to the Essentials defaults"
 msgstr "還原 Essentials 預設值"
 
-#: settings/search.py:223
-#: settings/software_tab.py:169
-#: settings/software_tab.py:198
+#: settings/search.py:226
+#: settings/software_tab.py:179
+#: settings/software_tab.py:208
 msgid "Uninstall"
 msgstr "解除安裝"
 
-#: settings/search.py:223
+#: settings/search.py:226
 msgid "Remove this software from the device"
 msgstr "從裝置中移除此軟體"
 
-#: settings/search.py:400
-#: settings/search.py:391
+#: settings/search.py:403
+#: settings/search.py:394
 msgid "Search settings"
 msgstr "搜尋設定"
 
-#: settings/search.py:289
+#: settings/search.py:292
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "說出設定名稱，例如速限。說完後點選麥克風。"
 
-#: settings/search.py:371
-#: settings/search.py:330
+#: settings/search.py:374
+#: settings/search.py:333
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "沒有符合「{}」的設定"
 
-#: settings/search.py:372
+#: settings/search.py:375
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "輸入設定名稱或功能，例如亮度或變換車道"
 
-#: settings/software_tab.py:37
+#: settings/software_tab.py:43
 msgid "Checking for an update"
 msgstr "正在檢查更新"
 
-#: settings/software_tab.py:37
+#: settings/software_tab.py:43
 msgid "Downloading the update"
 msgstr "正在下載更新"
 
-#: settings/software_tab.py:37
+#: settings/software_tab.py:43
 msgid "Getting the update ready"
 msgstr "正在準備更新"
 
-#: settings/software_tab.py:78
+#: settings/software_tab.py:87
 msgid "You have the latest version"
 msgstr "已是最新版本"
 
-#: settings/software_tab.py:119
+#: settings/software_tab.py:128
 msgid "No release notes for this version."
 msgstr "此版本暫無版本說明。"
 
-#: settings/software_tab.py:47
+#: settings/software_tab.py:55
 msgid "Unknown version"
 msgstr "未知版本"
 
-#: settings/software_tab.py:73
+#: settings/software_tab.py:82
 #, python-brace-format
 msgid "{} installs when you turn off the car or restart"
 msgstr "關閉車輛或重新啟動時安裝{}"
 
-#: settings/software_tab.py:75
+#: settings/software_tab.py:84
 msgid "Couldn't check for updates. Check the connection and try again."
 msgstr "無法檢查更新。請檢查連線後重試。"
 
-#: settings/software_tab.py:77
+#: settings/software_tab.py:86
 msgid "A new version is available to download"
 msgstr "有新版本可供下載"
 
-#: settings/software_tab.py:81
+#: settings/software_tab.py:90
 msgid "Working…"
 msgstr "正在處理…"
 
-#: settings/software_tab.py:81
+#: settings/software_tab.py:90
 msgid "Restart to install"
 msgstr "重新啟動以安裝"
 
-#: settings/software_tab.py:81
+#: settings/software_tab.py:90
 msgid "Try again"
 msgstr "重試"
 
-#: settings/software_tab.py:82
+#: settings/software_tab.py:91
 msgid "Check now"
 msgstr "立即檢查"
 
-#: settings/software_tab.py:125
+#: settings/software_tab.py:134
 #, python-brace-format
 msgid "What's new in {}"
 msgstr "{}的新功能"
 
-#: settings/software_tab.py:169
+#: settings/software_tab.py:179
 msgid "Uninstall openpilot?"
 msgstr "解除安裝 openpilot？"
 
-#: settings/software_tab.py:169
+#: settings/software_tab.py:179
 msgid "The device removes openpilot and starts its setup again."
 msgstr "裝置將移除 openpilot 並重新開始設定。"
 
-#: settings/software_tab.py:71
-#: settings/software_tab.py:65
+#: settings/software_tab.py:80
+#: settings/software_tab.py:73
 msgid "Updating"
 msgstr "正在更新"
 
-#: settings/software_tab.py:99
-#: settings/software_tab.py:99
-#: settings/software_tab.py:99
+#: settings/software_tab.py:108
+#: settings/software_tab.py:108
+#: settings/software_tab.py:108
 msgid "Stable"
 msgstr "穩定版"
 
-#: settings/software_tab.py:188
+#: settings/software_tab.py:198
 msgid "Choose another branch"
 msgstr "選擇其他分支"
 
-#: settings/software_tab.py:188
+#: settings/software_tab.py:198
 msgid "Other branches are in Tuner Mode"
 msgstr "其他分支位於調校模式"
 
-#: settings/software_tab.py:195
+#: settings/software_tab.py:205
 msgid "Back to the Essentials defaults. Backups are kept."
 msgstr "還原 Essentials 預設值，備份會保留。"
 
-#: settings/software_tab.py:65
+#: settings/software_tab.py:73
 msgid "Ready to install"
 msgstr "可供安裝"
 
-#: settings/software_tab.py:65
+#: settings/software_tab.py:73
 msgid "Check failed"
 msgstr "檢查失敗"
 
-#: settings/software_tab.py:66
+#: settings/software_tab.py:74
 msgid "Update available"
 msgstr "有可用更新"
 
-#: settings/software_tab.py:99
+#: settings/software_tab.py:108
 msgid "Beta"
 msgstr "測試版"
 
-#: settings/software_tab.py:158
+#: settings/software_tab.py:168
 msgid "Erase everything?"
 msgstr "清除所有資料？"
 
-#: settings/software_tab.py:158
+#: settings/software_tab.py:168
 msgid "Every setting, drive and download is deleted. This can't be undone."
 msgstr "所有設定、行程與下載都會被刪除。此操作無法復原。"
 
-#: settings/software_tab.py:158
+#: settings/software_tab.py:168
 msgid "Erase"
 msgstr "清除"
 
-#: settings/software_tab.py:166
+#: settings/software_tab.py:176
 msgid "Factory reset too?"
 msgstr "也還原原廠設定？"
 
-#: settings/software_tab.py:166
+#: settings/software_tab.py:176
 msgid "A factory reset also deletes every setting, drive and download. Skip keeps them."
 msgstr "還原原廠設定還會刪除所有設定、行程與下載。略過則保留。"
 
-#: settings/software_tab.py:167
+#: settings/software_tab.py:177
 #: selfdrive/ui/layouts/settings/software.py:350
 msgid "Factory Reset"
 msgstr "還原原廠設定"
 
-#: settings/software_tab.py:180
+#: settings/software_tab.py:190
 #, python-brace-format
 msgid "Version {}"
 msgstr "版本{}"
 
-#: settings/software_tab.py:167
+#: settings/software_tab.py:177
 #: selfdrive/ui/layouts/settings/software.py:350
 msgid "Skip"
 msgstr "略過"
 
-#: settings/software_tab.py:184
+#: settings/software_tab.py:194
 msgid "What's new"
 msgstr "新功能"
 
-#: settings/software_tab.py:196
+#: settings/software_tab.py:206
 msgid "Reset settings?"
 msgstr "重設設定？"
 
-#: settings/software_tab.py:196
+#: settings/software_tab.py:206
 msgid "Every setting goes back to the Essentials default. Your backups are kept."
 msgstr "所有設定還原為 Essentials 預設值。備份會保留。"
 
-#: settings/speed_steering.py:14
-#: settings/tuner.py:76
-#: setup.py:34
+#: settings/speed_steering.py:19
+#: settings/tuner.py:84
+#: setup.py:40
 msgid "Relaxed"
 msgstr "舒適"
 
-#: settings/speed_steering.py:14
-#: settings/tuner.py:76
-#: settings/tuner.py:94
+#: settings/speed_steering.py:19
+#: settings/tuner.py:84
+#: settings/tuner.py:102
 msgid "Sport"
 msgstr "運動"
 
-#: settings/speed_steering.py:15
-#: setup.py:40
+#: settings/speed_steering.py:20
+#: setup.py:46
 msgid "Show"
 msgstr "顯示"
 
-#: settings/speed_steering.py:16
+#: settings/speed_steering.py:21
 msgid "Update automatically"
 msgstr "自動更新"
 
-#: settings/speed_steering.py:16
+#: settings/speed_steering.py:21
 msgid "Tap to confirm"
 msgstr "點選確認"
 
-#: settings/speed_steering.py:17
+#: settings/speed_steering.py:22
 msgid "Nudge"
 msgstr "輕推"
 
-#: settings/speed_steering.py:182
+#: settings/speed_steering.py:188
 msgid "Light"
 msgstr "輕"
 
-#: settings/speed_steering.py:182
+#: settings/speed_steering.py:188
 msgid "Medium"
 msgstr "中"
 
-#: settings/speed_steering.py:182
+#: settings/speed_steering.py:188
 msgid "Heavy"
 msgstr "重"
 
-#: settings/speed_steering.py:180
+#: settings/speed_steering.py:186
 msgid "Car"
 msgstr "轎車"
 
-#: settings/speed_steering.py:180
+#: settings/speed_steering.py:186
 msgid "Standard tuning for most cars and SUVs"
 msgstr "適合多數轎車與 SUV 的標準調校"
 
-#: settings/speed_steering.py:180
+#: settings/speed_steering.py:186
 msgid "Smoother take-off and regen-aware braking"
 msgstr "更平順的起步及考量能量回收的煞車"
 
-#: settings/speed_steering.py:181
+#: settings/speed_steering.py:187
 msgid "Truck"
 msgstr "卡車"
 
-#: settings/speed_steering.py:181
+#: settings/speed_steering.py:187
 msgid "Gentler acceleration for heavier vehicles"
 msgstr "為較重車輛提供更柔和的加速"
 
-#: settings/speed_steering.py:181
+#: settings/speed_steering.py:187
 msgid "Towing"
 msgstr "拖曳"
 
-#: settings/speed_steering.py:181
+#: settings/speed_steering.py:187
 msgid "Truck tuning plus room for a trailer"
 msgstr "卡車調校並為拖車預留空間"
 
-#: settings/speed_steering.py:290
+#: settings/speed_steering.py:301
 msgid "Low"
 msgstr "低"
 
-#: settings/speed_steering.py:290
+#: settings/speed_steering.py:301
 msgid "High"
 msgstr "高"
 
-#: settings/speed_steering.py:171
+#: settings/speed_steering.py:177
 msgid "Keeps steering with cruise off."
 msgstr "巡航關閉後仍維持轉向。"
 
-#: settings/speed_steering.py:174
+#: settings/speed_steering.py:180
 #, python-brace-format
 msgid "{} settings"
 msgstr "{}項設定"
 
-#: settings/speed_steering.py:273
+#: settings/speed_steering.py:284
 msgid "Fog or low visibility"
 msgstr "霧或能見度低"
 
-#: settings/speed_steering.py:273
+#: settings/speed_steering.py:284
 msgid "Longer following gap"
 msgstr "增加跟車距離"
 
-#: settings/speed_steering.py:273
+#: settings/speed_steering.py:284
 msgid "Longer gap, earlier braking"
 msgstr "增加車距，提前煞車"
 
-#: settings/speed_steering.py:274
+#: settings/speed_steering.py:285
 msgid "Heavy rain or storms"
 msgstr "大雨或風暴"
 
-#: settings/speed_steering.py:274
+#: settings/speed_steering.py:285
 msgid "More gap, softer acceleration"
 msgstr "增加車距，柔和加速"
 
-#: settings/speed_steering.py:275
+#: settings/speed_steering.py:286
 msgid "Snow or ice"
 msgstr "雪或冰"
 
-#: settings/speed_steering.py:275
+#: settings/speed_steering.py:286
 msgid "Most gap, gentlest starts and stops"
 msgstr "最大車距，最柔和的起步與停車"
 
-#: settings/speed_steering.py:284
+#: settings/speed_steering.py:295
 msgid "Needs an internet connection. Chips show it ahead and while it lasts."
 msgstr "需要連網。狀態標籤會提前及在天氣持續期間顯示。"
 
-#: settings/speed_steering.py:314
+#: settings/speed_steering.py:327
 msgid "Gas pedal disengages"
 msgstr "踩油門會退出"
 
-#: settings/speed_steering.py:314
+#: settings/speed_steering.py:327
 msgid "Gas pedal doesn't disengage"
 msgstr "踩油門不會退出"
 
-#: settings/speed_steering.py:335
+#: settings/speed_steering.py:348
 msgid "Driver monitoring always on"
 msgstr "駕駛監控一律開啟"
 
-#: settings/speed_steering.py:335
+#: settings/speed_steering.py:348
 msgid "Driver monitoring while engaged"
 msgstr "啟用時監控駕駛"
 
-#: settings/speed_steering.py:353
+#: settings/speed_steering.py:367
 msgid "openpilot's core switches"
 msgstr "openpilot 核心開關"
 
-#: settings/speed_steering.py:368
+#: settings/speed_steering.py:382
 msgid "Watches that you're paying attention"
 msgstr "監控您是否專心駕駛"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/speed_steering.py:442
+#: settings/speed_steering.py:458
 msgid "Saved places and the maps used to calculate your route"
 msgstr "Saved places and the maps used to calculate your route"
 
-#: settings/speed_steering.py:138
+#: settings/speed_steering.py:143
 msgid "Speed limits off"
 msgstr "速限已關閉"
 
-#: settings/speed_steering.py:138
+#: settings/speed_steering.py:143
 msgid "Showing speed limits"
 msgstr "正在顯示速限"
 
-#: settings/speed_steering.py:138
+#: settings/speed_steering.py:143
 msgid "Matching speed limits"
 msgstr "正在依速限調整"
 
-#: settings/speed_steering.py:142
+#: settings/speed_steering.py:148
 msgid "Relaxed while Safe Mode is on"
 msgstr "安全模式開啟時使用舒適風格"
 
-#: settings/speed_steering.py:167
+#: settings/speed_steering.py:173
 #, python-brace-format
 msgid "Auto starts one change per signal, above {} {}"
 msgstr "自動模式在高於{} {}時，每次打方向燈變換一次車道"
 
-#: settings/speed_steering.py:219
+#: settings/speed_steering.py:227
 msgid "Available with Towing"
 msgstr "使用拖曳時可用"
 
-#: settings/speed_steering.py:281
+#: settings/speed_steering.py:292
 msgid "WHAT CHANGES"
 msgstr "變更內容"
 
-#: settings/speed_steering.py:347
+#: settings/speed_steering.py:361
 msgid "Adaptive cruise and lane keeping. Your attention is required at all times."
 msgstr "主動式定速巡航與車道維持。您必須隨時保持注意力。"
 
-#: settings/speed_steering.py:350
+#: settings/speed_steering.py:364
 msgid "Alerts when you drift over a lane line without signaling, above 31 mph (50 km/h)"
 msgstr "高於 31 mph（50 km/h）時，未打方向燈越線會警告"
 
-#: settings/speed_steering.py:351
+#: settings/speed_steering.py:365
 msgid "Uses stock tuning, the default model and Relaxed until turned off."
 msgstr "關閉前會使用原廠調校、預設模型與舒適風格。"
 
-#: settings/speed_steering.py:362
+#: settings/speed_steering.py:376
 msgid "WHILE PARKED"
 msgstr "停車時"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/speed_steering.py:409
+#: settings/speed_steering.py:423
 msgid "Optional for online search and speed-limit filling"
 msgstr "Optional for online search and speed-limit filling"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/speed_steering.py:417
+#: settings/speed_steering.py:433
 msgid "Used when Offline maps only is off."
 msgstr "Used when Offline maps only is off."
 
-#: settings/speed_steering.py:420
-#: sidebar.py:116
-#: sidebar.py:121
+#: settings/speed_steering.py:436
+#: sidebar.py:122
+#: sidebar.py:127
 msgid "Offline"
 msgstr "離線"
 
-#: settings/speed_steering.py:385
+#: settings/speed_steering.py:399
 msgid "Saved place"
 msgstr "已儲存地點"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/speed_steering.py:418
+#: settings/speed_steering.py:434
 msgid "Try online first; fall back to downloaded maps."
 msgstr "Try online first; fall back to downloaded maps."
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/speed_steering.py:419
+#: settings/speed_steering.py:435
 msgid "Try downloaded maps first; fall back to online."
 msgstr "Try downloaded maps first; fall back to online."
 
-#: settings/speed_steering.py:431
+#: settings/speed_steering.py:447
 #, python-brace-format
 msgid "{} saved"
 msgstr "已儲存{}"
 
-#: settings/speed_steering.py:340
+#: settings/speed_steering.py:354
 msgid " Restarts openpilot if the car is on."
 msgstr " 車輛開啟時會重新啟動 openpilot。"
 
-#: settings/speed_steering.py:425
+#: settings/speed_steering.py:441
 msgid "Change"
 msgstr "變更"
 
-#: settings/speed_steering.py:425
+#: settings/speed_steering.py:441
 msgid "Set"
 msgstr "設定"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/speed_steering.py:434
+#: settings/speed_steering.py:450
 msgid "Never use online routing."
 msgstr "Never use online routing."
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/speed_steering.py:435
+#: settings/speed_steering.py:451
 msgid "Use the preferred maps, with a fallback if needed."
 msgstr "Use the preferred maps, with a fallback if needed."
 
-#: settings/speed_steering.py:225
+#: settings/speed_steering.py:233
 msgid "Adjusts acceleration and braking for what you drive"
 msgstr "依車輛類型調整加速與煞車"
 
-#: settings/speed_steering.py:440
+#: settings/speed_steering.py:456
 msgid "How to change"
 msgstr "如何變更"
 
-#: settings/speed_steering.py:440
+#: settings/speed_steering.py:456
 msgid "How to add"
 msgstr "如何新增"
 
-#: settings/tuner.py:566
+#: settings/tuner.py:580
 msgid "Every Tuner Mode change goes back to its default, in every section and bundle. Your other settings stay as they are."
 msgstr "所有區段與組合中的調校模式變更均還原為預設值，其他設定保持不變。"
 
-#: settings/tuner.py:26
-#: settings/tuner.py:292
-#: settings/tuner.py:513
+#: settings/tuner.py:33
+#: settings/tuner.py:304
+#: settings/tuner.py:527
 msgid "Override"
 msgstr "覆寫"
 
-#: settings/tuner.py:26
+#: settings/tuner.py:33
 msgid "Learned"
 msgstr "已學習"
 
-#: settings/tuner.py:26
+#: settings/tuner.py:33
 msgid "From style"
 msgstr "來自風格"
 
-#: settings/tuner.py:78
+#: settings/tuner.py:86
 msgid "Vehicle default"
 msgstr "車輛預設"
 
-#: settings/tuner.py:78
+#: settings/tuner.py:86
 msgid "NNFF auto"
 msgstr "NNFF 自動"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/tuner.py:78
+#: settings/tuner.py:86
 msgid "NNFF"
 msgstr "NNFF"
 
-#: settings/tuner.py:78
+#: settings/tuner.py:86
 msgid "Lite"
 msgstr "Lite"
 
-#: settings/tuner.py:78
+#: settings/tuner.py:86
 msgid "Torque"
 msgstr "扭力"
 
-#: settings/tuner.py:81
+#: settings/tuner.py:89
 msgid "Uses the car's normal controller"
 msgstr "使用車輛的預設控制器"
 
-#: settings/tuner.py:82
+#: settings/tuner.py:90
 msgid "NNFF when available, otherwise Lite"
 msgstr "支援時使用 NNFF，否則使用 Lite"
 
-#: settings/tuner.py:83
+#: settings/tuner.py:91
 msgid "Uses a neural model for your car"
 msgstr "使用適用於車輛的神經網路模型"
 
-#: settings/tuner.py:84
+#: settings/tuner.py:92
 msgid "Uses lightweight neural feedforward"
 msgstr "使用輕量神經網路前饋"
 
-#: settings/tuner.py:85
+#: settings/tuner.py:93
 msgid "Uses the torque steering controller"
 msgstr "使用扭矩轉向控制器"
 
-#: settings/tuner.py:99
+#: settings/tuner.py:107
 msgid "Developer sidebar"
 msgstr "開發者側欄"
 
-#: settings/tuner.py:99
+#: settings/tuner.py:107
 msgid "FPS counter"
 msgstr "FPS 計數器"
 
-#: settings/tuner.py:99
+#: settings/tuner.py:107
 msgid "CPU load"
 msgstr "CPU 負載"
 
-#: settings/tuner.py:99
+#: settings/tuner.py:107
 msgid "GPU load"
 msgstr "GPU 負載"
 
-#: settings/tuner.py:100
+#: settings/tuner.py:108
 msgid "Numeric temperature"
 msgstr "數值溫度"
 
-#: settings/tuner.py:100
+#: settings/tuner.py:108
 msgid "Memory use"
 msgstr "記憶體用量"
 
-#: settings/tuner.py:100
+#: settings/tuner.py:108
 msgid "Adjacent lane widths"
 msgstr "相鄰車道寬度"
 
-#: settings/tuner.py:101
+#: settings/tuner.py:109
 msgid "Speed limit sources"
 msgstr "速限來源"
 
-#: settings/tuner.py:101
+#: settings/tuner.py:109
 msgid "Lead details on the tag"
 msgstr "標籤中的前車資訊"
 
-#: settings/tuner.py:101
+#: settings/tuner.py:109
 msgid "Radar points"
 msgstr "雷達點"
 
-#: settings/tuner.py:102
+#: settings/tuner.py:110
 msgid "Stopping point"
 msgstr "停車點"
 
-#: settings/tuner.py:102
+#: settings/tuner.py:110
 msgid "Stopping point distance"
 msgstr "距停車點的距離"
 
-#: settings/tuner.py:102
+#: settings/tuner.py:110
 msgid "Adjacent paths"
 msgstr "相鄰路徑"
 
-#: settings/tuner.py:103
+#: settings/tuner.py:111
 msgid "Pedals"
 msgstr "踏板"
 
-#: settings/tuner.py:77
+#: settings/tuner.py:85
 msgid "Traffic"
 msgstr "壅塞"
 
-#: settings/tuner.py:94
-#: settings/tuner.py:95
+#: settings/tuner.py:102
+#: settings/tuner.py:103
 msgid "Eco"
 msgstr "節能"
 
-#: settings/tuner.py:276
+#: settings/tuner.py:287
 #, python-brace-format
 msgid "{} changed"
 msgstr "已變更{}項"
 
-#: settings/tuner.py:489
-#: settings/tuner.py:557
+#: settings/tuner.py:503
+#: settings/tuner.py:571
 msgid "Bar metrics"
 msgstr "列指標"
 
-#: settings/tuner.py:561
+#: settings/tuner.py:575
 #, python-brace-format
 msgid "{} of {} items differ from the bundle."
 msgstr "{} / {}項與組合設定不同。"
 
-#: settings/tuner.py:576
+#: settings/tuner.py:591
 msgid "TUNER MODE"
 msgstr "調校模式"
 
-#: settings/tuner.py:330
+#: settings/tuner.py:342
 msgid "Learned values work for most cars. An override replaces the learned value until you reset it."
 msgstr "學習值適用於多數車輛。覆寫值會取代學習值，直到您重設。"
 
-#: settings/tuner.py:361
+#: settings/tuner.py:374
 msgid "Driving Style and Vehicle Profile set these. An override replaces their value."
 msgstr "由駕駛風格與車輛設定檔設定，覆寫值會取代其數值。"
 
-#: settings/tuner.py:405
+#: settings/tuner.py:418
 msgid "Following gap by style"
 msgstr "各風格跟車距離"
 
-#: settings/tuner.py:574
+#: settings/tuner.py:589
 msgid "Reset all tuning?"
 msgstr "重設所有調校？"
 
-#: settings/tuner.py:399
+#: settings/tuner.py:412
 #, python-brace-format
 msgid "{} gap"
 msgstr "{}車距"
 
-#: settings/tuner.py:399
+#: settings/tuner.py:412
 msgid "Seconds behind the car ahead in this Driving Style"
 msgstr "此駕駛風格下與前車的時間間隔（秒）"
 
-#: settings/tuner.py:422
+#: settings/tuner.py:436
 msgid "Starts moving as soon as the radar sees the car ahead pull away"
 msgstr "雷達偵測到前車起步後立即跟隨"
 
-#: settings/tuner.py:490
+#: settings/tuner.py:504
 #, python-brace-format
 msgid "{} of {} picked. They spread evenly across the bar; pick none to hide it."
 msgstr "已選{} / {}項，平均分布於列中；不選則隱藏。"
 
-#: settings/tuner.py:505
+#: settings/tuner.py:519
 msgid "Choose"
 msgstr "選擇"
 
-#: settings/tuner.py:529
+#: settings/tuner.py:543
 msgid "Bundle on"
 msgstr "組合已開啟"
 
-#: settings/tuner.py:529
+#: settings/tuner.py:543
 msgid "Bundle off"
 msgstr "組合已關閉"
 
-#: settings/tuner.py:558
+#: settings/tuner.py:572
 msgid "None: the bar is hidden"
 msgstr "無：列隱藏"
 
-#: settings/tuner.py:584
+#: settings/tuner.py:599
 msgid "Reset all tuning"
 msgstr "重設所有調校"
 
-#: settings/tuner.py:343
+#: settings/tuner.py:356
 msgid "Replaces the profile your Driving Style sets, until you reset it"
 msgstr "取代駕駛風格設定的設定檔，直到重設"
 
-#: settings/vehicle.py:29
+#: settings/vehicle.py:34
 msgid "Car default"
 msgstr "車輛預設值"
 
-#: settings/vehicle.py:29
+#: settings/vehicle.py:34
 msgid "Pause steering"
 msgstr "暫停轉向"
 
-#: settings/vehicle.py:29
+#: settings/vehicle.py:34
 msgid "Pause gas and brake"
 msgstr "暫停油門與煞車"
 
-#: settings/vehicle.py:30
+#: settings/vehicle.py:35
 msgid "Switch experimental mode"
 msgstr "切換實驗模式"
 
-#: settings/vehicle.py:30
+#: settings/vehicle.py:35
 msgid "Traffic mode"
 msgstr "壅塞模式"
 
-#: settings/vehicle.py:30
+#: settings/vehicle.py:35
 msgid "Switchback mode"
 msgstr "連續急彎模式"
 
-#: settings/vehicle.py:31
+#: settings/vehicle.py:36
 msgid "Match the speed limit"
 msgstr "依速限調整"
 
-#: settings/vehicle.py:31
+#: settings/vehicle.py:36
 msgid "Favorite 1"
 msgstr "收藏 1"
 
-#: settings/vehicle.py:31
+#: settings/vehicle.py:36
 msgid "Favorite 2"
 msgstr "收藏 2"
 
-#: settings/vehicle.py:31
+#: settings/vehicle.py:36
 msgid "Favorite 3"
 msgstr "收藏 3"
 
-#: settings/vehicle.py:254
+#: settings/vehicle.py:273
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:883
 #: selfdrive/ui/layouts/settings/starpilot/vehicle.py:78
 msgid "Never"
 msgstr "永不"
 
 #. Unit notation; keep as written.
-#: settings/vehicle.py:254
+#: settings/vehicle.py:273
 msgid "10 s"
 msgstr "10 s"
 
 #. Unit notation; keep as written.
-#: settings/vehicle.py:254
+#: settings/vehicle.py:273
 msgid "30 s"
 msgstr "30 s"
 
-#: settings/vehicle.py:254
+#: settings/vehicle.py:273
 msgid "1 min"
 msgstr "1分鐘"
 
-#: settings/vehicle.py:254
+#: settings/vehicle.py:273
 msgid "2 min"
 msgstr "2分鐘"
 
-#: settings/vehicle.py:254
+#: settings/vehicle.py:273
 msgid "5 min"
 msgstr "5分鐘"
 
-#: settings/vehicle.py:96
+#: settings/vehicle.py:107
 msgid "Buttons customized"
 msgstr "已自訂按鈕"
 
-#: settings/vehicle.py:96
+#: settings/vehicle.py:107
 msgid "Car default buttons"
 msgstr "車輛預設按鈕"
 
-#: settings/vehicle.py:194
+#: settings/vehicle.py:207
 msgid "Preset for your car. Tap a button to change what it does."
 msgstr "已為您的車輛預設。點選按鈕可變更其操作。"
 
-#: settings/vehicle.py:143
+#: settings/vehicle.py:154
 msgid "MAKE"
 msgstr "廠牌"
 
-#: settings/vehicle.py:143
+#: settings/vehicle.py:154
 msgid "MODEL"
 msgstr "車型"
 
-#: settings/vehicle.py:157
+#: settings/vehicle.py:170
 msgid "Choose your car"
 msgstr "選擇車輛"
 
-#: settings/vehicle.py:176
+#: settings/vehicle.py:189
 msgid "YOUR CAR"
 msgstr "您的車輛"
 
-#: settings/vehicle.py:228
-#: settings/vehicle.py:232
-#: settings/vehicle.py:231
+#: settings/vehicle.py:246
+#: settings/vehicle.py:250
+#: settings/vehicle.py:249
 msgid "Press"
 msgstr "短按"
 
-#: settings/vehicle.py:229
+#: settings/vehicle.py:247
 msgid "Long press"
 msgstr "長按"
 
-#: settings/vehicle.py:232
+#: settings/vehicle.py:250
 msgid "Cruise main"
 msgstr "巡航主按鈕"
 
-#: settings/vehicle.py:303
-#: settings/vehicle.py:352
+#: settings/vehicle.py:324
+#: settings/vehicle.py:374
 msgid "Lock doors after"
 msgstr "延時鎖門"
 
-#: settings/vehicle.py:317
+#: settings/vehicle.py:338
 msgid "Nothing extra for this car. Everything it supports is on the Vehicle page."
 msgstr "此車沒有額外選項，所有支援的功能均在車輛頁面。"
 
-#: settings/vehicle.py:318
+#: settings/vehicle.py:339
 msgid "Options only some makes and models have"
 msgstr "僅部分廠牌與車型支援的選項"
 
-#: settings/vehicle.py:333
+#: settings/vehicle.py:355
 msgid "Use the car's own cruise control"
 msgstr "使用車輛內建巡航控制"
 
-#: settings/vehicle.py:334
+#: settings/vehicle.py:356
 msgid "Turns off openpilot's gas and brake control. openpilot restarts if the car is on."
 msgstr "關閉 openpilot 的油門與煞車控制。車輛開啟時會重新啟動 openpilot。"
 
-#: settings/vehicle.py:158
+#: settings/vehicle.py:171
 msgid "Only needed if detection picked the wrong car. Choosing turns off automatic detection."
 msgstr "僅在車輛辨識錯誤時需要。手動選擇會關閉自動偵測。"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/vehicle.py:231
+#: settings/vehicle.py:249
 msgid "LKAS"
 msgstr "LKAS"
 
-#: settings/vehicle.py:236
+#: settings/vehicle.py:254
 msgid "Mode"
 msgstr "模式"
 
-#: settings/vehicle.py:236
+#: settings/vehicle.py:254
 msgid "Star"
 msgstr "星號"
 
-#: settings/vehicle.py:288
+#: settings/vehicle.py:309
 msgid "This needs a panda firmware update, and the device restarts when it's done."
 msgstr "需要更新 panda 韌體，完成後裝置會重新啟動。"
 
-#: settings/vehicle.py:288
+#: settings/vehicle.py:309
 msgid "Update and restart"
 msgstr "更新並重新啟動"
 
-#: settings/vehicle.py:305
+#: settings/vehicle.py:326
 msgid "How long after you turn off the car"
 msgstr "關閉車輛後的等待時間"
 
-#: settings/vehicle.py:335
+#: settings/vehicle.py:357
 msgid "openpilot stops controlling gas and brakes; the car's adaptive cruise takes over. openpilot restarts if the car is on."
 msgstr "openpilot 停止控制油門與煞車，由車輛主動式定速巡航接管。車輛開啟時會重新啟動 openpilot。"
 
-#: settings/vehicle.py:337
+#: settings/vehicle.py:359
 msgid "Pedal for gas and brake"
 msgstr "使用 pedal 控制油門與煞車"
 
-#: settings/vehicle.py:337
+#: settings/vehicle.py:359
 msgid "Use the comma pedal for openpilot's speed control"
 msgstr "使用 comma pedal 進行 openpilot 速度控制"
 
-#: settings/vehicle.py:338
+#: settings/vehicle.py:360
 msgid "Offsets on the dash"
 msgstr "儀表板偏移量"
 
-#: settings/vehicle.py:338
+#: settings/vehicle.py:360
 msgid "Show set-speed offsets on the dashboard"
 msgstr "在儀表板顯示設定速度偏移量"
 
-#: settings/vehicle.py:340
+#: settings/vehicle.py:362
 msgid "CAN ignition only"
 msgstr "僅 CAN 點火"
 
-#: settings/vehicle.py:340
+#: settings/vehicle.py:362
 msgid "Start only from the car's CAN ignition, not the ignition wire"
 msgstr "僅依車輛 CAN 點火訊號啟動，忽略點火線"
 
-#: settings/vehicle.py:341
+#: settings/vehicle.py:363
 msgid "Remote start wakes the device"
 msgstr "遠端啟動車輛時喚醒裝置"
 
-#: settings/vehicle.py:341
+#: settings/vehicle.py:363
 msgid "Starting the car remotely starts openpilot too"
 msgstr "遠端啟動車輛時也啟動 openpilot"
 
-#: settings/vehicle.py:343
-#: settings/vehicle.py:347
-#: settings/vehicle.py:354
+#: settings/vehicle.py:365
+#: settings/vehicle.py:369
+#: settings/vehicle.py:376
 msgid "Stop and go"
 msgstr "走走停停"
 
-#: settings/vehicle.py:343
+#: settings/vehicle.py:365
 msgid "Keep going after a stop on Volts that don't do it themselves"
 msgstr "讓無法自行恢復的 Volt 在停車後繼續行駛"
 
-#: settings/vehicle.py:345
+#: settings/vehicle.py:367
 msgid "Brake hold"
 msgstr "煞車維持"
 
-#: settings/vehicle.py:345
+#: settings/vehicle.py:367
 msgid "Hold after cruise times out at a stop, and go again when traffic moves"
 msgstr "停車時巡航逾時後維持煞車，車流移動時繼續行駛"
 
-#: settings/vehicle.py:347
+#: settings/vehicle.py:369
 msgid "Keep going after a stop"
 msgstr "停車後繼續行駛"
 
-#: settings/vehicle.py:351
+#: settings/vehicle.py:373
 msgid "Auto-unlock doors"
 msgstr "自動解鎖車門"
 
-#: settings/vehicle.py:351
+#: settings/vehicle.py:373
 msgid "Unlocks when you shift into park"
 msgstr "排入 P 檔時解鎖"
 
-#: settings/vehicle.py:352
+#: settings/vehicle.py:374
 msgid "Locks the doors a while after you turn off the car"
 msgstr "關閉車輛一段時間後鎖門"
 
-#: settings/vehicle.py:354
+#: settings/vehicle.py:376
 msgid "Keep going after a stop on Toyotas that don't do it themselves"
 msgstr "讓無法自行恢復的 Toyota 在停車後繼續行駛"
 
-#: settings/vehicle.py:356
+#: settings/vehicle.py:378
 msgid "Use Cancel as a button"
 msgstr "將 Cancel 用作可指派按鈕"
 
-#: settings/vehicle.py:356
+#: settings/vehicle.py:378
 msgid "Map the Cancel button like the other steering wheel buttons"
 msgstr "像其他方向盤按鈕一樣指派 Cancel 按鈕"
 
-#: settings/vehicle.py:358
+#: settings/vehicle.py:380
 msgid "EV remote climate wakes the device"
 msgstr "電動車遠端空調喚醒裝置"
 
-#: settings/vehicle.py:358
+#: settings/vehicle.py:380
 msgid "Remote climate starts openpilot too"
 msgstr "遠端空調也會啟動 openpilot"
 
-#: settings/vehicle.py:359
+#: settings/vehicle.py:381
 msgid "Nostalgia mode"
 msgstr "懷舊模式"
 
-#: settings/vehicle.py:359
+#: settings/vehicle.py:381
 msgid "The left paddle pauses openpilot's gas and brake control"
 msgstr "左撥片暫停 openpilot 油門與煞車控制"
 
-#: settings/vehicle.py:178
+#: settings/vehicle.py:191
 msgid "Chosen manually"
 msgstr "已手動選擇"
 
-#: settings/vehicle.py:178
+#: settings/vehicle.py:191
 msgid "Detected automatically"
 msgstr "已自動偵測"
 
-#: settings/vehicle.py:349
+#: settings/vehicle.py:371
 msgid "Stop and go with a manual parking brake"
 msgstr "手動駐車煞車車輛的走走停停"
 
-#: settings/vehicle.py:349
+#: settings/vehicle.py:371
 msgid "For cars with a hand brake"
 msgstr "適用於手煞車車輛"
 
-#: settings/vehicle.py:181
+#: settings/vehicle.py:194
 msgid "Use detection instead"
 msgstr "改用自動偵測"
 
-#: settings/vehicle.py:181
+#: settings/vehicle.py:194
 msgid "Wrong car? Choose it manually"
 msgstr "車輛不正確？請手動選擇"
 
-#: settings/vehicle.py:285
+#: settings/vehicle.py:306
 msgid "Updating the panda"
 msgstr "正在更新 panda"
 
-#: settings/vehicle.py:285
+#: settings/vehicle.py:306
 msgid "The device restarts when it's done. Keep the car on until then."
 msgstr "完成後裝置會重新啟動。請保持車輛開啟直到完成。"
 
-#: settings/vehicle.py:287
+#: settings/vehicle.py:308
 msgid "Turn on"
 msgstr "開啟"
 
-#: settings/vehicle.py:287
+#: settings/vehicle.py:308
 msgid "Turn off"
 msgstr "關閉"
 
-#: settings/window.py:324
+#: settings/window.py:368
 msgid "DEVICE"
 msgstr "裝置"
 
-#: setup.py:33
+#: setup.py:39
 msgid "driving style"
 msgstr "駕駛風格"
 
-#: setup.py:33
+#: setup.py:39
 msgid "How should your car drive?"
 msgstr "希望車輛如何駕駛？"
 
-#: setup.py:38
+#: setup.py:44
 msgid "speed limits"
 msgstr "速限"
 
-#: setup.py:38
+#: setup.py:44
 msgid "What should it do with speed limits?"
 msgstr "如何處理速限？"
 
-#: setup.py:43
+#: setup.py:49
 msgid "lane changes"
 msgstr "變換車道"
 
-#: setup.py:43
+#: setup.py:49
 msgid "How should lane changes start?"
 msgstr "如何開始變換車道？"
 
-#: setup.py:117
+#: setup.py:137
 msgid "You can change all of these later in Settings › Driving."
 msgstr "之後可在設定 › 駕駛中變更這些選項。"
 
-#: setup.py:108
+#: setup.py:128
 #, python-brace-format
 msgid "STEP {} OF {}"
 msgstr "第{}步，共{}步"
 
-#: setup.py:118
+#: setup.py:138
 #, python-brace-format
 msgid "Next: {}. You can change all of these later."
 msgstr "下一項：{}。之後均可變更。"
 
-#: setup.py:34
+#: setup.py:40
 msgid "Longer following gap, gentle starts and early, soft braking."
 msgstr "較大跟車距離，柔和起步，提前輕柔煞車。"
 
-#: setup.py:35
+#: setup.py:41
 msgid "Standard · recommended"
 msgstr "標準 · 建議"
 
-#: setup.py:35
+#: setup.py:41
 msgid "Keeps pace with traffic. A good fit for most drivers and roads."
 msgstr "跟隨車流，適合多數駕駛與道路。"
 
-#: setup.py:36
+#: setup.py:42
 msgid "Shorter gap, quicker acceleration and later braking."
 msgstr "較短車距、更快加速、更晚煞車。"
 
-#: setup.py:39
+#: setup.py:45
 msgid "Speed limits aren't shown or used."
 msgstr "不顯示也不使用速限。"
 
-#: setup.py:40
+#: setup.py:46
 msgid "Shows the limit next to your speed. You set the speed."
 msgstr "在車速旁顯示速限，由您設定速度。"
 
-#: setup.py:41
+#: setup.py:47
 msgid "Match · recommended"
 msgstr "依速限調整 · 建議"
 
-#: setup.py:41
+#: setup.py:47
 msgid "Sets cruise to the limit plus 3. Asks before speeding up."
 msgstr "將巡航設為速限加 3，加速前會詢問。"
 
-#: setup.py:44
+#: setup.py:50
 msgid "Nudge · recommended"
 msgstr "輕推 · 建議"
 
-#: setup.py:44
+#: setup.py:50
 msgid "Signal, then nudge the wheel toward the lane."
 msgstr "打方向燈，再朝目標車道輕推方向盤。"
 
-#: setup.py:45
+#: setup.py:51
 msgid "Signal and the car changes lanes when it's clear."
 msgstr "打方向燈，車道安全時車輛會變換車道。"
 
-#: setup.py:96
+#: setup.py:116
 msgid "Use defaults"
 msgstr "使用預設值"
 
-#: setup.py:97
+#: setup.py:117
 msgid "Back"
 msgstr "返回"
 
-#: setup.py:99
+#: setup.py:119
 msgid "Start driving"
 msgstr "開始駕駛"
 
-#: setup.py:118
+#: setup.py:138
 msgid ", then "
 msgstr "，接著"
 
-#: sidebar.py:116
+#: sidebar.py:122
 msgid "comma connect"
 msgstr "comma connect"
 
-#: sidebar.py:122
-#: sidebar.py:121
+#: sidebar.py:128
+#: sidebar.py:127
 msgid "Network"
 msgstr "網路"
 
-#: sidebar.py:66
+#: sidebar.py:72
 msgid "Settings"
 msgstr "設定"
 
-#: sidebar.py:70
+#: sidebar.py:76
 msgid "Recording audio"
 msgstr "正在錄音"
 
-#: sidebar.py:135
+#: sidebar.py:141
 msgid "Checking"
 msgstr "正在檢查"
 
-#: sidebar.py:165
+#: sidebar.py:171
 msgid "Good"
 msgstr "良好"
 
-#: sidebar.py:165
+#: sidebar.py:171
 msgid "Warm"
 msgstr "偏暖"
 
-#: sidebar.py:165
+#: sidebar.py:171
 msgid "Hot"
 msgstr "高溫"
 
-#: voice.py:36
+#: voice.py:37
 msgid "Didn't catch that. Tap the mic to try again."
 msgstr "未能聽清。點選麥克風重試。"
 
-#: voice.py:37
+#: voice.py:38
 msgid "The microphone isn't available right now."
 msgstr "目前無法使用麥克風。"
 
-#: voice.py:38
+#: voice.py:39
 msgid "Voice typing can't hear the microphone while driving right now. Try again parked."
 msgstr "目前駕駛時語音輸入無法聽到麥克風。請停車後重試。"
 
-#: voice.py:39
+#: voice.py:40
 msgid "Couldn't download the speech model. Check the connection and try again."
 msgstr "無法下載語音模型。請檢查連線後重試。"
 
-#: voice.py:40
+#: voice.py:41
 msgid "Voice typing didn't work this time. Try again or type it."
 msgstr "本次語音輸入失敗。請重試或手動輸入。"
 
-#: voice.py:189
+#: voice.py:200
 msgid "Type instead"
 msgstr "改用鍵盤輸入"
 
-#: voice.py:202
+#: voice.py:214
 msgid "Listening"
 msgstr "正在聆聽"
 
-#: voice.py:197
+#: voice.py:209
 msgid "Getting voice typing ready"
 msgstr "正在準備語音輸入"
 
-#: voice.py:197
+#: voice.py:209
 msgid "One-time setup for the speech model and voice engine. Everything stays on this device."
 msgstr "一次性設定語音模型與引擎。所有資料保留在此裝置上。"
 
-#: voice.py:199
+#: voice.py:211
 msgid "Writing it down"
 msgstr "正在轉寫"
 
-#: voice.py:199
+#: voice.py:211
 msgid "This takes a few seconds. You can edit the words after."
 msgstr "需要幾秒鐘，之後可編輯文字。"
 
-#: voice.py:201
+#: voice.py:213
 msgid "Voice typing"
 msgstr "語音輸入"
 

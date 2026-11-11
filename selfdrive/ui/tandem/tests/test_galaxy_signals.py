@@ -9,7 +9,7 @@ REPO_ROOT = Path(__file__).resolve().parents[4]
 the_galaxy = SimpleNamespace(BUNDLED_SIGNAL_ANIMATIONS=signals.BUNDLED_SIGNAL_ANIMATIONS)
 BUNDLED = [
   "sequential", "flow", "open_flow", "glide",
-  "frog", "pouncing_cat", "shooting_star", "bouncing_ball",
+  "frog", "pouncing_cat", "shooting_star", "bouncing_ball", "unicorn_rider",
 ]
 
 

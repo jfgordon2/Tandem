@@ -114,7 +114,7 @@ ENTRIES: list[Entry] = [
   Entry(N_("Developer View"), N_("Side panel with system and controls data"), 0, D, 0, "developer ui metrics"),
   Entry(N_("Lead Insights"), N_("Distance, gap and speed of the car ahead, plus radar points"), 0, D, 0, "lead metrics radar"),
   Entry(N_("Path Style"), N_("Color, width and edges as one preset"), 0, D, 1, "rainbow path lane lines"),
-  Entry(N_("Turn Signal"), N_("Chevrons by the speed, or a whimsical animation"), 0, D, 1, "frog cat ball blinker animation"),
+  Entry(N_("Turn Signal"), N_("Chevrons by the speed, or a whimsical animation"), 0, D, 1, "frog cat ball unicorn dinosaur blinker animation"),
   Entry(N_("Boot Logo"), N_("Shown while the device starts up"), 0, D, 1),
   Entry(N_("Startup Message"), N_("The banner when you start the car"), 0, D, 1),
   Entry(N_("Turn-by-Turn on Screen"), N_("Next turn, arrival time and distance while navigating"), 0, D, 2, "navigation"),

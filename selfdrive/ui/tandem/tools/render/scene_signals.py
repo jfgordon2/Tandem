@@ -1,7 +1,7 @@
 import time
 from types import SimpleNamespace
 import pyray as rl
-from openpilot.selfdrive.ui.onroad.starpilot import turn_signals as TS
+from openpilot.selfdrive.ui.tandem.onroad import turn_signals as TS
 from openpilot.selfdrive.ui.tandem.onroad import extras
 from openpilot.selfdrive.ui.tandem.onroad.layers import ArcState, BarState, bar_height, bar_margin
 from scene_onroad import scene
@@ -16,7 +16,7 @@ class SM(dict):
 
 
 def main(frame, save, out, tap, gui_app):
-  for slug, t in (("frog", 0.3), ("pouncing_cat", 0.5), ("bouncing_ball", 1.4)):
+  for slug, t in (("frog", 0.3), ("pouncing_cat", 0.5), ("bouncing_ball", 1.4), ("unicorn_rider", 0.42)):
     renderer = TS.TurnSignalRenderer()
     cs = SimpleNamespace(leftBlinker=True, rightBlinker=False, leftBlindspot=False, rightBlindspot=False)
     state = SimpleNamespace(starpilot_toggles={"signal_icons": slug}, sm=SM(cs), started=True, started_frame=1)

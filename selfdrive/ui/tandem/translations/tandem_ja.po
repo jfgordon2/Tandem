@@ -5,212 +5,212 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=(0);\n"
 "X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\n"
 
-#: controls.py:179
+#: controls.py:196
 msgid "On"
 msgstr "オン"
 
-#: controls.py:179
-#: controls.py:182
-#: settings/device_sections.py:50
+#: controls.py:196
+#: controls.py:199
+#: settings/device_sections.py:60
 msgid "Off"
 msgstr "オフ"
 
-#: controls.py:276
+#: controls.py:302
 msgid "RECOMMENDED"
 msgstr "おすすめ"
 
-#: controls.py:547
-#: settings/display.py:185
-#: settings/display.py:336
+#: controls.py:575
+#: settings/display.py:203
+#: settings/display.py:355
 msgid "Default"
 msgstr "デフォルト"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: destinations.py:664
+#: destinations.py:677
 msgid "Road data still supplies speed limits"
 msgstr "Road data still supplies speed limits"
 
-#: destinations.py:386
-#: settings/search.py:288
+#: destinations.py:400
+#: settings/search.py:291
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:688
 msgid "Search"
 msgstr "検索"
 
-#: destinations.py:400
+#: destinations.py:414
 msgid "Offline maps"
 msgstr "オフラインマップ"
 
-#: destinations.py:529
-#: home.py:144
+#: destinations.py:543
+#: home.py:151
 msgid "Where to?"
 msgstr "どこへ？"
 
-#: destinations.py:168
+#: destinations.py:180
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:703
 msgid "Searching…"
 msgstr "検索中…"
 
-#: destinations.py:168
+#: destinations.py:180
 msgid "Looking up places"
 msgstr "場所を検索中"
 
-#: destinations.py:170
+#: destinations.py:182
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:713
 msgid "Search unavailable"
 msgstr "検索できません"
 
-#: destinations.py:172
+#: destinations.py:184
 msgid "Nothing found"
 msgstr "見つかりませんでした"
 
-#: destinations.py:172
+#: destinations.py:184
 msgid "Try a different place or address"
 msgstr "別の場所や住所をお試しください"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: destinations.py:187
+#: destinations.py:200
 msgid "This saved place has no coordinates. Search again when online."
 msgstr "This saved place has no coordinates. Search again when online."
 
-#: destinations.py:387
+#: destinations.py:401
 msgid "Say a place or an address. Tap the mic when you're done."
 msgstr "場所か住所を話してください。終わったらマイクをタップします。"
 
-#: destinations.py:423
+#: destinations.py:437
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:643
 msgid "Start"
 msgstr "開始"
 
-#: destinations.py:426
-#: settings/maps.py:256
-#: settings/maps.py:230
+#: destinations.py:440
+#: settings/maps.py:279
+#: settings/maps.py:252
 msgid "Choose regions"
 msgstr "地域を選ぶ"
 
-#: destinations.py:536
+#: destinations.py:550
 msgid "Offline maps ready"
 msgstr "オフラインマップの準備完了"
 
-#: destinations.py:595
+#: destinations.py:608
 msgid "Search needs the public Mapbox key · see Settings › Driving › Speed & Steering › Navigation"
 msgstr "検索には Mapbox の公開キーが必要です · 設定 › 運転 › 速度とステアリング › ナビゲーション"
 
-#: destinations.py:652
+#: destinations.py:665
 msgid "Arrive"
 msgstr "到着"
 
-#: destinations.py:652
+#: destinations.py:665
 msgid "Time"
 msgstr "時間"
 
-#: destinations.py:652
-#: settings/vehicle.py:228
-#: settings/vehicle.py:229
+#: destinations.py:665
+#: settings/vehicle.py:246
+#: settings/vehicle.py:247
 msgid "Distance"
 msgstr "距離"
 
-#: destinations.py:668
+#: destinations.py:681
 msgid "Slows ahead of turns on the route"
 msgstr "ルート上の曲がり角の手前で減速します"
 
-#: destinations.py:334
+#: destinations.py:348
 msgid "Search for a place or address"
 msgstr "場所や住所を検索"
 
-#: destinations.py:403
+#: destinations.py:417
 msgid "Turns and speed follow the route automatically while navigating"
 msgstr "ナビ中は曲がる場所と速度が自動でルートに従います"
 
-#: destinations.py:558
+#: destinations.py:572
 msgid "RECENT"
 msgstr "最近"
 
-#: destinations.py:397
+#: destinations.py:411
 msgid "Add favorite"
 msgstr "お気に入りに追加"
 
-#: destinations.py:397
+#: destinations.py:411
 msgid "Search for a place"
 msgstr "場所を検索"
 
-#: destinations.py:551
+#: destinations.py:565
 msgid "ON A ROUTE"
 msgstr "ルート案内中"
 
-#: destinations.py:552
+#: destinations.py:566
 #, python-brace-format
 msgid "To {}"
 msgstr "{}へ"
 
-#: destinations.py:555
+#: destinations.py:569
 msgid "FAVORITES"
 msgstr "お気に入り"
 
-#: destinations.py:566
+#: destinations.py:579
 msgid "Places you navigate to show up here."
 msgstr "ナビした場所がここに表示されます。"
 
-#: destinations.py:598
+#: destinations.py:611
 msgid "Type a place or address"
 msgstr "場所か住所を入力"
 
-#: destinations.py:598
+#: destinations.py:611
 #, python-brace-format
 msgid "Results show as you type, from {} letters"
 msgstr "{} 文字から入力中に結果が表示されます"
 
-#: destinations.py:391
-#: settings/speed_steering.py:429
+#: destinations.py:405
+#: settings/speed_steering.py:445
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:778
 msgid "Home"
 msgstr "自宅"
 
-#: destinations.py:391
+#: destinations.py:405
 msgid "Set Home"
 msgstr "自宅を設定"
 
-#: destinations.py:392
+#: destinations.py:406
 msgid "Search for your home address"
 msgstr "自宅の住所を検索"
 
-#: destinations.py:394
-#: settings/speed_steering.py:430
+#: destinations.py:408
+#: settings/speed_steering.py:446
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:780
 msgid "Work"
 msgstr "職場"
 
-#: destinations.py:394
+#: destinations.py:408
 msgid "Set Work"
 msgstr "職場を設定"
 
-#: destinations.py:395
+#: destinations.py:409
 msgid "Search for your work address"
 msgstr "職場の住所を検索"
 
-#: destinations.py:553
-#: onroad/layers.py:96
+#: destinations.py:567
+#: onroad/layers.py:97
 msgid "End route"
 msgstr "ルート終了"
 
-#: drivercamera.py:18
+#: drivercamera.py:19
 msgid "Sit as you do to drive. The box should follow your face."
 msgstr "運転するときの姿勢で座ってください。枠が顔を追うはずです。"
 
-#: drivercamera.py:42
+#: drivercamera.py:53
 msgid "Face found · driver monitoring can see you"
 msgstr "顔を検出 · ドライバーモニタリングが認識しています"
 
-#: drivercamera.py:42
+#: drivercamera.py:53
 msgid "Looking for your face"
 msgstr "顔を探しています"
 
-#: drivercamera.py:33
+#: drivercamera.py:44
 msgid "Starting the camera…"
 msgstr "カメラを起動中…"
 
 #: forecast.py:45
 #: forecast.py:45
-#: onroad/status.py:254
+#: onroad/status.py:272
 msgid "Fog"
 msgstr "霧"
 
@@ -231,14 +231,14 @@ msgid "Freezing drizzle"
 msgstr "着氷性の霧雨"
 
 #: forecast.py:48
-#: onroad/status.py:251
-#: settings/speed_steering.py:239
+#: onroad/status.py:269
+#: settings/speed_steering.py:247
 msgid "Rain"
 msgstr "雨"
 
 #: forecast.py:48
 #: forecast.py:51
-#: onroad/status.py:252
+#: onroad/status.py:270
 msgid "Heavy rain"
 msgstr "大雨"
 
@@ -252,8 +252,8 @@ msgid "Light snow"
 msgstr "小雪"
 
 #: forecast.py:50
-#: onroad/status.py:253
-#: settings/speed_steering.py:241
+#: onroad/status.py:271
+#: settings/speed_steering.py:249
 msgid "Snow"
 msgstr "雪"
 
@@ -309,116 +309,116 @@ msgstr "晴れ時々曇り"
 msgid "Cloudy"
 msgstr "曇り"
 
-#: forecast.py:182
+#: forecast.py:184
 #, python-brace-format
 msgid "{} in {} min"
 msgstr "{0}まであと{1}分"
 
-#: forecast.py:183
-#: forecast.py:367
+#: forecast.py:185
+#: forecast.py:383
 #, python-brace-format
 msgid "{} until {}"
 msgstr "{0}は{1}まで"
 
-#: forecast.py:373
+#: forecast.py:389
 msgid "No rain or snow ahead"
 msgstr "この先 雨や雪はありません"
 
-#: forecast.py:369
+#: forecast.py:385
 #, python-brace-format
 msgid "{} from {}"
 msgstr "{0}は{1}から"
 
-#: forecast.py:369
+#: forecast.py:385
 #, python-brace-format
 msgid " to {}"
 msgstr "～{}"
 
-#: home.py:33
+#: home.py:40
 #, python-brace-format
 msgid "{} style · {} · {}"
 msgstr "{}スタイル · {} · {}"
 
-#: home.py:32
-#: settings/speed_steering.py:134
+#: home.py:39
+#: settings/speed_steering.py:139
 msgid "Auto lane change"
 msgstr "自動車線変更"
 
-#: home.py:32
-#: settings/speed_steering.py:134
+#: home.py:39
+#: settings/speed_steering.py:139
 msgid "Nudge to change lanes"
 msgstr "ハンドルを軽く切って車線変更"
 
-#: home.py:40
+#: home.py:47
 msgid "READY"
 msgstr "準備完了"
 
-#: home.py:39
+#: home.py:46
 msgid "NEEDS ATTENTION"
 msgstr "要確認"
 
-#: home.py:39
+#: home.py:46
 #, python-brace-format
 msgid "Check {} alert"
 msgid_plural "Check {} alerts"
 msgstr[0] "{}件のアラートを確認"
 
-#: home.py:40
+#: home.py:47
 msgid "Press cruise to engage"
 msgstr "クルーズを押して作動"
 
-#: home.py:40
+#: home.py:47
 msgid "Start the car to drive"
 msgstr "車を始動して運転"
 
-#: home.py:83
+#: home.py:90
 #, python-brace-format
 msgid "Forecast · updated {}"
 msgstr "予報 · {} 更新"
 
-#: home.py:145
+#: home.py:152
 msgid "Notes"
 msgstr "メモ"
 
-#: home.py:206
+#: home.py:214
 msgid "A new version"
 msgstr "新しいバージョン"
 
-#: home.py:144
+#: home.py:151
 msgid "Home · Work · Recent"
 msgstr "自宅 · 職場 · 履歴"
 
-#: home.py:199
+#: home.py:207
 msgid "Acknowledge excessive actuation"
 msgstr "過剰な制御を確認"
 
-#: home.py:201
+#: home.py:207
 msgid "Snooze update"
 msgstr "アップデートを延期"
 
-#: home.py:147
-#: home_alerts.py:158
+#: home.py:154
+#: home_alerts.py:159
 msgid "Update ready"
 msgstr "アップデートの準備完了"
 
-#: home.py:147
-#: settings/search.py:24
-#: settings/search.py:219
+#: home.py:154
+#: settings/search.py:25
+#: settings/search.py:222
 msgid "Software"
 msgstr "ソフトウェア"
 
-#: home.py:148
+#: home.py:155
 msgid "Installs when you turn off the car"
 msgstr "車の電源を切るとインストールされます"
 
-#: home.py:149
+#: home.py:156
 #, python-brace-format
 msgid "Up to date · {}"
 msgstr "最新 · {}"
 
-#: home.py:149
-#: settings/software_tab.py:66
-#: sidebar.py:158
+#: home.py:156
+#: settings/software_tab.py:74
+#: sidebar.py:164
 msgid "Up to date"
 msgstr "最新"
 
@@ -490,420 +490,424 @@ msgstr "ドライバーカメラがよく見えません"
 msgid "Excessive actuation"
 msgstr "過剰な制御"
 
-#: home_alerts.py:180
+#: home_alerts.py:181
 msgid "It also installs on its own when you turn off the car."
 msgstr "車の電源を切ると自動でもインストールされます。"
 
-#: home_alerts.py:159
+#: home_alerts.py:160
 msgid "Restart and update"
 msgstr "再起動してアップデート"
 
-#: home_alerts.py:123
+#: home_alerts.py:124
 #, python-brace-format
 msgid "{} alert"
 msgid_plural "{} alerts"
 msgstr[0] "{}件のアラート"
 
-#: home_alerts.py:124
+#: home_alerts.py:125
 msgid "openpilot may not start until these are sorted out"
 msgstr "これらを解決するまで openpilot が起動しない場合があります"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: keyboard.py:41
+#: keyboard.py:44
 msgid "ABC"
 msgstr "ABC"
 
-#: keyboard.py:41
+#: keyboard.py:44
 msgid "space"
 msgstr "空白"
 
-#: keyboard.py:126
-#: mapbox_help.py:87
+#: keyboard.py:129
+#: mapbox_help.py:91
 #: routing_status.py:9
 msgid "Done"
 msgstr "完了"
 
-#: keyboard.py:126
-#: voice.py:185
+#: keyboard.py:130
+#: voice.py:196
 msgid "Speak now. Tap the mic when you're done."
 msgstr "話してください。終わったらマイクをタップします。"
 
-#: keyboard.py:132
-#: overlays.py:163
-#: settings/bluetooth_tab.py:248
+#: keyboard.py:135
+#: overlays.py:174
+#: settings/bluetooth_tab.py:260
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: mapbox_help.py:20
+#: mapbox_help.py:24
 msgid "Settings › Driving › Speed & Steering › Navigation"
 msgstr "設定 › 運転 › 速度とステアリング › ナビゲーション"
 
-#: mapbox_help.py:57
+#: mapbox_help.py:61
 msgid "The keys stay on this device. Search and routes work as soon as they're saved."
 msgstr "キーはこのデバイスに保存されます。保存するとすぐに検索とルートが使えます。"
 
-#: mapbox_help.py:23
+#: mapbox_help.py:27
 msgid "Make a Mapbox account"
 msgstr "Mapbox アカウントを作成"
 
-#: mapbox_help.py:23
+#: mapbox_help.py:27
 msgid "At account.mapbox.com. The free tier covers personal driving."
 msgstr "account.mapbox.com で作成します。個人の運転なら無料プランで足ります。"
 
-#: mapbox_help.py:24
+#: mapbox_help.py:28
 msgid "Get two keys"
 msgstr "キーを2つ取得"
 
-#: mapbox_help.py:24
+#: mapbox_help.py:28
 msgid "Your default public token (pk.) is there already. Create a token, keep its public scopes, and also check DOWNLOADS:READ so it starts with sk."
 msgstr "デフォルトの公開トークン（pk.）はすでにあります。トークンを作成し、公開スコープはそのままに DOWNLOADS:READ もチェックすると sk. で始まるトークンになります。"
 
-#: mapbox_help.py:26
+#: mapbox_help.py:30
 msgid "Open Galaxy"
 msgstr "Galaxy を開く"
 
-#: mapbox_help.py:26
+#: mapbox_help.py:30
 msgid "On this device: Device › This Device › Remote Access › Set Up, then open its link on your phone."
 msgstr "このデバイスで：デバイス › このデバイス › リモートアクセス › 設定 を開き、そのリンクをスマホで開きます。"
 
-#: mapbox_help.py:27
+#: mapbox_help.py:31
 msgid "Paste both keys"
 msgstr "両方のキーを貼り付け"
 
-#: mapbox_help.py:27
+#: mapbox_help.py:31
 msgid "In Galaxy: Navigation & Maps › App Keys. The public key is for search, the secret one for routes."
 msgstr "Galaxy で：Navigation & Maps › App Keys。公開キーは検索用、シークレットキーはルート用です。"
 
-#: mapbox_help.py:51
+#: mapbox_help.py:55
 msgid "Not added · needed for place search and routes"
 msgstr "未追加 · 場所の検索とルートに必要です"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: mapbox_help.py:84
+#: mapbox_help.py:88
 msgid "Optional: online search and speed-limit filling"
 msgstr "Optional: online search and speed-limit filling"
 
-#: mapbox_help.py:85
+#: mapbox_help.py:89
 msgid "For place search, routes, and speed limits the maps don't have"
 msgstr "場所の検索、ルート、地図にない制限速度に使います"
 
-#: mapbox_help.py:86
+#: mapbox_help.py:90
 msgid "Add Mapbox keys"
 msgstr "Mapbox キーを追加"
 
-#: mapbox_help.py:46
+#: mapbox_help.py:50
 msgid "Added"
 msgstr "追加済み"
 
-#: mapbox_help.py:48
+#: mapbox_help.py:52
 msgid "Public key only · routes need the secret key too"
 msgstr "公開キーのみ · ルートにはシークレットキーも必要です"
 
-#: mapbox_help.py:50
+#: mapbox_help.py:54
 msgid "Secret key only · search needs the public key too"
 msgstr "シークレットキーのみ · 検索には公開キーも必要です"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
-#: onroad/developer.py:98
-#: onroad/developer.py:313
+#: onroad/developer.py:106
+#: onroad/developer.py:325
 msgid "idle"
 msgstr "待機"
 
-#: onroad/developer.py:99
-#: onroad/developer.py:163
+#: onroad/developer.py:107
+#: onroad/developer.py:171
 msgid "none"
 msgstr "なし"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:104
+#: onroad/developer.py:112
 msgid "0.0 m/s²"
 msgstr "0.0 m/s²"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:105
+#: onroad/developer.py:113
 msgid "0.00 s"
 msgstr "0.00 s"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
-#: onroad/developer.py:56
+#: onroad/developer.py:62
 msgid "accel"
 msgstr "加速"
 
-#: onroad/developer.py:56
+#: onroad/developer.py:62
 msgid "Acceleration now"
 msgstr "現在の加速度"
 
 #. Requested acceleration, not a desire; short label in Developer View. Machine draft, needs native review.
-#: onroad/developer.py:57
+#: onroad/developer.py:63
 msgid "want"
 msgstr "目標"
 
-#: onroad/developer.py:57
+#: onroad/developer.py:63
 msgid "Acceleration openpilot asks for"
 msgstr "openpilot が求める加速度"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
-#: onroad/developer.py:58
+#: onroad/developer.py:64
 msgid "jerk"
 msgstr "ジャーク"
 
-#: onroad/developer.py:58
+#: onroad/developer.py:64
 msgid "Planned jerk"
 msgstr "予定ジャーク"
 
 #. Lateral acceleration, not latitude; short label in Developer View. Machine draft, needs native review.
-#: onroad/developer.py:59
+#: onroad/developer.py:65
 msgid "lat"
 msgstr "横加速"
 
-#: onroad/developer.py:59
+#: onroad/developer.py:65
 msgid "Lateral acceleration"
 msgstr "横加速度"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
-#: onroad/developer.py:60
+#: onroad/developer.py:66
 msgid "delay"
 msgstr "遅延"
 
-#: onroad/developer.py:60
+#: onroad/developer.py:66
 msgid "Steering delay"
 msgstr "ステアリング遅延"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
-#: onroad/developer.py:61
+#: onroad/developer.py:67
 msgid "steer"
 msgstr "舵角"
 
-#: onroad/developer.py:61
+#: onroad/developer.py:67
 msgid "Steering wheel angle"
 msgstr "ハンドル角度"
 
-#: onroad/developer.py:62
+#: onroad/developer.py:68
 msgid "torque"
 msgstr "トルク"
 
-#: onroad/developer.py:62
+#: onroad/developer.py:68
 msgid "Steering torque used"
 msgstr "使用中の操舵トルク"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
-#: onroad/developer.py:63
+#: onroad/developer.py:69
 msgid "danger"
 msgstr "危険"
 
-#: onroad/developer.py:63
+#: onroad/developer.py:69
 msgid "Following danger factor"
 msgstr "追従の危険係数"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
-#: onroad/developer.py:64
+#: onroad/developer.py:70
 msgid "ratio"
 msgstr "比率"
 
-#: onroad/developer.py:64
+#: onroad/developer.py:70
 msgid "Steer ratio"
 msgstr "ステアリング比"
 
-#: onroad/developer.py:158
+#: onroad/developer.py:166
 msgid "Lead"
 msgstr "先行車"
 
-#: onroad/developer.py:186
+#: onroad/developer.py:194
 msgid "Controls"
 msgstr "制御"
 
-#: onroad/developer.py:187
+#: onroad/developer.py:195
 msgid "curve spd"
 msgstr "カーブ速度"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:278
-#: onroad/extras.py:215
-#: onroad/lead.py:97
+#: onroad/developer.py:286
+#: onroad/extras.py:236
+#: onroad/lead.py:116
 #, python-brace-format
 msgid "{} m"
 msgstr "{} m"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:278
-#: onroad/extras.py:215
-#: onroad/lead.py:97
+#: onroad/developer.py:286
+#: onroad/extras.py:236
+#: onroad/lead.py:116
 #, python-brace-format
 msgid "{} ft"
 msgstr "{} ft"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:280
-#: onroad/developer.py:333
-#: onroad/lead.py:108
+#: onroad/developer.py:288
+#: onroad/developer.py:345
+#: onroad/lead.py:127
 #, python-brace-format
 msgid "{} s"
 msgstr "{} s"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:309
-#: settings/device_sections.py:301
+#: onroad/developer.py:321
+#: settings/device_sections.py:327
 #: settings/ram.py:30
 #, python-brace-format
 msgid "{} GB"
 msgstr "{} GB"
 
 #. Unit notation; keep as written.
-#: onroad/developer.py:331
+#: onroad/developer.py:343
 #, python-brace-format
 msgid "{} m/s²"
 msgstr "{} m/s²"
 
-#: onroad/developer.py:161
+#: onroad/developer.py:169
 msgid "distance"
 msgstr "距離"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
-#: onroad/developer.py:161
+#: onroad/developer.py:169
 msgid "gap"
 msgstr "車間"
 
-#: onroad/developer.py:162
+#: onroad/developer.py:170
 msgid "rel speed"
 msgstr "相対速度"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
-#: onroad/developer.py:163
+#: onroad/developer.py:171
 msgid "source"
 msgstr "情報源"
 
-#: onroad/developer.py:173
-#: settings/search.py:24
-#: settings/window.py:44
+#: onroad/developer.py:181
+#: settings/search.py:25
+#: settings/window.py:59
 msgid "Device"
 msgstr "デバイス"
 
-#: onroad/developer.py:189
+#: onroad/developer.py:197
 msgid "limit src"
 msgstr "制限の情報源"
 
-#: onroad/developer.py:191
+#: onroad/developer.py:199
 msgid "lanes L/R"
 msgstr "車線幅 左/右"
 
 #. Short automotive label in Developer View; machine draft, needs native review.
-#: onroad/developer.py:281
+#: onroad/developer.py:289
 msgid "radar"
 msgstr "レーダー"
 
-#: onroad/developer.py:281
+#: onroad/developer.py:289
 msgid "vision"
 msgstr "カメラ"
 
-#: onroad/developer.py:313
+#: onroad/developer.py:325
 #, python-brace-format
 msgid "active · {} {}"
 msgstr "動作中 · {} {}"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: onroad/developer.py:185
+#: onroad/developer.py:193
 msgid "FPS"
 msgstr "FPS"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: onroad/developer.py:177
+#: onroad/developer.py:185
 msgid "CPU"
 msgstr "CPU"
 
-#: onroad/developer.py:177
+#: onroad/developer.py:185
 msgid "Temp"
 msgstr "温度"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: onroad/developer.py:181
+#: onroad/developer.py:189
 msgid "GPU"
 msgstr "GPU"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: onroad/developer.py:183
+#: onroad/developer.py:191
 #: settings/ram.py:110
-#: settings/search.py:30
+#: settings/search.py:31
 msgid "RAM"
 msgstr "RAM"
 
-#: onroad/extras.py:42
+#: onroad/extras.py:47
 msgid "Jumping frog"
 msgstr "跳ねるカエル"
 
-#: onroad/extras.py:42
+#: onroad/extras.py:47
 msgid "Pouncing cat"
 msgstr "飛びかかるネコ"
 
-#: onroad/extras.py:42
+#: onroad/extras.py:47
 msgid "Bouncing ball"
 msgstr "弾むボール"
 
-#: onroad/extras.py:148
+#: onroad/extras.py:48
+msgid "Unicorn rider"
+msgstr "ユニコーンライダー"
+
+#: onroad/extras.py:168
 msgid "Loading model"
 msgstr "モデルを読み込み中"
 
-#: onroad/extras.py:149
+#: onroad/extras.py:169
 msgid "Big model"
 msgstr "大きいモデル"
 
-#: onroad/extras.py:150
+#: onroad/extras.py:170
 msgid "Big model failed"
 msgstr "大きいモデルが失敗しました"
 
-#: onroad/extras.py:151
+#: onroad/extras.py:171
 msgid "Small model in use"
 msgstr "小さいモデルを使用中"
 
-#: onroad/layers.py:432
+#: onroad/layers.py:451
 msgid "Help steer"
 msgstr "ハンドル操作を手伝って"
 
-#: onroad/layers.py:432
+#: onroad/layers.py:451
 msgid "Steering is at its limit for this curve"
 msgstr "このカーブではステアリングが限界です"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: onroad/layers.py:145
+#: onroad/layers.py:146
 msgid "MAX"
 msgstr "MAX"
 
-#: onroad/layers.py:516
+#: onroad/layers.py:536
 #, python-brace-format
 msgid "New limit {}"
 msgstr "新しい制限 {}"
 
-#: onroad/layers.py:517
+#: onroad/layers.py:537
 msgid "Slow down"
 msgstr "減速"
 
-#: onroad/layers.py:517
+#: onroad/layers.py:537
 msgid "Speed up"
 msgstr "加速"
 
-#: onroad/layers.py:518
+#: onroad/layers.py:538
 #, python-brace-format
 msgid "{} to {} {}?"
 msgstr "{1} {2}に{0}？"
 
-#: onroad/layers.py:519
+#: onroad/layers.py:539
 #, python-brace-format
 msgid "From {} · ignored in {} s"
 msgstr "{0}から · {1}秒後に無視"
 
-#: onroad/layers.py:212
+#: onroad/layers.py:213
 msgid "ARRIVE"
 msgstr "到着"
 
-#: onroad/layers.py:212
+#: onroad/layers.py:213
 msgid "LEFT"
 msgstr "残り"
 
-#: onroad/layers.py:489
-#: settings/speed_steering.py:15
+#: onroad/layers.py:509
+#: settings/speed_steering.py:20
 msgid "Match"
 msgstr "合わせる"
 
-#: onroad/layers.py:491
+#: onroad/layers.py:511
 msgid "Ignore"
 msgstr "無視"
 
@@ -923,152 +927,152 @@ msgstr "カメラ"
 msgid "Mapbox"
 msgstr "Mapbox"
 
-#: onroad/status.py:122
-#: onroad/status.py:127
+#: onroad/status.py:129
+#: onroad/status.py:134
 msgid "Stopped"
 msgstr "停止中"
 
-#: onroad/status.py:122
+#: onroad/status.py:129
 msgid "Stopping"
 msgstr "停止しています"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: onroad/status.py:171
-#: onroad/status.py:173
+#: onroad/status.py:189
+#: onroad/status.py:191
 msgid "Recalculating route"
 msgstr "Recalculating route"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: onroad/status.py:171
+#: onroad/status.py:189
 msgid "Finding route"
 msgstr "Finding route"
 
-#: onroad/status.py:96
-#: onroad/status.py:108
+#: onroad/status.py:103
+#: onroad/status.py:115
 msgid "Steering paused"
 msgstr "ステアリング一時停止"
 
-#: onroad/status.py:110
+#: onroad/status.py:117
 msgid "Speed control paused"
 msgstr "速度制御一時停止"
 
-#: onroad/status.py:115
+#: onroad/status.py:122
 msgid "Lane change blocked"
 msgstr "車線変更できません"
 
-#: onroad/status.py:120
-#: onroad/status.py:150
+#: onroad/status.py:127
+#: onroad/status.py:157
 msgid "Light is green"
 msgstr "信号が青です"
 
-#: onroad/status.py:129
+#: onroad/status.py:136
 msgid "Slowing for curve"
 msgstr "カーブのため減速中"
 
-#: onroad/status.py:131
+#: onroad/status.py:138
 msgid "Slowing for turn"
 msgstr "曲がるため減速中"
 
-#: onroad/status.py:134
+#: onroad/status.py:141
 msgid "Turning left"
 msgstr "左折中"
 
-#: onroad/status.py:138
+#: onroad/status.py:145
 msgid "Slowing for traffic"
 msgstr "前方車両のため減速中"
 
-#: onroad/status.py:140
+#: onroad/status.py:147
 #, python-brace-format
 msgid "Matching limit {}"
 msgstr "制限 {} に合わせています"
 
-#: onroad/status.py:142
+#: onroad/status.py:149
 msgid "Coasting"
 msgstr "惰性走行"
 
-#: onroad/status.py:148
+#: onroad/status.py:155
 #, python-brace-format
 msgid "{} · longer gap"
 msgstr "{} · 車間を広げています"
 
-#: onroad/status.py:152
+#: onroad/status.py:159
 msgid "Car ahead moved"
 msgstr "前の車が発進しました"
 
-#: onroad/status.py:154
+#: onroad/status.py:161
 msgid "Ready · tap resume"
 msgstr "準備完了 · 再開をタップ"
 
-#: onroad/status.py:156
+#: onroad/status.py:163
 msgid "Steering only"
 msgstr "ステアリングのみ"
 
-#: onroad/status.py:162
+#: onroad/status.py:169
 #, python-brace-format
 msgid "Low on RAM · {}% used"
 msgstr "RAM不足 · {}% 使用中"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: onroad/status.py:175
+#: onroad/status.py:193
 msgid "Waiting for GPS"
 msgstr "Waiting for GPS"
 
-#: onroad/status.py:117
+#: onroad/status.py:124
 #, python-brace-format
 msgid "Changing lanes {}"
 msgstr "車線変更中 {}"
 
-#: onroad/status.py:124
+#: onroad/status.py:131
 #, python-brace-format
 msgid "{} for stop sign"
 msgstr "一時停止標識のため{}"
 
-#: onroad/status.py:136
+#: onroad/status.py:143
 msgid "Turning right"
 msgstr "右折中"
 
-#: onroad/status.py:144
+#: onroad/status.py:151
 msgid "Pulse & glide · gliding"
 msgstr "パルス＆グライド · 惰性中"
 
-#: onroad/status.py:144
+#: onroad/status.py:151
 msgid "Pulse & glide"
 msgstr "パルス＆グライド"
 
-#: onroad/status.py:102
+#: onroad/status.py:109
 msgid "Steering paused for signal"
 msgstr "ウインカーのためステアリング一時停止"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: onroad/status.py:183
+#: onroad/status.py:201
 msgid "Using offline maps"
 msgstr "Using offline maps"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: onroad/status.py:183
+#: onroad/status.py:201
 msgid "Using online maps"
 msgstr "Using online maps"
 
-#: onroad/status.py:104
+#: onroad/status.py:111
 msgid "Steering paused after turn"
 msgstr "曲がった後のためステアリング一時停止"
 
-#: onroad/status.py:127
+#: onroad/status.py:134
 msgid "Stopping ahead"
 msgstr "この先で停止"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: onroad/status.py:187
+#: onroad/status.py:205
 msgid "Offline maps unavailable"
 msgstr "Offline maps unavailable"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: onroad/status.py:187
+#: onroad/status.py:205
 #: routing_status.py:34
 msgid "Route unavailable"
 msgstr "Route unavailable"
 
-#: onroad/status.py:106
+#: onroad/status.py:113
 #, python-brace-format
 msgid "Steering paused · under {} {}"
 msgstr "ステアリング一時停止 · {} {}未満"
@@ -1214,24 +1218,24 @@ msgid "Byp"
 msgstr "Byp"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:610
+#: onroad/view.py:628
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:610
+#: onroad/view.py:628
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/view.py:611
+#: onroad/view.py:629
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{}分 · {}"
 
 #: ram.py:44
-#: settings/window.py:258
+#: settings/window.py:294
 msgid "Driving model"
 msgstr "運転モデル"
 
@@ -1284,8 +1288,8 @@ msgid "Drive logging"
 msgstr "走行ログ"
 
 #: ram.py:57
-#: settings/device_sections.py:357
-#: settings/search.py:194
+#: settings/device_sections.py:384
+#: settings/search.py:197
 msgid "Uploads"
 msgstr "アップロード"
 
@@ -1337,30 +1341,30 @@ msgstr "Bluetoothリモコン"
 msgid "Car connection"
 msgstr "車との接続"
 
-#: routemap.py:154
+#: routemap.py:163
 #: routing_status.py:7
 #: routing_status.py:8
 msgid "Finding a route…"
 msgstr "ルートを検索中…"
 
-#: routemap.py:155
+#: routemap.py:164
 msgid "Needs a GPS fix to plan the route"
 msgstr "ルートを計画するには GPS の測位が必要です"
 
-#: routemap.py:156
+#: routemap.py:165
 msgid "Couldn't find a route. Check the connection."
 msgstr "ルートが見つかりませんでした。接続を確認してください。"
 
-#: routemap.py:157
+#: routemap.py:166
 msgid "Routes need the secret Mapbox key: see Settings › Driving › Speed & Steering › Navigation"
 msgstr "ルートには Mapbox のシークレットキーが必要です：設定 › 運転 › 速度とステアリング › ナビゲーション"
 
-#: routemap.py:50
+#: routemap.py:51
 #, python-brace-format
 msgid "{} min"
 msgstr "{}分"
 
-#: routemap.py:50
+#: routemap.py:51
 #, python-brace-format
 msgid "{} h {} min"
 msgstr "{}時間{}分"
@@ -1491,2876 +1495,2876 @@ msgstr "Online routing is unavailable"
 msgid "Routing is unavailable"
 msgstr "Routing is unavailable"
 
-#: settings/alerts.py:43
-#: settings/alerts.py:93
-#: settings/alerts.py:146
+#: settings/alerts.py:49
+#: settings/alerts.py:101
+#: settings/alerts.py:154
 msgid "Auto"
 msgstr "自動"
 
-#: settings/alerts.py:43
-#: settings/alerts.py:130
+#: settings/alerts.py:49
+#: settings/alerts.py:138
 msgid "Quiet"
 msgstr "小"
 
-#: settings/alerts.py:43
-#: settings/alerts.py:130
+#: settings/alerts.py:49
+#: settings/alerts.py:138
 msgid "Normal"
 msgstr "標準"
 
-#: settings/alerts.py:43
-#: settings/alerts.py:130
+#: settings/alerts.py:49
+#: settings/alerts.py:138
 msgid "Loud"
 msgstr "大"
 
-#: settings/alerts.py:36
+#: settings/alerts.py:42
 msgid "Engage and disengage chimes"
 msgstr "作動・解除のチャイム"
 
-#: settings/alerts.py:36
+#: settings/alerts.py:42
 msgid "When openpilot turns on or off"
 msgstr "openpilot がオン・オフになったとき"
 
-#: settings/alerts.py:37
+#: settings/alerts.py:43
 msgid "Prompts and reminders"
 msgstr "案内とリマインダー"
 
-#: settings/alerts.py:37
+#: settings/alerts.py:43
 msgid "Gentle nudges, like steering below its minimum speed"
 msgstr "最低速度未満でのステアリングなど、控えめな通知"
 
-#: settings/alerts.py:39
+#: settings/alerts.py:45
 msgid "Driver attention"
 msgstr "ドライバーの注意"
 
-#: settings/alerts.py:39
+#: settings/alerts.py:45
 msgid "The chime that asks you to look at the road"
 msgstr "道路を見るよう促すチャイム"
 
-#: settings/alerts.py:41
+#: settings/alerts.py:47
 msgid "Take control warnings"
 msgstr "操作を引き継ぐ警告"
 
-#: settings/alerts.py:41
+#: settings/alerts.py:47
 msgid "When you need to steer or brake now"
 msgstr "今すぐハンドルかブレーキの操作が必要なとき"
 
-#: settings/alerts.py:46
-#: settings/search.py:123
+#: settings/alerts.py:52
+#: settings/search.py:126
 msgid "Green Light"
 msgstr "青信号"
 
-#: settings/alerts.py:46
-#: settings/search.py:123
+#: settings/alerts.py:52
+#: settings/search.py:126
 msgid "When the light turns green and you are stopped"
 msgstr "停止中に信号が青になったとき"
 
-#: settings/alerts.py:47
-#: settings/search.py:124
+#: settings/alerts.py:53
+#: settings/search.py:127
 msgid "Lead Departure"
 msgstr "先行車の発進"
 
-#: settings/alerts.py:47
-#: settings/search.py:124
+#: settings/alerts.py:53
+#: settings/search.py:127
 msgid "When the car ahead pulls away"
 msgstr "前の車が発進したとき"
 
-#: settings/alerts.py:48
-#: settings/search.py:125
+#: settings/alerts.py:54
+#: settings/search.py:128
 msgid "Speed Limit Change"
 msgstr "制限速度の変更"
 
-#: settings/alerts.py:48
-#: settings/search.py:125
+#: settings/alerts.py:54
+#: settings/search.py:128
 msgid "When the posted limit changes"
 msgstr "標識の制限速度が変わったとき"
 
-#: settings/alerts.py:49
-#: settings/search.py:126
+#: settings/alerts.py:55
+#: settings/search.py:129
 msgid "Loud Blind Spot"
 msgstr "死角の警告音（大）"
 
-#: settings/alerts.py:49
-#: settings/search.py:126
+#: settings/alerts.py:55
+#: settings/search.py:129
 msgid "Signalling into an occupied lane, even when paused"
 msgstr "車がいる車線にウインカーを出したとき（一時停止中も）"
 
-#: settings/alerts.py:50
-#: settings/search.py:91
-#: settings/search.py:127
+#: settings/alerts.py:56
+#: settings/search.py:94
+#: settings/search.py:130
 msgid "Weather heads-up"
 msgstr "天気の予告"
 
-#: settings/alerts.py:50
-#: settings/search.py:127
+#: settings/alerts.py:56
+#: settings/search.py:130
 msgid "Once, when rain, snow or storms are coming"
 msgstr "雨・雪・嵐が近づくと一度だけ"
 
-#: settings/alerts.py:182
-#: settings/driving_tab.py:132
-#: settings/search.py:25
+#: settings/alerts.py:190
+#: settings/driving_tab.py:147
+#: settings/search.py:26
 msgid "Alerts"
 msgstr "アラート"
 
-#: settings/alerts.py:182
+#: settings/alerts.py:190
 msgid "One volume for everything. Safety warnings never go below 25%."
 msgstr "すべてに共通の音量です。安全警告は 25% を下回りません。"
 
-#: settings/alerts.py:100
+#: settings/alerts.py:108
 msgid "Custom volume"
 msgstr "カスタム音量"
 
-#: settings/alerts.py:100
+#: settings/alerts.py:108
 #, python-brace-format
 msgid "{} volume"
 msgstr "音量 {}"
 
-#: settings/alerts.py:104
+#: settings/alerts.py:112
 msgid "No extra chimes"
 msgstr "追加のチャイムなし"
 
-#: settings/alerts.py:153
+#: settings/alerts.py:161
 msgid "Plays through your car speakers if they're connected."
 msgstr "接続されていれば車のスピーカーから鳴ります。"
 
-#: settings/alerts.py:157
+#: settings/alerts.py:165
 msgid "Changing a level sets the Alert Volume preset to Custom."
 msgstr "レベルを変えると音量プリセットがカスタムになります。"
 
-#: settings/alerts.py:169
+#: settings/alerts.py:177
 msgid "Auto follows cabin noise. Tap a level to set it yourself."
 msgstr "自動は車内の騒音に合わせます。レベルをタップすると自分で設定できます。"
 
-#: settings/alerts.py:170
+#: settings/alerts.py:178
 msgid "Custom levels. Pick a preset to reset them."
 msgstr "カスタムレベルです。プリセットを選ぶとリセットされます。"
 
-#: settings/alerts.py:170
+#: settings/alerts.py:178
 msgid "Tap a level to fine-tune it."
 msgstr "レベルをタップして微調整します。"
 
-#: settings/alerts.py:181
+#: settings/alerts.py:189
 msgid "Chimes"
 msgstr "チャイム"
 
-#: settings/alerts.py:124
+#: settings/alerts.py:132
 msgid "Play sample"
 msgstr "サンプルを再生"
 
-#: settings/alerts.py:131
+#: settings/alerts.py:139
 msgid "Reset to Normal"
 msgstr "標準に戻す"
 
-#: settings/alerts.py:173
-#: settings/search.py:122
+#: settings/alerts.py:181
+#: settings/search.py:125
 msgid "Volume"
 msgstr "音量"
 
-#: settings/alerts.py:129
+#: settings/alerts.py:137
 #, python-brace-format
 msgid "Minimum {}% for safety alerts"
 msgstr "安全警告は最低 {}%"
 
-#: settings/bluetooth_tab.py:468
+#: settings/bluetooth_tab.py:489
 msgid "Engage"
 msgstr "作動"
 
-#: settings/bluetooth_tab.py:468
+#: settings/bluetooth_tab.py:489
 msgid "Disengage"
 msgstr "解除"
 
-#: settings/bluetooth_tab.py:468
-#: settings/vehicle.py:29
+#: settings/bluetooth_tab.py:489
+#: settings/vehicle.py:34
 msgid "Change driving style"
 msgstr "運転スタイルを変更"
 
-#: settings/bluetooth_tab.py:469
+#: settings/bluetooth_tab.py:490
 msgid "Screen off / on"
 msgstr "画面オフ／オン"
 
-#: settings/bluetooth_tab.py:469
-#: settings/vehicle.py:30
-#: sidebar.py:68
+#: settings/bluetooth_tab.py:490
+#: settings/vehicle.py:35
+#: sidebar.py:74
 msgid "Save a clip"
 msgstr "クリップを保存"
 
-#: settings/bluetooth_tab.py:469
-#: settings/vehicle.py:30
+#: settings/bluetooth_tab.py:490
+#: settings/vehicle.py:35
 msgid "Always-on steering"
 msgstr "常時ステアリング"
 
-#: settings/bluetooth_tab.py:469
-#: settings/vehicle.py:29
+#: settings/bluetooth_tab.py:490
+#: settings/vehicle.py:34
 msgid "Coast"
 msgstr "惰性走行"
 
-#: settings/bluetooth_tab.py:276
+#: settings/bluetooth_tab.py:288
 msgid "Press any button to find it"
 msgstr "どれかのボタンを押して見つけます"
 
-#: settings/bluetooth_tab.py:310
+#: settings/bluetooth_tab.py:322
 #, python-brace-format
 msgid "Button {}"
 msgstr "ボタン {}"
 
-#: settings/bluetooth_tab.py:412
-#: settings/bluetooth_tab.py:417
-#: settings/bluetooth_tab.py:412
+#: settings/bluetooth_tab.py:431
+#: settings/bluetooth_tab.py:435
+#: settings/bluetooth_tab.py:431
 msgid "Forget"
 msgstr "削除"
 
-#: settings/bluetooth_tab.py:656
+#: settings/bluetooth_tab.py:687
 #, python-brace-format
 msgid "A sound plays in {}…"
 msgstr "{}後に音が鳴ります…"
 
-#: settings/bluetooth_tab.py:54
-#: settings/speed_steering.py:425
+#: settings/bluetooth_tab.py:64
+#: settings/speed_steering.py:441
 msgid "Not set"
 msgstr "未設定"
 
-#: settings/bluetooth_tab.py:72
+#: settings/bluetooth_tab.py:82
 msgid "No remote connected"
 msgstr "リモコンが接続されていません"
 
-#: settings/bluetooth_tab.py:79
+#: settings/bluetooth_tab.py:89
 #, python-brace-format
 msgid "{} wheel button"
 msgid_plural "{} wheel buttons"
 msgstr[0] "ハンドルボタン {} 個"
 
-#: settings/bluetooth_tab.py:79
+#: settings/bluetooth_tab.py:89
 msgid "No wheel buttons"
 msgstr "ハンドルボタンなし"
 
-#: settings/bluetooth_tab.py:168
+#: settings/bluetooth_tab.py:178
 msgid "Remove another button to free an action slot, then try again."
 msgstr "別のボタンを削除して枠を空けてから、もう一度お試しください。"
 
-#: settings/bluetooth_tab.py:184
+#: settings/bluetooth_tab.py:195
 #, python-brace-format
 msgid "{} detected"
 msgstr "{}を検出"
 
-#: settings/bluetooth_tab.py:184
+#: settings/bluetooth_tab.py:195
 msgid "Press a different button on the remote to change it."
 msgstr "変更するにはリモコンの別のボタンを押してください。"
 
-#: settings/bluetooth_tab.py:199
+#: settings/bluetooth_tab.py:210
 msgid "STEP 1 · PRESS IT"
 msgstr "ステップ 1 · 押す"
 
-#: settings/bluetooth_tab.py:205
+#: settings/bluetooth_tab.py:216
 #, python-brace-format
 msgid "Listening stops after {} s."
 msgstr "{}秒で待ち受けを終了します。"
 
-#: settings/bluetooth_tab.py:208
+#: settings/bluetooth_tab.py:219
 msgid "STEP 2 · CHOOSE WHAT IT DOES"
 msgstr "ステップ 2 · 動作を選ぶ"
 
-#: settings/bluetooth_tab.py:210
+#: settings/bluetooth_tab.py:221
 msgid "Pulse and glide and driver selfie are in Tuner Mode."
 msgstr "パルス＆グライドとドライバー自撮りはチューナーモードにあります。"
 
-#: settings/bluetooth_tab.py:287
-#: settings/connections.py:67
-#: settings/search.py:31
+#: settings/bluetooth_tab.py:299
+#: settings/connections.py:72
+#: settings/search.py:32
 msgid "Bluetooth Remote"
 msgstr "Bluetooth リモコン"
 
-#: settings/bluetooth_tab.py:343
+#: settings/bluetooth_tab.py:355
 msgid "That button isn't assigned yet. Tap to add it."
 msgstr "このボタンはまだ割り当てられていません。タップして追加します。"
 
-#: settings/bluetooth_tab.py:343
+#: settings/bluetooth_tab.py:355
 msgid "Add a button"
 msgstr "ボタンを追加"
 
-#: settings/bluetooth_tab.py:376
+#: settings/bluetooth_tab.py:390
 msgid "Bluetooth device"
 msgstr "Bluetooth デバイス"
 
-#: settings/bluetooth_tab.py:408
+#: settings/bluetooth_tab.py:427
 msgid "Test"
 msgstr "テスト"
 
-#: settings/bluetooth_tab.py:415
-#: settings/bluetooth_tab.py:415
+#: settings/bluetooth_tab.py:434
+#: settings/bluetooth_tab.py:434
 msgid "Disconnect"
 msgstr "切断"
 
-#: settings/bluetooth_tab.py:415
+#: settings/bluetooth_tab.py:434
 msgid "It reconnects the next time you choose it"
 msgstr "次に選んだときに再接続します"
 
-#: settings/bluetooth_tab.py:417
+#: settings/bluetooth_tab.py:435
 msgid "Removes the pairing. Change it with the car off."
 msgstr "ペアリングを削除します。車の電源を切って変更してください。"
 
-#: settings/bluetooth_tab.py:418
-#: settings/bluetooth_tab.py:429
-#: settings/network_tab.py:206
+#: settings/bluetooth_tab.py:436
+#: settings/bluetooth_tab.py:448
+#: settings/network_tab.py:220
 msgid "Connected"
 msgstr "接続済み"
 
-#: settings/bluetooth_tab.py:648
+#: settings/bluetooth_tab.py:679
 #, python-brace-format
 msgid "The test didn't play: {}"
 msgstr "テスト音が鳴りませんでした：{}"
 
-#: settings/bluetooth_tab.py:651
+#: settings/bluetooth_tab.py:682
 msgid "Playing now. You should hear it through the car."
 msgstr "再生中です。車から聞こえるはずです。"
 
-#: settings/bluetooth_tab.py:653
+#: settings/bluetooth_tab.py:684
 msgid "Done. If you didn't hear it, check the car's volume and audio source."
 msgstr "完了しました。聞こえなかった場合は車の音量と音源を確認してください。"
 
-#: settings/bluetooth_tab.py:655
+#: settings/bluetooth_tab.py:686
 msgid "Getting ready…"
 msgstr "準備中…"
 
-#: settings/bluetooth_tab.py:178
+#: settings/bluetooth_tab.py:189
 msgid "Couldn't assign this button"
 msgstr "このボタンを割り当てられませんでした"
 
-#: settings/bluetooth_tab.py:180
+#: settings/bluetooth_tab.py:191
 msgid "All button slots are in use"
 msgstr "ボタンの枠がすべて使用中です"
 
-#: settings/bluetooth_tab.py:180
+#: settings/bluetooth_tab.py:191
 msgid "Remove a button to add another."
 msgstr "別のボタンを追加するには、ボタンを削除してください。"
 
-#: settings/bluetooth_tab.py:183
+#: settings/bluetooth_tab.py:194
 msgid "Press the button on your remote"
 msgstr "リモコンのボタンを押してください"
 
-#: settings/bluetooth_tab.py:183
+#: settings/bluetooth_tab.py:194
 #, python-brace-format
 msgid "Listening{}."
 msgstr "待ち受け中{}。"
 
-#: settings/bluetooth_tab.py:248
+#: settings/bluetooth_tab.py:260
 msgid "Assign a button"
 msgstr "ボタンを割り当て"
 
-#: settings/bluetooth_tab.py:254
+#: settings/bluetooth_tab.py:266
 msgid "Buttons don't run their actions while this screen is open."
 msgstr "この画面を開いている間、ボタンの動作は実行されません。"
 
-#: settings/bluetooth_tab.py:318
+#: settings/bluetooth_tab.py:330
 msgid "PRESSED"
 msgstr "押されました"
 
-#: settings/bluetooth_tab.py:366
+#: settings/bluetooth_tab.py:380
 msgid "Sound test"
 msgstr "サウンドテスト"
 
-#: settings/bluetooth_tab.py:380
+#: settings/bluetooth_tab.py:394
 #, python-brace-format
 msgid "Pairing with {}"
 msgstr "{}とペアリング中"
 
-#: settings/bluetooth_tab.py:386
+#: settings/bluetooth_tab.py:400
 #, python-brace-format
 msgid "Enter the {} for {}"
 msgstr "{1}の{0}を入力"
 
-#: settings/bluetooth_tab.py:386
+#: settings/bluetooth_tab.py:400
 msgid "It's shown on the device, or in its manual"
 msgstr "デバイス本体か説明書に記載されています"
 
-#: settings/bluetooth_tab.py:394
+#: settings/bluetooth_tab.py:408
 #, python-brace-format
 msgid "Check that the device shows {}."
 msgstr "デバイスに {} と表示されているか確認してください。"
 
-#: settings/bluetooth_tab.py:394
+#: settings/bluetooth_tab.py:408
 msgid "The device is asking to pair."
 msgstr "デバイスがペアリングを求めています。"
 
-#: settings/bluetooth_tab.py:410
+#: settings/bluetooth_tab.py:429
 msgid "Alerts and Chimes"
 msgstr "アラートとチャイム"
 
-#: settings/bluetooth_tab.py:410
+#: settings/bluetooth_tab.py:429
 msgid "Play openpilot's sounds through this device. Change it with the car off."
 msgstr "openpilot の音をこのデバイスで鳴らします。車の電源を切って変更してください。"
 
-#: settings/bluetooth_tab.py:411
+#: settings/bluetooth_tab.py:430
 msgid "Sound Test"
 msgstr "サウンドテスト"
 
-#: settings/bluetooth_tab.py:411
+#: settings/bluetooth_tab.py:430
 msgid "Plays a sound through the car after a short countdown"
 msgstr "短いカウントダウンの後、車から音を鳴らします"
 
-#: settings/bluetooth_tab.py:412
+#: settings/bluetooth_tab.py:431
 #, python-brace-format
 msgid "Forget {}?"
 msgstr "{}を削除しますか？"
 
-#: settings/bluetooth_tab.py:412
+#: settings/bluetooth_tab.py:431
 msgid "You'll need to pair it again to use it."
 msgstr "使うにはもう一度ペアリングが必要です。"
 
-#: settings/bluetooth_tab.py:430
+#: settings/bluetooth_tab.py:449
 msgid "Test sound"
 msgstr "テスト音"
 
-#: settings/bluetooth_tab.py:224
+#: settings/bluetooth_tab.py:236
 msgid "All action slots are in use. Remove another button first."
 msgstr "動作の枠がすべて使用中です。先に別のボタンを削除してください。"
 
-#: settings/bluetooth_tab.py:380
+#: settings/bluetooth_tab.py:394
 msgid "Follow the steps on the device."
 msgstr "デバイスの手順に従ってください。"
 
-#: settings/bluetooth_tab.py:385
-#: settings/bluetooth_tab.py:395
-#: settings/bluetooth_tab.py:434
+#: settings/bluetooth_tab.py:399
+#: settings/bluetooth_tab.py:409
+#: settings/bluetooth_tab.py:453
 msgid "Pair"
 msgstr "ペアリング"
 
-#: settings/bluetooth_tab.py:395
+#: settings/bluetooth_tab.py:409
 #, python-brace-format
 msgid "Pair with {}?"
 msgstr "{}とペアリングしますか？"
 
-#: settings/bluetooth_tab.py:429
+#: settings/bluetooth_tab.py:448
 msgid "Plays alerts and chimes"
 msgstr "アラートとチャイムを鳴らします"
 
-#: settings/bluetooth_tab.py:434
-#: settings/network_tab.py:79
-#: settings/network_tab.py:88
+#: settings/bluetooth_tab.py:453
+#: settings/network_tab.py:91
+#: settings/network_tab.py:100
 msgid "Connect"
 msgstr "接続"
 
-#: settings/bluetooth_tab.py:436
-#: settings/bluetooth_tab.py:429
-#: settings/device.py:233
+#: settings/bluetooth_tab.py:455
+#: settings/bluetooth_tab.py:448
+#: settings/device.py:250
 msgid "Paired"
 msgstr "ペアリング済み"
 
-#: settings/bluetooth_tab.py:443
+#: settings/bluetooth_tab.py:462
 msgid "Scanning…"
 msgstr "検索中…"
 
-#: settings/bluetooth_tab.py:183
+#: settings/bluetooth_tab.py:463
+msgid "No car audio paired."
+msgstr "車のオーディオがペアリングされていません。"
+
+#: settings/bluetooth_tab.py:464
+msgid "No devices found yet."
+msgstr "デバイスはまだ見つかっていません。"
+
+#: settings/bluetooth_tab.py:194
 #, python-brace-format
 msgid " · {} s left"
 msgstr " · 残り {} 秒"
 
-#: settings/bluetooth_tab.py:230
+#: settings/bluetooth_tab.py:242
 msgid "Button"
 msgstr "ボタン"
 
-#: settings/bluetooth_tab.py:448
+#: settings/bluetooth_tab.py:469
 msgid "Pairing waits until you're parked."
 msgstr "ペアリングは駐車中に行います。"
 
-#: settings/bluetooth_tab.py:248
-#: settings/device_sections.py:393
-#: settings/display.py:373
+#: settings/bluetooth_tab.py:260
+#: settings/device_sections.py:424
+#: settings/display.py:393
 msgid "Save"
 msgstr "保存"
 
-#: settings/bluetooth_tab.py:445
+#: settings/bluetooth_tab.py:466
 msgid "CAR AUDIO"
 msgstr "車のオーディオ"
 
-#: settings/bluetooth_tab.py:446
+#: settings/bluetooth_tab.py:467
 msgid "NEARBY"
 msgstr "近く"
 
-#: settings/bluetooth_tab.py:233
-#: settings/vehicle.py:172
+#: settings/bluetooth_tab.py:245
+#: settings/vehicle.py:185
 msgid "What this button does while driving"
 msgstr "運転中のこのボタンの動作"
 
-#: settings/bluetooth_tab.py:234
-#: settings/developer.py:144
-#: settings/device_sections.py:335
+#: settings/bluetooth_tab.py:246
+#: settings/developer.py:155
+#: settings/device_sections.py:361
 msgid "Remove"
 msgstr "削除"
 
-#: settings/bluetooth_tab.py:445
-msgid "No car audio paired."
-msgstr "車のオーディオがペアリングされていません。"
-
-#: settings/bluetooth_tab.py:447
-msgid "No devices found yet."
-msgstr "デバイスはまだ見つかっていません。"
-
-#: settings/bundles.py:43
-#: settings/search.py:111
+#: settings/bundles.py:44
+#: settings/search.py:114
 msgid "Developer View"
 msgstr "開発者ビュー"
 
-#: settings/bundles.py:43
+#: settings/bundles.py:44
 msgid "Sidebar with live metrics, CPU, GPU, memory and temperatures, and where speed limits come from"
 msgstr "ライブ指標、CPU、GPU、メモリ、温度、制限速度の出どころを表示するサイドバー"
 
-#: settings/bundles.py:47
-#: settings/search.py:112
+#: settings/bundles.py:48
+#: settings/search.py:115
 msgid "Lead Insights"
 msgstr "先行車の詳細"
 
-#: settings/bundles.py:47
+#: settings/bundles.py:48
 msgid "Distance and speed of the car ahead, radar tracks, stopping point, adjacent paths and pedals"
 msgstr "前の車の距離と速度、レーダー点、停止位置、隣の車線、ペダル"
 
-#: settings/bundles.py:52
-#: settings/driving_tab.py:91
-#: settings/search.py:25
+#: settings/bundles.py:53
+#: settings/driving_tab.py:106
+#: settings/search.py:26
 msgid "Tuner Mode"
 msgstr "チューナーモード"
 
-#: settings/bundles.py:52
-#: settings/search.py:144
+#: settings/bundles.py:53
+#: settings/search.py:147
 msgid "Fine-tuning screens for gas, brake, steering and following"
 msgstr "アクセル、ブレーキ、ステアリング、追従の微調整画面"
 
-#: settings/can_recorder.py:13
-#: settings/map_source.py:95
-#: settings/maps.py:524
+#: settings/can_recorder.py:19
+#: settings/map_source.py:108
+#: settings/maps.py:549
 msgid "Ready"
 msgstr "準備完了"
 
-#: settings/can_recorder.py:13
+#: settings/can_recorder.py:19
 msgid "Starting…"
 msgstr "開始中…"
 
-#: settings/can_recorder.py:13
+#: settings/can_recorder.py:19
 msgid "Recording"
 msgstr "記録中"
 
-#: settings/can_recorder.py:14
-#: settings/network_tab.py:289
+#: settings/can_recorder.py:20
+#: settings/network_tab.py:305
 msgid "Saving…"
 msgstr "保存中…"
 
-#: settings/can_recorder.py:14
-#: settings/network_tab.py:59
+#: settings/can_recorder.py:20
+#: settings/network_tab.py:70
 msgid "Saved"
 msgstr "保存済み"
 
-#: settings/can_recorder.py:14
-#: sidebar.py:116
+#: settings/can_recorder.py:20
+#: sidebar.py:122
 msgid "Error"
 msgstr "エラー"
 
-#: settings/can_recorder.py:15
+#: settings/can_recorder.py:21
 msgid "Discarding…"
 msgstr "削除中…"
 
-#: settings/can_recorder.py:15
+#: settings/can_recorder.py:21
 msgid "Discarded"
 msgstr "削除済み"
 
-#: settings/can_recorder.py:40
+#: settings/can_recorder.py:47
 msgid "Start logging"
 msgstr "記録を開始"
 
-#: settings/can_recorder.py:42
+#: settings/can_recorder.py:49
 msgid "Stop logging"
 msgstr "記録を停止"
 
-#: settings/can_recorder.py:44
+#: settings/can_recorder.py:51
 msgid "Abort"
 msgstr "中止"
 
-#: settings/can_recorder.py:47
+#: settings/can_recorder.py:54
 msgid "Mark lock"
 msgstr "ロックをマーク"
 
-#: settings/can_recorder.py:48
+#: settings/can_recorder.py:55
 msgid "Mark unlock"
 msgstr "ロック解除をマーク"
 
-#: settings/can_recorder.py:57
+#: settings/can_recorder.py:64
 msgid "OBD frames"
 msgstr "OBDフレーム"
 
-#: settings/can_recorder.py:93
+#: settings/can_recorder.py:106
 msgid "Test discarded. Start a new test."
 msgstr "テストを削除しました。新しいテストを開始してください。"
 
-#: settings/can_recorder.py:103
+#: settings/can_recorder.py:116
 msgid "Couldn't save the log. Check storage and try again."
 msgstr "ログを保存できませんでした。空き容量を確認して、もう一度お試しください。"
 
-#: settings/can_recorder.py:105
+#: settings/can_recorder.py:118
 msgid "Saved: the car is no longer parked."
 msgstr "保存済み：車が駐車状態ではなくなりました。"
 
-#: settings/can_recorder.py:107
+#: settings/can_recorder.py:120
 msgid "Saved: storage is running low."
 msgstr "保存済み：空き容量が少なくなりました。"
 
-#: settings/can_recorder.py:109
+#: settings/can_recorder.py:122
 msgid "Saved: the recording limit was reached."
 msgstr "保存済み：記録の上限で停止しました。"
 
-#: settings/can_recorder.py:111
+#: settings/can_recorder.py:124
 msgid "Saved: OBD test ended and normal input restored."
 msgstr "保存済み：OBDテストを終了し、通常の入力に戻しました。"
 
-#: settings/can_recorder.py:114
+#: settings/can_recorder.py:127
 #, python-brace-format
 msgid "Last marker: {} at {}"
 msgstr "最後のマーク：{}、{}"
 
-#: settings/can_recorder.py:116
+#: settings/can_recorder.py:129
 msgid "Waiting for OBD traffic. Check the RJ45 cable."
 msgstr "OBDデータを待っています。RJ45ケーブルを確認してください。"
 
-#: settings/can_recorder.py:118
+#: settings/can_recorder.py:131
 msgid "Waiting for CAN traffic. Some channels sleep with the car off."
 msgstr "CANデータを待っています。車の電源が切れていると一部の通信は休止します。"
 
-#: settings/can_recorder.py:119
+#: settings/can_recorder.py:132
 msgid "No markers yet."
 msgstr "まだマークがありません。"
 
-#: settings/can_recorder.py:119
-#: settings/can_recorder.py:102
+#: settings/can_recorder.py:132
+#: settings/can_recorder.py:115
 msgid "Park the car to start a test."
 msgstr "テストを始めるには車を駐車してください。"
 
-#: settings/can_recorder.py:38
+#: settings/can_recorder.py:45
 msgid "Camera"
 msgstr "カメラ"
 
-#: settings/can_recorder.py:38
+#: settings/can_recorder.py:45
 msgid "OBD"
 msgstr "OBD"
 
-#: settings/can_recorder.py:56
+#: settings/can_recorder.py:63
 msgid "Test controls"
 msgstr "テスト操作"
 
-#: settings/can_recorder.py:69
+#: settings/can_recorder.py:76
 msgid "Test status"
 msgstr "テスト状態"
 
-#: settings/can_recorder.py:71
-#: settings/developer.py:154
-#: settings/search.py:198
+#: settings/can_recorder.py:78
+#: settings/developer.py:165
+#: settings/search.py:201
 msgid "CAN test recorder"
 msgstr "CANテスト記録"
 
-#: settings/can_recorder.py:71
+#: settings/can_recorder.py:78
 msgid "Device › Developer"
 msgstr "デバイス › 開発者"
 
-#: settings/can_recorder.py:96
+#: settings/can_recorder.py:109
 msgid "Couldn't delete the log. Try Abort again."
 msgstr "ログを削除できませんでした。もう一度「中止」をタップしてください。"
 
-#: settings/can_recorder.py:98
+#: settings/can_recorder.py:111
 msgid "Couldn't restore the input. Restart the device before another test."
 msgstr "入力を元に戻せませんでした。次のテストの前にデバイスを再起動してください。"
 
-#: settings/can_recorder.py:100
-#: settings/can_recorder.py:102
+#: settings/can_recorder.py:113
+#: settings/can_recorder.py:115
 msgid "OBD needs the RJ45 cable and this Bolt on, in Park."
 msgstr "OBDにはRJ45ケーブル接続と、このBoltの電源がオンでPに入っていることが必要です。"
 
-#: settings/can_recorder.py:113
+#: settings/can_recorder.py:126
 msgid "Lock"
 msgstr "ロック"
 
-#: settings/can_recorder.py:113
+#: settings/can_recorder.py:126
 msgid "Unlock"
 msgstr "ロック解除"
 
-#: settings/can_recorder.py:50
+#: settings/can_recorder.py:57
 msgid "Tap a marker, then press the car's lock control."
 msgstr "マークをタップしてから車のロック操作をしてください。"
 
-#: settings/can_recorder.py:60
+#: settings/can_recorder.py:67
 msgid "Elapsed"
 msgstr "経過時間"
 
-#: settings/can_recorder.py:61
+#: settings/can_recorder.py:68
 msgid "CAN frames"
 msgstr "CANフレーム"
 
-#: settings/can_recorder.py:63
+#: settings/can_recorder.py:70
 msgid "Lock markers"
 msgstr "ロックのマーク"
 
-#: settings/can_recorder.py:64
+#: settings/can_recorder.py:71
 msgid "Unlock markers"
 msgstr "ロック解除のマーク"
 
-#: settings/can_recorder.py:68
+#: settings/can_recorder.py:75
 msgid "Full and focused logs stay on this device."
 msgstr "完全ログとフィルタ済みログはこのデバイスに保存されます。"
 
-#: settings/can_recorder.py:51
+#: settings/can_recorder.py:58
 msgid "Input"
 msgstr "入力"
 
-#: settings/can_recorder.py:54
+#: settings/can_recorder.py:61
 msgid "Abort deletes this test. OBD stops after 2 minutes."
 msgstr "中止するとこのテストを削除します。OBDは2分後に停止します。"
 
-#: settings/can_recorder.py:55
+#: settings/can_recorder.py:62
 msgid "Stops after 10 minutes. Abort deletes this test."
 msgstr "10分後に停止します。中止するとこのテストを削除します。"
 
-#: settings/can_recorder.py:66
+#: settings/can_recorder.py:73
 #, python-brace-format
 msgid "Log: {}"
 msgstr "ログ：{}"
 
-#: settings/can_recorder.py:66
+#: settings/can_recorder.py:73
 msgid "Start logging to create a new test log."
 msgstr "記録を開始すると新しいテストログが作成されます。"
 
-#: settings/connections.py:50
+#: settings/connections.py:54
 #, python-brace-format
 msgid "{} button"
 msgid_plural "{} buttons"
 msgstr[0] "ボタン {} 個"
 
-#: settings/connections.py:63
+#: settings/connections.py:68
 msgid "CONNECTIONS"
 msgstr "接続"
 
-#: settings/connections.py:64
-#: settings/map_source.py:193
-#: settings/network_tab.py:281
+#: settings/connections.py:69
+#: settings/map_source.py:207
+#: settings/network_tab.py:296
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
-#: settings/connections.py:66
-#: settings/network_tab.py:299
-#: settings/search.py:31
+#: settings/connections.py:71
+#: settings/network_tab.py:315
+#: settings/search.py:32
 msgid "Cellular"
 msgstr "モバイル通信"
 
-#: settings/connections.py:69
-#: settings/search.py:31
-#: settings/search.py:217
+#: settings/connections.py:74
+#: settings/search.py:32
+#: settings/search.py:220
 msgid "Car Audio & Devices"
 msgstr "車のオーディオとデバイス"
 
-#: settings/developer.py:18
+#: settings/developer.py:23
 msgid "openpilot longitudinal control is in alpha for this car and turns off Automatic Emergency Braking (AEB). The car's own cruise control is the default. Experimental mode is recommended with it. openpilot restarts if the car is on."
 msgstr "この車での openpilot の縦制御はアルファ版で、自動緊急ブレーキ（AEB）がオフになります。デフォルトは車の純正クルーズコントロールです。使う場合は実験モードをおすすめします。車がオンなら openpilot が再起動します。"
 
-#: settings/developer.py:145
-#: settings/search.py:203
+#: settings/developer.py:156
+#: settings/search.py:206
 msgid "openpilot Longitudinal (Alpha)"
 msgstr "openpilot の縦制御（アルファ）"
 
-#: settings/developer.py:145
+#: settings/developer.py:156
 msgid "Turns off the car's emergency braking. Off while engaged."
 msgstr "車の緊急ブレーキをオフにします。作動中はオフ。"
 
-#: settings/developer.py:106
+#: settings/developer.py:117
 msgid "GitHub username"
 msgstr "GitHub ユーザー名"
 
-#: settings/developer.py:106
+#: settings/developer.py:117
 msgid "Your own account only: every public key in it gets SSH access"
 msgstr "自分のアカウントのみ：そのすべての公開キーに SSH アクセスが付与されます"
 
-#: settings/developer.py:118
+#: settings/developer.py:129
 msgid "Getting keys from GitHub…"
 msgstr "GitHub からキーを取得中…"
 
-#: settings/developer.py:122
+#: settings/developer.py:133
 #, python-brace-format
 msgid "Keys from GitHub user {}"
 msgstr "GitHub ユーザー {} のキー"
 
-#: settings/developer.py:122
+#: settings/developer.py:133
 msgid "Adds every public key in a GitHub account. Never use someone else's."
 msgstr "GitHub アカウントの公開キーをすべて追加します。他人のものは使わないでください。"
 
-#: settings/developer.py:155
-#: settings/search.py:30
-#: settings/search.py:197
+#: settings/developer.py:166
+#: settings/search.py:31
+#: settings/search.py:200
 msgid "Developer"
 msgstr "開発者"
 
-#: settings/developer.py:155
+#: settings/developer.py:166
 msgid "openpilot's developer options. They're only here with Tuner Mode on."
 msgstr "openpilot の開発者向けオプションです。チューナーモードがオンのときだけ表示されます。"
 
-#: settings/developer.py:105
-#: settings/developer.py:144
+#: settings/developer.py:116
+#: settings/developer.py:155
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:662
 msgid "Add"
 msgstr "追加"
 
-#: settings/developer.py:135
+#: settings/developer.py:146
 msgid "Turn on alpha longitudinal?"
 msgstr "アルファ版の縦制御をオンにしますか？"
 
-#: settings/developer.py:135
-#: settings/vehicle.py:290
+#: settings/developer.py:146
+#: settings/vehicle.py:311
 msgid "Turn On"
 msgstr "オンにする"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/developer.py:148
-#: settings/search.py:199
+#: settings/developer.py:159
+#: settings/search.py:202
 msgid "ADB"
 msgstr "ADB"
 
-#: settings/developer.py:148
+#: settings/developer.py:159
 msgid "Connect over USB or the network (docs.comma.ai). Change it with the car off."
 msgstr "USB またはネットワークで接続します（docs.comma.ai）。車の電源を切って変更してください。"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/developer.py:149
-#: settings/search.py:200
+#: settings/developer.py:160
+#: settings/search.py:203
 msgid "SSH"
 msgstr "SSH"
 
-#: settings/developer.py:149
+#: settings/developer.py:160
 msgid "Remote shell access with the keys below"
 msgstr "下のキーでリモートシェルにアクセス"
 
-#: settings/developer.py:150
-#: settings/search.py:201
+#: settings/developer.py:161
+#: settings/search.py:204
 #: selfdrive/ui/layouts/settings/developer.py:53
 msgid "SSH Keys"
 msgstr "SSH キー"
 
-#: settings/developer.py:151
-#: settings/search.py:202
+#: settings/developer.py:162
+#: settings/search.py:205
 #: selfdrive/ui/layouts/settings/developer.py:56
 msgid "Joystick Debug Mode"
 msgstr "ジョイスティックデバッグモード"
 
-#: settings/developer.py:151
+#: settings/developer.py:162
 msgid "Drive openpilot's controls from a joystick. Change it with the car off."
 msgstr "ジョイスティックで openpilot を操作します。車の電源を切って変更してください。"
 
-#: settings/developer.py:153
-#: settings/search.py:204
+#: settings/developer.py:164
+#: settings/search.py:207
 #: selfdrive/ui/layouts/settings/developer.py:72
 msgid "UI Debug Mode"
 msgstr "UI デバッグモード"
 
-#: settings/developer.py:153
-#: settings/search.py:204
+#: settings/developer.py:164
+#: settings/search.py:207
 msgid "Shows touches and the frame rate"
 msgstr "タッチとフレームレートを表示します"
 
-#: settings/developer.py:154
-#: settings/search.py:198
+#: settings/developer.py:165
+#: settings/search.py:201
 msgid "Record traffic and mark manual lock/unlock actions"
 msgstr "通信を記録し、手動のロックと解除をマーク"
 
-#: settings/developer.py:144
+#: settings/developer.py:155
 msgid "Adding…"
 msgstr "追加中…"
 
-#: settings/device.py:24
+#: settings/device.py:30
 msgid "Calibrated"
 msgstr "キャリブレーション済み"
 
-#: settings/device.py:25
+#: settings/device.py:31
 #: selfdrive/selfdrived/events.py:1496
 msgid "Calibrating"
 msgstr "キャリブレーション中"
 
-#: settings/device.py:26
+#: settings/device.py:32
 msgid "Not calibrated yet"
 msgstr "まだキャリブレーションされていません"
 
-#: settings/device.py:61
+#: settings/device.py:67
 msgid "Preview"
 msgstr "プレビュー"
 
-#: settings/device.py:63
-#: settings/device.py:64
-#: settings/software_tab.py:196
+#: settings/device.py:69
+#: settings/device.py:70
+#: settings/software_tab.py:206
 msgid "Reset"
 msgstr "リセット"
 
-#: settings/device.py:126
+#: settings/device.py:143
 msgid "Open connect.comma.ai"
 msgstr "connect.comma.ai を開く"
 
-#: settings/device.py:126
+#: settings/device.py:143
 msgid "Bookmark it to your home screen to use it like an app"
 msgstr "ホーム画面に追加するとアプリのように使えます"
 
-#: settings/device.py:127
+#: settings/device.py:144
 msgid "Tap Add new device"
 msgstr "新しいデバイスを追加をタップ"
 
-#: settings/device.py:127
+#: settings/device.py:144
 msgid "Sign in first if it asks"
 msgstr "求められたら先にサインイン"
 
-#: settings/device.py:128
-#: settings/device.py:132
+#: settings/device.py:145
+#: settings/device.py:149
 msgid "Scan the code"
 msgstr "コードをスキャン"
 
-#: settings/device.py:128
+#: settings/device.py:145
 msgid "The Phone App row shows Paired when it's done"
 msgstr "完了するとスマホアプリの行に「ペアリング済み」と表示されます"
 
-#: settings/device.py:131
+#: settings/device.py:148
 msgid "Choose a password"
 msgstr "パスワードを決める"
 
-#: settings/device.py:131
+#: settings/device.py:148
 msgid "At least 6 characters. Galaxy asks for it when you sign in"
 msgstr "6 文字以上。Galaxy にサインインするときに使います"
 
-#: settings/device.py:132
+#: settings/device.py:149
 msgid "It opens this device's page in Galaxy"
 msgstr "Galaxy でこのデバイスのページが開きます"
 
-#: settings/device.py:133
+#: settings/device.py:150
 msgid "Bookmark the page"
 msgstr "ページをブックマーク"
 
-#: settings/device.py:133
+#: settings/device.py:150
 msgid "The link stays the same until you unpair"
 msgstr "ペアリングを解除するまでリンクは変わりません"
 
-#: settings/device.py:235
+#: settings/device.py:252
 msgid "Pair the phone app"
 msgstr "スマホアプリとペアリング"
 
-#: settings/device.py:235
+#: settings/device.py:252
 msgid "Change settings and see drives from your phone"
 msgstr "スマホから設定変更やドライブの確認ができます"
 
-#: settings/device.py:245
-#: settings/device.py:410
+#: settings/device.py:262
+#: settings/device.py:427
 msgctxt "action"
 msgid "Set up"
 msgstr "設定"
 
-#: settings/device.py:248
-#: settings/device.py:249
+#: settings/device.py:265
+#: settings/device.py:266
 #: selfdrive/ui/layouts/settings/device.py:335
 msgid "Unpair"
 msgstr "ペアリング解除"
 
-#: settings/device.py:264
-#: settings/device.py:107
-#: settings/search.py:173
+#: settings/device.py:281
+#: settings/device.py:124
+#: settings/search.py:176
 msgid "Remote Access"
 msgstr "リモートアクセス"
 
-#: settings/device.py:264
+#: settings/device.py:281
 msgid "Reach this device from the Galaxy web app"
 msgstr "Galaxy のウェブアプリからこのデバイスにアクセス"
 
-#: settings/device.py:68
-#: settings/search.py:140
+#: settings/device.py:74
+#: settings/search.py:143
 #: selfdrive/ui/layouts/settings/device.py:152
 msgid "Driver Camera"
 msgstr "ドライバーカメラ"
 
-#: settings/device.py:68
+#: settings/device.py:74
 msgid "Check that it can see your face. The car must be off."
 msgstr "顔が見えているか確認します。車の電源は切ってください。"
 
-#: settings/device.py:69
-#: settings/search.py:141
-#: settings/speed_steering.py:368
+#: settings/device.py:75
+#: settings/search.py:144
+#: settings/speed_steering.py:382
 msgid "Driver Monitoring"
 msgstr "ドライバーモニタリング"
 
-#: settings/device.py:69
-#: settings/search.py:141
+#: settings/device.py:75
+#: settings/search.py:144
 msgid "Forget which side of the car the driver sits on"
 msgstr "運転席がどちら側かを忘れます"
 
-#: settings/device.py:92
-#: settings/device.py:92
-#: settings/search.py:180
+#: settings/device.py:109
+#: settings/device.py:109
+#: settings/search.py:183
 msgid "Power Off"
 msgstr "電源オフ"
 
-#: settings/device.py:95
-#: settings/device.py:96
-#: settings/search.py:179
+#: settings/device.py:112
+#: settings/device.py:113
+#: settings/search.py:182
 msgid "Restart"
 msgstr "再起動"
 
-#: settings/device.py:97
-#: settings/device.py:99
+#: settings/device.py:114
+#: settings/device.py:116
 msgid "Recalibrate"
 msgstr "再キャリブレーション"
 
-#: settings/device.py:226
-#: settings/device.py:114
-#: settings/search.py:176
+#: settings/device.py:243
+#: settings/device.py:131
+#: settings/search.py:179
 msgid "Regulatory"
 msgstr "規制情報"
 
-#: settings/device.py:262
+#: settings/device.py:279
 msgid "Choosing a password creates this device's link"
 msgstr "パスワードを決めるとこのデバイスのリンクが作られます"
 
-#: settings/device.py:347
+#: settings/device.py:364
 msgid "Manage"
 msgstr "管理"
 
-#: settings/device.py:347
+#: settings/device.py:364
 msgid "Set Up"
 msgstr "設定"
 
-#: settings/device.py:353
-#: settings/model.py:130
-#: settings/network_tab.py:202
+#: settings/device.py:370
+#: settings/model.py:140
+#: settings/network_tab.py:216
 msgid "Not available"
 msgstr "利用できません"
 
-#: settings/device.py:423
+#: settings/device.py:440
 msgid "Choose a Galaxy password"
 msgstr "Galaxy のパスワードを決める"
 
-#: settings/device.py:423
+#: settings/device.py:440
 msgid "At least 6 characters. Galaxy asks for it when you sign in."
 msgstr "6 文字以上。Galaxy にサインインするときに使います。"
 
-#: settings/device.py:63
+#: settings/device.py:69
 msgid "Reset driver monitoring?"
 msgstr "ドライバーモニタリングをリセットしますか？"
 
-#: settings/device.py:64
+#: settings/device.py:70
 msgid "It forgets which side of the car the driver sits on and learns it again on the next drive."
 msgstr "運転席がどちら側かを忘れ、次のドライブで覚え直します。"
 
-#: settings/device.py:92
+#: settings/device.py:109
 msgid "Power off?"
 msgstr "電源を切りますか？"
 
-#: settings/device.py:92
+#: settings/device.py:109
 msgid "The device stays off until the car starts again."
 msgstr "車が再び始動するまでデバイスはオフのままです。"
 
-#: settings/device.py:95
+#: settings/device.py:112
 msgid "Restart the device?"
 msgstr "デバイスを再起動しますか？"
 
-#: settings/device.py:95
+#: settings/device.py:112
 msgid "openpilot shuts down and starts again. This takes about a minute."
 msgstr "openpilot を終了して再起動します。1 分ほどかかります。"
 
-#: settings/device.py:97
+#: settings/device.py:114
 msgid "Recalibrate the camera?"
 msgstr "カメラを再キャリブレーションしますか？"
 
-#: settings/device.py:98
+#: settings/device.py:115
 msgid "Calibration starts over. openpilot relearns how the device is mounted over your next few minutes of driving."
 msgstr "キャリブレーションをやり直します。次の数分間の運転で、openpilot がデバイスの取り付け位置を学び直します。"
 
-#: settings/device.py:117
-#: settings/search.py:30
-#: settings/search.py:171
+#: settings/device.py:134
+#: settings/search.py:31
+#: settings/search.py:174
 msgid "This Device"
 msgstr "このデバイス"
 
-#: settings/device.py:232
+#: settings/device.py:249
 msgid "ON YOUR PHONE"
 msgstr "スマホで"
 
-#: settings/device.py:233
+#: settings/device.py:250
 msgid "A new code every 5 minutes"
 msgstr "5 分ごとに新しいコード"
 
-#: settings/device.py:234
+#: settings/device.py:251
 msgid "Getting a code…"
 msgstr "コードを取得中…"
 
-#: settings/device.py:248
+#: settings/device.py:265
 msgid "Unpair from Galaxy?"
 msgstr "Galaxy とのペアリングを解除しますか？"
 
-#: settings/device.py:248
+#: settings/device.py:265
 msgid "The link stops working. Setting up again makes a new one."
 msgstr "リンクは使えなくなります。設定し直すと新しいリンクが作られます。"
 
-#: settings/device.py:252
+#: settings/device.py:269
 msgid "Set up · protected by your password"
 msgstr "設定済み · パスワードで保護"
 
-#: settings/device.py:252
+#: settings/device.py:269
 msgid "Not set up"
 msgstr "未設定"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/device.py:254
+#: settings/device.py:271
 msgid "GALAXY"
 msgstr "GALAXY"
 
-#: settings/device.py:263
+#: settings/device.py:280
 msgid "Your code appears here once you choose a password"
 msgstr "パスワードを決めるとここにコードが表示されます"
 
-#: settings/device.py:104
-#: settings/search.py:172
+#: settings/device.py:121
+#: settings/search.py:175
 msgid "Phone App"
 msgstr "スマホアプリ"
 
-#: settings/device.py:110
-#: settings/search.py:174
+#: settings/device.py:127
+#: settings/search.py:177
 msgid "Camera Calibration"
 msgstr "カメラのキャリブレーション"
 
-#: settings/device.py:112
-#: settings/search.py:175
+#: settings/device.py:129
+#: settings/search.py:178
 msgid "How It Works"
 msgstr "しくみ"
 
-#: settings/device.py:112
-#: settings/search.py:175
+#: settings/device.py:129
+#: settings/search.py:178
 msgid "Rules, features and limits"
 msgstr "ルール、機能、制限"
 
-#: settings/device.py:113
+#: settings/device.py:130
 msgid "MORE"
 msgstr "その他"
 
-#: settings/device.py:115
-#: settings/search.py:177
+#: settings/device.py:132
+#: settings/search.py:180
 msgid "Device ID and Serial"
 msgstr "デバイス ID とシリアル番号"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/device.py:116
-#: settings/search.py:178
+#: settings/device.py:133
+#: settings/search.py:181
 msgid "IMEI"
 msgstr "IMEI"
 
-#: settings/device.py:112
+#: settings/device.py:129
 msgid "Review"
 msgstr "確認"
 
-#: settings/device.py:105
+#: settings/device.py:122
 msgid "comma connect · Paired"
 msgstr "comma connect · ペアリング済み"
 
-#: settings/device.py:105
+#: settings/device.py:122
 msgid "comma connect · see drives and change settings on your phone"
 msgstr "comma connect · スマホでドライブの確認や設定変更"
 
-#: settings/device.py:107
+#: settings/device.py:124
 msgid "Galaxy · Set up"
 msgstr "Galaxy · 設定済み"
 
-#: settings/device.py:107
+#: settings/device.py:124
 msgid "Galaxy · reach this device from a web browser"
 msgstr "Galaxy · ブラウザからこのデバイスにアクセス"
 
-#: settings/device.py:114
+#: settings/device.py:131
 msgid "View"
 msgstr "表示"
 
-#: settings/device_sections.py:304
+#: settings/device_sections.py:330
 msgid "Every recorded drive and its video is removed. This can't be undone."
 msgstr "記録したすべてのドライブと動画が削除されます。元に戻せません。"
 
-#: settings/device_sections.py:305
+#: settings/device_sections.py:331
 #, python-brace-format, drawn
 msgid "Backup {}"
 msgstr "バックアップ {}"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/device_sections.py:306
+#: settings/device_sections.py:332
 msgid "Remove offline routes, speed limits and street names from this device. Saved places stay saved. Your regions stay chosen, so a scheduled update downloads them again."
 msgstr "Remove offline routes, speed limits and street names from this device. Saved places stay saved. Your regions stay chosen, so a scheduled update downloads them again."
 
-#: settings/device_sections.py:50
-#: settings/maps.py:444
+#: settings/device_sections.py:60
+#: settings/maps.py:469
 msgid "Parked"
 msgstr "駐車中"
 
-#: settings/device_sections.py:50
+#: settings/device_sections.py:60
 msgid "Always"
 msgstr "常に"
 
-#: settings/device_sections.py:51
+#: settings/device_sections.py:61
 msgid "Acceleration felt harsh or jerky"
 msgstr "加速が急だった、またはぎくしゃくした"
 
-#: settings/device_sections.py:51
+#: settings/device_sections.py:61
 msgid "Braking was too sudden"
 msgstr "ブレーキが急すぎた"
 
-#: settings/device_sections.py:51
+#: settings/device_sections.py:61
 msgid "It disengaged when I didn't expect it"
 msgstr "予期せず解除された"
 
-#: settings/device_sections.py:52
+#: settings/device_sections.py:62
 msgid "It felt slow to respond"
 msgstr "反応が遅く感じた"
 
-#: settings/device_sections.py:52
+#: settings/device_sections.py:62
 msgid "An alert was unclear"
 msgstr "アラートがわかりにくかった"
 
-#: settings/device_sections.py:52
+#: settings/device_sections.py:62
 msgid "My steering wheel buttons aren't working"
 msgstr "ハンドルのボタンが効かない"
 
-#: settings/device_sections.py:52
+#: settings/device_sections.py:62
 msgid "Something else"
 msgstr "その他"
 
-#: settings/device_sections.py:49
+#: settings/device_sections.py:59
 msgid "Dimmer"
 msgstr "暗く"
 
-#: settings/device_sections.py:49
+#: settings/device_sections.py:59
 msgid "Brighter"
 msgstr "明るく"
 
-#: settings/device_sections.py:301
+#: settings/device_sections.py:327
 #: settings/ram.py:30
 #, python-brace-format
 msgid "{} MB"
 msgstr "{} MB"
 
-#: settings/device_sections.py:314
-#: settings/device_sections.py:185
-#: settings/device_sections.py:314
+#: settings/device_sections.py:340
+#: settings/device_sections.py:209
+#: settings/device_sections.py:340
 msgid "Delete"
 msgstr "削除"
 
-#: settings/device_sections.py:317
-#: settings/display.py:346
-#: settings/maps.py:244
+#: settings/device_sections.py:343
+#: settings/display.py:366
+#: settings/maps.py:266
 msgid "Offline Maps"
 msgstr "オフラインマップ"
 
-#: settings/device_sections.py:337
-#: settings/search.py:191
+#: settings/device_sections.py:363
+#: settings/search.py:194
 msgid "Unused Models"
 msgstr "未使用のモデル"
 
-#: settings/device_sections.py:341
-#: settings/search.py:192
+#: settings/device_sections.py:368
+#: settings/search.py:195
 msgid "Record Driver Camera"
 msgstr "ドライバーカメラを録画"
 
-#: settings/device_sections.py:341
+#: settings/device_sections.py:368
 msgid "Saved and uploaded with your drives. Restarts openpilot if the car is on."
 msgstr "ドライブと一緒に保存・アップロードされます。車がオンなら openpilot が再起動します。"
 
-#: settings/device_sections.py:343
-#: settings/search.py:193
+#: settings/device_sections.py:370
+#: settings/search.py:196
 msgid "Record Microphone"
 msgstr "マイクを録音"
 
-#: settings/device_sections.py:343
+#: settings/device_sections.py:370
 msgid "Cabin audio in your drive recordings. Restarts openpilot if the car is on."
 msgstr "ドライブの録画に車内の音声を含めます。車がオンなら openpilot が再起動します。"
 
-#: settings/device_sections.py:158
-#: settings/device_sections.py:171
-#: settings/search.py:184
+#: settings/device_sections.py:180
+#: settings/device_sections.py:194
+#: settings/search.py:187
 msgid "Language"
 msgstr "言語"
 
-#: settings/device_sections.py:175
-#: settings/search.py:30
-#: settings/search.py:181
+#: settings/device_sections.py:198
+#: settings/search.py:31
+#: settings/search.py:184
 msgid "General"
 msgstr "一般"
 
-#: settings/device_sections.py:182
-#: settings/device_sections.py:183
+#: settings/device_sections.py:206
+#: settings/device_sections.py:207
 msgid "Restore"
 msgstr "復元"
 
-#: settings/device_sections.py:226
+#: settings/device_sections.py:252
 msgid "Drives"
 msgstr "ドライブ"
 
-#: settings/device_sections.py:226
-#: sidebar.py:135
-#: sidebar.py:156
+#: settings/device_sections.py:252
+#: sidebar.py:141
+#: sidebar.py:162
 msgid "Maps"
 msgstr "地図"
 
-#: settings/device_sections.py:226
+#: settings/device_sections.py:252
 msgid "Models"
 msgstr "モデル"
 
-#: settings/device_sections.py:313
-#: settings/maps.py:244
+#: settings/device_sections.py:339
+#: settings/maps.py:266
 msgid "Speed limits and curves work without a connection"
 msgstr "制限速度とカーブが接続なしで使えます"
 
-#: settings/device_sections.py:327
+#: settings/device_sections.py:353
 #, python-brace-format
 msgid "{} downloaded model not in use"
 msgid_plural "{} downloaded models not in use"
 msgstr[0] "未使用のダウンロード済みモデル {} 個"
 
-#: settings/device_sections.py:327
+#: settings/device_sections.py:353
 msgid "Only the models you use are downloaded"
 msgstr "使うモデルだけがダウンロードされています"
 
-#: settings/device_sections.py:331
+#: settings/device_sections.py:357
 msgid "Remove unused models?"
 msgstr "未使用のモデルを削除しますか？"
 
-#: settings/device_sections.py:332
+#: settings/device_sections.py:358
 #, python-brace-format
 msgid "{} model you aren't using is removed. You can download it again from the model catalog."
 msgid_plural "{} models you aren't using are removed. You can download them again from the model catalog."
 msgstr[0] "使っていないモデル {} 個を削除します。モデルカタログから再ダウンロードできます。"
 
-#: settings/device_sections.py:358
-#: settings/search.py:30
-#: settings/search.py:188
+#: settings/device_sections.py:385
+#: settings/search.py:31
+#: settings/search.py:191
 msgid "Storage & Data"
 msgstr "ストレージとデータ"
 
-#: settings/device_sections.py:359
+#: settings/device_sections.py:386
 msgid "High-quality recording, logging and error logs are in Tuner Mode."
 msgstr "高画質録画、ログ、エラーログはチューナーモードにあります。"
 
-#: settings/device_sections.py:161
+#: settings/device_sections.py:183
 msgid "For menus and alerts"
 msgstr "メニューとアラートに使います"
 
-#: settings/device_sections.py:169
-#: settings/search.py:182
+#: settings/device_sections.py:192
+#: settings/search.py:185
 msgid "Units"
 msgstr "単位"
 
-#: settings/device_sections.py:169
-#: settings/search.py:182
+#: settings/device_sections.py:192
+#: settings/search.py:185
 msgid "Speed and distance everywhere"
 msgstr "速度と距離の表示すべて"
 
-#: settings/device_sections.py:170
-#: settings/search.py:183
-#: sidebar.py:170
+#: settings/device_sections.py:193
+#: settings/search.py:186
+#: sidebar.py:176
 msgid "Temperature"
 msgstr "気温"
 
-#: settings/device_sections.py:170
-#: settings/search.py:183
+#: settings/device_sections.py:193
+#: settings/search.py:186
 msgid "For the weather forecast"
 msgstr "天気予報に使います"
 
-#: settings/device_sections.py:172
-#: settings/search.py:185
+#: settings/device_sections.py:195
+#: settings/search.py:188
 msgid "Screen Brightness"
 msgstr "画面の明るさ"
 
-#: settings/device_sections.py:172
-#: settings/search.py:185
+#: settings/device_sections.py:195
+#: settings/search.py:188
 msgid "Auto follows ambient light, day and night"
 msgstr "自動は昼夜の周囲の明るさに合わせます"
 
-#: settings/device_sections.py:174
-#: settings/search.py:186
+#: settings/device_sections.py:197
+#: settings/search.py:189
 msgid "Standby"
 msgstr "スタンバイ"
 
-#: settings/device_sections.py:174
-#: settings/search.py:186
+#: settings/device_sections.py:197
+#: settings/search.py:189
 msgid "Screen sleeps while driving, wakes for alerts"
 msgstr "運転中は画面がスリープし、アラートで点灯します"
 
-#: settings/device_sections.py:194
-#: settings/search.py:30
-#: settings/search.py:187
+#: settings/device_sections.py:219
+#: settings/search.py:31
+#: settings/search.py:190
 msgid "Backups"
 msgstr "バックアップ"
 
-#: settings/device_sections.py:194
+#: settings/device_sections.py:219
 msgid "Snapshots of your settings. Drives aren't included."
 msgstr "設定のスナップショットです。ドライブは含まれません。"
 
-#: settings/device_sections.py:266
+#: settings/device_sections.py:292
 #, python-brace-format
 msgid "{} of {}"
 msgstr "{} / {}"
 
-#: settings/device_sections.py:268
+#: settings/device_sections.py:294
 #, python-brace-format
 msgid "{} of {} used"
 msgstr "{1} 中 {0} 使用"
 
-#: settings/device_sections.py:314
+#: settings/device_sections.py:340
 msgid "Delete offline maps?"
 msgstr "オフラインマップを削除しますか？"
 
-#: settings/device_sections.py:349
-#: settings/search.py:189
+#: settings/device_sections.py:376
+#: settings/search.py:192
 msgid "Recorded Drives"
 msgstr "記録したドライブ"
 
-#: settings/device_sections.py:349
-#: settings/search.py:189
+#: settings/device_sections.py:376
+#: settings/search.py:192
 msgid "Oldest drives are removed when space runs low"
 msgstr "空き容量が少なくなると古いドライブから削除されます"
 
-#: settings/device_sections.py:354
+#: settings/device_sections.py:381
 msgid "RECORDING & UPLOADS"
 msgstr "録画とアップロード"
 
-#: settings/device_sections.py:357
-#: settings/search.py:194
+#: settings/device_sections.py:384
+#: settings/search.py:197
 msgid "Drive logs and video for debugging"
 msgstr "デバッグ用のドライブログと動画"
 
-#: settings/device_sections.py:394
+#: settings/device_sections.py:425
 msgid "Optional"
 msgstr "任意"
 
-#: settings/device_sections.py:404
+#: settings/device_sections.py:435
 msgid "Sent. Thank you!"
 msgstr "送信しました。ありがとうございます！"
 
-#: settings/device_sections.py:404
+#: settings/device_sections.py:435
 msgid "Send report"
 msgstr "レポートを送信"
 
-#: settings/device_sections.py:412
+#: settings/device_sections.py:443
 msgid "Details (optional)"
 msgstr "詳細（任意）"
 
-#: settings/device_sections.py:412
+#: settings/device_sections.py:443
 msgid "Where and when it happened"
 msgstr "いつどこで起きたか"
 
-#: settings/device_sections.py:414
+#: settings/device_sections.py:445
 msgid "Discord name (optional)"
 msgstr "Discord の名前（任意）"
 
-#: settings/device_sections.py:414
+#: settings/device_sections.py:445
 msgid "So we can follow up"
 msgstr "こちらから連絡するため"
 
-#: settings/device_sections.py:182
+#: settings/device_sections.py:206
 msgid "Restore this backup?"
 msgstr "このバックアップを復元しますか？"
 
-#: settings/device_sections.py:182
+#: settings/device_sections.py:206
 #, python-brace-format
 msgid "Your current settings are replaced with {}."
 msgstr "現在の設定が {} に置き換わります。"
 
-#: settings/device_sections.py:185
+#: settings/device_sections.py:209
 msgid "Delete this backup?"
 msgstr "このバックアップを削除しますか？"
 
-#: settings/device_sections.py:185
+#: settings/device_sections.py:209
 #, python-brace-format
 msgid "{} can't be recovered."
 msgstr "{} は元に戻せません。"
 
-#: settings/device_sections.py:192
-msgid "SAVED"
-msgstr "保存済み"
-
-#: settings/device_sections.py:195
-msgid "Back up now"
-msgstr "今すぐバックアップ"
-
-#: settings/device_sections.py:350
-msgid "Delete all"
-msgstr "すべて削除"
-
-#: settings/device_sections.py:408
-msgid "What happened?"
-msgstr "何が起きましたか？"
-
-#: settings/device_sections.py:413
-msgid "Details"
-msgstr "詳細"
-
-#: settings/device_sections.py:415
-msgid "Discord name"
-msgstr "Discord の名前"
-
-#: settings/device_sections.py:350
-msgid "Delete all drives?"
-msgstr "すべてのドライブを削除しますか？"
-
-#: settings/device_sections.py:193
+#: settings/device_sections.py:215
 msgid "No backups yet."
 msgstr "バックアップはまだありません。"
 
-#: settings/display.py:35
+#: settings/device_sections.py:217
+msgid "SAVED"
+msgstr "保存済み"
+
+#: settings/device_sections.py:220
+msgid "Back up now"
+msgstr "今すぐバックアップ"
+
+#: settings/device_sections.py:377
+msgid "Delete all"
+msgstr "すべて削除"
+
+#: settings/device_sections.py:439
+msgid "What happened?"
+msgstr "何が起きましたか？"
+
+#: settings/device_sections.py:444
+msgid "Details"
+msgstr "詳細"
+
+#: settings/device_sections.py:446
+msgid "Discord name"
+msgstr "Discord の名前"
+
+#: settings/device_sections.py:377
+msgid "Delete all drives?"
+msgstr "すべてのドライブを削除しますか？"
+
 #: settings/display.py:40
-#: settings/display.py:28
+#: settings/display.py:45
+#: settings/display.py:33
 msgid "Standard"
 msgstr "標準"
 
-#: settings/display.py:40
+#: settings/display.py:45
 msgid "Larger"
 msgstr "大きく"
 
-#: settings/display.py:56
+#: settings/display.py:63
 #: selfdrive/selfdrived/events.py:551
 msgid "Be ready to take over at any time"
 msgstr "いつでも操作を引き継げるようにしてください"
 
-#: settings/display.py:56
+#: settings/display.py:63
 #: selfdrive/selfdrived/events.py:211
 msgid "Always keep hands on wheel and eyes on road"
 msgstr "常にハンドルに手を、道路に目を向けてください"
 
-#: settings/display.py:226
+#: settings/display.py:244
 msgid "Developer UI"
 msgstr "開発者 UI"
 
-#: settings/display.py:226
+#: settings/display.py:244
 msgid "Controls metrics bar"
 msgstr "制御指標バー"
 
-#: settings/display.py:226
+#: settings/display.py:244
 msgid "Developer widgets"
 msgstr "開発者ウィジェット"
 
-#: settings/display.py:227
+#: settings/display.py:245
 msgid "Side panel with system and controls data."
 msgstr "システムと制御のデータを表示するサイドパネル。"
 
-#: settings/display.py:228
+#: settings/display.py:246
 msgid "Distance, gap and speed of the car ahead, plus radar points."
 msgstr "前の車の距離・車間・速度とレーダー点。"
 
-#: settings/display.py:28
+#: settings/display.py:33
 msgid "The usual path and lane lines"
 msgstr "通常のパスと車線"
 
-#: settings/display.py:29
+#: settings/display.py:34
 msgid "Thin"
 msgstr "細い"
 
-#: settings/display.py:29
+#: settings/display.py:34
 msgid "A narrower path and lighter lines"
 msgstr "細めのパスと薄い線"
 
-#: settings/display.py:30
+#: settings/display.py:35
 msgid "Rainbow"
 msgstr "レインボー"
 
-#: settings/display.py:30
+#: settings/display.py:35
 msgid "A rainbow path"
 msgstr "虹色のパス"
 
-#: settings/display.py:31
+#: settings/display.py:36
 msgid "Acceleration"
 msgstr "加速度"
 
-#: settings/display.py:31
+#: settings/display.py:36
 msgid "Green when speeding up, amber when slowing"
 msgstr "加速中は緑、減速中は琥珀色"
 
-#: settings/display.py:39
+#: settings/display.py:44
 msgid "Wide"
 msgstr "広角"
 
-#: settings/display.py:43
+#: settings/display.py:48
 msgid "Tandem"
 msgstr "Tandem"
 
-#: settings/display.py:223
+#: settings/display.py:241
 #, python-brace-format
 msgid "{} path"
 msgstr "{}パス"
 
-#: settings/display.py:379
+#: settings/display.py:399
 msgid "Startup Message: first line"
 msgstr "起動メッセージ：1 行目"
 
-#: settings/display.py:220
+#: settings/display.py:238
 msgid "Style banner shown"
 msgstr "スタイルバナーを表示"
 
-#: settings/display.py:220
+#: settings/display.py:238
 msgid "Style banner hidden"
 msgstr "スタイルバナーを非表示"
 
-#: settings/display.py:266
+#: settings/display.py:284
 msgid "Switching off turns these back off. To change one on its own, turn on Tuner Mode."
 msgstr "オフにするとこれらもオフに戻ります。個別に変えるにはチューナーモードをオンにします。"
 
-#: settings/display.py:275
+#: settings/display.py:293
 #, python-brace-format
 msgid "{} sets"
 msgstr "{} の設定内容"
 
-#: settings/display.py:276
+#: settings/display.py:294
 msgid "One switch for the details most drivers never need"
 msgstr "ほとんどのドライバーに不要な詳細をまとめて切り替え"
 
-#: settings/display.py:303
-#: settings/driving_tab.py:109
-#: settings/search.py:28
+#: settings/display.py:322
+#: settings/driving_tab.py:124
+#: settings/search.py:29
 msgid "Driving Screen"
 msgstr "運転画面"
 
-#: settings/display.py:314
-#: settings/display.py:334
-#: settings/search.py:115
+#: settings/display.py:333
+#: settings/display.py:353
+#: settings/search.py:118
 msgid "Boot Logo"
 msgstr "起動ロゴ"
 
-#: settings/display.py:337
-#: settings/driving_tab.py:110
-#: settings/search.py:28
+#: settings/display.py:356
+#: settings/driving_tab.py:125
+#: settings/search.py:29
 msgid "Theme & Startup"
 msgstr "テーマと起動"
 
-#: settings/display.py:347
-#: settings/driving_tab.py:111
-#: settings/search.py:28
+#: settings/display.py:367
+#: settings/driving_tab.py:126
+#: settings/search.py:29
 msgid "Map"
 msgstr "地図"
 
-#: settings/display.py:348
+#: settings/display.py:368
 msgid "The street name is always shown in the onroad bar. Speed limit sources and their order are in Tuner Mode."
 msgstr "通りの名前は常に運転バーに表示されます。制限速度の情報源と順番はチューナーモードにあります。"
 
-#: settings/display.py:357
-#: settings/network_tab.py:89
-#: setup.py:99
+#: settings/display.py:377
+#: settings/network_tab.py:101
+#: setup.py:119
 msgid "Next"
 msgstr "次へ"
 
-#: settings/display.py:363
+#: settings/display.py:383
 msgid "Leave empty for the default"
 msgstr "空欄でデフォルト"
 
-#: settings/display.py:519
+#: settings/display.py:539
 msgid "Acceleration tints the path green when speeding up and amber when slowing. Each value can be changed in Tuner Mode."
 msgstr "加速度では、加速中はパスが緑、減速中は琥珀色になります。各値はチューナーモードで変更できます。"
 
-#: settings/display.py:636
+#: settings/display.py:657
 msgid "Whimsy animations cross the road above the bar while you signal; the chevrons by the speed stay."
 msgstr "ウインカー中は遊び心のあるアニメーションがバーの上の道路を横切ります。速度横の矢印はそのままです。"
 
-#: settings/display.py:284
-#: settings/search.py:103
+#: settings/display.py:303
+#: settings/search.py:106
 msgid "Text Size"
 msgstr "文字サイズ"
 
-#: settings/display.py:284
-#: settings/search.py:103
+#: settings/display.py:303
+#: settings/search.py:106
 msgid "Larger text and icons on the driving screen"
 msgstr "運転画面の文字とアイコンを大きくします"
 
-#: settings/display.py:286
-#: settings/search.py:104
+#: settings/display.py:305
+#: settings/search.py:107
 msgid "Reduce Motion"
 msgstr "動きを減らす"
 
-#: settings/display.py:286
-#: settings/search.py:104
+#: settings/display.py:305
+#: settings/search.py:107
 msgid "Long street names end in … instead of scrolling"
 msgstr "長い通り名はスクロールせず … で省略します"
 
-#: settings/display.py:288
-#: settings/search.py:105
+#: settings/display.py:307
+#: settings/search.py:108
 msgid "Camera View"
 msgstr "カメラビュー"
 
-#: settings/display.py:288
-#: settings/search.py:105
+#: settings/display.py:307
+#: settings/search.py:108
 msgid "Wide shows more of the road at low speed"
 msgstr "広角では低速時に道路を広く表示します"
 
-#: settings/display.py:290
-#: settings/search.py:106
+#: settings/display.py:309
+#: settings/search.py:109
 msgid "Driver Camera in Reverse"
 msgstr "後退時にドライバーカメラ"
 
-#: settings/display.py:290
-#: settings/search.py:106
+#: settings/display.py:309
+#: settings/search.py:109
 msgid "Shows the inside camera while backing up"
 msgstr "バック中に車内カメラを表示します"
 
-#: settings/display.py:292
-#: settings/search.py:107
+#: settings/display.py:311
+#: settings/search.py:110
 msgid "Driving Style Banner"
 msgstr "運転スタイルのバナー"
 
-#: settings/display.py:292
-#: settings/search.py:107
+#: settings/display.py:311
+#: settings/search.py:110
 msgid "Shows the current style when it changes"
 msgstr "スタイルが変わると現在のスタイルを表示します"
 
-#: settings/display.py:294
-#: settings/search.py:108
+#: settings/display.py:313
+#: settings/search.py:111
 msgid "Compass"
 msgstr "方位"
 
-#: settings/display.py:294
-#: settings/search.py:108
+#: settings/display.py:313
+#: settings/search.py:111
 msgid "Heading beside the street name, like NE"
 msgstr "通りの名前の横に NE などの方角を表示"
 
-#: settings/display.py:295
-#: settings/search.py:109
+#: settings/display.py:314
+#: settings/search.py:112
 msgid "Blind Spot Highlights"
 msgstr "死角の強調表示"
 
-#: settings/display.py:295
-#: settings/search.py:109
+#: settings/display.py:314
+#: settings/search.py:112
 msgid "Colors the screen edge and lane when a car is beside you"
 msgstr "横に車がいると画面の端と車線に色を付けます"
 
-#: settings/display.py:297
-#: settings/search.py:110
+#: settings/display.py:316
+#: settings/search.py:113
 msgid "Lead Car Tag"
 msgstr "先行車のタグ"
 
-#: settings/display.py:297
-#: settings/search.py:110
+#: settings/display.py:316
+#: settings/search.py:113
 msgid "Numbers above the car ahead. Off keeps only the bar under it"
 msgstr "前の車の上の数値。オフにすると下のバーだけになります"
 
-#: settings/display.py:298
-#: settings/driving_tab.py:117
+#: settings/display.py:317
+#: settings/driving_tab.py:132
 msgid "POWER USER"
 msgstr "上級者向け"
 
-#: settings/display.py:315
 #: settings/display.py:334
-#: settings/search.py:115
+#: settings/display.py:353
+#: settings/search.py:118
 msgid "Shown while the device starts up"
 msgstr "デバイスの起動中に表示されます"
 
-#: settings/display.py:322
-#: settings/display.py:332
-#: settings/search.py:113
+#: settings/display.py:341
+#: settings/display.py:351
+#: settings/search.py:116
 msgid "Path Style"
 msgstr "パスのスタイル"
 
-#: settings/display.py:327
-#: settings/display.py:333
-#: settings/search.py:114
+#: settings/display.py:346
+#: settings/display.py:352
+#: settings/search.py:117
 msgid "Turn Signal"
 msgstr "ウインカー"
 
-#: settings/display.py:332
-#: settings/search.py:113
+#: settings/display.py:351
+#: settings/search.py:116
 msgid "Color, width and edges as one preset"
 msgstr "色・幅・縁をまとめたプリセット"
 
-#: settings/display.py:333
-#: settings/search.py:114
+#: settings/display.py:352
+#: settings/search.py:117
 msgid "Chevrons by the speed, or a whimsical animation"
 msgstr "速度横の矢印、または遊び心のあるアニメーション"
 
-#: settings/display.py:335
-#: settings/search.py:116
+#: settings/display.py:354
+#: settings/search.py:119
 msgid "Startup Message"
 msgstr "起動メッセージ"
 
-#: settings/display.py:342
-#: settings/search.py:117
+#: settings/display.py:362
+#: settings/search.py:120
 msgid "Turn-by-Turn on Screen"
 msgstr "画面にターンバイターン"
 
-#: settings/display.py:342
-#: settings/search.py:117
+#: settings/display.py:362
+#: settings/search.py:120
 msgid "Next turn, arrival time and distance while navigating"
 msgstr "ナビ中に次の曲がり角、到着時刻、距離を表示"
 
-#: settings/display.py:344
-#: settings/search.py:118
+#: settings/display.py:364
+#: settings/search.py:121
 msgid "Speed Limit Sign"
 msgstr "制限速度標識"
 
-#: settings/display.py:344
-#: settings/search.py:118
+#: settings/display.py:364
+#: settings/search.py:121
 msgid "US style, or the round Vienna style used in most other countries"
 msgstr "米国式、または多くの国で使われる丸いウィーン条約式"
 
-#: settings/display.py:346
+#: settings/display.py:366
 msgid "Speed limits and routing without a connection"
 msgstr "接続なしで制限速度とルート案内"
 
-#: settings/display.py:374
+#: settings/display.py:394
 msgid "Startup Message: second line"
 msgstr "起動メッセージ：2 行目"
 
-#: settings/display.py:554
-#: settings/display.py:665
+#: settings/display.py:575
+#: settings/display.py:686
 msgid "No preview"
 msgstr "プレビューなし"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/display.py:616
+#: settings/display.py:637
 msgid "ESSENTIALS"
 msgstr "ESSENTIALS"
 
-#: settings/display.py:616
+#: settings/display.py:637
 msgid "WHIMSY"
 msgstr "遊び心"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/display.py:696
+#: settings/display.py:717
 msgid "RGB"
 msgstr "RGB"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/display.py:701
+#: settings/display.py:722
 msgid "PNG"
 msgstr "PNG"
 
-#: settings/display.py:323
+#: settings/display.py:342
 msgid "Sets path color, width, edges and lane lines together"
 msgstr "パスの色・幅・縁・車線をまとめて設定します"
 
-#: settings/display.py:328
+#: settings/display.py:347
 msgid "Plays beside the speed while a blinker is on"
 msgstr "ウインカー点灯中に速度の横で再生されます"
 
-#: settings/display.py:300
-#: settings/display.py:302
+#: settings/display.py:319
+#: settings/display.py:321
 #, python-brace-format
 msgid "Sets {} options"
 msgstr "{} 項目を設定"
 
-#: settings/display.py:335
-#: settings/search.py:116
+#: settings/display.py:354
+#: settings/search.py:119
 msgid "The banner when you start the car"
 msgstr "車を始動したときのバナー"
 
-#: settings/display.py:336
+#: settings/display.py:355
 msgid "Custom"
 msgstr "カスタム"
 
-#: settings/driving_tab.py:117
+#: settings/driving_tab.py:132
 msgid "Extra detail and fine tuning, each behind one switch"
 msgstr "詳細表示と微調整を、それぞれスイッチ1つで"
 
-#: settings/driving_tab.py:129
-#: settings/search.py:24
-#: settings/window.py:44
+#: settings/driving_tab.py:144
+#: settings/search.py:25
+#: settings/window.py:59
 msgid "Driving"
 msgstr "運転"
 
-#: settings/driving_tab.py:129
+#: settings/driving_tab.py:144
 msgid "Good defaults are on. Change only what matters to you."
 msgstr "おすすめの設定がオンになっています。必要なものだけ変えてください。"
 
-#: settings/driving_tab.py:93
+#: settings/driving_tab.py:108
 msgid "SPEED & STEERING"
 msgstr "速度とステアリング"
 
-#: settings/driving_tab.py:108
+#: settings/driving_tab.py:123
 msgid "DISPLAY"
 msgstr "表示"
 
-#: settings/driving_tab.py:115
-#: settings/vehicle.py:62
+#: settings/driving_tab.py:130
+#: settings/vehicle.py:73
 msgid "Detected on the first drive"
 msgstr "最初のドライブで検出"
 
-#: settings/driving_tab.py:130
-#: settings/search.py:25
-#: settings/search.py:77
+#: settings/driving_tab.py:145
+#: settings/search.py:26
+#: settings/search.py:80
 msgid "Speed & Steering"
 msgstr "速度とステアリング"
 
-#: settings/driving_tab.py:131
-#: settings/search.py:25
-#: settings/search.py:102
+#: settings/driving_tab.py:146
+#: settings/search.py:26
+#: settings/search.py:105
 msgid "Display"
 msgstr "表示"
 
-#: settings/driving_tab.py:134
-#: settings/model.py:291
-#: settings/search.py:25
+#: settings/driving_tab.py:149
+#: settings/model.py:302
+#: settings/search.py:26
 msgid "Driving Model"
 msgstr "運転モデル"
 
-#: settings/driving_tab.py:136
-#: settings/search.py:26
-#: settings/search.py:130
+#: settings/driving_tab.py:151
+#: settings/search.py:27
+#: settings/search.py:133
 msgid "Vehicle"
 msgstr "車両"
 
-#: settings/driving_tab.py:138
-#: settings/search.py:26
-#: settings/search.py:134
+#: settings/driving_tab.py:153
+#: settings/search.py:27
+#: settings/search.py:137
 msgid "Assistance"
 msgstr "アシスト"
 
-#: settings/driving_tab.py:94
-#: settings/search.py:27
-#: settings/speed_steering.py:175
+#: settings/driving_tab.py:109
+#: settings/search.py:28
+#: settings/speed_steering.py:181
 msgid "Everyday"
 msgstr "日常"
 
-#: settings/driving_tab.py:95
-#: settings/search.py:27
-#: settings/search.py:88
+#: settings/driving_tab.py:110
+#: settings/search.py:28
+#: settings/search.py:91
 msgid "Vehicle Profile"
 msgstr "車両プロファイル"
 
-#: settings/driving_tab.py:96
-#: settings/search.py:27
-#: settings/search.py:90
+#: settings/driving_tab.py:111
+#: settings/search.py:28
+#: settings/search.py:93
 msgid "Weather"
 msgstr "天気"
 
-#: settings/driving_tab.py:97
-#: settings/search.py:27
-#: settings/search.py:93
+#: settings/driving_tab.py:112
+#: settings/search.py:28
+#: settings/search.py:96
 msgid "Navigation"
 msgstr "ナビゲーション"
 
-#: settings/driving_tab.py:136
+#: settings/driving_tab.py:151
 #, python-brace-format
 msgid "{} profile · {}"
 msgstr "{}プロファイル · {}"
 
-#: settings/editors.py:96
+#: settings/editors.py:104
 #, python-brace-format
 msgid "Steps of {}{}. Hold − or + to move faster."
 msgstr "{}{} 刻み。− か + を長押しすると速く変わります。"
 
-#: settings/editors.py:89
+#: settings/editors.py:97
 msgid "Reset to default"
 msgstr "デフォルトに戻す"
 
-#: settings/editors.py:106
+#: settings/editors.py:114
 msgid "Quick picks"
 msgstr "クイック選択"
 
-#: settings/favorites.py:9
+#: settings/favorites.py:17
 #, python-brace-format
 msgid "Favorite {}"
 msgstr "お気に入り {}"
 
-#: settings/favorites.py:11
+#: settings/favorites.py:19
 msgid " · Not set"
 msgstr " · 未設定"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:209
+#: settings/map_source.py:224
 msgid "Download selected maps"
 msgstr "Download selected maps"
 
 #. English fallback for new map-selection wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:38
+#: settings/map_source.py:49
 msgid "None selected"
 msgstr "None selected"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:77
+#: settings/map_source.py:89
 msgid "Midwest"
 msgstr "Midwest"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:77
+#: settings/map_source.py:89
 msgid "West"
 msgstr "West"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:77
+#: settings/map_source.py:89
 msgid "South"
 msgstr "South"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:77
+#: settings/map_source.py:89
 msgid "Northeast"
 msgstr "Northeast"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:116
-#: settings/maps.py:601
-#: settings/maps.py:614
+#: settings/map_source.py:129
+#: settings/maps.py:640
+#: settings/maps.py:653
 msgid "All maps ready"
 msgstr "All maps ready"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:117
+#: settings/map_source.py:130
 msgid "Choose where you drive"
 msgstr "Choose where you drive"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:160
+#: settings/map_source.py:174
 msgid "Road data ready; offline routes downloading."
 msgstr "Road data ready; offline routes downloading."
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:202
-#: settings/map_source.py:206
-#: settings/maps.py:250
+#: settings/map_source.py:217
+#: settings/map_source.py:221
+#: settings/maps.py:273
 msgid "Update maps"
 msgstr "Update maps"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:204
+#: settings/map_source.py:219
 msgid "Download road data"
 msgstr "Download road data"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:208
+#: settings/map_source.py:223
 #, python-brace-format
 msgid "Download {} MiB"
 msgstr "Download {} MiB"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:85
+#: settings/map_source.py:97
 msgid "Road data ready"
 msgstr "Road data ready"
 
-#: settings/map_source.py:85
-#: sidebar.py:160
+#: settings/map_source.py:97
+#: sidebar.py:166
 msgid "Not downloaded"
 msgstr "未ダウンロード"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:86
-#: settings/maps.py:312
+#: settings/map_source.py:98
+#: settings/maps.py:335
 msgid "Routes ready"
 msgstr "Routes ready"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:93
+#: settings/map_source.py:106
 msgid "Already downloaded"
 msgstr "Already downloaded"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:94
+#: settings/map_source.py:107
 msgid "Download missing road data"
 msgstr "Download missing road data"
 
 #. English fallback for new map-selection wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:95
+#: settings/map_source.py:108
 msgid "Removed on update"
 msgstr "Removed on update"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:98
+#: settings/map_source.py:111
 msgid "Routing coverage is not available for every selected region."
 msgstr "Routing coverage is not available for every selected region."
 
 #. English fallback for new map-progress wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:133
+#: settings/map_source.py:147
 msgid "Maps download one region at a time."
 msgstr "Maps download one region at a time."
 
 #. English fallback for approved map-progress wording; translation pending.
-#: settings/map_source.py:162
+#: settings/map_source.py:176
 msgid "Some map data is shared between these states."
 msgstr "Some map data is shared between these states."
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:86
+#: settings/map_source.py:98
 msgid "Routes not downloaded"
 msgstr "Routes not downloaded"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:86
+#: settings/map_source.py:98
 msgid "Routes not available yet"
 msgstr "Routes not available yet"
 
 #. English fallback for new map-selection wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:99
+#: settings/map_source.py:112
 msgid "Updates offline routes to match this selection."
 msgstr "Updates offline routes to match this selection."
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:100
+#: settings/map_source.py:113
 msgid "Downloads all missing map data for this selection."
 msgstr "Downloads all missing map data for this selection."
 
 #. English fallback for approved map-progress wording; translation pending.
-#: settings/map_source.py:134
-#: settings/map_source.py:163
+#: settings/map_source.py:148
+#: settings/map_source.py:177
 msgid "All selected regions are installed together."
 msgstr "All selected regions are installed together."
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:96
+#: settings/map_source.py:109
 msgid "Not available for this region"
 msgstr "Not available for this region"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:97
-#: settings/maps.py:264
+#: settings/map_source.py:110
+#: settings/maps.py:287
 #, python-brace-format
 msgid "{} MiB"
 msgstr "{} MiB"
 
 #. English fallback for new map-progress wording; translation pending, as permitted by AGENTS.md.
-#: settings/map_source.py:135
+#: settings/map_source.py:149
 msgid "All selected regions are ready."
 msgstr "All selected regions are ready."
 
 #. English fallback for approved map-progress wording; translation pending.
-#: settings/map_source.py:164
+#: settings/map_source.py:178
 msgid "Road data and offline routes are ready."
 msgstr "Road data and offline routes are ready."
 
-#: settings/maps.py:525
+#: settings/maps.py:550
 msgid "Pauses if you start driving or lose Wi-Fi, and picks up where it stopped. Keep the device powered."
 msgstr "運転を始めるか Wi-Fi が切れると一時停止し、止まったところから再開します。デバイスの電源は入れたままにしてください。"
 
-#: settings/maps.py:29
+#: settings/maps.py:35
 msgid "Weekly"
 msgstr "毎週"
 
-#: settings/maps.py:29
+#: settings/maps.py:35
 msgid "Monthly"
 msgstr "毎月"
 
-#: settings/maps.py:524
+#: settings/maps.py:549
 msgid "Prepare"
 msgstr "準備"
 
-#: settings/maps.py:524
-#: settings/maps.py:212
-#: settings/maps.py:211
+#: settings/maps.py:549
+#: settings/maps.py:234
+#: settings/maps.py:233
 msgid "Download"
 msgstr "ダウンロード"
 
-#: settings/maps.py:524
+#: settings/maps.py:549
 msgid "Install"
 msgstr "インストール"
 
-#: settings/maps.py:252
-#: settings/maps.py:217
+#: settings/maps.py:275
+#: settings/maps.py:239
 msgid "Remove maps"
 msgstr "地図を削除"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:279
-#: settings/speed_steering.py:438
+#: settings/maps.py:302
+#: settings/speed_steering.py:454
 msgid "Routes, speed limits and street names without a connection"
 msgstr "Routes, speed limits and street names without a connection"
 
-#: settings/maps.py:327
+#: settings/maps.py:350
 msgid "U.S. regions"
 msgstr "米国の地域"
 
-#: settings/maps.py:327
+#: settings/maps.py:350
 msgid "U.S. states"
 msgstr "米国の州"
 
-#: settings/maps.py:327
+#: settings/maps.py:350
 msgid "Other countries"
 msgstr "その他の国"
 
-#: settings/maps.py:470
+#: settings/maps.py:495
 msgid "Park to delete offline maps"
 msgstr "オフラインマップを削除するには駐車してください"
 
-#: settings/maps.py:475
-#: settings/maps.py:479
-#: settings/model.py:404
+#: settings/maps.py:500
+#: settings/maps.py:504
+#: settings/model.py:419
 msgid "Wait for the download to finish"
 msgstr "ダウンロードが終わるまでお待ちください"
 
-#: settings/maps.py:596
+#: settings/maps.py:635
 msgid "You can leave this screen. It keeps going in the background."
 msgstr "この画面を離れても、バックグラウンドで続きます。"
 
-#: settings/maps.py:154
+#: settings/maps.py:175
 msgid "Choose at least one region"
 msgstr "地域を1つ以上選んでください"
 
-#: settings/maps.py:162
+#: settings/maps.py:184
 msgid "Cancelling…"
 msgstr "中止しています…"
 
-#: settings/maps.py:164
+#: settings/maps.py:186
 #, python-brace-format
 msgid "Downloading {} · {}%"
 msgstr "{}をダウンロード中 · {}%"
 
-#: settings/maps.py:165
+#: settings/maps.py:187
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:253
 msgid "Downloaded"
 msgstr "ダウンロード済み"
 
-#: settings/maps.py:165
+#: settings/maps.py:187
 msgid "Not downloaded yet"
 msgstr "まだダウンロードしていません"
 
-#: settings/maps.py:198
+#: settings/maps.py:220
 #, python-brace-format
 msgid "{} of {} files · {}. Pauses if you drive or lose the connection."
 msgstr "{1} 件中 {0} 件のファイル · {2}。運転するか接続が切れると一時停止します。"
 
-#: settings/maps.py:212
+#: settings/maps.py:234
 msgid "Update now"
 msgstr "今すぐ更新"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:590
+#: settings/maps.py:629
 #, python-brace-format
 msgid "{} download stopped"
 msgstr "{} download stopped"
 
 #. English fallback for approved map-progress wording; translation pending.
-#: settings/maps.py:594
+#: settings/maps.py:633
 #, python-brace-format
 msgid "{} ready"
 msgstr "{} ready"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:625
+#: settings/maps.py:664
 msgid " · Download stopped"
 msgstr " · Download stopped"
 
-#: settings/maps.py:627
+#: settings/maps.py:666
 #, python-brace-format
 msgid " · about {} min left"
 msgstr " · 残り約 {} 分"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:687
+#: settings/maps.py:726
 msgid "Paused. Downloads continue when parked on Wi-Fi."
 msgstr "Paused. Downloads continue when parked on Wi-Fi."
 
-#: settings/maps.py:155
+#: settings/maps.py:176
 #, python-brace-format
 msgid "Waiting: {}"
 msgstr "待機中：{}"
 
-#: settings/maps.py:180
-#: settings/maps.py:558
+#: settings/maps.py:202
+#: settings/maps.py:597
 msgid "Cancel download"
 msgstr "ダウンロードを中止"
 
-#: settings/maps.py:217
+#: settings/maps.py:239
 msgid "Park to remove maps"
 msgstr "地図を削除するには駐車してください"
 
-#: settings/maps.py:218
-#: settings/maps.py:252
+#: settings/maps.py:240
+#: settings/maps.py:275
 msgid "Remove offline maps?"
 msgstr "オフラインマップを削除しますか？"
 
-#: settings/maps.py:223
+#: settings/maps.py:245
 msgid "YOUR REGIONS"
 msgstr "選んだ地域"
 
-#: settings/maps.py:224
+#: settings/maps.py:246
 msgid "Change them in Choose regions"
 msgstr "「地域を選ぶ」で変更できます"
 
-#: settings/maps.py:234
-#: settings/maps.py:271
+#: settings/maps.py:256
+#: settings/maps.py:294
 msgid "Keep up to date"
 msgstr "最新に保つ"
 
-#: settings/maps.py:236
+#: settings/maps.py:258
 msgid "Updates download only while parked and online"
 msgstr "更新は駐車中かつオンラインのときだけダウンロードされます"
 
-#: settings/maps.py:240
+#: settings/maps.py:262
 msgid "Without maps, speed limits need a connection."
 msgstr "地図がないと制限速度には接続が必要です。"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:258
+#: settings/maps.py:281
 msgid "DOWNLOADED REGIONS"
 msgstr "DOWNLOADED REGIONS"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:273
+#: settings/maps.py:296
 msgid "One schedule for road data and offline routes, while parked on Wi-Fi."
 msgstr "One schedule for road data and offline routes, while parked on Wi-Fi."
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:277
+#: settings/maps.py:300
 msgid "Updates keep the current maps until the new maps are ready."
 msgstr "Updates keep the current maps until the new maps are ready."
 
 #. English fallback for new map-selection wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:334
+#: settings/maps.py:357
 msgid "Pick where you drive. Maps for routes, speed limits and street names."
 msgstr "Pick where you drive. Maps for routes, speed limits and street names."
 
-#: settings/maps.py:335
+#: settings/maps.py:358
 msgid "Pick a region, or switch to states for less storage"
 msgstr "地域を選ぶか、容量を減らすなら州に切り替えます"
 
-#: settings/maps.py:336
+#: settings/maps.py:359
 msgid "Add map regions"
 msgstr "地図の地域を追加"
 
-#: settings/maps.py:337
-#: settings/maps.py:650
+#: settings/maps.py:360
+#: settings/maps.py:689
 msgid "REGIONS"
 msgstr "地域"
 
-#: settings/maps.py:368
+#: settings/maps.py:392
 msgid "SELECTED"
 msgstr "選択済み"
 
-#: settings/maps.py:444
-#: settings/speed_steering.py:420
-#: sidebar.py:116
+#: settings/maps.py:469
+#: settings/speed_steering.py:436
+#: sidebar.py:122
 msgid "Online"
 msgstr "オンライン"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:483
+#: settings/maps.py:508
 msgid "Park and end the route to remove maps"
 msgstr "Park and end the route to remove maps"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:559
+#: settings/maps.py:598
 msgid "Retry download"
 msgstr "Retry download"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:590
+#: settings/maps.py:629
 #, python-brace-format
 msgid "{} maps ready"
 msgstr "{} maps ready"
 
 #. English fallback for approved map-progress wording; translation pending.
-#: settings/maps.py:611
+#: settings/maps.py:650
 msgid "Download complete · Building maps"
 msgstr "Download complete · Building maps"
 
 #. English fallback for new map-progress wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:649
+#: settings/maps.py:688
 #, python-brace-format
 msgid "REGIONS · {} OF {} DOWNLOADED"
 msgstr "REGIONS · {} OF {} DOWNLOADED"
 
-#: settings/maps.py:660
+#: settings/maps.py:699
 #, python-brace-format
 msgid "+{} more"
 msgstr "他 {} 件"
 
 #. English fallback for new map-progress wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:689
+#: settings/maps.py:728
 msgid "Maps are ready. Existing saved places stay saved."
 msgstr "Maps are ready. Existing saved places stay saved."
 
 #. English fallback for approved map-progress wording; translation pending.
-#: settings/maps.py:690
+#: settings/maps.py:729
 msgid "Both map sets are ready. Existing saved places stay saved."
 msgstr "Both map sets are ready. Existing saved places stay saved."
 
-#: settings/maps.py:230
+#: settings/maps.py:252
 msgid "Add or remove states, regions and countries"
 msgstr "州・地域・国を追加または削除"
 
-#: settings/maps.py:239
-#: settings/maps.py:276
-#: settings/model.py:316
+#: settings/maps.py:261
+#: settings/maps.py:299
+#: settings/model.py:327
 msgid "Storage"
 msgstr "ストレージ"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:260
-#: settings/maps.py:357
+#: settings/maps.py:283
+#: settings/maps.py:381
 msgid "Road data"
 msgstr "Road data"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:260
+#: settings/maps.py:283
 msgid "Speed limits and street names"
 msgstr "Speed limits and street names"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:264
-#: settings/maps.py:360
+#: settings/maps.py:287
+#: settings/maps.py:384
 msgid "Offline routes"
 msgstr "Offline routes"
 
-#: settings/maps.py:411
+#: settings/maps.py:435
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:583
 msgid "Whole U.S."
 msgstr "米国全土"
 
-#: settings/maps.py:411
+#: settings/maps.py:435
 msgid "Every state and territory"
 msgstr "すべての州と準州"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:591
+#: settings/maps.py:630
 #, python-brace-format
 msgid "Preparing {} maps"
 msgstr "Preparing {} maps"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:601
-#: settings/maps.py:614
+#: settings/maps.py:640
+#: settings/maps.py:653
 msgid "Both map sets ready"
 msgstr "Both map sets ready"
 
 #. English fallback for approved map-progress wording; translation pending.
-#: settings/maps.py:612
+#: settings/maps.py:651
 msgid "Download complete · Checking maps"
 msgstr "Download complete · Checking maps"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:612
+#: settings/maps.py:651
 msgid "Download complete · Installing maps"
 msgstr "Download complete · Installing maps"
 
-#: settings/maps.py:650
+#: settings/maps.py:689
 #, python-brace-format
 msgid "REGIONS · {} OF {} DONE"
 msgstr "地域 · {1} 中 {0} 完了"
 
-#: settings/maps.py:352
+#: settings/maps.py:375
 #, python-brace-format
 msgid "{}: not yet"
 msgstr "{}：まだ"
 
 #. English fallback for approved map-progress wording; translation pending.
-#: settings/maps.py:591
+#: settings/maps.py:630
 #, python-brace-format
 msgid "Installing {}"
 msgstr "Installing {}"
 
-#: settings/maps.py:592
+#: settings/maps.py:631
 #, python-brace-format
 msgid "Downloading {}"
 msgstr "{}をダウンロード中"
 
 #. English fallback for new map-progress wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:618
+#: settings/maps.py:657
 #, python-brace-format
 msgid "{} · {} of {}"
 msgstr "{} · {} of {}"
 
-#: settings/maps.py:619
-#: settings/maps.py:623
+#: settings/maps.py:658
+#: settings/maps.py:662
 msgid "Getting ready"
 msgstr "準備中"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:621
+#: settings/maps.py:660
 #, python-brace-format
 msgid "Offline routes · {} of {} MiB"
 msgstr "Offline routes · {} of {} MiB"
 
-#: settings/maps.py:342
+#: settings/maps.py:365
 msgid "No regions available."
 msgstr "利用できる地域がありません。"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/maps.py:623
+#: settings/maps.py:662
 #, python-brace-format
 msgid "Road data · {} of {} files"
 msgstr "Road data · {} of {} files"
 
-#: settings/model.py:291
+#: settings/model.py:302
 msgid "The neural network that steers and judges speed"
 msgstr "ハンドル操作と速度判断を行うニューラルネットワーク"
 
-#: settings/model.py:299
+#: settings/model.py:310
 msgid "All models"
 msgstr "すべてのモデル"
 
-#: settings/model.py:299
+#: settings/model.py:310
 msgid "Community picks"
 msgstr "コミュニティのおすすめ"
 
-#: settings/model.py:299
-#: settings/model.py:147
-#: settings/model.py:145
+#: settings/model.py:310
+#: settings/model.py:158
+#: settings/model.py:156
 msgid "On device"
 msgstr "デバイス上"
 
-#: settings/model.py:64
+#: settings/model.py:69
 msgid "Default model"
 msgstr "デフォルトのモデル"
 
-#: settings/model.py:104
+#: settings/model.py:114
 msgid "Recommended"
 msgstr "おすすめ"
 
-#: settings/model.py:108
-#: sidebar.py:156
+#: settings/model.py:118
+#: sidebar.py:162
 msgid "Downloading"
 msgstr "ダウンロード中"
 
-#: settings/model.py:109
+#: settings/model.py:119
 msgid "Updates automatically"
 msgstr "自動で更新"
 
-#: settings/model.py:109
+#: settings/model.py:119
 msgid "Chosen by you"
 msgstr "あなたが選択"
 
-#: settings/model.py:130
-#: settings/model.py:127
+#: settings/model.py:140
+#: settings/model.py:137
 msgid "Use"
 msgstr "使う"
 
-#: settings/model.py:283
+#: settings/model.py:294
 msgid "Browse all"
 msgstr "すべて見る"
 
-#: settings/model.py:336
+#: settings/model.py:347
 msgid "Driving models"
 msgstr "運転モデル"
 
-#: settings/model.py:402
+#: settings/model.py:417
 msgid "Park to remove models"
 msgstr "モデルを削除するには駐車してください"
 
-#: settings/model.py:126
-#: settings/model.py:274
+#: settings/model.py:136
+#: settings/model.py:285
 msgid "ACTIVE"
 msgstr "有効"
 
-#: settings/model.py:146
+#: settings/model.py:157
 #, python-brace-format
 msgid "Downloading · {}"
 msgstr "ダウンロード中 · {}"
 
-#: settings/model.py:148
+#: settings/model.py:159
 msgid "Needs an eGPU"
 msgstr "eGPU が必要"
 
-#: settings/model.py:145
+#: settings/model.py:156
 msgid "Recommended · On device"
 msgstr "おすすめ · デバイス上"
 
-#: settings/model.py:149
+#: settings/model.py:160
 msgid "Community pick"
 msgstr "コミュニティのおすすめ"
 
-#: settings/model.py:149
+#: settings/model.py:160
 msgid "Available to download"
 msgstr "ダウンロード可能"
 
-#: settings/model.py:285
+#: settings/model.py:296
 msgid "OTHER MODELS"
 msgstr "その他のモデル"
 
-#: settings/model.py:287
+#: settings/model.py:298
 msgid "Available when Use recommended is off. Model randomizer and blacklist are in Tuner Mode."
 msgstr "「おすすめを使う」がオフのときに選べます。モデルのランダム選択とブラックリストはチューナーモードにあります。"
 
-#: settings/model.py:310
+#: settings/model.py:321
 #, python-brace-format
 msgid "Remove unused models ({})"
 msgstr "未使用のモデルを削除（{}）"
 
-#: settings/model.py:310
+#: settings/model.py:321
 msgid "Remove unused models"
 msgstr "未使用のモデルを削除"
 
-#: settings/model.py:279
-#: settings/search.py:129
+#: settings/model.py:290
+#: settings/search.py:132
 msgid "Use recommended"
 msgstr "おすすめを使う"
 
-#: settings/model.py:279
+#: settings/model.py:290
 msgid "Turn off to pick your own"
 msgstr "オフにすると自分で選べます"
 
-#: settings/model.py:276
+#: settings/model.py:287
 msgid "Chosen for your car. Swaps to newer recommended models automatically."
 msgstr "あなたの車向けに選ばれています。新しいおすすめモデルに自動で切り替わります。"
 
-#: settings/model.py:277
+#: settings/model.py:288
 msgid "Picked by you"
 msgstr "あなたが選択"
 
-#: settings/model.py:320
+#: settings/model.py:331
 msgid "GOOD TO KNOW"
 msgstr "知っておくと便利"
 
-#: settings/model.py:321
+#: settings/model.py:332
 msgid "One download at a time, paused while driving."
 msgstr "ダウンロードは1つずつで、運転中は一時停止します。"
 
-#: settings/model.py:322
+#: settings/model.py:333
 msgid "A new model applies on your next drive."
 msgstr "新しいモデルは次のドライブから使われます。"
 
-#: settings/model.py:308
+#: settings/model.py:319
 msgid "No models here yet."
 msgstr "ここにはまだモデルがありません。"
 
-#: settings/network_tab.py:206
-#: settings/network_tab.py:58
+#: settings/network_tab.py:220
+#: settings/network_tab.py:69
 msgid "Connecting…"
 msgstr "接続中…"
 
-#: settings/network_tab.py:206
-#: settings/network_tab.py:203
-#: settings/network_tab.py:160
+#: settings/network_tab.py:220
+#: settings/network_tab.py:217
+#: settings/network_tab.py:173
 msgid "Not connected"
 msgstr "未接続"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:207
+#: settings/network_tab.py:221
 msgid "No SIM"
 msgstr "No SIM"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:207
+#: settings/network_tab.py:221
 msgid "No signal"
 msgstr "No signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:207
+#: settings/network_tab.py:221
 msgid "Wi-Fi in use"
 msgstr "Wi-Fi in use"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:207
-#: settings/network_tab.py:200
+#: settings/network_tab.py:221
+#: settings/network_tab.py:214
 msgid "Checking…"
 msgstr "Checking…"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:210
+#: settings/network_tab.py:224
 msgid "Cellular data is connected."
 msgstr "Cellular data is connected."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:211
+#: settings/network_tab.py:225
 msgid "APN saved. Waiting for a cellular data connection."
 msgstr "APN saved. Waiting for a cellular data connection."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:212
+#: settings/network_tab.py:226
 msgid "Cellular data is not connected. Check your APN, signal and carrier account."
 msgstr "Cellular data is not connected. Check your APN, signal and carrier account."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:213
+#: settings/network_tab.py:227
 msgid "No SIM detected. Insert a SIM to use cellular data."
 msgstr "No SIM detected. Insert a SIM to use cellular data."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:214
+#: settings/network_tab.py:228
 msgid "SIM detected. No cellular service. Your APN is saved."
 msgstr "SIM detected. No cellular service. Your APN is saved."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:215
+#: settings/network_tab.py:229
 msgid "Wi-Fi is connected. Cellular data is not confirmed yet."
 msgstr "Wi-Fi is connected. Cellular data is not confirmed yet."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:216
+#: settings/network_tab.py:230
 msgid "Waiting for current modem status."
 msgstr "Waiting for current modem status."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:218
+#: settings/network_tab.py:232
 msgid "Poor signal"
 msgstr "Poor signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:218
+#: settings/network_tab.py:232
 msgid "Moderate signal"
 msgstr "Moderate signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:218
+#: settings/network_tab.py:232
 msgid "Good signal"
 msgstr "Good signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:218
+#: settings/network_tab.py:232
 msgid "Great signal"
 msgstr "Great signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:188
+#: settings/network_tab.py:202
 msgid "SIM detected"
 msgstr "SIM detected"
 
-#: settings/network_tab.py:78
+#: settings/network_tab.py:90
 #, python-brace-format
 msgid "for \"{}\""
 msgstr "「{}」用"
 
-#: settings/network_tab.py:89
+#: settings/network_tab.py:101
 msgid "Network name"
 msgstr "ネットワーク名"
 
-#: settings/network_tab.py:102
+#: settings/network_tab.py:114
 #, python-brace-format
 msgid "{} · Couldn't save"
 msgstr "{} · 保存できませんでした"
 
-#: settings/network_tab.py:121
+#: settings/network_tab.py:134
 msgid "Connected devices will need to reconnect."
 msgstr "接続中のデバイスは再接続が必要です。"
 
-#: settings/network_tab.py:124
+#: settings/network_tab.py:137
 msgid "Hotspot password"
 msgstr "ホットスポットのパスワード"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/network_tab.py:154
-#: settings/network_tab.py:305
+#: settings/network_tab.py:167
+#: settings/network_tab.py:321
 msgid "APN"
 msgstr "APN"
 
-#: settings/network_tab.py:154
+#: settings/network_tab.py:167
 msgid "Leave empty for automatic"
 msgstr "空欄で自動"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:175
+#: settings/network_tab.py:189
 msgid "Reading cellular status"
 msgstr "Reading cellular status"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:177
+#: settings/network_tab.py:191
 msgid "Cellular data unavailable"
 msgstr "Cellular data unavailable"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:179
+#: settings/network_tab.py:193
 msgid "SIM detected · No cellular service"
 msgstr "SIM detected · No cellular service"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:187
+#: settings/network_tab.py:201
 #, python-brace-format
 msgid "SIM detected · {}"
 msgstr "SIM detected · {}"
 
-#: settings/network_tab.py:291
-#: settings/network_tab.py:289
+#: settings/network_tab.py:307
 #: settings/network_tab.py:305
+#: settings/network_tab.py:321
 msgid "Edit"
 msgstr "編集"
 
-#: settings/network_tab.py:308
-#: settings/network_tab.py:299
-#: settings/search.py:214
+#: settings/network_tab.py:324
+#: settings/network_tab.py:315
+#: settings/search.py:217
 msgid "Roaming, APN and IP address"
 msgstr "ローミング、APN、IP アドレス"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:308
+#: settings/network_tab.py:324
 msgid "Status updates automatically while this page is open."
 msgstr "Status updates automatically while this page is open."
 
-#: settings/network_tab.py:78
+#: settings/network_tab.py:90
 msgid "Wrong password"
 msgstr "パスワードが違います"
 
-#: settings/network_tab.py:78
-#: settings/network_tab.py:87
+#: settings/network_tab.py:90
+#: settings/network_tab.py:99
 msgid "Enter password"
 msgstr "パスワードを入力"
 
-#: settings/network_tab.py:108
-#: settings/network_tab.py:295
-#: settings/search.py:211
+#: settings/network_tab.py:121
+#: settings/network_tab.py:311
+#: settings/search.py:214
 msgid "Hotspot name"
 msgstr "ホットスポット名"
 
-#: settings/network_tab.py:115
+#: settings/network_tab.py:128
 msgid "A saved network already uses this name"
 msgstr "保存済みのネットワークがこの名前を使用しています"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:184
+#: settings/network_tab.py:198
 #, python-brace-format
 msgid "{} · {}"
 msgstr "{} · {}"
 
-#: settings/network_tab.py:294
-#: settings/search.py:210
+#: settings/network_tab.py:310
+#: settings/search.py:213
 msgid "Hotspot"
 msgstr "ホットスポット"
 
-#: settings/network_tab.py:294
-#: settings/search.py:210
+#: settings/network_tab.py:310
+#: settings/search.py:213
 msgid "Share this device's connection"
 msgstr "このデバイスの接続を共有"
 
-#: settings/network_tab.py:297
-#: settings/search.py:212
+#: settings/network_tab.py:313
+#: settings/search.py:215
 msgid "Hotspot Password"
 msgstr "ホットスポットのパスワード"
 
-#: settings/network_tab.py:297
-#: settings/search.py:212
+#: settings/network_tab.py:313
+#: settings/search.py:215
 msgid "For phones joining this device's hotspot"
 msgstr "このデバイスのホットスポットにつなぐスマホ用"
 
-#: settings/network_tab.py:298
-#: settings/search.py:213
+#: settings/network_tab.py:314
+#: settings/search.py:216
 msgid "Save Data"
 msgstr "データ節約"
 
-#: settings/network_tab.py:298
-#: settings/search.py:213
+#: settings/network_tab.py:314
+#: settings/search.py:216
 msgid "No large uploads on cellular or phone hotspots"
 msgstr "モバイル通信やスマホのホットスポットでは大きなアップロードをしません"
 
-#: settings/network_tab.py:304
+#: settings/network_tab.py:320
 msgid "Roaming"
 msgstr "ローミング"
 
-#: settings/network_tab.py:304
+#: settings/network_tab.py:320
 msgid "Use cellular data outside your carrier's network"
 msgstr "契約キャリアの圏外でもモバイル通信を使う"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:307
-#: settings/search.py:215
+#: settings/network_tab.py:323
+#: settings/search.py:218
 msgid "Cellular IP address"
 msgstr "Cellular IP address"
 
-#: settings/network_tab.py:87
+#: settings/network_tab.py:99
 #, python-brace-format
 msgid "for \"{}\", or leave empty for an open network"
 msgstr "「{}」用。オープンネットワークなら空欄"
 
-#: settings/network_tab.py:280
+#: settings/network_tab.py:295
 msgid "Scanning for networks…"
 msgstr "ネットワークを検索中…"
 
-#: settings/network_tab.py:281
-#: settings/search.py:208
+#: settings/network_tab.py:296
+#: settings/search.py:211
 msgid "Join a hidden network"
 msgstr "非公開ネットワークに接続"
 
-#: settings/network_tab.py:112
+#: settings/network_tab.py:125
 msgid "Enter a hotspot name"
 msgstr "ホットスポット名を入力してください"
 
-#: settings/network_tab.py:112
+#: settings/network_tab.py:125
 msgid "Name is too long. Use a shorter name."
 msgstr "名前が長すぎます。短い名前にしてください。"
 
-#: settings/network_tab.py:113
+#: settings/network_tab.py:126
 msgid "Use letters, numbers, spaces or punctuation"
 msgstr "文字、数字、スペース、記号を使ってください"
 
-#: settings/network_tab.py:272
+#: settings/network_tab.py:287
 msgid "Secured"
 msgstr "保護あり"
 
-#: settings/network_tab.py:272
+#: settings/network_tab.py:287
 msgid "Open"
 msgstr "オープン"
 
-#: settings/network_tab.py:305
+#: settings/network_tab.py:321
 msgid "Automatic"
 msgstr "自動"
 
@@ -4400,1849 +4404,1849 @@ msgstr "直近3回の走行を保存し、問題の報告に添付します。�
 msgid "No drive has run low on RAM yet."
 msgstr "RAMが不足した走行はまだありません。"
 
-#: settings/search.py:24
-#: settings/window.py:44
+#: settings/search.py:25
+#: settings/window.py:59
 msgid "Connections"
 msgstr "接続"
 
-#: settings/search.py:29
-#: settings/search.py:146
-#: settings/tuner.py:330
+#: settings/search.py:30
+#: settings/search.py:149
+#: settings/tuner.py:342
 msgid "Steering"
 msgstr "ステアリング"
 
-#: settings/search.py:29
-#: settings/search.py:153
-#: settings/tuner.py:361
+#: settings/search.py:30
+#: settings/search.py:156
+#: settings/tuner.py:374
 msgid "Gas & Brake"
 msgstr "アクセルとブレーキ"
 
-#: settings/search.py:29
-#: settings/search.py:161
-#: settings/tuner.py:428
+#: settings/search.py:30
+#: settings/search.py:164
+#: settings/tuner.py:442
 msgid "Following & Stops"
 msgstr "追従と停止"
 
-#: settings/search.py:29
-#: settings/search.py:168
-#: settings/tuner.py:582
+#: settings/search.py:30
+#: settings/search.py:171
+#: settings/tuner.py:597
 msgid "Bundle Overrides"
 msgstr "バンドルの個別設定"
 
-#: settings/search.py:30
-#: settings/search.py:196
-#: settings/window.py:330
+#: settings/search.py:31
+#: settings/search.py:199
+#: settings/window.py:374
 msgid "Report a Problem"
 msgstr "問題を報告"
 
-#: settings/search.py:77
-#: settings/speed_steering.py:175
+#: settings/search.py:80
+#: settings/speed_steering.py:181
 msgid "Driving style, speed limits, lane changes and steering"
 msgstr "運転スタイル、制限速度、車線変更、ステアリング"
 
-#: settings/search.py:78
-#: settings/speed_steering.py:142
+#: settings/search.py:81
+#: settings/speed_steering.py:148
 msgid "Driving Style"
 msgstr "運転スタイル"
 
-#: settings/search.py:78
-#: settings/speed_steering.py:143
+#: settings/search.py:81
+#: settings/speed_steering.py:149
 msgid "Sets following gap, acceleration and braking together"
 msgstr "車間・加速・ブレーキをまとめて設定します"
 
-#: settings/search.py:79
-#: settings/speed_steering.py:161
+#: settings/search.py:82
+#: settings/speed_steering.py:167
 msgid "Speed Limits"
 msgstr "制限速度"
 
-#: settings/search.py:79
-#: settings/speed_steering.py:161
+#: settings/search.py:82
+#: settings/speed_steering.py:167
 msgid "Match sets cruise to the posted limit"
 msgstr "「合わせる」でクルーズを標識の制限速度にします"
 
-#: settings/search.py:80
-#: settings/speed_steering.py:145
+#: settings/search.py:83
+#: settings/speed_steering.py:151
 msgid "Offset"
 msgstr "オフセット"
 
-#: settings/search.py:80
-#: settings/speed_steering.py:145
+#: settings/search.py:83
+#: settings/speed_steering.py:151
 msgid "Added to every matched limit"
 msgstr "合わせた制限速度に毎回加算します"
 
-#: settings/search.py:81
-#: settings/speed_steering.py:148
+#: settings/search.py:84
+#: settings/speed_steering.py:154
 msgid "Higher limits"
 msgstr "制限速度が上がるとき"
 
-#: settings/search.py:81
-#: settings/speed_steering.py:148
+#: settings/search.py:84
+#: settings/speed_steering.py:154
 msgid "When a posted limit goes up"
 msgstr "標識の制限速度が上がったとき"
 
-#: settings/search.py:82
-#: settings/speed_steering.py:151
+#: settings/search.py:85
+#: settings/speed_steering.py:157
 msgid "Lower limits"
 msgstr "制限速度が下がるとき"
 
-#: settings/search.py:82
-#: settings/speed_steering.py:151
+#: settings/search.py:85
+#: settings/speed_steering.py:157
 msgid "When a posted limit goes down"
 msgstr "標識の制限速度が下がったとき"
 
-#: settings/search.py:83
-#: settings/speed_steering.py:154
+#: settings/search.py:86
+#: settings/speed_steering.py:160
 msgid "MAX follows limits"
 msgstr "MAX を制限速度に合わせる"
 
-#: settings/search.py:83
-#: settings/speed_steering.py:154
+#: settings/search.py:86
+#: settings/speed_steering.py:160
 msgid "Each new limit sets MAX, so it slows promptly for lower ones"
 msgstr "新しい制限速度ごとに MAX を設定し、低い制限ではすぐ減速します"
 
-#: settings/search.py:85
-#: settings/speed_steering.py:167
+#: settings/search.py:88
+#: settings/speed_steering.py:173
 msgid "Lane Changes"
 msgstr "車線変更"
 
-#: settings/search.py:85
+#: settings/search.py:88
 msgid "Nudge or Auto"
 msgstr "軽い操作または自動"
 
-#: settings/search.py:86
-#: settings/speed_steering.py:169
+#: settings/search.py:89
+#: settings/speed_steering.py:175
 msgid "Smart Slowdowns"
 msgstr "スマート減速"
 
-#: settings/search.py:86
-#: settings/speed_steering.py:169
+#: settings/search.py:89
+#: settings/speed_steering.py:175
 msgid "Slows for curves, stop lights and stopped traffic on its own"
 msgstr "カーブ、信号、停止車両で自動的に減速します"
 
-#: settings/search.py:87
-#: settings/speed_steering.py:171
+#: settings/search.py:90
+#: settings/speed_steering.py:177
 msgid "Always-On Steering"
 msgstr "常時ステアリング"
 
-#: settings/search.py:87
+#: settings/search.py:90
 msgid "Keeps steering with cruise off"
 msgstr "クルーズがオフでもステアリングを続けます"
 
-#: settings/search.py:88
+#: settings/search.py:91
 msgid "Car, SUV, truck or towing"
 msgstr "乗用車、SUV、トラック、牽引"
 
-#: settings/search.py:89
-#: settings/speed_steering.py:219
+#: settings/search.py:92
+#: settings/speed_steering.py:227
 msgid "Trailer Load"
 msgstr "トレーラーの積載"
 
-#: settings/search.py:89
-#: settings/speed_steering.py:219
+#: settings/search.py:92
+#: settings/speed_steering.py:227
 msgid "Weight of a loaded trailer"
 msgstr "積載したトレーラーの重さ"
 
-#: settings/search.py:90
-#: settings/speed_steering.py:282
+#: settings/search.py:93
+#: settings/speed_steering.py:293
 msgid "Drives more cautiously in bad conditions, using local weather"
 msgstr "地域の天気を使い、悪条件ではより慎重に走ります"
 
-#: settings/search.py:91
-#: settings/speed_steering.py:279
+#: settings/search.py:94
+#: settings/speed_steering.py:290
 msgid "Warns before rain, snow or storms start, and says when they should stop"
 msgstr "雨・雪・嵐が始まる前に知らせ、やむ見込みの時刻も伝えます"
 
-#: settings/search.py:93
+#: settings/search.py:96
 msgid "Home, Work and favorites; slows for turns on a route"
 msgstr "自宅・職場・お気に入り。ルート上の曲がり角で減速します"
 
-#: settings/search.py:94
-#: settings/speed_steering.py:431
+#: settings/search.py:97
+#: settings/speed_steering.py:447
 msgid "Other favorites"
 msgstr "その他のお気に入り"
 
-#: settings/search.py:94
+#: settings/search.py:97
 msgid "Saved places for Where to?"
 msgstr "「どこへ？」用の保存した場所"
 
-#: settings/search.py:95
-#: settings/speed_steering.py:432
+#: settings/search.py:98
+#: settings/speed_steering.py:448
 msgid "End Route When Parked"
 msgstr "駐車したらルートを終了"
 
-#: settings/search.py:95
-#: settings/speed_steering.py:432
+#: settings/search.py:98
+#: settings/speed_steering.py:448
 msgid "Clears the destination when you turn off the car"
 msgstr "車の電源を切ると目的地を消去します"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/search.py:96
-#: settings/speed_steering.py:434
+#: settings/search.py:99
+#: settings/speed_steering.py:450
 msgid "Offline maps only"
 msgstr "Offline maps only"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/search.py:96
+#: settings/search.py:99
 msgid "Never use online routing"
 msgstr "Never use online routing"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/search.py:97
-#: settings/speed_steering.py:416
+#: settings/search.py:100
+#: settings/speed_steering.py:432
 msgid "Preferred maps (when available)"
 msgstr "Preferred maps (when available)"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/search.py:97
+#: settings/search.py:100
 msgid "Choose which maps to try first, with a fallback"
 msgstr "Choose which maps to try first, with a fallback"
 
-#: settings/search.py:99
-#: settings/speed_steering.py:439
+#: settings/search.py:102
+#: settings/speed_steering.py:455
 msgid "Mapbox Keys"
 msgstr "Mapbox キー"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/search.py:99
+#: settings/search.py:102
 msgid "Keys for online search, routes and speed limits"
 msgstr "Keys for online search, routes and speed limits"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/search.py:100
-#: settings/search.py:119
+#: settings/search.py:103
+#: settings/search.py:122
 msgid "Speed limits and street names without a connection"
 msgstr "Speed limits and street names without a connection"
 
-#: settings/search.py:102
+#: settings/search.py:105
 msgid "The driving screen, theme and startup, and the map"
 msgstr "運転画面、テーマと起動、地図"
 
-#: settings/search.py:111
+#: settings/search.py:114
 msgid "Side panel with system and controls data"
 msgstr "システムと制御のデータを表示するサイドパネル"
 
-#: settings/search.py:112
+#: settings/search.py:115
 msgid "Distance, gap and speed of the car ahead, plus radar points"
 msgstr "前の車の距離・車間・速度とレーダー点"
 
-#: settings/search.py:121
+#: settings/search.py:124
 msgid "Volume and the optional chimes"
 msgstr "音量と任意のチャイム"
 
-#: settings/search.py:122
+#: settings/search.py:125
 msgid "One volume for everything, or each group on its own"
 msgstr "すべて同じ音量、またはグループごとに設定"
 
-#: settings/search.py:128
+#: settings/search.py:131
 msgid "The model that drives, and downloading others"
 msgstr "運転するモデルと、他のモデルのダウンロード"
 
-#: settings/search.py:129
+#: settings/search.py:132
 msgid "The recommended driving model"
 msgstr "おすすめの運転モデル"
 
-#: settings/search.py:130
+#: settings/search.py:133
 msgid "Your car, its steering wheel buttons and car-specific options"
 msgstr "車、ハンドルのボタン、車種別のオプション"
 
-#: settings/search.py:131
-#: settings/vehicle.py:194
+#: settings/search.py:134
+#: settings/vehicle.py:207
 msgid "Steering Wheel Buttons"
 msgstr "ハンドルのボタン"
 
-#: settings/search.py:131
+#: settings/search.py:134
 msgid "What the car's own buttons do while driving"
 msgstr "運転中に車のボタンが何をするか"
 
-#: settings/search.py:132
-#: settings/vehicle.py:185
+#: settings/search.py:135
+#: settings/vehicle.py:198
 msgid "Auto-Lock Doors"
 msgstr "自動ドアロック"
 
-#: settings/search.py:132
-#: settings/vehicle.py:185
+#: settings/search.py:135
+#: settings/vehicle.py:198
 msgid "Locks when you shift out of park"
 msgstr "P レンジから出すとロックします"
 
-#: settings/search.py:133
-#: settings/vehicle.py:193
-#: settings/vehicle.py:318
+#: settings/search.py:136
+#: settings/vehicle.py:206
+#: settings/vehicle.py:339
 msgid "More for your car"
 msgstr "あなたの車向けの機能"
 
-#: settings/search.py:133
-#: settings/vehicle.py:193
+#: settings/search.py:136
+#: settings/vehicle.py:206
 msgid "Features specific to your make and model"
 msgstr "メーカーと車種に固有の機能"
 
-#: settings/search.py:134
+#: settings/search.py:137
 msgid "openpilot's core switches and driver monitoring"
 msgstr "openpilot の基本スイッチとドライバーモニタリング"
 
-#: settings/search.py:135
+#: settings/search.py:138
 msgid "Adaptive cruise and lane keeping"
 msgstr "アダプティブクルーズと車線維持"
 
-#: settings/search.py:136
-#: settings/speed_steering.py:349
+#: settings/search.py:139
+#: settings/speed_steering.py:363
 msgid "Disengage on Gas Pedal"
 msgstr "アクセルで解除"
 
-#: settings/search.py:136
-#: settings/speed_steering.py:349
+#: settings/search.py:139
+#: settings/speed_steering.py:363
 msgid "Pressing the accelerator turns openpilot off"
 msgstr "アクセルを踏むと openpilot がオフになります"
 
-#: settings/search.py:137
-#: settings/speed_steering.py:350
+#: settings/search.py:140
+#: settings/speed_steering.py:364
 msgid "Lane Departure Warnings"
 msgstr "車線逸脱警報"
 
-#: settings/search.py:137
+#: settings/search.py:140
 msgid "Alerts when you drift over a lane line without signaling"
 msgstr "ウインカーなしで車線を越えると警告します"
 
-#: settings/search.py:138
-#: settings/speed_steering.py:351
+#: settings/search.py:141
+#: settings/speed_steering.py:365
 msgid "Safe Mode"
 msgstr "セーフモード"
 
-#: settings/search.py:138
+#: settings/search.py:141
 msgid "Stock tuning, the default model and Relaxed"
 msgstr "純正のチューニング、デフォルトのモデル、ゆったり"
 
-#: settings/search.py:139
-#: settings/speed_steering.py:359
+#: settings/search.py:142
+#: settings/speed_steering.py:373
 msgid "Always-On Driver Monitoring"
 msgstr "常時ドライバーモニタリング"
 
-#: settings/search.py:139
-#: settings/speed_steering.py:359
+#: settings/search.py:142
+#: settings/speed_steering.py:373
 msgid "Watches for distraction even when openpilot is off"
 msgstr "openpilot がオフでもわき見を監視します"
 
-#: settings/search.py:140
+#: settings/search.py:143
 msgid "Check that it can see your face"
 msgstr "顔が見えているか確認します"
 
-#: settings/search.py:142
-#: settings/speed_steering.py:363
+#: settings/search.py:145
+#: settings/speed_steering.py:377
 msgid "Sentry Mode"
 msgstr "センチネルモード"
 
-#: settings/search.py:142
-#: settings/speed_steering.py:363
+#: settings/search.py:145
+#: settings/speed_steering.py:377
 msgid "Pictures in Galaxy if the parked car is bumped"
 msgstr "駐車中の車に衝撃があると Galaxy に写真"
 
-#: settings/search.py:143
-#: settings/speed_steering.py:365
+#: settings/search.py:146
+#: settings/speed_steering.py:379
 msgid "Sensitivity"
 msgstr "感度"
 
-#: settings/search.py:143
-#: settings/speed_steering.py:365
+#: settings/search.py:146
+#: settings/speed_steering.py:379
 msgid "High notices smaller bumps"
 msgstr "高にすると小さな衝撃も検知します"
 
-#: settings/search.py:146
+#: settings/search.py:149
 msgid "Learned steering values and the controller"
 msgstr "学習したステアリング値と制御器"
 
-#: settings/search.py:147
-#: settings/tuner.py:49
+#: settings/search.py:150
+#: settings/tuner.py:57
 msgid "Steering Delay"
 msgstr "ステアリング遅延"
 
-#: settings/search.py:147
-#: settings/tuner.py:49
+#: settings/search.py:150
+#: settings/tuner.py:57
 msgid "Time from command to wheel response"
 msgstr "指令からハンドルが反応するまでの時間"
 
-#: settings/search.py:148
-#: settings/tuner.py:51
+#: settings/search.py:151
+#: settings/tuner.py:59
 msgid "Friction"
 msgstr "摩擦"
 
-#: settings/search.py:148
-#: settings/tuner.py:51
+#: settings/search.py:151
+#: settings/tuner.py:59
 msgid "Extra torque near center"
 msgstr "中央付近の追加トルク"
 
-#: settings/search.py:149
-#: settings/tuner.py:53
+#: settings/search.py:152
+#: settings/tuner.py:61
 msgid "Lateral Acceleration"
 msgstr "横加速度"
 
-#: settings/search.py:149
-#: settings/tuner.py:53
+#: settings/search.py:152
+#: settings/tuner.py:61
 msgid "Torque to cornering scaling"
 msgstr "コーナリング時のトルク倍率"
 
-#: settings/search.py:150
-#: settings/tuner.py:55
+#: settings/search.py:153
+#: settings/tuner.py:63
 msgid "Kp Factor"
 msgstr "Kp 係数"
 
-#: settings/search.py:150
-#: settings/tuner.py:55
+#: settings/search.py:153
+#: settings/tuner.py:63
 msgid "Correction strength"
 msgstr "補正の強さ"
 
-#: settings/search.py:151
-#: settings/tuner.py:328
+#: settings/search.py:154
+#: settings/tuner.py:340
 msgid "Steering controller"
 msgstr "操舵コントローラー"
 
-#: settings/search.py:151
+#: settings/search.py:154
 msgid "Vehicle default, neural feedforward or torque"
 msgstr "車両標準、ニューラル制御、トルク制御"
 
-#: settings/search.py:153
+#: settings/search.py:156
 msgid "Acceleration and braking profiles and values"
 msgstr "加速とブレーキのプロファイルと値"
 
-#: settings/search.py:154
-#: settings/tuner.py:356
+#: settings/search.py:157
+#: settings/tuner.py:369
 msgid "Acceleration Profile"
 msgstr "加速プロファイル"
 
-#: settings/search.py:154
-#: settings/tuner.py:356
+#: settings/search.py:157
+#: settings/tuner.py:369
 msgid "How quickly the car speeds up"
 msgstr "車の加速の速さ"
 
-#: settings/search.py:155
-#: settings/tuner.py:358
+#: settings/search.py:158
+#: settings/tuner.py:371
 msgid "Braking Profile"
 msgstr "ブレーキプロファイル"
 
-#: settings/search.py:155
-#: settings/tuner.py:358
+#: settings/search.py:158
+#: settings/tuner.py:371
 msgid "How early and firmly it slows down"
 msgstr "どれだけ早く強く減速するか"
 
-#: settings/search.py:156
-#: settings/tuner.py:58
+#: settings/search.py:159
+#: settings/tuner.py:66
 msgid "Maximum Acceleration"
 msgstr "最大加速度"
 
-#: settings/search.py:156
-#: settings/tuner.py:58
+#: settings/search.py:159
+#: settings/tuner.py:66
 msgid "The hardest openpilot will accelerate"
 msgstr "openpilot が加速する最大の強さ"
 
-#: settings/search.py:157
-#: settings/tuner.py:60
+#: settings/search.py:160
+#: settings/tuner.py:68
 msgid "Start Acceleration"
 msgstr "発進時の加速度"
 
-#: settings/search.py:157
-#: settings/tuner.py:60
+#: settings/search.py:160
+#: settings/tuner.py:68
 msgid "How firmly the car pulls away from a stop"
 msgstr "停止状態からの発進の強さ"
 
-#: settings/search.py:158
-#: settings/tuner.py:62
+#: settings/search.py:161
+#: settings/tuner.py:70
 msgid "Stop Acceleration"
 msgstr "停止時の加速度"
 
-#: settings/search.py:158
-#: settings/tuner.py:62
+#: settings/search.py:161
+#: settings/tuner.py:70
 msgid "Braking held while stopped"
 msgstr "停止中に保持するブレーキ"
 
-#: settings/search.py:159
-#: settings/tuner.py:64
+#: settings/search.py:162
+#: settings/tuner.py:72
 msgid "Stopping Rate"
 msgstr "停止の速さ"
 
-#: settings/search.py:159
-#: settings/tuner.py:64
+#: settings/search.py:162
+#: settings/tuner.py:72
 msgid "How quickly braking builds into a stop"
 msgstr "停止までにブレーキが強まる速さ"
 
-#: settings/search.py:160
-#: settings/tuner.py:66
+#: settings/search.py:163
+#: settings/tuner.py:74
 msgid "Actuator Delay"
 msgstr "アクチュエーター遅延"
 
-#: settings/search.py:160
-#: settings/tuner.py:66
+#: settings/search.py:163
+#: settings/tuner.py:74
 msgid "Time from command to gas or brake response"
 msgstr "指令からアクセル・ブレーキが反応するまでの時間"
 
-#: settings/search.py:161
+#: settings/search.py:164
 msgid "Following gaps and how the car stops"
 msgstr "車間距離と停止のしかた"
 
-#: settings/search.py:162
+#: settings/search.py:165
 msgid "Following Gaps"
 msgstr "車間距離"
 
-#: settings/search.py:162
+#: settings/search.py:165
 msgid "Relaxed, Standard, Aggressive and Traffic"
 msgstr "ゆったり、標準、積極的、渋滞"
 
-#: settings/search.py:163
-#: settings/tuner.py:70
+#: settings/search.py:166
+#: settings/tuner.py:78
 msgid "Lead Detection Sensitivity"
 msgstr "先行車検出の感度"
 
-#: settings/search.py:163
-#: settings/tuner.py:70
+#: settings/search.py:166
+#: settings/tuner.py:78
 msgid "Lower notices cars ahead sooner"
 msgstr "低いほど前の車を早く検出します"
 
-#: settings/search.py:164
-#: settings/tuner.py:72
+#: settings/search.py:167
+#: settings/tuner.py:80
 msgid "Stopped Distance"
 msgstr "停止時の車間"
 
-#: settings/search.py:164
-#: settings/tuner.py:72
+#: settings/search.py:167
+#: settings/tuner.py:80
 msgid "Extra room left behind a stopped car"
 msgstr "停止車両の後ろに空ける追加の距離"
 
-#: settings/search.py:165
-#: settings/tuner.py:422
+#: settings/search.py:168
+#: settings/tuner.py:436
 msgid "Use Radar for Take-Offs"
 msgstr "発進にレーダーを使う"
 
-#: settings/search.py:165
+#: settings/search.py:168
 msgid "Starts moving as soon as the car ahead pulls away"
 msgstr "前の車が動き出したらすぐ発進します"
 
-#: settings/search.py:166
-#: settings/tuner.py:424
+#: settings/search.py:169
+#: settings/tuner.py:438
 msgid "Force Stops at Lights"
 msgstr "信号で必ず停止"
 
-#: settings/search.py:166
-#: settings/tuner.py:424
+#: settings/search.py:169
+#: settings/tuner.py:438
 msgid "Comes to a full stop for red lights the model detects"
 msgstr "モデルが検出した赤信号で完全に停止します"
 
-#: settings/search.py:167
-#: settings/tuner.py:426
+#: settings/search.py:170
+#: settings/tuner.py:440
 msgid "Cruise Button Step"
 msgstr "クルーズボタンの刻み"
 
-#: settings/search.py:167
-#: settings/tuner.py:426
+#: settings/search.py:170
+#: settings/tuner.py:440
 msgid "How far one press of + or − moves the set speed"
 msgstr "+ か − を1回押したときの設定速度の変化量"
 
-#: settings/search.py:168
+#: settings/search.py:171
 msgid "Change one option that Developer View or Lead Insights sets"
 msgstr "開発者ビューや先行車の詳細が設定する項目を個別に変更"
 
-#: settings/search.py:169
+#: settings/search.py:172
 msgid "Bar Metrics"
 msgstr "バーの指標"
 
-#: settings/search.py:169
+#: settings/search.py:172
 msgid "Up to five values in Developer View's strip"
 msgstr "開発者ビューのバーに最大 5 つの値"
 
-#: settings/search.py:171
+#: settings/search.py:174
 msgid "Pairing, remote access, calibration, restart and power"
 msgstr "ペアリング、リモートアクセス、キャリブレーション、再起動、電源"
 
-#: settings/search.py:172
+#: settings/search.py:175
 msgid "comma connect: see drives and change settings on your phone"
 msgstr "comma connect：スマホでドライブの確認や設定変更"
 
-#: settings/search.py:173
+#: settings/search.py:176
 msgid "Galaxy: reach this device from a web browser"
 msgstr "Galaxy：ブラウザからこのデバイスにアクセス"
 
-#: settings/search.py:174
+#: settings/search.py:177
 msgid "How the device is mounted"
 msgstr "デバイスの取り付け状態"
 
-#: settings/search.py:176
+#: settings/search.py:179
 msgid "Regulatory information"
 msgstr "規制情報"
 
-#: settings/search.py:177
+#: settings/search.py:180
 msgid "This device's IDs"
 msgstr "このデバイスの ID"
 
-#: settings/search.py:178
+#: settings/search.py:181
 msgid "The cellular modem's ID"
 msgstr "モバイルモデムの ID"
 
-#: settings/search.py:179
+#: settings/search.py:182
 msgid "Restart the device"
 msgstr "デバイスを再起動"
 
-#: settings/search.py:180
+#: settings/search.py:183
 msgid "Turn the device off until the car starts"
 msgstr "車が始動するまでデバイスをオフにします"
 
-#: settings/search.py:181
+#: settings/search.py:184
 msgid "Units, language, brightness and standby"
 msgstr "単位、言語、明るさ、スタンバイ"
 
-#: settings/search.py:184
+#: settings/search.py:187
 msgid "Menus and alerts"
 msgstr "メニューとアラート"
 
-#: settings/search.py:187
+#: settings/search.py:190
 msgid "Snapshots of your settings"
 msgstr "設定のスナップショット"
 
-#: settings/search.py:188
+#: settings/search.py:191
 msgid "What's using space, and recording and uploads"
 msgstr "容量の使用状況、録画とアップロード"
 
-#: settings/search.py:190
+#: settings/search.py:193
 msgid "Delete downloaded map data"
 msgstr "ダウンロードした地図データを削除"
 
-#: settings/search.py:191
+#: settings/search.py:194
 msgid "Downloaded models that aren't in use"
 msgstr "使っていないダウンロード済みモデル"
 
-#: settings/search.py:192
+#: settings/search.py:195
 msgid "Saved and uploaded with your drives"
 msgstr "ドライブと一緒に保存・アップロード"
 
-#: settings/search.py:193
+#: settings/search.py:196
 msgid "Cabin audio in your drive recordings"
 msgstr "ドライブの録画に車内の音声"
 
-#: settings/search.py:195
+#: settings/search.py:198
 msgid "What was using RAM on drives that ran low"
 msgstr "RAMが不足した走行でRAMを使っていたもの"
 
-#: settings/search.py:196
+#: settings/search.py:199
 msgid "Send what happened to the developers"
 msgstr "起きたことを開発者に送ります"
 
-#: settings/search.py:197
+#: settings/search.py:200
 msgid "ADB, SSH and debug modes"
 msgstr "ADB、SSH、デバッグモード"
 
-#: settings/search.py:199
+#: settings/search.py:202
 msgid "Connect over USB or the network"
 msgstr "USB またはネットワークで接続"
 
-#: settings/search.py:200
+#: settings/search.py:203
 msgid "Remote shell access"
 msgstr "リモートシェルアクセス"
 
-#: settings/search.py:201
+#: settings/search.py:204
 msgid "Adds every public key in a GitHub account"
 msgstr "GitHub アカウントの公開キーをすべて追加"
 
-#: settings/search.py:202
+#: settings/search.py:205
 msgid "Drive openpilot's controls from a joystick"
 msgstr "ジョイスティックで openpilot を操作"
 
-#: settings/search.py:203
+#: settings/search.py:206
 msgid "Turns off the car's emergency braking"
 msgstr "車の緊急ブレーキをオフにします"
 
-#: settings/search.py:206
+#: settings/search.py:209
 msgid "Networks nearby, and joining one"
 msgstr "近くのネットワークと接続"
 
-#: settings/search.py:207
+#: settings/search.py:210
 msgid "IP Address"
 msgstr "IP アドレス"
 
-#: settings/search.py:207
+#: settings/search.py:210
 msgid "This device's local address, beside the connected network"
 msgstr "接続中のネットワークの横に、このデバイスのローカルアドレス"
 
-#: settings/search.py:208
+#: settings/search.py:211
 msgid "Enter its name and password"
 msgstr "名前とパスワードを入力"
 
 #. English fallback pending cellular-status translation.
-#: settings/search.py:209
+#: settings/search.py:212
 msgid "Connection status, hotspot, data use, roaming and APN"
 msgstr "Connection status, hotspot, data use, roaming and APN"
 
-#: settings/search.py:211
+#: settings/search.py:214
 msgid "The name phones see when joining this device"
 msgstr "スマートフォンをこのデバイスに接続するときに表示される名前"
 
 #. English fallback pending cellular-status translation.
-#: settings/search.py:214
+#: settings/search.py:217
 msgid "Roaming, APN and the cellular IP address"
 msgstr "Roaming, APN and the cellular IP address"
 
 #. English fallback pending cellular-status translation.
-#: settings/search.py:215
+#: settings/search.py:218
 msgid "The modem's mobile data address"
 msgstr "The modem's mobile data address"
 
-#: settings/search.py:216
+#: settings/search.py:219
 msgid "A wheel remote's buttons and what they do"
 msgstr "ハンドル用リモコンのボタンとその動作"
 
-#: settings/search.py:217
+#: settings/search.py:220
 msgid "Car audio for alerts, and pairing devices"
 msgstr "アラート用の車のオーディオとデバイスのペアリング"
 
-#: settings/search.py:219
+#: settings/search.py:222
 msgid "Updates and the release notes"
 msgstr "アップデートとリリースノート"
 
-#: settings/search.py:220
-#: settings/software_tab.py:192
+#: settings/search.py:223
+#: settings/software_tab.py:202
 msgid "Automatic Updates"
 msgstr "自動アップデート"
 
-#: settings/search.py:220
-#: settings/software_tab.py:192
+#: settings/search.py:223
+#: settings/software_tab.py:202
 msgid "Download while parked, install when you turn off the car"
 msgstr "駐車中にダウンロードし、車の電源を切るとインストール"
 
-#: settings/search.py:221
-#: settings/software_tab.py:188
-#: settings/software_tab.py:140
+#: settings/search.py:224
+#: settings/software_tab.py:198
+#: settings/software_tab.py:150
 msgid "Release Channel"
 msgstr "リリースチャンネル"
 
-#: settings/search.py:221
-#: settings/software_tab.py:140
+#: settings/search.py:224
+#: settings/software_tab.py:150
 msgid "The branch to download updates from"
 msgstr "アップデートをダウンロードするブランチ"
 
-#: settings/search.py:222
-#: settings/software_tab.py:195
+#: settings/search.py:225
+#: settings/software_tab.py:205
 msgid "Reset Settings"
 msgstr "設定をリセット"
 
-#: settings/search.py:222
+#: settings/search.py:225
 msgid "Back to the Essentials defaults"
 msgstr "Essentials のデフォルトに戻す"
 
-#: settings/search.py:223
-#: settings/software_tab.py:169
-#: settings/software_tab.py:198
+#: settings/search.py:226
+#: settings/software_tab.py:179
+#: settings/software_tab.py:208
 msgid "Uninstall"
 msgstr "アンインストール"
 
-#: settings/search.py:223
+#: settings/search.py:226
 msgid "Remove this software from the device"
 msgstr "このソフトウェアをデバイスから削除"
 
-#: settings/search.py:400
-#: settings/search.py:391
+#: settings/search.py:403
+#: settings/search.py:394
 msgid "Search settings"
 msgstr "設定を検索"
 
-#: settings/search.py:289
+#: settings/search.py:292
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "「制限速度」などの設定名を話してください。終わったらマイクをタップします。"
 
-#: settings/search.py:371
-#: settings/search.py:330
+#: settings/search.py:374
+#: settings/search.py:333
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "「{}」に一致する設定はありません"
 
-#: settings/search.py:372
+#: settings/search.py:375
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "設定の名前か機能を入力してください（例：明るさ、車線変更）"
 
-#: settings/software_tab.py:37
+#: settings/software_tab.py:43
 msgid "Checking for an update"
 msgstr "アップデートを確認中"
 
-#: settings/software_tab.py:37
+#: settings/software_tab.py:43
 msgid "Downloading the update"
 msgstr "アップデートをダウンロード中"
 
-#: settings/software_tab.py:37
+#: settings/software_tab.py:43
 msgid "Getting the update ready"
 msgstr "アップデートを準備中"
 
-#: settings/software_tab.py:78
+#: settings/software_tab.py:87
 msgid "You have the latest version"
 msgstr "最新バージョンです"
 
-#: settings/software_tab.py:119
+#: settings/software_tab.py:128
 msgid "No release notes for this version."
 msgstr "このバージョンのリリースノートはありません。"
 
-#: settings/software_tab.py:47
+#: settings/software_tab.py:55
 msgid "Unknown version"
 msgstr "不明なバージョン"
 
-#: settings/software_tab.py:73
+#: settings/software_tab.py:82
 #, python-brace-format
 msgid "{} installs when you turn off the car or restart"
 msgstr "{} は車の電源を切るか再起動するとインストールされます"
 
-#: settings/software_tab.py:75
+#: settings/software_tab.py:84
 msgid "Couldn't check for updates. Check the connection and try again."
 msgstr "アップデートを確認できませんでした。接続を確認してもう一度お試しください。"
 
-#: settings/software_tab.py:77
+#: settings/software_tab.py:86
 msgid "A new version is available to download"
 msgstr "新しいバージョンをダウンロードできます"
 
-#: settings/software_tab.py:81
+#: settings/software_tab.py:90
 msgid "Working…"
 msgstr "処理中…"
 
-#: settings/software_tab.py:81
+#: settings/software_tab.py:90
 msgid "Restart to install"
 msgstr "再起動してインストール"
 
-#: settings/software_tab.py:81
+#: settings/software_tab.py:90
 msgid "Try again"
 msgstr "もう一度試す"
 
-#: settings/software_tab.py:82
+#: settings/software_tab.py:91
 msgid "Check now"
 msgstr "今すぐ確認"
 
-#: settings/software_tab.py:125
+#: settings/software_tab.py:134
 #, python-brace-format
 msgid "What's new in {}"
 msgstr "{} の新機能"
 
-#: settings/software_tab.py:169
+#: settings/software_tab.py:179
 msgid "Uninstall openpilot?"
 msgstr "openpilot をアンインストールしますか？"
 
-#: settings/software_tab.py:169
+#: settings/software_tab.py:179
 msgid "The device removes openpilot and starts its setup again."
 msgstr "デバイスから openpilot を削除し、セットアップをやり直します。"
 
-#: settings/software_tab.py:71
-#: settings/software_tab.py:65
+#: settings/software_tab.py:80
+#: settings/software_tab.py:73
 msgid "Updating"
 msgstr "更新中"
 
-#: settings/software_tab.py:99
-#: settings/software_tab.py:99
-#: settings/software_tab.py:99
+#: settings/software_tab.py:108
+#: settings/software_tab.py:108
+#: settings/software_tab.py:108
 msgid "Stable"
 msgstr "安定版"
 
-#: settings/software_tab.py:188
+#: settings/software_tab.py:198
 msgid "Choose another branch"
 msgstr "別のブランチを選ぶ"
 
-#: settings/software_tab.py:188
+#: settings/software_tab.py:198
 msgid "Other branches are in Tuner Mode"
 msgstr "他のブランチはチューナーモードにあります"
 
-#: settings/software_tab.py:195
+#: settings/software_tab.py:205
 msgid "Back to the Essentials defaults. Backups are kept."
 msgstr "Essentials のデフォルトに戻します。バックアップは残ります。"
 
-#: settings/software_tab.py:65
+#: settings/software_tab.py:73
 msgid "Ready to install"
 msgstr "インストールの準備完了"
 
-#: settings/software_tab.py:65
+#: settings/software_tab.py:73
 msgid "Check failed"
 msgstr "確認に失敗"
 
-#: settings/software_tab.py:66
+#: settings/software_tab.py:74
 msgid "Update available"
 msgstr "アップデートあり"
 
-#: settings/software_tab.py:99
+#: settings/software_tab.py:108
 msgid "Beta"
 msgstr "ベータ"
 
-#: settings/software_tab.py:158
+#: settings/software_tab.py:168
 msgid "Erase everything?"
 msgstr "すべて消去しますか？"
 
-#: settings/software_tab.py:158
+#: settings/software_tab.py:168
 msgid "Every setting, drive and download is deleted. This can't be undone."
 msgstr "すべての設定、ドライブ、ダウンロードが削除されます。元に戻せません。"
 
-#: settings/software_tab.py:158
+#: settings/software_tab.py:168
 msgid "Erase"
 msgstr "消去"
 
-#: settings/software_tab.py:166
+#: settings/software_tab.py:176
 msgid "Factory reset too?"
 msgstr "工場出荷時の状態にも戻しますか？"
 
-#: settings/software_tab.py:166
+#: settings/software_tab.py:176
 msgid "A factory reset also deletes every setting, drive and download. Skip keeps them."
 msgstr "工場出荷時リセットでは、すべての設定・ドライブ・ダウンロードも削除されます。スキップすると残ります。"
 
-#: settings/software_tab.py:167
+#: settings/software_tab.py:177
 #: selfdrive/ui/layouts/settings/software.py:350
 msgid "Factory Reset"
 msgstr "工場出荷時リセット"
 
-#: settings/software_tab.py:180
+#: settings/software_tab.py:190
 #, python-brace-format
 msgid "Version {}"
 msgstr "バージョン {}"
 
-#: settings/software_tab.py:167
+#: settings/software_tab.py:177
 #: selfdrive/ui/layouts/settings/software.py:350
 msgid "Skip"
 msgstr "スキップ"
 
-#: settings/software_tab.py:184
+#: settings/software_tab.py:194
 msgid "What's new"
 msgstr "新機能"
 
-#: settings/software_tab.py:196
+#: settings/software_tab.py:206
 msgid "Reset settings?"
 msgstr "設定をリセットしますか？"
 
-#: settings/software_tab.py:196
+#: settings/software_tab.py:206
 msgid "Every setting goes back to the Essentials default. Your backups are kept."
 msgstr "すべての設定が Essentials のデフォルトに戻ります。バックアップは残ります。"
 
-#: settings/speed_steering.py:14
-#: settings/tuner.py:76
-#: setup.py:34
+#: settings/speed_steering.py:19
+#: settings/tuner.py:84
+#: setup.py:40
 msgid "Relaxed"
 msgstr "ゆったり"
 
-#: settings/speed_steering.py:14
-#: settings/tuner.py:76
-#: settings/tuner.py:94
+#: settings/speed_steering.py:19
+#: settings/tuner.py:84
+#: settings/tuner.py:102
 msgid "Sport"
 msgstr "スポーツ"
 
-#: settings/speed_steering.py:15
-#: setup.py:40
+#: settings/speed_steering.py:20
+#: setup.py:46
 msgid "Show"
 msgstr "表示"
 
-#: settings/speed_steering.py:16
+#: settings/speed_steering.py:21
 msgid "Update automatically"
 msgstr "自動で更新"
 
-#: settings/speed_steering.py:16
+#: settings/speed_steering.py:21
 msgid "Tap to confirm"
 msgstr "タップで確認"
 
-#: settings/speed_steering.py:17
+#: settings/speed_steering.py:22
 msgid "Nudge"
 msgstr "軽い操作"
 
-#: settings/speed_steering.py:182
+#: settings/speed_steering.py:188
 msgid "Light"
 msgstr "軽い"
 
-#: settings/speed_steering.py:182
+#: settings/speed_steering.py:188
 msgid "Medium"
 msgstr "中"
 
-#: settings/speed_steering.py:182
+#: settings/speed_steering.py:188
 msgid "Heavy"
 msgstr "重い"
 
-#: settings/speed_steering.py:180
+#: settings/speed_steering.py:186
 msgid "Car"
 msgstr "乗用車"
 
-#: settings/speed_steering.py:180
+#: settings/speed_steering.py:186
 msgid "Standard tuning for most cars and SUVs"
 msgstr "ほとんどの乗用車と SUV 向けの標準チューニング"
 
-#: settings/speed_steering.py:180
+#: settings/speed_steering.py:186
 msgid "Smoother take-off and regen-aware braking"
 msgstr "より滑らかな発進と回生を考慮したブレーキ"
 
-#: settings/speed_steering.py:181
+#: settings/speed_steering.py:187
 msgid "Truck"
 msgstr "トラック"
 
-#: settings/speed_steering.py:181
+#: settings/speed_steering.py:187
 msgid "Gentler acceleration for heavier vehicles"
 msgstr "重い車両向けの穏やかな加速"
 
-#: settings/speed_steering.py:181
+#: settings/speed_steering.py:187
 msgid "Towing"
 msgstr "牽引"
 
-#: settings/speed_steering.py:181
+#: settings/speed_steering.py:187
 msgid "Truck tuning plus room for a trailer"
 msgstr "トラックのチューニングにトレーラー分の余裕を追加"
 
-#: settings/speed_steering.py:290
+#: settings/speed_steering.py:301
 msgid "Low"
 msgstr "低"
 
-#: settings/speed_steering.py:290
+#: settings/speed_steering.py:301
 msgid "High"
 msgstr "高"
 
-#: settings/speed_steering.py:171
+#: settings/speed_steering.py:177
 msgid "Keeps steering with cruise off."
 msgstr "クルーズがオフでもステアリングを続けます。"
 
-#: settings/speed_steering.py:174
+#: settings/speed_steering.py:180
 #, python-brace-format
 msgid "{} settings"
 msgstr "{} 項目"
 
-#: settings/speed_steering.py:273
+#: settings/speed_steering.py:284
 msgid "Fog or low visibility"
 msgstr "霧または視界不良"
 
-#: settings/speed_steering.py:273
+#: settings/speed_steering.py:284
 msgid "Longer following gap"
 msgstr "車間を広げる"
 
-#: settings/speed_steering.py:273
+#: settings/speed_steering.py:284
 msgid "Longer gap, earlier braking"
 msgstr "車間を広げ、早めにブレーキ"
 
-#: settings/speed_steering.py:274
+#: settings/speed_steering.py:285
 msgid "Heavy rain or storms"
 msgstr "大雨または嵐"
 
-#: settings/speed_steering.py:274
+#: settings/speed_steering.py:285
 msgid "More gap, softer acceleration"
 msgstr "車間を広げ、加速を穏やかに"
 
-#: settings/speed_steering.py:275
+#: settings/speed_steering.py:286
 msgid "Snow or ice"
 msgstr "雪または凍結"
 
-#: settings/speed_steering.py:275
+#: settings/speed_steering.py:286
 msgid "Most gap, gentlest starts and stops"
 msgstr "車間を最大にし、発進と停止を最も穏やかに"
 
-#: settings/speed_steering.py:284
+#: settings/speed_steering.py:295
 msgid "Needs an internet connection. Chips show it ahead and while it lasts."
 msgstr "インターネット接続が必要です。始まる前と続いている間はチップに表示されます。"
 
-#: settings/speed_steering.py:314
+#: settings/speed_steering.py:327
 msgid "Gas pedal disengages"
 msgstr "アクセルで解除"
 
-#: settings/speed_steering.py:314
+#: settings/speed_steering.py:327
 msgid "Gas pedal doesn't disengage"
 msgstr "アクセルで解除しない"
 
-#: settings/speed_steering.py:335
+#: settings/speed_steering.py:348
 msgid "Driver monitoring always on"
 msgstr "ドライバーモニタリング常時オン"
 
-#: settings/speed_steering.py:335
+#: settings/speed_steering.py:348
 msgid "Driver monitoring while engaged"
 msgstr "作動中のみドライバーモニタリング"
 
-#: settings/speed_steering.py:353
+#: settings/speed_steering.py:367
 msgid "openpilot's core switches"
 msgstr "openpilot の基本スイッチ"
 
-#: settings/speed_steering.py:368
+#: settings/speed_steering.py:382
 msgid "Watches that you're paying attention"
 msgstr "注意を払っているか見守ります"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/speed_steering.py:442
+#: settings/speed_steering.py:458
 msgid "Saved places and the maps used to calculate your route"
 msgstr "Saved places and the maps used to calculate your route"
 
-#: settings/speed_steering.py:138
+#: settings/speed_steering.py:143
 msgid "Speed limits off"
 msgstr "制限速度オフ"
 
-#: settings/speed_steering.py:138
+#: settings/speed_steering.py:143
 msgid "Showing speed limits"
 msgstr "制限速度を表示中"
 
-#: settings/speed_steering.py:138
+#: settings/speed_steering.py:143
 msgid "Matching speed limits"
 msgstr "制限速度に合わせています"
 
-#: settings/speed_steering.py:142
+#: settings/speed_steering.py:148
 msgid "Relaxed while Safe Mode is on"
 msgstr "セーフモード中はゆったり"
 
-#: settings/speed_steering.py:167
+#: settings/speed_steering.py:173
 #, python-brace-format
 msgid "Auto starts one change per signal, above {} {}"
 msgstr "自動ではウインカー1回につき1回車線変更します（{} {} 以上）"
 
-#: settings/speed_steering.py:219
+#: settings/speed_steering.py:227
 msgid "Available with Towing"
 msgstr "牽引で利用可能"
 
-#: settings/speed_steering.py:281
+#: settings/speed_steering.py:292
 msgid "WHAT CHANGES"
 msgstr "変わること"
 
-#: settings/speed_steering.py:347
+#: settings/speed_steering.py:361
 msgid "Adaptive cruise and lane keeping. Your attention is required at all times."
 msgstr "アダプティブクルーズと車線維持です。常に注意を払ってください。"
 
-#: settings/speed_steering.py:350
+#: settings/speed_steering.py:364
 msgid "Alerts when you drift over a lane line without signaling, above 31 mph (50 km/h)"
 msgstr "時速 50 km（31 mph）以上でウインカーなしに車線を越えると警告します"
 
-#: settings/speed_steering.py:351
+#: settings/speed_steering.py:365
 msgid "Uses stock tuning, the default model and Relaxed until turned off."
 msgstr "オフにするまで純正チューニング、デフォルトのモデル、ゆったりを使います。"
 
-#: settings/speed_steering.py:362
+#: settings/speed_steering.py:376
 msgid "WHILE PARKED"
 msgstr "駐車中"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/speed_steering.py:409
+#: settings/speed_steering.py:423
 msgid "Optional for online search and speed-limit filling"
 msgstr "Optional for online search and speed-limit filling"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/speed_steering.py:417
+#: settings/speed_steering.py:433
 msgid "Used when Offline maps only is off."
 msgstr "Used when Offline maps only is off."
 
-#: settings/speed_steering.py:420
-#: sidebar.py:116
-#: sidebar.py:121
+#: settings/speed_steering.py:436
+#: sidebar.py:122
+#: sidebar.py:127
 msgid "Offline"
 msgstr "オフライン"
 
-#: settings/speed_steering.py:385
+#: settings/speed_steering.py:399
 msgid "Saved place"
 msgstr "保存した場所"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/speed_steering.py:418
+#: settings/speed_steering.py:434
 msgid "Try online first; fall back to downloaded maps."
 msgstr "Try online first; fall back to downloaded maps."
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/speed_steering.py:419
+#: settings/speed_steering.py:435
 msgid "Try downloaded maps first; fall back to online."
 msgstr "Try downloaded maps first; fall back to online."
 
-#: settings/speed_steering.py:431
+#: settings/speed_steering.py:447
 #, python-brace-format
 msgid "{} saved"
 msgstr "{} 件保存済み"
 
-#: settings/speed_steering.py:340
+#: settings/speed_steering.py:354
 msgid " Restarts openpilot if the car is on."
 msgstr " 車がオンなら openpilot が再起動します。"
 
-#: settings/speed_steering.py:425
+#: settings/speed_steering.py:441
 msgid "Change"
 msgstr "変更"
 
-#: settings/speed_steering.py:425
+#: settings/speed_steering.py:441
 msgid "Set"
 msgstr "設定"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/speed_steering.py:434
+#: settings/speed_steering.py:450
 msgid "Never use online routing."
 msgstr "Never use online routing."
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
-#: settings/speed_steering.py:435
+#: settings/speed_steering.py:451
 msgid "Use the preferred maps, with a fallback if needed."
 msgstr "Use the preferred maps, with a fallback if needed."
 
-#: settings/speed_steering.py:225
+#: settings/speed_steering.py:233
 msgid "Adjusts acceleration and braking for what you drive"
 msgstr "運転する車に合わせて加速とブレーキを調整します"
 
-#: settings/speed_steering.py:440
+#: settings/speed_steering.py:456
 msgid "How to change"
 msgstr "変更方法"
 
-#: settings/speed_steering.py:440
+#: settings/speed_steering.py:456
 msgid "How to add"
 msgstr "追加方法"
 
-#: settings/tuner.py:566
+#: settings/tuner.py:580
 msgid "Every Tuner Mode change goes back to its default, in every section and bundle. Your other settings stay as they are."
 msgstr "チューナーモードでの変更は、すべてのセクションとバンドルでデフォルトに戻ります。その他の設定はそのままです。"
 
-#: settings/tuner.py:26
-#: settings/tuner.py:292
-#: settings/tuner.py:513
+#: settings/tuner.py:33
+#: settings/tuner.py:304
+#: settings/tuner.py:527
 msgid "Override"
 msgstr "上書き"
 
-#: settings/tuner.py:26
+#: settings/tuner.py:33
 msgid "Learned"
 msgstr "学習済み"
 
-#: settings/tuner.py:26
+#: settings/tuner.py:33
 msgid "From style"
 msgstr "スタイルから"
 
-#: settings/tuner.py:78
+#: settings/tuner.py:86
 msgid "Vehicle default"
 msgstr "車両標準"
 
-#: settings/tuner.py:78
+#: settings/tuner.py:86
 msgid "NNFF auto"
 msgstr "NNFF 自動"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/tuner.py:78
+#: settings/tuner.py:86
 msgid "NNFF"
 msgstr "NNFF"
 
-#: settings/tuner.py:78
+#: settings/tuner.py:86
 msgid "Lite"
 msgstr "ライト"
 
-#: settings/tuner.py:78
+#: settings/tuner.py:86
 msgid "Torque"
 msgstr "トルク"
 
-#: settings/tuner.py:81
+#: settings/tuner.py:89
 msgid "Uses the car's normal controller"
 msgstr "車両標準のコントローラーを使用"
 
-#: settings/tuner.py:82
+#: settings/tuner.py:90
 msgid "NNFF when available, otherwise Lite"
 msgstr "対応していれば NNFF、それ以外は Lite"
 
-#: settings/tuner.py:83
+#: settings/tuner.py:91
 msgid "Uses a neural model for your car"
 msgstr "車両用のニューラルモデルを使用"
 
-#: settings/tuner.py:84
+#: settings/tuner.py:92
 msgid "Uses lightweight neural feedforward"
 msgstr "軽量のニューラルフィードフォワードを使用"
 
-#: settings/tuner.py:85
+#: settings/tuner.py:93
 msgid "Uses the torque steering controller"
 msgstr "トルク操舵コントローラーを使用"
 
-#: settings/tuner.py:99
+#: settings/tuner.py:107
 msgid "Developer sidebar"
 msgstr "開発者サイドバー"
 
-#: settings/tuner.py:99
+#: settings/tuner.py:107
 msgid "FPS counter"
 msgstr "FPS カウンター"
 
-#: settings/tuner.py:99
+#: settings/tuner.py:107
 msgid "CPU load"
 msgstr "CPU 負荷"
 
-#: settings/tuner.py:99
+#: settings/tuner.py:107
 msgid "GPU load"
 msgstr "GPU 負荷"
 
-#: settings/tuner.py:100
+#: settings/tuner.py:108
 msgid "Numeric temperature"
 msgstr "温度を数値で表示"
 
-#: settings/tuner.py:100
+#: settings/tuner.py:108
 msgid "Memory use"
 msgstr "メモリ使用量"
 
-#: settings/tuner.py:100
+#: settings/tuner.py:108
 msgid "Adjacent lane widths"
 msgstr "隣の車線の幅"
 
-#: settings/tuner.py:101
+#: settings/tuner.py:109
 msgid "Speed limit sources"
 msgstr "制限速度の情報源"
 
-#: settings/tuner.py:101
+#: settings/tuner.py:109
 msgid "Lead details on the tag"
 msgstr "タグに先行車の詳細"
 
-#: settings/tuner.py:101
+#: settings/tuner.py:109
 msgid "Radar points"
 msgstr "レーダー点"
 
-#: settings/tuner.py:102
+#: settings/tuner.py:110
 msgid "Stopping point"
 msgstr "停止位置"
 
-#: settings/tuner.py:102
+#: settings/tuner.py:110
 msgid "Stopping point distance"
 msgstr "停止位置までの距離"
 
-#: settings/tuner.py:102
+#: settings/tuner.py:110
 msgid "Adjacent paths"
 msgstr "隣の車線のパス"
 
-#: settings/tuner.py:103
+#: settings/tuner.py:111
 msgid "Pedals"
 msgstr "ペダル"
 
-#: settings/tuner.py:77
+#: settings/tuner.py:85
 msgid "Traffic"
 msgstr "渋滞"
 
-#: settings/tuner.py:94
-#: settings/tuner.py:95
+#: settings/tuner.py:102
+#: settings/tuner.py:103
 msgid "Eco"
 msgstr "エコ"
 
-#: settings/tuner.py:276
+#: settings/tuner.py:287
 #, python-brace-format
 msgid "{} changed"
 msgstr "{} 件変更"
 
-#: settings/tuner.py:489
-#: settings/tuner.py:557
+#: settings/tuner.py:503
+#: settings/tuner.py:571
 msgid "Bar metrics"
 msgstr "バーの指標"
 
-#: settings/tuner.py:561
+#: settings/tuner.py:575
 #, python-brace-format
 msgid "{} of {} items differ from the bundle."
 msgstr "{1} 項目中 {0} 項目がバンドルと異なります。"
 
-#: settings/tuner.py:576
+#: settings/tuner.py:591
 msgid "TUNER MODE"
 msgstr "チューナーモード"
 
-#: settings/tuner.py:330
+#: settings/tuner.py:342
 msgid "Learned values work for most cars. An override replaces the learned value until you reset it."
 msgstr "ほとんどの車は学習値で問題ありません。上書きするとリセットするまで学習値の代わりに使われます。"
 
-#: settings/tuner.py:361
+#: settings/tuner.py:374
 msgid "Driving Style and Vehicle Profile set these. An override replaces their value."
 msgstr "運転スタイルと車両プロファイルがこれらを設定します。上書きするとその値が置き換わります。"
 
-#: settings/tuner.py:405
+#: settings/tuner.py:418
 msgid "Following gap by style"
 msgstr "スタイル別の車間"
 
-#: settings/tuner.py:574
+#: settings/tuner.py:589
 msgid "Reset all tuning?"
 msgstr "すべてのチューニングをリセットしますか？"
 
-#: settings/tuner.py:399
+#: settings/tuner.py:412
 #, python-brace-format
 msgid "{} gap"
 msgstr "{}の車間"
 
-#: settings/tuner.py:399
+#: settings/tuner.py:412
 msgid "Seconds behind the car ahead in this Driving Style"
 msgstr "この運転スタイルでの前の車との秒数"
 
-#: settings/tuner.py:422
+#: settings/tuner.py:436
 msgid "Starts moving as soon as the radar sees the car ahead pull away"
 msgstr "前の車の発進をレーダーが捉えるとすぐ発進します"
 
-#: settings/tuner.py:490
+#: settings/tuner.py:504
 #, python-brace-format
 msgid "{} of {} picked. They spread evenly across the bar; pick none to hide it."
 msgstr "{1} 個中 {0} 個を選択中。バーに均等に並びます。何も選ばないとバーは非表示です。"
 
-#: settings/tuner.py:505
+#: settings/tuner.py:519
 msgid "Choose"
 msgstr "選ぶ"
 
-#: settings/tuner.py:529
+#: settings/tuner.py:543
 msgid "Bundle on"
 msgstr "バンドル オン"
 
-#: settings/tuner.py:529
+#: settings/tuner.py:543
 msgid "Bundle off"
 msgstr "バンドル オフ"
 
-#: settings/tuner.py:558
+#: settings/tuner.py:572
 msgid "None: the bar is hidden"
 msgstr "なし：バーは非表示"
 
-#: settings/tuner.py:584
+#: settings/tuner.py:599
 msgid "Reset all tuning"
 msgstr "すべてのチューニングをリセット"
 
-#: settings/tuner.py:343
+#: settings/tuner.py:356
 msgid "Replaces the profile your Driving Style sets, until you reset it"
 msgstr "リセットするまで、運転スタイルが設定するプロファイルの代わりに使います"
 
-#: settings/vehicle.py:29
+#: settings/vehicle.py:34
 msgid "Car default"
 msgstr "車のデフォルト"
 
-#: settings/vehicle.py:29
+#: settings/vehicle.py:34
 msgid "Pause steering"
 msgstr "ステアリングを一時停止"
 
-#: settings/vehicle.py:29
+#: settings/vehicle.py:34
 msgid "Pause gas and brake"
 msgstr "アクセルとブレーキを一時停止"
 
-#: settings/vehicle.py:30
+#: settings/vehicle.py:35
 msgid "Switch experimental mode"
 msgstr "実験モードを切り替え"
 
-#: settings/vehicle.py:30
+#: settings/vehicle.py:35
 msgid "Traffic mode"
 msgstr "渋滞モード"
 
-#: settings/vehicle.py:30
+#: settings/vehicle.py:35
 msgid "Switchback mode"
 msgstr "つづら折りモード"
 
-#: settings/vehicle.py:31
+#: settings/vehicle.py:36
 msgid "Match the speed limit"
 msgstr "制限速度に合わせる"
 
-#: settings/vehicle.py:31
+#: settings/vehicle.py:36
 msgid "Favorite 1"
 msgstr "お気に入り 1"
 
-#: settings/vehicle.py:31
+#: settings/vehicle.py:36
 msgid "Favorite 2"
 msgstr "お気に入り 2"
 
-#: settings/vehicle.py:31
+#: settings/vehicle.py:36
 msgid "Favorite 3"
 msgstr "お気に入り 3"
 
-#: settings/vehicle.py:254
+#: settings/vehicle.py:273
 #: selfdrive/ui/layouts/settings/starpilot/maps.py:883
 #: selfdrive/ui/layouts/settings/starpilot/vehicle.py:78
 msgid "Never"
 msgstr "しない"
 
 #. Unit notation; keep as written.
-#: settings/vehicle.py:254
+#: settings/vehicle.py:273
 msgid "10 s"
 msgstr "10 s"
 
 #. Unit notation; keep as written.
-#: settings/vehicle.py:254
+#: settings/vehicle.py:273
 msgid "30 s"
 msgstr "30 s"
 
-#: settings/vehicle.py:254
+#: settings/vehicle.py:273
 msgid "1 min"
 msgstr "1 分"
 
-#: settings/vehicle.py:254
+#: settings/vehicle.py:273
 msgid "2 min"
 msgstr "2 分"
 
-#: settings/vehicle.py:254
+#: settings/vehicle.py:273
 msgid "5 min"
 msgstr "5 分"
 
-#: settings/vehicle.py:96
+#: settings/vehicle.py:107
 msgid "Buttons customized"
 msgstr "ボタンをカスタマイズ済み"
 
-#: settings/vehicle.py:96
+#: settings/vehicle.py:107
 msgid "Car default buttons"
 msgstr "車のデフォルトのボタン"
 
-#: settings/vehicle.py:194
+#: settings/vehicle.py:207
 msgid "Preset for your car. Tap a button to change what it does."
 msgstr "あなたの車向けのプリセットです。ボタンをタップすると動作を変えられます。"
 
-#: settings/vehicle.py:143
+#: settings/vehicle.py:154
 msgid "MAKE"
 msgstr "メーカー"
 
-#: settings/vehicle.py:143
+#: settings/vehicle.py:154
 msgid "MODEL"
 msgstr "車種"
 
-#: settings/vehicle.py:157
+#: settings/vehicle.py:170
 msgid "Choose your car"
 msgstr "車を選ぶ"
 
-#: settings/vehicle.py:176
+#: settings/vehicle.py:189
 msgid "YOUR CAR"
 msgstr "あなたの車"
 
-#: settings/vehicle.py:228
-#: settings/vehicle.py:232
-#: settings/vehicle.py:231
+#: settings/vehicle.py:246
+#: settings/vehicle.py:250
+#: settings/vehicle.py:249
 msgid "Press"
 msgstr "押す"
 
-#: settings/vehicle.py:229
+#: settings/vehicle.py:247
 msgid "Long press"
 msgstr "長押し"
 
-#: settings/vehicle.py:232
+#: settings/vehicle.py:250
 msgid "Cruise main"
 msgstr "クルーズのメインスイッチ"
 
-#: settings/vehicle.py:303
-#: settings/vehicle.py:352
+#: settings/vehicle.py:324
+#: settings/vehicle.py:374
 msgid "Lock doors after"
 msgstr "ドアをロックするまで"
 
-#: settings/vehicle.py:317
+#: settings/vehicle.py:338
 msgid "Nothing extra for this car. Everything it supports is on the Vehicle page."
 msgstr "この車向けの追加機能はありません。対応する機能はすべて車両ページにあります。"
 
-#: settings/vehicle.py:318
+#: settings/vehicle.py:339
 msgid "Options only some makes and models have"
 msgstr "一部のメーカーと車種だけのオプション"
 
-#: settings/vehicle.py:333
+#: settings/vehicle.py:355
 msgid "Use the car's own cruise control"
 msgstr "車の純正クルーズコントロールを使う"
 
-#: settings/vehicle.py:334
+#: settings/vehicle.py:356
 msgid "Turns off openpilot's gas and brake control. openpilot restarts if the car is on."
 msgstr "openpilot のアクセルとブレーキ制御をオフにします。車がオンなら openpilot が再起動します。"
 
-#: settings/vehicle.py:158
+#: settings/vehicle.py:171
 msgid "Only needed if detection picked the wrong car. Choosing turns off automatic detection."
 msgstr "検出された車が違う場合だけ必要です。選ぶと自動検出がオフになります。"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/vehicle.py:231
+#: settings/vehicle.py:249
 msgid "LKAS"
 msgstr "LKAS"
 
-#: settings/vehicle.py:236
+#: settings/vehicle.py:254
 msgid "Mode"
 msgstr "モード"
 
-#: settings/vehicle.py:236
+#: settings/vehicle.py:254
 msgid "Star"
 msgstr "スター"
 
-#: settings/vehicle.py:288
+#: settings/vehicle.py:309
 msgid "This needs a panda firmware update, and the device restarts when it's done."
 msgstr "panda のファームウェア更新が必要で、完了するとデバイスが再起動します。"
 
-#: settings/vehicle.py:288
+#: settings/vehicle.py:309
 msgid "Update and restart"
 msgstr "更新して再起動"
 
-#: settings/vehicle.py:305
+#: settings/vehicle.py:326
 msgid "How long after you turn off the car"
 msgstr "車の電源を切ってからの時間"
 
-#: settings/vehicle.py:335
+#: settings/vehicle.py:357
 msgid "openpilot stops controlling gas and brakes; the car's adaptive cruise takes over. openpilot restarts if the car is on."
 msgstr "openpilot はアクセルとブレーキの制御をやめ、車のアダプティブクルーズが引き継ぎます。車がオンなら openpilot が再起動します。"
 
-#: settings/vehicle.py:337
+#: settings/vehicle.py:359
 msgid "Pedal for gas and brake"
 msgstr "アクセルとブレーキに Pedal"
 
-#: settings/vehicle.py:337
+#: settings/vehicle.py:359
 msgid "Use the comma pedal for openpilot's speed control"
 msgstr "openpilot の速度制御に comma pedal を使います"
 
-#: settings/vehicle.py:338
+#: settings/vehicle.py:360
 msgid "Offsets on the dash"
 msgstr "メーターにオフセット"
 
-#: settings/vehicle.py:338
+#: settings/vehicle.py:360
 msgid "Show set-speed offsets on the dashboard"
 msgstr "設定速度のオフセットをメーターに表示します"
 
-#: settings/vehicle.py:340
+#: settings/vehicle.py:362
 msgid "CAN ignition only"
 msgstr "CAN イグニッションのみ"
 
-#: settings/vehicle.py:340
+#: settings/vehicle.py:362
 msgid "Start only from the car's CAN ignition, not the ignition wire"
 msgstr "イグニッション線ではなく、車の CAN イグニッションだけで起動します"
 
-#: settings/vehicle.py:341
+#: settings/vehicle.py:363
 msgid "Remote start wakes the device"
 msgstr "リモートスタートでデバイスを起動"
 
-#: settings/vehicle.py:341
+#: settings/vehicle.py:363
 msgid "Starting the car remotely starts openpilot too"
 msgstr "車をリモートで始動すると openpilot も起動します"
 
-#: settings/vehicle.py:343
-#: settings/vehicle.py:347
-#: settings/vehicle.py:354
+#: settings/vehicle.py:365
+#: settings/vehicle.py:369
+#: settings/vehicle.py:376
 msgid "Stop and go"
 msgstr "ストップ＆ゴー"
 
-#: settings/vehicle.py:343
+#: settings/vehicle.py:365
 msgid "Keep going after a stop on Volts that don't do it themselves"
 msgstr "自分で再発進しない Volt で停止後も走り続けます"
 
-#: settings/vehicle.py:345
+#: settings/vehicle.py:367
 msgid "Brake hold"
 msgstr "ブレーキホールド"
 
-#: settings/vehicle.py:345
+#: settings/vehicle.py:367
 msgid "Hold after cruise times out at a stop, and go again when traffic moves"
 msgstr "停止中にクルーズが切れても保持し、車列が動いたら再発進します"
 
-#: settings/vehicle.py:347
+#: settings/vehicle.py:369
 msgid "Keep going after a stop"
 msgstr "停止後も走り続ける"
 
-#: settings/vehicle.py:351
+#: settings/vehicle.py:373
 msgid "Auto-unlock doors"
 msgstr "自動ドアロック解除"
 
-#: settings/vehicle.py:351
+#: settings/vehicle.py:373
 msgid "Unlocks when you shift into park"
 msgstr "P レンジに入れるとロックを解除します"
 
-#: settings/vehicle.py:352
+#: settings/vehicle.py:374
 msgid "Locks the doors a while after you turn off the car"
 msgstr "車の電源を切ってしばらくするとドアをロックします"
 
-#: settings/vehicle.py:354
+#: settings/vehicle.py:376
 msgid "Keep going after a stop on Toyotas that don't do it themselves"
 msgstr "自分で再発進しないトヨタ車で停止後も走り続けます"
 
-#: settings/vehicle.py:356
+#: settings/vehicle.py:378
 msgid "Use Cancel as a button"
 msgstr "キャンセルをボタンとして使う"
 
-#: settings/vehicle.py:356
+#: settings/vehicle.py:378
 msgid "Map the Cancel button like the other steering wheel buttons"
 msgstr "キャンセルボタンを他のハンドルボタンと同じように割り当てます"
 
-#: settings/vehicle.py:358
+#: settings/vehicle.py:380
 msgid "EV remote climate wakes the device"
 msgstr "EV のリモート空調でデバイスを起動"
 
-#: settings/vehicle.py:358
+#: settings/vehicle.py:380
 msgid "Remote climate starts openpilot too"
 msgstr "リモート空調で openpilot も起動します"
 
-#: settings/vehicle.py:359
+#: settings/vehicle.py:381
 msgid "Nostalgia mode"
 msgstr "ノスタルジアモード"
 
-#: settings/vehicle.py:359
+#: settings/vehicle.py:381
 msgid "The left paddle pauses openpilot's gas and brake control"
 msgstr "左のパドルで openpilot のアクセルとブレーキ制御を一時停止します"
 
-#: settings/vehicle.py:178
+#: settings/vehicle.py:191
 msgid "Chosen manually"
 msgstr "手動で選択"
 
-#: settings/vehicle.py:178
+#: settings/vehicle.py:191
 msgid "Detected automatically"
 msgstr "自動で検出"
 
-#: settings/vehicle.py:349
+#: settings/vehicle.py:371
 msgid "Stop and go with a manual parking brake"
 msgstr "手動パーキングブレーキでストップ＆ゴー"
 
-#: settings/vehicle.py:349
+#: settings/vehicle.py:371
 msgid "For cars with a hand brake"
 msgstr "ハンドブレーキの車向け"
 
-#: settings/vehicle.py:181
+#: settings/vehicle.py:194
 msgid "Use detection instead"
 msgstr "自動検出を使う"
 
-#: settings/vehicle.py:181
+#: settings/vehicle.py:194
 msgid "Wrong car? Choose it manually"
 msgstr "車が違いますか？手動で選んでください"
 
-#: settings/vehicle.py:285
+#: settings/vehicle.py:306
 msgid "Updating the panda"
 msgstr "panda を更新中"
 
-#: settings/vehicle.py:285
+#: settings/vehicle.py:306
 msgid "The device restarts when it's done. Keep the car on until then."
 msgstr "完了するとデバイスが再起動します。それまで車はオンのままにしてください。"
 
-#: settings/vehicle.py:287
+#: settings/vehicle.py:308
 msgid "Turn on"
 msgstr "オンにする"
 
-#: settings/vehicle.py:287
+#: settings/vehicle.py:308
 msgid "Turn off"
 msgstr "オフにする"
 
-#: settings/window.py:324
+#: settings/window.py:368
 msgid "DEVICE"
 msgstr "デバイス"
 
-#: setup.py:33
+#: setup.py:39
 msgid "driving style"
 msgstr "運転スタイル"
 
-#: setup.py:33
+#: setup.py:39
 msgid "How should your car drive?"
 msgstr "車にどう走ってほしいですか？"
 
-#: setup.py:38
+#: setup.py:44
 msgid "speed limits"
 msgstr "制限速度"
 
-#: setup.py:38
+#: setup.py:44
 msgid "What should it do with speed limits?"
 msgstr "制限速度をどう扱いますか？"
 
-#: setup.py:43
+#: setup.py:49
 msgid "lane changes"
 msgstr "車線変更"
 
-#: setup.py:43
+#: setup.py:49
 msgid "How should lane changes start?"
 msgstr "車線変更をどう始めますか？"
 
-#: setup.py:117
+#: setup.py:137
 msgid "You can change all of these later in Settings › Driving."
 msgstr "これらは後で 設定 › 運転 から変更できます。"
 
-#: setup.py:108
+#: setup.py:128
 #, python-brace-format
 msgid "STEP {} OF {}"
 msgstr "ステップ {0}/{1}"
 
-#: setup.py:118
+#: setup.py:138
 #, python-brace-format
 msgid "Next: {}. You can change all of these later."
 msgstr "次は{}です。これらは後で変更できます。"
 
-#: setup.py:34
+#: setup.py:40
 msgid "Longer following gap, gentle starts and early, soft braking."
 msgstr "車間を広めに、発進は穏やかに、ブレーキは早めでやさしく。"
 
-#: setup.py:35
+#: setup.py:41
 msgid "Standard · recommended"
 msgstr "標準 · おすすめ"
 
-#: setup.py:35
+#: setup.py:41
 msgid "Keeps pace with traffic. A good fit for most drivers and roads."
 msgstr "流れに合わせて走ります。ほとんどのドライバーと道路に合います。"
 
-#: setup.py:36
+#: setup.py:42
 msgid "Shorter gap, quicker acceleration and later braking."
 msgstr "車間を短めに、加速は速く、ブレーキは遅めに。"
 
-#: setup.py:39
+#: setup.py:45
 msgid "Speed limits aren't shown or used."
 msgstr "制限速度は表示も使用もしません。"
 
-#: setup.py:40
+#: setup.py:46
 msgid "Shows the limit next to your speed. You set the speed."
 msgstr "速度の横に制限速度を表示します。速度は自分で設定します。"
 
-#: setup.py:41
+#: setup.py:47
 msgid "Match · recommended"
 msgstr "合わせる · おすすめ"
 
-#: setup.py:41
+#: setup.py:47
 msgid "Sets cruise to the limit plus 3. Asks before speeding up."
 msgstr "クルーズを制限速度 +3 に設定します。加速する前に確認します。"
 
-#: setup.py:44
+#: setup.py:50
 msgid "Nudge · recommended"
 msgstr "軽い操作 · おすすめ"
 
-#: setup.py:44
+#: setup.py:50
 msgid "Signal, then nudge the wheel toward the lane."
 msgstr "ウインカーを出し、ハンドルを車線の方へ軽く切ります。"
 
-#: setup.py:45
+#: setup.py:51
 msgid "Signal and the car changes lanes when it's clear."
 msgstr "ウインカーを出すと、空いたときに車が車線変更します。"
 
-#: setup.py:96
+#: setup.py:116
 msgid "Use defaults"
 msgstr "デフォルトを使う"
 
-#: setup.py:97
+#: setup.py:117
 msgid "Back"
 msgstr "戻る"
 
-#: setup.py:99
+#: setup.py:119
 msgid "Start driving"
 msgstr "運転を始める"
 
-#: setup.py:118
+#: setup.py:138
 msgid ", then "
 msgstr "、次に"
 
-#: sidebar.py:116
+#: sidebar.py:122
 msgid "comma connect"
 msgstr "comma connect"
 
-#: sidebar.py:122
-#: sidebar.py:121
+#: sidebar.py:128
+#: sidebar.py:127
 msgid "Network"
 msgstr "ネットワーク"
 
-#: sidebar.py:66
+#: sidebar.py:72
 msgid "Settings"
 msgstr "設定"
 
-#: sidebar.py:70
+#: sidebar.py:76
 msgid "Recording audio"
 msgstr "音声を録音中"
 
-#: sidebar.py:135
+#: sidebar.py:141
 msgid "Checking"
 msgstr "確認中"
 
-#: sidebar.py:165
+#: sidebar.py:171
 msgid "Good"
 msgstr "良好"
 
-#: sidebar.py:165
+#: sidebar.py:171
 msgid "Warm"
 msgstr "やや高温"
 
-#: sidebar.py:165
+#: sidebar.py:171
 msgid "Hot"
 msgstr "高温"
 
-#: voice.py:36
+#: voice.py:37
 msgid "Didn't catch that. Tap the mic to try again."
 msgstr "聞き取れませんでした。マイクをタップしてもう一度お試しください。"
 
-#: voice.py:37
+#: voice.py:38
 msgid "The microphone isn't available right now."
 msgstr "今はマイクを使えません。"
 
-#: voice.py:38
+#: voice.py:39
 msgid "Voice typing can't hear the microphone while driving right now. Try again parked."
 msgstr "運転中は今、音声入力がマイクを使えません。駐車中にもう一度お試しください。"
 
-#: voice.py:39
+#: voice.py:40
 msgid "Couldn't download the speech model. Check the connection and try again."
 msgstr "音声モデルをダウンロードできませんでした。接続を確認してもう一度お試しください。"
 
-#: voice.py:40
+#: voice.py:41
 msgid "Voice typing didn't work this time. Try again or type it."
 msgstr "今回は音声入力がうまくいきませんでした。もう一度試すか、入力してください。"
 
-#: voice.py:189
+#: voice.py:200
 msgid "Type instead"
 msgstr "キーボードで入力"
 
-#: voice.py:202
+#: voice.py:214
 msgid "Listening"
 msgstr "聞いています"
 
-#: voice.py:197
+#: voice.py:209
 msgid "Getting voice typing ready"
 msgstr "音声入力を準備中"
 
-#: voice.py:197
+#: voice.py:209
 msgid "One-time setup for the speech model and voice engine. Everything stays on this device."
 msgstr "音声モデルと音声エンジンの初回セットアップです。すべてこのデバイス内で処理されます。"
 
-#: voice.py:199
+#: voice.py:211
 msgid "Writing it down"
 msgstr "文字にしています"
 
-#: voice.py:199
+#: voice.py:211
 msgid "This takes a few seconds. You can edit the words after."
 msgstr "数秒かかります。あとで文字を編集できます。"
 
-#: voice.py:201
+#: voice.py:213
 msgid "Voice typing"
 msgstr "音声入力"
 

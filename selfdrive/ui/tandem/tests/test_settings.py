@@ -482,7 +482,7 @@ def test_turn_signal_whimsy_round_trip():
   store, cache = _store({"SignalAnimation": "stock", "CustomThemes": False, "RandomThemes": True})
   display = Display(store)
   assert display.signal_style == 0 and display.signal_name() == "Standard"
-  assert [name for name, _ in SIGNAL_STYLES] == ["Standard", "Jumping frog", "Pouncing cat", "Bouncing ball"]
+  assert [name for name, _ in SIGNAL_STYLES] == ["Standard", "Jumping frog", "Pouncing cat", "Bouncing ball", "Unicorn rider"]
   for i, (name, slug) in enumerate(SIGNAL_STYLES):
     assert slug == "stock" or BUNDLED_SIGNAL_PATHS[slug].is_dir()          # StarPilot ships every Whimsy animation
     display.set_signal_style(i)

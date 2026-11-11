@@ -1,3 +1,9 @@
+Tandem 2026.11.11
+========================
+* New Whimsy turn signal: a unicorn riding a galloping triceratops (Display › Turn Signal)
+* Text Size: a larger driving screen that's easier to read from your seat, with Reduce Motion to keep long text still
+* Long street names and turn instructions scroll instead of ending in "…"
+
 Tandem 2026.11.06
 ========================
 * Live cellular connection and signal status in Cellular and APN settings

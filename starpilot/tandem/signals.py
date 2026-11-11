@@ -25,6 +25,7 @@ BUNDLED_SIGNAL_ANIMATIONS = (
   ("pouncing_cat", "Pouncing Cat"),
   ("shooting_star", "Shooting Star"),
   ("bouncing_ball", "Bouncing Ball"),
+  ("unicorn_rider", "Unicorn Rider"),
 )
 SIGNAL_FRAME_PATTERN = re.compile(r"turn_signal(?:_(\d+))?\.png", re.IGNORECASE)
 

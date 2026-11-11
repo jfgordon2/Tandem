@@ -137,7 +137,7 @@ Defaults are in **bold**.
 | Control | Choices | Params |
 | --- | --- | --- |
 | Path Style | **Standard** · Thin · Rainbow · Acceleration | `PathColor` `PathWidth` `PathEdgeWidth` `PathEdgesColor` `LaneLinesColor` `LaneLinesWidth` `RoadEdgesWidth` `RainbowPath` `AccelerationPath` `DynamicPathWidth` |
-| Turn Signal | **Standard** · Whimsy: Jumping frog · Pouncing cat · Bouncing ball | `SignalAnimation` (`stock`, `frog`, `pouncing_cat`, `bouncing_ball`); a Whimsy choice also sets `CustomThemes` on and `RandomThemes` off, as StarPilot's picker does |
+| Turn Signal | **Standard** · Whimsy: Jumping frog · Pouncing cat · Bouncing ball · Unicorn rider | `SignalAnimation` (`stock`, `frog`, `pouncing_cat`, `bouncing_ball`, `unicorn_rider`); a Whimsy choice also sets `CustomThemes` on and `RandomThemes` off, as StarPilot's picker does |
 | Driving Style Banner | On · **Off** | `HideDistanceProfileBanner` (inverted) `AdvancedCustomUI` |
 | Compass | **On** · Off | `Compass` |
 | Blind Spot Highlights | **On** · Off | `BlindSpotPath` `BlindSpotMetrics` `SignalMetrics` `BorderWidth` |
@@ -260,7 +260,7 @@ Every sidebar item has its own screen. Sidebar items link to each other, so the 
   - Speed limit sign style: Auto / US / Vienna (`UseVienna`; Auto follows your region).
   - A link to Offline Maps.
 - **Path Style picker:** a sheet with live previews of Standard, Thin, Rainbow and Acceleration.
-- **Turn Signal picker:** Standard (the chevrons in the speed pill) and, under Whimsy, StarPilot's jumping frog, pouncing cat and bouncing ball, each shown by a frame of its animation. A Whimsy animation crosses the road above the bar while signalling, drawn by StarPilot's renderer (its frames, timing and blind spot frame), and hides while an alert shows; the chevrons stay. Other StarPilot animations, chosen in StarPilot's own settings, aren't drawn in Essentials and read as Standard.
+- **Turn Signal picker:** Standard (the chevrons in the speed pill) and, under Whimsy, StarPilot's jumping frog, pouncing cat and bouncing ball, and Tandem's unicorn rider (design/signalunicorn.html), each shown by a frame of its animation. A Whimsy animation crosses the road above the bar while signalling, drawn by StarPilot's renderer (its frames, timing and blind spot frame), and hides while an alert shows; the chevrons stay. Other StarPilot animations, chosen in StarPilot's own settings, aren't drawn in Essentials and read as Standard.
 - **Device › Backups:** Back up now; Automatic Off / Weekly / Monthly, which also saves before every update; the saved list with Restore and Delete.
 - **Device › Storage & Data:** a storage bar (drives, maps, models); Delete all drives; Record Driver Camera and Record Microphone, both off by default.
 - **Device › Report a Problem:** six plain-language categories, optional details, "Attach last drive" (logs only), an optional Discord name, and Send.
