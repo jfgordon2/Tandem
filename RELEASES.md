@@ -1,5 +1,6 @@
 Tandem 2026.11.11
 ========================
+* Fixed a memory leak in navigation turn status during drives
 * New Whimsy turn signal: a unicorn riding a galloping triceratops (Display › Turn Signal)
 * Text Size: a larger driving screen that's easier to read from your seat, with Reduce Motion to keep long text still
 * Long street names and turn instructions scroll instead of ending in "…"

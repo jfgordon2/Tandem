@@ -1,5 +1,28 @@
 # starpilot_process memory growth: findings and test plan
 
+## November 10 diagnosis and msgq migration
+
+Two drives on `debug` reached 97% RAM. Across drives, the same planner process went from 180 MiB to 758 MiB RSS.
+At the longer 97% peak, its PSS had grown by 80.8 MiB since the first minute, with 81.2 MiB of heap growth.
+The routing broker, navigation service and Valhalla worker were absent from every qlog sample of both 97% drives.
+
+The planner calls Tandem's `publish_turn()` at about 20 Hz. The former `json.dump()` snapshot writer created
+reference cycles on each call, including during inactive turns. The planner disables cyclic garbage collection.
+On the parked device, 4,000 calls to the old publisher retained 10.11 MiB with collection disabled. An explicit
+collection freed nearly all of that memory. Tracemalloc's own bookkeeping adds overhead on `debug`.
+
+The planner now sends a 73-byte turn record on `tandemNavTurnV1`, using a 4 KiB msgq ring. An active turn starts,
+changes or clears on the next planner update. An unchanged active turn refreshes every 250 ms. The UI receives
+the latest record without blocking and expires it after one second. A restarted or late subscriber can receive
+the next active refresh. Existing sparse JSON snapshots use a single `json.dumps()` call before atomic replacement.
+
+An isolated two-process check on the comma passed native latest-message delivery, late joins, clears, expiry,
+publisher restart and queue wraps. With garbage collection disabled, 4,000 forced turn changes retained about
+0.2 KiB of traced allocations. The next validation is a drive of at least 20 minutes followed by a second drive
+without restarting. Compare planner RSS after the first minute and across the stop using `tools/ram_report.py`.
+
+## November 4 baseline
+
 November 4, 2026, comma 3X (3.6 GB RAM, no swap), branch `valhalla` at `b334e9f6` on the device.
 
 ## What the logs show
@@ -30,11 +53,10 @@ Read from the drive logs' `procLog` (every 30 s in qlogs, every 2 s in rlogs) fo
   `loggerd` ~140 MB, `speed_limit_vision` 150–204 MB, `adj_spot_monitor_vision` ~115 MB. Offline routing's `routingd`
   stays at ~65 MB on every drive, and `navigationd` plus Valhalla's worker added ~120 MB on the drive that routed.
 
-`starpilot_process` runs StarPilot's planner and its helpers. Tandem's onroad hook runs inside it too
-(`starpilot/controls/starpilot_planner.py` selects the owned cruise subclass that observes navigation turns), so the
-leak could be either StarPilot's or Tandem's.
+`starpilot_process` runs StarPilot's planner and its helpers. At this point, both StarPilot's planner code and
+Tandem's onroad hook were candidates. The November 10 trace and reproduction identified Tandem's snapshot writer.
 
-## Test plan
+## Original investigation plan
 
 Each step is one drive of at least 20 minutes (growth is clear after 10), parked restart before it, and
 `tools/ram_report.py` afterwards. Record the MB/min for `starpilot_process`.
@@ -57,14 +79,14 @@ Each step is one drive of at least 20 minutes (growth is clear after 10), parked
      tracemalloc inside the planner's process, from the Tandem module the planner already imports, and also under
      `TANDEM_ONROAD=0`. Each drive gets a report in `/data/tandem/diagnostics/memory/` (the last ten kept): a line a
      minute with RssAnon, RssFile, RssShmem and the memory Python traced, then the 25 lines whose allocations grew most
-     between a minute into the drive and parking, by file and line. If RssAnon grows but the traced lines don't, the leak
-     is in a native library (a C extension), not Python. Tracing slows allocation a little and its two snapshots pause the
-     process briefly (one at a minute in, one parked), so use it for diagnostic drives only.
+     between a minute into the drive and parking, by file and line. RssAnon can also include native allocations,
+     allocator overhead and tracemalloc bookkeeping. Taking the two tracing snapshots briefly pauses the process,
+     so use tracing for diagnostic drives.
    - If step 2 pointed at StarPilot, also try one drive each with its optional planner features off that are on today
      (weather presets, speed limit controller, curve speed control, Smart Slowdowns), to find which one grows.
 4. **Fix and confirm.** After a fix, repeat step 1: the rate should be near 0 MB/min, and RAM should peak in the 80s.
 
-Until it's fixed, restarting openpilot between long driving sessions clears it.
+On affected builds, restarting openpilot between long driving sessions clears the accumulated allocations.
 
 ## Measuring
 

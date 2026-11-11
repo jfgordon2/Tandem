@@ -8,7 +8,8 @@ import pytest
 from openpilot.selfdrive.ui.tandem.settings.controllers import confirmed_controller, notice_controller
 from openpilot.selfdrive.ui.tandem.prefs import DEVELOPER_STRIP, restore_prefs, save_prefs
 from openpilot.starpilot.tandem.navigation import controller_type, publish_turn, read_turn
-from openpilot.starpilot.tandem.state import HEADROOM, NAV_TURN, Snapshot
+from openpilot.starpilot.tandem.state import HEADROOM, Snapshot
+from openpilot.starpilot.tandem.turn_status import ENDPOINT
 from openpilot.system.ui.widgets import DialogResult
 
 ROOT = Path(__file__).resolve().parents[4]
@@ -90,6 +91,7 @@ def test_snapshot_is_atomic_and_rejects_old_future_and_malformed_data(tmp_path):
     path.write_text(broken)
     assert state.read(1.0, now=100) is None
   assert state.write(0.0, now=100)
+  assert not state.write(float("nan"), now=100)
   assert state.read(1.0, now=100) == 0.0
   assert sorted(p.name for p in path.parent.iterdir()) == ["sample.json"]
 
@@ -98,8 +100,8 @@ def test_unavailable_snapshot_storage_does_not_break_the_driving_process(tmp_pat
   blocked = tmp_path / "blocked"
   blocked.touch()
   monkeypatch.setenv("TANDEM_STATE_DIR", str(blocked))
-  assert not NAV_TURN.write({"active": True}, now=100)
-  assert read_turn(100) == {"active": False, "maneuver": "", "modifier": ""}
+  assert not HEADROOM.write(100.0, now=100)
+  assert HEADROOM.read(max_age=1.0, now=100) is None
 
 
 @pytest.mark.parametrize("prefix", ["d", "_desktop"])
@@ -138,9 +140,8 @@ def test_navigation_observes_the_upstream_choice_and_does_not_change_its_target(
   assert controller_type(Cruise) is Cruise
 
 
-def test_navigation_snapshot_tracks_the_binding_target_and_expires(monkeypatch):
-  monkeypatch.setenv("TANDEM_ONROAD", "1")
-  monkeypatch.setattr("openpilot.starpilot.tandem.state.time.monotonic", lambda: 100.0)
+def test_navigation_status_tracks_the_binding_target_and_expires(monkeypatch, turn_channel):
+  monkeypatch.setattr("openpilot.starpilot.tandem.navigation.time.monotonic", lambda: 100.0)
   cruise = SimpleNamespace(forcing_stop=False, nav_turn_target=8.0, nav_turn_maneuver="turn", nav_turn_modifier="right")
   planner = SimpleNamespace(starpilot_vcruise=cruise, v_cruise=8.0)
   messages = {"carControl": SimpleNamespace(longActive=True)}
@@ -155,14 +156,25 @@ def test_navigation_snapshot_tracks_the_binding_target_and_expires(monkeypatch):
   planner.v_cruise = 6.0
   publish_turn(planner, messages)
   assert not read_turn(100)["active"]
+  planner.v_cruise = 8.0
+  publish_turn(planner, messages)
+  assert read_turn(100)["active"]
+  messages["carControl"].longActive = False
+  publish_turn(planner, messages)
+  assert not read_turn(100)["active"]
+  monkeypatch.setenv("TANDEM_ONROAD", "0")
+  messages["carControl"].longActive = True
+  publish_turn(planner, messages)
+  assert not read_turn(100)["active"]
 
 
 def test_local_state_does_not_extend_the_upstream_schema_or_param_registry():
   header = (ROOT / "common/params_keys.h").read_text()
   schema = (ROOT / "cereal/custom.capnp").read_text()
+  services = (ROOT / "cereal/services.py").read_text()
   assert all(f'{{"{key}"' not in header for key in ("SpeedAtBottom", "DeveloperStripMetrics", "SteeringHeadroomWarning"))
   assert "navTurnControllingSpeed" not in schema and "navTurnModifier" not in schema
-  assert HEADROOM.name != NAV_TURN.name
+  assert ENDPOINT not in services and ENDPOINT not in schema
 
 
 def test_font_shaping_and_fallback_are_scoped_to_tandem(monkeypatch):

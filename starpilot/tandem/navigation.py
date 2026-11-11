@@ -3,14 +3,24 @@ from __future__ import annotations
 
 import os
 import time
-from typing import Any, TYPE_CHECKING
+from typing import Any, TYPE_CHECKING, TypedDict
 
-from openpilot.starpilot.tandem.state import NAV_TURN
+from openpilot.starpilot.tandem.turn_status import EMPTY_TURN, Publisher, Subscriber
 
 if TYPE_CHECKING:
   from cereal.messaging import SubMaster
 
-EMPTY_TURN = {"active": False, "maneuver": "", "modifier": ""}
+
+class TurnReading(TypedDict):
+  """The selected turn fields used by the drive screen."""
+
+  active: bool
+  maneuver: str
+  modifier: str
+
+
+_turn_publisher = Publisher()
+_turn_subscriber = Subscriber()
 
 
 def controller_type(base: type[Any]) -> type[Any]:
@@ -43,18 +53,18 @@ def controller_type(base: type[Any]) -> type[Any]:
 
 
 def publish_turn(planner: Any, sm: SubMaster) -> None:
+  """Publishes whether the selected turn currently sets the cruise target."""
   if os.getenv("TANDEM_ONROAD", "1") == "0":
     return
   cruise = planner.starpilot_vcruise
   active = bool(sm["carControl"].longActive and not cruise.forcing_stop
                 and 0.0 < cruise.nav_turn_target == planner.v_cruise)
-  NAV_TURN.write({"active": active, "maneuver": cruise.nav_turn_maneuver if active else "",
-                  "modifier": cruise.nav_turn_modifier if active else ""})
+  turn = (True, cruise.nav_turn_maneuver, cruise.nav_turn_modifier) if active else EMPTY_TURN
+  _turn_publisher.update(turn, time.monotonic())
 
 
-def read_turn(now: float | None = None) -> dict:
-  value = NAV_TURN.read(max_age=1.0, now=time.monotonic() if now is None else now)
-  if (isinstance(value, dict) and type(value.get("active")) is bool
-      and all(isinstance(value.get(key), str) for key in ("maneuver", "modifier"))):
-    return value
-  return EMPTY_TURN.copy()
+def read_turn(now: float | None = None) -> TurnReading:
+  """Returns the latest fresh turn for the drive screen."""
+  turn = EMPTY_TURN if os.getenv("TANDEM_ONROAD", "1") == "0" else _turn_subscriber.read(time.monotonic() if now is None else now)
+  active, maneuver, modifier = turn
+  return {"active": active, "maneuver": maneuver, "modifier": modifier}
