@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import time
 
 from collections import Counter, deque
@@ -327,7 +328,7 @@ class HistoryEntry:
 
 
 class SpeedLimitVisionDaemon:
-  def __init__(self, use_runtime=True):
+  def __init__(self, use_runtime=True, *, load_models=True):
     self.use_runtime = use_runtime
     self.params = None
     self.params_memory = None
@@ -361,6 +362,7 @@ class SpeedLimitVisionDaemon:
 
     self.net = None
     self.classifier_net = None
+    self.reject_classifier_net = None
     self.model_mode = "legacy"
     self.detector_input_size = DEFAULT_DETECTOR_INPUT_SIZE
     self.classifier_input_size = DEFAULT_CLASSIFIER_INPUT_SIZE
@@ -441,7 +443,11 @@ class SpeedLimitVisionDaemon:
 
     self.digit_templates = self._build_digit_templates()
     self.speed_value_templates = self._build_speed_value_templates()
-    self._load_model()
+    if load_models:
+      self._load_model()
+
+  def _prepare_models(self, started: bool, now: float) -> bool:
+    return self.net is not None
 
   def _start_debug_session(self) -> bool:
     if not self.use_runtime or self.params_memory is None or self.debug_session_id or self.debug_session_unavailable:
@@ -2686,13 +2692,14 @@ class SpeedLimitVisionDaemon:
         else:
           self._record_bookmark()
 
-      if self.net is None:
+      started = self.sm["deviceState"].started
+      if not self._prepare_models(started, now):
         self._publish_status(self.last_error or "Vision model unavailable", clear_speed=True)
         self._publish_runtime_telemetry(now, "model_unavailable")
         ratekeeper.keep_time()
         continue
 
-      if not self.sm["deviceState"].started:
+      if not started:
         if self.started_prev:
           self._write_debug_event("session_end", reason="offroad")
           self._close_debug_session()
@@ -2838,7 +2845,11 @@ def main():
   # important daemons during detection bursts.
   cv2.setNumThreads(1)
 
-  daemon = SpeedLimitVisionDaemon()
+  if os.getenv("TANDEM_ONROAD", "1") != "0":
+    from openpilot.starpilot.tandem.speed_limit_vision import TandemSpeedLimitVisionDaemon
+    daemon = TandemSpeedLimitVisionDaemon()
+  else:
+    daemon = SpeedLimitVisionDaemon()
   daemon.run()
 
 

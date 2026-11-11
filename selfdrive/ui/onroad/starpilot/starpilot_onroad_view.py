@@ -40,7 +40,6 @@ class StarPilotOnroadView(AugmentedRoadView):
     self._params = ui_state.ui_params
 
     self._font_bold = gui_app.font(FontWeight.BOLD)
-    self._font_medium = gui_app.font(FontWeight.MEDIUM)
     self._torque_bar = TorqueBar()
     self._min_fps = 99.9
     self._max_fps = 0.0
@@ -305,7 +304,7 @@ class StarPilotOnroadView(AugmentedRoadView):
       mem_val = int(device_state.memoryUsagePercent)
       mem_gb = 8.0 * mem_val / 100.0
 
-    font = self._font_medium
+    font = gui_app.font(FontWeight.MEDIUM)
     font_size = 24
 
     def draw_text_with_outline(text, pos_x, pos_y, color):

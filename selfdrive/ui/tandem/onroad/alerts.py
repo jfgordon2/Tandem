@@ -22,6 +22,7 @@ from openpilot.selfdrive.ui.tandem.onroad import size as Z
 from openpilot.selfdrive.ui.tandem.layout import Align, inset, place
 from openpilot.selfdrive.ui.tandem.i18n import translate
 from openpilot.selfdrive.ui.tandem.fonts import face_for, font
+from openpilot.system.ui.lib.multilang import multilang
 
 if TYPE_CHECKING:
   from openpilot.selfdrive.ui.onroad.alert_renderer import Alert
@@ -49,6 +50,14 @@ MARGIN_PX = 16
 INFO_PAD_PX, INFO_FONT_PX, INFO_ICON_PX = (22, 18), 24, 30
 WARNING_PAD_PX, WARNING_TITLE_PX, WARNING_LINE_PX = (24, 20), 32, 22
 CRITICAL_ICON_PX, CRITICAL_TITLE_PX, CRITICAL_LINE_PX = 84, 44, 24
+
+
+def prepare_fonts() -> None:
+  """Upload alert faces before the first frame can need a warning."""
+  for face in (T.FONT, T.FONT_SEMIBOLD, T.FONT_BOLD, T.FONT_EXTRABOLD):
+    font(face)
+  if multilang.language != "en":
+    font(T.FONT_UNIFONT)
 
 
 def level(size: int, status: int, alert_type: str = "") -> str:

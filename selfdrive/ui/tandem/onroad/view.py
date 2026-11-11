@@ -213,6 +213,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
     self._pip_sidecam.set_visible(False)   # the side-camera bubble: a Galaxy developer feature, and it would cover the bar
     self._stopped_timer_widget = _NoStoppedTimer()  # type: ignore[assignment]
     self.alert_renderer: EssentialsAlertRenderer = EssentialsAlertRenderer()
+    alerts.prepare_fonts()
     self.alert_renderer.headroom_warning = lambda: self._headroom_warning   # hides steerSaturated while Help steer shows
     self.alert_renderer.limit_card = lambda: self._offer() is not None      # hides Speed limit changed while the card asks
     self._layers_visible = False

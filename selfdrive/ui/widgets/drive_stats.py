@@ -4,6 +4,7 @@ import json
 import os
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
+from functools import cached_property
 from typing import Any
 
 import pyray as rl
@@ -522,8 +523,11 @@ class DriveStatsDashboard:
     self._data = DriveStatsData()
     self._font_bold = gui_app.font(FontWeight.BOLD)
     self._font_semi_bold = gui_app.font(FontWeight.SEMI_BOLD)
-    self._font_medium = gui_app.font(FontWeight.MEDIUM)
     self.refresh()
+
+  @cached_property
+  def _font_medium(self) -> rl.Font:
+    return gui_app.font(FontWeight.MEDIUM)
 
   def refresh(self) -> None:
     demo_enabled = os.getenv("SP_C3_FAKE_DRIVE_STATS", "0").lower() in ("1", "true", "yes", "on")

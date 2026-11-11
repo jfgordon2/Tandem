@@ -1,5 +1,6 @@
 import pyray as rl
 from dataclasses import dataclass
+from functools import cached_property
 from openpilot.common.constants import CV
 from openpilot.selfdrive.ui.onroad.exp_button import ExpButton
 from openpilot.selfdrive.ui.onroad.starpilot.navigation_card import NavigationCardRenderer
@@ -73,7 +74,6 @@ class HudRenderer(Widget):
 
     self._font_semi_bold: rl.Font = gui_app.font(FontWeight.SEMI_BOLD)
     self._font_bold: rl.Font = gui_app.font(FontWeight.BOLD)
-    self._font_medium: rl.Font = gui_app.font(FontWeight.MEDIUM)
 
     self._exp_button: ExpButton = ExpButton(UI_CONFIG.button_size, UI_CONFIG.wheel_icon_size)
     self._navigation_card = NavigationCardRenderer()
@@ -82,6 +82,10 @@ class HudRenderer(Widget):
     self.draw_current_speed = True
     self.draw_exp_button = True
     self.draw_gradients = True  # Tandem disables the edge fade for its own HUD
+
+  @cached_property
+  def _font_medium(self) -> rl.Font:
+    return gui_app.font(FontWeight.MEDIUM)
 
   def _update_state(self) -> None:
     """Update HUD state based on car state and controls state."""

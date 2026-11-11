@@ -103,28 +103,35 @@ empty status when their inputs are unavailable or invalid.
 | `README.md` | Fork introduction, documentation links, screenshots and upstream credits. |
 | `selfdrive/ui/layouts/main.py` | Screen factories and sidebar widths from `screens.py`; each factory has an upstream fallback. |
 | `selfdrive/ui/layouts/home.py` | `_show_header()` override; the default is `True`. |
+| `selfdrive/ui/layouts/onboarding.py` | Creates the terms and decline pages on first display so their fonts load only when used. |
 | `selfdrive/ui/layouts/settings/device.py` | Named confirmation hook for calibration and driver monitoring; default shows the original dialog and callbacks retain engagement checks. |
 | `selfdrive/ui/layouts/settings/starpilot/driving_model.py` | `_show_notice()` hook; default shows the original alert. Tandem overrides it to deliver model notices directly. |
 | `selfdrive/ui/layouts/settings/starpilot/vehicle.py` | Named confirmation hook for longitudinal changes and panda flashing; default shows the original dialog. |
-| `selfdrive/ui/onroad/hud_renderer.py` | `draw_gradients=True`; Tandem opts out of the edge fade. |
+| `selfdrive/ui/onroad/hud_renderer.py` | `draw_gradients=True`; Tandem opts out of the edge fade. The speed unit's Inter Medium is resolved at first draw. |
 | `selfdrive/ui/onroad/model_renderer.py` | Optional lane color override, default `None`. |
+| `selfdrive/ui/onroad/starpilot/navigation_card.py` | Resolves Inter Medium when the card first measures or draws text. |
 | `selfdrive/ui/onroad/starpilot/starpilot_border.py` | Optional curve-glow drawing color; default keeps upstream colors and the shared fade state remains upstream's. |
-| `selfdrive/ui/onroad/starpilot/starpilot_onroad_view.py` | Overridable border color with the original default. |
+| `selfdrive/ui/onroad/starpilot/starpilot_onroad_view.py` | Overridable border color with the original default. Resolves Inter Medium when drawing the optional metrics. |
+| `selfdrive/ui/onroad/starpilot/widgets/aethergauge.py` | Resolves Inter Medium when the gauge draws. |
 | `selfdrive/ui/soundd.py` | Overridable per-class sound catalog, alert filter and extra-sound tick; `main()` selects the owned Help steer subclass, or the original class with `TANDEM_ONROAD=0`. |
+| `selfdrive/ui/ui.py` | The big UI opts in to on-demand shared fonts when all four Essentials screen switches are enabled. |
+| `selfdrive/ui/widgets/drive_stats.py`, `selfdrive/ui/widgets/offroad_alerts.py` | Resolve Inter Medium when the dashboard or alert action draws. |
 | `starpilot/assets/theme_manager.py` | Installs the owned bundled signal assets as regular theme packs at boot. |
 | `starpilot/controls/lib/starpilot_vcruise.py` | Optional `on_selected` navigation-turn observer; unset preserves the original target and state. |
 | `starpilot/controls/starpilot_planner.py` | Selects the owned cruise subclass and publishes its observed turn on Tandem's msgq endpoint. `TANDEM_ONROAD=0` disables the hook. |
 | `starpilot/navigation/navigationd.py` | `_can_fetch_route(token)` defaults to the original nonempty-key gate. `main()` selects the owned policy subclass for Tandem; `TANDEM_ROUTING=0` or any upstream screen switch restores the original daemon. Progress, publishers and message schemas remain upstream's. |
 | `starpilot/common/starpilot_functions.py` | After the existing schedule/date gates, one guarded import/call/early return delegates supported US updates to owned `handoff.coordinate`. It calls the unchanged `update_maps` body for each state through scoped parameter views, preserving the actual selection and keeping its existing worker lock until the paired job finishes. The original companion hook now imports its lightweight wrapper from `handoff`; recursive state calls suppress that companion. Missing broker, disabled routing, unsupported selections or coordinator exceptions fall through to the original downloader. Both upstream guards catch all ordinary exceptions; the owned companion also catches all exceptions. Atomic requests never take the graph install lock. Scheduling, mapd commands and the upstream UI rollback remain intact. |
 | `starpilot/system/bluetooth/daemon.py` | Overridable settings gate, default offroad; selects the owned stationary-Park subclass unless `TANDEM_SETTINGS=0`. |
+| `starpilot/system/speed_limit_vision.py` | Optional initial model loading and a per-tick model readiness hook. The owned subclass loads at drive start and releases model and frame allocations offroad and during the existing critical-memory pause. It preserves the status publisher and keeps models warm through ordinary Park stops. `TANDEM_ONROAD=0` selects the original lifetime. |
 | `starpilot/system/wheel_controls/wheel_controlsd.py` | Overridable testing gate, default offroad; `main()` selects the owned test-lifecycle subclass unless `TANDEM_SETTINGS=0`. Public upstream testing/learning functions remain original. |
 | `system/manager/process_config.py` | Starts the wheel service for an owned temporary test request; ignored with `TANDEM_SETTINGS=0`. Adds the low-priority `tandem_routingd` process with the owned `config.should_run` demand gate: an active destination, queued/active map job, or a short preview/request wake. The broker exits after two minutes without demand. `TANDEM_ROUTING=0` or any of the four screen switches disables it. The predicate imports no map installer or native worker into manager. Original navigationd/mapd lifecycle predicates remain unchanged. |
 | `starpilot/system/the_galaxy/the_galaxy.py` | Calls the owned signal catalog, validation and effective-selection helpers, retaining the public API routes. Its JSON settings source remains upstream's. |
+| `starpilot/system/the_galaxy/utilities.py` | Uses the owned nonblocking launch lock and passes its descriptor to the analyzer until exit. The status file records worker identity for cancellation; the analyzer checks for driving between log segments before saving stats. |
 | `starpilot/system/starpilot_stats.py` | Fork-wide unattended statistics policy gate. |
 | `system/athena/athenad.py` | Fork-wide unattended diagnostic log/stat forwarding policy gates. |
 | `system/loggerd/uploader.py` | Retains crash artifacts locally; drive log/video upload behavior stays upstream's. |
 | `system/sentry.py` | Fork-wide automatic-report policy; explicit user reports and tunes retain their submission tags. |
-| `system/ui/lib/application.py` | `KEEP_FONT=False` and empty `TEXT_SHAPERS`; Tandem opts in only inside a drawing context, restoring both afterward. Upstream font names remain original. |
+| `system/ui/lib/application.py` | `KEEP_FONT=False` and empty `TEXT_SHAPERS`; Tandem opts in only inside a drawing context, restoring both afterward. Optional lazy loading keeps the normal GUI font ready and caches other faces on demand. The default loads all original faces up front. Fallback checks an already loaded brand face without loading it. |
 | `system/ui/lib/text_measure.py` | Applies scoped text shapers so measurement matches drawing; empty by default. |
 | `system/ui/widgets/inputbox.py` | Overridable font getter, defaulting to the original app font; Tandem fields supply their own face for drawing and cursor measurement. |
 | `system/version.py` | Includes `release` in `RELEASE_BRANCHES`. |

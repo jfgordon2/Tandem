@@ -172,7 +172,8 @@ def font_fallback(font: rl.Font) -> rl.Font:
   """Fall back to unifont for languages that require it."""
   if multilang.requires_unifont() and not KEEP_FONT:
     try:
-      if font.texture.id == gui_app.font(FontWeight.BRAND).texture.id:
+      brand = gui_app._fonts.get(FontWeight.BRAND)
+      if brand is not None and font.texture.id == brand.texture.id:
         return font
     except (AttributeError, KeyError):
       pass
@@ -500,6 +501,7 @@ class GuiApplication:
     self._set_log_callback()
 
     self._fonts: dict[FontWeight, rl.Font] = {}
+    self._lazy_fonts = False
     self._width = width if width is not None else GuiApplication._default_width()
     self._height = height if height is not None else GuiApplication._default_height()
 
@@ -634,7 +636,7 @@ class GuiApplication:
       or WHITE_LUMINANCE_CAP < 1.0
     )
 
-  def init_window(self, title: str, fps: int = _DEFAULT_FPS):
+  def init_window(self, title: str, fps: int = _DEFAULT_FPS, *, lazy_fonts: bool = False):
     with self._startup_profile_context():
       def _request_close(sig, frame):
         self.request_close()
@@ -703,7 +705,7 @@ class GuiApplication:
       self._full_target_fps = fps
       self._target_fps = fps
       self._set_styles()
-      self._load_fonts()
+      self._load_fonts(lazy=lazy_fonts)
       self._patch_text_functions()
       self._patch_scissor_mode()
       if BURN_IN_MODE and self._burn_in_shader is None:
@@ -1016,6 +1018,7 @@ class GuiApplication:
     for font in self._fonts.values():
       rl.unload_font(font)
     self._fonts = {}
+    self._lazy_fonts = False
 
     if self._render_texture is not None:
       rl.unload_render_texture(self._render_texture)
@@ -1216,6 +1219,8 @@ class GuiApplication:
     return x * BURN_IN_SHIFT_PIXELS, y * BURN_IN_SHIFT_PIXELS
 
   def font(self, font_weight: FontWeight = FontWeight.NORMAL) -> rl.Font:
+    if self._lazy_fonts and font_weight not in self._fonts:
+      self._load_font(font_weight)
     return self._fonts[font_weight]
 
   @property
@@ -1226,15 +1231,18 @@ class GuiApplication:
   def height(self):
     return self._height
 
-  def _load_fonts(self):
-    for font_weight_file in FontWeight:
-      with as_file(FONT_DIR) as fspath:
-        fnt_path = fspath / font_weight_file
-        font = rl.load_font(fnt_path.as_posix())
-        if font_weight_file != FontWeight.UNIFONT:
-          rl.gen_texture_mipmaps(font.texture)
-          rl.set_texture_filter(font.texture, rl.TextureFilter.TEXTURE_FILTER_TRILINEAR)
-        self._fonts[font_weight_file] = font
+  def _load_font(self, weight: FontWeight) -> None:
+    with as_file(FONT_DIR) as fspath:
+      font = rl.load_font((fspath / weight).as_posix())
+    if weight != FontWeight.UNIFONT:
+      rl.gen_texture_mipmaps(font.texture)
+      rl.set_texture_filter(font.texture, rl.TextureFilter.TEXTURE_FILTER_TRILINEAR)
+    self._fonts[weight] = font
+
+  def _load_fonts(self, *, lazy: bool = False):
+    self._lazy_fonts = lazy
+    for weight in (FontWeight.NORMAL,) if lazy else FontWeight:
+      self._load_font(weight)
     rl.gui_set_font(self._fonts[FontWeight.NORMAL])
 
   def _set_styles(self):

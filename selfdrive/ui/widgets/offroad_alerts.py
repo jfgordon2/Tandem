@@ -59,14 +59,14 @@ class ActionButton(Widget):
     self._text = text
     self._style = style
     self._min_width = min_width
-    self._font = gui_app.font(FontWeight.MEDIUM)
 
   @property
   def text(self) -> str:
     return self._text() if callable(self._text) else self._text
 
   def _render(self, _):
-    text_size = measure_text_cached(gui_app.font(FontWeight.MEDIUM), self.text, AlertConstants.FONT_SIZE)
+    font = gui_app.font(FontWeight.MEDIUM)
+    text_size = measure_text_cached(font, self.text, AlertConstants.FONT_SIZE)
     self._rect.width = max(text_size.x + 60 * 2, self._min_width)
     self._rect.height = AlertConstants.BUTTON_HEIGHT
 
@@ -81,7 +81,7 @@ class ActionButton(Widget):
     color = rl.WHITE if self._style == ButtonStyle.DARK else rl.BLACK
     text_x = int(self._rect.x + (self._rect.width - text_size.x) // 2)
     text_y = int(self._rect.y + (self._rect.height - text_size.y) // 2)
-    rl.draw_text_ex(self._font, self.text, rl.Vector2(text_x, text_y), AlertConstants.FONT_SIZE, 0, color)
+    rl.draw_text_ex(font, self.text, rl.Vector2(text_x, text_y), AlertConstants.FONT_SIZE, 0, color)
 
 
 class AbstractAlert(Widget, ABC):

@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from enum import StrEnum
 from importlib.resources import as_file
+import os
 
 import pyray as rl
 
@@ -31,6 +32,10 @@ FONT_FILES: dict[Face, str] = {
   FontWeight.UNIFONT: "NotoSans-Fallback.fnt",
 }
 _loaded: dict[str, rl.Font] = {}
+
+
+def lazy_upstream_fonts() -> bool:
+  return all(os.getenv(switch, "1") != "0" for switch in ("TANDEM_HOME", "TANDEM_SETTINGS", "TANDEM_ONROAD", "TANDEM_SIDEBAR"))
 
 
 def font_file(face: Face) -> str:

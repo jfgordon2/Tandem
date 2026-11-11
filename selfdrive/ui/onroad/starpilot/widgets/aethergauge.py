@@ -11,7 +11,6 @@ class AetherGaugeWidget(LayoutWidget):
     self.hud_renderer = hud_renderer
     self._aethergauge = AetherGauge()
     self._font_bold = gui_app.font(FontWeight.BOLD)
-    self._font_medium = gui_app.font(FontWeight.MEDIUM)
     self._alpha_filter = FirstOrderFilter(0.0, 0.3, 1 / gui_app.target_fps)
 
   @property
@@ -32,7 +31,7 @@ class AetherGaugeWidget(LayoutWidget):
     # Set the road bottom to rect.y + 145, leaving 115px for the text cradle underneath
     bottom = rect.y + 145.0
     self._aethergauge.render(
-      rect, self._font_bold, self._font_medium,
+      rect, self._font_bold, gui_app.font(FontWeight.MEDIUM),
       current_speed=self.hud_renderer.speed,
       cx=cx,
       bottom=bottom,

@@ -33,6 +33,7 @@ from openpilot.tools.lib.route import SegmentName
 from openpilot.starpilot.assets.model_manager import canonical_model_key
 from openpilot.starpilot.common.starpilot_variables import THEME_SAVE_PATH, VIDEO_CACHE_PATH
 from openpilot.starpilot.assets.theme_manager import HOLIDAY_THEME_PATH
+from openpilot.starpilot.tandem import dashboard_worker
 
 LOG_CANDIDATES = [
   "qlog",
@@ -79,7 +80,6 @@ DASHBOARD_ROUTE_ANALYSIS_VERSION = 4
 DASHBOARD_PARAMS_DIR = Path("/data/params/d")
 DASHBOARD_ANALYZER_LOG_PATH = "/tmp/galaxy_dashboard_analyzer.log"
 DASHBOARD_ANALYZER_STATUS_PATH = Path("/tmp/galaxy_dashboard_analyzer_status.json")
-DASHBOARD_ANALYZER_STATUS_MAX_AGE_SECONDS = 30 * 60
 DASHBOARD_TOP_MODEL_LIMIT = 3
 LAN_IP_CACHE_TTL_SECONDS = 10.0
 NETWORK_STATUS_CACHE_TTL_SECONDS = 10.0
@@ -1558,13 +1558,15 @@ def _analyze_route_messages(messages, route_info, model_names, is_metric, deadli
   }
 
 
-def _iter_route_log_messages(route_info, deadline=None):
+def _iter_route_log_messages(route_info, deadline=None, *, cancelled=None):
   try:
     from openpilot.tools.lib.logreader import LogReader
   except Exception:
     return
 
   for segment in route_info.get("segments", []):
+    if cancelled is not None and cancelled():
+      raise InterruptedError
     if _deadline_reached(deadline):
       return
 
@@ -1904,12 +1906,16 @@ def clear_dashboard_route_history(params_obj, retained_route_names=None):
 
 def warm_dashboard_stats(footage_paths=None):
   params_obj = params
-  if params_obj.get_bool("IsOnroad"):
+
+  def onroad():
+    return params_obj.get_bool("IsOnroad")
+
+  if onroad():
     return
 
   route_infos = _list_dashboard_routes(footage_paths or [])
 
-  if not route_infos:
+  if not route_infos or onroad():
     return
 
   is_metric = _params_get_bool(params_obj, "IsMetric")
@@ -1924,12 +1930,17 @@ def warm_dashboard_stats(footage_paths=None):
   persistent_stats = _load_dashboard_persistent_stats(params_obj)
   candidates = _analysis_candidates(route_infos, persistent_stats)[:DASHBOARD_BACKGROUND_ROUTE_ANALYSIS_LIMIT]
   for route_info in candidates:
-    if params_obj.get_bool("IsOnroad"):
+    if onroad():
       break
     full_route_info = dict(route_info)
     full_route_info["analysisSegmentCount"] = max(0, _safe_int(route_info.get("segmentCount", 0), 0))
-    messages = _iter_route_log_messages(full_route_info)
-    drive = _analyze_route_messages(messages, full_route_info, model_names, is_metric)
+    try:
+      messages = _iter_route_log_messages(full_route_info, cancelled=onroad)
+      drive = _analyze_route_messages(messages, full_route_info, model_names, is_metric)
+    except InterruptedError:
+      break
+    if onroad():
+      break
     _update_dashboard_persistent_stats(params_obj, [drive], time.time())
 
 
@@ -1955,25 +1966,19 @@ def _dashboard_analyzer_running():
   if process is not None and process.poll() is None:
     return True
 
+  return _dashboard_analyzer_pid() > 0
+
+
+def _dashboard_analyzer_pid():
   status = _read_dashboard_analyzer_status()
   pid = _safe_int(status.get("pid", 0), 0)
-  started_at = _safe_float(status.get("startedAt", 0.0), 0.0)
-  if pid <= 0 or started_at <= 0:
-    return False
-  if (time.time() - started_at) > DASHBOARD_ANALYZER_STATUS_MAX_AGE_SECONDS:
-    _clear_dashboard_analyzer_status()
-    return False
-
-  try:
-    os.kill(pid, 0)
-  except ProcessLookupError:
-    _clear_dashboard_analyzer_status()
-    return False
-  except PermissionError:
-    return True
-  except OSError:
-    return False
-  return True
+  if pid <= 0:
+    return 0
+  if "processStart" in status:
+    start = status["processStart"]
+    return pid if start and dashboard_worker.process_start(pid) == start else 0
+  # A detached worker from the previous release may still be finishing.
+  return pid if _dashboard_analyzer_pid_matches(pid) else 0
 
 
 def _read_dashboard_analyzer_status():
@@ -1988,6 +1993,7 @@ def _write_dashboard_analyzer_status(process, pending_count):
   status = {
     "pid": process.pid,
     "startedAt": time.time(),
+    "processStart": dashboard_worker.process_start(process.pid),
     "pendingRoutes": max(0, _safe_int(pending_count, 0)),
     "batchSize": min(DASHBOARD_BACKGROUND_ROUTE_ANALYSIS_LIMIT, max(0, _safe_int(pending_count, 0))),
   }
@@ -2001,9 +2007,9 @@ def _write_dashboard_analyzer_status(process, pending_count):
 
 def _clear_dashboard_analyzer_status():
   try:
-    DASHBOARD_ANALYZER_STATUS_PATH.unlink()
-  except FileNotFoundError:
-    pass
+    with dashboard_worker.launch_lock(DASHBOARD_ANALYZER_STATUS_PATH) as lock_fd:
+      if lock_fd is not None:
+        DASHBOARD_ANALYZER_STATUS_PATH.unlink(missing_ok=True)
   except OSError:
     pass
 
@@ -2013,7 +2019,8 @@ def _dashboard_analyzer_pid_matches(pid):
     command = Path(f"/proc/{pid}/cmdline").read_bytes()
   except OSError:
     return False
-  return b"warm_dashboard_stats" in command
+  args = command.split(b"\x00")
+  return dashboard_worker.MODULE.encode() in args or any(b"utilities.warm_dashboard_stats(" in arg for arg in args)
 
 
 def stop_dashboard_background_analysis():
@@ -2026,8 +2033,7 @@ def stop_dashboard_background_analysis():
       process.terminate()
       stopped = True
     else:
-      status = _read_dashboard_analyzer_status()
-      pid = _safe_int(status.get("pid", 0), 0)
+      pid = _dashboard_analyzer_pid()
       if pid > 0 and _dashboard_analyzer_pid_matches(pid):
         try:
           os.kill(pid, signal.SIGTERM)
@@ -2058,42 +2064,30 @@ def _start_dashboard_background_analysis(footage_paths, route_infos, persistent_
     return False
 
   with _DASHBOARD_ANALYZER_LOCK:
-    if params.get_bool("IsOnroad"):
-      return False
-    if _dashboard_analyzer_running():
-      return True
-    repo_root = Path(__file__).resolve().parents[3]
-    worker_code = (
-      "import json, sys;"
-      "from openpilot.starpilot.system.the_galaxy import utilities;"
-      "utilities.warm_dashboard_stats(json.loads(sys.argv[1]))"
-    )
-    command = [
-      "nice",
-      "-n",
-      "19",
-      sys.executable or "python3",
-      "-c",
-      worker_code,
-      json.dumps([str(path) for path in (footage_paths or [])]),
-    ]
-    log_file = None
     try:
-      log_file = open(DASHBOARD_ANALYZER_LOG_PATH, "ab")
-      _DASHBOARD_ANALYZER_PROCESS = subprocess.Popen(
-        command,
-        cwd=str(repo_root),
-        env=_dashboard_worker_env(repo_root),
-        stdout=log_file,
-        stderr=log_file,
-        start_new_session=True,
-      )
-      _write_dashboard_analyzer_status(_DASHBOARD_ANALYZER_PROCESS, len(candidates))
+      with dashboard_worker.launch_lock(DASHBOARD_ANALYZER_STATUS_PATH) as lock_fd:
+        if params.get_bool("IsOnroad"):
+          return False
+        if lock_fd is None or _dashboard_analyzer_running():
+          return True
+        repo_root = Path(__file__).resolve().parents[3]
+        command = [
+          "nice", "-n", "19", sys.executable or "python3", "-m", dashboard_worker.MODULE, str(lock_fd),
+          json.dumps([str(path) for path in (footage_paths or [])]),
+        ]
+        with open(DASHBOARD_ANALYZER_LOG_PATH, "ab") as log_file:
+          _DASHBOARD_ANALYZER_PROCESS = subprocess.Popen(
+            command,
+            cwd=str(repo_root),
+            env=_dashboard_worker_env(repo_root),
+            stdout=log_file,
+            stderr=log_file,
+            start_new_session=True,
+            pass_fds=(lock_fd,),
+          )
+        _write_dashboard_analyzer_status(_DASHBOARD_ANALYZER_PROCESS, len(candidates))
     except Exception:
-      _DASHBOARD_ANALYZER_PROCESS = None
-    finally:
-      if log_file is not None:
-        log_file.close()
+      return False
 
   return _dashboard_analyzer_running()
 
