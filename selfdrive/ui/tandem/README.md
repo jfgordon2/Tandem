@@ -85,10 +85,11 @@ are now scoped to Tandem. Upstream retains Inter, unifont, its dialogs, scroll p
 
 The param registry, shipped parameter binaries and `cereal/custom.capnp` match upstream. Developer-strip
 choices use `prefs.DEVELOPER_STRIP`, migrating the old raw param file without querying an unregistered key.
-Backups include that preference. Help steer and selected-turn status use atomic snapshots in shared memory
-(`starpilot/tandem/state.py`), independent of the compiled registry and message schema. Readers reject stale,
-future or malformed snapshots; unavailable storage omits the extra status/chime without affecting driving.
-Navigation still reports the turn StarPilot actually selected through its optional observer callback.
+Backups include that preference. Help steer uses an atomic snapshot in shared memory (`starpilot/tandem/state.py`).
+The turn status uses a dedicated raw msgq endpoint (`starpilot/tandem/turn_status.py`). It reports the turn StarPilot
+actually selected through its optional observer callback. It publishes changes immediately, refreshes active turns
+every 250 ms, and expires a turn after one second. Both adapters keep their formats in Tandem and fall back to an
+empty status when their inputs are unavailable or invalid.
 
 **Upstream integration:** every remaining external edit is listed here. Defaults of shared hooks retain upstream behavior.
 
@@ -112,7 +113,7 @@ Navigation still reports the turn StarPilot actually selected through its option
 | `selfdrive/ui/soundd.py` | Overridable per-class sound catalog, alert filter and extra-sound tick; `main()` selects the owned Help steer subclass, or the original class with `TANDEM_ONROAD=0`. |
 | `starpilot/assets/theme_manager.py` | Installs the owned bundled signal assets as regular theme packs at boot. |
 | `starpilot/controls/lib/starpilot_vcruise.py` | Optional `on_selected` navigation-turn observer; unset preserves the original target and state. |
-| `starpilot/controls/starpilot_planner.py` | Selects the owned cruise subclass and publishes its observed turn to the owned snapshot; disabled with `TANDEM_ONROAD=0`. |
+| `starpilot/controls/starpilot_planner.py` | Selects the owned cruise subclass and publishes its observed turn on Tandem's msgq endpoint. `TANDEM_ONROAD=0` disables the hook. |
 | `starpilot/navigation/navigationd.py` | `_can_fetch_route(token)` defaults to the original nonempty-key gate. `main()` selects the owned policy subclass for Tandem; `TANDEM_ROUTING=0` or any upstream screen switch restores the original daemon. Progress, publishers and message schemas remain upstream's. |
 | `starpilot/common/starpilot_functions.py` | After the existing schedule/date gates, one guarded import/call/early return delegates supported US updates to owned `handoff.coordinate`. It calls the unchanged `update_maps` body for each state through scoped parameter views, preserving the actual selection and keeping its existing worker lock until the paired job finishes. The original companion hook now imports its lightweight wrapper from `handoff`; recursive state calls suppress that companion. Missing broker, disabled routing, unsupported selections or coordinator exceptions fall through to the original downloader. Both upstream guards catch all ordinary exceptions; the owned companion also catches all exceptions. Atomic requests never take the graph install lock. Scheduling, mapd commands and the upstream UI rollback remain intact. |
 | `starpilot/system/bluetooth/daemon.py` | Overridable settings gate, default offroad; selects the owned stationary-Park subclass unless `TANDEM_SETTINGS=0`. |
@@ -171,7 +172,7 @@ After a merge, check the interfaces that can change without a source conflict:
 - Run `tests/` and `starpilot/tandem/tests/`, plus `tools/upstream_audit.py --check`. The Galaxy HTTP tests need `tests/requirements.txt`.
 - Check the upstream model, maps, navigation, vehicle and device controller methods used by the owned adapters. Named confirmations must keep their original engagement checks; new confirmation actions must not be auto-approved.
 - Check mapd's embedded/custom download menu, 2-degree archive groups, quarter-degree tile names and `MapsDownloadSizeCache` receipts against `starpilot/tandem/routing/road.py`. Missing native entries use the existing local routing catalog's bounds to retain tiles, including Guam; this never certifies a legacy download. Coverage unknown to both catalogs prevents destructive cleanup. The helper owns removal without editing mapd.
-- Check the optional navigation observer, publisher placement and source-message validity. The snapshot must reflect the target actually binding cruise, including a selected next turn, and expire when the producer stops.
+- Check the optional navigation observer, publisher placement and source-message validity. The turn status must reflect the target actually binding cruise, including a selected next turn, and expire when the producer stops.
 - Check the alert filter, audio loop/catalog hooks and owned Help steer volume/muting tests; existing alerts keep priority.
 - Check all four screen switches at `0`, each supported mixed configuration, and the normal Tandem screens. Global fonts and shared widgets must retain upstream defaults.
 - Check the animation renderer's `render()` arguments, shared pack metadata and Galaxy endpoint behavior (`starpilot/tandem/signals.py`).

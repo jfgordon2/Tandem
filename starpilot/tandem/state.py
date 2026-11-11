@@ -33,7 +33,8 @@ class Snapshot:
       folder.mkdir(parents=True, exist_ok=True)
       with tempfile.NamedTemporaryFile(mode="w", dir=folder, delete=False) as stream:
         temporary = Path(stream.name)
-        json.dump({"time": time.monotonic() if now is None else now, "value": value}, stream, allow_nan=False)
+        # The streaming encoder in json.dump() can leave cycles when GC is disabled.
+        stream.write(json.dumps({"time": time.monotonic() if now is None else now, "value": value}, allow_nan=False))
       temporary.replace(folder / self.name)
       return True
     except (OSError, TypeError, ValueError):
@@ -59,4 +60,3 @@ class Snapshot:
 
 
 HEADROOM = Snapshot("headroom.json")
-NAV_TURN = Snapshot("nav-turn.json")
