@@ -37,6 +37,7 @@ Every settings row is indexed in `selfdrive/ui/tandem/settings/search.py`. When 
 ## Tests
 
 - Run `pytest selfdrive/ui/tandem/tests` before pushing, and add tests for new behavior. `ruff check selfdrive/ui/tandem` must pass.
+- Annotate every function and write Google-format docstrings (README › Conventions). `python3 selfdrive/ui/tandem/tools/typecheck.py` must pass; it type-checks `selfdrive/ui/tandem` and `starpilot/tandem` with mypy.
 - Without a full openpilot build (no `cereal`, `zmq` or device hardware), run them with the stand-ins in `tools/render/` and leave out the four files that import `cereal`; say that those didn't run:
 
   ```

@@ -69,6 +69,7 @@ page = SettingsPage(
 - **Containers lay out their children.** A container asks each child for `preferred_size(max_width)` and decides where it goes, so pages never hard-code positions.
 - **Touch.** A control smaller than `MIN_TOUCH` (112 px) still responds across a 112 px area. Containers turn that off with `grow_touch_target = False`. Rows inside a `ListPanel` ignore taps that are really scrolls.
 - **Color and size only come from `tokens`.** If a screen needs a value that isn't there, add a token rather than a hex code.
+- **Types and docstrings.** Every function in Tandem's code is annotated, and `python3 selfdrive/ui/tandem/tools/typecheck.py` (mypy with the repo's settings, over `selfdrive/ui/tandem` and `starpilot/tandem`) must pass. Docstrings use the Google format: every public class gets one, and so does any function whose name and types don't say enough, with `Args:`, `Returns:` and `Raises:` sections for what needs explaining. A one-line summary is enough when that says it all.
 - **Text.** Use `draw.text`, `draw.caption` and `draw.paragraph`. They apply `FONT_SCALE` and elide with "…". The font atlases are pre-baked, so a character that isn't baked in draws as "?". Add it to `DESIGN_CHARS` in `tools/build_figtree_fonts.py` and run that script.
 
 ## Keeping rebases easy
