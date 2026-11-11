@@ -5,6 +5,7 @@ from __future__ import annotations
 import re
 import time
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import pyray as rl
 
@@ -14,6 +15,9 @@ ASSETS_PATH = Path(BASEDIR) / "starpilot/assets"
 ACTIVE_SIGNALS_PATH = ASSETS_PATH / "active_theme/signals"
 FROG_SIGNALS_PATH = ASSETS_PATH / "holiday_themes/world_frog_day/signals"
 from openpilot.starpilot.tandem.signals import BUNDLED_SIGNAL_ANIMATIONS, SIGNAL_PACKS_PATH
+
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.ui_state import UIState
 
 BUNDLED_SIGNAL_PATHS = {
   slug: FROG_SIGNALS_PATH if slug == "frog" else SIGNAL_PACKS_PATH / slug / "signals"
@@ -30,19 +34,28 @@ FRAME_PATTERN = re.compile(r"turn_signal(?:_(\d+))?\.png", re.IGNORECASE)
 STYLE_PATTERN = re.compile(r"(traditional|static)_(\d+)", re.IGNORECASE)
 
 
+
+def frame_number(path: Path) -> int:
+  """A signal pack frame's place in the animation, from its file name (0 when it has no number)."""
+  match = FRAME_PATTERN.fullmatch(path.name)
+  return int(match[1] or 0) if match else 0
+
 class TurnSignalRenderer:
-  def __init__(self):
+  """Draws the turn signal animation beside the speed (or StarPilot's static indicators), loading the chosen pack's frames on demand."""
+
+  def __init__(self) -> None:
     self._frames: list[rl.Texture] = []
     self._blindspot: rl.Texture | None = None
-    self._stamp = None
-    self._pack = None
+    self._stamp: tuple | None = None
+    self._pack: str | None = None
     self._signal_seen = False
     self._frame_seconds = 0.125
     self._style = "traditional"
-    self._animation_key = None
+    self._animation_key: tuple | None = None
     self._started_at = 0.0
 
   def close(self) -> None:
+    """Unloads the textures; the next render loads them again."""
     for texture in self._frames:
       rl.unload_texture(texture)
     if self._blindspot is not None:
@@ -95,8 +108,7 @@ class TurnSignalRenderer:
     self.close()
     self._pack = pack
     self._stamp = stamp
-    frame_paths = sorted((p for p in files if FRAME_PATTERN.fullmatch(p.name)),
-                         key=lambda p: int(FRAME_PATTERN.fullmatch(p.name)[1] or 0))
+    frame_paths = sorted((p for p in files if FRAME_PATTERN.fullmatch(p.name)), key=frame_number)
     self._style = "traditional" if len(frame_paths) > 1 else "static"
     self._frame_seconds = 0.125
     for path in files:
@@ -109,9 +121,18 @@ class TurnSignalRenderer:
       if (texture := self._load_texture(path)) is not None:
         self._frames.append(texture)
 
-  def render(self, rect: rl.Rectangle, state, *, enabled: bool = True, top_margin: float = 0.0, bottom_margin: float = 0.0,
+  def render(self, rect: rl.Rectangle, state: UIState, *, enabled: bool = True, top_margin: float = 0.0, bottom_margin: float = 0.0,
              static_offset: float = 0.0) -> None:
-    """static_offset moves static indicators down with the speed (Speed at Bottom)."""
+    """Draws the turn signals for this frame.
+
+    Args:
+      rect: The road view.
+      state: Upstream's UI state.
+      enabled: Whether to draw at all (not while a full alert covers the road).
+      top_margin: Space taken at the top.
+      bottom_margin: Space taken at the bottom.
+      static_offset: Moves static indicators down with the speed (Speed at Bottom).
+    """
     pack = state.starpilot_toggles.get("signal_icons", "stock")
     if state.starpilot_toggles.get("random_themes", False):
       pack = "random"

@@ -12,6 +12,8 @@ Speed limit changed is left to the new-limit card while it asks.
 from __future__ import annotations
 
 from dataclasses import replace
+from typing import Any, TYPE_CHECKING
+from collections.abc import Callable
 
 import pyray as rl
 
@@ -20,6 +22,10 @@ from openpilot.selfdrive.ui.tandem.onroad import size as Z
 from openpilot.selfdrive.ui.tandem.layout import Align, inset, place
 from openpilot.selfdrive.ui.tandem.i18n import translate
 from openpilot.selfdrive.ui.tandem.fonts import face_for, font
+
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.onroad.alert_renderer import Alert
+  from cereal.messaging import SubMaster
 
 INFO, WARNING, CRITICAL, REVERSE = "info", "warning", "critical", "reverse"
 
@@ -73,7 +79,7 @@ def replaced_by_headroom(alert_type: str) -> bool:
   return (alert_type or "").split("/", 1)[0].lower().endswith("steersaturated")
 
 
-def steer_limit_alert(sm) -> bool:
+def steer_limit_alert(sm: SubMaster) -> bool:
   """Whether openpilot or StarPilot is raising a steering-limit alert now."""
   return any(sm.valid.get(service, False) and replaced_by_headroom(str(getattr(sm[service], "alertType", "") or ""))
              for service in ("selfdriveState", "starpilotSelfdriveState"))
@@ -88,12 +94,12 @@ def _clean(text: str) -> str:
   return " ".join(translate(text or "").split())   # translate before folding StarPilot's line breaks
 
 
-def translated(alert):
+def translated(alert: Alert) -> Alert:
   """A translated display copy for the upstream reverse-gear layout; never change the live alert."""
   return replace(alert, text1=translate(alert.text1), text2=translate(alert.text2))
 
 
-def draw_reverse(alert, title_label, line_label, render) -> None:
+def draw_reverse(alert: Alert, title_label: Any, line_label: Any, render: Callable[[Alert], None]) -> None:
   """Keep upstream's text layout, using a face that covers the translated letters in each label."""
   display = translated(alert)
   for label, text, face in ((title_label, display.text1, T.FONT_BOLD), (line_label, display.text2, T.FONT)):
@@ -145,8 +151,8 @@ def draw_alert(where: rl.Rectangle, alert_level: str, text1: str, text2: str, op
     draw.text(title, draw.fit(text1, Z.font_px(WARNING_TITLE_PX), T.FONT_EXTRABOLD, body.width), Z.font_px(WARNING_TITLE_PX), fade(WARNING_TITLE),
               T.FONT_EXTRABOLD)
     if text2:
-      line = rl.Rectangle(body.x, title.y + title.height + Z.px(6), body.width, draw.line_height(Z.font_px(WARNING_LINE_PX)))
-      draw.text(line, draw.fit(text2, Z.font_px(WARNING_LINE_PX), T.FONT, body.width), Z.font_px(WARNING_LINE_PX), fade(WARNING_LINE))
+      second = rl.Rectangle(body.x, title.y + title.height + Z.px(6), body.width, draw.line_height(Z.font_px(WARNING_LINE_PX)))
+      draw.text(second, draw.fit(text2, Z.font_px(WARNING_LINE_PX), T.FONT, body.width), Z.font_px(WARNING_LINE_PX), fade(WARNING_LINE))
     return
   draw.fill(where, fade(INFO_FILL), Z.px(20))
   body = inset(where, x=Z.px(INFO_PAD_PX[0]), y=Z.px(INFO_PAD_PX[1]))

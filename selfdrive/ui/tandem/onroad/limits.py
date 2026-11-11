@@ -8,6 +8,7 @@ LIVE_SOURCES = {N_("Dashboard"), N_("Map Data"), N_("Vision"), N_("Mapbox")}
 
 @dataclass
 class LimitOfferState:
+  """Which speed limit the driver has seen offered or ignored, so the new-limit card asks once per change."""
   last_limit: float = 0.0
   ignored_limit: float = 0.0
   pending_limit: float = 0.0
@@ -18,6 +19,14 @@ class LimitOfferState:
     return math.isclose(a, b, rel_tol=0.0, abs_tol=0.1)
 
   def observe(self, pending: float, current: float, current_source: str, now: float) -> None:
+    """Notes this frame's limit.
+
+    Args:
+      pending: The limit StarPilot is asking to switch to (0 when it isn't asking).
+      current: The limit it's driving to now.
+      current_source: Where current came from; only a live source counts as a change.
+      now: The time in seconds.
+    """
     # A rejected/expired offer can leave the old accepted target in the plan. Only a live source counts as a change.
     observed = pending if pending > 1 else current if current_source in LIVE_SOURCES else 0.0
     if observed > 1:
@@ -50,6 +59,15 @@ class LimitFollower:
   limit: float = 0.0
 
   def update(self, limit: float, source: str, offset: float, set_speed: float, engaged: bool) -> float | None:
+    """The MAX to set when the posted limit changes, or None to leave MAX alone.
+
+    Args:
+      limit: The posted limit.
+      source: Where it came from; StarPilot's fallback is never followed.
+      offset: The driver's offset above the limit.
+      set_speed: The current MAX.
+      engaged: openpilot is engaged.
+    """
     if limit <= 1 or source not in LIVE_SOURCES:
       return None                         # no posted limit, or StarPilot's fallback: nothing to follow
     previous, self.limit = self.limit, limit
@@ -69,7 +87,14 @@ class OfferChime:
   shown: tuple | None = None
 
   def update(self, offer: tuple | None) -> bool:
-    """offer identifies the card on screen (its limit and when it was first offered), or None. True: chime now."""
+    """Whether to chime for the card on screen.
+
+    Args:
+      offer: Identifies the card (its limit and when it was first offered), or None when no card is up.
+
+    Returns:
+      True once per new card.
+    """
     chime = offer is not None and offer != self.shown
     self.shown = offer
     return chime

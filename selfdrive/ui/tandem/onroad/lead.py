@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import math
+from typing import TYPE_CHECKING
 
 import pyray as rl
 
@@ -12,6 +13,10 @@ from openpilot.selfdrive.ui.tandem.onroad.developer import Lead, developer_view_
 from openpilot.selfdrive.ui.tandem.onroad.extras import LEAD_UNSURE, LeadSettle
 from openpilot.selfdrive.ui.tandem.i18n import t_
 
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.lib.ui_param_cache import UIParamCache
+  from openpilot.selfdrive.ui.ui_state import UIState
+
 DISTANCE_SPEED = 1.0       # m/s: enter distance mode near a stop
 GAP_SPEED = 1.5            # m/s: return to seconds above this, avoiding flicker
 VALUE_TAU = 0.3           # seconds: smooth the displayed value, never the driving data
@@ -19,6 +24,7 @@ VALUE_TAU = 0.3           # seconds: smooth the displayed value, never the drivi
 
 @dataclass(frozen=True)
 class LeadSample:
+  """One frame's lead car, as the gap tag reads it: distance and speeds in m/s, and whether the model is confident."""
   distance: float
   speed: float
   relative_speed: float = 0.0
@@ -29,13 +35,14 @@ class LeadSample:
 
 @dataclass(frozen=True)
 class GapTagState:
+  """What the gap tag draws this frame: its label, the lead's values, its opacity and how far it has settled in."""
   label: str
   lead: Lead
   opacity: float
   progress: float
 
 
-def read_lead_sample(state, threshold: float) -> LeadSample | None:
+def read_lead_sample(state: UIState, threshold: float) -> LeadSample | None:
   """Use only live, valid messages from this drive, including the model that places the marker."""
   sm = state.sm
   if not state.started or not all(sm.valid.get(name, False) and sm.alive.get(name, False)
@@ -53,12 +60,12 @@ def read_lead_sample(state, threshold: float) -> LeadSample | None:
                     bool(getattr(lead, "radar", False)))
 
 
-def detailed_tag_on(state, params) -> bool:
+def detailed_tag_on(state: UIState, params: UIParamCache) -> bool:
   """Keep extra lead data in either of the existing power-user views."""
   return bool(params.get_bool("LeadInfo") or developer_view_on(state, params))
 
 
-def lead_anchor(chevron) -> rl.Vector2 | None:
+def lead_anchor(chevron: list[tuple[float, float]]) -> rl.Vector2 | None:
   """Estimate the roof from StarPilot's projected ground point and marker size, without a new object detector."""
   if not chevron or len(chevron) != 3:
     return None
@@ -72,7 +79,7 @@ def lead_anchor(chevron) -> rl.Vector2 | None:
 class GapTracker:
   """Keep the display calm, restarting its 250 ms entrance for a new lead or the existing cut-in rule."""
 
-  def __init__(self):
+  def __init__(self) -> None:
     self.reset()
 
   def reset(self) -> None:
@@ -82,6 +89,18 @@ class GapTracker:
     self._last_time: float | None = None
 
   def update(self, sample: LeadSample | None, now: float) -> GapTagState | None:
+    """Follows the lead car from frame to frame and returns what its tag shows.
+
+    Below DISTANCE_SPEED the tag shows the distance, above GAP_SPEED the time gap, keeping its mode in between; the value
+    eases toward each new reading.
+
+    Args:
+      sample: This frame's lead, or None when there isn't one (the tracker resets).
+      now: The time in seconds.
+
+    Returns:
+      The tag's state, or None without a lead.
+    """
     if sample is None:
       self.reset()
       return None
@@ -99,7 +118,7 @@ class GapTracker:
     relative_text = f"{round(relative):+d} {'km/h' if sample.metric else 'mph'}".replace("-", "−")
     if sample.confident:
       target = sample.distance if self._distance_mode else sample.distance / sample.speed
-      if progress == 0.0 or previous_mode != self._distance_mode or self._value is None:
+      if progress == 0.0 or previous_mode != self._distance_mode or self._value is None or self._last_time is None:
         self._value = target
       else:
         dt = max(0.0, now - self._last_time)

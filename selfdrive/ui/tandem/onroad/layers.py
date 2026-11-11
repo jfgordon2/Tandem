@@ -46,6 +46,7 @@ def radius() -> int:
 
 @dataclass
 class BarState:
+  """What the bottom bar shows: engagement, the set speed and its unit, and the street or route."""
   engaged: bool = False
   can_engage: bool = False
   set_speed: float = 0.0          # display units; 0 when cruise isn't set
@@ -127,7 +128,7 @@ class OnroadBar(Component):
   def hit_rects(self, rect: rl.Rectangle) -> list[rl.Rectangle]:
     return list(self.rects(rect).values())
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     if Z.zoom() != self._zoom:
       self._resize()
     state = self._state()
@@ -282,7 +283,7 @@ class StatusChip(Component):
   def size(self, chip: Chip) -> tuple[float, float]:
     return draw.text_width(chip.label, Z.font_px(17), T.FONT_SEMIBOLD) + Z.px(70), self.height()
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     chips = self._chips()
     self._slot = {chip.key: self._slot.get(chip.key, float(i)) for i, (chip, _) in enumerate(chips)}
     bar_top = rect.y + rect.height - bar_margin() - bar_height()
@@ -317,11 +318,22 @@ LIMIT_BORDER_COLOR = rl.Color(224, 162, 58, 255)
 class Headroom:
   """Debounce limit entry and release below 80%, so bumps and threshold noise don't repeat warnings."""
 
-  def __init__(self):
+  def __init__(self) -> None:
     self._over_since: float | None = None
     self._at_limit = False
 
   def stage(self, usage: float, now: float, active: bool = True) -> str:
+    """Where steering use stands: comfortable, working, or at the limit.
+
+    Args:
+      usage: The share of the steering limit in use; its sign is ignored.
+      now: The time in seconds.
+      active: Steering is engaged; when it isn't, the stage resets to comfortable.
+
+    Returns:
+      COMFORTABLE, WORKING (from WORKING_FROM) or AT_LIMIT. At the limit is entered after LIMIT_HOLD seconds over
+      LIMIT_FROM and held until use drops below LIMIT_RELEASE.
+    """
     if not active:
       self._over_since = None
       self._at_limit = False
@@ -342,6 +354,7 @@ class Headroom:
 
 @dataclass
 class ArcState:
+  """What the headroom arc shows: how much steering is in use, a preview of where it's heading, and the stage."""
   usage: float = 0.0       # -1..1, signed toward the turn
   preview: float = 0.0     # what the planned path needs 2–3 s ahead, same scale
   active: bool = False     # openpilot is steering
@@ -391,13 +404,19 @@ class HeadroomArc(Component):
 
   def __init__(self, state: Callable[[], ArcState], shape: Callable[[], ArcShape] = lambda: ARC,
                help_steer: Callable[[], bool] = lambda: False):
-    """help_steer: whether the Help steer card is up, in the bar's place; the arc then sits above the card."""
+    """Makes the headroom arc.
+
+    Args:
+      state: The arc's state each frame.
+      shape: The curve to draw (each mock's ARC).
+      help_steer: Whether the Help steer card is up, in the bar's place; the arc then sits above the card.
+    """
     super().__init__()
     self._state = state
     self._shape = shape
     self._help_steer = help_steer
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     s, shape = self._state(), self._shape()
     half = rect.width * shape.chord / 2
     cx, end_y = rect.x + rect.width / 2, rect.y + rect.height - Z.px(shape.lift)   # rect is the whole road view
@@ -441,7 +460,7 @@ class HelpSteer(Component):
   view hides the bar and chips while it shows, as for other alerts). The view requests its one-shot sound through soundd."""
   grow_touch_target = False
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     alerts.draw_alert(help_steer_box(rect), alerts.WARNING, *HELP_STEER, 1.0)
 
 
@@ -449,6 +468,7 @@ class HelpSteer(Component):
 
 @dataclass
 class LimitOffer:
+  """A new-limit card's offer: the limit, the set speed it would mean, its source, and how long it stays up."""
   limit: float          # display units
   target: float         # what cruise would go to, with the offset
   unit: str
@@ -496,7 +516,7 @@ class LimitCard(Component):
     height = self.pad() * 2 + sign_size()[1] + Z.px(14) + self.button_height() + Z.px(14) + Z.px(4)
     return rl.Rectangle(rect.x + Z.px(16), rect.y + self._top(), self.width(), height)
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     offer = self._offer()
     if offer is None:
       return
@@ -602,7 +622,14 @@ def sign_tile(rect: rl.Rectangle) -> rl.Rectangle:
 
 
 def draw_speed_limit(tile: rl.Rectangle, limit: str, vienna: bool, note: str = "") -> None:
-  """The posted limit on a dark tile. note is Developer View's source and offset ("MAP · +3")."""
+  """The posted limit on a dark tile.
+
+  Args:
+    tile: The tile.
+    limit: The limit, formatted.
+    vienna: Draw a round Vienna Convention sign instead of a U.S. one.
+    note: Developer View's source and offset ("MAP · +3").
+  """
   draw.fill(tile, rl.Color(0x0B, 0x0D, 0x10, 255), Z.px(14))
   draw_sign(place(tile, *sign_size()), limit, vienna, note)
 
@@ -647,8 +674,14 @@ def dm_tile(rect: rl.Rectangle) -> rl.Rectangle:
 
 
 def draw_driver_monitor(tile: rl.Rectangle, opacity: float, attentive: float, watching: bool) -> None:
-  """The driver on a dark tile, ringed green while attentive and amber as attention drops. Without a camera policy
-  (watching False) the ring is a quiet track and the whole tile is dimmed by the caller's opacity."""
+  """The driver on a dark tile, ringed green while attentive and amber as attention drops.
+
+  Args:
+    tile: The tile.
+    opacity: The whole tile's opacity.
+    attentive: Driver monitoring's awareness, from 0 (not fully aware) to 1.
+    watching: Driver monitoring has a camera policy; without one the ring is a quiet track.
+  """
   if opacity <= 0.01:
     return
   draw.fill(tile, draw.alpha(rl.Color(0x0B, 0x0D, 0x10, 255), opacity), Z.px(14))
@@ -685,8 +718,19 @@ TURN_SCROLL = Scroller()   # the instruction line scrolls when it doesn't fit, a
 
 def draw_turn_card(rect: rl.Rectangle, distance: str, text: str, maneuver: str, modifier: str,
                    top: float | None = None) -> rl.Rectangle:
-  """The next turn, top left (below the sign when there is one): its arrow, the distance and the instruction. Returns the
-  card's box. rect is the road view: an instruction that doesn't fit scrolls, clipped inside it."""
+  """The next turn, top left (below the sign when there is one): its arrow, the distance and the instruction.
+
+  Args:
+    rect: The road view; an instruction that doesn't fit scrolls, clipped inside it.
+    distance: The distance to the turn, formatted.
+    text: The instruction.
+    maneuver: The turn's maneuver, for its arrow.
+    modifier: The maneuver's direction.
+    top: Where the card's top goes; below the sign by default.
+
+  Returns:
+    The card's box.
+  """
   top = turn_card_top() if top is None else top
   lines = [draw.line_height(Z.font_px(30)), draw.line_height(Z.font_px(17))]
   box = rl.Rectangle(rect.x + sign_margin(), rect.y + top, turn_card_width(), max(Z.px(54), sum(lines)) + Z.px(28))

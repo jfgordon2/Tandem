@@ -20,6 +20,7 @@ TYPE_WORDS = set(TYPES) | {short.lower() for short in TYPES.values()} | {"way"} 
 
 
 def short_street(name: str) -> str:
+  """A street name shortened as signs write it: "North Main Street" reads "N Main St". Single words stay."""
   words = name.split()
   if len(words) < 2:
     return name

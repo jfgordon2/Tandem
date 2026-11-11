@@ -16,6 +16,7 @@ without a car.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Any, TYPE_CHECKING
 
 import pyray as rl
 
@@ -24,6 +25,11 @@ from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, row
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_, translate
 from openpilot.selfdrive.ui.tandem.prefs import DEVELOPER_STRIP
+
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.lib.ui_param_cache import UIParamCache
+  from openpilot.selfdrive.ui.ui_state import UIState
+  from openpilot.selfdrive.ui.onroad.starpilot.developer_sidebar import DeveloperSidebar
 
 PANEL_W = T.px(256)                 # the mock's sidebar
 WIDTH = PANEL_W + T.px(10)          # with its gap from the road view
@@ -79,6 +85,7 @@ def strip_keys(raw: str | bytes | None) -> list[str]:
 
 @dataclass
 class Lead:
+  """radarState's lead as Developer View shows it, already in the driver's units: distance, time gap, relative speed and source."""
   distance: str    # "38 m"
   gap: str         # "1.4 s"
   rel_speed: str   # "−2 mph"
@@ -88,6 +95,7 @@ class Lead:
 
 @dataclass
 class DevData:
+  """Every value Developer View shows, and which of its parts StarPilot's switches turn on."""
   lead: Lead | None = None
   cpu: float = 0.0          # 0..1
   cpu_temp: str = ""        # "61°C"
@@ -258,9 +266,9 @@ def draw_lead_tag(center_x: float, top_y: float, lead: Lead, *, compact: bool = 
   draw.fill(box, draw.alpha(TAG_FILL, alpha), Z.px(11))
   draw.stroke(box, draw.alpha(T.TRACK, alpha), Z.px(11), Z.px(1))
   x = box.x + (w - sum(widths)) / 2 if compact else box.x + pad
-  for (text, ink, weight), width in zip(parts, widths, strict=True):
-    draw.text(rl.Rectangle(x, box.y, width, box.height), text, size, draw.alpha(ink, alpha), weight)
-    x += width + gap
+  for (text, ink, weight), part_w in zip(parts, widths, strict=True):
+    draw.text(rl.Rectangle(x, box.y, part_w, box.height), text, size, draw.alpha(ink, alpha), weight)
+    x += part_w + gap
   return box
 
 
@@ -270,7 +278,7 @@ def _signed(value: float, digits: int = 2) -> str:
   return f"{value:+.{digits}f}".replace("-", "−")
 
 
-def lead_of(lead, v_ego: float, metric: bool) -> Lead | None:
+def lead_of(lead: Any, v_ego: float, metric: bool) -> Lead | None:
   """radarState's lead, in the driver's units."""
   if lead is None or not lead.status:
     return None
@@ -281,9 +289,13 @@ def lead_of(lead, v_ego: float, metric: bool) -> Lead | None:
               rel < -0.5, N_("radar") if getattr(lead, "radar", False) else N_("vision"))
 
 
-def read(ui_state, params=None) -> DevData:
-  """Every value the Developer View shows, from the messages the UI already receives, and which parts StarPilot's switches
-  turn on. params is the UI's per-frame param cache (ui_state.ui_params by default)."""
+def read(ui_state: UIState, params: UIParamCache | None = None) -> DevData:
+  """Every value Developer View shows, from the messages the UI already receives, and which parts StarPilot's switches turn on.
+
+  Args:
+    ui_state: Upstream's UI state.
+    params: The UI's per-frame param cache; ui_state.ui_params by default.
+  """
   from openpilot.common.constants import CV
   params = params if params is not None else ui_state.ui_params
   toggles = ui_state.starpilot_toggles or {}
@@ -334,12 +346,12 @@ def read(ui_state, params=None) -> DevData:
   return data
 
 
-def developer_ui_on(ui_state, params) -> bool:
+def developer_ui_on(ui_state: UIState, params: UIParamCache) -> bool:
   """StarPilot's Developer UI switch (the Developer View bundle turns it on)."""
   return bool(ui_state.starpilot_toggles.get("developer_ui", params.get_bool("DeveloperUI")))
 
 
-def developer_view_on(ui_state, params) -> bool:
+def developer_view_on(ui_state: UIState, params: UIParamCache) -> bool:
   """The Developer View switch: its bundle is keyed on StarPilot's DeveloperSidebar. Developer UI alone isn't enough,
   since Lead Insights keeps it on after Developer View is turned off."""
   toggles = ui_state.starpilot_toggles or {}
@@ -347,18 +359,19 @@ def developer_view_on(ui_state, params) -> bool:
   return developer_ui_on(ui_state, params) and bool(sidebar)
 
 
-def developer_sidebar():
+def developer_sidebar() -> DeveloperSidebar:
   """The right panel, shown when StarPilot's developer sidebar would be. Made on the device only."""
   from openpilot.selfdrive.ui.onroad.starpilot.developer_sidebar import DeveloperSidebar
   from openpilot.selfdrive.ui.ui_state import ui_state
 
   class EssentialsDeveloperSidebar(DeveloperSidebar):
-    def update(self):
+    def update(self) -> None:
       super().update()   # StarPilot decides whether the sidebar shows
       self._data = read(ui_state) if self._visible else None
 
-    def render(self, sidebar_rect: rl.Rectangle):
-      if self._visible and getattr(self, "_data", None) is not None:
-        draw_panel(sidebar_rect, self._data)
+    def render(self, sidebar_rect: rl.Rectangle) -> None:
+      data = getattr(self, "_data", None)
+      if self._visible and data is not None:
+        draw_panel(sidebar_rect, data)
 
   return EssentialsDeveloperSidebar()

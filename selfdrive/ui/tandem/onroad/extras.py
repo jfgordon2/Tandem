@@ -14,6 +14,7 @@ The functions take what they need as arguments, so they render and test without 
 from __future__ import annotations
 
 import math
+from typing import Any, TYPE_CHECKING
 
 import numpy as np
 import pyray as rl
@@ -21,6 +22,10 @@ import pyray as rl
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.layout import FILL, inset, place, row
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_
+
+if TYPE_CHECKING:
+  from openpilot.system.ui.lib.shader_polygon import Gradient
+  from openpilot.selfdrive.ui.lib.ui_param_cache import UIParamCache
 
 BRAKE_FILL, BRAKE_INK = T._hex("3A1F24"), T._hex("FF8A8A")
 GAS_FILL, GAS_INK = T._hex("173A2A"), T.SUCCESS_TEXT
@@ -55,7 +60,7 @@ LEAD_SETTLE = 0.25          # s for a new car's bar to grow in
 LEAD_JUMP = 8.0             # m: a lead this much nearer than the last one is a new car (a cut-in)
 
 
-def lead_bar_rect(chevron) -> rl.Rectangle | None:
+def lead_bar_rect(chevron: list[tuple[float, float]]) -> rl.Rectangle | None:
   """The bar under a lead car, from upstream's chevron for it: the chevron's tip is the car's ground point and its height
   (sz) scales with distance, so the bar keeps the chevron's place and size."""
   if not chevron or len(chevron) < 3:
@@ -69,8 +74,15 @@ def lead_bar_rect(chevron) -> rl.Rectangle | None:
 
 
 def draw_lead_bar(rect: rl.Rectangle, color: rl.Color, opacity: float = 1.0, scale: float = 1.0, outline: bool = True) -> None:
-  """The bar, grown from its center by scale (the settle-in), with a thin dark outline that keeps white readable on a bright
-  road."""
+  """The bar under a lead car.
+
+  Args:
+    rect: Where the bar goes.
+    color: Its fill.
+    opacity: How opaque it is, 0 to 1.
+    scale: How far it has grown from its center (the settle-in), 0 to 1.
+    outline: A thin dark outline that keeps white readable on a bright road.
+  """
   if opacity <= 0.01 or scale <= 0.01:
     return
   w = rect.width * scale
@@ -86,11 +98,18 @@ class LeadSettle:
   """How far a lead's bar has grown in (0 to 1): a car that appears, or one much nearer than the last (a cut-in), starts
   again from small and grows over LEAD_SETTLE."""
 
-  def __init__(self):
+  def __init__(self) -> None:
     self._since: float | None = None
     self._distance: float | None = None
 
   def update(self, present: bool, distance: float, now: float) -> float:
+    """The lead bar's settle-in, 0 to 1 with an ease-out: it restarts when a lead first appears or jumps much closer.
+
+    Args:
+      present: There's a lead to draw.
+      distance: Its distance in meters.
+      now: The time in seconds.
+    """
     if not present:
       self._since = self._distance = None
       return 0.0
@@ -103,7 +122,7 @@ class LeadSettle:
 
 # ── Pedals ──
 
-def pedal_levels(params, car_state, starpilot_car_state=None) -> tuple[float, float] | None:
+def pedal_levels(params: UIParamCache, car_state: Any, starpilot_car_state: Any = None) -> tuple[float, float] | None:
   """(brake, gas) from 0.25 (idle) to 1, as StarPilot's pedal icons reckon them; None when they're off."""
   if not params.get_bool("PedalsOnUI") or car_state is None:
     return None
@@ -170,10 +189,11 @@ def draw_model_chip(right: float, y: float, status: str, alpha: float) -> None:
 class ModelChip:
   """StarPilot's model-source widget keeps deciding the state and when it fades; this draws it as our chip."""
 
-  def __init__(self, widget):
+  def __init__(self, widget: Any) -> None:
     self._widget = widget
 
   def render(self, right: float, y: float) -> None:
+    """Draws StarPilot's model-source widget as our chip, right-aligned at right, while StarPilot decides it shows."""
     widget = self._widget
     if not widget.is_visible:
       return
@@ -235,7 +255,7 @@ def draw_stopping_point(ends: tuple[rl.Vector2, rl.Vector2], distance: str | Non
   draw.text(words, distance, size, T.TEXT, T.FONT_MONO_BOLD)
 
 
-def lane_gradient(color: rl.Color, strength: float):
+def lane_gradient(color: rl.Color, strength: float) -> Gradient:
   """A wash that fades out toward the horizon, as StarPilot's lane gradient does."""
   from openpilot.system.ui.lib.shader_polygon import Gradient
   return Gradient(start=(0.0, 1.0), end=(0.0, 0.0), stops=[0.0, 0.5, 1.0],
@@ -243,7 +263,12 @@ def lane_gradient(color: rl.Color, strength: float):
 
 
 def draw_lanes(rect: rl.Rectangle, sides: list[tuple[np.ndarray, str | None]]) -> None:
-  """sides: (polygon, "blind_spot" | "lane" | None) for the left and right lanes."""
+  """Tints the lanes beside the path: red for a blind spot, the lane color for an adjacent lane.
+
+  Args:
+    rect: The road view.
+    sides: (polygon, "blind_spot", "lane" or None) for the left and right lanes.
+  """
   from openpilot.system.ui.lib.shader_polygon import draw_polygon
   for vertices, kind in sides:
     if kind is None or vertices is None or len(vertices) < 4:

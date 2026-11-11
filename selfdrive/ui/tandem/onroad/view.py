@@ -16,8 +16,9 @@ from __future__ import annotations
 
 import datetime
 import json
-from collections.abc import Callable
+from collections.abc import Callable, Iterable
 import time
+from typing import TYPE_CHECKING, Any
 
 import pyray as rl
 
@@ -46,6 +47,12 @@ from openpilot.selfdrive.ui.tandem.onroad.lead import GapTracker, detailed_tag_o
 from openpilot.selfdrive.ui.tandem.forecast import Announcer, heads_up, now_conditions, shared_service, wall_clock
 from openpilot.selfdrive.ui.tandem.prefs import LEAD_TAG, MAX_FOLLOWS_LIMIT, WEATHER_CHIME, WEATHER_HEADS_UP
 from openpilot.selfdrive.ui.tandem.i18n import t_
+
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.tandem.onroad.lead import GapTagState
+  from openpilot.selfdrive.ui.tandem.onroad.status import Snapshot
+  from openpilot.selfdrive.ui.onroad.alert_renderer import Alert
+  from cereal.messaging import SubMaster
 
 CONFIRM_TIMEOUT = 30.0      # StarPilot rejects an unanswered higher limit after 30 s
 PREVIEW_SECONDS = 2.5
@@ -87,7 +94,8 @@ class EssentialsAlertRenderer(AlertRenderer):
   headroom_warning: Callable[[], bool] = staticmethod(lambda: False)   # the view's Help steer warning is up
   limit_card: Callable[[], bool] = staticmethod(lambda: False)         # the new-limit card is asking
 
-  def get_alert(self, sm):
+  def get_alert(self, sm: SubMaster) -> Alert | None:
+    """Upstream's alert, except those Essentials shows another way (a status chip, Help steer or the new-limit card)."""
     previous = self._prev_alert
     alert = super().get_alert(sm)
     if alert is not None and (alerts.shown_as_chip(alert.alert_type)
@@ -104,18 +112,18 @@ class EssentialsAlertRenderer(AlertRenderer):
   def _get_alert_rect(self, rect: rl.Rectangle, size: int) -> rl.Rectangle:
     alert = self._current_alert or self._prev_alert
     kind = alerts.level(alert.size, alert.status, alert.alert_type) if alert is not None else alerts.REVERSE
-    if kind == alerts.REVERSE:
+    if kind == alerts.REVERSE or alert is None:
       return super()._get_alert_rect(rect, size)
     return alerts.box(rect, kind, alert.text1, alert.text2)
 
-  def _draw_background(self, alert) -> None:
+  def _draw_background(self, alert: Alert) -> None:
     kind = alerts.level(alert.size, alert.status, alert.alert_type)
     if kind == alerts.REVERSE:
       return super()._draw_background(alert)
     where = rl.Rectangle(self._rect.x, self._alert_y_filter.x, self._rect.width, self._rect.height)   # slides as upstream's does
     alerts.draw_alert(where, kind, alert.text1, alert.text2, self._alpha_filter.x)
 
-  def _draw_text(self, alert) -> None:
+  def _draw_text(self, alert: Alert) -> None:
     if alerts.level(alert.size, alert.status, alert.alert_type) == alerts.REVERSE:
       alerts.draw_reverse(alert, self._alert_text1_label, self._alert_text2_label, super()._draw_text)
 
@@ -123,16 +131,16 @@ class EssentialsAlertRenderer(AlertRenderer):
 class _NoFavorites:
   """Stands in for StarPilot's favorites menu (the lower-left gesture), which Essentials doesn't show."""
 
-  def process_mouse_events(self, events, rect) -> bool:
+  def process_mouse_events(self, events: Iterable[Any], rect: rl.Rectangle) -> bool:
     return False
 
-  def blocks_pointer(self, mouse_pos) -> bool:
+  def blocks_pointer(self, mouse_pos: MousePos) -> bool:
     return False
 
-  def render(self, rect) -> None:
+  def render(self, rect: rl.Rectangle) -> None:
     pass
 
-  def render_corner_hint(self, rect) -> None:
+  def render_corner_hint(self, rect: rl.Rectangle) -> None:
     pass
 
   def collapse(self) -> None:
@@ -144,12 +152,18 @@ class _NoStoppedTimer:
   replaces_current_speed = False
   is_visible = False
 
-  def render(self, rect=None) -> None:
+  def render(self, rect: rl.Rectangle | None = None) -> None:
     pass
 
 
 class EssentialsOnroadView(StarPilotOnroadView):
-  def __init__(self, *args, **kwargs):
+  """StarPilot's onroad view drawn as Essentials: our bar, chips, arc, tags and cards, with StarPilot's state and rules.
+
+  Upstream's widgets that Essentials replaces are hidden or stood in for; StarPilot's HUD still decides when its speed and
+  turn card show.
+  """
+
+  def __init__(self, *args: Any, **kwargs: Any) -> None:
     super().__init__(*args, **kwargs)
     from openpilot.selfdrive.ui.tandem.onroad.turn_signals import TurnSignalRenderer
     self._turn_signals = TurnSignalRenderer()
@@ -164,7 +178,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
         zones[zone].remove(widget)
       widget.set_visible(False)
     self._model_chip = extras.ModelChip(self._model_source_widget)
-    self.model_renderer._draw_radar_marker_texture = extras.draw_radar_marker   # white dots ringed in black
+    self.model_renderer._draw_radar_marker_texture = extras.draw_radar_marker  # type: ignore[method-assign]   # white dots ringed in black
 
     from openpilot.starpilot.tandem.state import HEADROOM
     self._headroom_state = HEADROOM
@@ -193,25 +207,25 @@ class EssentialsOnroadView(StarPilotOnroadView):
     # StarPilot's HUD keeps deciding when the speed and turn card show; they're drawn in the Essentials style.
     self._turn_card = EssentialsTurnCard(self._turn_top)
     self._hud_renderer._navigation_card = self._turn_card
-    self._hud_renderer._draw_current_speed = self._draw_current_speed
+    self._hud_renderer._draw_current_speed = self._draw_current_speed  # type: ignore[method-assign]
     self._hud_renderer.draw_gradients = False   # no dark fade from the top or bottom edge: our tiles carry their own fills
-    self._favorite_radial_menu = _NoFavorites()
+    self._favorite_radial_menu = _NoFavorites()  # type: ignore[assignment]   # stands in with the calls the view makes
     self._pip_sidecam.set_visible(False)   # the side-camera bubble: a Galaxy developer feature, and it would cover the bar
-    self._stopped_timer_widget = _NoStoppedTimer()
-    self.alert_renderer = EssentialsAlertRenderer()
+    self._stopped_timer_widget = _NoStoppedTimer()  # type: ignore[assignment]
+    self.alert_renderer: EssentialsAlertRenderer = EssentialsAlertRenderer()
     self.alert_renderer.headroom_warning = lambda: self._headroom_warning   # hides steerSaturated while Help steer shows
     self.alert_renderer.limit_card = lambda: self._offer() is not None      # hides Speed limit changed while the card asks
     self._layers_visible = False
     self._dev: DevData | None = None            # Developer View's readout, while StarPilot's Developer UI is on
-    self.model_renderer._draw_lead_metrics = self._lead_tag   # Lead Insights' text becomes the mock's tag
+    self.model_renderer._draw_lead_metrics = self._lead_tag  # type: ignore[method-assign]   # Lead Insights' text becomes the mock's tag
     # The primary lead uses the shared developer tag with an anchor and connector (design/gaptag.html).
-    self.model_renderer._draw_lead_indicator = self._draw_leads
-    self.model_renderer._draw_adjacent_leads = self._draw_adjacent_leads
+    self.model_renderer._draw_lead_indicator = self._draw_leads  # type: ignore[method-assign]
+    self.model_renderer._draw_adjacent_leads = self._draw_adjacent_leads  # type: ignore[method-assign]
     self._gap_tracker = GapTracker()
-    self._gap_state = None
+    self._gap_state: GapTagState | None = None
     self._lead_tag_on, self._lead_tag_read = True, -1.0   # prefs.LEAD_TAG, read once a second
     self._braking_for_lead = False   # the Slowing for traffic chip's rule, so the bar turns amber with it
-    self._nav_sm = None
+    self._nav_sm: SubMaster | None = None
 
   # Upstream pieces replaced here
 
@@ -245,7 +259,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
     from openpilot.selfdrive.ui.lib.starpilot_visuals import get_border_width
     return get_border_width(T.px(8), ui_state.ui_params)
 
-  def _render_speed_card(self):
+  def _render_speed_card(self) -> None:
     """The posted limit StarPilot's speed card would show, as the mock's sign; hidden while the new-limit card asks."""
     if self._full_alert_showing() or self.alert_renderer.level() == alerts.CRITICAL:
       self._unified_speed_widget.collapse_sources()
@@ -258,14 +272,17 @@ class EssentialsOnroadView(StarPilotOnroadView):
     """The turn card stays below whatever holds the top left corner: the new-limit card while it asks, else the sign."""
     if self._offer() is not None:
       box = self._limit.box(self._content_rect)
-      return box.y + box.height - self._content_rect.y + Z.px(12)
+      return float(box.y + box.height - self._content_rect.y + Z.px(12))
     return turn_below_sign() if self._posted_limit() is not None else turn_card_top()
 
   def _posted_limit(self) -> str | None:
     """The limit for the sign, or None when it's hidden: no limit known, or the new-limit card is asking."""
     widget = self._unified_speed_widget
     widget._refresh_snapshot()   # cached per frame
-    limit = widget._presentation.posted_speed_text
+    presentation = widget._presentation
+    if presentation is None:
+      return None
+    limit = presentation.posted_speed_text
     return None if limit in ("", "–") or self._offer() is not None else limit
 
   def _render_driver_monitor(self) -> None:
@@ -297,7 +314,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
     strip = self._strip_rect(c)
     return (strip.y if strip is not None else c.y + c.height - bar_margin() - bar_height()) - strip_gap()
 
-  def _lead_tag(self, adjacent, chevron, lead_data) -> None:
+  def _lead_tag(self, adjacent: bool, chevron: list[tuple[float, float]], lead_data: Any) -> None:
     """Lead Insights for the lead car: our tag above it. Adjacent cars keep only StarPilot's markers, as in the mock."""
     if adjacent or not self._lead_tag_on:
       return
@@ -306,7 +323,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
     if lead is not None:
       draw_lead_tag(chevron[1][0], min(p[1] for p in chevron), lead, floor=self._tag_floor())
 
-  def _draw_leads(self, radar_state) -> None:
+  def _draw_leads(self, radar_state: Any) -> None:
     """The primary lead's gap tag; secondary leads keep their faint ground bars and optional metrics."""
     mr = self.model_renderer
     leads = [radar_state.leadOne, radar_state.leadTwo]
@@ -340,14 +357,14 @@ class EssentialsOnroadView(StarPilotOnroadView):
       if mr._lead_info_enabled:
         mr._draw_lead_metrics(True, mr._adjacent_lead_vehicles[idx].chevron, lead_data)
 
-  def _render_developer_metrics(self):
+  def _render_developer_metrics(self) -> None:
     """Developer View's readout, gathered here; StarPilot's device line moves to our panel and the controls to our strip."""
     self._dev = read(ui_state) if developer_view_on(ui_state, self._params) else None   # drawn as our strip, see _render
 
-  def _render_road_name(self):
+  def _render_road_name(self) -> None:
     pass
 
-  def _render_bottom_row_widgets(self):
+  def _render_bottom_row_widgets(self) -> None:
     pass
 
   def _render_torque_bar(self) -> None:
@@ -399,12 +416,13 @@ class EssentialsOnroadView(StarPilotOnroadView):
       self._headroom_chimed = False   # one chime per warning
     self._headroom_warning = warning
 
-  def _get_border_color(self):
+  def _get_border_color(self) -> rl.Color:
     if self._headroom_warning:
       return LIMIT_BORDER_COLOR
     return alerts.border(self.alert_renderer.level()) or super()._get_border_color()
 
-  def hide_event(self):
+  def hide_event(self) -> None:
+    """Resets the view's per-drive state as it's hidden: the gap tag, the headroom stage and warning, and the lane color."""
     self._gap_tracker.reset()
     self._gap_state = None
     self._headroom.stage(0.0, time.monotonic(), active=False)
@@ -416,7 +434,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
 
   # Our layers
 
-  def _render(self, rect: rl.Rectangle):
+  def _render(self, rect: rl.Rectangle) -> None:
     self._layers_visible = False   # set again by _render_layers, from _draw_border, on frames that draw the view
     super()._render(rect)
     if ui_state.started and self._draw_hud_controls:
@@ -425,7 +443,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
       self._turn_signals.render(self._content_rect, ui_state, enabled=False)
     self._render_driver_monitor()
 
-  def _draw_border(self, rect: rl.Rectangle):
+  def _draw_border(self, rect: rl.Rectangle) -> None:
     # Our layers go under the border, as the camera does, so its rounded inner corners stay round at the bottom too.
     rl.begin_scissor_mode(int(self._content_rect.x), int(self._content_rect.y), int(self._content_rect.width),
                           int(self._content_rect.height))
@@ -443,7 +461,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
       extras.draw_border_halves(rect, border_rect, roundness, border_width, halves)
     starpilot_onroad_view.render_overlay(border_rect, border_width)
 
-  def _border_halves(self):
+  def _border_halves(self) -> tuple[rl.Color | None, rl.Color | None] | None:
     """The signal and blind-spot halves, under StarPilot's SignalMetrics and BlindSpotMetrics. Alerts and Help steer keep the
     whole border."""
     params = getattr(ui_state, "ui_params", None)
@@ -471,7 +489,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
       self._render_stopping_point()
     starpilot_border.render_behind(rect, self._get_border_width(), csc_color=T.ACCENT)
 
-  def _lane_sides(self):
+  def _lane_sides(self) -> list[tuple[Any, str | None]]:
     """(polygon, kind) for each adjacent lane, under StarPilot's AdjacentPath and BlindSpotPath."""
     mr, params, sm = self.model_renderer, self.model_renderer._params, ui_state.sm
     adjacent, blind_spot = params.get_bool("AdjacentPath"), params.get_bool("BlindSpotPath")
@@ -528,7 +546,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
     self._render_corner_extras(c)
     lift = 0.0
     strip = self._strip_rect(c)
-    if strip is not None:   # the picked metrics, just above the bar; the chip moves up over it
+    if strip is not None and self._dev is not None:   # the picked metrics, just above the bar; the chip moves up over it
       lift = strip_h() + strip_gap()
       draw_strip(strip, self._dev)
     self._chip_view.render(rl.Rectangle(c.x, c.y, c.width, c.height - lift))
@@ -546,7 +564,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
       y = extras.draw_pedals(tile, levels)
     self._model_chip.render(tile.x + tile.width, y)
 
-  def _handle_mouse_press(self, mouse_pos: MousePos):
+  def _handle_mouse_press(self, mouse_pos: MousePos) -> None:
     # Taps on our layers stay ours; anywhere else keeps upstream's behavior (toggling the sidebar).
     if self._layers_visible:
       hits = self._bar.hit_rects(self._content_rect)
@@ -622,7 +640,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
     max_lat = ui_state.CP.maxLateralAccel if ui_state.CP and ui_state.CP.maxLateralAccel else 3.0
     return float(yaw_rates[index]) * float(ui_state.sm["carState"].vEgo) / max_lat
 
-  def _apply_forecast(self, current) -> None:
+  def _apply_forecast(self, current: Snapshot) -> None:
     """Weather heads-up (forecast.py): its chip from 15 minutes before rain, snow or storms until they end, and one soft
     chime (the pre-alert, as the new-limit card uses) when an event is first seen within the hour."""
     self._forecast.tick()

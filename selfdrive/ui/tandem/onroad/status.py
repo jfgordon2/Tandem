@@ -6,10 +6,15 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
+from typing import TYPE_CHECKING
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_
+
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.ui_state import UIState
 
 
 class ChipTone(Enum):
+  """A status chip's color family, by what kind of news it is."""
   INFO = "info"         # blue: the car is changing speed or steering on its own
   PAUSED = "paused"     # amber: steering paused or a change blocked
   WAITING = "waiting"   # green: waiting on the driver
@@ -18,6 +23,7 @@ class ChipTone(Enum):
 
 @dataclass(frozen=True)
 class Chip:
+  """One status chip: its key (for ordering and deduping), label, tone and icon."""
   key: str
   label: str
   tone: ChipTone
@@ -26,6 +32,7 @@ class Chip:
 
 @dataclass
 class Snapshot:
+  """Everything the status chips are chosen from, read from upstream's state each frame."""
   engaged: bool = False
   standstill: bool = False
   waiting_for_resume: bool = False         # the car's cruise is held at a stop until the driver resumes
@@ -164,6 +171,17 @@ def chips_for(s: Snapshot) -> list[Chip]:
 
 
 def routing_chip(state: dict | None, now: float, offline_only: bool = False) -> Chip | None:
+  """The routing chip for navigationd's published state (routing-status.json).
+
+  Args:
+    state: The routing status, or None.
+    now: The wall-clock time.
+    offline_only: Navigation is set to offline maps only.
+
+  Returns:
+    Finding or recalculating a route, waiting for GPS, which maps a fallback switched to (for 3 seconds), or route
+    unavailable; None when there's nothing to say.
+  """
   if not isinstance(state, dict):
     return None
   code = state.get("status", "")
@@ -210,7 +228,7 @@ class ChipStack:
   HOLD = 2.0
   FADE = 0.3
 
-  def __init__(self):
+  def __init__(self) -> None:
     self._shown: dict[str, _Shown] = {}
 
   def update(self, s: Snapshot, now: float, alert_showing: bool) -> list[tuple[Chip, float]]:
@@ -233,7 +251,7 @@ class ChipPicker:
   """Holds a chip for HOLD seconds after its reason ends, so it doesn't flicker. Hidden while an alert shows."""
   HOLD = 2.0
 
-  def __init__(self):
+  def __init__(self) -> None:
     self._chip: Chip | None = None
     self._until = 0.0
 
@@ -273,11 +291,22 @@ class LimitWatch:
   TIMEOUT = 20.0     # s: a change the car never reaches (traffic, hills) stops being news
   CLOSE = 0.5        # m/s
 
-  def __init__(self):
+  def __init__(self) -> None:
     self._last = 0.0
     self._until = 0.0
 
   def update(self, limit: float, target: float, limiting: bool, pending: bool, overridden: float, speed: float, now: float) -> bool:
+    """Whether the Matching speed limit chip shows this frame.
+
+    Args:
+      limit: The limit StarPilot drives to.
+      target: The speed it's holding to.
+      limiting: The Speed Limit Controller is holding the speed under the set speed.
+      pending: StarPilot is still asking to change limits.
+      overridden: The driver's override of the limit, if any.
+      speed: The car's speed, m/s.
+      now: The time in seconds.
+    """
     if limit > 0:
       if self._last > 0 and abs(limit - self._last) >= self.CLOSE:
         self._until = now + self.TIMEOUT
@@ -295,18 +324,25 @@ class RamWatch:
   RAM hovers around 90%."""
   CLEAR = 85
 
-  def __init__(self):
-    self.on = False
+  def __init__(self) -> None:
+    self.on: bool = False
 
   def update(self, raised: bool, percent: int) -> bool:
     self.on = raised or (self.on and percent > self.CLEAR)
     return self.on
 
 
-def snapshot(ui_state, nav_active: bool = False, limits: LimitWatch | None = None, now: float = 0.0,
+def snapshot(ui_state: UIState, nav_active: bool = False, limits: LimitWatch | None = None, now: float = 0.0,
              ram: RamWatch | None = None) -> Snapshot:
-  """Fill a Snapshot from upstream's ui_state. Missing messages leave defaults. limits tracks speed limit changes, ram
-  holds Low on RAM."""
+  """Fills a Snapshot from upstream's ui_state. Missing messages leave the defaults.
+
+  Args:
+    ui_state: Upstream's UI state.
+    nav_active: A route is active.
+    limits: Tracks speed limit changes for the Matching chip.
+    now: The time in seconds.
+    ram: Holds the Low on RAM chip.
+  """
   sm = ui_state.sm
   valid = sm.valid
   s = Snapshot(engaged=bool(ui_state.engaged), metric=bool(ui_state.is_metric), always_on_lateral=bool(ui_state.always_on_lateral_active))
