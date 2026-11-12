@@ -27,7 +27,6 @@ from openpilot.common.params import Params
 from openpilot.selfdrive.ui.onroad.alert_renderer import AlertRenderer
 from openpilot.selfdrive.ui.onroad.augmented_road_view import CAMERA_VIEW_DRIVER
 from openpilot.selfdrive.ui.onroad.starpilot import starpilot_border, starpilot_onroad_view
-from openpilot.selfdrive.ui.onroad.starpilot.compass import get_compass_text
 from openpilot.selfdrive.ui.tandem.onroad.streets import short_street, short_streets_in
 from openpilot.selfdrive.ui.onroad.starpilot.starpilot_onroad_view import StarPilotOnroadView
 from openpilot.selfdrive.ui.ui_state import ui_state
@@ -35,6 +34,7 @@ from openpilot.system.ui.lib.application import MousePos
 from openpilot.selfdrive.ui.onroad.starpilot.navigation_card import NavigationCardRenderer
 from openpilot.selfdrive.ui.tandem import tokens as T
 from openpilot.selfdrive.ui.tandem.onroad import alerts, extras, size as Z
+from openpilot.selfdrive.ui.tandem.onroad.compass import DriveCompass
 from openpilot.selfdrive.ui.tandem.onroad.developer import DevData, strip_gap, strip_h, developer_view_on, draw_lead_tag, draw_strip, lead_of, read
 from openpilot.selfdrive.ui.tandem.onroad.layers import (AT_LIMIT, LIMIT_BORDER_COLOR, LIMIT_LANE_COLOR, ArcState, BarState,
                                                          Headroom, HeadroomArc, HelpSteer, ARC, DEV_ARC, LimitCard, LimitOffer, OnroadBar, StatusChip,
@@ -193,6 +193,8 @@ class EssentialsOnroadView(StarPilotOnroadView):
     self._chip_list: list = []   # (chip, opacity), nearest the bar first
     self._headroom = Headroom()
     self._arc_state = ArcState()
+    self._compass = DriveCompass()
+    ui_state.add_offroad_transition_callback(self._compass_transition)
     self._headroom_warning = False
     self._headroom_chimed = False
     self._limit_offer = LimitOfferState()
@@ -435,8 +437,13 @@ class EssentialsOnroadView(StarPilotOnroadView):
 
   # Our layers
 
+  def _compass_transition(self) -> None:
+    if not ui_state.started:
+      self._compass.offroad(time.monotonic())
+
   def _render(self, rect: rl.Rectangle) -> None:
     self._layers_visible = False   # set again by _render_layers, from _draw_border, on frames that draw the view
+    self._compass.update(ui_state, time.monotonic(), self._is_in_reverse())
     super()._render(rect)
     if ui_state.started and self._draw_hud_controls:
       self._render_turn_signals()
@@ -593,9 +600,10 @@ class EssentialsOnroadView(StarPilotOnroadView):
       street = short_street(str(ui_state.sm["mapdOut"].roadName or ""))
     navigating = self._navigating()
     arrive, left = self._route_progress(metric) if navigating else ("", "")
+    heading = self._compass.direction if ui_state.ui_params.get_bool("Compass") else ""
     return BarState(engaged=bool(ui_state.engaged), can_engage=bool(ui_state.started), set_speed=set_speed,
                     unit="km/h" if metric else "mph", street=street, navigating=navigating, arrive=arrive, left=left,
-                    heading=extras.heading(get_compass_text()), weather=None if navigating else self._weather_now(metric))
+                    heading=heading, weather=None if navigating else self._weather_now(metric))
 
   def _weather_now(self, metric: bool) -> tuple[str, str] | None:
     """The forecast's current hour for the bar, without a route (Weather heads-up's forecast, General › Temperature)."""
