@@ -329,13 +329,20 @@
       "mock": "onroadlarge-nav",
       "title": "Onroad › Larger text, navigating",
       "match": true,
-      "note": "Arrival and time left take turns with the street name (6 s, then the street until a long name has scrolled through, at least 4 s), crossfading; the render shows arrival's turn. The turn card's instruction scrolls when it doesn't fit. Page ground uses true black (#000000)."
+      "note": "When Arrive and Left fit side by side, they share a 6 s turn. The street name takes the next turn for at least 4 s, longer when it scrolls. The turn card's instruction scrolls when it doesn't fit. Page ground uses true black (#000000)."
     },
     {
       "mock": "onroadlarge-nav-street",
       "title": "Onroad › Larger text, navigating, the street's turn",
       "match": false,
       "note": "The street name uses the full space before End route. The render scene shows arrival's turn. Page ground uses true black (#000000)."
+    },
+    {
+      "mock": "onroadlarge-nav-tight",
+      "title": "Onroad › Larger text, separate navigation turns",
+      "note": "When Arrive and Left exceed the space between the compass and End route, each gets its own 6 s turn, followed by the street name. The sample street scrolls in the render because the built controls leave less text width than the mock.",
+      "match": false,
+      "built": ["onroadlarge-nav-arrive", "onroadlarge-nav-left", "onroadlarge-nav-tight-street"]
     },
     {
       "mock": "onroadlarge-alert",

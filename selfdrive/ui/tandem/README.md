@@ -245,6 +245,8 @@ These are reached from a row or button, never as a tab:
 
 ### Where the code differs from the mocks
 
+- **Larger navigation turns:** the built controls leave less text width than the mock, so the sample street in `onroadlarge-nav-tight` scrolls. Arrive and Left each fit on their own turn.
+
 - **Cellular status, approved November 6:** the nine `cellular-status-*` and `cellular-apn-*` mocks supersede the earlier Cellular page. The built screens keep the approved badge, wording, controls and mobile address, using shared Essentials colors and standard native row/header geometry. English and expanded pseudo-language captures are recorded by `scene_cellular.py`; the comparison page places all nine beside their approved mocks. New catalog strings have explicitly marked English fallbacks pending translation. The captures use sample modem data; they do not establish hardware connectivity.
 
 - **Map updates:** the approved `valhalla4-shared-*` states supersede older progress mocks that showed 100% during installation or left Ready as the current step. Download and install use separate measured percentages; installation stays below 100% until verified activation. Retained regions may show 100% downloaded while awaiting the shared installation. Native captures and comparison notes are recorded in the progress review.

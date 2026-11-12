@@ -1,6 +1,8 @@
+import time
+
 import pyray as rl
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
-from openpilot.selfdrive.ui.tandem.onroad.layers import (ArcState, BarState, HeadroomArc, HelpSteer, LimitCard, LimitOffer, OnroadBar,
+from openpilot.selfdrive.ui.tandem.onroad.layers import (ARRIVAL_S, CROSSFADE_S, ArcState, BarState, HeadroomArc, HelpSteer, LimitCard, LimitOffer, OnroadBar,
                                                          StatusChip, WORKING, AT_LIMIT, draw_speed, draw_speed_limit, draw_turn_card,
                                                          sign_tile, dm_tile, draw_driver_monitor, turn_below_sign, turn_card_top)
 from openpilot.selfdrive.ui.tandem.onroad.status import Snapshot, chip_for
@@ -21,9 +23,9 @@ def road(rect):
   draw.stroke(rect, T.SUCCESS, T.px(18), T.px(6))
 
 
-def scene(state, arc, chip, offer=None, help_=False, speed=62, limit="60", turn=None, signal=None, attentive=1.0):
+def scene(state, arc, chip, offer=None, help_=False, speed=62, limit="60", turn=None, signal=None, attentive=1.0, clock=time.monotonic):
   rect = rl.Rectangle(15, 15, W - 30, H - 30)
-  bar = OnroadBar(lambda: state, lambda: None, lambda d: None, lambda: None, lambda: None, lambda: None)
+  bar = OnroadBar(lambda: state, lambda: None, lambda d: None, lambda: None, lambda: None, lambda: None, clock=clock)
   def render():
     road(rect)
     HeadroomArc(lambda: arc, help_steer=lambda: help_).render(rect)
@@ -107,5 +109,18 @@ def main(frame, save, out, tap, gui_app):
       for _ in range(3):
         frame(render)
       save(f"{out}/{name}.png")
+
+    now = [0.0]
+    tight = scene(BarState(True, True, 48, "mph", "NW University Ave", True, "10:58 PM", "143 min · 102.4 mi", heading="NE"),
+                  ArcState(0, 0, False), None, speed=44, limit="45", turn=("0.4 mi", "Turn right onto 6th Ave", "turn", "right"),
+                  clock=lambda: now[0])
+    for index, phase in enumerate(("arrive", "left", "tight-street")):
+      if index:
+        now[0] += ARRIVAL_S
+        frame(tight)
+        now[0] += CROSSFADE_S + 0.01
+      for _ in range(3):
+        frame(tight)
+      save(f"{out}/onroadlarge-nav-{phase}.png")
   finally:
     Z.set_text(False)

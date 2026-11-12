@@ -10,6 +10,7 @@ import math
 import time
 from collections.abc import Callable
 from dataclasses import dataclass
+from enum import Enum, auto
 
 import pyray as rl
 
@@ -64,16 +65,36 @@ def _glyph_button(name: str, on_click: Callable[[], None], ink: rl.Color | None 
                 glyph=lambda r, c, s: draw.icon(r, name, ink or c, Z.px(glyph)))
 
 
-# The larger navigation bar takes turns: arrival and time left, then the street name (design/onroadlarge-nav.html).
-ARRIVAL_S = 6.0       # arrival's turn
+# The larger navigation bar takes turns (design/onroadlarge-nav.html and onroadlarge-nav-tight.html).
+ARRIVAL_S = 6.0       # each turn with trip estimates
 STREET_S = 4.0        # the street's turn, at least; longer while a long name finishes scrolling
 CROSSFADE_S = 0.3     # instant with Reduce Motion
+
+
+class _NavTurn(Enum):
+  BOTH = auto()
+  ARRIVE = auto()
+  LEFT = auto()
+  STREET = auto()
+
+
+@dataclass(frozen=True)
+class _TripEstimate:
+  label: str
+  text: str
+  width: float
+
+  @classmethod
+  def measure(cls, label: str, text: str) -> _TripEstimate:
+    caption = draw.text_width(label, Z.font_px(13), T.FONT_BOLD, tracking=T.CAPTION_TRACKING)
+    value = draw.text_width(text, Z.font_px(22), T.FONT_BOLD)
+    return cls(label, text, max(caption, value))
 
 
 class OnroadBar(Component):
   """Menu, MAX − / +, Where to? (without a route, design/onroadwhereto.html), the street name (with arrival, time left and
   End route while navigating), and engage. A street name that doesn't fit scrolls (onroad/scroll.py). At Larger text the
-  navigating bar can't fit arrival, time left, the street and End route, so arrival and the street take turns."""
+  street and trip estimates take turns. Arrival and time left get their own turns when they can't fit together."""
   grow_touch_target = False
 
   def __init__(self, state: Callable[[], BarState], on_menu: Callable[[], None], on_speed: Callable[[int], None],
@@ -100,7 +121,9 @@ class OnroadBar(Component):
     self._zoom = Z.zoom()
     self._street_scroll = Scroller(clock)
     self._turn_since: float | None = None   # when the larger navigating bar's current turn began
-    self._street_turn = False
+    self._nav_turns: tuple[_NavTurn, ...] = ()
+    self._turn_index = 0
+    self._fade_from: _NavTurn | None = None
 
   def _resize(self) -> None:
     """Follow Text Size: the buttons keep their size from when they were made."""
@@ -167,53 +190,72 @@ class OnroadBar(Component):
     self._engage.render(engage)
 
   def _navigating(self, center: rl.Rectangle, state: BarState, outer: rl.Rectangle) -> None:
-    """Arrival and time left at the left, then the street name in what's left, then End route. At Larger text there's no
-    room for both, so they take turns."""
+    """Lay out trip estimates and the street in the space left by the compass and End route."""
     body = inset(center, x=Z.px(22))
     w, _ = self._end.preferred_size(body.width)
     self._end.render(place(body, w, Z.px(52), Align.END))
     body = inset(body, right=w + Z.px(20))
     if state.heading:   # the compass tag stays first, before the arrival time
       body = inset(body, left=heading_tag(body, state.heading) + Z.px(20))
+    arrive = _TripEstimate.measure(N_("ARRIVE"), state.arrive or "–")
+    left = _TripEstimate.measure(N_("LEFT"), state.left or "–")
     if not Z.larger():
       self._turn_since = None
-      x = self._arrival(body, state, 1.0)
+      x = self._draw_estimates(body, (arrive, left), 1.0)
       if state.street and x + Z.px(80) < body.x + body.width:
         rl.draw_rectangle_rec(rl.Rectangle(x, body.y + body.height * 0.25, T.DIVIDER, body.height * 0.5), T.CONTROL)
         self._street(rl.Rectangle(x + Z.px(22), body.y, body.x + body.width - x - Z.px(22), body.height), state.street, Align.START, outer)
       return
-    arrival, street = self._turns(body, state)
-    if arrival > 0:
-      self._arrival(body, state, arrival)
-    if street > 0 and state.street:
-      self._street(body, state.street, Align.START, outer, street)
+    estimates_fit = arrive.width + Z.px(24) + left.width <= body.width
+    for turn, alpha in self._turns(body, state.street, estimates_fit):
+      if turn == _NavTurn.STREET:
+        self._street(body, state.street, Align.START, outer, alpha)
+      elif turn == _NavTurn.BOTH:
+        self._draw_estimates(body, (arrive, left), alpha)
+      else:
+        estimate = arrive if turn == _NavTurn.ARRIVE else left
+        self._draw_estimates(body, (estimate,), alpha)
 
-  def _turns(self, body: rl.Rectangle, state: BarState) -> tuple[float, float]:
-    """How visible arrival and the street are, as the larger bar takes turns between them."""
+  def _turns(self, body: rl.Rectangle, street: str, estimates_fit: bool) -> tuple[tuple[_NavTurn, float], ...]:
+    """The visible turns and their opacity, including the outgoing turn during a crossfade."""
+    turns: tuple[_NavTurn, ...] = (_NavTurn.BOTH,) if estimates_fit else (_NavTurn.ARRIVE, _NavTurn.LEFT)
+    if street:
+      turns += (_NavTurn.STREET,)
     now = self._clock()
-    if not state.street:
-      self._turn_since, self._street_turn = None, False
-      return 1.0, 0.0
-    if self._turn_since is None:   # arrival shows at once; only the changes between turns fade
-      self._turn_since, self._street_turn = now - CROSSFADE_S, False
-    street_s = max(STREET_S, self._street_scroll.pass_seconds(state.street, body.width, street_size(), T.FONT_BOLD))
-    length = street_s if self._street_turn else ARRIVAL_S
+    if self._turn_since is None or self._nav_turns != turns:
+      self._nav_turns, self._turn_index = turns, 0
+      self._turn_since, self._fade_from = now, None
+    current = turns[self._turn_index]
+    if len(turns) == 1:
+      return ((current, 1.0),)
+
+    length = ARRIVAL_S
+    if current == _NavTurn.STREET:
+      length = max(STREET_S, self._street_scroll.pass_seconds(street, body.width, street_size(), T.FONT_BOLD))
     if now - self._turn_since >= length:
-      self._turn_since, self._street_turn = now, not self._street_turn
-    fade = 0.0 if Z.reduce_motion() else CROSSFADE_S
-    shown = min(1.0, (now - self._turn_since) / fade) if fade else 1.0
-    return (1.0 - shown, shown) if self._street_turn else (shown, 1.0 - shown)
+      self._turn_since, self._fade_from = now, current
+      self._turn_index = (self._turn_index + 1) % len(turns)
+      current = turns[self._turn_index]
+    elapsed = now - self._turn_since
+    if self._fade_from is not None and not Z.reduce_motion() and elapsed < CROSSFADE_S:
+      if elapsed == 0:
+        return ((self._fade_from, 1.0),)
+      shown = elapsed / CROSSFADE_S
+      return ((self._fade_from, 1.0 - shown), (current, shown))
+    return ((current, 1.0),)
 
   @staticmethod
-  def _arrival(body: rl.Rectangle, state: BarState, alpha: float) -> float:
-    """Arrival and time left, from the start of body. Returns where they end."""
+  def _draw_estimates(body: rl.Rectangle, estimates: tuple[_TripEstimate, ...], alpha: float) -> float:
+    """Draw trip estimates within body and return the start of the space after them."""
     x = body.x
     caption, value = Z.font_px(13), Z.font_px(22)
-    for label, text in ((N_("ARRIVE"), state.arrive or "–"), (N_("LEFT"), state.left or "–")):
-      cell_w = max(draw.text_width(label, caption, T.FONT_BOLD, tracking=T.CAPTION_TRACKING), draw.text_width(text, value, T.FONT_BOLD))
+    for estimate in estimates:
+      cell_w = min(estimate.width, body.x + body.width - x)
+      if cell_w <= 0:
+        break
       top, bottom = column(place(rl.Rectangle(x, body.y, cell_w, body.height), cell_w, Z.px(56)), [Z.px(18), FILL], Z.px(3))
-      draw.caption(top, label, draw.alpha(T.TEXT_MUTED, alpha), size=caption)
-      draw.text(bottom, text, value, draw.alpha(T.TEXT, alpha), T.FONT_BOLD)
+      draw.caption(top, estimate.label, draw.alpha(T.TEXT_MUTED, alpha), size=caption)
+      draw.text(bottom, estimate.text, value, draw.alpha(T.TEXT, alpha), T.FONT_BOLD)
       x += cell_w + Z.px(24)
     return x
 

@@ -77,18 +77,21 @@ def test_the_larger_navigating_bar_takes_turns_between_arrival_and_the_street():
   now = [0.0]
   bar, state = _bar(now)
   body = rl.Rectangle(0, 0, T.px(470), T.px(92))
-  assert bar._turns(body, state) == (1.0, 0.0)              # arrival first
-  now[0] = L.ARRIVAL_S + 0.01
-  arrival, street = bar._turns(body, state)
-  assert street < 0.1 and arrival > 0.9                     # the street's turn begins, fading in
-  now[0] += L.CROSSFADE_S
-  assert bar._turns(body, state) == pytest.approx((0.0, 1.0))
+  both, street = L._NavTurn.BOTH, L._NavTurn.STREET
+  assert bar._turns(body, state.street, estimates_fit=True) == ((both, 1.0),)
+  now[0] = L.ARRIVAL_S
+  assert bar._turns(body, state.street, estimates_fit=True) == ((both, 1.0),)
+  now[0] += 0.01
+  blend = dict(bar._turns(body, state.street, estimates_fit=True))
+  assert blend[street] < 0.1 and blend[both] > 0.9            # the street's turn begins, fading in
+  now[0] += L.CROSSFADE_S + 0.01
+  assert bar._turns(body, state.street, estimates_fit=True) == ((street, 1.0),)
   now[0] += L.STREET_S                                      # a long name keeps its turn until it has scrolled through
-  assert bar._turns(body, state)[1] == 1.0
+  assert bar._turns(body, state.street, estimates_fit=True) == ((street, 1.0),)
   now[0] += 60
-  bar._turns(body, state)                                   # then back to arrival, fading in
-  now[0] += L.CROSSFADE_S
-  assert bar._turns(body, state) == pytest.approx((1.0, 0.0))
+  bar._turns(body, state.street, estimates_fit=True)          # then back to arrival, fading in
+  now[0] += L.CROSSFADE_S + 0.01
+  assert bar._turns(body, state.street, estimates_fit=True) == ((both, 1.0),)
 
 
 def test_reduce_motion_switches_turns_without_fading():
@@ -98,9 +101,9 @@ def test_reduce_motion_switches_turns_without_fading():
   now = [0.0]
   bar, state = _bar(now, street="Elm St")
   body = rl.Rectangle(0, 0, T.px(470), T.px(92))
-  bar._turns(body, state)
+  bar._turns(body, state.street, estimates_fit=True)
   now[0] = L.ARRIVAL_S + 0.01
-  assert bar._turns(body, state) == (0.0, 1.0)
+  assert bar._turns(body, state.street, estimates_fit=True) == ((L._NavTurn.STREET, 1.0),)
 
 
 def test_larger_street_turn_uses_all_the_available_width() -> None:
@@ -111,14 +114,66 @@ def test_larger_street_turn_uses_all_the_available_width() -> None:
   bar, state = _bar(now)
   width = len(state.street) * L.street_size() / 2
   body = rl.Rectangle(0, 0, width, Z.px(74))
-  bar._turns(body, state)
+  bar._turns(body, state.street, estimates_fit=True)
   now[0] = L.ARRIVAL_S
-  bar._turns(body, state)
+  bar._turns(body, state.street, estimates_fit=True)
   now[0] += L.STREET_S + 0.01
-  arrival, street = bar._turns(body, state)
-  assert (arrival, street) == (0.0, 1.0)  # fade from the street back to arrival has started
-  now[0] += L.CROSSFADE_S
-  assert bar._turns(body, state) == pytest.approx((1.0, 0.0))
+  assert bar._turns(body, state.street, estimates_fit=True) == ((L._NavTurn.STREET, 1.0),)
+  now[0] += L.CROSSFADE_S + 0.01
+  assert bar._turns(body, state.street, estimates_fit=True) == ((L._NavTurn.BOTH, 1.0),)
+
+
+def test_larger_trip_fields_get_separate_turns_before_the_button(monkeypatch: pytest.MonkeyPatch) -> None:
+  import pyray as rl
+  from openpilot.selfdrive.ui.tandem.onroad import layers as L
+  Z.set_text(True, True)
+  now = [0.0]
+  bar, state = _bar(now, street="Elm St")
+  state.arrive, state.left, state.heading = "10:58 PM", "143 min · 102.4 mi", "NE"
+  # Give either value room, with a compass and End route, while making the pair too wide.
+  button_width, compass_width = 230, 115
+  fixed = Z.px(22) * 2 + Z.px(20) * 2 + button_width + compass_width
+  center = rl.Rectangle(0, 0, fixed + 500, Z.px(74))
+  button_x: list[float] = []
+  values: list[str] = []
+  monkeypatch.setattr(bar._end, "preferred_size", lambda _width: (button_width, 0))
+  monkeypatch.setattr(bar._end, "render", lambda box: button_x.append(box.x))
+  monkeypatch.setattr(L, "heading_tag", lambda *_args: compass_width)
+  monkeypatch.setattr(L.draw, "caption", lambda *_args, **_kwargs: None)
+
+  def record_value(box: rl.Rectangle, value: str, size: int, *_args: object, **_kwargs: object) -> None:
+    assert L.draw.text_width(value, size) <= box.width
+    assert box.x + box.width <= button_x[-1] - Z.px(20)
+    values.append(value)
+
+  monkeypatch.setattr(L.draw, "text", record_value)
+  monkeypatch.setattr(bar._street_scroll, "draw", record_value)
+  for seconds, expected in ((0.0, state.arrive), (L.ARRIVAL_S, state.left), (2 * L.ARRIVAL_S, state.street),
+                            (2 * L.ARRIVAL_S + L.STREET_S, state.arrive)):
+    now[0] = seconds
+    values.clear()
+    bar._navigating(center, state, center)
+    assert values == [expected]
+
+  values.clear()
+  wider = rl.Rectangle(center.x, center.y, fixed + 900, center.height)
+  bar._navigating(wider, state, wider)
+  assert values == [state.arrive, state.left]
+
+
+def test_larger_trip_without_a_street_skips_the_street_turn() -> None:
+  import pyray as rl
+  from openpilot.selfdrive.ui.tandem.onroad import layers as L
+  Z.set_text(True, True)
+  now = [0.0]
+  bar, _ = _bar(now)
+  body = rl.Rectangle(0, 0, 500, Z.px(74))
+  assert bar._turns(body, "", estimates_fit=False) == ((L._NavTurn.ARRIVE, 1.0),)
+  now[0] += L.ARRIVAL_S
+  assert bar._turns(body, "", estimates_fit=False) == ((L._NavTurn.LEFT, 1.0),)
+  now[0] += L.ARRIVAL_S
+  assert bar._turns(body, "", estimates_fit=False) == ((L._NavTurn.ARRIVE, 1.0),)
+  assert bar._turns(body, "", estimates_fit=True) == ((L._NavTurn.BOTH, 1.0),)
 
 
 def test_sizes_grow_and_the_offer_card_ends_before_the_speed():
