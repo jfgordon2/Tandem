@@ -867,6 +867,46 @@ def test_save_data_marks_cellular_and_current_wifi_metered():
   assert cache.values["GsmMetered"] and ("gsm", False, "fast.apn", True) in wifi.calls and ("metered", 1) in wifi.calls
 
 
+def test_radio_switches_stop_wifi_scanning_and_keep_cellular_independent() -> None:
+  from openpilot.starpilot.tandem.radios import Radio
+  net, wifi, _, _ = _network()
+  wifi_switch = net.radio_switch(Radio.WIFI)
+  cell_switch = net.radio_switch(Radio.CELLULAR)
+  assert wifi_switch is not None and cell_switch is not None
+  net.set_wifi_page(True)
+  assert wifi.calls[-1] == ("active", True)
+
+  wifi_switch._on_change(False)
+  net.tick()
+  assert wifi.calls[-1] == ("active", False)
+  assert not net.networks() and net.summary() == "Off"
+  assert cell_switch.value
+  net.set_hotspot(True)
+  assert not wifi.tethering
+
+  wifi_switch._on_change(True)
+  net.tick()
+  cell_switch._on_change(False)
+  assert wifi_switch.value and wifi.calls[-1] == ("active", True)
+  assert net.cellular_label() == "Off" and net.cellular_address() == "Not connected"
+  assert net.cellular_meta() == "Mobile broadband is off"
+  net.set_hotspot(True)
+  assert wifi.tethering
+
+
+def test_bluetooth_header_switches_share_one_setting() -> None:
+  from openpilot.selfdrive.ui.tandem.settings.bluetooth_tab import bluetooth_switch
+  from openpilot.selfdrive.ui.tandem.tests.fakes import FakeBluetooth
+  adapter = FakeBluetooth()
+  remote, audio = bluetooth_switch(adapter).right, bluetooth_switch(adapter).right
+  assert remote.value and audio.value
+  remote._on_change(False)
+  assert not remote.value and not audio.value
+  audio._on_change(True)
+  assert remote.value and audio.value
+  assert adapter.calls == [("power", False), ("power", True)]
+
+
 def test_wheel_buttons_highlight_and_assign():
   from openpilot.selfdrive.ui.tandem.settings.bluetooth_tab import AssignSheet, WheelButtons
   from openpilot.selfdrive.ui.tandem.tests.fakes import FakeWheel

@@ -5,21 +5,21 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=(0);\n"
 "X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\n"
 
-#: controls.py:196
+#: controls.py:197
 msgid "On"
 msgstr "オン"
 
-#: controls.py:196
-#: controls.py:199
+#: controls.py:197
+#: controls.py:200
 #: settings/device_sections.py:60
 msgid "Off"
 msgstr "オフ"
 
-#: controls.py:302
+#: controls.py:303
 msgid "RECOMMENDED"
 msgstr "おすすめ"
 
-#: controls.py:575
+#: controls.py:606
 #: settings/display.py:203
 #: settings/display.py:355
 msgid "Default"
@@ -188,7 +188,7 @@ msgid "Search for your work address"
 msgstr "職場の住所を検索"
 
 #: destinations.py:567
-#: onroad/layers.py:97
+#: onroad/layers.py:118
 msgid "End route"
 msgstr "ルート終了"
 
@@ -718,7 +718,7 @@ msgstr "カーブ速度"
 
 #. Unit notation; keep as written.
 #: onroad/developer.py:286
-#: onroad/extras.py:236
+#: onroad/extras.py:231
 #: onroad/lead.py:116
 #, python-brace-format
 msgid "{} m"
@@ -726,7 +726,7 @@ msgstr "{} m"
 
 #. Unit notation; keep as written.
 #: onroad/developer.py:286
-#: onroad/extras.py:236
+#: onroad/extras.py:231
 #: onroad/lead.py:116
 #, python-brace-format
 msgid "{} ft"
@@ -858,56 +858,56 @@ msgstr "大きいモデルが失敗しました"
 msgid "Small model in use"
 msgstr "小さいモデルを使用中"
 
-#: onroad/layers.py:451
+#: onroad/layers.py:492
 msgid "Help steer"
 msgstr "ハンドル操作を手伝って"
 
-#: onroad/layers.py:451
+#: onroad/layers.py:492
 msgid "Steering is at its limit for this curve"
 msgstr "このカーブではステアリングが限界です"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: onroad/layers.py:146
+#: onroad/layers.py:169
 msgid "MAX"
 msgstr "MAX"
 
-#: onroad/layers.py:536
+#: onroad/layers.py:200
+msgid "ARRIVE"
+msgstr "到着"
+
+#: onroad/layers.py:201
+msgid "LEFT"
+msgstr "残り"
+
+#: onroad/layers.py:577
 #, python-brace-format
 msgid "New limit {}"
 msgstr "新しい制限 {}"
 
-#: onroad/layers.py:537
+#: onroad/layers.py:578
 msgid "Slow down"
 msgstr "減速"
 
-#: onroad/layers.py:537
+#: onroad/layers.py:578
 msgid "Speed up"
 msgstr "加速"
 
-#: onroad/layers.py:538
+#: onroad/layers.py:579
 #, python-brace-format
 msgid "{} to {} {}?"
 msgstr "{1} {2}に{0}？"
 
-#: onroad/layers.py:539
+#: onroad/layers.py:580
 #, python-brace-format
 msgid "From {} · ignored in {} s"
 msgstr "{0}から · {1}秒後に無視"
 
-#: onroad/layers.py:213
-msgid "ARRIVE"
-msgstr "到着"
-
-#: onroad/layers.py:213
-msgid "LEFT"
-msgstr "残り"
-
-#: onroad/layers.py:509
+#: onroad/layers.py:550
 #: settings/speed_steering.py:20
 msgid "Match"
 msgstr "合わせる"
 
-#: onroad/layers.py:511
+#: onroad/layers.py:552
 msgid "Ignore"
 msgstr "無視"
 
@@ -1218,18 +1218,18 @@ msgid "Byp"
 msgstr "Byp"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:628
+#: onroad/view.py:637
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:628
+#: onroad/view.py:637
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/view.py:629
+#: onroad/view.py:638
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{}分 · {}"
@@ -1664,55 +1664,55 @@ msgstr "音量"
 msgid "Minimum {}% for safety alerts"
 msgstr "安全警告は最低 {}%"
 
-#: settings/bluetooth_tab.py:489
+#: settings/bluetooth_tab.py:529
 msgid "Engage"
 msgstr "作動"
 
-#: settings/bluetooth_tab.py:489
+#: settings/bluetooth_tab.py:529
 msgid "Disengage"
 msgstr "解除"
 
-#: settings/bluetooth_tab.py:489
+#: settings/bluetooth_tab.py:529
 #: settings/vehicle.py:34
 msgid "Change driving style"
 msgstr "運転スタイルを変更"
 
-#: settings/bluetooth_tab.py:490
+#: settings/bluetooth_tab.py:530
 msgid "Screen off / on"
 msgstr "画面オフ／オン"
 
-#: settings/bluetooth_tab.py:490
+#: settings/bluetooth_tab.py:530
 #: settings/vehicle.py:35
 #: sidebar.py:74
 msgid "Save a clip"
 msgstr "クリップを保存"
 
-#: settings/bluetooth_tab.py:490
+#: settings/bluetooth_tab.py:530
 #: settings/vehicle.py:35
 msgid "Always-on steering"
 msgstr "常時ステアリング"
 
-#: settings/bluetooth_tab.py:490
+#: settings/bluetooth_tab.py:530
 #: settings/vehicle.py:34
 msgid "Coast"
 msgstr "惰性走行"
 
-#: settings/bluetooth_tab.py:288
+#: settings/bluetooth_tab.py:309
 msgid "Press any button to find it"
 msgstr "どれかのボタンを押して見つけます"
 
-#: settings/bluetooth_tab.py:322
+#: settings/bluetooth_tab.py:345
 #, python-brace-format
 msgid "Button {}"
 msgstr "ボタン {}"
 
-#: settings/bluetooth_tab.py:431
-#: settings/bluetooth_tab.py:435
-#: settings/bluetooth_tab.py:431
+#: settings/bluetooth_tab.py:468
+#: settings/bluetooth_tab.py:472
+#: settings/bluetooth_tab.py:468
 msgid "Forget"
 msgstr "削除"
 
-#: settings/bluetooth_tab.py:687
+#: settings/bluetooth_tab.py:727
 #, python-brace-format
 msgid "A sound plays in {}…"
 msgstr "{}後に音が鳴ります…"
@@ -1766,61 +1766,74 @@ msgstr "ステップ 2 · 動作を選ぶ"
 msgid "Pulse and glide and driver selfie are in Tuner Mode."
 msgstr "パルス＆グライドとドライバー自撮りはチューナーモードにあります。"
 
-#: settings/bluetooth_tab.py:299
-#: settings/connections.py:72
+#: settings/bluetooth_tab.py:320
+#: settings/connections.py:87
 #: settings/search.py:32
 msgid "Bluetooth Remote"
 msgstr "Bluetooth リモコン"
 
-#: settings/bluetooth_tab.py:355
+#: settings/bluetooth_tab.py:321
+#: settings/bluetooth_tab.py:499
+msgid "Bluetooth is off"
+msgstr "Bluetooth はオフです"
+
+#: settings/bluetooth_tab.py:379
 msgid "That button isn't assigned yet. Tap to add it."
 msgstr "このボタンはまだ割り当てられていません。タップして追加します。"
 
-#: settings/bluetooth_tab.py:355
+#: settings/bluetooth_tab.py:379
 msgid "Add a button"
 msgstr "ボタンを追加"
 
-#: settings/bluetooth_tab.py:390
+#: settings/bluetooth_tab.py:409
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
+#: settings/bluetooth_tab.py:427
 msgid "Bluetooth device"
 msgstr "Bluetooth デバイス"
 
-#: settings/bluetooth_tab.py:427
+#: settings/bluetooth_tab.py:464
 msgid "Test"
 msgstr "テスト"
 
-#: settings/bluetooth_tab.py:434
-#: settings/bluetooth_tab.py:434
+#: settings/bluetooth_tab.py:471
+#: settings/bluetooth_tab.py:471
 msgid "Disconnect"
 msgstr "切断"
 
-#: settings/bluetooth_tab.py:434
+#: settings/bluetooth_tab.py:471
 msgid "It reconnects the next time you choose it"
 msgstr "次に選んだときに再接続します"
 
-#: settings/bluetooth_tab.py:435
+#: settings/bluetooth_tab.py:472
 msgid "Removes the pairing. Change it with the car off."
 msgstr "ペアリングを削除します。車の電源を切って変更してください。"
 
-#: settings/bluetooth_tab.py:436
-#: settings/bluetooth_tab.py:448
-#: settings/network_tab.py:220
+#: settings/bluetooth_tab.py:473
+#: settings/bluetooth_tab.py:485
+#: settings/network_tab.py:283
 msgid "Connected"
 msgstr "接続済み"
 
-#: settings/bluetooth_tab.py:679
+#: settings/bluetooth_tab.py:497
+msgid "CAR AUDIO"
+msgstr "車のオーディオ"
+
+#: settings/bluetooth_tab.py:719
 #, python-brace-format
 msgid "The test didn't play: {}"
 msgstr "テスト音が鳴りませんでした：{}"
 
-#: settings/bluetooth_tab.py:682
+#: settings/bluetooth_tab.py:722
 msgid "Playing now. You should hear it through the car."
 msgstr "再生中です。車から聞こえるはずです。"
 
-#: settings/bluetooth_tab.py:684
+#: settings/bluetooth_tab.py:724
 msgid "Done. If you didn't hear it, check the car's volume and audio source."
 msgstr "完了しました。聞こえなかった場合は車の音量と音源を確認してください。"
 
-#: settings/bluetooth_tab.py:686
+#: settings/bluetooth_tab.py:726
 msgid "Getting ready…"
 msgstr "準備中…"
 
@@ -1849,67 +1862,67 @@ msgstr "待ち受け中{}。"
 msgid "Assign a button"
 msgstr "ボタンを割り当て"
 
-#: settings/bluetooth_tab.py:266
+#: settings/bluetooth_tab.py:270
 msgid "Buttons don't run their actions while this screen is open."
 msgstr "この画面を開いている間、ボタンの動作は実行されません。"
 
-#: settings/bluetooth_tab.py:330
+#: settings/bluetooth_tab.py:354
 msgid "PRESSED"
 msgstr "押されました"
 
-#: settings/bluetooth_tab.py:380
+#: settings/bluetooth_tab.py:417
 msgid "Sound test"
 msgstr "サウンドテスト"
 
-#: settings/bluetooth_tab.py:394
+#: settings/bluetooth_tab.py:431
 #, python-brace-format
 msgid "Pairing with {}"
 msgstr "{}とペアリング中"
 
-#: settings/bluetooth_tab.py:400
+#: settings/bluetooth_tab.py:437
 #, python-brace-format
 msgid "Enter the {} for {}"
 msgstr "{1}の{0}を入力"
 
-#: settings/bluetooth_tab.py:400
+#: settings/bluetooth_tab.py:437
 msgid "It's shown on the device, or in its manual"
 msgstr "デバイス本体か説明書に記載されています"
 
-#: settings/bluetooth_tab.py:408
+#: settings/bluetooth_tab.py:445
 #, python-brace-format
 msgid "Check that the device shows {}."
 msgstr "デバイスに {} と表示されているか確認してください。"
 
-#: settings/bluetooth_tab.py:408
+#: settings/bluetooth_tab.py:445
 msgid "The device is asking to pair."
 msgstr "デバイスがペアリングを求めています。"
 
-#: settings/bluetooth_tab.py:429
+#: settings/bluetooth_tab.py:466
 msgid "Alerts and Chimes"
 msgstr "アラートとチャイム"
 
-#: settings/bluetooth_tab.py:429
+#: settings/bluetooth_tab.py:466
 msgid "Play openpilot's sounds through this device. Change it with the car off."
 msgstr "openpilot の音をこのデバイスで鳴らします。車の電源を切って変更してください。"
 
-#: settings/bluetooth_tab.py:430
+#: settings/bluetooth_tab.py:467
 msgid "Sound Test"
 msgstr "サウンドテスト"
 
-#: settings/bluetooth_tab.py:430
+#: settings/bluetooth_tab.py:467
 msgid "Plays a sound through the car after a short countdown"
 msgstr "短いカウントダウンの後、車から音を鳴らします"
 
-#: settings/bluetooth_tab.py:431
+#: settings/bluetooth_tab.py:468
 #, python-brace-format
 msgid "Forget {}?"
 msgstr "{}を削除しますか？"
 
-#: settings/bluetooth_tab.py:431
+#: settings/bluetooth_tab.py:468
 msgid "You'll need to pair it again to use it."
 msgstr "使うにはもう一度ペアリングが必要です。"
 
-#: settings/bluetooth_tab.py:449
+#: settings/bluetooth_tab.py:486
 msgid "Test sound"
 msgstr "テスト音"
 
@@ -1917,46 +1930,46 @@ msgstr "テスト音"
 msgid "All action slots are in use. Remove another button first."
 msgstr "動作の枠がすべて使用中です。先に別のボタンを削除してください。"
 
-#: settings/bluetooth_tab.py:394
+#: settings/bluetooth_tab.py:431
 msgid "Follow the steps on the device."
 msgstr "デバイスの手順に従ってください。"
 
-#: settings/bluetooth_tab.py:399
-#: settings/bluetooth_tab.py:409
-#: settings/bluetooth_tab.py:453
+#: settings/bluetooth_tab.py:436
+#: settings/bluetooth_tab.py:446
+#: settings/bluetooth_tab.py:490
 msgid "Pair"
 msgstr "ペアリング"
 
-#: settings/bluetooth_tab.py:409
+#: settings/bluetooth_tab.py:446
 #, python-brace-format
 msgid "Pair with {}?"
 msgstr "{}とペアリングしますか？"
 
-#: settings/bluetooth_tab.py:448
+#: settings/bluetooth_tab.py:485
 msgid "Plays alerts and chimes"
 msgstr "アラートとチャイムを鳴らします"
 
-#: settings/bluetooth_tab.py:453
-#: settings/network_tab.py:91
-#: settings/network_tab.py:100
+#: settings/bluetooth_tab.py:490
+#: settings/network_tab.py:140
+#: settings/network_tab.py:151
 msgid "Connect"
 msgstr "接続"
 
-#: settings/bluetooth_tab.py:455
-#: settings/bluetooth_tab.py:448
+#: settings/bluetooth_tab.py:492
+#: settings/bluetooth_tab.py:485
 #: settings/device.py:250
 msgid "Paired"
 msgstr "ペアリング済み"
 
-#: settings/bluetooth_tab.py:462
+#: settings/bluetooth_tab.py:502
 msgid "Scanning…"
 msgstr "検索中…"
 
-#: settings/bluetooth_tab.py:463
+#: settings/bluetooth_tab.py:503
 msgid "No car audio paired."
 msgstr "車のオーディオがペアリングされていません。"
 
-#: settings/bluetooth_tab.py:464
+#: settings/bluetooth_tab.py:504
 msgid "No devices found yet."
 msgstr "デバイスはまだ見つかっていません。"
 
@@ -1969,7 +1982,7 @@ msgstr " · 残り {} 秒"
 msgid "Button"
 msgstr "ボタン"
 
-#: settings/bluetooth_tab.py:469
+#: settings/bluetooth_tab.py:509
 msgid "Pairing waits until you're parked."
 msgstr "ペアリングは駐車中に行います。"
 
@@ -1979,11 +1992,7 @@ msgstr "ペアリングは駐車中に行います。"
 msgid "Save"
 msgstr "保存"
 
-#: settings/bluetooth_tab.py:466
-msgid "CAR AUDIO"
-msgstr "車のオーディオ"
-
-#: settings/bluetooth_tab.py:467
+#: settings/bluetooth_tab.py:507
 msgid "NEARBY"
 msgstr "近く"
 
@@ -2042,12 +2051,12 @@ msgid "Recording"
 msgstr "記録中"
 
 #: settings/can_recorder.py:20
-#: settings/network_tab.py:305
+#: settings/network_tab.py:381
 msgid "Saving…"
 msgstr "保存中…"
 
 #: settings/can_recorder.py:20
-#: settings/network_tab.py:70
+#: settings/network_tab.py:119
 msgid "Saved"
 msgstr "保存済み"
 
@@ -2232,23 +2241,23 @@ msgid "{} button"
 msgid_plural "{} buttons"
 msgstr[0] "ボタン {} 個"
 
-#: settings/connections.py:68
+#: settings/connections.py:83
 msgid "CONNECTIONS"
 msgstr "接続"
 
-#: settings/connections.py:69
+#: settings/connections.py:84
 #: settings/map_source.py:207
-#: settings/network_tab.py:296
+#: settings/network_tab.py:371
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
-#: settings/connections.py:71
-#: settings/network_tab.py:315
+#: settings/connections.py:86
+#: settings/network_tab.py:391
 #: settings/search.py:32
 msgid "Cellular"
 msgstr "モバイル通信"
 
-#: settings/connections.py:74
+#: settings/connections.py:89
 #: settings/search.py:32
 #: settings/search.py:220
 msgid "Car Audio & Devices"
@@ -2525,7 +2534,7 @@ msgstr "設定"
 
 #: settings/device.py:370
 #: settings/model.py:140
-#: settings/network_tab.py:216
+#: settings/network_tab.py:279
 msgid "Not available"
 msgstr "利用できません"
 
@@ -3138,7 +3147,7 @@ msgid "The street name is always shown in the onroad bar. Speed limit sources an
 msgstr "通りの名前は常に運転バーに表示されます。制限速度の情報源と順番はチューナーモードにあります。"
 
 #: settings/display.py:377
-#: settings/network_tab.py:101
+#: settings/network_tab.py:152
 #: setup.py:119
 msgid "Next"
 msgstr "次へ"
@@ -4099,272 +4108,291 @@ msgstr "新しいモデルは次のドライブから使われます。"
 msgid "No models here yet."
 msgstr "ここにはまだモデルがありません。"
 
-#: settings/network_tab.py:220
-#: settings/network_tab.py:69
+#: settings/network_tab.py:283
+#: settings/network_tab.py:118
 msgid "Connecting…"
 msgstr "接続中…"
 
-#: settings/network_tab.py:220
-#: settings/network_tab.py:217
-#: settings/network_tab.py:173
+#: settings/network_tab.py:283
+#: settings/network_tab.py:280
+#: settings/network_tab.py:227
 msgid "Not connected"
 msgstr "未接続"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:221
+#: settings/network_tab.py:284
 msgid "No SIM"
 msgstr "No SIM"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:221
+#: settings/network_tab.py:284
 msgid "No signal"
 msgstr "No signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:221
+#: settings/network_tab.py:284
 msgid "Wi-Fi in use"
 msgstr "Wi-Fi in use"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:221
-#: settings/network_tab.py:214
+#: settings/network_tab.py:284
+#: settings/network_tab.py:277
+#: settings/network_tab.py:368
 msgid "Checking…"
 msgstr "Checking…"
 
+#: settings/network_tab.py:285
+#: settings/network_tab.py:296
+msgid "Couldn’t change cellular"
+msgstr "モバイル通信を切り替えられませんでした"
+
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:224
+#: settings/network_tab.py:288
 msgid "Cellular data is connected."
 msgstr "Cellular data is connected."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:225
+#: settings/network_tab.py:289
 msgid "APN saved. Waiting for a cellular data connection."
 msgstr "APN saved. Waiting for a cellular data connection."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:226
+#: settings/network_tab.py:290
 msgid "Cellular data is not connected. Check your APN, signal and carrier account."
 msgstr "Cellular data is not connected. Check your APN, signal and carrier account."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:227
+#: settings/network_tab.py:291
 msgid "No SIM detected. Insert a SIM to use cellular data."
 msgstr "No SIM detected. Insert a SIM to use cellular data."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:228
+#: settings/network_tab.py:292
 msgid "SIM detected. No cellular service. Your APN is saved."
 msgstr "SIM detected. No cellular service. Your APN is saved."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:229
+#: settings/network_tab.py:293
 msgid "Wi-Fi is connected. Cellular data is not confirmed yet."
 msgstr "Wi-Fi is connected. Cellular data is not confirmed yet."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:230
+#: settings/network_tab.py:294
 msgid "Waiting for current modem status."
 msgstr "Waiting for current modem status."
 
+#: settings/network_tab.py:295
+#: settings/network_tab.py:247
+msgid "Mobile broadband is off"
+msgstr "モバイル通信はオフです"
+
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:232
+#: settings/network_tab.py:298
 msgid "Poor signal"
 msgstr "Poor signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:232
+#: settings/network_tab.py:298
 msgid "Moderate signal"
 msgstr "Moderate signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:232
+#: settings/network_tab.py:298
 msgid "Good signal"
 msgstr "Good signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:232
+#: settings/network_tab.py:298
 msgid "Great signal"
 msgstr "Great signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:202
+#: settings/network_tab.py:263
 msgid "SIM detected"
 msgstr "SIM detected"
 
-#: settings/network_tab.py:90
+#: settings/network_tab.py:139
 #, python-brace-format
 msgid "for \"{}\""
 msgstr "「{}」用"
 
-#: settings/network_tab.py:101
+#: settings/network_tab.py:152
 msgid "Network name"
 msgstr "ネットワーク名"
 
-#: settings/network_tab.py:114
+#: settings/network_tab.py:166
 #, python-brace-format
 msgid "{} · Couldn't save"
 msgstr "{} · 保存できませんでした"
 
-#: settings/network_tab.py:134
+#: settings/network_tab.py:186
 msgid "Connected devices will need to reconnect."
 msgstr "接続中のデバイスは再接続が必要です。"
 
-#: settings/network_tab.py:137
+#: settings/network_tab.py:189
 msgid "Hotspot password"
 msgstr "ホットスポットのパスワード"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/network_tab.py:167
-#: settings/network_tab.py:321
+#: settings/network_tab.py:219
+#: settings/network_tab.py:397
 msgid "APN"
 msgstr "APN"
 
-#: settings/network_tab.py:167
+#: settings/network_tab.py:219
 msgid "Leave empty for automatic"
 msgstr "空欄で自動"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:189
+#: settings/network_tab.py:250
 msgid "Reading cellular status"
 msgstr "Reading cellular status"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:191
+#: settings/network_tab.py:252
 msgid "Cellular data unavailable"
 msgstr "Cellular data unavailable"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:193
+#: settings/network_tab.py:254
 msgid "SIM detected · No cellular service"
 msgstr "SIM detected · No cellular service"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:201
+#: settings/network_tab.py:262
 #, python-brace-format
 msgid "SIM detected · {}"
 msgstr "SIM detected · {}"
 
-#: settings/network_tab.py:307
-#: settings/network_tab.py:305
-#: settings/network_tab.py:321
+#: settings/network_tab.py:383
+#: settings/network_tab.py:381
+#: settings/network_tab.py:397
 msgid "Edit"
 msgstr "編集"
 
-#: settings/network_tab.py:324
-#: settings/network_tab.py:315
+#: settings/network_tab.py:400
+#: settings/network_tab.py:391
 #: settings/search.py:217
 msgid "Roaming, APN and IP address"
 msgstr "ローミング、APN、IP アドレス"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:324
+#: settings/network_tab.py:400
 msgid "Status updates automatically while this page is open."
 msgstr "Status updates automatically while this page is open."
 
-#: settings/network_tab.py:90
+#: settings/network_tab.py:139
 msgid "Wrong password"
 msgstr "パスワードが違います"
 
-#: settings/network_tab.py:90
-#: settings/network_tab.py:99
+#: settings/network_tab.py:139
+#: settings/network_tab.py:150
 msgid "Enter password"
 msgstr "パスワードを入力"
 
-#: settings/network_tab.py:121
-#: settings/network_tab.py:311
+#: settings/network_tab.py:173
+#: settings/network_tab.py:387
 #: settings/search.py:214
 msgid "Hotspot name"
 msgstr "ホットスポット名"
 
-#: settings/network_tab.py:128
+#: settings/network_tab.py:180
 msgid "A saved network already uses this name"
 msgstr "保存済みのネットワークがこの名前を使用しています"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:198
+#: settings/network_tab.py:259
 #, python-brace-format
 msgid "{} · {}"
 msgstr "{} · {}"
 
-#: settings/network_tab.py:310
-#: settings/search.py:213
-msgid "Hotspot"
-msgstr "ホットスポット"
-
-#: settings/network_tab.py:310
-#: settings/search.py:213
-msgid "Share this device's connection"
-msgstr "このデバイスの接続を共有"
-
-#: settings/network_tab.py:313
-#: settings/search.py:215
-msgid "Hotspot Password"
-msgstr "ホットスポットのパスワード"
-
-#: settings/network_tab.py:313
-#: settings/search.py:215
-msgid "For phones joining this device's hotspot"
-msgstr "このデバイスのホットスポットにつなぐスマホ用"
-
-#: settings/network_tab.py:314
-#: settings/search.py:216
-msgid "Save Data"
-msgstr "データ節約"
-
-#: settings/network_tab.py:314
-#: settings/search.py:216
-msgid "No large uploads on cellular or phone hotspots"
-msgstr "モバイル通信やスマホのホットスポットでは大きなアップロードをしません"
-
-#: settings/network_tab.py:320
-msgid "Roaming"
-msgstr "ローミング"
-
-#: settings/network_tab.py:320
-msgid "Use cellular data outside your carrier's network"
-msgstr "契約キャリアの圏外でもモバイル通信を使う"
-
-#. English fallback pending cellular-status translation.
-#: settings/network_tab.py:323
-#: settings/search.py:218
-msgid "Cellular IP address"
-msgstr "Cellular IP address"
-
-#: settings/network_tab.py:99
-#, python-brace-format
-msgid "for \"{}\", or leave empty for an open network"
-msgstr "「{}」用。オープンネットワークなら空欄"
-
-#: settings/network_tab.py:295
-msgid "Scanning for networks…"
-msgstr "ネットワークを検索中…"
-
-#: settings/network_tab.py:296
+#: settings/network_tab.py:366
 #: settings/search.py:211
 msgid "Join a hidden network"
 msgstr "非公開ネットワークに接続"
 
-#: settings/network_tab.py:125
+#: settings/network_tab.py:386
+#: settings/search.py:213
+msgid "Hotspot"
+msgstr "ホットスポット"
+
+#: settings/network_tab.py:386
+#: settings/search.py:213
+msgid "Share this device's connection"
+msgstr "このデバイスの接続を共有"
+
+#: settings/network_tab.py:389
+#: settings/search.py:215
+msgid "Hotspot Password"
+msgstr "ホットスポットのパスワード"
+
+#: settings/network_tab.py:389
+#: settings/search.py:215
+msgid "For phones joining this device's hotspot"
+msgstr "このデバイスのホットスポットにつなぐスマホ用"
+
+#: settings/network_tab.py:390
+#: settings/search.py:216
+msgid "Save Data"
+msgstr "データ節約"
+
+#: settings/network_tab.py:390
+#: settings/search.py:216
+msgid "No large uploads on cellular or phone hotspots"
+msgstr "モバイル通信やスマホのホットスポットでは大きなアップロードをしません"
+
+#: settings/network_tab.py:396
+msgid "Roaming"
+msgstr "ローミング"
+
+#: settings/network_tab.py:396
+msgid "Use cellular data outside your carrier's network"
+msgstr "契約キャリアの圏外でもモバイル通信を使う"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:399
+#: settings/search.py:218
+msgid "Cellular IP address"
+msgstr "Cellular IP address"
+
+#: settings/network_tab.py:150
+#, python-brace-format
+msgid "for \"{}\", or leave empty for an open network"
+msgstr "「{}」用。オープンネットワークなら空欄"
+
+#: settings/network_tab.py:370
+msgid "Couldn’t change Wi-Fi"
+msgstr "Wi-Fi を切り替えられませんでした"
+
+#: settings/network_tab.py:177
 msgid "Enter a hotspot name"
 msgstr "ホットスポット名を入力してください"
 
-#: settings/network_tab.py:125
+#: settings/network_tab.py:177
 msgid "Name is too long. Use a shorter name."
 msgstr "名前が長すぎます。短い名前にしてください。"
 
-#: settings/network_tab.py:126
+#: settings/network_tab.py:178
 msgid "Use letters, numbers, spaces or punctuation"
 msgstr "文字、数字、スペース、記号を使ってください"
 
-#: settings/network_tab.py:287
+#: settings/network_tab.py:355
 msgid "Secured"
 msgstr "保護あり"
 
-#: settings/network_tab.py:287
+#: settings/network_tab.py:355
 msgid "Open"
 msgstr "オープン"
 
-#: settings/network_tab.py:321
+#: settings/network_tab.py:365
+msgid "Scanning for networks…"
+msgstr "ネットワークを検索中…"
+
+#: settings/network_tab.py:368
+msgid "Wi-Fi is off"
+msgstr "Wi-Fi はオフです"
+
+#: settings/network_tab.py:397
 msgid "Automatic"
 msgstr "自動"
 

@@ -773,6 +773,54 @@
       "match": true
     },
     {
+      "mock": "radio-wifi-on",
+      "title": "Connections › Wi-Fi, radio on",
+      "note": "The top-right switch controls Wi-Fi. The network list and join action are absent while Wi-Fi is off.",
+      "match": true
+    },
+    {
+      "mock": "radio-wifi-off",
+      "title": "Connections › Wi-Fi, radio off",
+      "note": "The top-right switch controls Wi-Fi. The network list and join action are absent while Wi-Fi is off.",
+      "match": true
+    },
+    {
+      "mock": "radio-cellular-on",
+      "title": "Connections › Cellular, radio on",
+      "note": "The status badge and radio switch share the header. The hotspot and saved cellular settings remain available.",
+      "match": true
+    },
+    {
+      "mock": "radio-cellular-off",
+      "title": "Connections › Cellular, radio off",
+      "note": "The status badge and radio switch share the header. The hotspot and saved cellular settings remain available.",
+      "match": true
+    },
+    {
+      "mock": "radio-remote-on",
+      "title": "Connections › Bluetooth Remote, radio on",
+      "note": "The right-hand Bluetooth switch is shared with Car Audio & Devices. Saved wheel mappings stay visible while Bluetooth is off.",
+      "match": true
+    },
+    {
+      "mock": "radio-remote-off",
+      "title": "Connections › Bluetooth Remote, radio off",
+      "note": "The right-hand Bluetooth switch is shared with Car Audio & Devices. Saved wheel mappings stay visible while Bluetooth is off.",
+      "match": true
+    },
+    {
+      "mock": "radio-audio-on",
+      "title": "Connections › Car Audio & Devices, radio on",
+      "note": "The header uses the same Bluetooth radio as Bluetooth Remote. Nearby discovery only runs while Bluetooth is on.",
+      "match": true
+    },
+    {
+      "mock": "radio-audio-off",
+      "title": "Connections › Car Audio & Devices, radio off",
+      "note": "The header uses the same Bluetooth radio as Bluetooth Remote. Nearby discovery only runs while Bluetooth is on.",
+      "match": true
+    },
+    {
       "mock": "cellular-status-connected",
       "title": "Cellular · Connected",
       "note": "Approved live Cellular/APN feedback. Matches the status, existing controls, explanatory line and mobile address. Uses shared Essentials colors and native row/header metrics; no changes to the approved mock. Sample modem data only, not a hardware connectivity test.",

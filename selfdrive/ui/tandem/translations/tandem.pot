@@ -5,21 +5,21 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\n"
 
-#: controls.py:196
+#: controls.py:197
 msgid "On"
 msgstr ""
 
-#: controls.py:196
-#: controls.py:199
+#: controls.py:197
+#: controls.py:200
 #: settings/device_sections.py:60
 msgid "Off"
 msgstr ""
 
-#: controls.py:302
+#: controls.py:303
 msgid "RECOMMENDED"
 msgstr ""
 
-#: controls.py:575
+#: controls.py:606
 #: settings/display.py:203
 #: settings/display.py:355
 msgid "Default"
@@ -186,7 +186,7 @@ msgid "Search for your work address"
 msgstr ""
 
 #: destinations.py:567
-#: onroad/layers.py:97
+#: onroad/layers.py:118
 msgid "End route"
 msgstr ""
 
@@ -704,14 +704,14 @@ msgid "curve spd"
 msgstr ""
 
 #: onroad/developer.py:286
-#: onroad/extras.py:236
+#: onroad/extras.py:231
 #: onroad/lead.py:116
 #, python-brace-format
 msgid "{} m"
 msgstr ""
 
 #: onroad/developer.py:286
-#: onroad/extras.py:236
+#: onroad/extras.py:231
 #: onroad/lead.py:116
 #, python-brace-format
 msgid "{} ft"
@@ -833,55 +833,55 @@ msgstr ""
 msgid "Small model in use"
 msgstr ""
 
-#: onroad/layers.py:451
+#: onroad/layers.py:492
 msgid "Help steer"
 msgstr ""
 
-#: onroad/layers.py:451
+#: onroad/layers.py:492
 msgid "Steering is at its limit for this curve"
 msgstr ""
 
-#: onroad/layers.py:146
+#: onroad/layers.py:169
 msgid "MAX"
 msgstr ""
 
-#: onroad/layers.py:536
+#: onroad/layers.py:200
+msgid "ARRIVE"
+msgstr ""
+
+#: onroad/layers.py:201
+msgid "LEFT"
+msgstr ""
+
+#: onroad/layers.py:577
 #, python-brace-format
 msgid "New limit {}"
 msgstr ""
 
-#: onroad/layers.py:537
+#: onroad/layers.py:578
 msgid "Slow down"
 msgstr ""
 
-#: onroad/layers.py:537
+#: onroad/layers.py:578
 msgid "Speed up"
 msgstr ""
 
-#: onroad/layers.py:538
+#: onroad/layers.py:579
 #, python-brace-format
 msgid "{} to {} {}?"
 msgstr ""
 
-#: onroad/layers.py:539
+#: onroad/layers.py:580
 #, python-brace-format
 msgid "From {} · ignored in {} s"
 msgstr ""
 
-#: onroad/layers.py:213
-msgid "ARRIVE"
-msgstr ""
-
-#: onroad/layers.py:213
-msgid "LEFT"
-msgstr ""
-
-#: onroad/layers.py:509
+#: onroad/layers.py:550
 #: settings/speed_steering.py:20
 msgid "Match"
 msgstr ""
 
-#: onroad/layers.py:511
+#: onroad/layers.py:552
 msgid "Ignore"
 msgstr ""
 
@@ -1156,17 +1156,17 @@ msgstr ""
 msgid "Byp"
 msgstr ""
 
-#: onroad/view.py:628
+#: onroad/view.py:637
 #, python-brace-format
 msgid "{} km"
 msgstr ""
 
-#: onroad/view.py:628
+#: onroad/view.py:637
 #, python-brace-format
 msgid "{} mi"
 msgstr ""
 
-#: onroad/view.py:629
+#: onroad/view.py:638
 #, python-brace-format
 msgid "{} min · {}"
 msgstr ""
@@ -1576,55 +1576,55 @@ msgstr ""
 msgid "Minimum {}% for safety alerts"
 msgstr ""
 
-#: settings/bluetooth_tab.py:489
+#: settings/bluetooth_tab.py:529
 msgid "Engage"
 msgstr ""
 
-#: settings/bluetooth_tab.py:489
+#: settings/bluetooth_tab.py:529
 msgid "Disengage"
 msgstr ""
 
-#: settings/bluetooth_tab.py:489
+#: settings/bluetooth_tab.py:529
 #: settings/vehicle.py:34
 msgid "Change driving style"
 msgstr ""
 
-#: settings/bluetooth_tab.py:490
+#: settings/bluetooth_tab.py:530
 msgid "Screen off / on"
 msgstr ""
 
-#: settings/bluetooth_tab.py:490
+#: settings/bluetooth_tab.py:530
 #: settings/vehicle.py:35
 #: sidebar.py:74
 msgid "Save a clip"
 msgstr ""
 
-#: settings/bluetooth_tab.py:490
+#: settings/bluetooth_tab.py:530
 #: settings/vehicle.py:35
 msgid "Always-on steering"
 msgstr ""
 
-#: settings/bluetooth_tab.py:490
+#: settings/bluetooth_tab.py:530
 #: settings/vehicle.py:34
 msgid "Coast"
 msgstr ""
 
-#: settings/bluetooth_tab.py:288
+#: settings/bluetooth_tab.py:309
 msgid "Press any button to find it"
 msgstr ""
 
-#: settings/bluetooth_tab.py:322
+#: settings/bluetooth_tab.py:345
 #, python-brace-format
 msgid "Button {}"
 msgstr ""
 
-#: settings/bluetooth_tab.py:431
-#: settings/bluetooth_tab.py:435
-#: settings/bluetooth_tab.py:431
+#: settings/bluetooth_tab.py:468
+#: settings/bluetooth_tab.py:472
+#: settings/bluetooth_tab.py:468
 msgid "Forget"
 msgstr ""
 
-#: settings/bluetooth_tab.py:687
+#: settings/bluetooth_tab.py:727
 #, python-brace-format
 msgid "A sound plays in {}…"
 msgstr ""
@@ -1679,61 +1679,74 @@ msgstr ""
 msgid "Pulse and glide and driver selfie are in Tuner Mode."
 msgstr ""
 
-#: settings/bluetooth_tab.py:299
-#: settings/connections.py:72
+#: settings/bluetooth_tab.py:320
+#: settings/connections.py:87
 #: settings/search.py:32
 msgid "Bluetooth Remote"
 msgstr ""
 
-#: settings/bluetooth_tab.py:355
+#: settings/bluetooth_tab.py:321
+#: settings/bluetooth_tab.py:499
+msgid "Bluetooth is off"
+msgstr ""
+
+#: settings/bluetooth_tab.py:379
 msgid "That button isn't assigned yet. Tap to add it."
 msgstr ""
 
-#: settings/bluetooth_tab.py:355
+#: settings/bluetooth_tab.py:379
 msgid "Add a button"
 msgstr ""
 
-#: settings/bluetooth_tab.py:390
-msgid "Bluetooth device"
+#: settings/bluetooth_tab.py:409
+msgid "Bluetooth"
 msgstr ""
 
 #: settings/bluetooth_tab.py:427
+msgid "Bluetooth device"
+msgstr ""
+
+#: settings/bluetooth_tab.py:464
 msgid "Test"
 msgstr ""
 
-#: settings/bluetooth_tab.py:434
-#: settings/bluetooth_tab.py:434
+#: settings/bluetooth_tab.py:471
+#: settings/bluetooth_tab.py:471
 msgid "Disconnect"
 msgstr ""
 
-#: settings/bluetooth_tab.py:434
+#: settings/bluetooth_tab.py:471
 msgid "It reconnects the next time you choose it"
 msgstr ""
 
-#: settings/bluetooth_tab.py:435
+#: settings/bluetooth_tab.py:472
 msgid "Removes the pairing. Change it with the car off."
 msgstr ""
 
-#: settings/bluetooth_tab.py:436
-#: settings/bluetooth_tab.py:448
-#: settings/network_tab.py:220
+#: settings/bluetooth_tab.py:473
+#: settings/bluetooth_tab.py:485
+#: settings/network_tab.py:283
 msgid "Connected"
 msgstr ""
 
-#: settings/bluetooth_tab.py:679
+#: settings/bluetooth_tab.py:497
+msgid "CAR AUDIO"
+msgstr ""
+
+#: settings/bluetooth_tab.py:719
 #, python-brace-format
 msgid "The test didn't play: {}"
 msgstr ""
 
-#: settings/bluetooth_tab.py:682
+#: settings/bluetooth_tab.py:722
 msgid "Playing now. You should hear it through the car."
 msgstr ""
 
-#: settings/bluetooth_tab.py:684
+#: settings/bluetooth_tab.py:724
 msgid "Done. If you didn't hear it, check the car's volume and audio source."
 msgstr ""
 
-#: settings/bluetooth_tab.py:686
+#: settings/bluetooth_tab.py:726
 msgid "Getting ready…"
 msgstr ""
 
@@ -1762,67 +1775,67 @@ msgstr ""
 msgid "Assign a button"
 msgstr ""
 
-#: settings/bluetooth_tab.py:266
+#: settings/bluetooth_tab.py:270
 msgid "Buttons don't run their actions while this screen is open."
 msgstr ""
 
-#: settings/bluetooth_tab.py:330
+#: settings/bluetooth_tab.py:354
 msgid "PRESSED"
 msgstr ""
 
-#: settings/bluetooth_tab.py:380
+#: settings/bluetooth_tab.py:417
 msgid "Sound test"
 msgstr ""
 
-#: settings/bluetooth_tab.py:394
+#: settings/bluetooth_tab.py:431
 #, python-brace-format
 msgid "Pairing with {}"
 msgstr ""
 
-#: settings/bluetooth_tab.py:400
+#: settings/bluetooth_tab.py:437
 #, python-brace-format
 msgid "Enter the {} for {}"
 msgstr ""
 
-#: settings/bluetooth_tab.py:400
+#: settings/bluetooth_tab.py:437
 msgid "It's shown on the device, or in its manual"
 msgstr ""
 
-#: settings/bluetooth_tab.py:408
+#: settings/bluetooth_tab.py:445
 #, python-brace-format
 msgid "Check that the device shows {}."
 msgstr ""
 
-#: settings/bluetooth_tab.py:408
+#: settings/bluetooth_tab.py:445
 msgid "The device is asking to pair."
 msgstr ""
 
-#: settings/bluetooth_tab.py:429
+#: settings/bluetooth_tab.py:466
 msgid "Alerts and Chimes"
 msgstr ""
 
-#: settings/bluetooth_tab.py:429
+#: settings/bluetooth_tab.py:466
 msgid "Play openpilot's sounds through this device. Change it with the car off."
 msgstr ""
 
-#: settings/bluetooth_tab.py:430
+#: settings/bluetooth_tab.py:467
 msgid "Sound Test"
 msgstr ""
 
-#: settings/bluetooth_tab.py:430
+#: settings/bluetooth_tab.py:467
 msgid "Plays a sound through the car after a short countdown"
 msgstr ""
 
-#: settings/bluetooth_tab.py:431
+#: settings/bluetooth_tab.py:468
 #, python-brace-format
 msgid "Forget {}?"
 msgstr ""
 
-#: settings/bluetooth_tab.py:431
+#: settings/bluetooth_tab.py:468
 msgid "You'll need to pair it again to use it."
 msgstr ""
 
-#: settings/bluetooth_tab.py:449
+#: settings/bluetooth_tab.py:486
 msgid "Test sound"
 msgstr ""
 
@@ -1830,46 +1843,46 @@ msgstr ""
 msgid "All action slots are in use. Remove another button first."
 msgstr ""
 
-#: settings/bluetooth_tab.py:394
+#: settings/bluetooth_tab.py:431
 msgid "Follow the steps on the device."
 msgstr ""
 
-#: settings/bluetooth_tab.py:399
-#: settings/bluetooth_tab.py:409
-#: settings/bluetooth_tab.py:453
+#: settings/bluetooth_tab.py:436
+#: settings/bluetooth_tab.py:446
+#: settings/bluetooth_tab.py:490
 msgid "Pair"
 msgstr ""
 
-#: settings/bluetooth_tab.py:409
+#: settings/bluetooth_tab.py:446
 #, python-brace-format
 msgid "Pair with {}?"
 msgstr ""
 
-#: settings/bluetooth_tab.py:448
+#: settings/bluetooth_tab.py:485
 msgid "Plays alerts and chimes"
 msgstr ""
 
-#: settings/bluetooth_tab.py:453
-#: settings/network_tab.py:91
-#: settings/network_tab.py:100
+#: settings/bluetooth_tab.py:490
+#: settings/network_tab.py:140
+#: settings/network_tab.py:151
 msgid "Connect"
 msgstr ""
 
-#: settings/bluetooth_tab.py:455
-#: settings/bluetooth_tab.py:448
+#: settings/bluetooth_tab.py:492
+#: settings/bluetooth_tab.py:485
 #: settings/device.py:250
 msgid "Paired"
 msgstr ""
 
-#: settings/bluetooth_tab.py:462
+#: settings/bluetooth_tab.py:502
 msgid "Scanning…"
 msgstr ""
 
-#: settings/bluetooth_tab.py:463
+#: settings/bluetooth_tab.py:503
 msgid "No car audio paired."
 msgstr ""
 
-#: settings/bluetooth_tab.py:464
+#: settings/bluetooth_tab.py:504
 msgid "No devices found yet."
 msgstr ""
 
@@ -1882,7 +1895,7 @@ msgstr ""
 msgid "Button"
 msgstr ""
 
-#: settings/bluetooth_tab.py:469
+#: settings/bluetooth_tab.py:509
 msgid "Pairing waits until you're parked."
 msgstr ""
 
@@ -1892,11 +1905,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: settings/bluetooth_tab.py:466
-msgid "CAR AUDIO"
-msgstr ""
-
-#: settings/bluetooth_tab.py:467
+#: settings/bluetooth_tab.py:507
 msgid "NEARBY"
 msgstr ""
 
@@ -1955,12 +1964,12 @@ msgid "Recording"
 msgstr ""
 
 #: settings/can_recorder.py:20
-#: settings/network_tab.py:305
+#: settings/network_tab.py:381
 msgid "Saving…"
 msgstr ""
 
 #: settings/can_recorder.py:20
-#: settings/network_tab.py:70
+#: settings/network_tab.py:119
 msgid "Saved"
 msgstr ""
 
@@ -2146,23 +2155,23 @@ msgid_plural "{} buttons"
 msgstr[0] ""
 msgstr[1] ""
 
-#: settings/connections.py:68
+#: settings/connections.py:83
 msgid "CONNECTIONS"
 msgstr ""
 
-#: settings/connections.py:69
+#: settings/connections.py:84
 #: settings/map_source.py:207
-#: settings/network_tab.py:296
+#: settings/network_tab.py:371
 msgid "Wi-Fi"
 msgstr ""
 
-#: settings/connections.py:71
-#: settings/network_tab.py:315
+#: settings/connections.py:86
+#: settings/network_tab.py:391
 #: settings/search.py:32
 msgid "Cellular"
 msgstr ""
 
-#: settings/connections.py:74
+#: settings/connections.py:89
 #: settings/search.py:32
 #: settings/search.py:220
 msgid "Car Audio & Devices"
@@ -2437,7 +2446,7 @@ msgstr ""
 
 #: settings/device.py:370
 #: settings/model.py:140
-#: settings/network_tab.py:216
+#: settings/network_tab.py:279
 msgid "Not available"
 msgstr ""
 
@@ -3049,7 +3058,7 @@ msgid "The street name is always shown in the onroad bar. Speed limit sources an
 msgstr ""
 
 #: settings/display.py:377
-#: settings/network_tab.py:101
+#: settings/network_tab.py:152
 #: setup.py:119
 msgid "Next"
 msgstr ""
@@ -3951,248 +3960,267 @@ msgstr ""
 msgid "No models here yet."
 msgstr ""
 
-#: settings/network_tab.py:220
-#: settings/network_tab.py:69
+#: settings/network_tab.py:283
+#: settings/network_tab.py:118
 msgid "Connecting…"
 msgstr ""
 
-#: settings/network_tab.py:220
-#: settings/network_tab.py:217
-#: settings/network_tab.py:173
+#: settings/network_tab.py:283
+#: settings/network_tab.py:280
+#: settings/network_tab.py:227
 msgid "Not connected"
 msgstr ""
 
-#: settings/network_tab.py:221
+#: settings/network_tab.py:284
 msgid "No SIM"
 msgstr ""
 
-#: settings/network_tab.py:221
+#: settings/network_tab.py:284
 msgid "No signal"
 msgstr ""
 
-#: settings/network_tab.py:221
+#: settings/network_tab.py:284
 msgid "Wi-Fi in use"
 msgstr ""
 
-#: settings/network_tab.py:221
-#: settings/network_tab.py:214
+#: settings/network_tab.py:284
+#: settings/network_tab.py:277
+#: settings/network_tab.py:368
 msgid "Checking…"
 msgstr ""
 
-#: settings/network_tab.py:224
+#: settings/network_tab.py:285
+#: settings/network_tab.py:296
+msgid "Couldn’t change cellular"
+msgstr ""
+
+#: settings/network_tab.py:288
 msgid "Cellular data is connected."
 msgstr ""
 
-#: settings/network_tab.py:225
+#: settings/network_tab.py:289
 msgid "APN saved. Waiting for a cellular data connection."
 msgstr ""
 
-#: settings/network_tab.py:226
+#: settings/network_tab.py:290
 msgid "Cellular data is not connected. Check your APN, signal and carrier account."
 msgstr ""
 
-#: settings/network_tab.py:227
+#: settings/network_tab.py:291
 msgid "No SIM detected. Insert a SIM to use cellular data."
 msgstr ""
 
-#: settings/network_tab.py:228
+#: settings/network_tab.py:292
 msgid "SIM detected. No cellular service. Your APN is saved."
 msgstr ""
 
-#: settings/network_tab.py:229
+#: settings/network_tab.py:293
 msgid "Wi-Fi is connected. Cellular data is not confirmed yet."
 msgstr ""
 
-#: settings/network_tab.py:230
+#: settings/network_tab.py:294
 msgid "Waiting for current modem status."
 msgstr ""
 
-#: settings/network_tab.py:232
+#: settings/network_tab.py:295
+#: settings/network_tab.py:247
+msgid "Mobile broadband is off"
+msgstr ""
+
+#: settings/network_tab.py:298
 msgid "Poor signal"
 msgstr ""
 
-#: settings/network_tab.py:232
+#: settings/network_tab.py:298
 msgid "Moderate signal"
 msgstr ""
 
-#: settings/network_tab.py:232
+#: settings/network_tab.py:298
 msgid "Good signal"
 msgstr ""
 
-#: settings/network_tab.py:232
+#: settings/network_tab.py:298
 msgid "Great signal"
 msgstr ""
 
-#: settings/network_tab.py:202
+#: settings/network_tab.py:263
 msgid "SIM detected"
 msgstr ""
 
-#: settings/network_tab.py:90
+#: settings/network_tab.py:139
 #, python-brace-format
 msgid "for \"{}\""
 msgstr ""
 
-#: settings/network_tab.py:101
+#: settings/network_tab.py:152
 msgid "Network name"
 msgstr ""
 
-#: settings/network_tab.py:114
+#: settings/network_tab.py:166
 #, python-brace-format
 msgid "{} · Couldn't save"
 msgstr ""
 
-#: settings/network_tab.py:134
+#: settings/network_tab.py:186
 msgid "Connected devices will need to reconnect."
 msgstr ""
 
-#: settings/network_tab.py:137
+#: settings/network_tab.py:189
 msgid "Hotspot password"
 msgstr ""
 
-#: settings/network_tab.py:167
-#: settings/network_tab.py:321
+#: settings/network_tab.py:219
+#: settings/network_tab.py:397
 msgid "APN"
 msgstr ""
 
-#: settings/network_tab.py:167
+#: settings/network_tab.py:219
 msgid "Leave empty for automatic"
 msgstr ""
 
-#: settings/network_tab.py:189
+#: settings/network_tab.py:250
 msgid "Reading cellular status"
 msgstr ""
 
-#: settings/network_tab.py:191
+#: settings/network_tab.py:252
 msgid "Cellular data unavailable"
 msgstr ""
 
-#: settings/network_tab.py:193
+#: settings/network_tab.py:254
 msgid "SIM detected · No cellular service"
 msgstr ""
 
-#: settings/network_tab.py:201
+#: settings/network_tab.py:262
 #, python-brace-format
 msgid "SIM detected · {}"
 msgstr ""
 
-#: settings/network_tab.py:307
-#: settings/network_tab.py:305
-#: settings/network_tab.py:321
+#: settings/network_tab.py:383
+#: settings/network_tab.py:381
+#: settings/network_tab.py:397
 msgid "Edit"
 msgstr ""
 
-#: settings/network_tab.py:324
-#: settings/network_tab.py:315
+#: settings/network_tab.py:400
+#: settings/network_tab.py:391
 #: settings/search.py:217
 msgid "Roaming, APN and IP address"
 msgstr ""
 
-#: settings/network_tab.py:324
+#: settings/network_tab.py:400
 msgid "Status updates automatically while this page is open."
 msgstr ""
 
-#: settings/network_tab.py:90
+#: settings/network_tab.py:139
 msgid "Wrong password"
 msgstr ""
 
-#: settings/network_tab.py:90
-#: settings/network_tab.py:99
+#: settings/network_tab.py:139
+#: settings/network_tab.py:150
 msgid "Enter password"
 msgstr ""
 
-#: settings/network_tab.py:121
-#: settings/network_tab.py:311
+#: settings/network_tab.py:173
+#: settings/network_tab.py:387
 #: settings/search.py:214
 msgid "Hotspot name"
 msgstr ""
 
-#: settings/network_tab.py:128
+#: settings/network_tab.py:180
 msgid "A saved network already uses this name"
 msgstr ""
 
-#: settings/network_tab.py:198
+#: settings/network_tab.py:259
 #, python-brace-format
 msgid "{} · {}"
 msgstr ""
 
-#: settings/network_tab.py:310
-#: settings/search.py:213
-msgid "Hotspot"
-msgstr ""
-
-#: settings/network_tab.py:310
-#: settings/search.py:213
-msgid "Share this device's connection"
-msgstr ""
-
-#: settings/network_tab.py:313
-#: settings/search.py:215
-msgid "Hotspot Password"
-msgstr ""
-
-#: settings/network_tab.py:313
-#: settings/search.py:215
-msgid "For phones joining this device's hotspot"
-msgstr ""
-
-#: settings/network_tab.py:314
-#: settings/search.py:216
-msgid "Save Data"
-msgstr ""
-
-#: settings/network_tab.py:314
-#: settings/search.py:216
-msgid "No large uploads on cellular or phone hotspots"
-msgstr ""
-
-#: settings/network_tab.py:320
-msgid "Roaming"
-msgstr ""
-
-#: settings/network_tab.py:320
-msgid "Use cellular data outside your carrier's network"
-msgstr ""
-
-#: settings/network_tab.py:323
-#: settings/search.py:218
-msgid "Cellular IP address"
-msgstr ""
-
-#: settings/network_tab.py:99
-#, python-brace-format
-msgid "for \"{}\", or leave empty for an open network"
-msgstr ""
-
-#: settings/network_tab.py:295
-msgid "Scanning for networks…"
-msgstr ""
-
-#: settings/network_tab.py:296
+#: settings/network_tab.py:366
 #: settings/search.py:211
 msgid "Join a hidden network"
 msgstr ""
 
-#: settings/network_tab.py:125
+#: settings/network_tab.py:386
+#: settings/search.py:213
+msgid "Hotspot"
+msgstr ""
+
+#: settings/network_tab.py:386
+#: settings/search.py:213
+msgid "Share this device's connection"
+msgstr ""
+
+#: settings/network_tab.py:389
+#: settings/search.py:215
+msgid "Hotspot Password"
+msgstr ""
+
+#: settings/network_tab.py:389
+#: settings/search.py:215
+msgid "For phones joining this device's hotspot"
+msgstr ""
+
+#: settings/network_tab.py:390
+#: settings/search.py:216
+msgid "Save Data"
+msgstr ""
+
+#: settings/network_tab.py:390
+#: settings/search.py:216
+msgid "No large uploads on cellular or phone hotspots"
+msgstr ""
+
+#: settings/network_tab.py:396
+msgid "Roaming"
+msgstr ""
+
+#: settings/network_tab.py:396
+msgid "Use cellular data outside your carrier's network"
+msgstr ""
+
+#: settings/network_tab.py:399
+#: settings/search.py:218
+msgid "Cellular IP address"
+msgstr ""
+
+#: settings/network_tab.py:150
+#, python-brace-format
+msgid "for \"{}\", or leave empty for an open network"
+msgstr ""
+
+#: settings/network_tab.py:370
+msgid "Couldn’t change Wi-Fi"
+msgstr ""
+
+#: settings/network_tab.py:177
 msgid "Enter a hotspot name"
 msgstr ""
 
-#: settings/network_tab.py:125
+#: settings/network_tab.py:177
 msgid "Name is too long. Use a shorter name."
 msgstr ""
 
-#: settings/network_tab.py:126
+#: settings/network_tab.py:178
 msgid "Use letters, numbers, spaces or punctuation"
 msgstr ""
 
-#: settings/network_tab.py:287
+#: settings/network_tab.py:355
 msgid "Secured"
 msgstr ""
 
-#: settings/network_tab.py:287
+#: settings/network_tab.py:355
 msgid "Open"
 msgstr ""
 
-#: settings/network_tab.py:321
+#: settings/network_tab.py:365
+msgid "Scanning for networks…"
+msgstr ""
+
+#: settings/network_tab.py:368
+msgid "Wi-Fi is off"
+msgstr ""
+
+#: settings/network_tab.py:397
 msgid "Automatic"
 msgstr ""
 

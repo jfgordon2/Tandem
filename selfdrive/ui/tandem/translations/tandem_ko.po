@@ -5,21 +5,21 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=(0);\n"
 "X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\n"
 
-#: controls.py:196
+#: controls.py:197
 msgid "On"
 msgstr "켜짐"
 
-#: controls.py:196
-#: controls.py:199
+#: controls.py:197
+#: controls.py:200
 #: settings/device_sections.py:60
 msgid "Off"
 msgstr "꺼짐"
 
-#: controls.py:302
+#: controls.py:303
 msgid "RECOMMENDED"
 msgstr "권장"
 
-#: controls.py:575
+#: controls.py:606
 #: settings/display.py:203
 #: settings/display.py:355
 msgid "Default"
@@ -188,7 +188,7 @@ msgid "Search for your work address"
 msgstr "직장 주소 검색"
 
 #: destinations.py:567
-#: onroad/layers.py:97
+#: onroad/layers.py:118
 msgid "End route"
 msgstr "경로 안내 종료"
 
@@ -718,7 +718,7 @@ msgstr "커브 속도"
 
 #. Unit notation; keep as written.
 #: onroad/developer.py:286
-#: onroad/extras.py:236
+#: onroad/extras.py:231
 #: onroad/lead.py:116
 #, python-brace-format
 msgid "{} m"
@@ -726,7 +726,7 @@ msgstr "{} m"
 
 #. Unit notation; keep as written.
 #: onroad/developer.py:286
-#: onroad/extras.py:236
+#: onroad/extras.py:231
 #: onroad/lead.py:116
 #, python-brace-format
 msgid "{} ft"
@@ -858,56 +858,56 @@ msgstr "대형 모델 실패"
 msgid "Small model in use"
 msgstr "소형 모델 사용 중"
 
-#: onroad/layers.py:451
+#: onroad/layers.py:492
 msgid "Help steer"
 msgstr "조향을 도와주세요"
 
-#: onroad/layers.py:451
+#: onroad/layers.py:492
 msgid "Steering is at its limit for this curve"
 msgstr "이 커브에서 조향 한계에 도달했습니다"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: onroad/layers.py:146
+#: onroad/layers.py:169
 msgid "MAX"
 msgstr "MAX"
 
-#: onroad/layers.py:536
+#: onroad/layers.py:200
+msgid "ARRIVE"
+msgstr "도착"
+
+#: onroad/layers.py:201
+msgid "LEFT"
+msgstr "남음"
+
+#: onroad/layers.py:577
 #, python-brace-format
 msgid "New limit {}"
 msgstr "새 제한 {}"
 
-#: onroad/layers.py:537
+#: onroad/layers.py:578
 msgid "Slow down"
 msgstr "감속"
 
-#: onroad/layers.py:537
+#: onroad/layers.py:578
 msgid "Speed up"
 msgstr "가속"
 
-#: onroad/layers.py:538
+#: onroad/layers.py:579
 #, python-brace-format
 msgid "{} to {} {}?"
 msgstr "{}하여 {} {}로?"
 
-#: onroad/layers.py:539
+#: onroad/layers.py:580
 #, python-brace-format
 msgid "From {} · ignored in {} s"
 msgstr "출처: {} · {}초 후 무시"
 
-#: onroad/layers.py:213
-msgid "ARRIVE"
-msgstr "도착"
-
-#: onroad/layers.py:213
-msgid "LEFT"
-msgstr "남음"
-
-#: onroad/layers.py:509
+#: onroad/layers.py:550
 #: settings/speed_steering.py:20
 msgid "Match"
 msgstr "제한에 맞춤"
 
-#: onroad/layers.py:511
+#: onroad/layers.py:552
 msgid "Ignore"
 msgstr "무시"
 
@@ -1218,18 +1218,18 @@ msgid "Byp"
 msgstr "Byp"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:628
+#: onroad/view.py:637
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:628
+#: onroad/view.py:637
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/view.py:629
+#: onroad/view.py:638
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{}분 · {}"
@@ -1664,55 +1664,55 @@ msgstr "음량"
 msgid "Minimum {}% for safety alerts"
 msgstr "안전 알림의 최저 음량 {}%"
 
-#: settings/bluetooth_tab.py:489
+#: settings/bluetooth_tab.py:529
 msgid "Engage"
 msgstr "작동"
 
-#: settings/bluetooth_tab.py:489
+#: settings/bluetooth_tab.py:529
 msgid "Disengage"
 msgstr "해제"
 
-#: settings/bluetooth_tab.py:489
+#: settings/bluetooth_tab.py:529
 #: settings/vehicle.py:34
 msgid "Change driving style"
 msgstr "주행 스타일 변경"
 
-#: settings/bluetooth_tab.py:490
+#: settings/bluetooth_tab.py:530
 msgid "Screen off / on"
 msgstr "화면 끄기 / 켜기"
 
-#: settings/bluetooth_tab.py:490
+#: settings/bluetooth_tab.py:530
 #: settings/vehicle.py:35
 #: sidebar.py:74
 msgid "Save a clip"
 msgstr "영상 클립 저장"
 
-#: settings/bluetooth_tab.py:490
+#: settings/bluetooth_tab.py:530
 #: settings/vehicle.py:35
 msgid "Always-on steering"
 msgstr "상시 조향"
 
-#: settings/bluetooth_tab.py:490
+#: settings/bluetooth_tab.py:530
 #: settings/vehicle.py:34
 msgid "Coast"
 msgstr "타력 주행"
 
-#: settings/bluetooth_tab.py:288
+#: settings/bluetooth_tab.py:309
 msgid "Press any button to find it"
 msgstr "버튼을 누르면 어떤 버튼인지 확인할 수 있습니다"
 
-#: settings/bluetooth_tab.py:322
+#: settings/bluetooth_tab.py:345
 #, python-brace-format
 msgid "Button {}"
 msgstr "버튼 {}"
 
-#: settings/bluetooth_tab.py:431
-#: settings/bluetooth_tab.py:435
-#: settings/bluetooth_tab.py:431
+#: settings/bluetooth_tab.py:468
+#: settings/bluetooth_tab.py:472
+#: settings/bluetooth_tab.py:468
 msgid "Forget"
 msgstr "등록 해제"
 
-#: settings/bluetooth_tab.py:687
+#: settings/bluetooth_tab.py:727
 #, python-brace-format
 msgid "A sound plays in {}…"
 msgstr "{} 후 소리가 재생됩니다…"
@@ -1766,61 +1766,74 @@ msgstr "2단계 · 동작 고르기"
 msgid "Pulse and glide and driver selfie are in Tuner Mode."
 msgstr "가속 후 타력 주행과 운전자 셀카는 튜닝 모드에 있습니다."
 
-#: settings/bluetooth_tab.py:299
-#: settings/connections.py:72
+#: settings/bluetooth_tab.py:320
+#: settings/connections.py:87
 #: settings/search.py:32
 msgid "Bluetooth Remote"
 msgstr "블루투스 리모컨"
 
-#: settings/bluetooth_tab.py:355
+#: settings/bluetooth_tab.py:321
+#: settings/bluetooth_tab.py:499
+msgid "Bluetooth is off"
+msgstr "블루투스가 꺼져 있습니다"
+
+#: settings/bluetooth_tab.py:379
 msgid "That button isn't assigned yet. Tap to add it."
 msgstr "아직 동작이 지정되지 않은 버튼입니다. 눌러 추가하세요."
 
-#: settings/bluetooth_tab.py:355
+#: settings/bluetooth_tab.py:379
 msgid "Add a button"
 msgstr "버튼 추가"
 
-#: settings/bluetooth_tab.py:390
+#: settings/bluetooth_tab.py:409
+msgid "Bluetooth"
+msgstr "블루투스"
+
+#: settings/bluetooth_tab.py:427
 msgid "Bluetooth device"
 msgstr "블루투스 기기"
 
-#: settings/bluetooth_tab.py:427
+#: settings/bluetooth_tab.py:464
 msgid "Test"
 msgstr "테스트"
 
-#: settings/bluetooth_tab.py:434
-#: settings/bluetooth_tab.py:434
+#: settings/bluetooth_tab.py:471
+#: settings/bluetooth_tab.py:471
 msgid "Disconnect"
 msgstr "연결 해제"
 
-#: settings/bluetooth_tab.py:434
+#: settings/bluetooth_tab.py:471
 msgid "It reconnects the next time you choose it"
 msgstr "다음에 선택하면 다시 연결됩니다"
 
-#: settings/bluetooth_tab.py:435
+#: settings/bluetooth_tab.py:472
 msgid "Removes the pairing. Change it with the car off."
 msgstr "페어링을 해제합니다. 차량 시동을 끈 상태에서 변경하세요."
 
-#: settings/bluetooth_tab.py:436
-#: settings/bluetooth_tab.py:448
-#: settings/network_tab.py:220
+#: settings/bluetooth_tab.py:473
+#: settings/bluetooth_tab.py:485
+#: settings/network_tab.py:283
 msgid "Connected"
 msgstr "연결됨"
 
-#: settings/bluetooth_tab.py:679
+#: settings/bluetooth_tab.py:497
+msgid "CAR AUDIO"
+msgstr "차량 오디오"
+
+#: settings/bluetooth_tab.py:719
 #, python-brace-format
 msgid "The test didn't play: {}"
 msgstr "테스트 소리가 재생되지 않았습니다: {}"
 
-#: settings/bluetooth_tab.py:682
+#: settings/bluetooth_tab.py:722
 msgid "Playing now. You should hear it through the car."
 msgstr "재생 중입니다. 차량에서 소리가 나야 합니다."
 
-#: settings/bluetooth_tab.py:684
+#: settings/bluetooth_tab.py:724
 msgid "Done. If you didn't hear it, check the car's volume and audio source."
 msgstr "완료했습니다. 소리가 들리지 않으면 차량의 음량과 오디오 소스를 확인하세요."
 
-#: settings/bluetooth_tab.py:686
+#: settings/bluetooth_tab.py:726
 msgid "Getting ready…"
 msgstr "준비 중…"
 
@@ -1849,67 +1862,67 @@ msgstr "감지 중{}."
 msgid "Assign a button"
 msgstr "버튼 지정"
 
-#: settings/bluetooth_tab.py:266
+#: settings/bluetooth_tab.py:270
 msgid "Buttons don't run their actions while this screen is open."
 msgstr "이 화면이 열려 있는 동안 버튼 동작은 실행되지 않습니다."
 
-#: settings/bluetooth_tab.py:330
+#: settings/bluetooth_tab.py:354
 msgid "PRESSED"
 msgstr "눌림"
 
-#: settings/bluetooth_tab.py:380
+#: settings/bluetooth_tab.py:417
 msgid "Sound test"
 msgstr "소리 테스트"
 
-#: settings/bluetooth_tab.py:394
+#: settings/bluetooth_tab.py:431
 #, python-brace-format
 msgid "Pairing with {}"
 msgstr "{} 페어링 중"
 
-#: settings/bluetooth_tab.py:400
+#: settings/bluetooth_tab.py:437
 #, python-brace-format
 msgid "Enter the {} for {}"
 msgstr "{1}의 {0} 입력"
 
-#: settings/bluetooth_tab.py:400
+#: settings/bluetooth_tab.py:437
 msgid "It's shown on the device, or in its manual"
 msgstr "기기 화면이나 설명서에 표시되어 있습니다"
 
-#: settings/bluetooth_tab.py:408
+#: settings/bluetooth_tab.py:445
 #, python-brace-format
 msgid "Check that the device shows {}."
 msgstr "기기에 {}가 표시되는지 확인하세요."
 
-#: settings/bluetooth_tab.py:408
+#: settings/bluetooth_tab.py:445
 msgid "The device is asking to pair."
 msgstr "기기에서 페어링을 요청했습니다."
 
-#: settings/bluetooth_tab.py:429
+#: settings/bluetooth_tab.py:466
 msgid "Alerts and Chimes"
 msgstr "알림 및 알림음"
 
-#: settings/bluetooth_tab.py:429
+#: settings/bluetooth_tab.py:466
 msgid "Play openpilot's sounds through this device. Change it with the car off."
 msgstr "이 기기로 openpilot 소리를 재생합니다. 차량 시동을 끈 상태에서 변경하세요."
 
-#: settings/bluetooth_tab.py:430
+#: settings/bluetooth_tab.py:467
 msgid "Sound Test"
 msgstr "소리 테스트"
 
-#: settings/bluetooth_tab.py:430
+#: settings/bluetooth_tab.py:467
 msgid "Plays a sound through the car after a short countdown"
 msgstr "짧은 카운트다운 후 차량에서 소리를 재생합니다"
 
-#: settings/bluetooth_tab.py:431
+#: settings/bluetooth_tab.py:468
 #, python-brace-format
 msgid "Forget {}?"
 msgstr "{} 등록을 해제할까요?"
 
-#: settings/bluetooth_tab.py:431
+#: settings/bluetooth_tab.py:468
 msgid "You'll need to pair it again to use it."
 msgstr "다시 사용하려면 페어링해야 합니다."
 
-#: settings/bluetooth_tab.py:449
+#: settings/bluetooth_tab.py:486
 msgid "Test sound"
 msgstr "테스트 소리"
 
@@ -1917,46 +1930,46 @@ msgstr "테스트 소리"
 msgid "All action slots are in use. Remove another button first."
 msgstr "모든 동작 슬롯이 사용 중입니다. 먼저 다른 버튼을 삭제하세요."
 
-#: settings/bluetooth_tab.py:394
+#: settings/bluetooth_tab.py:431
 msgid "Follow the steps on the device."
 msgstr "기기에 표시된 단계를 따르세요."
 
-#: settings/bluetooth_tab.py:399
-#: settings/bluetooth_tab.py:409
-#: settings/bluetooth_tab.py:453
+#: settings/bluetooth_tab.py:436
+#: settings/bluetooth_tab.py:446
+#: settings/bluetooth_tab.py:490
 msgid "Pair"
 msgstr "페어링"
 
-#: settings/bluetooth_tab.py:409
+#: settings/bluetooth_tab.py:446
 #, python-brace-format
 msgid "Pair with {}?"
 msgstr "{}와 페어링할까요?"
 
-#: settings/bluetooth_tab.py:448
+#: settings/bluetooth_tab.py:485
 msgid "Plays alerts and chimes"
 msgstr "알림과 알림음을 재생합니다"
 
-#: settings/bluetooth_tab.py:453
-#: settings/network_tab.py:91
-#: settings/network_tab.py:100
+#: settings/bluetooth_tab.py:490
+#: settings/network_tab.py:140
+#: settings/network_tab.py:151
 msgid "Connect"
 msgstr "연결"
 
-#: settings/bluetooth_tab.py:455
-#: settings/bluetooth_tab.py:448
+#: settings/bluetooth_tab.py:492
+#: settings/bluetooth_tab.py:485
 #: settings/device.py:250
 msgid "Paired"
 msgstr "페어링됨"
 
-#: settings/bluetooth_tab.py:462
+#: settings/bluetooth_tab.py:502
 msgid "Scanning…"
 msgstr "검색 중…"
 
-#: settings/bluetooth_tab.py:463
+#: settings/bluetooth_tab.py:503
 msgid "No car audio paired."
 msgstr "페어링된 차량 오디오가 없습니다."
 
-#: settings/bluetooth_tab.py:464
+#: settings/bluetooth_tab.py:504
 msgid "No devices found yet."
 msgstr "아직 기기를 찾지 못했습니다."
 
@@ -1969,7 +1982,7 @@ msgstr " · {}초 남음"
 msgid "Button"
 msgstr "버튼"
 
-#: settings/bluetooth_tab.py:469
+#: settings/bluetooth_tab.py:509
 msgid "Pairing waits until you're parked."
 msgstr "주차한 후 페어링할 수 있습니다."
 
@@ -1979,11 +1992,7 @@ msgstr "주차한 후 페어링할 수 있습니다."
 msgid "Save"
 msgstr "저장"
 
-#: settings/bluetooth_tab.py:466
-msgid "CAR AUDIO"
-msgstr "차량 오디오"
-
-#: settings/bluetooth_tab.py:467
+#: settings/bluetooth_tab.py:507
 msgid "NEARBY"
 msgstr "주변 기기"
 
@@ -2042,12 +2051,12 @@ msgid "Recording"
 msgstr "녹화 중"
 
 #: settings/can_recorder.py:20
-#: settings/network_tab.py:305
+#: settings/network_tab.py:381
 msgid "Saving…"
 msgstr "저장 중…"
 
 #: settings/can_recorder.py:20
-#: settings/network_tab.py:70
+#: settings/network_tab.py:119
 msgid "Saved"
 msgstr "저장됨"
 
@@ -2232,23 +2241,23 @@ msgid "{} button"
 msgid_plural "{} buttons"
 msgstr[0] "버튼 {}개"
 
-#: settings/connections.py:68
+#: settings/connections.py:83
 msgid "CONNECTIONS"
 msgstr "연결"
 
-#: settings/connections.py:69
+#: settings/connections.py:84
 #: settings/map_source.py:207
-#: settings/network_tab.py:296
+#: settings/network_tab.py:371
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
-#: settings/connections.py:71
-#: settings/network_tab.py:315
+#: settings/connections.py:86
+#: settings/network_tab.py:391
 #: settings/search.py:32
 msgid "Cellular"
 msgstr "이동통신"
 
-#: settings/connections.py:74
+#: settings/connections.py:89
 #: settings/search.py:32
 #: settings/search.py:220
 msgid "Car Audio & Devices"
@@ -2525,7 +2534,7 @@ msgstr "설정"
 
 #: settings/device.py:370
 #: settings/model.py:140
-#: settings/network_tab.py:216
+#: settings/network_tab.py:279
 msgid "Not available"
 msgstr "사용 불가"
 
@@ -3138,7 +3147,7 @@ msgid "The street name is always shown in the onroad bar. Speed limit sources an
 msgstr "도로 이름은 항상 주행 표시줄에 표시됩니다. 제한 속도 출처와 우선순위는 튜닝 모드에 있습니다."
 
 #: settings/display.py:377
-#: settings/network_tab.py:101
+#: settings/network_tab.py:152
 #: setup.py:119
 msgid "Next"
 msgstr "다음"
@@ -4099,272 +4108,291 @@ msgstr "새 모델은 다음 주행부터 적용됩니다."
 msgid "No models here yet."
 msgstr "아직 모델이 없습니다."
 
-#: settings/network_tab.py:220
-#: settings/network_tab.py:69
+#: settings/network_tab.py:283
+#: settings/network_tab.py:118
 msgid "Connecting…"
 msgstr "연결 중…"
 
-#: settings/network_tab.py:220
-#: settings/network_tab.py:217
-#: settings/network_tab.py:173
+#: settings/network_tab.py:283
+#: settings/network_tab.py:280
+#: settings/network_tab.py:227
 msgid "Not connected"
 msgstr "연결 안 됨"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:221
+#: settings/network_tab.py:284
 msgid "No SIM"
 msgstr "No SIM"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:221
+#: settings/network_tab.py:284
 msgid "No signal"
 msgstr "No signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:221
+#: settings/network_tab.py:284
 msgid "Wi-Fi in use"
 msgstr "Wi-Fi in use"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:221
-#: settings/network_tab.py:214
+#: settings/network_tab.py:284
+#: settings/network_tab.py:277
+#: settings/network_tab.py:368
 msgid "Checking…"
 msgstr "Checking…"
 
+#: settings/network_tab.py:285
+#: settings/network_tab.py:296
+msgid "Couldn’t change cellular"
+msgstr "모바일 네트워크를 전환할 수 없습니다"
+
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:224
+#: settings/network_tab.py:288
 msgid "Cellular data is connected."
 msgstr "Cellular data is connected."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:225
+#: settings/network_tab.py:289
 msgid "APN saved. Waiting for a cellular data connection."
 msgstr "APN saved. Waiting for a cellular data connection."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:226
+#: settings/network_tab.py:290
 msgid "Cellular data is not connected. Check your APN, signal and carrier account."
 msgstr "Cellular data is not connected. Check your APN, signal and carrier account."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:227
+#: settings/network_tab.py:291
 msgid "No SIM detected. Insert a SIM to use cellular data."
 msgstr "No SIM detected. Insert a SIM to use cellular data."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:228
+#: settings/network_tab.py:292
 msgid "SIM detected. No cellular service. Your APN is saved."
 msgstr "SIM detected. No cellular service. Your APN is saved."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:229
+#: settings/network_tab.py:293
 msgid "Wi-Fi is connected. Cellular data is not confirmed yet."
 msgstr "Wi-Fi is connected. Cellular data is not confirmed yet."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:230
+#: settings/network_tab.py:294
 msgid "Waiting for current modem status."
 msgstr "Waiting for current modem status."
 
+#: settings/network_tab.py:295
+#: settings/network_tab.py:247
+msgid "Mobile broadband is off"
+msgstr "모바일 네트워크가 꺼져 있습니다"
+
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:232
+#: settings/network_tab.py:298
 msgid "Poor signal"
 msgstr "Poor signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:232
+#: settings/network_tab.py:298
 msgid "Moderate signal"
 msgstr "Moderate signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:232
+#: settings/network_tab.py:298
 msgid "Good signal"
 msgstr "Good signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:232
+#: settings/network_tab.py:298
 msgid "Great signal"
 msgstr "Great signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:202
+#: settings/network_tab.py:263
 msgid "SIM detected"
 msgstr "SIM detected"
 
-#: settings/network_tab.py:90
+#: settings/network_tab.py:139
 #, python-brace-format
 msgid "for \"{}\""
 msgstr "\"{}\"의 비밀번호"
 
-#: settings/network_tab.py:101
+#: settings/network_tab.py:152
 msgid "Network name"
 msgstr "네트워크 이름"
 
-#: settings/network_tab.py:114
+#: settings/network_tab.py:166
 #, python-brace-format
 msgid "{} · Couldn't save"
 msgstr "{} · 저장하지 못함"
 
-#: settings/network_tab.py:134
+#: settings/network_tab.py:186
 msgid "Connected devices will need to reconnect."
 msgstr "연결된 기기는 다시 연결해야 합니다."
 
-#: settings/network_tab.py:137
+#: settings/network_tab.py:189
 msgid "Hotspot password"
 msgstr "핫스팟 비밀번호"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/network_tab.py:167
-#: settings/network_tab.py:321
+#: settings/network_tab.py:219
+#: settings/network_tab.py:397
 msgid "APN"
 msgstr "APN"
 
-#: settings/network_tab.py:167
+#: settings/network_tab.py:219
 msgid "Leave empty for automatic"
 msgstr "자동으로 설정하려면 비워 두세요"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:189
+#: settings/network_tab.py:250
 msgid "Reading cellular status"
 msgstr "Reading cellular status"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:191
+#: settings/network_tab.py:252
 msgid "Cellular data unavailable"
 msgstr "Cellular data unavailable"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:193
+#: settings/network_tab.py:254
 msgid "SIM detected · No cellular service"
 msgstr "SIM detected · No cellular service"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:201
+#: settings/network_tab.py:262
 #, python-brace-format
 msgid "SIM detected · {}"
 msgstr "SIM detected · {}"
 
-#: settings/network_tab.py:307
-#: settings/network_tab.py:305
-#: settings/network_tab.py:321
+#: settings/network_tab.py:383
+#: settings/network_tab.py:381
+#: settings/network_tab.py:397
 msgid "Edit"
 msgstr "수정"
 
-#: settings/network_tab.py:324
-#: settings/network_tab.py:315
+#: settings/network_tab.py:400
+#: settings/network_tab.py:391
 #: settings/search.py:217
 msgid "Roaming, APN and IP address"
 msgstr "로밍, APN 및 IP 주소"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:324
+#: settings/network_tab.py:400
 msgid "Status updates automatically while this page is open."
 msgstr "Status updates automatically while this page is open."
 
-#: settings/network_tab.py:90
+#: settings/network_tab.py:139
 msgid "Wrong password"
 msgstr "잘못된 비밀번호"
 
-#: settings/network_tab.py:90
-#: settings/network_tab.py:99
+#: settings/network_tab.py:139
+#: settings/network_tab.py:150
 msgid "Enter password"
 msgstr "비밀번호 입력"
 
-#: settings/network_tab.py:121
-#: settings/network_tab.py:311
+#: settings/network_tab.py:173
+#: settings/network_tab.py:387
 #: settings/search.py:214
 msgid "Hotspot name"
 msgstr "핫스팟 이름"
 
-#: settings/network_tab.py:128
+#: settings/network_tab.py:180
 msgid "A saved network already uses this name"
 msgstr "저장된 네트워크에서 이미 사용하는 이름입니다"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:198
+#: settings/network_tab.py:259
 #, python-brace-format
 msgid "{} · {}"
 msgstr "{} · {}"
 
-#: settings/network_tab.py:310
-#: settings/search.py:213
-msgid "Hotspot"
-msgstr "핫스팟"
-
-#: settings/network_tab.py:310
-#: settings/search.py:213
-msgid "Share this device's connection"
-msgstr "이 기기의 인터넷 연결 공유"
-
-#: settings/network_tab.py:313
-#: settings/search.py:215
-msgid "Hotspot Password"
-msgstr "핫스팟 비밀번호"
-
-#: settings/network_tab.py:313
-#: settings/search.py:215
-msgid "For phones joining this device's hotspot"
-msgstr "이 기기의 핫스팟에 연결할 휴대전화용"
-
-#: settings/network_tab.py:314
-#: settings/search.py:216
-msgid "Save Data"
-msgstr "데이터 절약"
-
-#: settings/network_tab.py:314
-#: settings/search.py:216
-msgid "No large uploads on cellular or phone hotspots"
-msgstr "이동통신이나 휴대전화 핫스팟에서 대용량 업로드 안 함"
-
-#: settings/network_tab.py:320
-msgid "Roaming"
-msgstr "로밍"
-
-#: settings/network_tab.py:320
-msgid "Use cellular data outside your carrier's network"
-msgstr "통신사 네트워크 밖에서 이동통신 데이터 사용"
-
-#. English fallback pending cellular-status translation.
-#: settings/network_tab.py:323
-#: settings/search.py:218
-msgid "Cellular IP address"
-msgstr "Cellular IP address"
-
-#: settings/network_tab.py:99
-#, python-brace-format
-msgid "for \"{}\", or leave empty for an open network"
-msgstr "\"{}\"의 비밀번호입니다. 개방형 네트워크면 비워 두세요"
-
-#: settings/network_tab.py:295
-msgid "Scanning for networks…"
-msgstr "네트워크 검색 중…"
-
-#: settings/network_tab.py:296
+#: settings/network_tab.py:366
 #: settings/search.py:211
 msgid "Join a hidden network"
 msgstr "숨겨진 네트워크 연결"
 
-#: settings/network_tab.py:125
+#: settings/network_tab.py:386
+#: settings/search.py:213
+msgid "Hotspot"
+msgstr "핫스팟"
+
+#: settings/network_tab.py:386
+#: settings/search.py:213
+msgid "Share this device's connection"
+msgstr "이 기기의 인터넷 연결 공유"
+
+#: settings/network_tab.py:389
+#: settings/search.py:215
+msgid "Hotspot Password"
+msgstr "핫스팟 비밀번호"
+
+#: settings/network_tab.py:389
+#: settings/search.py:215
+msgid "For phones joining this device's hotspot"
+msgstr "이 기기의 핫스팟에 연결할 휴대전화용"
+
+#: settings/network_tab.py:390
+#: settings/search.py:216
+msgid "Save Data"
+msgstr "데이터 절약"
+
+#: settings/network_tab.py:390
+#: settings/search.py:216
+msgid "No large uploads on cellular or phone hotspots"
+msgstr "이동통신이나 휴대전화 핫스팟에서 대용량 업로드 안 함"
+
+#: settings/network_tab.py:396
+msgid "Roaming"
+msgstr "로밍"
+
+#: settings/network_tab.py:396
+msgid "Use cellular data outside your carrier's network"
+msgstr "통신사 네트워크 밖에서 이동통신 데이터 사용"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:399
+#: settings/search.py:218
+msgid "Cellular IP address"
+msgstr "Cellular IP address"
+
+#: settings/network_tab.py:150
+#, python-brace-format
+msgid "for \"{}\", or leave empty for an open network"
+msgstr "\"{}\"의 비밀번호입니다. 개방형 네트워크면 비워 두세요"
+
+#: settings/network_tab.py:370
+msgid "Couldn’t change Wi-Fi"
+msgstr "Wi-Fi를 전환할 수 없습니다"
+
+#: settings/network_tab.py:177
 msgid "Enter a hotspot name"
 msgstr "핫스팟 이름 입력"
 
-#: settings/network_tab.py:125
+#: settings/network_tab.py:177
 msgid "Name is too long. Use a shorter name."
 msgstr "이름이 너무 깁니다. 더 짧은 이름을 사용하세요."
 
-#: settings/network_tab.py:126
+#: settings/network_tab.py:178
 msgid "Use letters, numbers, spaces or punctuation"
 msgstr "문자, 숫자, 공백 또는 문장부호를 사용하세요"
 
-#: settings/network_tab.py:287
+#: settings/network_tab.py:355
 msgid "Secured"
 msgstr "보안 네트워크"
 
-#: settings/network_tab.py:287
+#: settings/network_tab.py:355
 msgid "Open"
 msgstr "개방형"
 
-#: settings/network_tab.py:321
+#: settings/network_tab.py:365
+msgid "Scanning for networks…"
+msgstr "네트워크 검색 중…"
+
+#: settings/network_tab.py:368
+msgid "Wi-Fi is off"
+msgstr "Wi-Fi가 꺼져 있습니다"
+
+#: settings/network_tab.py:397
 msgid "Automatic"
 msgstr "자동"
 

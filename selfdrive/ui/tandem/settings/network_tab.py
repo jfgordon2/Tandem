@@ -13,12 +13,13 @@ import pyray as rl
 
 from openpilot.selfdrive.ui.tandem import tokens as T
 from openpilot.selfdrive.ui.tandem.base import Component
-from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, StatusBadge, Switch, Tone, ValueButton
+from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, HeaderControls, StatusBadge, Switch, Tone, ValueButton
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, SettingRow, Text
 from openpilot.selfdrive.ui.tandem.settings.model import Rebuilding
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
 from openpilot.system.ui.widgets import Widget
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_
+from openpilot.starpilot.tandem.radios import Radio, RadioControls
 
 if TYPE_CHECKING:
   from openpilot.system.ui.lib.wifi_manager import MeteredType
@@ -50,6 +51,8 @@ class Network:
 
   def __init__(self, wifi: WifiManager, store: SettingsStore, ask: Callable = ask_text, cellular: Monitor | None = None) -> None:
     self.wifi = wifi
+    self.radios: RadioControls | None = getattr(wifi, "radios", None)
+    self._wifi_page = self._wifi_scanning = False
     self._store = store
     self._ask = ask
     from openpilot.starpilot.tandem.cellular import monitor
@@ -58,9 +61,55 @@ class Network:
 
   def tick(self) -> None:
     self.wifi.process_callbacks()
+    if self.radios is not None:
+      self.radios.refresh()
+    self._sync_wifi_scans()
+
+  def set_wifi_page(self, shown: bool) -> None:
+    self._wifi_page = shown
+    if shown and self.radios is not None:
+      self.radios.refresh()
+    self._sync_wifi_scans()
+
+  def _sync_wifi_scans(self) -> None:
+    scan = self._wifi_page and self.wifi_enabled
+    if scan != self._wifi_scanning:
+      self._wifi_scanning = scan
+      self.wifi.set_active(scan)
+
+  @property
+  def wifi_enabled(self) -> bool:
+    if self.radios is None:
+      return True
+    state = self.radios.state(Radio.WIFI)
+    return state.enabled if state is not None else self.radios.read_failed
+
+  def radio_off(self, radio: Radio) -> bool:
+    state = self.radios.state(radio) if self.radios is not None else None
+    return state is not None and not state.enabled
+
+  def radio_failed(self, radio: Radio) -> bool:
+    return self.radios is not None and self.radios.failed == radio
+
+  def radio_switch(self, radio: Radio) -> Switch | None:
+    radios = self.radios
+    if radios is None:
+      return None
+
+    def on() -> bool:
+      state = radios.state(radio)
+      return state is not None and state.enabled
+
+    def can_toggle() -> bool:
+      state = radios.state(radio)
+      return state is not None and state.can_toggle and not radios.busy and not radios.read_failed
+
+    control = Switch(on, lambda enabled: radios.set_enabled(radio, enabled))
+    control.set_enabled(can_toggle)
+    return control
 
   def networks(self) -> list:
-    return [n for n in self.wifi.networks if not n.is_tethering]
+    return [n for n in self.wifi.networks if not n.is_tethering] if self.wifi_enabled else []
 
   def status(self, ssid: str) -> str:
     if self.wifi.connected_ssid == ssid:
@@ -77,7 +126,7 @@ class Network:
 
   def choose(self, network: WifiNetwork) -> None:
     """Connects to a network: at once when it's saved or open, else after asking for its password."""
-    if network.security_type == UNSUPPORTED or self.wifi.connected_ssid == network.ssid:
+    if not self.wifi_enabled or network.security_type == UNSUPPORTED or self.wifi.connected_ssid == network.ssid:
       return
     if self.wifi.is_connection_saved(network.ssid):
       self.wifi.activate_connection(network.ssid)
@@ -94,6 +143,8 @@ class Network:
     self.wifi.forget_connection(ssid)
 
   def join_hidden(self) -> None:
+    if not self.wifi_enabled:
+      return
     def with_name(ssid: str) -> None:
       if ssid:
         self._ask(N_("Enter password"), t_("for \"{}\", or leave empty for an open network", ssid), "",
@@ -104,10 +155,11 @@ class Network:
 
   @property
   def hotspot(self) -> bool:
-    return bool(self.wifi.is_tethering_active())
+    return self.wifi_enabled and self.wifi.is_tethering_active()
 
   def set_hotspot(self, on: bool) -> None:
-    self.wifi.set_tethering_active(on)
+    if not on or self.wifi_enabled:
+      self.wifi.set_tethering_active(on)
 
   def hotspot_name_detail(self) -> str:
     name = self.wifi.tethering_ssid
@@ -170,20 +222,29 @@ class Network:
     self.wifi.update_gsm_settings(self.roaming, self.apn(), self.save_data)
 
   def summary(self) -> str:
+    if self.radio_off(Radio.WIFI):
+      return N_("Off")
     return self.wifi.connected_ssid or N_("Not connected")
 
+  def cellular_code(self) -> str:
+    if self.radio_failed(Radio.CELLULAR):
+      return "radio_failed"
+    return "off" if self.radio_off(Radio.CELLULAR) else self.cellular.status().code
+
   def cellular_label(self) -> str:
-    return CELLULAR_LABELS[self.cellular.status().code]
+    return CELLULAR_LABELS[self.cellular_code()]
 
   def cellular_summary(self) -> str:
-    status = self.cellular.status()
-    return "" if status.code == "checking" else CELLULAR_LABELS[status.code]
+    code = self.cellular_code()
+    return "" if code == "checking" else CELLULAR_LABELS[code]
 
   def cellular_tone(self) -> Tone:
-    return CELLULAR_TONES.get(self.cellular.status().code, Tone.WARNING)
+    return CELLULAR_TONES.get(self.cellular_code(), Tone.WARNING)
 
   def cellular_meta(self, main: bool = False) -> str:
     """The cellular panel's line: the technology and signal, or why there's no service."""
+    if self.radio_off(Radio.CELLULAR):
+      return N_("Mobile broadband is off")
     status = self.cellular.status()
     if status.code == "checking" or status.observation is None:
       return N_("Reading cellular status")
@@ -202,13 +263,15 @@ class Network:
     return N_("SIM detected")
 
   def cellular_note(self) -> str:
-    return CELLULAR_NOTES[self.cellular.status().code]
+    return CELLULAR_NOTES[self.cellular_code()]
 
   def cellular_note_color(self) -> rl.Color:
     return {Tone.SUCCESS: T.SUCCESS_TEXT, Tone.ACCENT: T.ACCENT_TEXT, Tone.NEUTRAL: T.TEXT_TERTIARY}.get(
       self.cellular_tone(), T.WARNING)
 
   def cellular_address(self) -> str:
+    if self.radio_off(Radio.CELLULAR):
+      return N_("Not connected")
     status = self.cellular.status()
     if status.code == "checking":
       return N_("Checking…")
@@ -218,8 +281,9 @@ class Network:
 
 
 CELLULAR_LABELS = {"connected": N_("Connected"), "connecting": N_("Connecting…"), "not_connected": N_("Not connected"),
-                   "no_sim": N_("No SIM"), "no_signal": N_("No signal"), "wifi": N_("Wi-Fi in use"), "checking": N_("Checking…")}
-CELLULAR_TONES = {"connected": Tone.SUCCESS, "wifi": Tone.ACCENT, "checking": Tone.NEUTRAL}
+                   "no_sim": N_("No SIM"), "no_signal": N_("No signal"), "wifi": N_("Wi-Fi in use"), "checking": N_("Checking…"),
+                   "off": N_("Off"), "radio_failed": N_("Couldn’t change cellular")}
+CELLULAR_TONES = {"connected": Tone.SUCCESS, "wifi": Tone.ACCENT, "checking": Tone.NEUTRAL, "off": Tone.NEUTRAL}
 CELLULAR_NOTES = {
   "connected": N_("Cellular data is connected."),
   "connecting": N_("APN saved. Waiting for a cellular data connection."),
@@ -228,6 +292,8 @@ CELLULAR_NOTES = {
   "no_signal": N_("SIM detected. No cellular service. Your APN is saved."),
   "wifi": N_("Wi-Fi is connected. Cellular data is not confirmed yet."),
   "checking": N_("Waiting for current modem status."),
+  "off": N_("Mobile broadband is off"),
+  "radio_failed": N_("Couldn’t change cellular"),
 }
 SIGNAL_LABELS = [N_("Poor signal"), N_("Moderate signal"), N_("Good signal"), N_("Great signal")]
 
@@ -237,8 +303,10 @@ class CellularPanel(ListPanel):
 
   def __init__(self, model: Network, items: Sequence[Widget], *, main: bool = False, **kwargs: Any) -> None:
     self.model = model
+    badge = StatusBadge(model.cellular_label, model.cellular_tone, dot=lambda: model.cellular_code() != "off")
+    power = model.radio_switch(Radio.CELLULAR) if main else None
     super().__init__(items, subtitle=lambda: model.cellular_meta(main),
-                     header_control=StatusBadge(model.cellular_label, model.cellular_tone), **kwargs)
+                     header_control=HeaderControls(badge, power) if power else badge, **kwargs)
 
   def show_event(self) -> None:
     self.model.cellular.set_active(True, self.model.apn())
@@ -292,16 +360,24 @@ def wifi_panel(model: Network) -> Component:
 
   def build() -> ListPanel:
     networks = model.networks()
-    rows: list[Widget] = [network_row(n) for n in networks] or [Text(N_("Scanning for networks…"))]
-    return ListPanel(rows, title=N_("Wi-Fi"), bottom=SettingRow(N_("Join a hidden network"), None, on_click=model.join_hidden))
+    bottom = None
+    if model.wifi_enabled:
+      rows: list[Widget] = [network_row(n) for n in networks] or [Text(N_("Scanning for networks…"))]
+      bottom = SettingRow(N_("Join a hidden network"), None, on_click=model.join_hidden)
+    else:
+      rows = [Text(N_("Wi-Fi is off") if model.radio_off(Radio.WIFI) else N_("Checking…"))]
+    if model.radio_failed(Radio.WIFI):
+      rows.insert(0, Text(N_("Couldn’t change Wi-Fi")))
+    return ListPanel(rows, title=N_("Wi-Fi"), header_control=model.radio_switch(Radio.WIFI), bottom=bottom)
 
-  return Rebuilding(lambda: tuple(n.ssid for n in model.networks()), build, model.tick)
+  return Rebuilding(lambda: (model.wifi_enabled, model.radio_off(Radio.WIFI), model.radio_failed(Radio.WIFI),
+                             tuple(n.ssid for n in model.networks())), build, model.tick)
 
 
 def cellular_panel(model: Network, open_advanced: Callable[[], None]) -> ListPanel:
   """Connections › Cellular: status, roaming, APN and IP address, with Advanced."""
   hotspot = Switch(lambda: model.hotspot, model.set_hotspot)
-  hotspot.set_enabled(lambda: not model.wifi.tethering_name_busy)
+  hotspot.set_enabled(lambda: model.wifi_enabled and not model.wifi.tethering_name_busy)
   edit_name = ValueButton(lambda: N_("Saving…") if model.wifi.tethering_name_busy else N_("Edit"), model.edit_hotspot_name)
   edit_name.set_enabled(lambda: model.wifi.tethering_name_ready)
   password = ValueButton(lambda: N_("Edit"), model.edit_hotspot_password)
@@ -326,6 +402,4 @@ def advanced_panel(model: Network) -> ListPanel:
 
 def upstream_wifi() -> WifiManager:
   from openpilot.starpilot.tandem.wifi import WifiManager
-  wifi = WifiManager()
-  wifi.set_active(False)
-  return wifi
+  return WifiManager(active=False)

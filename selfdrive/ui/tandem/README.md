@@ -230,7 +230,9 @@ The Cellular section shows the current hotspot name and edits it through the sha
 
 Cellular and APN settings also show live modem status through the page-scoped, read-only adapter in `starpilot/tandem/cellular.py`. The worker stops when those pages close. APN, roaming and Save Data still use StarPilot's params and apply method; no upstream hook is added. Connected requires a matching active mobile connection and modem bearer. The displayed address belongs to that connection, never Wi-Fi. See [cellular status](docs/cellular-status.md) for state conditions, freshness and device checks.
 
-Bluetooth discovery runs through the shared `WhileShown` lifecycle on both Bluetooth sections. Tandem waits for the manager's asynchronous status, enables the radio through StarPilot's existing manager, and starts scanning only after the adapter reports powered. Settings are allowed offroad or with fresh valid messages confirming Park, standstill, speed below 0.1 m/s, and no enabled lateral/longitudinal control. Both the UI and authoritative service use `starpilot/tandem/bluetooth.py`; publication and receive times must both be within one second. This lets a car stereo be paired with accessory/ignition power available. Scans renew when the daemon's 20-second window ends, pause while pairing, and stop when the section hides (including a start still awaiting its first status update). Original device filtering, pairing protocol, reconnect/offroad controller policy and the upstream UI fallback remain intact.
+Wi-Fi and Cellular have independent header switches backed by NetworkManager's radio properties in `starpilot/tandem/radios.py`. The UI reads the system's state and permissions in a short-lived worker while the panel is visible. Wi-Fi Off stops the Wi-Fi list and hotspot. Cellular Off shows a distinct status and keeps APN settings. Both switches retain the saved connection profiles.
+
+Bluetooth Remote and Car Audio & Devices share the Bluetooth switch, using StarPilot's existing manager and persistent setting. Opening either section respects Off. Bluetooth discovery runs through the shared `WhileShown` lifecycle and starts only after the adapter reports powered. Settings are allowed offroad or with fresh valid messages confirming Park, standstill, speed below 0.1 m/s, and no enabled lateral/longitudinal control. Both the UI and authoritative service use `starpilot/tandem/bluetooth.py`; publication and receive times must both be within one second. This lets a car stereo be paired with accessory/ignition power available. Scans renew when the daemon's 20-second window ends, pause while pairing, and stop when the section hides (including a start still awaiting its first status update). Original device filtering, pairing protocol, reconnect/offroad controller policy and the upstream UI fallback remain intact.
 | Software | Updates, release channel, Reset Settings, Uninstall | `software_tab.py`, `defaults.py` | `SoftwareLayout` actions |
 
 ### Upstream screens still shown, one tap away
@@ -244,6 +246,8 @@ These are reached from a row or button, never as a tab:
 `upstream.py` hosts them. `StarPilotPage` opens one StarPilot panel directly, without going through StarPilot's own hub.
 
 ### Where the code differs from the mocks
+
+- **Radio switches:** the eight `radio-*` mocks supersede the older Connections headers. The built panels use the native header padding and show the live network or remote name.
 
 - **Larger navigation turns:** the built controls leave less text width than the mock, so the sample street in `onroadlarge-nav-tight` scrolls. Arrive and Left each fit on their own turn.
 

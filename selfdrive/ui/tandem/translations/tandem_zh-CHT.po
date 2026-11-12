@@ -5,21 +5,21 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=(0);\n"
 "X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\n"
 
-#: controls.py:196
+#: controls.py:197
 msgid "On"
 msgstr "開啟"
 
-#: controls.py:196
-#: controls.py:199
+#: controls.py:197
+#: controls.py:200
 #: settings/device_sections.py:60
 msgid "Off"
 msgstr "關閉"
 
-#: controls.py:302
+#: controls.py:303
 msgid "RECOMMENDED"
 msgstr "建議"
 
-#: controls.py:575
+#: controls.py:606
 #: settings/display.py:203
 #: settings/display.py:355
 msgid "Default"
@@ -188,7 +188,7 @@ msgid "Search for your work address"
 msgstr "搜尋公司地址"
 
 #: destinations.py:567
-#: onroad/layers.py:97
+#: onroad/layers.py:118
 msgid "End route"
 msgstr "結束路線"
 
@@ -718,7 +718,7 @@ msgstr "彎道速度"
 
 #. Unit notation; keep as written.
 #: onroad/developer.py:286
-#: onroad/extras.py:236
+#: onroad/extras.py:231
 #: onroad/lead.py:116
 #, python-brace-format
 msgid "{} m"
@@ -726,7 +726,7 @@ msgstr "{} m"
 
 #. Unit notation; keep as written.
 #: onroad/developer.py:286
-#: onroad/extras.py:236
+#: onroad/extras.py:231
 #: onroad/lead.py:116
 #, python-brace-format
 msgid "{} ft"
@@ -858,56 +858,56 @@ msgstr "大型模型失敗"
 msgid "Small model in use"
 msgstr "正在使用小型模型"
 
-#: onroad/layers.py:451
+#: onroad/layers.py:492
 msgid "Help steer"
 msgstr "請協助轉向"
 
-#: onroad/layers.py:451
+#: onroad/layers.py:492
 msgid "Steering is at its limit for this curve"
 msgstr "轉向已達此彎道的極限"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: onroad/layers.py:146
+#: onroad/layers.py:169
 msgid "MAX"
 msgstr "MAX"
 
-#: onroad/layers.py:536
+#: onroad/layers.py:200
+msgid "ARRIVE"
+msgstr "抵達"
+
+#: onroad/layers.py:201
+msgid "LEFT"
+msgstr "剩餘"
+
+#: onroad/layers.py:577
 #, python-brace-format
 msgid "New limit {}"
 msgstr "新速限{}"
 
-#: onroad/layers.py:537
+#: onroad/layers.py:578
 msgid "Slow down"
 msgstr "減速"
 
-#: onroad/layers.py:537
+#: onroad/layers.py:578
 msgid "Speed up"
 msgstr "加速"
 
-#: onroad/layers.py:538
+#: onroad/layers.py:579
 #, python-brace-format
 msgid "{} to {} {}?"
 msgstr "{}至{} {}？"
 
-#: onroad/layers.py:539
+#: onroad/layers.py:580
 #, python-brace-format
 msgid "From {} · ignored in {} s"
 msgstr "來源：{} · {}秒後忽略"
 
-#: onroad/layers.py:213
-msgid "ARRIVE"
-msgstr "抵達"
-
-#: onroad/layers.py:213
-msgid "LEFT"
-msgstr "剩餘"
-
-#: onroad/layers.py:509
+#: onroad/layers.py:550
 #: settings/speed_steering.py:20
 msgid "Match"
 msgstr "依速限調整"
 
-#: onroad/layers.py:511
+#: onroad/layers.py:552
 msgid "Ignore"
 msgstr "忽略"
 
@@ -1218,18 +1218,18 @@ msgid "Byp"
 msgstr "Byp"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:628
+#: onroad/view.py:637
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
 #. Unit notation; keep as written.
-#: onroad/view.py:628
+#: onroad/view.py:637
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/view.py:629
+#: onroad/view.py:638
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{}分鐘 · {}"
@@ -1664,55 +1664,55 @@ msgstr "音量"
 msgid "Minimum {}% for safety alerts"
 msgstr "安全警報最低音量為{}%"
 
-#: settings/bluetooth_tab.py:489
+#: settings/bluetooth_tab.py:529
 msgid "Engage"
 msgstr "啟用"
 
-#: settings/bluetooth_tab.py:489
+#: settings/bluetooth_tab.py:529
 msgid "Disengage"
 msgstr "退出"
 
-#: settings/bluetooth_tab.py:489
+#: settings/bluetooth_tab.py:529
 #: settings/vehicle.py:34
 msgid "Change driving style"
 msgstr "變更駕駛風格"
 
-#: settings/bluetooth_tab.py:490
+#: settings/bluetooth_tab.py:530
 msgid "Screen off / on"
 msgstr "關閉/開啟螢幕"
 
-#: settings/bluetooth_tab.py:490
+#: settings/bluetooth_tab.py:530
 #: settings/vehicle.py:35
 #: sidebar.py:74
 msgid "Save a clip"
 msgstr "儲存片段"
 
-#: settings/bluetooth_tab.py:490
+#: settings/bluetooth_tab.py:530
 #: settings/vehicle.py:35
 msgid "Always-on steering"
 msgstr "持續轉向"
 
-#: settings/bluetooth_tab.py:490
+#: settings/bluetooth_tab.py:530
 #: settings/vehicle.py:34
 msgid "Coast"
 msgstr "滑行"
 
-#: settings/bluetooth_tab.py:288
+#: settings/bluetooth_tab.py:309
 msgid "Press any button to find it"
 msgstr "按任意按鈕以辨識"
 
-#: settings/bluetooth_tab.py:322
+#: settings/bluetooth_tab.py:345
 #, python-brace-format
 msgid "Button {}"
 msgstr "按鈕{}"
 
-#: settings/bluetooth_tab.py:431
-#: settings/bluetooth_tab.py:435
-#: settings/bluetooth_tab.py:431
+#: settings/bluetooth_tab.py:468
+#: settings/bluetooth_tab.py:472
+#: settings/bluetooth_tab.py:468
 msgid "Forget"
 msgstr "忘記"
 
-#: settings/bluetooth_tab.py:687
+#: settings/bluetooth_tab.py:727
 #, python-brace-format
 msgid "A sound plays in {}…"
 msgstr "{}後播放聲音…"
@@ -1766,61 +1766,74 @@ msgstr "第 2 步 · 選擇操作"
 msgid "Pulse and glide and driver selfie are in Tuner Mode."
 msgstr "加速與滑行及駕駛自拍位於調校模式。"
 
-#: settings/bluetooth_tab.py:299
-#: settings/connections.py:72
+#: settings/bluetooth_tab.py:320
+#: settings/connections.py:87
 #: settings/search.py:32
 msgid "Bluetooth Remote"
 msgstr "藍牙遙控器"
 
-#: settings/bluetooth_tab.py:355
+#: settings/bluetooth_tab.py:321
+#: settings/bluetooth_tab.py:499
+msgid "Bluetooth is off"
+msgstr "藍牙已關閉"
+
+#: settings/bluetooth_tab.py:379
 msgid "That button isn't assigned yet. Tap to add it."
 msgstr "此按鈕尚未指派操作。點選可新增。"
 
-#: settings/bluetooth_tab.py:355
+#: settings/bluetooth_tab.py:379
 msgid "Add a button"
 msgstr "新增按鈕"
 
-#: settings/bluetooth_tab.py:390
+#: settings/bluetooth_tab.py:409
+msgid "Bluetooth"
+msgstr "藍牙"
+
+#: settings/bluetooth_tab.py:427
 msgid "Bluetooth device"
 msgstr "藍牙裝置"
 
-#: settings/bluetooth_tab.py:427
+#: settings/bluetooth_tab.py:464
 msgid "Test"
 msgstr "測試"
 
-#: settings/bluetooth_tab.py:434
-#: settings/bluetooth_tab.py:434
+#: settings/bluetooth_tab.py:471
+#: settings/bluetooth_tab.py:471
 msgid "Disconnect"
 msgstr "中斷連線"
 
-#: settings/bluetooth_tab.py:434
+#: settings/bluetooth_tab.py:471
 msgid "It reconnects the next time you choose it"
 msgstr "下次選擇時會重新連接"
 
-#: settings/bluetooth_tab.py:435
+#: settings/bluetooth_tab.py:472
 msgid "Removes the pairing. Change it with the car off."
 msgstr "移除配對。請在車輛關閉時變更。"
 
-#: settings/bluetooth_tab.py:436
-#: settings/bluetooth_tab.py:448
-#: settings/network_tab.py:220
+#: settings/bluetooth_tab.py:473
+#: settings/bluetooth_tab.py:485
+#: settings/network_tab.py:283
 msgid "Connected"
 msgstr "已連接"
 
-#: settings/bluetooth_tab.py:679
+#: settings/bluetooth_tab.py:497
+msgid "CAR AUDIO"
+msgstr "車輛音響"
+
+#: settings/bluetooth_tab.py:719
 #, python-brace-format
 msgid "The test didn't play: {}"
 msgstr "測試未播放：{}"
 
-#: settings/bluetooth_tab.py:682
+#: settings/bluetooth_tab.py:722
 msgid "Playing now. You should hear it through the car."
 msgstr "正在播放，您應該能從車輛聽到聲音。"
 
-#: settings/bluetooth_tab.py:684
+#: settings/bluetooth_tab.py:724
 msgid "Done. If you didn't hear it, check the car's volume and audio source."
 msgstr "已完成。若未聽到聲音，請檢查車輛音量與音源。"
 
-#: settings/bluetooth_tab.py:686
+#: settings/bluetooth_tab.py:726
 msgid "Getting ready…"
 msgstr "正在準備…"
 
@@ -1849,67 +1862,67 @@ msgstr "正在偵聽{}。"
 msgid "Assign a button"
 msgstr "指派按鈕"
 
-#: settings/bluetooth_tab.py:266
+#: settings/bluetooth_tab.py:270
 msgid "Buttons don't run their actions while this screen is open."
 msgstr "此畫面開啟時，按鈕不會執行其操作。"
 
-#: settings/bluetooth_tab.py:330
+#: settings/bluetooth_tab.py:354
 msgid "PRESSED"
 msgstr "已按下"
 
-#: settings/bluetooth_tab.py:380
+#: settings/bluetooth_tab.py:417
 msgid "Sound test"
 msgstr "聲音測試"
 
-#: settings/bluetooth_tab.py:394
+#: settings/bluetooth_tab.py:431
 #, python-brace-format
 msgid "Pairing with {}"
 msgstr "正在與{}配對"
 
-#: settings/bluetooth_tab.py:400
+#: settings/bluetooth_tab.py:437
 #, python-brace-format
 msgid "Enter the {} for {}"
 msgstr "輸入{1}的{0}"
 
-#: settings/bluetooth_tab.py:400
+#: settings/bluetooth_tab.py:437
 msgid "It's shown on the device, or in its manual"
 msgstr "顯示於裝置上或其說明書中"
 
-#: settings/bluetooth_tab.py:408
+#: settings/bluetooth_tab.py:445
 #, python-brace-format
 msgid "Check that the device shows {}."
 msgstr "請確認裝置顯示{}。"
 
-#: settings/bluetooth_tab.py:408
+#: settings/bluetooth_tab.py:445
 msgid "The device is asking to pair."
 msgstr "裝置正在要求配對。"
 
-#: settings/bluetooth_tab.py:429
+#: settings/bluetooth_tab.py:466
 msgid "Alerts and Chimes"
 msgstr "警報與提示音"
 
-#: settings/bluetooth_tab.py:429
+#: settings/bluetooth_tab.py:466
 msgid "Play openpilot's sounds through this device. Change it with the car off."
 msgstr "透過此裝置播放 openpilot 的聲音。請在車輛關閉時變更。"
 
-#: settings/bluetooth_tab.py:430
+#: settings/bluetooth_tab.py:467
 msgid "Sound Test"
 msgstr "聲音測試"
 
-#: settings/bluetooth_tab.py:430
+#: settings/bluetooth_tab.py:467
 msgid "Plays a sound through the car after a short countdown"
 msgstr "短暫倒數後透過車輛播放聲音"
 
-#: settings/bluetooth_tab.py:431
+#: settings/bluetooth_tab.py:468
 #, python-brace-format
 msgid "Forget {}?"
 msgstr "忘記{}？"
 
-#: settings/bluetooth_tab.py:431
+#: settings/bluetooth_tab.py:468
 msgid "You'll need to pair it again to use it."
 msgstr "需要重新配對才能使用。"
 
-#: settings/bluetooth_tab.py:449
+#: settings/bluetooth_tab.py:486
 msgid "Test sound"
 msgstr "測試聲音"
 
@@ -1917,46 +1930,46 @@ msgstr "測試聲音"
 msgid "All action slots are in use. Remove another button first."
 msgstr "所有操作欄位均已使用。請先移除其他按鈕。"
 
-#: settings/bluetooth_tab.py:394
+#: settings/bluetooth_tab.py:431
 msgid "Follow the steps on the device."
 msgstr "請依裝置上的步驟操作。"
 
-#: settings/bluetooth_tab.py:399
-#: settings/bluetooth_tab.py:409
-#: settings/bluetooth_tab.py:453
+#: settings/bluetooth_tab.py:436
+#: settings/bluetooth_tab.py:446
+#: settings/bluetooth_tab.py:490
 msgid "Pair"
 msgstr "配對"
 
-#: settings/bluetooth_tab.py:409
+#: settings/bluetooth_tab.py:446
 #, python-brace-format
 msgid "Pair with {}?"
 msgstr "與{}配對？"
 
-#: settings/bluetooth_tab.py:448
+#: settings/bluetooth_tab.py:485
 msgid "Plays alerts and chimes"
 msgstr "播放警報與提示音"
 
-#: settings/bluetooth_tab.py:453
-#: settings/network_tab.py:91
-#: settings/network_tab.py:100
+#: settings/bluetooth_tab.py:490
+#: settings/network_tab.py:140
+#: settings/network_tab.py:151
 msgid "Connect"
 msgstr "連接"
 
-#: settings/bluetooth_tab.py:455
-#: settings/bluetooth_tab.py:448
+#: settings/bluetooth_tab.py:492
+#: settings/bluetooth_tab.py:485
 #: settings/device.py:250
 msgid "Paired"
 msgstr "已配對"
 
-#: settings/bluetooth_tab.py:462
+#: settings/bluetooth_tab.py:502
 msgid "Scanning…"
 msgstr "正在掃描…"
 
-#: settings/bluetooth_tab.py:463
+#: settings/bluetooth_tab.py:503
 msgid "No car audio paired."
 msgstr "未配對車輛音響。"
 
-#: settings/bluetooth_tab.py:464
+#: settings/bluetooth_tab.py:504
 msgid "No devices found yet."
 msgstr "尚未找到裝置。"
 
@@ -1969,7 +1982,7 @@ msgstr " · 剩餘{}秒"
 msgid "Button"
 msgstr "按鈕"
 
-#: settings/bluetooth_tab.py:469
+#: settings/bluetooth_tab.py:509
 msgid "Pairing waits until you're parked."
 msgstr "停車後才能配對。"
 
@@ -1979,11 +1992,7 @@ msgstr "停車後才能配對。"
 msgid "Save"
 msgstr "儲存"
 
-#: settings/bluetooth_tab.py:466
-msgid "CAR AUDIO"
-msgstr "車輛音響"
-
-#: settings/bluetooth_tab.py:467
+#: settings/bluetooth_tab.py:507
 msgid "NEARBY"
 msgstr "附近"
 
@@ -2042,12 +2051,12 @@ msgid "Recording"
 msgstr "正在錄製"
 
 #: settings/can_recorder.py:20
-#: settings/network_tab.py:305
+#: settings/network_tab.py:381
 msgid "Saving…"
 msgstr "正在儲存…"
 
 #: settings/can_recorder.py:20
-#: settings/network_tab.py:70
+#: settings/network_tab.py:119
 msgid "Saved"
 msgstr "已儲存"
 
@@ -2232,23 +2241,23 @@ msgid "{} button"
 msgid_plural "{} buttons"
 msgstr[0] "{}個按鈕"
 
-#: settings/connections.py:68
+#: settings/connections.py:83
 msgid "CONNECTIONS"
 msgstr "連線"
 
-#: settings/connections.py:69
+#: settings/connections.py:84
 #: settings/map_source.py:207
-#: settings/network_tab.py:296
+#: settings/network_tab.py:371
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
-#: settings/connections.py:71
-#: settings/network_tab.py:315
+#: settings/connections.py:86
+#: settings/network_tab.py:391
 #: settings/search.py:32
 msgid "Cellular"
 msgstr "行動網路"
 
-#: settings/connections.py:74
+#: settings/connections.py:89
 #: settings/search.py:32
 #: settings/search.py:220
 msgid "Car Audio & Devices"
@@ -2525,7 +2534,7 @@ msgstr "設定"
 
 #: settings/device.py:370
 #: settings/model.py:140
-#: settings/network_tab.py:216
+#: settings/network_tab.py:279
 msgid "Not available"
 msgstr "無法使用"
 
@@ -3138,7 +3147,7 @@ msgid "The street name is always shown in the onroad bar. Speed limit sources an
 msgstr "道路名稱一律顯示在駕駛列中。速限來源及其優先順序位於調校模式。"
 
 #: settings/display.py:377
-#: settings/network_tab.py:101
+#: settings/network_tab.py:152
 #: setup.py:119
 msgid "Next"
 msgstr "下一步"
@@ -4099,272 +4108,291 @@ msgstr "新模型將在下次駕駛時生效。"
 msgid "No models here yet."
 msgstr "暫無模型。"
 
-#: settings/network_tab.py:220
-#: settings/network_tab.py:69
+#: settings/network_tab.py:283
+#: settings/network_tab.py:118
 msgid "Connecting…"
 msgstr "正在連接…"
 
-#: settings/network_tab.py:220
-#: settings/network_tab.py:217
-#: settings/network_tab.py:173
+#: settings/network_tab.py:283
+#: settings/network_tab.py:280
+#: settings/network_tab.py:227
 msgid "Not connected"
 msgstr "未連接"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:221
+#: settings/network_tab.py:284
 msgid "No SIM"
 msgstr "No SIM"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:221
+#: settings/network_tab.py:284
 msgid "No signal"
 msgstr "No signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:221
+#: settings/network_tab.py:284
 msgid "Wi-Fi in use"
 msgstr "Wi-Fi in use"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:221
-#: settings/network_tab.py:214
+#: settings/network_tab.py:284
+#: settings/network_tab.py:277
+#: settings/network_tab.py:368
 msgid "Checking…"
 msgstr "Checking…"
 
+#: settings/network_tab.py:285
+#: settings/network_tab.py:296
+msgid "Couldn’t change cellular"
+msgstr "無法變更行動網路狀態"
+
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:224
+#: settings/network_tab.py:288
 msgid "Cellular data is connected."
 msgstr "Cellular data is connected."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:225
+#: settings/network_tab.py:289
 msgid "APN saved. Waiting for a cellular data connection."
 msgstr "APN saved. Waiting for a cellular data connection."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:226
+#: settings/network_tab.py:290
 msgid "Cellular data is not connected. Check your APN, signal and carrier account."
 msgstr "Cellular data is not connected. Check your APN, signal and carrier account."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:227
+#: settings/network_tab.py:291
 msgid "No SIM detected. Insert a SIM to use cellular data."
 msgstr "No SIM detected. Insert a SIM to use cellular data."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:228
+#: settings/network_tab.py:292
 msgid "SIM detected. No cellular service. Your APN is saved."
 msgstr "SIM detected. No cellular service. Your APN is saved."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:229
+#: settings/network_tab.py:293
 msgid "Wi-Fi is connected. Cellular data is not confirmed yet."
 msgstr "Wi-Fi is connected. Cellular data is not confirmed yet."
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:230
+#: settings/network_tab.py:294
 msgid "Waiting for current modem status."
 msgstr "Waiting for current modem status."
 
+#: settings/network_tab.py:295
+#: settings/network_tab.py:247
+msgid "Mobile broadband is off"
+msgstr "行動網路已關閉"
+
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:232
+#: settings/network_tab.py:298
 msgid "Poor signal"
 msgstr "Poor signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:232
+#: settings/network_tab.py:298
 msgid "Moderate signal"
 msgstr "Moderate signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:232
+#: settings/network_tab.py:298
 msgid "Good signal"
 msgstr "Good signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:232
+#: settings/network_tab.py:298
 msgid "Great signal"
 msgstr "Great signal"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:202
+#: settings/network_tab.py:263
 msgid "SIM detected"
 msgstr "SIM detected"
 
-#: settings/network_tab.py:90
+#: settings/network_tab.py:139
 #, python-brace-format
 msgid "for \"{}\""
 msgstr "用於「{}」"
 
-#: settings/network_tab.py:101
+#: settings/network_tab.py:152
 msgid "Network name"
 msgstr "網路名稱"
 
-#: settings/network_tab.py:114
+#: settings/network_tab.py:166
 #, python-brace-format
 msgid "{} · Couldn't save"
 msgstr "{} · 無法儲存"
 
-#: settings/network_tab.py:134
+#: settings/network_tab.py:186
 msgid "Connected devices will need to reconnect."
 msgstr "已連接的裝置需要重新連接。"
 
-#: settings/network_tab.py:137
+#: settings/network_tab.py:189
 msgid "Hotspot password"
 msgstr "熱點密碼"
 
 #. Name, identifier, keyboard keys or command; keep as written.
-#: settings/network_tab.py:167
-#: settings/network_tab.py:321
+#: settings/network_tab.py:219
+#: settings/network_tab.py:397
 msgid "APN"
 msgstr "APN"
 
-#: settings/network_tab.py:167
+#: settings/network_tab.py:219
 msgid "Leave empty for automatic"
 msgstr "留空自動設定"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:189
+#: settings/network_tab.py:250
 msgid "Reading cellular status"
 msgstr "Reading cellular status"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:191
+#: settings/network_tab.py:252
 msgid "Cellular data unavailable"
 msgstr "Cellular data unavailable"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:193
+#: settings/network_tab.py:254
 msgid "SIM detected · No cellular service"
 msgstr "SIM detected · No cellular service"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:201
+#: settings/network_tab.py:262
 #, python-brace-format
 msgid "SIM detected · {}"
 msgstr "SIM detected · {}"
 
-#: settings/network_tab.py:307
-#: settings/network_tab.py:305
-#: settings/network_tab.py:321
+#: settings/network_tab.py:383
+#: settings/network_tab.py:381
+#: settings/network_tab.py:397
 msgid "Edit"
 msgstr "編輯"
 
-#: settings/network_tab.py:324
-#: settings/network_tab.py:315
+#: settings/network_tab.py:400
+#: settings/network_tab.py:391
 #: settings/search.py:217
 msgid "Roaming, APN and IP address"
 msgstr "漫遊、APN 與 IP 位址"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:324
+#: settings/network_tab.py:400
 msgid "Status updates automatically while this page is open."
 msgstr "Status updates automatically while this page is open."
 
-#: settings/network_tab.py:90
+#: settings/network_tab.py:139
 msgid "Wrong password"
 msgstr "密碼錯誤"
 
-#: settings/network_tab.py:90
-#: settings/network_tab.py:99
+#: settings/network_tab.py:139
+#: settings/network_tab.py:150
 msgid "Enter password"
 msgstr "輸入密碼"
 
-#: settings/network_tab.py:121
-#: settings/network_tab.py:311
+#: settings/network_tab.py:173
+#: settings/network_tab.py:387
 #: settings/search.py:214
 msgid "Hotspot name"
 msgstr "熱點名稱"
 
-#: settings/network_tab.py:128
+#: settings/network_tab.py:180
 msgid "A saved network already uses this name"
 msgstr "已儲存的網路已使用此名稱"
 
 #. English fallback pending cellular-status translation.
-#: settings/network_tab.py:198
+#: settings/network_tab.py:259
 #, python-brace-format
 msgid "{} · {}"
 msgstr "{} · {}"
 
-#: settings/network_tab.py:310
-#: settings/search.py:213
-msgid "Hotspot"
-msgstr "熱點"
-
-#: settings/network_tab.py:310
-#: settings/search.py:213
-msgid "Share this device's connection"
-msgstr "分享此裝置的連線"
-
-#: settings/network_tab.py:313
-#: settings/search.py:215
-msgid "Hotspot Password"
-msgstr "熱點密碼"
-
-#: settings/network_tab.py:313
-#: settings/search.py:215
-msgid "For phones joining this device's hotspot"
-msgstr "供連接此裝置熱點的手機使用"
-
-#: settings/network_tab.py:314
-#: settings/search.py:216
-msgid "Save Data"
-msgstr "節省流量"
-
-#: settings/network_tab.py:314
-#: settings/search.py:216
-msgid "No large uploads on cellular or phone hotspots"
-msgstr "行動網路或手機熱點不上傳大型檔案"
-
-#: settings/network_tab.py:320
-msgid "Roaming"
-msgstr "漫遊"
-
-#: settings/network_tab.py:320
-msgid "Use cellular data outside your carrier's network"
-msgstr "在電信業者網路以外使用行動數據"
-
-#. English fallback pending cellular-status translation.
-#: settings/network_tab.py:323
-#: settings/search.py:218
-msgid "Cellular IP address"
-msgstr "Cellular IP address"
-
-#: settings/network_tab.py:99
-#, python-brace-format
-msgid "for \"{}\", or leave empty for an open network"
-msgstr "用於「{}」，開放網路可留空"
-
-#: settings/network_tab.py:295
-msgid "Scanning for networks…"
-msgstr "正在掃描網路…"
-
-#: settings/network_tab.py:296
+#: settings/network_tab.py:366
 #: settings/search.py:211
 msgid "Join a hidden network"
 msgstr "加入隱藏網路"
 
-#: settings/network_tab.py:125
+#: settings/network_tab.py:386
+#: settings/search.py:213
+msgid "Hotspot"
+msgstr "熱點"
+
+#: settings/network_tab.py:386
+#: settings/search.py:213
+msgid "Share this device's connection"
+msgstr "分享此裝置的連線"
+
+#: settings/network_tab.py:389
+#: settings/search.py:215
+msgid "Hotspot Password"
+msgstr "熱點密碼"
+
+#: settings/network_tab.py:389
+#: settings/search.py:215
+msgid "For phones joining this device's hotspot"
+msgstr "供連接此裝置熱點的手機使用"
+
+#: settings/network_tab.py:390
+#: settings/search.py:216
+msgid "Save Data"
+msgstr "節省流量"
+
+#: settings/network_tab.py:390
+#: settings/search.py:216
+msgid "No large uploads on cellular or phone hotspots"
+msgstr "行動網路或手機熱點不上傳大型檔案"
+
+#: settings/network_tab.py:396
+msgid "Roaming"
+msgstr "漫遊"
+
+#: settings/network_tab.py:396
+msgid "Use cellular data outside your carrier's network"
+msgstr "在電信業者網路以外使用行動數據"
+
+#. English fallback pending cellular-status translation.
+#: settings/network_tab.py:399
+#: settings/search.py:218
+msgid "Cellular IP address"
+msgstr "Cellular IP address"
+
+#: settings/network_tab.py:150
+#, python-brace-format
+msgid "for \"{}\", or leave empty for an open network"
+msgstr "用於「{}」，開放網路可留空"
+
+#: settings/network_tab.py:370
+msgid "Couldn’t change Wi-Fi"
+msgstr "無法變更 Wi-Fi 狀態"
+
+#: settings/network_tab.py:177
 msgid "Enter a hotspot name"
 msgstr "輸入熱點名稱"
 
-#: settings/network_tab.py:125
+#: settings/network_tab.py:177
 msgid "Name is too long. Use a shorter name."
 msgstr "名稱過長，請縮短。"
 
-#: settings/network_tab.py:126
+#: settings/network_tab.py:178
 msgid "Use letters, numbers, spaces or punctuation"
 msgstr "使用字母、數字、空白或標點"
 
-#: settings/network_tab.py:287
+#: settings/network_tab.py:355
 msgid "Secured"
 msgstr "加密"
 
-#: settings/network_tab.py:287
+#: settings/network_tab.py:355
 msgid "Open"
 msgstr "開放"
 
-#: settings/network_tab.py:321
+#: settings/network_tab.py:365
+msgid "Scanning for networks…"
+msgstr "正在掃描網路…"
+
+#: settings/network_tab.py:368
+msgid "Wi-Fi is off"
+msgstr "Wi-Fi 已關閉"
+
+#: settings/network_tab.py:397
 msgid "Automatic"
 msgstr "自動"
 

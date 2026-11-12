@@ -1,0 +1,70 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<title>Connections: Car Audio and Devices</title>
+<style>@font-face{font-family:Figtree;font-weight:400;src:url('../../../assets/fonts/Figtree-Regular.ttf')}
+@font-face{font-family:Figtree;font-weight:500;src:url('../../../assets/fonts/Figtree-Medium.ttf')}
+@font-face{font-family:Figtree;font-weight:600;src:url('../../../assets/fonts/Figtree-SemiBold.ttf')}
+@font-face{font-family:Figtree;font-weight:700;src:url('../../../assets/fonts/Figtree-Bold.ttf')}
+@font-face{font-family:Figtree;font-weight:800;src:url('../../../assets/fonts/Figtree-ExtraBold.ttf')}
+
+.radio-control{display:flex;align-items:center;gap:10px;color:#C9D0DA;font-size:14px;font-weight:600;flex-shrink:0}
+.radio-control button{box-sizing:border-box;display:flex;align-items:center;justify-content:flex-start;width:72px;height:42px;border:0;
+border-radius:21px;background:#343A44;padding:4px;flex-shrink:0}
+.radio-control button[aria-checked=true]{background:#5AAAF8;justify-content:flex-end}
+.radio-control button span{width:34px;height:34px;border-radius:17px;background:#F2F5F9}
+.radio-control button[aria-checked=true] span{background:#0E1520}
+.radio-empty{color:#AEB6C2;font-size:16px;padding:18px 22px}
+.radio-actions{display:flex;align-items:center;gap:14px}
+.radio-muted{opacity:.45}
+</style></head>
+<body>
+
+
+<style>
+body{margin:0}
+a{color:#7DBBF9}a:hover{color:#A9D3FB}
+</style>
+
+<div style="width: 1125px; height: 563px; box-sizing: border-box; background: #000000; color: #F2F5F9; font-family: Figtree, system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden;">
+  <div style="flex-grow: 1; display: flex; gap: 18px; padding: 18px 20px 14px; min-height: 0;">
+    <div style="width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 6px; padding-top: 8px;">
+      <span style="font-size: 14px; font-weight: 700; letter-spacing: 1.8px; color: #7DBBF9; padding: 0 16px 8px;">CONNECTIONS</span>
+      <a href="connections.html" style="text-decoration: none; height: 56px; border-radius: 14px; color: #C9D0DA; font-size: 18px; font-weight: 600; padding: 0 16px; display: flex; align-items: center; justify-content: space-between;">Wi-Fi<span style="font-size: 14px; color: #8FA0B5; font-weight: 500;">Home Wi-Fi</span></a>
+      <a href="connectionscellular.html" style="text-decoration: none; height: 56px; border-radius: 14px; color: #C9D0DA; font-size: 18px; font-weight: 600; padding: 0 16px; display: flex; align-items: center; justify-content: space-between;">Cellular<span style="font-size: 14px; color: #8FA0B5; font-weight: 500;">LTE</span></a>
+      <a href="connectionsremote.html" style="text-decoration: none; height: 56px; border-radius: 14px; color: #C9D0DA; font-size: 18px; font-weight: 600; padding: 0 16px; display: flex; align-items: center; justify-content: space-between;">Bluetooth Remote<span style="font-size: 14px; color: #8FA0B5; font-weight: 500;">4 buttons</span></a>
+      <a href="connectionsaudio.html" aria-current="page" style="text-decoration: none; height: 56px; border-radius: 14px; background: #1F2E45; color: #F2F5F9; font-size: 18px; font-weight: 600; padding: 0 16px; display: flex; align-items: center; justify-content: space-between;">Car Audio &amp; Devices<span style="font-size: 14px; color: #8FA0B5; font-weight: 500;">Car Audio</span></a>
+    </div>
+    <div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 14px; min-height: 0;">
+      <div style="flex-grow: 1; min-width: 0; background: #16191D; border-radius: 22px; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px;"><div class="radio-actions" data-review-header="" style="justify-content: space-between;"><span style="font-size: 13px; font-weight: 700; letter-spacing: 1.6px; color: #8FA0B5;">CAR AUDIO</span><div class="radio-control"><span>Bluetooth</span>
+      <button type="button" role="switch" aria-label="Bluetooth" aria-checked="false"><span></span></button></div></div><div class="radio-empty" style="padding: 0px;">Bluetooth is off</div>
+
+
+      </div>
+      <div style="flex-grow: 1; background: rgb(22, 25, 29); border-radius: 22px; display: none; flex-direction: column; overflow: hidden;" hidden="">
+        <div style="display: flex; align-items: center; gap: 12px; padding: 14px 18px 8px;">
+          <span style="flex-grow: 1; font-size: 13px; font-weight: 700; letter-spacing: 1.6px; color: #8FA0B5;">NEARBY</span>
+          <span style="font-size: 14px; color: #7DBBF9;">Scanning…</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; padding: 0 12px 0 18px; height: 60px; border-top: 1px solid #23272E;">
+          <span style="flex-grow: 1; font-size: 17px; font-weight: 600;">[Device name]</span>
+          <button type="button" style="font-family: inherit; height: 42px; padding: 0 16px; border: 0; border-radius: 12px; background: #23272E; color: #F2F5F9; font-size: 15px; font-weight: 600;">Pair</button>
+        </div>
+        <div style="flex-grow: 1;"></div>
+        <span style="font-size: 14px; color: #8FA0B5; padding: 10px 18px 14px;">Pairing waits until you're parked.</span>
+      </div>
+    </div>
+  </div>
+  <nav style="height: 102px; flex-shrink: 0; border-top: 1px solid #1F242B; background: #0E1013; display: flex; align-items: center; gap: 10px; padding: 0 16px;">
+    <a href="hub.html" aria-label="Close settings" style="width: 74px; height: 74px; flex-shrink: 0; border-radius: 18px; background: #1F2328; display: flex; align-items: center; justify-content: center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F2F5F9" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></a>
+    <div style="flex-grow: 1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px;">
+      <a href="hub.html" style="text-decoration: none; height: 74px; border-radius: 18px; color: #C9D0DA; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Driving</a>
+      <a href="devicetab.html" style="text-decoration: none; height: 74px; border-radius: 18px; color: #C9D0DA; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Device</a>
+      <a href="connections.html" aria-current="page" style="text-decoration: none; height: 74px; border-radius: 18px; background: #5AAAF8; color: #0B1A2B; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center;">Connections</a>
+      <a href="softwaretab.html" style="text-decoration: none; height: 74px; border-radius: 18px; color: #C9D0DA; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Software</a>
+    </div>
+  </nav>
+</div>
+
+
+
+</body></html>

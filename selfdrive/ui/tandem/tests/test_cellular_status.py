@@ -73,7 +73,9 @@ def test_cellular_and_apn_collection_follows_page_visibility():
 def test_status_badge_and_explanatory_text_remain_dynamic():
   network, wifi, _, _ = _network()
   panel = cellular_panel(network, lambda: None)
-  badge = panel._header_control
+  header = panel._header_control
+  assert isinstance(header, controls.HeaderControls) and isinstance(header.right, controls.Switch)
+  badge = header.left
   assert isinstance(badge, controls.StatusBadge)
   assert badge._label() == "Connected" and badge._tone() == controls.Tone.SUCCESS
   wifi.cellular_status.value = Observation(sim=False)

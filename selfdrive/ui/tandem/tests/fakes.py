@@ -150,8 +150,27 @@ class FakeCellular:
     return self.model.status()
 
 
+class FakeRadios:
+  def __init__(self):
+    from openpilot.starpilot.tandem.radios import Radio, RadioState
+    self.states = {radio: RadioState(True, True, True) for radio in Radio}
+    self.busy = self.read_failed = False
+    self.failed = None
+
+  def refresh(self):
+    pass
+
+  def state(self, radio):
+    return self.states.get(radio)
+
+  def set_enabled(self, radio, enabled):
+    from dataclasses import replace
+    self.states[radio] = replace(self.states[radio], enabled=enabled)
+
+
 class FakeWifi:
   def __init__(self):
+    self.radios = FakeRadios()
     self.cellular_status = FakeCellular()
     self.networks = [FakeNet("Home Wi-Fi", 90), FakeNet("Coffee Shop", 60, 0), FakeNet("Neighbor", 30)]
     self.saved = {"Home Wi-Fi"}
@@ -266,6 +285,7 @@ class FakeDevice_:
 
 class FakeBtStatus:
   def __init__(self):
+    self.available = self.enabled = self.powered = True
     self.devices = (FakeDevice_("AA", "Car Audio", True, True, audio=True), FakeDevice_("BB", "Pixel 9"),
                     FakeDevice_("CC", "Wheel Remote", True, True, controller=True))
     self.selected_audio = "AA"
@@ -286,6 +306,14 @@ class FakeBluetooth:
 
   def status(self):
     return self._status
+
+  def set_power(self, enabled):
+    self.calls.append(("power", enabled))
+    self._status.enabled = self._status.powered = enabled
+    self._status.discovering = enabled
+
+  def power_busy(self):
+    return False
 
   def select(self, address):
     self.calls.append(("select", address))

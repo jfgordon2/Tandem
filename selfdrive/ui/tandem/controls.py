@@ -10,11 +10,12 @@ import pyray as rl
 
 from openpilot.system.ui.lib.application import MousePos
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
-from openpilot.selfdrive.ui.tandem.base import Bindable, Component, resolve
+from openpilot.selfdrive.ui.tandem.base import Bindable, Component, resolve, size_of
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, grid, inset, place, row
 from openpilot.selfdrive.ui.tandem.i18n import N_
 from openpilot.system.ui.lib.application import MouseEvent
 from openpilot.selfdrive.ui.tandem.fonts import Face
+from openpilot.system.ui.widgets import Widget
 
 
 class Tone(Enum):
@@ -359,6 +360,36 @@ class Switch(Component):
     rl.draw_circle_v(rl.Vector2(x + d / 2, track.y + track.height / 2), d / 2, knob_color)
 
 
+class HeaderControls(Component):
+  """Two controls side by side in a panel header."""
+
+  grow_touch_target = False
+
+  def __init__(self, left: Widget, right: Widget) -> None:
+    super().__init__()
+    self.left, self.right = self._child(left), self._child(right)
+
+  def preferred_size(self, max_width: float) -> tuple[float, float]:
+    right_w, right_h = size_of(self.right, max_width)
+    left_w, left_h = size_of(self.left, max(0, max_width - right_w - T.px(14)))
+    return left_w + T.px(14) + right_w, max(left_h, right_h)
+
+  def set_touch_valid_callback(self, callback: Callable[[], bool]) -> None:
+    super().set_touch_valid_callback(callback)
+    self.left.set_touch_valid_callback(callback)
+    self.right.set_touch_valid_callback(callback)
+
+  def set_parent_rect(self, rect: rl.Rectangle) -> None:
+    super().set_parent_rect(rect)
+    self.left.set_parent_rect(rect)
+    self.right.set_parent_rect(rect)
+
+  def _render(self, rect: rl.Rectangle) -> None:
+    w, h = size_of(self.right, rect.width)
+    self.left.render(inset(rect, right=w + T.px(14)))
+    self.right.render(place(rect, w, h, Align.END))
+
+
 # ── Segmented ──
 
 class Segmented(Component):
@@ -615,21 +646,23 @@ class Badge(Component):
 class StatusBadge(Component):
   """A sentence-case status with a colored dot (for a live connection)."""
 
-  def __init__(self, label: Bindable[str], tone: Bindable[Tone] = Tone.NEUTRAL):
+  def __init__(self, label: Bindable[str], tone: Bindable[Tone] = Tone.NEUTRAL, dot: Bindable[bool] = True):
     super().__init__()
-    self._label, self._tone = label, tone
+    self._label, self._tone, self._dot = label, tone, dot
 
   def preferred_size(self, max_width: float) -> tuple[float, float]:
-    return min(max_width, draw.text_width(resolve(self._label), T.font_px(15), T.FONT_SEMIBOLD) + T.px(40)), T.px(34)
+    padding = T.px(40) if resolve(self._dot) else T.px(24)
+    return min(max_width, draw.text_width(resolve(self._label), T.font_px(15), T.FONT_SEMIBOLD) + padding), T.px(34)
 
   def _render(self, rect: rl.Rectangle) -> None:
     tone = resolve(self._tone)
     surface, ink = _TONE_COLORS[tone][0], _TONE_INK[tone]
     draw.fill(rect, surface, T.px(10))
     content = inset(rect, x=T.px(12))
-    dot, label = row(content, [T.px(8), FILL], T.px(8))
-    draw.fill(place(dot, T.px(8), T.px(8)), ink, T.px(4))
-    draw.text(label, resolve(self._label), T.font_px(15), ink, T.FONT_SEMIBOLD)
+    if resolve(self._dot):
+      dot, content = row(content, [T.px(8), FILL], T.px(8))
+      draw.fill(place(dot, T.px(8), T.px(8)), ink, T.px(4))
+    draw.text(content, resolve(self._label), T.font_px(15), ink, T.FONT_SEMIBOLD)
 
 
 class Chip(Component):
