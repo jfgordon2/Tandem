@@ -117,25 +117,23 @@ class RadioControls:
   def __init__(self, backend: NetworkRadios | None = None) -> None:
     self._backend = backend or NetworkRadios()
     self._states: dict[Radio, RadioState] = {}
-    self._job: threading.Thread | None = None
+    self._read_job: threading.Thread | None = None
+    self._write_job: threading.Thread | None = None
     self._next_read = 0.0
     self.failed: Radio | None = None
     self.read_failed = False
 
   @property
-  def busy(self) -> bool:
-    return self._job is not None and self._job.is_alive()
+  def writing(self) -> bool:
+    """Whether a user-requested change is waiting or running."""
+    return self._write_job is not None and self._write_job.is_alive()
 
   def state(self, radio: Radio) -> RadioState | None:
     return self._states.get(radio)
 
-  def _start(self, work: Callable[[], None]) -> None:
-    self._job = threading.Thread(target=work, daemon=True)
-    self._job.start()
-
   def refresh(self) -> None:
     now = time.monotonic()
-    if self.busy or now < self._next_read:
+    if self.writing or now < self._next_read or (self._read_job is not None and self._read_job.is_alive()):
       return
     self._next_read = now + 2.0
 
@@ -146,15 +144,20 @@ class RadioControls:
       except Exception:
         self.read_failed = True
 
-    self._start(read)
+    self._read_job = threading.Thread(target=read, daemon=True)
+    self._read_job.start()
 
   def set_enabled(self, radio: Radio, enabled: bool) -> None:
     state = self.state(radio)
-    if self.busy or self.read_failed or state is None or not state.can_toggle or state.enabled == enabled:
+    if self.writing or state is None or not state.can_toggle or state.enabled == enabled:
       return
+    read_job = self._read_job
     self.failed = None
 
     def write() -> None:
+      # Finish an in-flight refresh first so it cannot overwrite the confirmed change.
+      if read_job is not None:
+        read_job.join()
       try:
         result = self._backend.set_enabled(radio, enabled)
         self._states = {**self._states, radio: result}
@@ -163,4 +166,5 @@ class RadioControls:
       except Exception:
         self.failed = radio
 
-    self._start(write)
+    self._write_job = threading.Thread(target=write, daemon=True)
+    self._write_job.start()

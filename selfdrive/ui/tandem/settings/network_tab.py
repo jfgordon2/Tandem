@@ -102,7 +102,7 @@ class Network:
 
     def can_toggle() -> bool:
       state = radios.state(radio)
-      return state is not None and state.can_toggle and not radios.busy and not radios.read_failed
+      return state is not None and state.can_toggle and not radios.writing
 
     control = Switch(on, lambda enabled: radios.set_enabled(radio, enabled))
     control.set_enabled(can_toggle)

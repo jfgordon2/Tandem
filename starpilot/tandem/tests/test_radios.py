@@ -1,3 +1,4 @@
+from threading import Event
 from types import SimpleNamespace
 
 import pytest
@@ -88,11 +89,50 @@ def test_async_radio_controls_preserve_state_on_failure() -> None:
   bus = Bus()
   controller = RadioControls(NetworkRadios(lambda: bus))
   controller.refresh()
-  assert controller._job is not None
-  controller._job.join(timeout=2)
+  assert controller._read_job is not None
+  controller._read_job.join(timeout=2)
   assert controller.state(Radio.WIFI) == RadioState(True, True, True)
   bus.reject_write = True
   controller.set_enabled(Radio.WIFI, False)
-  controller._job.join(timeout=2)
+  assert controller._write_job is not None
+  controller._write_job.join(timeout=2)
   assert controller.failed == Radio.WIFI
   assert controller.state(Radio.WIFI) == RadioState(True, True, True)
+
+
+def test_switch_request_during_refresh_runs_after_the_read(monkeypatch: pytest.MonkeyPatch) -> None:
+  bus = Bus()
+  backend = NetworkRadios(lambda: bus)
+  controller = RadioControls(backend)
+  controller.refresh()
+  assert controller._read_job is not None
+  controller._read_job.join(timeout=2)
+  assert controller.state(Radio.WIFI) == RadioState(True, True, True)
+
+  read_started, finish_read = Event(), Event()
+  read = backend.read
+
+  def slow_read() -> dict[Radio, RadioState]:
+    states = read()
+    read_started.set()
+    if not finish_read.wait(timeout=5):
+      raise TimeoutError("Test did not release the refresh")
+    return states
+
+  monkeypatch.setattr(backend, "read", slow_read)
+  controller._next_read = 0.0
+  controller.refresh()
+  try:
+    assert read_started.wait(timeout=2)
+    assert not controller.writing
+    controller.set_enabled(Radio.WIFI, False)
+    assert controller.writing
+    assert not bus.writes
+  finally:
+    finish_read.set()
+
+  assert controller._write_job is not None
+  controller._write_job.join(timeout=2)
+  assert not controller.writing
+  assert controller.state(Radio.WIFI) == RadioState(False, True, True)
+  assert bus.writes == [("WirelessEnabled", False)]

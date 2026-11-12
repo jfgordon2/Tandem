@@ -894,6 +894,20 @@ def test_radio_switches_stop_wifi_scanning_and_keep_cellular_independent() -> No
   assert wifi.tethering
 
 
+def test_radio_switches_use_confirmed_state_after_failed_refresh() -> None:
+  from openpilot.starpilot.tandem.radios import Radio
+  net, wifi, _, _ = _network()
+  for radio in Radio:
+    switch = net.radio_switch(radio)
+    assert switch is not None
+    wifi.radios.read_failed = True
+    assert switch.enabled and switch.value
+    wifi.radios.writing = True
+    assert not switch.enabled and switch.value
+    wifi.radios.writing = False
+    assert switch.enabled and switch.value
+
+
 def test_bluetooth_header_switches_share_one_setting() -> None:
   from openpilot.selfdrive.ui.tandem.settings.bluetooth_tab import bluetooth_switch
   from openpilot.selfdrive.ui.tandem.tests.fakes import FakeBluetooth

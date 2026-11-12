@@ -154,7 +154,7 @@ class FakeRadios:
   def __init__(self):
     from openpilot.starpilot.tandem.radios import Radio, RadioState
     self.states = {radio: RadioState(True, True, True) for radio in Radio}
-    self.busy = self.read_failed = False
+    self.writing = self.read_failed = False
     self.failed = None
 
   def refresh(self):
