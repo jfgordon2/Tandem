@@ -103,6 +103,24 @@ def test_reduce_motion_switches_turns_without_fading():
   assert bar._turns(body, state) == (0.0, 1.0)
 
 
+def test_larger_street_turn_uses_all_the_available_width() -> None:
+  import pyray as rl
+  from openpilot.selfdrive.ui.tandem.onroad import layers as L
+  Z.set_text(True)
+  now = [0.0]
+  bar, state = _bar(now)
+  width = len(state.street) * L.street_size() / 2
+  body = rl.Rectangle(0, 0, width, Z.px(74))
+  bar._turns(body, state)
+  now[0] = L.ARRIVAL_S
+  bar._turns(body, state)
+  now[0] += L.STREET_S + 0.01
+  arrival, street = bar._turns(body, state)
+  assert (arrival, street) == (0.0, 1.0)  # fade from the street back to arrival has started
+  now[0] += L.CROSSFADE_S
+  assert bar._turns(body, state) == pytest.approx((1.0, 0.0))
+
+
 def test_sizes_grow_and_the_offer_card_ends_before_the_speed():
   from openpilot.selfdrive.ui.tandem.onroad import layers as L
   standard = (L.bar_height(), L.sign_tile_size(), L.street_size(), L.LimitCard.width())

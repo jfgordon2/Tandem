@@ -196,8 +196,7 @@ class OnroadBar(Component):
       return 1.0, 0.0
     if self._turn_since is None:   # arrival shows at once; only the changes between turns fade
       self._turn_since, self._street_turn = now - CROSSFADE_S, False
-    text_w = body.width - Z.px(50)
-    street_s = max(STREET_S, self._street_scroll.pass_seconds(state.street, text_w, street_size(), T.FONT_BOLD))
+    street_s = max(STREET_S, self._street_scroll.pass_seconds(state.street, body.width, street_size(), T.FONT_BOLD))
     length = street_s if self._street_turn else ARRIVAL_S
     if now - self._turn_since >= length:
       self._turn_since, self._street_turn = now, not self._street_turn
@@ -219,12 +218,12 @@ class OnroadBar(Component):
     return x
 
   def _street(self, rect: rl.Rectangle, street: str, h: Align, outer: rl.Rectangle, alpha: float = 1.0) -> None:
-    """The road icon and the street name, centered (or at the start) in rect; a name that doesn't fit scrolls."""
-    icon, gap = Z.px(28), Z.px(12)
-    text_w = min(rect.width - icon - gap, draw.text_width(street, street_size(), T.FONT_BOLD))
-    block = place(rect, icon + gap + text_w, rect.height, h)
-    draw.icon(rl.Rectangle(block.x, block.y, icon, block.height), "road", draw.alpha(T.ACCENT_TEXT, alpha), icon)
-    self._street_scroll.draw(inset(block, left=icon + gap), street, street_size(), draw.alpha(T.TEXT, alpha), T.FONT_BOLD, outer,
+    """Draw the street name in the available space and scroll it if needed."""
+    if rect.width <= 0:
+      return
+    text_w = min(rect.width, draw.text_width(street, street_size(), T.FONT_BOLD))
+    block = place(rect, text_w, rect.height, h)
+    self._street_scroll.draw(block, street, street_size(), draw.alpha(T.TEXT, alpha), T.FONT_BOLD, outer,
                              fade=CONTROL_FILL)
 
 

@@ -309,7 +309,7 @@
     {
       "mock": "onroad",
       "title": "Onroad",
-      "note": "Matches: Essentials' speed with its turn signal, the sign, the chip bottom left and the driver monitor tile top right. The street name and its road icon are 28 px; a name that doesn't fit scrolls (onroad/scroll.py) instead of ending in an ellipsis. The stand-in road stands for the camera. Page ground uses true black (#000000).",
+      "note": "Matches: Essentials' speed with its turn signal, the sign, the chip bottom left and the driver monitor tile top right. The 28 px street name can use the full text area and scrolls if it doesn't fit. The stand-in road stands for the camera. Page ground uses true black (#000000).",
       "match": true,
       "built": "onroad_default"
     },
@@ -335,7 +335,7 @@
       "mock": "onroadlarge-nav-street",
       "title": "Onroad › Larger text, navigating, the street's turn",
       "match": false,
-      "note": "The same bar in the street's turn; not rendered separately (the render scene shows arrival's turn). Page ground uses true black (#000000)."
+      "note": "The street name uses the full space before End route. The render scene shows arrival's turn. Page ground uses true black (#000000)."
     },
     {
       "mock": "onroadlarge-alert",
