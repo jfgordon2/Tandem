@@ -131,7 +131,7 @@ empty status when their inputs are unavailable or invalid.
 | `system/athena/athenad.py` | Fork-wide unattended diagnostic log/stat forwarding policy gates. |
 | `system/loggerd/uploader.py` | Retains crash artifacts locally; drive log/video upload behavior stays upstream's. |
 | `system/sentry.py` | Fork-wide automatic-report policy; explicit user reports and tunes retain their submission tags. |
-| `system/ui/lib/application.py` | `KEEP_FONT=False` and empty `TEXT_SHAPERS`; Tandem opts in only inside a drawing context, restoring both afterward. Optional lazy loading keeps the normal GUI font ready and caches other faces on demand. The default loads all original faces up front. Fallback checks an already loaded brand face without loading it. |
+| `system/ui/lib/application.py` | `KEEP_FONT=False` and empty `TEXT_SHAPERS`; Tandem opts in only inside a drawing context, restoring both afterward. Optional lazy loading keeps the normal GUI font ready and caches other faces on demand. The default loads all original faces up front. Fallback checks an already loaded brand face without loading it. With lazy loading on, `release_glyph_images` frees raylib's CPU copy of each loaded font's glyphs (text draws from the atlas texture). |
 | `system/ui/lib/text_measure.py` | Applies scoped text shapers so measurement matches drawing; empty by default. |
 | `system/ui/widgets/inputbox.py` | Overridable font getter, defaulting to the original app font; Tandem fields supply their own face for drawing and cursor measurement. |
 | `system/version.py` | Includes `release` in `RELEASE_BRANCHES`. |

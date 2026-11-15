@@ -496,6 +496,14 @@ class MouseState:
       self._prev_mouse_event[ev.slot] = ev
 
 
+def release_glyph_images(font: rl.Font) -> None:
+  """Free raylib's CPU copy of each glyph. Text draws from the atlas texture and glyph metrics, which stay."""
+  for i in range(font.glyphCount):
+    if font.glyphs[i].image.data != rl.ffi.NULL:
+      rl.unload_image(font.glyphs[i].image)
+      font.glyphs[i].image.data = rl.ffi.NULL
+
+
 class GuiApplication:
   def __init__(self, width: int | None = None, height: int | None = None):
     self._set_log_callback()
@@ -1237,6 +1245,8 @@ class GuiApplication:
     if weight != FontWeight.UNIFONT:
       rl.gen_texture_mipmaps(font.texture)
       rl.set_texture_filter(font.texture, rl.TextureFilter.TEXTURE_FILTER_TRILINEAR)
+    if self._lazy_fonts:
+      release_glyph_images(font)
     self._fonts[weight] = font
 
   def _load_fonts(self, *, lazy: bool = False):

@@ -163,6 +163,8 @@ def build() -> None:
   if not rl.export_image(image, (FONT_DIR / f"{NAME}.png").as_posix()):
     raise RuntimeError("couldn't write the atlas")
   _write_bmfont(FONT_DIR / f"{NAME}.fnt", SIZE, NAME, f"{NAME}.png", line_height, base, (image.width, image.height), entries)
+  from crop_font_atlases import crop   # raylib's square atlas is a third empty at the bottom
+  print(f"{NAME}: %d -> %d rows" % crop(NAME))
   print(f"{NAME}: {total} glyphs, {image.width}x{image.height}")
 
 

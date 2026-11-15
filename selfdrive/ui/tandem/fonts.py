@@ -12,7 +12,7 @@ import os
 
 import pyray as rl
 
-from openpilot.system.ui.lib.application import FONT_DIR, FontWeight
+from openpilot.system.ui.lib.application import FONT_DIR, FontWeight, release_glyph_images
 
 
 class ExtraFont(StrEnum):
@@ -43,13 +43,18 @@ def font_file(face: Face) -> str:
 
 
 def font(face: Face) -> rl.Font:
-  """The face's font, loaded the first time it's asked for and kept, with mipmaps so scaled text stays smooth."""
+  """The face's font, loaded the first time it's asked for and kept, with mipmaps so scaled text stays smooth.
+
+  raylib's CPU copy of each glyph is freed once the atlas is on the GPU: text draws from the texture and the glyph
+  metrics, so the copies only held RAM (about 1.7 MB a face, 9 MB for the fallback).
+  """
   filename = font_file(face)
   if filename not in _loaded:
     with as_file(FONT_DIR) as path:
       loaded = rl.load_font((path / filename).as_posix())
     rl.gen_texture_mipmaps(loaded.texture)
     rl.set_texture_filter(loaded.texture, rl.TextureFilter.TEXTURE_FILTER_TRILINEAR)
+    release_glyph_images(loaded)
     _loaded[filename] = loaded
   return _loaded[filename]
 
