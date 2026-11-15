@@ -295,6 +295,18 @@
       "match": true
     },
     {
+      "mock": "connectionstest",
+      "title": "Connections › Network Test",
+      "note": "Matches: download, upload and ping from the last test, with the time and the data it used. Before the first test the rows are empty and the button reads Start. The Wi-Fi name comes from the sample network.",
+      "match": true
+    },
+    {
+      "mock": "connectionstestrunning",
+      "title": "Network Test, measuring",
+      "note": "Matches: the row being measured turns blue and the button reads Stop. On cellular or a metered connection a test uses up to 30 MB. The sidebar's Wi-Fi value stays, as the sample data keeps its Wi-Fi network.",
+      "match": true
+    },
+    {
       "mock": "wheelbuttonlearn",
       "title": "Assign a button",
       "note": "Matches. The action grid lists what the remote offers, including each favorite by its saved name, so it differs from the mock's sample list.",

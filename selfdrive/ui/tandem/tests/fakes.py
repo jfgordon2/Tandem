@@ -1,6 +1,10 @@
 """Stand-ins for StarPilot's model controller and car catalog, for tests and headless renders."""
+from dataclasses import replace
+
 from openpilot.selfdrive.ui.tandem.settings.model import ModelInfo
+from openpilot.selfdrive.ui.tandem.settings.network_test import Connection, Via
 from openpilot.selfdrive.ui.tandem.settings.vehicle import CarOption, WheelButton
+from openpilot.starpilot.tandem.network_test import Phase, Result
 
 
 class FakeModels:
@@ -628,3 +632,28 @@ class FakeCarExtras:
 
   def set_timer(self, seconds):
     self.seconds = seconds
+
+
+class FakeNetworkTest:
+  """The network tester, showing the result a test or render gives it. Nothing is sent anywhere."""
+
+  def __init__(self, shown=None):
+    self.shown = shown or Result()
+    self.calls = []
+
+  def result(self):
+    return self.shown
+
+  def start(self, budget):
+    self.calls.append(("start", budget))
+    self.shown = Result(Phase.DOWNLOAD, budget=budget)
+
+  def stop(self):
+    self.calls.append("stop")
+    if self.shown.running:
+      self.shown = replace(self.shown, phase=Phase.STOPPED, finished=0.0)
+
+
+def home_wifi():
+  """The connection FakeWifi's device is on."""
+  return Connection(Via.WIFI)

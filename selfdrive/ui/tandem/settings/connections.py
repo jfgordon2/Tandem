@@ -1,7 +1,8 @@
-"""Connections: what were the Network and Bluetooth tabs, as one tab with four sections (design/connections*.html).
+"""Connections: what were the Network and Bluetooth tabs, as one tab with five sections (design/connections*.html).
 
 Each section keeps its radio busy only while it's shown, as the two tabs did: Wi-Fi scans while Wi-Fi is open, and Bluetooth
-scans, with wheel-button testing, while Bluetooth Remote or Car Audio & Devices is open.
+scans, with wheel-button testing, while Bluetooth Remote or Car Audio & Devices is open. A network test stops when its
+section is left.
 """
 from __future__ import annotations
 
@@ -14,13 +15,14 @@ from openpilot.system.ui.widgets import Widget
 from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.settings.bluetooth_tab import BluetoothDevices, WheelButtons, devices_panel, wheel_panel
 from openpilot.selfdrive.ui.tandem.settings.network_tab import Network, cellular_panel, wifi_panel
+from openpilot.selfdrive.ui.tandem.settings.network_test import NetworkTestModel, network_test_panel
 from openpilot.selfdrive.ui.tandem.settings.pages import Section, SectionPage
 from openpilot.selfdrive.ui.tandem.i18n import N_, tn_
 
 if TYPE_CHECKING:
   from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow
 
-WIFI, CELLULAR, REMOTE, AUDIO = range(4)
+WIFI, CELLULAR, REMOTE, AUDIO, TEST = range(5)
 
 
 class WhileShown(Component):
@@ -54,8 +56,9 @@ def buttons_label(count: int) -> str:
   return tn_("{} button", "{} buttons", count) if count else ""
 
 
-def connections_page(network: Network, open_advanced: Callable[[], None], wheel: WheelButtons, bt: BluetoothDevices, window: SettingsWindow) -> SectionPage:
-  """The Connections tab: Wi-Fi, cellular, the Bluetooth remote, and car audio, each a section of its sidebar."""
+def connections_page(network: Network, open_advanced: Callable[[], None], wheel: WheelButtons, bt: BluetoothDevices, window: SettingsWindow,
+                     test: NetworkTestModel) -> SectionPage:
+  """The Connections tab: Wi-Fi, cellular, the Bluetooth remote, car audio and the network test, each a section of its sidebar."""
   testing = False
 
   def bluetooth_tick() -> None:
@@ -87,4 +90,5 @@ def connections_page(network: Network, open_advanced: Callable[[], None], wheel:
     Section(N_("Bluetooth Remote"), lambda: WhileShown(wheel_panel(wheel, window, bt), bluetooth_on, bluetooth_off, bluetooth_tick),
             value=lambda: buttons_label(len(wheel.buttons()))),
     Section(N_("Car Audio & Devices"), lambda: WhileShown(devices_panel(bt, window), bluetooth_on, bluetooth_off, bluetooth_tick)),
+    Section(N_("Network Test"), lambda: WhileShown(network_test_panel(test), lambda: None, test.stop), value=test.summary),
   ])

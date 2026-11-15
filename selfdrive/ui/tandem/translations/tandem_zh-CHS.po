@@ -31,7 +31,7 @@ msgid "Road data still supplies speed limits"
 msgstr "Road data still supplies speed limits"
 
 #: destinations.py:400
-#: settings/search.py:291
+#: settings/search.py:293
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:688
 msgid "Search"
 msgstr "搜索"
@@ -77,6 +77,7 @@ msgid "Say a place or an address. Tap the mic when you're done."
 msgstr "请说出地点或地址，结束后点击麦克风。"
 
 #: destinations.py:437
+#: settings/network_test.py:121
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:643
 msgid "Start"
 msgstr "开始"
@@ -403,7 +404,7 @@ msgstr "更新已就绪"
 
 #: home.py:154
 #: settings/search.py:25
-#: settings/search.py:222
+#: settings/search.py:224
 msgid "Software"
 msgstr "软件"
 
@@ -774,7 +775,7 @@ msgstr "来源"
 
 #: onroad/developer.py:181
 #: settings/search.py:25
-#: settings/window.py:59
+#: settings/window.py:61
 msgid "Device"
 msgstr "设备"
 
@@ -1235,7 +1236,7 @@ msgid "{} min · {}"
 msgstr "{}分钟 · {}"
 
 #: ram.py:44
-#: settings/window.py:294
+#: settings/window.py:304
 msgid "Driving model"
 msgstr "驾驶模型"
 
@@ -1767,7 +1768,7 @@ msgid "Pulse and glide and driver selfie are in Tuner Mode."
 msgstr "加速与滑行及驾驶员自拍位于调校模式。"
 
 #: settings/bluetooth_tab.py:320
-#: settings/connections.py:87
+#: settings/connections.py:90
 #: settings/search.py:32
 msgid "Bluetooth Remote"
 msgstr "蓝牙遥控器"
@@ -2235,33 +2236,39 @@ msgstr "日志：{}"
 msgid "Start logging to create a new test log."
 msgstr "开始记录以创建新测试日志。"
 
-#: settings/connections.py:54
+#: settings/connections.py:56
 #, python-brace-format
 msgid "{} button"
 msgid_plural "{} buttons"
 msgstr[0] "{}个按钮"
 
-#: settings/connections.py:83
+#: settings/connections.py:86
 msgid "CONNECTIONS"
 msgstr "连接"
 
-#: settings/connections.py:84
+#: settings/connections.py:87
 #: settings/map_source.py:207
 #: settings/network_tab.py:371
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
-#: settings/connections.py:86
+#: settings/connections.py:89
 #: settings/network_tab.py:391
-#: settings/search.py:32
+#: settings/network_test.py:99
 msgid "Cellular"
 msgstr "移动网络"
 
-#: settings/connections.py:89
+#: settings/connections.py:92
 #: settings/search.py:32
 #: settings/search.py:220
 msgid "Car Audio & Devices"
 msgstr "车辆音响与设备"
+
+#: settings/connections.py:93
+#: settings/network_test.py:172
+#: settings/search.py:32
+msgid "Network Test"
+msgstr "网络测试"
 
 #: settings/developer.py:23
 msgid "openpilot longitudinal control is in alpha for this car and turns off Automatic Emergency Braking (AEB). The car's own cruise control is the default. Experimental mode is recommended with it. openpilot restarts if the car is on."
@@ -3363,7 +3370,7 @@ msgstr "额外细节和微调功能，各由一个开关控制"
 
 #: settings/driving_tab.py:144
 #: settings/search.py:25
-#: settings/window.py:59
+#: settings/window.py:61
 msgid "Driving"
 msgstr "驾驶"
 
@@ -4302,6 +4309,8 @@ msgstr "已保存的网络已使用此名称"
 
 #. English fallback pending cellular-status translation.
 #: settings/network_tab.py:259
+#: settings/network_test.py:97
+#: settings/network_test.py:99
 #, python-brace-format
 msgid "{} · {}"
 msgstr "{} · {}"
@@ -4396,6 +4405,102 @@ msgstr "Wi-Fi 已关闭"
 msgid "Automatic"
 msgstr "自动"
 
+#: settings/network_test.py:43
+msgid "Couldn't reach the speed test. Check the connection and try again."
+msgstr "无法连接测速服务。请检查连接后重试。"
+
+#: settings/network_test.py:44
+msgid "The connection dropped during the test. Try again."
+msgstr "测试期间连接中断。请重试。"
+
+#: settings/network_test.py:45
+msgid "The speed test turned the request down. Try again later."
+msgstr "测速服务拒绝了请求。请之后重试。"
+
+#: settings/network_test.py:65
+#, python-brace-format
+msgid "{} Mbps"
+msgstr "{} Mbps"
+
+#: settings/network_test.py:69
+#, python-brace-format
+msgid "{} ms"
+msgstr "{} ms"
+
+#: settings/network_test.py:40
+msgid "Maps, models and updates coming in"
+msgstr "接收地图、模型和更新"
+
+#: settings/network_test.py:41
+msgid "Upload"
+msgstr "上传"
+
+#: settings/network_test.py:41
+msgid "Drive video and logs going out"
+msgstr "发送行程视频和日志"
+
+#: settings/network_test.py:42
+msgid "Ping"
+msgstr "Ping"
+
+#: settings/network_test.py:42
+msgid "How quickly the internet answers"
+msgstr "互联网的响应速度"
+
+#: settings/network_test.py:73
+msgid "under 1 MB"
+msgstr "不到 1 MB"
+
+#: settings/network_test.py:159
+#, python-brace-format
+msgid "Uses Cloudflare's speed test and up to {} of data."
+msgstr "使用 Cloudflare 的测速服务，最多使用 {} 数据。"
+
+#: settings/network_test.py:100
+msgid "Ethernet"
+msgstr "有线网络"
+
+#: settings/network_test.py:120
+msgid "Stop"
+msgstr "停止"
+
+#: settings/network_test.py:121
+msgid "Test again"
+msgstr "再次测试"
+
+#: settings/network_test.py:138
+msgid "Testing…"
+msgstr "正在测试…"
+
+#: settings/network_test.py:145
+#, python-brace-format
+msgid "Tested {} with Cloudflare's speed test. Used {} of data."
+msgstr "{} 已用 Cloudflare 的测速服务测试。使用了 {} 数据。"
+
+#: settings/network_test.py:147
+#, python-brace-format
+msgid "Stopped early. Used {} of data."
+msgstr "已提前停止。使用了 {} 数据。"
+
+#: settings/network_test.py:155
+#, python-brace-format
+msgid "Uses up to {} of data. Leaving this page stops the test."
+msgstr "最多使用 {} 数据。离开此页面会停止测试。"
+
+#: settings/network_test.py:158
+#, python-brace-format
+msgid "Uses Cloudflare's speed test and up to {} of cellular data."
+msgstr "使用 Cloudflare 的测速服务，最多使用 {} 移动数据。"
+
+#: settings/network_test.py:154
+#, python-brace-format
+msgid "Uses up to {} of cellular data. Leaving this page stops the test."
+msgstr "最多使用 {} 移动数据。离开此页面会停止测试。"
+
+#: settings/network_test.py:169
+msgid "Measuring…"
+msgstr "正在测量…"
+
 #: settings/ram.py:50
 #, python-brace-format
 msgid "{} · {}%"
@@ -4433,7 +4538,7 @@ msgid "No drive has run low on RAM yet."
 msgstr "还没有行程出现内存不足。"
 
 #: settings/search.py:25
-#: settings/window.py:59
+#: settings/window.py:61
 msgid "Connections"
 msgstr "连接"
 
@@ -4463,7 +4568,7 @@ msgstr "组合设置覆盖"
 
 #: settings/search.py:31
 #: settings/search.py:199
-#: settings/window.py:374
+#: settings/window.py:384
 msgid "Report a Problem"
 msgstr "报告问题"
 
@@ -5120,66 +5225,70 @@ msgstr "方向盘遥控器的按钮及其操作"
 msgid "Car audio for alerts, and pairing devices"
 msgstr "警报用车辆音响及设备配对"
 
-#: settings/search.py:222
+#: settings/search.py:221
+msgid "Download speed, upload speed and ping of this device's connection"
+msgstr "此设备连接的下载速度、上传速度和 Ping"
+
+#: settings/search.py:224
 msgid "Updates and the release notes"
 msgstr "更新和发行说明"
 
-#: settings/search.py:223
+#: settings/search.py:225
 #: settings/software_tab.py:202
 msgid "Automatic Updates"
 msgstr "自动更新"
 
-#: settings/search.py:223
+#: settings/search.py:225
 #: settings/software_tab.py:202
 msgid "Download while parked, install when you turn off the car"
 msgstr "停车时下载，关闭车辆时安装"
 
-#: settings/search.py:224
+#: settings/search.py:226
 #: settings/software_tab.py:198
 #: settings/software_tab.py:150
 msgid "Release Channel"
 msgstr "更新通道"
 
-#: settings/search.py:224
+#: settings/search.py:226
 #: settings/software_tab.py:150
 msgid "The branch to download updates from"
 msgstr "下载更新所用的分支"
 
-#: settings/search.py:225
+#: settings/search.py:227
 #: settings/software_tab.py:205
 msgid "Reset Settings"
 msgstr "重置设置"
 
-#: settings/search.py:225
+#: settings/search.py:227
 msgid "Back to the Essentials defaults"
 msgstr "恢复 Essentials 默认值"
 
-#: settings/search.py:226
+#: settings/search.py:228
 #: settings/software_tab.py:179
 #: settings/software_tab.py:208
 msgid "Uninstall"
 msgstr "卸载"
 
-#: settings/search.py:226
+#: settings/search.py:228
 msgid "Remove this software from the device"
 msgstr "从设备中移除此软件"
 
-#: settings/search.py:403
-#: settings/search.py:394
+#: settings/search.py:405
+#: settings/search.py:396
 msgid "Search settings"
 msgstr "搜索设置"
 
-#: settings/search.py:292
+#: settings/search.py:294
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "说出设置名称，例如限速。结束后点击麦克风。"
 
-#: settings/search.py:374
-#: settings/search.py:333
+#: settings/search.py:376
+#: settings/search.py:335
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "没有匹配“{}”的设置"
 
-#: settings/search.py:375
+#: settings/search.py:377
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "输入设置名称或功能，例如亮度或变道"
 
@@ -6095,7 +6204,7 @@ msgstr "开启"
 msgid "Turn off"
 msgstr "关闭"
 
-#: settings/window.py:368
+#: settings/window.py:378
 msgid "DEVICE"
 msgstr "设备"
 

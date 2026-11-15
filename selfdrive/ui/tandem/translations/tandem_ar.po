@@ -31,7 +31,7 @@ msgid "Road data still supplies speed limits"
 msgstr "Road data still supplies speed limits"
 
 #: destinations.py:400
-#: settings/search.py:291
+#: settings/search.py:293
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:688
 msgid "Search"
 msgstr "البحث"
@@ -77,6 +77,7 @@ msgid "Say a place or an address. Tap the mic when you're done."
 msgstr "قل اسم مكان أو عنوانا. اضغط الميكروفون عند الانتهاء."
 
 #: destinations.py:437
+#: settings/network_test.py:121
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:643
 msgid "Start"
 msgstr "ابدأ"
@@ -408,7 +409,7 @@ msgstr "التحديث جاهز"
 
 #: home.py:154
 #: settings/search.py:25
-#: settings/search.py:222
+#: settings/search.py:224
 msgid "Software"
 msgstr "البرمجيات"
 
@@ -784,7 +785,7 @@ msgstr "مصدر"
 
 #: onroad/developer.py:181
 #: settings/search.py:25
-#: settings/window.py:59
+#: settings/window.py:61
 msgid "Device"
 msgstr "الجهاز"
 
@@ -1246,7 +1247,7 @@ msgid "{} min · {}"
 msgstr "{} دقيقة · {}"
 
 #: ram.py:44
-#: settings/window.py:294
+#: settings/window.py:304
 msgid "Driving model"
 msgstr "نموذج الذكاء الاصطناعي للقيادة"
 
@@ -1783,7 +1784,7 @@ msgid "Pulse and glide and driver selfie are in Tuner Mode."
 msgstr "النبض والانزلاق وصورة شخصية للسائق في وضع الضبط الدقيق."
 
 #: settings/bluetooth_tab.py:320
-#: settings/connections.py:87
+#: settings/connections.py:90
 #: settings/search.py:32
 msgid "Bluetooth Remote"
 msgstr "جهاز التحكم عن بعد بالبلوتوث"
@@ -2251,7 +2252,7 @@ msgstr "سجل : {}"
 msgid "Start logging to create a new test log."
 msgstr "ابدأ التسجيل لإنشاء سجل اختبار جديد."
 
-#: settings/connections.py:54
+#: settings/connections.py:56
 #, python-brace-format
 msgid "{} button"
 msgid_plural "{} buttons"
@@ -2262,27 +2263,33 @@ msgstr[3] "{} أزرار"
 msgstr[4] "{} زرا"
 msgstr[5] "{} زر"
 
-#: settings/connections.py:83
+#: settings/connections.py:86
 msgid "CONNECTIONS"
 msgstr "اتصالات"
 
-#: settings/connections.py:84
+#: settings/connections.py:87
 #: settings/map_source.py:207
 #: settings/network_tab.py:371
 msgid "Wi-Fi"
 msgstr "Wi‑Fi"
 
-#: settings/connections.py:86
+#: settings/connections.py:89
 #: settings/network_tab.py:391
-#: settings/search.py:32
+#: settings/network_test.py:99
 msgid "Cellular"
 msgstr "الخلوية"
 
-#: settings/connections.py:89
+#: settings/connections.py:92
 #: settings/search.py:32
 #: settings/search.py:220
 msgid "Car Audio & Devices"
 msgstr "صوت وأجهزة السيارة"
+
+#: settings/connections.py:93
+#: settings/network_test.py:172
+#: settings/search.py:32
+msgid "Network Test"
+msgstr "اختبار الشبكة"
 
 #: settings/developer.py:23
 msgid "openpilot longitudinal control is in alpha for this car and turns off Automatic Emergency Braking (AEB). The car's own cruise control is the default. Experimental mode is recommended with it. openpilot restarts if the car is on."
@@ -3396,7 +3403,7 @@ msgstr "تفاصيل إضافية وضبط دقيق، كل منها خلف مف�
 
 #: settings/driving_tab.py:144
 #: settings/search.py:25
-#: settings/window.py:59
+#: settings/window.py:61
 msgid "Driving"
 msgstr "القيادة"
 
@@ -4335,6 +4342,8 @@ msgstr "هناك شبكة محفوظة تستخدم هذا الاسم بالفع
 
 #. English fallback pending cellular-status translation.
 #: settings/network_tab.py:259
+#: settings/network_test.py:97
+#: settings/network_test.py:99
 #, python-brace-format
 msgid "{} · {}"
 msgstr "{} · {}"
@@ -4429,6 +4438,102 @@ msgstr "Wi-Fi متوقف"
 msgid "Automatic"
 msgstr "اوتوماتيك"
 
+#: settings/network_test.py:43
+msgid "Couldn't reach the speed test. Check the connection and try again."
+msgstr "تعذر الوصول إلى اختبار السرعة. تحقق من الاتصال وحاول مرة أخرى."
+
+#: settings/network_test.py:44
+msgid "The connection dropped during the test. Try again."
+msgstr "انقطع الاتصال أثناء الاختبار. حاول مرة أخرى."
+
+#: settings/network_test.py:45
+msgid "The speed test turned the request down. Try again later."
+msgstr "رفض اختبار السرعة الطلب. حاول مرة أخرى لاحقا."
+
+#: settings/network_test.py:65
+#, python-brace-format
+msgid "{} Mbps"
+msgstr "{} Mbps"
+
+#: settings/network_test.py:69
+#, python-brace-format
+msgid "{} ms"
+msgstr "{} ms"
+
+#: settings/network_test.py:40
+msgid "Maps, models and updates coming in"
+msgstr "الخرائط والنماذج والتحديثات الواردة"
+
+#: settings/network_test.py:41
+msgid "Upload"
+msgstr "رفع"
+
+#: settings/network_test.py:41
+msgid "Drive video and logs going out"
+msgstr "فيديو الرحلات والسجلات الصادرة"
+
+#: settings/network_test.py:42
+msgid "Ping"
+msgstr "Ping"
+
+#: settings/network_test.py:42
+msgid "How quickly the internet answers"
+msgstr "سرعة استجابة الإنترنت"
+
+#: settings/network_test.py:73
+msgid "under 1 MB"
+msgstr "أقل من 1 MB"
+
+#: settings/network_test.py:159
+#, python-brace-format
+msgid "Uses Cloudflare's speed test and up to {} of data."
+msgstr "يستخدم اختبار السرعة من Cloudflare وما يصل إلى {} من البيانات."
+
+#: settings/network_test.py:100
+msgid "Ethernet"
+msgstr "إيثرنت"
+
+#: settings/network_test.py:120
+msgid "Stop"
+msgstr "إيقاف"
+
+#: settings/network_test.py:121
+msgid "Test again"
+msgstr "اختبر مرة أخرى"
+
+#: settings/network_test.py:138
+msgid "Testing…"
+msgstr "جار الاختبار…"
+
+#: settings/network_test.py:145
+#, python-brace-format
+msgid "Tested {} with Cloudflare's speed test. Used {} of data."
+msgstr "تم الاختبار {} باستخدام اختبار السرعة من Cloudflare. تم استخدام {} من البيانات."
+
+#: settings/network_test.py:147
+#, python-brace-format
+msgid "Stopped early. Used {} of data."
+msgstr "توقف مبكرا. تم استخدام {} من البيانات."
+
+#: settings/network_test.py:155
+#, python-brace-format
+msgid "Uses up to {} of data. Leaving this page stops the test."
+msgstr "يستخدم ما يصل إلى {} من البيانات. مغادرة هذه الصفحة توقف الاختبار."
+
+#: settings/network_test.py:158
+#, python-brace-format
+msgid "Uses Cloudflare's speed test and up to {} of cellular data."
+msgstr "يستخدم اختبار السرعة من Cloudflare وما يصل إلى {} من البيانات الخلوية."
+
+#: settings/network_test.py:154
+#, python-brace-format
+msgid "Uses up to {} of cellular data. Leaving this page stops the test."
+msgstr "يستخدم ما يصل إلى {} من البيانات الخلوية. مغادرة هذه الصفحة توقف الاختبار."
+
+#: settings/network_test.py:169
+msgid "Measuring…"
+msgstr "جار القياس…"
+
 #: settings/ram.py:50
 #, python-brace-format
 msgid "{} · {}%"
@@ -4466,7 +4571,7 @@ msgid "No drive has run low on RAM yet."
 msgstr "لم تنخفض ذاكرة RAM في أي رحلة بعد."
 
 #: settings/search.py:25
-#: settings/window.py:59
+#: settings/window.py:61
 msgid "Connections"
 msgstr "الاتصالات"
 
@@ -4496,7 +4601,7 @@ msgstr "تخصيص الحزم"
 
 #: settings/search.py:31
 #: settings/search.py:199
-#: settings/window.py:374
+#: settings/window.py:384
 msgid "Report a Problem"
 msgstr "الإبلاغ عن مشكلة"
 
@@ -5153,66 +5258,70 @@ msgstr "أزرار جهاز التحكم عن بعد في العجلة وماذ�
 msgid "Car audio for alerts, and pairing devices"
 msgstr "صوت السيارة للتنبيهات وأجهزة الاقتران"
 
-#: settings/search.py:222
+#: settings/search.py:221
+msgid "Download speed, upload speed and ping of this device's connection"
+msgstr "سرعة التنزيل وسرعة الرفع و Ping لاتصال هذا الجهاز"
+
+#: settings/search.py:224
 msgid "Updates and the release notes"
 msgstr "تحديثات وملاحظات الإصدار"
 
-#: settings/search.py:223
+#: settings/search.py:225
 #: settings/software_tab.py:202
 msgid "Automatic Updates"
 msgstr "التحديثات التلقائية"
 
-#: settings/search.py:223
+#: settings/search.py:225
 #: settings/software_tab.py:202
 msgid "Download while parked, install when you turn off the car"
 msgstr "يتم التنزيل أثناء ركن السيارة، ويتم تثبيته عند إيقاف تشغيل السيارة"
 
-#: settings/search.py:224
+#: settings/search.py:226
 #: settings/software_tab.py:198
 #: settings/software_tab.py:150
 msgid "Release Channel"
 msgstr "قناة الإصدار"
 
-#: settings/search.py:224
+#: settings/search.py:226
 #: settings/software_tab.py:150
 msgid "The branch to download updates from"
 msgstr "الفرع الذي سيتم تنزيل التحديثات منه"
 
-#: settings/search.py:225
+#: settings/search.py:227
 #: settings/software_tab.py:205
 msgid "Reset Settings"
 msgstr "إعادة ضبط الإعدادات"
 
-#: settings/search.py:225
+#: settings/search.py:227
 msgid "Back to the Essentials defaults"
 msgstr "العودة إلى الإعدادات الافتراضية للأساسيات"
 
-#: settings/search.py:226
+#: settings/search.py:228
 #: settings/software_tab.py:179
 #: settings/software_tab.py:208
 msgid "Uninstall"
 msgstr "إلغاء التثبيت"
 
-#: settings/search.py:226
+#: settings/search.py:228
 msgid "Remove this software from the device"
 msgstr "قم بإزالة هذا البرنامج من الجهاز"
 
-#: settings/search.py:403
-#: settings/search.py:394
+#: settings/search.py:405
+#: settings/search.py:396
 msgid "Search settings"
 msgstr "إعدادات البحث"
 
-#: settings/search.py:292
+#: settings/search.py:294
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "انطق الإعداد، مثل الحد الأقصى للسرعة. اضغط على الميكروفون عند الانتهاء."
 
-#: settings/search.py:374
-#: settings/search.py:333
+#: settings/search.py:376
+#: settings/search.py:335
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "لا توجد إعدادات تطابق \"{}\""
 
-#: settings/search.py:375
+#: settings/search.py:377
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "اكتب اسم الإعداد أو ما يفعله، مثل السطوع أو تغيير المسار"
 
@@ -6129,7 +6238,7 @@ msgstr "قم بالتشغيل"
 msgid "Turn off"
 msgstr "إيقاف"
 
-#: settings/window.py:368
+#: settings/window.py:378
 msgid "DEVICE"
 msgstr "جهاز"
 

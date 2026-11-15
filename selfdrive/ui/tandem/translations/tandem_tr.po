@@ -31,7 +31,7 @@ msgid "Road data still supplies speed limits"
 msgstr "Road data still supplies speed limits"
 
 #: destinations.py:400
-#: settings/search.py:291
+#: settings/search.py:293
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:688
 msgid "Search"
 msgstr "Ara"
@@ -77,6 +77,7 @@ msgid "Say a place or an address. Tap the mic when you're done."
 msgstr "Bir yer veya adres söyleyin. Bitirdiğinizde mikrofona dokunun."
 
 #: destinations.py:437
+#: settings/network_test.py:121
 #: selfdrive/ui/layouts/settings/starpilot/navigation.py:643
 msgid "Start"
 msgstr "Başlat"
@@ -405,7 +406,7 @@ msgstr "Güncelleme hazır"
 
 #: home.py:154
 #: settings/search.py:25
-#: settings/search.py:222
+#: settings/search.py:224
 msgid "Software"
 msgstr "Yazılım"
 
@@ -778,7 +779,7 @@ msgstr "kaynak"
 
 #: onroad/developer.py:181
 #: settings/search.py:25
-#: settings/window.py:59
+#: settings/window.py:61
 msgid "Device"
 msgstr "Cihaz"
 
@@ -1239,7 +1240,7 @@ msgid "{} min · {}"
 msgstr "{} dk · {}"
 
 #: ram.py:44
-#: settings/window.py:294
+#: settings/window.py:304
 msgid "Driving model"
 msgstr "Sürüş modeli"
 
@@ -1773,7 +1774,7 @@ msgid "Pulse and glide and driver selfie are in Tuner Mode."
 msgstr "Hızlan ve süzül ile sürücü selfiesi İnce ayar modundadır."
 
 #: settings/bluetooth_tab.py:320
-#: settings/connections.py:87
+#: settings/connections.py:90
 #: settings/search.py:32
 msgid "Bluetooth Remote"
 msgstr "Bluetooth kumanda"
@@ -2242,34 +2243,40 @@ msgid "Start logging to create a new test log."
 msgstr "Yeni bir test günlüğü oluşturmak için kaydı başlatın."
 
 #. After numerals, Turkish uses the same noun form in both catalog plural slots.
-#: settings/connections.py:54
+#: settings/connections.py:56
 #, python-brace-format
 msgid "{} button"
 msgid_plural "{} buttons"
 msgstr[0] "{} düğme"
 msgstr[1] "{} düğme"
 
-#: settings/connections.py:83
+#: settings/connections.py:86
 msgid "CONNECTIONS"
 msgstr "BAĞLANTILAR"
 
-#: settings/connections.py:84
+#: settings/connections.py:87
 #: settings/map_source.py:207
 #: settings/network_tab.py:371
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
-#: settings/connections.py:86
+#: settings/connections.py:89
 #: settings/network_tab.py:391
-#: settings/search.py:32
+#: settings/network_test.py:99
 msgid "Cellular"
 msgstr "Hücresel"
 
-#: settings/connections.py:89
+#: settings/connections.py:92
 #: settings/search.py:32
 #: settings/search.py:220
 msgid "Car Audio & Devices"
 msgstr "Araç sesi ve cihazlar"
+
+#: settings/connections.py:93
+#: settings/network_test.py:172
+#: settings/search.py:32
+msgid "Network Test"
+msgstr "Ağ Testi"
 
 #: settings/developer.py:23
 msgid "openpilot longitudinal control is in alpha for this car and turns off Automatic Emergency Braking (AEB). The car's own cruise control is the default. Experimental mode is recommended with it. openpilot restarts if the car is on."
@@ -3375,7 +3382,7 @@ msgstr "Ek ayrıntılar ve ince ayarlar, her biri tek anahtarın arkasında"
 
 #: settings/driving_tab.py:144
 #: settings/search.py:25
-#: settings/window.py:59
+#: settings/window.py:61
 msgid "Driving"
 msgstr "Sürüş"
 
@@ -4314,6 +4321,8 @@ msgstr "Kayıtlı bir ağ bu adı zaten kullanıyor"
 
 #. English fallback pending cellular-status translation.
 #: settings/network_tab.py:259
+#: settings/network_test.py:97
+#: settings/network_test.py:99
 #, python-brace-format
 msgid "{} · {}"
 msgstr "{} · {}"
@@ -4408,6 +4417,102 @@ msgstr "Wi-Fi kapalı"
 msgid "Automatic"
 msgstr "Otomatik"
 
+#: settings/network_test.py:43
+msgid "Couldn't reach the speed test. Check the connection and try again."
+msgstr "Hız testine ulaşılamadı. Bağlantıyı kontrol edip tekrar deneyin."
+
+#: settings/network_test.py:44
+msgid "The connection dropped during the test. Try again."
+msgstr "Test sırasında bağlantı koptu. Tekrar deneyin."
+
+#: settings/network_test.py:45
+msgid "The speed test turned the request down. Try again later."
+msgstr "Hız testi isteği reddetti. Daha sonra tekrar deneyin."
+
+#: settings/network_test.py:65
+#, python-brace-format
+msgid "{} Mbps"
+msgstr "{} Mbps"
+
+#: settings/network_test.py:69
+#, python-brace-format
+msgid "{} ms"
+msgstr "{} ms"
+
+#: settings/network_test.py:40
+msgid "Maps, models and updates coming in"
+msgstr "Gelen haritalar, modeller ve güncellemeler"
+
+#: settings/network_test.py:41
+msgid "Upload"
+msgstr "Yükle"
+
+#: settings/network_test.py:41
+msgid "Drive video and logs going out"
+msgstr "Giden sürüş videoları ve kayıtlar"
+
+#: settings/network_test.py:42
+msgid "Ping"
+msgstr "Ping"
+
+#: settings/network_test.py:42
+msgid "How quickly the internet answers"
+msgstr "İnternetin ne kadar hızlı yanıt verdiği"
+
+#: settings/network_test.py:73
+msgid "under 1 MB"
+msgstr "1 MB'tan az"
+
+#: settings/network_test.py:159
+#, python-brace-format
+msgid "Uses Cloudflare's speed test and up to {} of data."
+msgstr "Cloudflare'in hız testini ve en fazla {} veri kullanır."
+
+#: settings/network_test.py:100
+msgid "Ethernet"
+msgstr "Ethernet"
+
+#: settings/network_test.py:120
+msgid "Stop"
+msgstr "Durdur"
+
+#: settings/network_test.py:121
+msgid "Test again"
+msgstr "Tekrar test et"
+
+#: settings/network_test.py:138
+msgid "Testing…"
+msgstr "Test ediliyor…"
+
+#: settings/network_test.py:145
+#, python-brace-format
+msgid "Tested {} with Cloudflare's speed test. Used {} of data."
+msgstr "{} Cloudflare'in hız testiyle test edildi. {} veri kullanıldı."
+
+#: settings/network_test.py:147
+#, python-brace-format
+msgid "Stopped early. Used {} of data."
+msgstr "Erken durduruldu. {} veri kullanıldı."
+
+#: settings/network_test.py:155
+#, python-brace-format
+msgid "Uses up to {} of data. Leaving this page stops the test."
+msgstr "En fazla {} veri kullanır. Bu sayfadan çıkmak testi durdurur."
+
+#: settings/network_test.py:158
+#, python-brace-format
+msgid "Uses Cloudflare's speed test and up to {} of cellular data."
+msgstr "Cloudflare'in hız testini ve en fazla {} hücresel veri kullanır."
+
+#: settings/network_test.py:154
+#, python-brace-format
+msgid "Uses up to {} of cellular data. Leaving this page stops the test."
+msgstr "En fazla {} hücresel veri kullanır. Bu sayfadan çıkmak testi durdurur."
+
+#: settings/network_test.py:169
+msgid "Measuring…"
+msgstr "Ölçülüyor…"
+
 #: settings/ram.py:50
 #, python-brace-format
 msgid "{} · {}%"
@@ -4445,7 +4550,7 @@ msgid "No drive has run low on RAM yet."
 msgstr "Henüz RAM'i az kalan bir sürüş yok."
 
 #: settings/search.py:25
-#: settings/window.py:59
+#: settings/window.py:61
 msgid "Connections"
 msgstr "Bağlantılar"
 
@@ -4475,7 +4580,7 @@ msgstr "Paket ayarlarını geçersiz kıl"
 
 #: settings/search.py:31
 #: settings/search.py:199
-#: settings/window.py:374
+#: settings/window.py:384
 msgid "Report a Problem"
 msgstr "Sorun bildir"
 
@@ -5132,66 +5237,70 @@ msgstr "Direksiyon kumandasının düğmeleri ve işlevleri"
 msgid "Car audio for alerts, and pairing devices"
 msgstr "Uyarılar için araç sesi ve cihaz eşleştirme"
 
-#: settings/search.py:222
+#: settings/search.py:221
+msgid "Download speed, upload speed and ping of this device's connection"
+msgstr "Bu cihazın bağlantısının indirme hızı, yükleme hızı ve ping değeri"
+
+#: settings/search.py:224
 msgid "Updates and the release notes"
 msgstr "Güncellemeler ve sürüm notları"
 
-#: settings/search.py:223
+#: settings/search.py:225
 #: settings/software_tab.py:202
 msgid "Automatic Updates"
 msgstr "Otomatik güncellemeler"
 
-#: settings/search.py:223
+#: settings/search.py:225
 #: settings/software_tab.py:202
 msgid "Download while parked, install when you turn off the car"
 msgstr "Park halinde indir, aracı kapatınca yükle"
 
-#: settings/search.py:224
+#: settings/search.py:226
 #: settings/software_tab.py:198
 #: settings/software_tab.py:150
 msgid "Release Channel"
 msgstr "Sürüm kanalı"
 
-#: settings/search.py:224
+#: settings/search.py:226
 #: settings/software_tab.py:150
 msgid "The branch to download updates from"
 msgstr "Güncellemelerin indirileceği dal"
 
-#: settings/search.py:225
+#: settings/search.py:227
 #: settings/software_tab.py:205
 msgid "Reset Settings"
 msgstr "Ayarları sıfırla"
 
-#: settings/search.py:225
+#: settings/search.py:227
 msgid "Back to the Essentials defaults"
 msgstr "Essentials varsayılanlarına dön"
 
-#: settings/search.py:226
+#: settings/search.py:228
 #: settings/software_tab.py:179
 #: settings/software_tab.py:208
 msgid "Uninstall"
 msgstr "Kaldır"
 
-#: settings/search.py:226
+#: settings/search.py:228
 msgid "Remove this software from the device"
 msgstr "Bu yazılımı cihazdan kaldır"
 
-#: settings/search.py:403
-#: settings/search.py:394
+#: settings/search.py:405
+#: settings/search.py:396
 msgid "Search settings"
 msgstr "Ayarlarda ara"
 
-#: settings/search.py:292
+#: settings/search.py:294
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "Hız sınırı gibi bir ayar söyleyin. Bitirdiğinizde mikrofona dokunun."
 
-#: settings/search.py:374
-#: settings/search.py:333
+#: settings/search.py:376
+#: settings/search.py:335
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "“{}” ile eşleşen ayar yok"
 
-#: settings/search.py:375
+#: settings/search.py:377
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "Parlaklık veya şerit değişimi gibi ayar adını ya da işlevini yazın"
 
@@ -6107,7 +6216,7 @@ msgstr "Aç"
 msgid "Turn off"
 msgstr "Kapat"
 
-#: settings/window.py:368
+#: settings/window.py:378
 msgid "DEVICE"
 msgstr "CİHAZ"
 

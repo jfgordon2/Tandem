@@ -75,7 +75,7 @@ def join(text: str) -> str:
 
 
 _SEPARATORS = " .,:/-%"
-_UNITS = {"mph", "km/h", "m/s", "m/s²", "km", "mi", "m", "ft", "s", "ms", "GB", "MB", "Hz", "V", "A", "°C", "°F", "°", "%", "٪"}
+_UNITS = {"mph", "km/h", "m/s", "m/s²", "km", "mi", "m", "ft", "s", "ms", "GB", "MB", "Mbps", "Hz", "V", "A", "°C", "°F", "°", "%", "٪"}
 _UNIT_PATTERN = "|".join(re.escape(unit) for unit in sorted(_UNITS, key=lambda s: (-len(s), s)))
 _MEASUREMENT = rf"[+\-−]?\d+(?:[.,]\d+)*\s*(?:{_UNIT_PATTERN})(?!\w)"
 _ATOMS = re.compile(rf"(?P<measurement>\({_MEASUREMENT}\)|\[{_MEASUREMENT}\]|{_MEASUREMENT})"

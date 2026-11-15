@@ -957,12 +957,15 @@ def test_cancelling_assignment_removes_a_learned_button():
   assert [m["id"] for m in source.maps] == ["a", "b"] and source.learning is None
 
 
-def _connections(window, wheel, bt, section):
+def _connections(window, wheel, bt, section, test=None):
   from openpilot.selfdrive.ui.tandem.settings import connections
   from openpilot.selfdrive.ui.tandem.settings.bluetooth_tab import WheelButtons
   from openpilot.selfdrive.ui.tandem.settings.network_tab import Network
-  from openpilot.selfdrive.ui.tandem.tests.fakes import FakeWifi
-  page = connections.connections_page(Network(FakeWifi(), window.store), lambda: None, WheelButtons(wheel), bt, window)
+  from openpilot.selfdrive.ui.tandem.settings.network_test import NetworkTestModel
+  from openpilot.selfdrive.ui.tandem.tests.fakes import FakeNetworkTest, FakeWifi, home_wifi
+  wifi = FakeWifi()
+  model = NetworkTestModel(test or FakeNetworkTest(), lambda: wifi.connected_ssid, home_wifi)
+  page = connections.connections_page(Network(wifi, window.store), lambda: None, WheelButtons(wheel), bt, window, model)
   page.select(section)
   return page
 
@@ -977,7 +980,7 @@ def test_connections_sections_keep_radios_busy_only_while_shown():
   window._roots[Tab.CONNECTIONS] = lambda: page
   window.show_event()
   window.select_tab(Tab.CONNECTIONS)
-  assert [s.label for s in page._sections] == ["Wi-Fi", "Cellular", "Bluetooth Remote", "Car Audio & Devices"]
+  assert [s.label for s in page._sections] == ["Wi-Fi", "Cellular", "Bluetooth Remote", "Car Audio & Devices", "Network Test"]
   assert not source.state["testing"] and ("active", True) not in bt.calls     # Wi-Fi open: Bluetooth idle
   page.select(connections.AUDIO)
   assert bt.calls[-1] == ("active", True)
@@ -1355,18 +1358,21 @@ def _search_window():
   from openpilot.selfdrive.ui.tandem.settings import window as W
   from openpilot.selfdrive.ui.tandem.settings.bundles import TUNER_MODE
   from openpilot.selfdrive.ui.tandem.tests.fakes import (FakeBluetooth, FakeBootLogos, FakeCarExtras, FakeCars, FakeData,
-                                                         FakeDeveloperSource, FakeMaps, FakeModels, FakeUpdates, FakeWheel, FakeWifi)
+                                                         FakeDeveloperSource, FakeMaps, FakeModels, FakeNetworkTest, FakeUpdates,
+                                                         FakeWheel, FakeWifi, home_wifi)
   models, wheel, maps = FakeModels(), FakeWheel(), FakeMaps()
   window = W.SettingsWindow(store=SettingsStore(FakeCache(), lambda: None), live=FakeLive(), model_source=lambda: models,
                             car_catalog=FakeCars, device_data=FakeData, device=FakeDevice, wifi=FakeWifi, wheel=lambda: wheel,
                             bluetooth=FakeBluetooth, updates=FakeUpdates, maps_source=lambda: maps, boot_logos=FakeBootLogos,
-                            developer_source=FakeDeveloperSource, car_extras=FakeCarExtras)
+                            developer_source=FakeDeveloperSource, car_extras=FakeCarExtras, network_test=FakeNetworkTest,
+                            connection=home_wifi)
   TUNER_MODE.set(window.store, True)
   return window
 
 
-# Rows named after data (networks, backups, devices, the car's own buttons), not settings
-DATA_ROWS = {"Home Wi-Fi", "Coffee Shop", "Neighbor", "Car Audio", "Pixel 9", "Home", "Work", "Distance", "LKAS", "Cruise main"}
+# Rows named after data (networks, backups, devices, the car's own buttons, what the network test measures), not settings
+DATA_ROWS = {"Home Wi-Fi", "Coffee Shop", "Neighbor", "Car Audio", "Pixel 9", "Home", "Work", "Distance", "LKAS", "Cruise main",
+             "Download", "Upload", "Ping"}
 
 
 def test_search_index_matches_every_settings_screen():
