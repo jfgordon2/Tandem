@@ -6,7 +6,7 @@ stage 2 is done, `development` boots as stock StarPilot 7.0.
 | Stage | State |
 |---|---|
 | 1. Foundation | Done; see below |
-| 2. Entry point | Decided: Tandem sits on openpilot's original screens |
+| 2. Entry point | Done; see below |
 | 3 to 6 | Not started |
 
 ## Why a port and not a merge
@@ -102,6 +102,22 @@ or memory. Tandem stays off until stage 2 picks it.
 - Checked by rendering `tools/render/scene_components.py` on both branches: the same apart from raylib 6's antialiasing,
   and Vietnamese, which `release` draws as "?".
 
+## Stage 2: what was done
+
+- `ui.py` wraps StarPilot's UI choice in `screens.ui_selection()`, and `layouts/main.py` imports `Sidebar` and
+  `SIDEBAR_WIDTH` from `screens.py`: one line each (README › Upstream integration). Upstream's UI tests give the same
+  results with and without them.
+- The sidebar is ported, with its Maps row read from StarPilot 7's map manager (`starpilot/maps/operation_owner.py`)
+  on a worker thread. It renders the same as on `release`.
+- With Tandem on, home, settings and the onroad view are openpilot's until stage 4 ports them.
+- **What StarPilot 7 runs only with its own UI**, and so isn't running with Tandem's screens until Tandem starts it: the
+  controller runtime (wheel and controller buttons, favorites), the screen-off wheel poll, Android Auto bookmark and
+  speed limit actions, the Galaxy layout preview, SpacePilot's game mode and the projection features. `ui.py` starts
+  them only beside `StarMainLayout` (`layout.star`). This is the same as StarPilot's own `STARPILOT_UI=upstream`
+  recovery mode. Stage 5 decides which Tandem keeps and how it starts them without StarPilot's layout.
+- Not checked on a device: this Mac can't load StarPilot 7's msgq and params builds, so `MainLayout` itself wasn't run.
+  The real `Sidebar` subclass was built and checked over a stand-in `ui_state`.
+
 ## Tests still on `release` only
 
 Ported so far: `test_fallback_font.py`, the component tests of `test_tandem.py`, the catalog-mechanics tests of
@@ -113,8 +129,8 @@ Ported so far: `test_fallback_font.py`, the component tests of `test_tandem.py`,
 | `test_tandem.py` from `test_traffic_chip_only_while_braking...` on | Onroad, home and settings screens (stage 4) |
 | `test_translations.py`: the template, metadata, coverage and completed-language checks, Developer View labels, picker languages | Every screen ported, then `tools/translations.py update` (end of stage 4) |
 | `test_font_loading.py`: lazy fonts, glyph release and alert faces | Lazy fonts and glyph release if they come back; alert faces with onroad alerts (stage 4) |
-| `test_upstream_integration.py`: all but the text hooks | Their hooks and modules (stages 2 to 6) |
-| `test_larger_text.py`, `test_bar.py`, `test_compass.py`, `test_streets.py`, `test_turn_signals.py`, `test_lead_tag.py`, `test_onroad*.py`, `test_alert_levels.py`, `test_chip_events.py`, `test_headroom_warning.py`, `test_limit_follower.py`, `test_limit_offers.py`, `test_developer_view.py` | Onroad (stage 4) |
+| `test_upstream_integration.py`: all but the text hooks and the sidebar factory | Their hooks and modules (stages 3 to 6) |
+| `test_larger_text.py` (the size tests and the menu sidebar test are ported, in `test_screens.py`), `test_bar.py`, `test_compass.py`, `test_streets.py`, `test_turn_signals.py`, `test_lead_tag.py`, `test_onroad*.py`, `test_alert_levels.py`, `test_chip_events.py`, `test_headroom_warning.py`, `test_limit_follower.py`, `test_limit_offers.py`, `test_developer_view.py` | Onroad (stage 4) |
 | `test_home_layout.py`, `test_forecast.py`, `test_menu_idle.py`, `test_ram.py`, `test_keyboard.py`, `test_voice.py`, `test_speech_native.py` | Home, sidebar and keyboard (stage 4) |
 | `test_settings.py`, `test_developer.py`, `test_software_dialogs.py`, `test_hotspot_name.py`, `test_network_touches.py`, `test_storage_sizes.py`, `test_prebuilt_params.py` | Settings (stages 3 and 4) |
 | `test_destinations.py`, `test_routemap.py`, `test_routing_ui.py`, `test_map_progress.py` | Navigation and routing (stage 5) |

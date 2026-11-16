@@ -13,6 +13,7 @@ from openpilot.selfdrive.ui.ui_state import device, ui_state
 from openpilot.starpilot.ui.presentation import Profile
 from openpilot.starpilot.ui.startup import select_ui
 from openpilot.starpilot.ui.wheel_input import poll_screen_off_wheel
+from openpilot.selfdrive.ui.tandem.screens import ui_selection
 
 BIG_UI = gui_app.big_ui()
 
@@ -49,7 +50,7 @@ def main():
   else:
     config_realtime_process(0, Priority.UI)
 
-  selection = select_ui(Profile.LARGE if BIG_UI else Profile.COMPACT, os.environ)
+  selection = ui_selection(select_ui(Profile.LARGE if BIG_UI else Profile.COMPACT, os.environ), BIG_UI)  # Tandem: openpilot's layout for its screens
   print(f"UI: {'StarPilot' if selection.custom else 'upstream'} selected ({selection.reason})", file=sys.stderr, flush=True)
   star_ui = selection.custom
   gui_app.init_window("UI")

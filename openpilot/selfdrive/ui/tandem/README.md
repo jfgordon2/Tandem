@@ -2,7 +2,9 @@
 
 Tandem is this fork of StarPilot. Its design language is **Essentials**: fewer choices and better defaults, with the car explaining what it's doing. This package holds the Essentials component library. The mocks, screenshots and tokens are in [`design/`](design/). It's built on raylib and the existing `Widget` base class. Screens are put together from these pieces instead of drawing with raylib directly.
 
-This branch ports Tandem onto StarPilot 7. [`PORTING.md`](PORTING.md) has the stages; so far the component library, fonts and translation catalog are here, and no screen is. Until stage 2, the device runs StarPilot 7's own UI.
+This branch ports Tandem onto StarPilot 7. [`PORTING.md`](PORTING.md) has the stages; so far the component library, fonts, translation catalog and the sidebar are here.
+
+Tandem sits on openpilot's original layout (`MainLayout`), not on StarPilot 7's own UI. On the big UI, `ui.py` takes `MainLayout`'s path while any Essentials screen is on (`screens.py`), and `MainLayout` gets each screen from `screens.py`. A screen not ported yet is openpilot's. `TANDEM_HOME`, `TANDEM_SETTINGS`, `TANDEM_ONROAD` and `TANDEM_SIDEBAR` set to `0` give openpilot's screen back; with all four `0`, or `STARPILOT_UI=upstream`, Tandem stays out and StarPilot 7 chooses its UI as it would without Tandem.
 
 | Module | Contents |
 | --- | --- |
@@ -20,6 +22,9 @@ This branch ports Tandem onto StarPilot 7. [`PORTING.md`](PORTING.md) has the st
 | `scroll.py` | Gesture rejection for Tandem's lists; upstream's scroll panel keeps its behavior. |
 | `i18n.py`, `arabic.py`, `thai.py` | Translation (see Translations), Arabic joining and right-to-left order, and Thai clusters. |
 | `prefs.py` | Tandem's own on/off preferences, kept as marker files beside the params folder. |
+| `screens.py` | Where Tandem joins StarPilot 7's UI: `ui_selection()` for `ui.py`, and the screens `MainLayout` shows. |
+| `sidebar.py` | The sidebar beside home and the onroad view (`design/home.html`, `onroadmenu.html`): upstream's `Sidebar`, redrawn, with a Maps row from StarPilot's map manager. |
+| `onroad/size.py` | Text Size (Larger) and Reduce Motion for the driving screen and the menu sidebar. |
 | `tools/` | `shoot_mocks.js` (mock screenshots), `render/` (headless renders: `snap.py` and `scene_*.py`), `compare.py` (the mock-beside-build page), `build_icons.js`, the font builders (`bmfont.py`, `build_figtree_fonts.py`, `fallback_font.py`, `crop_font_atlases.py`, `thai_font.py`), `translations.py` and `typecheck.py`. |
 
 ## Conventions
@@ -42,10 +47,16 @@ Tandem merges StarPilot 7 (`Dom`). New behavior, presentation, assets, tools and
 | --- | --- |
 | `openpilot/system/ui/lib/application.py` | `KEEP_FONT = False` and an empty `TEXT_SHAPERS` list. `font_fallback` skips the language-wide Noto fallback while `KEEP_FONT` is set, and the `rl.draw_text_ex` wrapper runs `TEXT_SHAPERS` over the text. Tandem sets both only while drawing its own text (`draw._own_font`) and restores them afterward. |
 | `openpilot/system/ui/lib/text_measure.py` | `measure_text_cached` runs `TEXT_SHAPERS` too, so measuring matches drawing. |
+| `openpilot/selfdrive/ui/ui.py` | `select_ui(...)` is wrapped in `screens.ui_selection(..., BIG_UI)`, which returns StarPilot's choice unchanged unless Tandem's screens are on, and then openpilot's layout with the reason logged. |
+| `openpilot/selfdrive/ui/layouts/main.py` | `Sidebar` and `SIDEBAR_WIDTH` are imported from `screens.py`, which gives openpilot's when Tandem's sidebar is off. |
 
 **Font atlases:** `openpilot/selfdrive/assets/.gitignore` ignores `fonts/*.fnt` and `fonts/*.png`, left from StarPilot 6's generator. Tandem's own atlases are committed with `git add -f` rather than by editing that file; once tracked, git keeps them. After rebuilding an atlas, `git add -f` it again.
 
 Not carried over from `release`: lazy loading of upstream's Inter faces and freeing glyph images after loading. StarPilot 7 draws Inter from TTF files at startup, and its raylib binding has no safe way to free a font's glyph images. Tandem's memory use is measured again on a device before either comes back (`PORTING.md`).
+
+## Where the code differs from the mocks
+
+- **Sidebar, Maps row:** the mocks say "Up to date" for downloaded maps. StarPilot 7 selects a map snapshot and doesn't track updates, so the row says "Ready" when a map is selected. It says "Downloading" while the map manager downloads, installs or switches maps, and keeps its last answer while driving, when the map manager doesn't answer.
 
 ## Translations
 

@@ -3,7 +3,7 @@ from enum import IntEnum
 import openpilot.cereal.messaging as messaging
 from openpilot.system.ui.lib.application import gui_app
 from openpilot.system.ui.widgets import Widget
-from openpilot.selfdrive.ui.layouts.sidebar import Sidebar, SIDEBAR_WIDTH
+from openpilot.selfdrive.ui.tandem.screens import SIDEBAR_WIDTH, sidebar as Sidebar  # Tandem: its sidebar, or openpilot's
 from openpilot.selfdrive.ui.layouts.home import HomeLayout
 from openpilot.selfdrive.ui.layouts.arabesque import ArabesqueLayout
 from openpilot.selfdrive.ui.layouts.settings.settings import SettingsLayout, PanelType
