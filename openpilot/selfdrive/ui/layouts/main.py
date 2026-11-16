@@ -3,11 +3,10 @@ from enum import IntEnum
 import openpilot.cereal.messaging as messaging
 from openpilot.system.ui.lib.application import gui_app
 from openpilot.system.ui.widgets import Widget
-from openpilot.selfdrive.ui.tandem.screens import SIDEBAR_WIDTH, sidebar as Sidebar  # Tandem: its sidebar, or openpilot's
-from openpilot.selfdrive.ui.layouts.home import HomeLayout
+from openpilot.selfdrive.ui.tandem.screens import (SIDEBAR_WIDTH, home, onroad, onroad_requires_full_view,
+                                                        sidebar as Sidebar)  # Tandem screen factories
 from openpilot.selfdrive.ui.layouts.arabesque import ArabesqueLayout
 from openpilot.selfdrive.ui.layouts.settings.settings import SettingsLayout, PanelType
-from openpilot.selfdrive.ui.onroad.augmented_road_view import AugmentedRoadView
 from openpilot.selfdrive.ui.ui_state import device, ui_state
 from openpilot.selfdrive.ui.layouts.onboarding import OnboardingWindow
 from openpilot.selfdrive.ui.body.layouts.onroad import BodyLayout
@@ -31,12 +30,12 @@ class MainLayout(Widget):
     self._prev_onroad = False
 
     # Initialize layouts
-    self._home_layout = HomeLayout()
+    self._home_layout = home(lambda: self.open_settings(PanelType.SOFTWARE))
     self._home_body_layout = BodyLayout()
     self._layouts: dict[MainState, Widget] = {
       MainState.HOME: self._home_layout,
       MainState.SETTINGS: SettingsLayout(on_open_arabesque=self._open_arabesque, arabesque_available=self._arabesque_allowed),
-      MainState.ONROAD: AugmentedRoadView(),
+      MainState.ONROAD: onroad(),
       MainState.ARABESQUE: ArabesqueLayout(self._exit_arabesque, self._arabesque_allowed),
     }
 
@@ -157,6 +156,8 @@ class MainLayout(Widget):
     self._set_mode_for_state()
 
   def _render_main_content(self):
+    if self._current_mode == MainState.ONROAD and onroad_requires_full_view(self._layouts[MainState.ONROAD]):
+      self._sidebar.set_visible(False)
     # Render sidebar
     if self._sidebar.is_visible:
       self._sidebar.render(self._sidebar_rect)

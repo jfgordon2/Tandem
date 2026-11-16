@@ -319,6 +319,108 @@
       "match": true
     },
     {
+      "mock": "stage4-software-current",
+      "title": "Software up to date",
+      "note": "The owner reports a successful check for the installed branch.",
+      "match": true
+    },
+    {
+      "mock": "stage4-software-checking",
+      "title": "Checking for updates",
+      "note": "StarPilot’s check keeps its button disabled while metadata is in flight.",
+      "match": true
+    },
+    {
+      "mock": "stage4-software-available",
+      "title": "Update available",
+      "note": "Download addresses the selected branch after the owner reports a newer revision.",
+      "match": true
+    },
+    {
+      "mock": "stage4-software-downloading",
+      "title": "Downloading an update",
+      "note": "The bar uses the updater’s measured percentage.",
+      "match": true
+    },
+    {
+      "mock": "stage4-software-ready",
+      "title": "Ready to install",
+      "note": "Notes opens the qualified build. The next restart uses the saved time zone.",
+      "match": true
+    },
+    {
+      "mock": "stage4-software-park",
+      "title": "Park to update",
+      "note": "Controls follow current update and vehicle permission.",
+      "match": true
+    },
+    {
+      "mock": "stage4-software-error",
+      "title": "Update check failed",
+      "note": "The updater reported a failure, and Check now retries.",
+      "match": true
+    },
+    {
+      "mock": "stage4-software-notes",
+      "title": "Update notes",
+      "note": "Restart requests the installed and prepared commits shown in the notes.",
+      "match": true
+    },
+    {
+      "mock": "stage4-software-installed-notes",
+      "title": "Installed release notes",
+      "note": "This page uses the installed build’s release notes.",
+      "match": true
+    },
+    {
+      "mock": "stage4-software-options",
+      "title": "More software options",
+      "note": "The native widget supplies its own scrollable list and dialogs. The fixture stands in for native status.",
+      "match": false
+    },
+    {
+      "mock": "stage4-onroad-engaged",
+      "title": "StarPilot 7 onroad",
+      "note": "MAX and the green wheel use StarPilot’s cruise and disengage permissions. The stand-in road replaces the camera.",
+      "match": true
+    },
+    {
+      "mock": "stage4-onroad-factory-cruise",
+      "title": "StarPilot 7 onroad with car cruise",
+      "note": "The car supplies the value and the driver adjusts it with the car’s controls.",
+      "match": true
+    },
+    {
+      "mock": "stage4-onroad-inactive",
+      "title": "StarPilot 7 onroad with cruise inactive",
+      "note": "The gray wheel is status only. An unavailable MAX shows a dash.",
+      "match": true
+    },
+    {
+      "mock": "stage4-onroad-new-limit",
+      "title": "StarPilot 7 speed-limit confirmation",
+      "note": "Match and Ignore address the exact pending proposal. The timer comes from StarPilot’s confirmation window.",
+      "match": true
+    },
+    {
+      "mock": "stage4-onroad-warning",
+      "title": "StarPilot 7 driving warning",
+      "note": "The native warning takes the place of the action bar and preserves native wording.",
+      "match": true
+    },
+    {
+      "mock": "stage4-onroad-critical",
+      "title": "StarPilot 7 critical takeover",
+      "note": "An active critical alert fills the display and closes the sidebar.",
+      "match": true
+    },
+    {
+      "mock": "stage4-onroad-low-ram",
+      "title": "StarPilot 7 Low on RAM",
+      "note": "Memory is the lowest-priority chip. Larger text can show it below the primary driving status.",
+      "match": true
+    },
+    {
       "mock": "onroad",
       "title": "Onroad",
       "note": "Matches: Essentials' speed with its turn signal, the sign, the chip bottom left and the driver monitor tile top right. The 28 px street name can use the full text area and scrolls if it doesn't fit. The stand-in road stands for the camera. Page ground uses true black (#000000).",
@@ -433,6 +535,42 @@
         "alert_pay_attention",
         "alert_fcw"
       ]
+    },
+    {
+      "mock": "stage4-home",
+      "title": "StarPilot 7 Home",
+      "note": "Parked Home with the installed version. The Software card opens openpilot’s Software page. The existing Settings button label is centered.",
+      "match": false
+    },
+    {
+      "mock": "stage4-home-update-ready",
+      "title": "StarPilot 7 Home with update ready",
+      "note": "Only rendered for a qualified, installable update. Notes opens the staged revision. The existing Settings button label is centered.",
+      "match": false
+    },
+    {
+      "mock": "stage4-home-update-notes",
+      "title": "StarPilot 7 update notes",
+      "note": "The parked, revision-bound Restart and update action. Release notes use a plain-text list. The existing Settings button label is centered.",
+      "match": false
+    },
+    {
+      "mock": "stage4-home-update-scheduled",
+      "title": "StarPilot 7 update notes with a schedule",
+      "note": "The footer appears when StarPilot reports an automatic install schedule. Release notes use a plain-text list. The existing Settings button label is centered.",
+      "match": false
+    },
+    {
+      "mock": "stage4-home-alerts",
+      "title": "StarPilot 7 parked alerts",
+      "note": "Upstream determines severity, order and the active alert action. The existing Settings button label is centered.",
+      "match": false
+    },
+    {
+      "mock": "stage4-home-weather",
+      "title": "StarPilot 7 Home with weather",
+      "note": "The weather strip appears while Weather heads-up is enabled and there is a usable forecast. The existing Settings button label is centered.",
+      "match": false
     },
     {
       "mock": "home",

@@ -9,7 +9,7 @@ Screens that aren't ported to StarPilot 7 yet (PORTING.md) are openpilot's for n
 """
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Callable, Mapping
 import os
 from typing import TYPE_CHECKING
 
@@ -43,6 +43,55 @@ def ui_selection(selection: UiSelection, big_ui: bool, environment: Mapping[str,
 
 def _enabled(name: str, environment: Mapping[str, str] = os.environ) -> bool:
   return environment.get("STARPILOT_UI") != "upstream" and environment.get(name, "1") != "0"
+
+
+def home(on_software: Callable[[], None]) -> Widget:
+  """Use the approved parked Home or openpilot's original layout."""
+  if not _enabled("TANDEM_HOME"):
+    from openpilot.selfdrive.ui.layouts.home import HomeLayout
+    return HomeLayout()
+  from openpilot.selfdrive.ui.tandem.home_layout import EssentialsHome
+  return EssentialsHome(on_software)
+
+
+
+def onroad() -> Widget:
+  """Build the approved onroad view or openpilot's original road layout."""
+  if not _enabled("TANDEM_ONROAD"):
+    from openpilot.selfdrive.ui.onroad.augmented_road_view import AugmentedRoadView
+    return AugmentedRoadView()
+  from openpilot.selfdrive.ui.tandem.onroad.view import EssentialsOnroad
+  return EssentialsOnroad()
+
+
+def onroad_requires_full_view(widget: Widget) -> bool:
+  """Tell the shell whether Tandem's current critical alert needs the whole screen."""
+  prepare = getattr(widget, "prepare_frame", None)
+  return bool(prepare()) if callable(prepare) else False
+
+
+def software() -> Widget:
+  """Use the Essentials Software panel on the big UI or the original panel."""
+  from openpilot.selfdrive.ui.layouts.settings.software import SoftwareLayout
+  from openpilot.system.ui.lib.application import BIG_UI
+
+  if not BIG_UI or not _enabled("TANDEM_SETTINGS"):
+    return SoftwareLayout()
+  from openpilot.common.swaglog import cloudlog
+  from openpilot.selfdrive.ui.tandem.home_software import SoftwareOwner
+  from openpilot.selfdrive.ui.tandem.settings.software import SoftwarePanel
+  from openpilot.selfdrive.ui.tandem.settings.software_state import SoftwareWatch
+  from openpilot.selfdrive.ui.ui_state import ui_state
+
+  def owner() -> SoftwareOwner:
+    from openpilot.starpilot.galaxy.software_operations import SoftwareOperations
+    return SoftwareOperations(params=ui_state.params)
+
+  def watch(authorized: Callable[[], bool]) -> SoftwareWatch:
+    return SoftwareWatch(owner, ui_state.params.get, lambda: authorized() and ui_state.is_offroad(),
+                         lambda error: cloudlog.warning("Tandem Software: %s", error))
+
+  return SoftwarePanel(watch, SoftwareLayout, lambda: not ui_state.projection_read_only and ui_state.replay_clock is None)
 
 
 def sidebar() -> Widget:

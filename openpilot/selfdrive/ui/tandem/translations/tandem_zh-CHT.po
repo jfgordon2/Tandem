@@ -8427,3 +8427,216 @@ msgstr "彎道超出轉向能力"
 #: selfdrive/selfdrived/events.py:1505
 msgid "Reverse"
 msgstr "倒車"
+
+#: home_alerts.py:182
+msgid "Automatic installation is scheduled while parked."
+msgstr ""
+
+#: home_layout.py:32
+#, python-brace-format
+msgid "{} style"
+msgstr ""
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ChestnutBranch
+msgid "Chestnut detected! Switch to the release-chestnut branch to use chestnut-class models."
+msgstr ""
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ChestnutModelError
+msgid "Chestnut model error. Restart the car to retry."
+msgstr ""
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ChestnutNotDetected
+msgid "Chestnut not detected. Check USB and 12V connections, then restart the car."
+msgstr ""
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ChestnutOverheated
+msgid "Chestnut overheated. Ensure good airflow."
+msgstr ""
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_JetlinkUnavailable
+#, python-brace-format, drawn
+msgid "Jetlink unavailable: {}"
+msgstr ""
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_UploadsIgnored
+msgid "Uploads ignored due to a potential detected safety policy violation. Contact comma.ai/support if you believe this was made in error."
+msgstr ""
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_Pairing
+msgid "Finish setup. Pair your device with comma connect to view recent drives and bookmarked routes."
+msgstr ""
+
+#: onroad/hud.py:213
+#, python-brace-format
+msgid "Adjusted limit {} {}"
+msgstr ""
+
+#: onroad/state.py:106
+msgid "Low on RAM"
+msgstr ""
+
+#: onroad/view.py:32
+msgid "map"
+msgstr ""
+
+#: onroad/view.py:33
+msgid "dashboard"
+msgstr ""
+
+#: onroad/view.py:34
+msgid "camera"
+msgstr ""
+
+#: onroad/view.py:35
+msgid "online maps"
+msgstr ""
+
+#: onroad/view.py:65
+msgid "speed limit source"
+msgstr ""
+
+#: settings/software.py:85
+#, python-brace-format
+msgid "An update is available on {}"
+msgstr ""
+
+#: settings/software.py:131
+msgid "Automatic downloads"
+msgstr ""
+
+#: settings/software.py:132
+msgid "Automatic installation"
+msgstr ""
+
+#: settings/software.py:133
+msgid "Change in More software options"
+msgstr ""
+
+#: settings/software.py:91
+msgid "Check your connection and try again"
+msgstr ""
+
+#: settings/software.py:63
+msgid "Checked just now"
+msgstr ""
+
+#: settings/software.py:66
+#, python-brace-format
+msgid "Checked {}"
+msgstr ""
+
+#: settings/software.py:65
+#, python-brace-format
+msgid "Checked {} minute ago"
+msgid_plural "Checked {} minutes ago"
+msgstr[0] ""
+
+#: settings/software.py:38
+msgid "Checking for updates"
+msgstr ""
+
+#: settings/software.py:42
+msgid "Could not download the update"
+msgstr ""
+
+#: settings/software.py:43
+msgid "Couldn't check for updates"
+msgstr ""
+
+#: settings/software.py:131
+msgid "Download updates while parked"
+msgstr ""
+
+#: settings/software.py:39
+msgid "Downloading update"
+msgstr ""
+
+#: settings/software.py:47
+msgid "Installed software"
+msgstr ""
+
+#: settings/software.py:83
+msgid "Looking for a newer version"
+msgstr ""
+
+#: settings/software.py:116
+msgid "More software options"
+msgstr ""
+
+#: settings/software.py:77
+#, python-brace-format
+msgid "Next scheduled restart · {}"
+msgstr ""
+
+#: settings/software.py:36
+msgid "Park to update"
+msgstr ""
+
+#: settings/software.py:40
+msgid "Preparing update"
+msgstr ""
+
+#: settings/software.py:34
+msgid "Reading software status"
+msgstr ""
+
+#: settings/software.py:132
+msgid "Restart at the scheduled time while parked"
+msgstr ""
+
+#: settings/software.py:41
+msgid "Restart pending"
+msgstr ""
+
+#: settings/software.py:93
+msgid "Software actions are available while parked"
+msgstr ""
+
+#: settings/software.py:206
+msgid "Software change could not be saved"
+msgstr ""
+
+#: settings/software.py:32
+msgid "Software options"
+msgstr ""
+
+#: settings/software.py:133
+msgid "Target branch"
+msgstr ""
+
+#: settings/software.py:31
+msgid "Update notes"
+msgstr ""
+
+#: settings/software.py:35
+msgid "Updater unavailable"
+msgstr ""
+
+#: settings/software.py:37
+msgid "Updates are disabled"
+msgstr ""
+
+#: settings/software.py:89
+#, python-brace-format
+msgid "{} is ready to install"
+msgstr ""
+
+#: settings/software.py:87
+#, python-brace-format
+msgid "{}% downloaded"
+msgstr ""
+
+#: settings/device.py:243
+#, python-brace-format
+msgid "Open {}"
+msgstr ""
+
+#: settings/device.py:133
+#, python-brace-format
+msgid "{} · Paired"
+msgstr ""
+
+#: settings/device.py:133
+#, python-brace-format
+msgid "{} · see drives and change settings on your phone"
+msgstr ""

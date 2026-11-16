@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Up to date</title>
+<style>@font-face{font-family:Inter;src:url("../../../assets/fonts/Inter-Medium.ttf");font-weight:500}@font-face{font-family:Figtree;src:url("../../../assets/fonts/Figtree-Regular.ttf");font-weight:400}@font-face{font-family:Figtree;src:url("../../../assets/fonts/Figtree-SemiBold.ttf");font-weight:600}@font-face{font-family:Figtree;src:url("../../../assets/fonts/Figtree-Bold.ttf");font-weight:700}@font-face{font-family:Figtree;src:url("../../../assets/fonts/Figtree-ExtraBold.ttf");font-weight:800}
+body { margin: 0; }
+.screen, .screen * { box-sizing: border-box; }
+.screen { width:1125px; height:563px; overflow:hidden; display:flex; background:#000; color:#f2f5f9; font-family:Figtree,system-ui,sans-serif; }
+.rail { width:260px; padding-top:31px; flex:none; color:#808080; font:500 34px Inter,system-ui,sans-serif; }
+.close { width:104px; height:104px; margin:0 auto 21px; background:#292929; border-radius:52px; display:grid; place-items:center; }
+.rail span { display:flex; height:57.3px; padding-right:52px; justify-content:flex-end; align-items:center; }
+.rail .selected { color:#fff; }
+.host { margin:5px 5px 5px 5px; padding:16px; flex:1; min-width:0; background:#292929; border-radius:12px; display:flex; }
+.panel { display:flex; flex:1; min-width:0; flex-direction:column; gap:14px; padding:16px 15px; border-radius:18px; background:#000; }
+.header { display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:44px; }
+h1 { font-size:30px; line-height:1.1; margin:0; font-weight:800; }
+.versions { display:grid; grid-template-columns:1fr 1.13fr; gap:14px; flex:1; min-height:0; }
+.card { background:#16191d; border-radius:22px; min-width:0; overflow:hidden; }
+.version { padding:21px 18px 18px; display:flex; flex-direction:column; gap:8px; }
+.status { color:#7dbbf9; font-size:15px; font-weight:700; letter-spacing:.5px; }
+.status.ok { color:#6fd8a0; }
+.status.caution { color:#ffc66d; }
+.version strong { font-size:29px; line-height:1.1; font-weight:800; }
+.version .line { font-size:16px; line-height:1.32; color:#aeb6c2; }
+.spacer { flex:1; }
+.actions { display:flex; gap:8px; }
+.button { display:inline-flex; align-items:center; justify-content:center; min-height:46px; padding:0 13px; color:#f2f5f9; font:700 16px Figtree,sans-serif; background:#23272e; border:0; border-radius:12px; text-align:center; white-space:nowrap; }
+.actions .button { flex:1; }
+.button.primary { color:#0b1a2b; background:#5aaaf8; }
+.button:disabled { color:#818c99; background:#23272e; }
+.row { min-height:75px; border-bottom:1px solid #23272e; padding:12px 14px 12px 17px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.row:last-child { border:0; }
+.row-title { display:block; font-size:18px; font-weight:700; }
+.row small, .install-note { display:block; color:#aeb6c2; font-size:14px; margin-top:4px; }
+.row strong { color:#c9d0da; }
+.install-note { margin:0; padding:14px 17px 0; }
+.track { background:#2b3037; height:6px; border-radius:4px; margin:5px 0 1px; }
+.track span { display:block; height:100%; background:#5aaaf8; border-radius:4px; }
+.switch { width:72px; height:42px; border:0; border-radius:21px; background:#343a44; flex:none; padding:4px; display:flex; }
+.switch span { width:34px; height:34px; border-radius:17px; background:#f2f5f9; }
+.switch[aria-checked=true] { background:#5aaaf8; justify-content:flex-end; }
+.switch[aria-checked=true] span { background:#0e1520; }
+.switch:disabled { opacity:.45; }
+.notes { flex:1; padding:20px; display:flex; flex-direction:column; gap:8px; }
+.notes h2 { font-size:25px; margin:0 0 4px; }
+.notes p { font-size:18px; margin:4px 0; line-height:1.4; }
+.notes .line { color:#aeb6c2; font-size:15px; }
+.notes .actions { align-self:flex-end; }
+</style>
+<body><div class="screen"><div class="rail"><div class="close" aria-label="Close settings"><svg width="34" height="34" viewBox="0 0 34 34" stroke="#fff" stroke-width="4" stroke-linecap="round" aria-hidden="true"><path d="M7 7l20 20M27 7L7 27"/></svg></div><span>Device</span><span>Network</span><span>Toggles</span><span class="selected">Software</span><span>Firehose</span><span>Developer</span></div><main class="host"><div class="panel">
+    <div class="header"><h1>Software</h1><button class="button">More software options</button></div>
+    <div class="versions">
+      <section class="card version"><span class="status ok">Up to date</span><strong>Version 7.0.0</strong><div class="line">Checked 6 minutes ago</div>
+        <div class="spacer"></div><div class="actions"><button class="button primary">Check now</button><button class="button">What’s new</button></div>
+      </section>
+      <section class="card">
+        <div class="row"><div><span class="row-title">Automatic downloads</span><small>Download updates while parked</small></div><button class="switch" aria-label="Automatic downloads" role="switch" aria-checked="true"><span></span></button></div>
+        <div class="row"><div><span class="row-title">Automatic installation</span><small>Restart at the scheduled time while parked</small></div><button class="switch" aria-label="Automatic installation" role="switch" aria-checked="false"><span></span></button></div>
+        <div class="row"><div><span class="row-title">Target branch</span><small>Change in More software options</small></div><strong>development</strong></div>
+
+      </section>
+    </div></div></main></div></body></html>

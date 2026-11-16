@@ -2,7 +2,7 @@
 
 Tandem is this fork of StarPilot. Its design language is **Essentials**: fewer choices and better defaults, with the car explaining what it's doing. This package holds the Essentials component library. The mocks, screenshots and tokens are in [`design/`](design/). It's built on raylib and the existing `Widget` base class. Screens are put together from these pieces instead of drawing with raylib directly.
 
-This branch ports Tandem onto StarPilot 7. [`PORTING.md`](PORTING.md) has the stages; so far the component library, fonts, translation catalog and the sidebar are here.
+This branch ports Tandem onto StarPilot 7. [`PORTING.md`](PORTING.md) tracks the stages. The component library, sidebar, parked Home and core driving overlays are ported.
 
 Tandem sits on openpilot's original layout (`MainLayout`), not on StarPilot 7's own UI. On the big UI, `ui.py` takes `MainLayout`'s path while any Essentials screen is on (`screens.py`), and `MainLayout` gets each screen from `screens.py`. A screen not ported yet is openpilot's. `TANDEM_HOME`, `TANDEM_SETTINGS`, `TANDEM_ONROAD` and `TANDEM_SIDEBAR` set to `0` give openpilot's screen back; with all four `0`, or `STARPILOT_UI=upstream`, Tandem stays out and StarPilot 7 chooses its UI as it would without Tandem.
 
@@ -23,7 +23,9 @@ Tandem sits on openpilot's original layout (`MainLayout`), not on StarPilot 7's 
 | `i18n.py`, `arabic.py`, `thai.py` | Translation (see Translations), Arabic joining and right-to-left order, and Thai clusters. |
 | `prefs.py` | Tandem's own on/off preferences, kept as marker files beside the params folder. |
 | `screens.py` | Where Tandem joins StarPilot 7's UI: `ui_selection()` for `ui.py`, and the screens `MainLayout` shows. |
+| `home.py`, `home_layout.py` | Parked Home, weather, release notes and offroad alerts. StarPilot’s software and alert owners supply state and actions. |
 | `sidebar.py` | The sidebar beside home and the onroad view (`design/home.html`, `onroadmenu.html`): upstream's `Sidebar`, redrawn, with a Maps row from StarPilot's map manager. |
+| `onroad/view.py`, `onroad/overlay.py` | Standard and Larger onroad HUD and the existing camera and model. StarPilot owns speed-limit decisions, cruise actions and alerts. |
 | `onroad/size.py` | Text Size (Larger) and Reduce Motion for the driving screen and the menu sidebar. |
 | `tools/` | `shoot_mocks.js` (mock screenshots), `render/` (headless renders: `snap.py` and `scene_*.py`), `compare.py` (the mock-beside-build page), `build_icons.js`, the font builders (`bmfont.py`, `build_figtree_fonts.py`, `fallback_font.py`, `crop_font_atlases.py`, `thai_font.py`), `translations.py` and `typecheck.py`. |
 
@@ -48,13 +50,21 @@ Tandem merges StarPilot 7 (`Dom`). New behavior, presentation, assets, tools and
 | `openpilot/system/ui/lib/application.py` | `KEEP_FONT = False` and an empty `TEXT_SHAPERS` list. `font_fallback` skips the language-wide Noto fallback while `KEEP_FONT` is set, and the `rl.draw_text_ex` wrapper runs `TEXT_SHAPERS` over the text. Tandem sets both only while drawing its own text (`draw._own_font`) and restores them afterward. |
 | `openpilot/system/ui/lib/text_measure.py` | `measure_text_cached` runs `TEXT_SHAPERS` too, so measuring matches drawing. |
 | `openpilot/selfdrive/ui/ui.py` | `select_ui(...)` is wrapped in `screens.ui_selection(..., BIG_UI)`, which returns StarPilot's choice unchanged unless Tandem's screens are on, and then openpilot's layout with the reason logged. |
-| `openpilot/selfdrive/ui/layouts/main.py` | `Sidebar` and `SIDEBAR_WIDTH` are imported from `screens.py`, which gives openpilot's when Tandem's sidebar is off. |
+| `openpilot/selfdrive/ui/layouts/main.py` | `Sidebar`, `SIDEBAR_WIDTH` and the Home factory come from `screens.py`. Home receives a callback to open the Software page. The onroad factory uses the existing camera and model. A critical alert closes the sidebar through its existing visibility setter. The factories return openpilot’s widgets when their switches are off. |
+| `openpilot/selfdrive/ui/layouts/settings/settings.py` | Use the Software panel factory from `screens.py`. `TANDEM_SETTINGS=0` restores the original widget. The existing Settings navigation and other panels stay in openpilot's layout. |
 
 **Font atlases:** `openpilot/selfdrive/assets/.gitignore` ignores `fonts/*.fnt` and `fonts/*.png`, left from StarPilot 6's generator. Tandem's own atlases are committed with `git add -f` rather than by editing that file; once tracked, git keeps them. After rebuilding an atlas, `git add -f` it again.
 
 Not carried over from `release`: lazy loading of upstream's Inter faces and freeing glyph images after loading. StarPilot 7 draws Inter from TTF files at startup, and its raylib binding has no safe way to free a font's glyph images. Tandem's memory use is measured again on a device before either comes back (`PORTING.md`).
 
 ## Where the code differs from the mocks
+
+- **Stage 4 Software:** More software options embeds the native list. StarPilot supplies its row labels, availability, spacing and dialogs. The fixed left rail follows openpilot’s actual navigation size.
+
+- **Stage 4 driving screen:** the stand-in road in the mock represents StarPilot’s live camera and model. Speed-limit confirmation waits for a wide enough road view when the sidebar is open.
+
+- **Stage 4 Home:** the existing sidebar centers its Settings button label, and release notes use a scrollable list
+  of plain paragraphs. Home shows the installed version while the updater has no confirmed result for the current branch.
 
 - **Sidebar, Maps row:** the mocks say "Up to date" for downloaded maps. StarPilot 7 selects a map snapshot and doesn't track updates, so the row says "Ready" when a map is selected. It says "Downloading" while the map manager downloads, installs or switches maps, and keeps its last answer while driving, when the map manager doesn't answer.
 
@@ -69,7 +79,7 @@ Tandem's screens are written in English, and the text a driver reads is marked w
 | `t_("Sets {} options", count)` | Text built at runtime | Now, with the values in its `{}` holes |
 | `tn_("{} alert", "{} alerts", n)` | Counts | Now, in each language's plural forms |
 
-- **Catalog:** `translations/` is `release`'s, complete for every screen, ported or not. Don't run `tools/translations.py update` until the screens are ported: it would drop the strings of the rest, and their translations.
+- **Catalog:** `translations/` is `release`'s, complete for every screen, ported or not. During the port, retain the existing entries when adding newly extracted strings. Rebuild the full catalog once every screen is ported.
 - **Fonts:** each string is drawn in Figtree when Figtree has all its letters, otherwise in the Noto fallback. Figtree has no Vietnamese, which StarPilot 7 adds, so Vietnamese draws in the fallback. StarPilot 7 also drops Arabic from its language picker; Tandem's Arabic catalog stays until stage 4 decides the language list.
 - **Fallback atlas:** rebuilt for StarPilot 7's translations from Noto Sans 500 Medium (`@expo-google-fonts` packages on npm). It leaves out Braille, which StarPilot 7 uses only for Galaxy's web drag handle ("Drag ⠿ to reorder"), and no Noto font has.
 

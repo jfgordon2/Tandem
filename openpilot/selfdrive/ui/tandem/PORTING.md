@@ -7,7 +7,9 @@ stage 2 is done, `development` boots as stock StarPilot 7.0.
 |---|---|
 | 1. Foundation | Done; see below |
 | 2. Entry point | Done; see below |
-| 3 to 6 | Not started |
+| 3. State | Mapped and covered by contract tests |
+| 4. Screens | Parked Home, core driving overlays and Software ported |
+| 5 to 6 | Not started |
 
 ## Why a port and not a merge
 
@@ -15,7 +17,7 @@ stage 2 is done, `development` boots as stock StarPilot 7.0.
 ("unrelated histories"). It is also a different codebase, not a newer copy of the one Tandem hooks into:
 
 - All code moved under `openpilot/`. Import paths stay the same (`openpilot.selfdrive...`), file paths don't.
-- Params went from 802 keys to 397. Tandem uses 236 params; 119 of them are gone, including `IsOnroad`. Many settings
+- Params went from 802 keys to 396. Tandem uses 236 params; 119 of them are gone, including `IsOnroad`. Many settings
   now live in StarPilot's own documents and owners (`starpilot/*/profile_document.py`, `offset_document.py`,
   `saved_document.py`) instead of params.
 - StarPilot's UI was rewritten as `openpilot/starpilot/ui/` (`StarMainLayout`), picked in `ui.py` by
@@ -25,9 +27,8 @@ stage 2 is done, `development` boots as stock StarPilot 7.0.
 - 21 of the 36 upstream files Tandem edits on `release` no longer exist, and 15 of the 37 StarPilot modules Tandem
   imports are gone. The files that remain changed a lot (`application.py` -644/+259 lines, `ui_state.py` -349/+454,
   `soundd.py` -443/+190, `model_renderer.py` -789/+248).
-- Of the 22 message services Tandem reads, `starpilotPlan`, `liveDelay` and `liveParameters` are gone. Likely
-  replacements, to confirm field by field: `starpilotLongitudinalPlan` and the `slc*` services, `lateralDelay`,
-  `vehicleParameters`.
+- Dom replaced three of the 22 message services Tandem reads. The [service map](#cereal-services) covers
+  `starpilotPlan`, `liveDelay` and `liveParameters` field by field.
 
 `Dom` was moving fast when this was written (439 commits in a week, against 5 on `StarPilot`), and its README calls it a
 development branch with migration still in progress.
@@ -48,17 +49,18 @@ or memory. Tandem stays off until stage 2 picks it.
    i18n, fonts module, design mocks, tools, tests) and `openpilot/starpilot/tandem/`, Figtree, JetBrains Mono and
    NotoSans-Fallback, `AGENTS.md` with the new paths, and the README's upstream table started fresh. Rework the font
    loading for Dom's runtime atlases, and redo the four text hooks (`KEEP_FONT`, `TEXT_SHAPERS`, the `text_measure.py`
-   shapers, the `inputbox.py` font getter) on Dom's `application.py`. The lazy loading and atlas cropping from
-   `idle-memory` don't carry over as written; measure Dom's font memory on a device first.
+   shapers, the `inputbox.py` font getter) on Dom's `application.py`. Carry forward the cropped Figtree atlases
+   and restore CPU glyph image release for GPU-drawn fonts. See the [device measurements](#font-memory-on-the-comma).
 2. **Entry point.** Tandem sits on openpilot's original screens (`MainLayout`), as on `release`, and isn't offered as a
    choice next to StarPilot 7's UI: Tandem's point is fewer choices. The owner decided this on 2026-11-16. It needs one
    small hook where `ui.py` builds the layout, with `STARPILOT_UI=upstream` and Tandem's own switch still giving
    upstream's screens back.
-3. **State.** Map what Tandem reads to Dom: `ui_state`, the services above, and each of the 119 missing params to its
-   Dom key, document or owner, or to "dropped". Settings must write Dom's stores, not old keys. Keep the map in this
-   file or a test, so a Dom merge that moves something fails a test.
+3. **State.** Map UI state, cereal services and missing Params to Dom's fields and owners. The
+   [state contracts](#stage-3-state-and-settings-contracts) specify where ported screens read and write settings.
+   The contract tests flag changes when Dom moves those dependencies.
 4. **Screens**, each against its mock: home, onroad, alerts, then the settings tabs. StarPilot features that 7.0
-   dropped lose their rows; new 7.0 features get mocks first.
+   dropped lose their rows. New 7.0 features get mocks first. Defer Inter font requests until the ported screens
+   need them. Recheck which weights load at boot and verify that alert fonts are ready before driving.
 5. **Services.** Routing (`starpilot/tandem/routing`, about 5,700 lines) against Dom's own offline routing
    (`starpilot/navigation/offline_owner.py`, `route_engine.py`) first, since 7.0 may make part of it unnecessary. Then
    Bluetooth (`starpilot/bluetooth/`), wheel controls (`starpilot/controllers/`), speed-limit vision memory
@@ -98,9 +100,25 @@ or memory. Tandem stays off until stage 2 picks it.
 - Figtree Regular is keyed on `FontWeight.NORMAL` (Inter Regular on the big UI); StarPilot 6's `ROMAN` is gone.
 - `NotoSans-Fallback` rebuilt for StarPilot 7's languages (Vietnamese added) with `tools/bmfont.py`, StarPilot 6's
   `.fnt` generator, kept in Tandem's tools since StarPilot 7 no longer ships it.
-- Not carried over: lazy Inter loading and freeing glyph images (README › Keeping merges easy). Measure on a device first.
+- The cropped Figtree atlases carried over from `release`.
 - Checked by rendering `tools/render/scene_components.py` on both branches: the same apart from raylib 6's antialiasing,
   and Vietnamese, which `release` draws as "?".
+
+### Font memory on the comma
+
+On the parked comma 3X running `development` at `874f5c6e` with AGNOS 20.5.2, the live Tandem UI reported **133 MiB**
+of GPU allocations and a process-lifetime peak of **186 MiB**. In a separate GPU context on the same device,
+the production font loader for the English large-screen UI allocated **86 MiB** for the four Inter atlases,
+about **21.5 MiB per weight**.
+
+- **Restore CPU glyph image release.** Freeing the CPU glyph images after texture upload reclaimed **26.7 MiB of
+  RAM** in the isolated test. GPU allocations stayed steady, and the rendered English text sample matched
+  pixel for pixel. Scope the release to fonts used exclusively for GPU drawing so raylib can still draw CPU image
+  text where needed. Recheck memory and rendered text on the device after integration.
+- **Defer lazy Inter loading to stage 4.** The [HUD renderer](../onroad/hud_renderer.py) and
+  [alert renderer](../onroad/alert_renderer.py) request all four weights during startup. Making just the loader
+  lazy would leave those allocations in place. Each weight the port can defer saves about **21.5 MiB of GPU
+  allocations** while it stays unloaded.
 
 ## Stage 2: what was done
 
@@ -115,8 +133,210 @@ or memory. Tandem stays off until stage 2 picks it.
   speed limit actions, the Galaxy layout preview, SpacePilot's game mode and the projection features. `ui.py` starts
   them only beside `StarMainLayout` (`layout.star`). This is the same as StarPilot's own `STARPILOT_UI=upstream`
   recovery mode. Stage 5 decides which Tandem keeps and how it starts them without StarPilot's layout.
-- Not checked on a device: this Mac can't load StarPilot 7's msgq and params builds, so `MainLayout` itself wasn't run.
-  The real `Sidebar` subclass was built and checked over a stand-in `ui_state`.
+- The Mac check built and rendered the real `Sidebar` subclass over a stand-in `ui_state`. `MainLayout` later ran
+  on the parked comma during the [font memory check](#font-memory-on-the-comma).
+
+## Stage 3: state and settings contracts
+
+This inventory compares registered keys and service names referenced by string literals in production Python under
+Tandem's two owned trees on `release` at `a4dbe5bcc6` with `development` at `874f5c6eee`. It covers 236 Params and 22
+cereal services. [The contract test](tests/test_porting_state.py) checks
+the current registry, cereal fields and owner entry points against this map. Stage 4 connects the screen callers.
+Stage 5 connects the service callers. Keep settings labels and availability tied to the owners' snapshots and use their
+validated actions with the revision or expected saved value and the same parked or vehicle checks upstream uses.
+
+### UI state
+
+| Release dependency | StarPilot 7 source |
+|---|---|
+| `started`, `ignition`, `started_frame`, `engaged`, `is_metric`, `CP`, `is_offroad()`, `add_offroad_transition_callback()`, `prime_state` | Same concepts on [UIState](../ui_state.py). Bind the UI to its state and transitions. Use a qualified parked sample for vehicle-sensitive actions that allow Park while the UI is onroad. |
+| `ui_params` | `UIState.params` is typed Params and can be read-only in projection. Read settings via the upstream owners below. Refresh outside per-frame rendering and preserve projection/replay permission checks. |
+| `params_memory` | Use the service or owner for each old mailbox in the [param map](#missing-params). Unchanged Param names can still have a different type or lifecycle. |
+| `starpilot_toggles` | No aggregate dict. Read display choices via `onroad_appearance()` and `read_customization()`, steering pause through `PauseLateralSpeed` and `PauseLateralOnSignal` via `FeatureSettingsOwner`, and live activity from the messages below. |
+| `always_on_lateral_active` | Reuse the [runtime snapshot](../../../starpilot/ui/runtime_snapshot.py) handling of the qualified AOL latch and active lateral output. Use `display_aol_latch()` for the armed display state, and keep armed and active distinct. |
+| Vehicle in Park / stationary | [`ParkedVehicleReader`](../../../starpilot/parked_vehicle.py) qualifies current CAN state and dwell. The map owner and the other write owners enforce their own admission. |
+| Reads of `sm.valid` and `recv_frame` alone | Reuse the StarPilot 7 display paths' validity, freshness, drive-transition and replay clock checks. `current_message()` is for action freshness, `display_message()` is for high-rate display data, and slow or sparse services use their own qualifications. |
+
+### Cereal services
+
+The first table covers all 22 release services. The current [UIState](../ui_state.py) subscriptions cover most UI
+inputs. Subscribe in an owned consumer when the table calls for a feed that UIState does not subscribe to. Attach
+any new consumer at its screen or service entry point.
+
+| Release service | StarPilot 7 read or action path |
+|---|---|
+| `can` | Retained. The CAN recorder owns its subscriber. |
+| `carControl`, `carOutput`, `carState`, `controlsState` | Retained on UIState. Read actuation, motion, cruise and steering through current samples. Use `carState.vCruiseCluster` for displayed SET in km/h. |
+| `deviceState`, `driverStateV2` | Retained on UIState for device health, connectivity and driver camera. |
+| `gpsLocationExternal` | Retained on UIState with `gpsLocation`. Follow [StarPilot GPS selection](../../../starpilot/gps/source.py) for a qualified fix. |
+| `liveDelay` | `lateralDelay.lateralDelay` in seconds. `LiveDelay` still exists as a persisted BYTES Param for the estimator. |
+| `liveParameters` | `vehicleParameters.steerRatio`. Use the current result with `valid` and `steerRatioValid` for a learned ratio. |
+| `mapdExtendedOut` | Retained for mapd reporting. Replace legacy download progress with `MapSnapshotOperationOwner` status. |
+| `mapdOut` | Retained, outside UIState. Follow [the onroad map](../../../starpilot/ui/onroad_map.py) for its own subscriber and `roadName` / `wayName` display. |
+| `modelV2`, `radarState` | Retained on UIState, including lane-change meta. Use `radarState.leadOne.present` for lead presence. The upstream conditional-lead UI helper still reads the legacy `status` field at this baseline. |
+| `navInstruction` | Retained for official nav. Prefer qualified `starpilotNavigation.navigation` through `navigation_display()`. Use `official_navigation_display()` with `navInstruction`, `navRoute` and `NavDestination` for official nav. |
+| `pandaStates` | Retained. Use the boot-clock-aware `current_message()` for UI readiness. Preserve the recorder's own subscription. |
+| `rawAudioData` | Retained on UIState. Speech can use its own mic subscription as on release. |
+| `selfdriveState`, `starpilotSelfdriveState` | Both retained. Use `current_alert()` for alert size, text and type and `onroadEvents` for current event names. |
+| `starpilotCarState` | Retained on UIState for pause, coast, pulse-and-glide and vehicle diagnostics. Use qualified AOL state for steering authority and the parked owner for settings admission. |
+| `starpilotPlan` | Replaced by the sources below. `customReserved6` and the legacy replay shim are for historical logs. |
+| `starpilotRadarState` | Retained outside UIState. Use the current `leadLeft` / `leadRight` for adjacent leads and the upstream qualification for adjacent-stop observations. |
+
+| Release `starpilotPlan` fields | StarPilot 7 source |
+|---|---|
+| `accelerationJerk`, `dangerFactor`, `laneWidthLeft`, `laneWidthRight` | Omit these legacy diagnostics. `modelV2.laneLines` supports drawing lane geometry, with no equivalent left/right width metric published. |
+| `cscControllingSpeed`, `cscSpeed` | Qualified `slcState.curve` via `current_curve_message()` and `curve_observation()`. Use `controlling` and qualified `ceilingMps`. |
+| `forcingStop`, `redLight` | `starpilotLongitudinalPlan.forceStopHolding` / `forceStopBraking` describe qualified stop behavior via [the force-stop consumer](../../../starpilot/longitudinal/force_stop_alert.py). Consume the native alert for its meaning. Holding or braking alone does not identify a red light. |
+| `forcingStopLength`, `stopSignConfirmed` | No equivalent qualified stop distance. Use the native stop-sign advisory path in the runtime snapshot. |
+| `experimentalMode`, `trackingLead` | `selfdriveState.experimentalMode` and `radarState.leadOne.present` for the individual values. A tracked lead alone gives no planner reason to assert that it is slowing the car. |
+| `lateralCheck` | Use qualified AOL status and `carControl.latActive` for steering output. Omit the old inferred steering-held reason. |
+| `pulseGlideCoasting` | No equivalent planner bit. `starpilotCarState.pulseAndGlide` and `forceCoast` remain separate indications. |
+| `slcIsLimitingMaxSet`, `slcSpeedLimitOffset`, `slcSpeedLimit`, `slcSpeedLimitSource`, `slcPresentedSpeedLimitSource` | Read `slcState` via the runtime snapshot. Use `isLimitingMaxSet`, `offset`, and qualified accepted / pending / observed speed and source. Use the matching `*AdjustedLimit` when its presence flag is true. Speed and offsets are m/s. |
+| `speedLimitChanged`, `unconfirmedSlcSpeedLimit`, `slcOverriddenSpeed` | Read the pending decision, `pendingSinceMonoTime`, `decisionId`, `presentationId` and `driverOverrideActive`. Reuse the upstream speed-limit observation for display and `SlcActionDispatcher` for Accept, Reject and Adopt. The planner owns the actual SET response. |
+| `starpilotEvents` | Current `onroadEvents.name` and the qualified alert path. Departure advisories have original-source timestamps on `starpilotLongitudinalPlan`. Keep the alert epoch and clear stale presentation on transition. |
+| `vCruise` | `carState.vCruiseCluster` describes SET. Use upstream's qualified navigation guidance and [intent](../../../starpilot/navigation/intent.py) for route-specific feedback. The legacy planner target comparison has no direct replacement. |
+| `weatherId` | Weather display uses qualified location via the StarPilot 7 or Tandem forecast service. Drop weather-dependent gap tuning. |
+
+### Missing Params
+
+A dropped entry has no equivalent for the old control or data contract. Its screen can omit the old row when ported.
+Some StarPilot 7 features cover part of the old UI through an owner with a different meaning.
+
+| Release Params | StarPilot 7 disposition |
+|---|---|
+| `AccelerationPath`, `PathColor`, `PathEdgeWidth`, `PathWidth`, `LaneLinesWidth`, `DynamicPathWidth` | Use `OnroadCustomizations` and `OnroadLayoutOwner.save()` for supported path modes and colors. Drop legacy width knobs. |
+| `AccelerationProfile`, `DecelerationProfile`, `AdvancedLongitudinalTune`, `IncreasedStoppedDistance` | `FeatureSettingsOwner` and `LongitudinalPersonalityProfiles`. Use selected acceleration / braking presets and `extraStoppedGapM`. Drop the tuning master switch. Use the owner's named choices and SI units. |
+| `AdjacentPath`, `AdjacentPathMetrics`, `DeveloperMetrics`, `DeveloperWidgets`, `FPSCounter`, `NumericalTemp`, `ShowCPU`, `ShowGPU`, `ShowMemoryUsage`, `RadarTracksUI` | Drop the legacy switches. Port Tandem's Developer View using `DeveloperUI` / `DeveloperSidebar` and its owned strip preference, with available Dom metrics. Keep adjacent lead data separate from old adjacent-path settings. |
+| `AdvancedCustomUI`, `CustomUI`, `ModelUI`, `NavigationUI`, `QOLVisuals`, `HideDistanceProfileBanner` | Drop the master switches and old banner flag. Use the relevant appearance owner and `OnroadCustomizations` for supported widget choices, including the following distance or driving mode widgets. |
+| `AlertVolumeControl`, `BelowSteerSpeedVolume` | `SoundsOwner` exposes individual supported volume settings. Drop the group flag and dedicated below-steer-speed volume. Keep the upstream alert policy. |
+| `AutomaticUpdates` | `UpdaterAutomaticDownloads` via `SoftwareOperations` `preferences` action. Read automatic install scheduling and the global `DisableUpdates` gate independently. |
+| `AutomaticallyDownloadModels` | Drop the legacy automatic catalog toggle. Use `ModelManager.snapshot()` and its guarded `action()`. |
+| `BlindSpotPath` | Drop legacy path shading. `AppearanceOwner` exposes the supported blind-spot border. For vision warnings follow `PiPWarningSource`'s freshness handling of `spotMonitorState`; retain native car blind-spot status separately. |
+| `BootLogo`, `StartupMessageTop`, `StartupMessageBottom` | Dropped. Use the StarPilot 7 startup screen and alert owners. |
+| `CECurves`, `CELead`, `CESlowerLead`, `CEStopLights`, `CEStoppedLead`, `ConditionalChill`, `ConditionalExperimental` | `ConditionalModeConfig` via `ConditionalFeature`. Use CEM / CCM / stock modes and `cem.curves`, `lead`, `slower_lead`, `stop_lights`, `stopped_lead` options. The upstream legacy-adoption helper produces a preview that requires explicit adoption. |
+| `CancelDownloadMaps`, `DownloadMaps`, `LastMapsUpdate`, `MapsDownloadProgress`, `MapsDownloadSizeCache`, `MapsSelected`, `PreferredSchedule` | `MapSnapshotOperationOwner` through `request_operation()` for catalog, status, start and cancel. Use the operation ID and selected generation. Offline navigation areas use `OfflineMapsOwner`. The map snapshot protocol has no equivalent weekly/monthly schedule or set of legacy cache flags. Resolve scheduled updates in stage 5. |
+| `CarMake`, `CarModel`, `CarModelName`, `ForceFingerprint` | `VehicleSelectionOwner` with `VehicleSelection` for a manual override or Auto. Use the active `CarParams` fingerprint and platform metadata for the detected vehicle. |
+| `ClearNavOnOffroad`, `FavoriteDestinations`, `MapboxPublicKey`, `MapboxSecretKey` | `NavigationOwner` owns route lifecycle, favorites and the supported provider credentials. Use its revision-bound actions. The Dom Mapbox token is a public token. The legacy clear-on-offroad switch has no replacement. |
+| `Compass` | No Dom key. Use a Tandem-owned preference for the Essentials compass with qualified GPS heading. |
+| `CustomThemes`, `HolidayThemes`, `RandomThemes`, `SignalAnimation` | Drop the old theme and pack controls. Use Dom appearance preferences for supported native signal indicators. |
+| `DisableOnroadUploads`, `NoUploads` | No exact equivalents. `AlwaysAllowUploads` permits metered uploads and does not implement either privacy policy. Omit the legacy choices until the uploader policy is ported in stage 6. |
+| `DiscordUsername`, `IssueReported` | Drop the saved identity and report marker. Galaxy's `StarPortLogSender` accepts an optional Discord username per explicit report. |
+| `DynamicPedalsOnUI`, `StaticPedalsOnUI` | Drop the two legacy pedal modes. `AppearanceOwner` exposes the supported wheel brake/acceleration feedback through `ShowBrakeStatus` and `PedalsOnUI`. |
+| `ForceTorqueController`, `LateralTune`, `NNFF`, `NNFFLite` | `LateralControllerSelection` and `SteeringLearningPreferences` through `FeatureSettingsOwner`. Show choices for the active platform. Drop the old controller modes and master switch. |
+| `GMDashSpoofOffsets`, `LockDoorsTimer`, `SubaruSNGManualParkingBrake` | Dropped. The retained lock/unlock and Subaru SNG switches have separate meanings. |
+| `IsOnroad` | UI uses `UIState.is_onroad()`. A background owner can use explicit `IsOffroad` and its activity checks. Missing or unreadable state does not authorize parked work. |
+| `LaneChanges`, `MinimumLaneChangeSpeed`, `NudgelessLaneChange` | `LaneChangeFeature` writes `LaneChangePreferences` with enabled, minimum speed in m/s and automatic lane-change options. |
+| `LeadDetectionThreshold`, `RadarTakeoffs`, `TrailerLoad` | Dropped. Use Dom's qualified lead observations and native longitudinal behavior. |
+| `LongitudinalActuatorDelay`, `LongitudinalActuatorDelayStock`, `StartAccel`, `StartAccelStock`, `StopAccel`, `StopAccelStock`, `StoppingDecelRate`, `StoppingDecelRateStock` | Drop the generic tuning overrides and stock shadows. New settings use the upstream vehicle and longitudinal profile owners. |
+| `MaxDesiredAcceleration` | Use the selected acceleration profile. The vehicle-specific `LongitudinalMaxOutputAcceleration` is an output limit with a different scope. |
+| `NavInstructionState` | Use `starpilotNavigation` and the native rendering path, plus the official-nav fallback. Drop the legacy shared-memory JSON. |
+| `Offroad_ChestnutUncompiled` | Use `UIState.chestnut_state` for readiness and the current Chestnut/model alerts for actual alerts. |
+| `Offroad_IsTakingSnapshot`, `Offroad_NeosUpdate` | Drop the snapshot alert. Use `UpdaterOSUpdate` via the software owner for OS update status. |
+| `SLCConfirmationHigher`, `SLCConfirmationLower` | `SLCConfirmation` is an integer choice via `FeatureSettingsOwner`: 0 off, 1 both, 3 higher only, 4 lower only. |
+| `SLCForceCruiseSpeed`, `SpeedLimitAccepted` | Use the planner's current `slcState` and state-bound `slcAction` via `SlcActionDispatcher`. Omit the old direct SET mailbox and acceptance bit. |
+| `SLCMapboxFiller`, `SpeedLimitSources`, `SpeedLimitChangedAlert` | Use the native SLC source priority settings and live `sourceReadings`. Drop the Mapbox filler, old diagnostic switch and dedicated limit-change chime setting. |
+| `ScreenManagement`, `StandbyMode` | `DisplayOwner` owns display preferences, including `StarPilotDisplayPreferencesEnabled`, brightness, timeout and `TurnOffCommaScreen`. The old standby flag has no equivalent. |
+| `SentryModeEnabled`, `SentryModeSensitivity` | `SentryOwner` writes `SentryMotionPreferences` using its named sensitivity choices and parked checks. |
+| `SetSpeedLimit` | `SLCOnEngage` via `FeatureSettingsOwner` for setting initial cruise from the limit. Keep it distinct from enabling `SpeedLimitController`. |
+| `ShowStoppingPoint`, `ShowStoppingPointMetrics` | Dropped with the old distance feed. Display the native stop advisory when qualified. |
+| `SteerDelay`, `SteerDelayStock`, `SteerKP`, `SteerKPStock`, `UseAutoSteerDelay` | Read live `lateralDelay` for diagnostics. For supported manual torque gain use `GainFeature` and `TorqueOverrideDocument`. Drop generic override fields and stock shadows. |
+| `TestAlert`, `WheelControlTestActive` | Drop the Param mailboxes. Connect alert previews and controller actions to their StarPilot 7 runtime owners when those screens port. |
+| `TuningLevel`, `TuningLevelConfirmed` | Dropped. Use each setting's owner and its capability and admission checks. |
+| `UseVienna` | `onroad_appearance()` has a bounded compatibility read of the old file. Drop the edit switch unless a supported Dom writer is added. |
+| `WeatherPresets` | Drop weather-dependent following-distance tuning. Weather display is independent. |
+
+### Retained Params
+
+These release keys are still registered in Dom. Registration alone gives no write permission or semantic equivalence.
+`SLCConfirmation` moved from BOOL to INT, `NavDestination` from STRING to JSON and `LastGPSPosition` from STRING to BYTES.
+Use the typed owner for each. Upstream retirement folds `AdvancedLateralTune`, `QOLLongitudinal`, and `RainbowPath`
+into its current settings and layout. Use `SLCOffsetSchedule` via `FeatureSettingsOwner` for speed-limit offsets, and
+`TorqueOverrideDocument` for supported torque edits, including when the old torque fields remain registered.
+
+```text
+AdbEnabled AdvancedLateralTune AggressiveFollow AlphaLongitudinalEnabled AlwaysOnDM AlwaysOnLateral BlindSpotMetrics
+CalibrationParams CameraView CancelButtonControl CarParamsPersistent CurveSpeedController CustomCruise
+CustomPersonalities DeveloperSidebar DeveloperUI DisableOpenpilotLongitudinal DisengageOnAccelerator DisengageVolume
+DistanceButtonControl DoUninstall DongleId DriverCamera EVTuning EngageVolume ExperimentalMode ForceStops
+GMPedalLongitudinal GitBranch GithubSshKeys GithubUsername GreenLightAlert GsmApn GsmMetered GsmRoaming
+HKGRemoteStartBootsComma HardwareSerial IgnoreIgnitionLine IsLdwEnabled IsMetric IsOffroad JeepBrakeHold
+JoystickDebugMode LKASButtonControl LanguageSetting LastGPSPosition LeadDepartingAlert LeadInfo LockDoors
+LongDistanceButtonControl LongitudinalManeuverMode LongitudinalPersonality LoudBlindspotAlert
+MainCruiseButtonControl ModeButtonControl NavDestination NostalgiaMode Offroad_CarUnrecognized
+Offroad_ChestnutNotDetected Offroad_ChestnutOverheated Offroad_ChestnutPcieUnavailable Offroad_ChestnutUpdateFailed
+Offroad_ChestnutUsbSlow Offroad_ConnectivityNeeded Offroad_ConnectivityNeededPrompt
+Offroad_DriverMonitoringUncertain Offroad_ExcessiveActuation Offroad_Recalibration Offroad_TemperatureTooHigh
+Offroad_UnregisteredHardware Offroad_UpdateFailed OnroadCycleRequested OpenpilotEnabledToggle PedalsOnUI
+PromptDistractedVolume PromptVolume QOLLongitudinal RainbowPath RecordAudio RecordFront RecordFrontLock RefuseVolume
+RelaxedFollow RemapCancelToDistance RemoteStartBootsComma SLCConfirmation SNGHack SafeMode ScreenBrightness
+ScreenBrightnessOnroad ShowDebugInfo ShowSpeedLimits SignalMetrics SpeedLimitController SshEnabled StandardFollow
+StarButtonControl SteerFriction SteerFrictionStock SteerLatAccel SteerLatAccelStock SubaruSNG TrafficFollow
+TruckTuning UnlockDoors UpdateAvailable UpdateFailedCount UpdaterAvailableBranches UpdaterCurrentDescription
+UpdaterCurrentReleaseNotes UpdaterFetchAvailable UpdaterNewDescription UpdaterState UpdaterTargetBranch VoltSNG
+WarningImmediateVolume WarningSoftVolume
+```
+
+## Stage 4: parked Home
+
+- The six approved Home variants are in `design/stage4-home*.html`. `TANDEM_HOME=0` gives openpilot's original Home.
+  Native terms and training still open through `MainLayout`. Pairing and Firehose remain available in native Settings.
+- Software opens the ported Software panel. A qualified staged update opens its notes and uses StarPilot's
+  revision-bound install request. The schedule note uses the owner's next scheduled restart. StarPilot's offroad alert
+  widget still supplies active alerts, priority, Snooze update, and Acknowledge excessive actuation.
+- Home shows weather from the current validated fix or StarPilot's last recorded navigation location. The forecast
+  cache and temperature unit preference carry forward. The onroad weather chip and chime return with onroad.
+- The approved Home variants give the bottom row to Software until stage 5 can reconnect Where to? to the
+  StarPilot 7 navigation owner. The Tandem setup choices and settings remain to port.
+
+## Stage 4: driving screen
+
+- The seven approved driving variants are in `design/stage4-onroad*.html`. `TANDEM_ONROAD=0` uses openpilot's
+  original road view. The port reuses the calibrated camera and model layer, typed StarPilot 7 snapshot, and the
+  native alert producers. A critical alert closes the sidebar and takes the entire display.
+- MAX adjustments, disengage, and speed-limit responses go through StarPilot's qualified action publishers.
+  Use the car's cruise controls to engage. Confirmation stays tied to the shown proposal and waits for the sidebar
+  to close if the available road view is too narrow. The Low on RAM chip clears at 85 percent and ranks after curve status.
+- The first slice covers the status and controls shown in the approved mocks. The navigation controls and the
+  existing Arrive, Left and street rotation come back with the navigation port. Developer View, optional onroad
+  extras, the weather chip and the remaining onroad tests come back with their screens.
+
+## Stage 4: Software
+
+- The approved Software variants are in `design/stage4-software-*.html`. The panel fits in openpilot's existing Settings
+  navigation. `TANDEM_SETTINGS=0` restores the native Software panel. More software options keeps the native controls
+  for branch selection, fast update, rollback, uninstall and error logs available.
+- The StarPilot software owner qualifies whether a check, download or install is available and reports progress while
+  it has a measured percentage. The staged notes and restart action bind to the installed and prepared commits.
+  Automatic downloads and installs use separate expected values. Changing automatic installs preserves the saved
+  schedule and timezone.
+- The other settings tabs, Developer View, optional onroad extras and Inter boot-memory verification are still pending.
+
+## Stage 4: match the release Settings layout
+
+- Use the running `release` UI at `a4dbe5bcc6` as the visual reference. It has four bottom tabs (Driving, Device,
+  Connections, Software), independent page stacks, a back or close button, and a separate section rail inside Device.
+  The earlier Stage 4 Software slice lives inside the native openpilot frame until the release Settings window is ported.
+- Port the presentation from `settings/window.py`, `settings/pages.py`, and the Device sections on `release`. This Device
+  keeps Phone App, Remote Access, Camera Calibration, How It Works, the lower identity rows and the pinned power buttons.
+  General keeps language, and Driving › Assistance keeps the driver camera and driver monitoring reset. The Device
+  section order is This Device, General, Backups, Storage & Data, RAM when snapshots exist, Report a Problem,
+  and Developer when Tuner Mode is on. Release page captures are authoritative where the older HTML differs.
+- Keep the release screens and dialogs backed by current owners. Use the active provider and native token flow for
+  Phone App, Galaxy Access for Remote Access, the cache schema and `calibration_reset` for calibration, and recheck
+  vehicle admission when confirming power and calibration. General uses the localization and display owners. The
+  backup, storage and report screens need adapters for ToggleBackup, the snapshot and model owners, and StarPort log
+  sending. RAM needs the drive snapshots as well as the existing chip. Preserve the recovery switch.
+- Host preview checked This Device in the parked, paired, engaged, calibrating, and scrolled states, plus Phone App
+  pairing. Each matched its release capture pixel for pixel at 2160 × 1080. The three confirmation dialogs matched
+  the release positions, controls and wording, with small raster differences. The Remote Access render
+  also matched its layout with small raster differences. Host renders use sample data.
+  End-to-end wiring and checks on the comma are pending.
+- The release Settings navigation, section layout, This Device, Phone App pairing, Remote Access and confirmations
+  are now implemented in Tandem-owned modules. The host fixture uses the real widgets with inert actions. The Device
+  adapter reuses the current pairing, Galaxy and calibration owners and rechecks the native power gates. The
+  remaining settings pages and the password-entry adapter still need connections. Carry forward the release
+  General, Backups, Storage & Data, RAM, Report and Developer widgets, then replace their old data sources. Reuse
+  the tested four-tab window when the page factories are complete.
 
 ## Tests still on `release` only
 
@@ -128,11 +348,11 @@ Ported so far: `test_fallback_font.py`, the component tests of `test_tandem.py`,
 |---|---|
 | `test_tandem.py` from `test_traffic_chip_only_while_braking...` on | Onroad, home and settings screens (stage 4) |
 | `test_translations.py`: the template, metadata, coverage and completed-language checks, Developer View labels, picker languages | Every screen ported, then `tools/translations.py update` (end of stage 4) |
-| `test_font_loading.py`: lazy fonts, glyph release and alert faces | Lazy fonts and glyph release if they come back; alert faces with onroad alerts (stage 4) |
+| `test_font_loading.py`: lazy fonts, glyph release and alert faces | Glyph release when restored, then lazy loading and alert faces with the screen port (stage 4) |
 | `test_upstream_integration.py`: all but the text hooks and the sidebar factory | Their hooks and modules (stages 3 to 6) |
 | `test_larger_text.py` (the size tests and the menu sidebar test are ported, in `test_screens.py`), `test_bar.py`, `test_compass.py`, `test_streets.py`, `test_turn_signals.py`, `test_lead_tag.py`, `test_onroad*.py`, `test_alert_levels.py`, `test_chip_events.py`, `test_headroom_warning.py`, `test_limit_follower.py`, `test_limit_offers.py`, `test_developer_view.py` | Onroad (stage 4) |
-| `test_home_layout.py`, `test_forecast.py`, `test_menu_idle.py`, `test_ram.py`, `test_keyboard.py`, `test_voice.py`, `test_speech_native.py` | Home, sidebar and keyboard (stage 4) |
-| `test_settings.py`, `test_developer.py`, `test_software_dialogs.py`, `test_hotspot_name.py`, `test_network_touches.py`, `test_storage_sizes.py`, `test_prebuilt_params.py` | Settings (stages 3 and 4) |
+| `test_forecast.py`, `test_menu_idle.py`, `test_ram.py`, `test_keyboard.py`, `test_voice.py`, `test_speech_native.py` | Home, sidebar and keyboard (stage 4) |
+| `test_settings.py`, `test_developer.py`, `test_software_dialogs.py`, `test_hotspot_name.py`, `test_network_touches.py`, `test_storage_sizes.py`, `test_prebuilt_params.py` | Settings screens and owner integration (stage 4) |
 | `test_destinations.py`, `test_routemap.py`, `test_routing_ui.py`, `test_map_progress.py` | Navigation and routing (stage 5) |
 | `test_bluetooth_*.py`, `test_remote_actions.py`, `test_can_recorder.py`, `test_obd.py`, `test_cellular_status.py`, `test_network_test.py`, `test_galaxy_signals.py` | Services (stage 5) |
 | `test_workflow_policy.py` | Workflows (stage 6) |
