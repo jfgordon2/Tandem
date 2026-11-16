@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 import math
 import time
-from functools import cached_property
 from pathlib import Path
 
 import pyray as rl
@@ -64,6 +63,7 @@ class NavigationCardRenderer(Widget):
     """layout_variant: "default" (tici/tizi) or "mici"."""
     super().__init__()
     self._font_bold = gui_app.font(FontWeight.BOLD)
+    self._font_medium = gui_app.font(FontWeight.MEDIUM)
     self._icons: dict[str, rl.Texture2D] = {}
     self._icon_filenames: dict[tuple[str, str], str] = {}
     self._layout_variant = layout_variant
@@ -86,10 +86,6 @@ class NavigationCardRenderer(Widget):
     self._press_started_at: float | None = None
     self._last_state_update = -math.inf
     self._state_context: tuple[object, bool] | None = None
-
-  @cached_property
-  def _font_medium(self) -> rl.Font:
-    return gui_app.font(FontWeight.MEDIUM)
 
   @property
   def _hit_rect(self) -> rl.Rectangle:

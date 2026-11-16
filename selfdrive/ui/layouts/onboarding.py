@@ -2,7 +2,6 @@ import os
 import re
 import threading
 from enum import IntEnum
-from functools import cached_property
 
 import pyray as rl
 from openpilot.common.basedir import BASEDIR
@@ -177,15 +176,9 @@ class OnboardingWindow(Widget):
     self._state = OnboardingState.TERMS if not self._accepted_terms else OnboardingState.ONBOARDING
 
     # Windows
+    self._terms = TermsPage(on_accept=self._on_terms_accepted, on_decline=self._on_terms_declined)
     self._training_guide: TrainingGuide | None = None
-
-  @cached_property
-  def _terms(self) -> TermsPage:
-    return TermsPage(on_accept=self._on_terms_accepted, on_decline=self._on_terms_declined)
-
-  @cached_property
-  def _decline_page(self) -> DeclinePage:
-    return DeclinePage(back_callback=self._on_decline_back)
+    self._decline_page = DeclinePage(back_callback=self._on_decline_back)
 
   @property
   def completed(self) -> bool:

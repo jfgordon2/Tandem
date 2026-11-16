@@ -103,19 +103,15 @@ empty status when their inputs are unavailable or invalid.
 | `README.md` | Fork introduction, documentation links, screenshots and upstream credits. |
 | `selfdrive/ui/layouts/main.py` | Screen factories and sidebar widths from `screens.py`; each factory has an upstream fallback. |
 | `selfdrive/ui/layouts/home.py` | `_show_header()` override; the default is `True`. |
-| `selfdrive/ui/layouts/onboarding.py` | Creates the terms and decline pages on first display so their fonts load only when used. |
 | `selfdrive/ui/layouts/settings/device.py` | Named confirmation hook for calibration and driver monitoring; default shows the original dialog and callbacks retain engagement checks. |
 | `selfdrive/ui/layouts/settings/starpilot/driving_model.py` | `_show_notice()` hook; default shows the original alert. Tandem overrides it to deliver model notices directly. |
 | `selfdrive/ui/layouts/settings/starpilot/vehicle.py` | Named confirmation hook for longitudinal changes and panda flashing; default shows the original dialog. |
-| `selfdrive/ui/onroad/hud_renderer.py` | `draw_gradients=True`; Tandem opts out of the edge fade. The speed unit's Inter Medium is resolved at first draw. |
+| `selfdrive/ui/onroad/hud_renderer.py` | `draw_gradients=True`; Tandem opts out of the edge fade. |
 | `selfdrive/ui/onroad/model_renderer.py` | Optional lane color override, default `None`. |
-| `selfdrive/ui/onroad/starpilot/navigation_card.py` | Resolves Inter Medium when the card first measures or draws text. |
 | `selfdrive/ui/onroad/starpilot/starpilot_border.py` | Optional curve-glow drawing color; default keeps upstream colors and the shared fade state remains upstream's. |
-| `selfdrive/ui/onroad/starpilot/starpilot_onroad_view.py` | Overridable border color with the original default. Resolves Inter Medium when drawing the optional metrics. |
-| `selfdrive/ui/onroad/starpilot/widgets/aethergauge.py` | Resolves Inter Medium when the gauge draws. |
+| `selfdrive/ui/onroad/starpilot/starpilot_onroad_view.py` | Overridable border color with the original default. |
 | `selfdrive/ui/soundd.py` | Overridable per-class sound catalog, alert filter and extra-sound tick; `main()` selects the owned Help steer subclass, or the original class with `TANDEM_ONROAD=0`. |
-| `selfdrive/ui/ui.py` | The big UI opts in to on-demand shared fonts when all four Essentials screen switches are enabled. |
-| `selfdrive/ui/widgets/drive_stats.py`, `selfdrive/ui/widgets/offroad_alerts.py` | Resolve Inter Medium when the dashboard or alert action draws. |
+| `selfdrive/ui/ui.py` | The big UI opts in to lazy shared fonts (`init_window(lazy_fonts=...)`) when all four Essentials screen switches are enabled. |
 | `starpilot/assets/theme_manager.py` | Installs the owned bundled signal assets as regular theme packs at boot. |
 | `starpilot/controls/lib/starpilot_vcruise.py` | Optional `on_selected` navigation-turn observer; unset preserves the original target and state. |
 | `starpilot/controls/starpilot_planner.py` | Selects the owned cruise subclass and publishes its observed turn on Tandem's msgq endpoint. `TANDEM_ONROAD=0` disables the hook. |
@@ -131,7 +127,7 @@ empty status when their inputs are unavailable or invalid.
 | `system/athena/athenad.py` | Fork-wide unattended diagnostic log/stat forwarding policy gates. |
 | `system/loggerd/uploader.py` | Retains crash artifacts locally; drive log/video upload behavior stays upstream's. |
 | `system/sentry.py` | Fork-wide automatic-report policy; explicit user reports and tunes retain their submission tags. |
-| `system/ui/lib/application.py` | `KEEP_FONT=False` and empty `TEXT_SHAPERS`; Tandem opts in only inside a drawing context, restoring both afterward. Optional lazy loading keeps the normal GUI font ready and caches other faces on demand. The default loads all original faces up front. Fallback checks an already loaded brand face without loading it. With lazy loading on, `release_glyph_images` frees raylib's CPU copy of each loaded font's glyphs (text draws from the atlas texture). |
+| `system/ui/lib/application.py` | `KEEP_FONT=False` and empty `TEXT_SHAPERS`; Tandem opts in only inside a drawing context, restoring both afterward. Optional lazy fonts (`init_window(lazy_fonts=True)`, default off, which loads every face as upstream does): every face is still loaded at startup, so the fonts widgets keep have their real metrics, but `_drop_font_atlas` swaps the atlas of each face outside `LOADED_AT_START` (Inter Medium, SemiBold and Bold) for a 1x1 stand-in texture, so those faces measure and wrap without their atlas. The `rl.draw_text_ex` wrapper and a `rl.gui_set_font` wrapper (installed only with lazy fonts on) call `_font_with_atlas` the first time such a face is drawn; it loads the atlas into the same font object and keeps the stand-in, whose id text caches are keyed on. `font_fallback` only gains `KEEP_FONT`, and `gui_app.font()` and the widgets that keep its result are upstream's. With lazy fonts on, `release_glyph_images` also frees raylib's CPU copy of each font's glyphs (text draws from the atlas texture). |
 | `system/ui/lib/text_measure.py` | Applies scoped text shapers so measurement matches drawing; empty by default. |
 | `system/ui/widgets/inputbox.py` | Overridable font getter, defaulting to the original app font; Tandem fields supply their own face for drawing and cursor measurement. |
 | `system/version.py` | Includes `release` in `RELEASE_BRANCHES`. |

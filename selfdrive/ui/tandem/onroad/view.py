@@ -194,7 +194,7 @@ class EssentialsOnroadView(StarPilotOnroadView):
     self._headroom = Headroom()
     self._arc_state = ArcState()
     self._compass = DriveCompass()
-    ui_state.add_offroad_transition_callback(self._compass_transition)
+    ui_state.add_offroad_transition_callback(self._drive_transition)
     self._headroom_warning = False
     self._headroom_chimed = False
     self._limit_offer = LimitOfferState()
@@ -437,9 +437,11 @@ class EssentialsOnroadView(StarPilotOnroadView):
 
   # Our layers
 
-  def _compass_transition(self) -> None:
+  def _drive_transition(self) -> None:
+    """Ends the drive's compass and gives back the turn signal animation's frames when the car turns off."""
     if not ui_state.started:
       self._compass.offroad(time.monotonic())
+      self._turn_signals.close()
 
   def _render(self, rect: rl.Rectangle) -> None:
     self._layers_visible = False   # set again by _render_layers, from _draw_border, on frames that draw the view
