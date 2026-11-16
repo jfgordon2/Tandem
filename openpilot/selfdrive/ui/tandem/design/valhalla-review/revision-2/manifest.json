@@ -1,0 +1,319 @@
+{
+  "revision": 2,
+  "status": "approved; implemented on valhalla",
+  "scope": "Approved references for routing preferences, shared region downloads and onroad status chips.",
+  "groups": [
+    {
+      "id": "preferences",
+      "title": "Navigation preferences",
+      "count": 4
+    },
+    {
+      "id": "regions",
+      "title": "Region-download ideas",
+      "count": 5
+    },
+    {
+      "id": "downloads",
+      "title": "Shared maps management",
+      "count": 9
+    },
+    {
+      "id": "driving",
+      "title": "Existing status chips",
+      "count": 7
+    },
+    {
+      "id": "places",
+      "title": "Saved places and preview",
+      "count": 2
+    }
+  ],
+  "policy": [
+    [
+      "On",
+      "Either, disabled",
+      "Offline only",
+      "Stop with a clear reason if offline routing fails. Never call online routing."
+    ],
+    [
+      "Off",
+      "Online",
+      "Online → Offline",
+      "Use a successful online route; otherwise try offline once."
+    ],
+    [
+      "Off",
+      "Offline",
+      "Offline → Online",
+      "Use a successful offline route; otherwise try online once."
+    ]
+  ],
+  "notes": [
+    "This revision follows the owner’s latest comments. It supersedes the separate routing-manager page, user-entered package URL, and status text that replaced the arrival/street bar.",
+    "The owner approved the selected revision 2 design and revised progress layout. The implementation now follows these references; B remains unselected. Built component captures are in the comparison page.",
+    "Offline maps only controls route calculations, including previews, first routes and recalculation. It prevents online route attempts and online route fallback. Place search is a separate online feature.",
+    "Availability means a usable route succeeds, not merely that Wi-Fi is connected. Missing keys, request errors, timeouts, invalid responses or no usable route can trigger the other provider when offline-only is off. Try each provider at most once per attempt.",
+    "Proposed defaults: Offline maps only off; Online preferred. The strict switch overrides the preference and retains the previous choice while disabled.",
+    "The owner selected A: one region selection downloads both map sets automatically, skipping already-installed data. Alternative B is retained only as a historical, unselected idea; do not implement its checkbox.",
+    "Progress was revised after owner feedback to keep the current large percentage, single progress bar, Prepare / Download / Install / Ready steps, region tiles, cancel position and settings footer. Only the active map-set label and a short readiness line are added. The earlier component-dashboard progress design is superseded.",
+    "The percentage is explicitly scoped to the active map-set phase. Road data keeps its file count; offline routes use bytes. The percentage can restart when the labelled phase changes. Never average file counts and bytes or imply the whole job is ready at 100% downloaded. A region turns green only when all required map sets are installed.",
+    "Runtime preparation happens automatically during Prepare. Data comes from a maintained region catalog. There is no driver-facing package link or manual software setup.",
+    "Routing data is still stored separately from road data internally. Multi-region availability must correspond to a connected compatible graph, not arbitrary concatenation of independently built packages. The Iowa catalog and graph are published in the routing-data-v1 data release; additional connected coverage still needs publication.",
+    "During short recalculation, retain the last useful estimates and live street. If no estimates have ever existed, show dashes. A stale route may not drive turn cards or control decisions. Long GPS outages still require a deliberate estimate-freshness policy at implementation time.",
+    "Chips use the existing StatusChip fill, position, size and stack. Informational route statuses yield to safety alerts. Brief fallback confirmations are a proposal; the primary recalculation text is Recalculating route.",
+    "Except the measured 280 MiB Iowa routing graph (and small trial Liechtenstein graph), catalog availability and display values are illustrative mock data. These screens do not claim published packages exist for every listed region."
+  ],
+  "states": [
+    {
+      "id": "prefer-online",
+      "file": "valhalla2-prefer-online",
+      "group": "preferences",
+      "title": "Prefer online",
+      "when": "Offline maps only is off; Online is selected.",
+      "detail": "Use a valid online route when it succeeds. If it is unavailable or fails, try the downloaded offline route once. Proposed default: this setting, with Offline maps only off.",
+      "approval": "approved"
+    },
+    {
+      "id": "prefer-offline",
+      "file": "valhalla2-prefer-offline",
+      "group": "preferences",
+      "title": "Prefer offline",
+      "when": "Offline maps only is off; Offline is selected.",
+      "detail": "Try a usable local route first. Missing coverage/data, a local failure, or no route triggers one online attempt if online routing is usable.",
+      "approval": "approved"
+    },
+    {
+      "id": "offline-only",
+      "file": "valhalla2-offline-only",
+      "group": "preferences",
+      "title": "Offline maps only",
+      "when": "Offline maps only is on.",
+      "detail": "No online routing request and no online routing fallback. Preferred maps is disabled and remembers its prior selection for when the override is turned off. Search remains a separate online feature.",
+      "approval": "approved"
+    },
+    {
+      "id": "offline-only-missing",
+      "file": "valhalla2-offline-only-missing",
+      "group": "preferences",
+      "title": "Offline only, maps missing",
+      "when": "Offline maps only is on, but Iowa offline routes have not been downloaded.",
+      "detail": "Keep the strict choice. The Offline Maps row leads to the existing region panes to obtain the missing maps. Do not silently use online routing.",
+      "approval": "approved"
+    },
+    {
+      "id": "regions-a",
+      "file": "valhalla2-regions-a",
+      "group": "regions",
+      "title": "A · One selection downloads all missing maps",
+      "when": "Choose Iowa in the existing U.S. states pane. This example already has its road data.",
+      "detail": "Recommended: one region selection and one Download action. Add its 280 MiB routing data without redownloading the road data. Software setup happens as part of Prepare, with no separate user step.",
+      "approval": "approved",
+      "idea": "A",
+      "recommended": true
+    },
+    {
+      "id": "regions-b",
+      "file": "valhalla2-regions-b",
+      "group": "regions",
+      "title": "B · Optional offline-route download (not selected)",
+      "when": "Historical alternative retained for reference. The owner selected downloading both map sets.",
+      "detail": "Do not implement the component checkbox. Region selection downloads all missing road data and offline routes automatically.",
+      "approval": "not selected",
+      "idea": "B"
+    },
+    {
+      "id": "regions-groups",
+      "file": "valhalla2-regions-groups",
+      "group": "regions",
+      "title": "Existing U.S. region groups",
+      "when": "Select U.S. regions rather than individual states.",
+      "detail": "Use the same catalog and summary for multi-state coverage. The available routing package must cover the selection as a connected graph; unsupported combinations are not labelled ready.",
+      "approval": "approved",
+      "idea": "A"
+    },
+    {
+      "id": "regions-countries",
+      "file": "valhalla2-regions-countries",
+      "group": "regions",
+      "title": "Existing country pane",
+      "when": "Select Other countries and a country.",
+      "detail": "The same flow handles countries. Catalog availability shown here is illustrative; the small Liechtenstein graph was used for the standalone trial.",
+      "approval": "approved",
+      "idea": "A"
+    },
+    {
+      "id": "regions-unavailable",
+      "file": "valhalla2-regions-unavailable",
+      "group": "regions",
+      "title": "A region without routing coverage",
+      "when": "The catalog can provide road data for a selected region but has no published routing package.",
+      "detail": "Show the limitation in the same pane. Road data may still download. Offline maps only never falls back online, so it cannot route there until coverage is provided.",
+      "approval": "approved",
+      "idea": "A"
+    },
+    {
+      "id": "maps-home",
+      "file": "valhalla2-maps-home",
+      "group": "downloads",
+      "title": "One Offline Maps page",
+      "when": "Open Offline Maps from Navigation, Display, or Where to? after Iowa is ready.",
+      "detail": "The existing maps page shows both data types, a shared update schedule, per-region Update/Remove actions, and Choose regions. No routing-software or URL page is needed.",
+      "approval": "approved"
+    },
+    {
+      "id": "download-prepare",
+      "file": "valhalla2-download-prepare",
+      "group": "downloads",
+      "title": "Prepare in the current layout",
+      "when": "A selected region needs download preparation, including automatic routing-software setup on first use.",
+      "detail": "Keep the current percentage, bar, four steps, region tiles, footer and background-download message. Both map sets are included automatically.",
+      "approval": "approved"
+    },
+    {
+      "id": "download-progress",
+      "file": "valhalla2-download-progress",
+      "group": "downloads",
+      "title": "Offline routes, current progress layout",
+      "when": "Iowa road data is already installed and its offline-route download is at 42%.",
+      "detail": "Restore the existing large percentage, single bar and region grid. The small Offline routes label scopes this percentage to routing bytes, while a short line confirms road data is ready.",
+      "approval": "approved"
+    },
+    {
+      "id": "download-road",
+      "file": "valhalla2-download-road",
+      "group": "downloads",
+      "title": "Road data, same progress screen",
+      "when": "Both map sets are missing; Iowa road data downloads first.",
+      "detail": "Keep the existing file count and region tile. Offline routes follow automatically in the same screen. The phase label and percentage reset explicitly when switching datasets; do not average file counts and bytes.",
+      "approval": "approved"
+    },
+    {
+      "id": "download-group",
+      "file": "valhalla2-download-group",
+      "group": "downloads",
+      "title": "Multiple regions, familiar tiles",
+      "when": "A Midwest download has finished both map sets for five states and is downloading Minnesota offline routes.",
+      "detail": "Keep the current seven-column region grid, completed/current/waiting colors and per-region percentage. A green region means both required map sets are installed; the top percentage describes the labelled download phase.",
+      "approval": "approved"
+    },
+    {
+      "id": "download-install",
+      "file": "valhalla2-download-install",
+      "group": "downloads",
+      "title": "Install keeps the existing step",
+      "when": "Iowa routing bytes have downloaded, but validation and installation are still running.",
+      "detail": "Keep Install as step three. Download at 100% is not Ready: the region remains current until its maps are checked and installed.",
+      "approval": "approved"
+    },
+    {
+      "id": "download-failed",
+      "file": "valhalla2-download-failed",
+      "group": "downloads",
+      "title": "Retry in the same layout",
+      "when": "Road data is ready, but the offline-route download failed.",
+      "detail": "Retain the last reported routing percentage, show the affected region in amber and replace the header action with Retry download. Retry only missing data; keep existing maps.",
+      "approval": "approved"
+    },
+    {
+      "id": "download-ready",
+      "file": "valhalla2-download-ready",
+      "group": "downloads",
+      "title": "Ready in the same layout",
+      "when": "Both selected map sets have passed verification and installed.",
+      "detail": "Advance the existing steps to Ready and turn the region green. Done returns to Offline Maps. No new management screen is introduced.",
+      "approval": "approved"
+    },
+    {
+      "id": "remove-region",
+      "file": "valhalla2-remove-region",
+      "group": "downloads",
+      "title": "Remove a region together",
+      "when": "Tap Remove region on the shared maps page.",
+      "detail": "Recommended A removes both data types after this confirmation. Saved places remain. Alternative B could offer component removal within the same region detail, if needed.",
+      "approval": "approved",
+      "idea": "A"
+    },
+    {
+      "id": "chip-recalculate",
+      "file": "valhalla2-chip-recalculate",
+      "group": "driving",
+      "title": "Recalculating route",
+      "when": "An active trip needs a replacement route.",
+      "detail": "Use the existing bottom-left status-chip placement and dark fill. Keep the time, distance-left and live street in the normal bottom bar. Hide stale turn guidance independently.",
+      "approval": "approved"
+    },
+    {
+      "id": "chip-offline-fallback",
+      "file": "valhalla2-chip-offline-fallback",
+      "group": "driving",
+      "title": "Online failed; offline route works",
+      "when": "Online is preferred, but its route request fails and a usable offline route succeeds.",
+      "detail": "Using offline maps appears briefly in the existing chip stack, then fades. The time/street layout stays in place.",
+      "approval": "approved"
+    },
+    {
+      "id": "chip-online-fallback",
+      "file": "valhalla2-chip-online-fallback",
+      "group": "driving",
+      "title": "Offline failed; online route works",
+      "when": "Offline is preferred, Offline maps only is off, and a failed/unavailable local route is replaced successfully online.",
+      "detail": "Using online maps appears briefly in the same chip. This state must never occur with Offline maps only on.",
+      "approval": "approved"
+    },
+    {
+      "id": "chip-strict-unavailable",
+      "file": "valhalla2-chip-strict-unavailable",
+      "group": "driving",
+      "title": "Offline only, route unavailable",
+      "when": "Offline maps only is on but a usable local route is unavailable.",
+      "detail": "The warning uses the existing chip; no online request is made. This example has no previous route estimate, so the time fields show dashes while the available street stays visible.",
+      "approval": "approved"
+    },
+    {
+      "id": "chip-gps",
+      "file": "valhalla2-chip-gps",
+      "group": "driving",
+      "title": "Waiting for GPS",
+      "when": "The current GPS fix is missing or stale.",
+      "detail": "Show Waiting for GPS in the status chip. Last useful trip estimates may remain visible; they must not be treated as valid turn guidance. This mock illustrates a short interruption.",
+      "approval": "approved"
+    },
+    {
+      "id": "chip-stack",
+      "file": "valhalla2-chip-stack",
+      "group": "driving",
+      "title": "Routing and existing statuses together",
+      "when": "Recalculation overlaps an existing steering-paused status.",
+      "detail": "Use the existing stack and spacing. Routing is informational and yields to safety alerts; it does not replace or recolor steering warnings.",
+      "approval": "approved"
+    },
+    {
+      "id": "chip-first-route",
+      "file": "valhalla2-chip-first-route",
+      "group": "driving",
+      "title": "First route, no previous estimate",
+      "when": "The first route has not returned any estimates yet.",
+      "detail": "The chip says Finding route. Time fields stay as dashes instead of invented values, and the street remains in its normal place.",
+      "approval": "approved"
+    },
+    {
+      "id": "places",
+      "file": "valhalla2-places",
+      "group": "places",
+      "title": "Same maps entry from saved places",
+      "when": "Open Where to? with usable offline maps downloaded.",
+      "detail": "The footer opens the same Offline Maps and region selection flow as Navigation. No separate package manager or URL-entry flow.",
+      "approval": "approved"
+    },
+    {
+      "id": "preview-strict-missing",
+      "file": "valhalla2-preview-strict-missing",
+      "group": "places",
+      "title": "Offline-only preview needs maps",
+      "when": "A saved place has coordinates but Offline maps only is on and the region’s routing data is missing.",
+      "detail": "Start stays disabled. Choose regions opens the existing region panes, rather than offering an online route or asking for a package URL.",
+      "approval": "approved"
+    }
+  ]
+}

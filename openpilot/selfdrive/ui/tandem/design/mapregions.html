@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Choose map regions</title>
+</head>
+<body>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7DBBF9}a:hover{color:#A9D3FB}
+</style>
+
+<div style="width: 1125px; height: 563px; box-sizing: border-box; background: #000000; color: #F2F5F9; font-family: Figtree, system-ui, sans-serif; display: flex; flex-direction: column; gap: 14px; padding: 16px 18px; overflow: hidden;">
+  <div style="display: flex; align-items: center; gap: 14px;">
+    <a href="mapdata.html" aria-label="Back" style="width: 56px; height: 56px; border-radius: 16px; background: #1F2328; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F2F5F9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></a>
+    <div style="display: flex; flex-direction: column; gap: 2px;"><h1 style="margin: 0; font-size: 26px; font-weight: 800;">Add map regions</h1><span style="font-size: 14px; color: #AEB6C2;">Pick a region, or switch to states for less storage</span></div>
+  </div>
+  <div style="flex-grow: 1; display: flex; gap: 14px; min-height: 0;">
+    <div role="tablist" aria-label="Region type" aria-orientation="vertical" style="width: 190px; flex-shrink: 0; display: flex; flex-direction: column; gap: 6px;">
+      <button type="button" role="tab" aria-selected="true" style="font-family: inherit; text-align: left; height: 54px; border: 0; border-radius: 14px; background: #1F2E45; color: #F2F5F9; font-size: 17px; font-weight: 700; padding: 0 16px;">U.S. regions</button>
+      <button type="button" role="tab" aria-selected="false" style="font-family: inherit; text-align: left; height: 54px; border: 0; border-radius: 14px; background: transparent; color: #C9D0DA; font-size: 17px; font-weight: 600; padding: 0 16px;">U.S. states</button>
+      <button type="button" role="tab" aria-selected="false" style="font-family: inherit; text-align: left; height: 54px; border: 0; border-radius: 14px; background: transparent; color: #C9D0DA; font-size: 17px; font-weight: 600; padding: 0 16px;">Other countries</button>
+    </div>
+    <div style="flex-grow: 1; min-width: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: minmax(0, 1fr); gap: 10px;">
+      <button type="button" aria-pressed="true" style="font-family: inherit; text-align: left; border: 2px solid #5AAAF8; border-radius: 16px; background: #182434; color: #F2F5F9; padding: 12px 16px; display: flex; flex-direction: column; justify-content: center; gap: 4px;"><span style="display: flex; align-items: center; gap: 8px; font-size: 17px; font-weight: 700;">West <span style="font-size: 11px; font-weight: 700; color: #0B1A2B; background: #5AAAF8; border-radius: 6px; padding: 2px 6px;">YOUR REGION</span></span><span style="font-size: 13px; color: #C9D8EA;">13 states · [size]</span></button>
+      <button type="button" aria-pressed="false" style="font-family: inherit; text-align: left; border: 2px solid transparent; border-radius: 16px; background: #1A1D22; color: #F2F5F9; padding: 12px 16px; display: flex; flex-direction: column; justify-content: center; gap: 4px;"><span style="font-size: 17px; font-weight: 700;">Midwest</span><span style="font-size: 13px; color: #AEB6C2;">12 states · [size]</span></button>
+      <button type="button" aria-pressed="false" style="font-family: inherit; text-align: left; border: 2px solid transparent; border-radius: 16px; background: #1A1D22; color: #F2F5F9; padding: 12px 16px; display: flex; flex-direction: column; justify-content: center; gap: 4px;"><span style="font-size: 17px; font-weight: 700;">South</span><span style="font-size: 13px; color: #AEB6C2;">17 states · [size]</span></button>
+      <button type="button" aria-pressed="false" style="font-family: inherit; text-align: left; border: 2px solid transparent; border-radius: 16px; background: #1A1D22; color: #F2F5F9; padding: 12px 16px; display: flex; flex-direction: column; justify-content: center; gap: 4px;"><span style="font-size: 17px; font-weight: 700;">Northeast</span><span style="font-size: 13px; color: #AEB6C2;">9 states · [size]</span></button>
+      <button type="button" aria-pressed="false" style="font-family: inherit; text-align: left; border: 2px solid transparent; border-radius: 16px; background: #1A1D22; color: #F2F5F9; padding: 12px 16px; display: flex; flex-direction: column; justify-content: center; gap: 4px;"><span style="font-size: 17px; font-weight: 700;">Territories</span><span style="font-size: 13px; color: #AEB6C2;">5 territories · [size]</span></button>
+      <button type="button" aria-pressed="false" style="font-family: inherit; text-align: left; border: 2px solid transparent; border-radius: 16px; background: #1A1D22; color: #F2F5F9; padding: 12px 16px; display: flex; flex-direction: column; justify-content: center; gap: 4px;"><span style="font-size: 17px; font-weight: 700;">Whole U.S.</span><span style="font-size: 13px; color: #AEB6C2;">Every state and territory · [size]</span></button>
+    </div>
+    <div style="width: 290px; flex-shrink: 0; background: #16191D; border-radius: 20px; padding: 18px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px;">
+      <span style="font-size: 13px; font-weight: 700; letter-spacing: 1.6px; color: #8FA0B5;">SELECTED</span>
+      <span style="font-size: 22px; font-weight: 800;">West · 13 states</span>
+      <span style="font-size: 15px; color: #AEB6C2;">[size] download · [free] left after</span>
+      <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 4px; font-size: 15px;">
+        <span style="display: flex; align-items: center; gap: 10px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6FD8A0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>Parked</span>
+        <span style="display: flex; align-items: center; gap: 10px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6FD8A0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>On Wi-Fi</span>
+        <span style="display: flex; align-items: center; gap: 10px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6FD8A0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>Enough storage</span>
+      </div>
+      <div style="flex-grow: 1;"></div>
+      <a href="mapdownloading.html" style="text-decoration: none; height: 60px; border-radius: 16px; background: #5AAAF8; color: #0B1A2B; font-size: 18px; font-weight: 800; display: flex; align-items: center; justify-content: center;">Download</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

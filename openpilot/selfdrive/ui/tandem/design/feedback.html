@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>System feedback states</title>
+</head>
+<body>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7DBBF9}a:hover{color:#A9D3FB}
+</style>
+
+<div style="width: 1125px; height: 563px; box-sizing: border-box; background: #000000; color: #F2F5F9; font-family: Figtree, system-ui, sans-serif; padding: 22px; display: flex; flex-direction: column; gap: 16px;">
+  <div style="display: flex; align-items: baseline; gap: 16px;">
+    <h1 style="margin: 0; font-size: 26px; font-weight: 800;">Progress, blocked, done, empty</h1>
+    <span style="font-size: 16px; color: #AEB6C2;">The same four states for downloads, backups, maps and models</span>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; flex-grow: 1;">
+    <div style="background: #16191D; border-radius: 22px; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px;">
+      <span style="font-size: 13px; font-weight: 700; letter-spacing: 1.6px; color: #7DBBF9;">IN PROGRESS</span>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 3px;"><span style="font-size: 19px; font-weight: 700;">Downloading [model name]</span><span style="font-size: 14px; color: #AEB6C2;">62% · [time] left · Wi-Fi</span></div>
+        <button type="button" style="font-family: inherit; height: 46px; padding: 0 16px; border: 0; border-radius: 12px; background: #23272E; color: #F2F5F9; font-size: 16px; font-weight: 600;">Cancel</button>
+      </div>
+      <div style="height: 10px; border-radius: 5px; background: #2A2F36;"><div style="width: 62%; height: 10px; border-radius: 5px; background: #5AAAF8;"></div></div>
+      <span style="font-size: 14px; color: #8FA0B5;">Pauses while driving and resumes when you park</span>
+    </div>
+    <div style="background: #16191D; border-radius: 22px; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px;">
+      <span style="font-size: 13px; font-weight: 700; letter-spacing: 1.6px; color: #F0B35A;">BLOCKED</span>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div style="width: 50px; height: 50px; border-radius: 14px; background: #3A2E1B; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F0B35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg></div>
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 3px;"><span style="font-size: 19px; font-weight: 700;">Park to download maps</span><span style="font-size: 14px; color: #AEB6C2;">Downloads and removals wait until the car is in park</span></div>
+      </div>
+      <button type="button" disabled="disabled" style="font-family: inherit; height: 52px; border: 0; border-radius: 14px; background: #23272E; color: #8FA0B5; font-size: 17px; font-weight: 700;">Download</button>
+    </div>
+    <div style="background: #16191D; border-radius: 22px; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px; justify-content: flex-end;">
+      <span style="font-size: 13px; font-weight: 700; letter-spacing: 1.6px; color: #6FD8A0;">DONE · TOAST</span>
+      <div style="flex-grow: 1;"></div>
+      <div role="status" style="align-self: center; display: flex; align-items: center; gap: 14px; background: #23272E; border-radius: 18px; padding: 12px 12px 12px 18px;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6FD8A0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>
+        <span style="font-size: 18px; font-weight: 600;">Backup created</span>
+        <button type="button" style="font-family: inherit; height: 44px; padding: 0 16px; border: 0; border-radius: 12px; background: transparent; color: #7DBBF9; font-size: 17px; font-weight: 700;">View</button>
+      </div>
+      <span style="font-size: 14px; color: #8FA0B5; text-align: center;">Bottom center, gone after 4 s. Never shown while driving.</span>
+    </div>
+    <div style="background: #16191D; border-radius: 22px; padding: 20px 22px; display: flex; flex-direction: column; gap: 10px; align-items: center; justify-content: center; text-align: center;">
+      <span style="align-self: flex-start; font-size: 13px; font-weight: 700; letter-spacing: 1.6px; color: #8FA0B5;">EMPTY</span>
+      <div style="width: 56px; height: 56px; border-radius: 16px; background: #1F2E45; display: flex; align-items: center; justify-content: center;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg></div>
+      <span style="font-size: 19px; font-weight: 700;">No destinations yet</span>
+      <span style="font-size: 15px; color: #AEB6C2;">Places you search for show up here</span>
+      <a href="navsearch.html" style="text-decoration: none; height: 48px; padding: 0 20px; border-radius: 12px; background: #5AAAF8; color: #0B1A2B; font-size: 16px; font-weight: 700; display: flex; align-items: center;">Search</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

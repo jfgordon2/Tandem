@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Steering controller</title>
+</head>
+<body>
+
+
+<style>
+@font-face{font-family:Figtree;font-style:normal;font-weight:400;src:url('../../../assets/fonts/Figtree-Regular.ttf') format('truetype')}
+@font-face{font-family:Figtree;font-style:normal;font-weight:500;src:url('../../../assets/fonts/Figtree-Medium.ttf') format('truetype')}
+@font-face{font-family:Figtree;font-style:normal;font-weight:600;src:url('../../../assets/fonts/Figtree-SemiBold.ttf') format('truetype')}
+@font-face{font-family:Figtree;font-style:normal;font-weight:700;src:url('../../../assets/fonts/Figtree-Bold.ttf') format('truetype')}
+@font-face{font-family:Figtree;font-style:normal;font-weight:800;src:url('../../../assets/fonts/Figtree-ExtraBold.ttf') format('truetype')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;src:url('../../../assets/fonts/JetBrainsMono-Medium.ttf') format('truetype')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:700;src:url('../../../assets/fonts/JetBrainsMono-Bold.ttf') format('truetype')}
+.controller-options{display:flex;flex-shrink:0;background:#23272E;border-radius:13px;padding:4px}
+.controller-options button{font-family:inherit;border:0;background:transparent;color:#C9D0DA;height:42px;padding:0 14px;border-radius:10px;font-size:16px;font-weight:600;white-space:nowrap;cursor:pointer}
+.controller-options button[aria-checked="true"]{background:#5AAAF8;color:#0B1A2B;font-weight:700}
+.controller-options button:focus-visible{outline:2px solid #8BC9FF;outline-offset:2px}
+
+body{margin:0}
+a{color:#7DBBF9}a:hover{color:#A9D3FB}
+</style>
+
+<div style="width: 1125px; height: 563px; box-sizing: border-box; background: #000000; color: #F2F5F9; font-family: Figtree, system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden;">
+  <div style="flex-grow: 1; display: flex; gap: 18px; padding: 18px 20px 14px; min-height: 0;">
+    <div style="width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 6px; padding-top: 8px;">
+      <span style="font-size: 14px; font-weight: 700; letter-spacing: 1.8px; color: #F0B35A; padding: 0 16px 8px;">TUNER MODE</span>
+      <button type="button" style="font-family: inherit; text-align: left; height: 56px; border: 0; border-radius: 14px; background: #3A2E1B; color: #F2F5F9; font-size: 18px; font-weight: 600; padding: 0 16px; display: flex; justify-content: space-between; align-items: center;">Steering <span style="font-size: 14px; color: #F0B35A; font-weight: 600;">1 changed</span></button>
+      <a href="tunergas.html" style="text-decoration: none; height: 56px; border-radius: 14px; color: #C9D0DA; font-size: 18px; font-weight: 600; padding: 0 16px; display: flex; align-items: center; justify-content: space-between;">Gas &amp; Brake</a>
+      <a href="tunerfollowing.html" style="text-decoration: none; height: 56px; border-radius: 14px; color: #C9D0DA; font-size: 18px; font-weight: 600; padding: 0 16px; display: flex; align-items: center; justify-content: space-between;">Following &amp; Stops</a>
+      <a href="tunerbundles.html" style="text-decoration: none; height: 56px; border-radius: 14px; color: #C9D0DA; font-size: 18px; font-weight: 600; padding: 0 16px; display: flex; align-items: center; justify-content: space-between;">Bundle Overrides</a>
+      <div style="flex-grow: 1;"></div>
+      <button type="button" style="font-family: inherit; height: 52px; border-radius: 14px; border: 0; background: #3A2026; color: #F2A7B1; font-size: 17px; font-weight: 600;">Reset all tuning</button>
+    </div>
+    <div style="flex-grow: 1; min-width: 0; background: #16191D; border-radius: 22px; display: flex; flex-direction: column; overflow: hidden;">
+      <div style="padding: 14px 22px; border-bottom: 1px solid #23272E; display: flex; align-items: center; gap: 12px; background: #221D14;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F0B35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9.5 17h-19z"></path><path d="M12 10v4M12 17h.01"></path></svg>
+        <span style="font-size: 15px; color: #E9D5B5;">Learned values work for most cars. An override replaces the learned value until you reset it.</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px; padding: 0 14px 0 22px; height: 62px; border-bottom: 1px solid #23272E;">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 19px; font-weight: 600;">Steering Delay</span><span style="font-size: 14px; color: #AEB6C2;">Time from command to wheel response</span></div>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 16px; color: #C9D0DA;">0.18 s</span>
+        <span style="font-size: 13px; font-weight: 700; color: #7DBBF9; background: #1F2E45; border-radius: 8px; padding: 5px 10px;">LEARNED</span>
+        <button type="button" style="font-family: inherit; height: 44px; padding: 0 16px; border: 0; border-radius: 12px; background: #23272E; color: #F2F5F9; font-size: 16px; font-weight: 600;">Override</button>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px; padding: 0 14px 0 22px; height: 62px; border-bottom: 1px solid #23272E; background: #1C1914;">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 19px; font-weight: 600;">Friction</span><span style="font-size: 14px; color: #AEB6C2;">Extra torque near center</span></div>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 16px; color: #F2F5F9; font-weight: 700;">0.14</span>
+        <span style="font-size: 13px; font-weight: 700; color: #F0B35A; background: #3A2E1B; border-radius: 8px; padding: 5px 10px;">OVERRIDE</span>
+        <button type="button" style="font-family: inherit; height: 44px; padding: 0 16px; border: 0; border-radius: 12px; background: #23272E; color: #F2F5F9; font-size: 16px; font-weight: 600;">Reset</button>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px; padding: 0 14px 0 22px; height: 62px; border-bottom: 1px solid #23272E;">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 19px; font-weight: 600;">Lateral Acceleration</span><span style="font-size: 14px; color: #AEB6C2;">Torque to cornering scaling</span></div>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 16px; color: #C9D0DA;">2.4</span>
+        <span style="font-size: 13px; font-weight: 700; color: #7DBBF9; background: #1F2E45; border-radius: 8px; padding: 5px 10px;">LEARNED</span>
+        <button type="button" style="font-family: inherit; height: 44px; padding: 0 16px; border: 0; border-radius: 12px; background: #23272E; color: #F2F5F9; font-size: 16px; font-weight: 600;">Override</button>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px; padding: 0 14px 0 22px; height: 62px; border-bottom: 1px solid #23272E;">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 19px; font-weight: 600;">Kp Factor</span><span style="font-size: 14px; color: #AEB6C2;">Correction strength</span></div>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 16px; color: #C9D0DA;">1.00</span>
+        <span style="font-size: 13px; font-weight: 700; color: #C9D0DA; background: #23272E; border-radius: 8px; padding: 5px 10px;">DEFAULT</span>
+        <button type="button" style="font-family: inherit; height: 44px; padding: 0 16px; border: 0; border-radius: 12px; background: #23272E; color: #F2F5F9; font-size: 16px; font-weight: 600;">Override</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;padding:0 14px 0 22px;min-height:62px;flex-grow:1;">
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;">
+          <span style="font-size:19px;font-weight:600;">Steering controller</span>
+          <span id="controller-help" aria-live="polite" style="font-size:14px;line-height:1.3;color:#AEB6C2;">Uses the car's normal controller</span>
+        </div>
+        <div class="controller-options" role="radiogroup" aria-label="Steering controller" aria-describedby="controller-help">
+          <button type="button" role="radio" aria-checked="true" tabindex="0" data-value="vehicle" data-help="Uses the car's normal controller">Vehicle default</button>
+          <button type="button" role="radio" aria-checked="false" tabindex="-1" data-value="auto" data-help="NNFF when available, otherwise Lite">NNFF auto</button>
+          <button type="button" role="radio" aria-checked="false" tabindex="-1" data-value="nnff" data-help="Uses a neural model for your car">NNFF</button>
+          <button type="button" role="radio" aria-checked="false" tabindex="-1" data-value="lite" data-help="Uses lightweight neural feedforward">Lite</button>
+          <button type="button" role="radio" aria-checked="false" tabindex="-1" data-value="torque" data-help="Uses the torque steering controller">Torque</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav style="height: 102px; flex-shrink: 0; border-top: 1px solid #1F242B; background: #0E1013; display: flex; align-items: center; gap: 10px; padding: 0 16px;">
+    <a href="driving.html" aria-label="Back" style="width: 74px; height: 74px; flex-shrink: 0; border-radius: 18px; background: #1F2328; display: flex; align-items: center; justify-content: center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F2F5F9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></a>
+    <div style="flex-grow: 1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px;">
+      <a href="hub.html" aria-current="page" style="text-decoration: none; height: 74px; border-radius: 18px; background: #5AAAF8; color: #0B1A2B; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center;">Driving</a>
+      <a href="devicetab.html" style="text-decoration: none; height: 74px; border-radius: 18px; color: #C9D0DA; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Device</a>
+      <a href="connections.html" style="text-decoration: none; height: 74px; border-radius: 18px; color: #C9D0DA; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Connections</a>
+      <a href="softwaretab.html" style="text-decoration: none; height: 74px; border-radius: 18px; color: #C9D0DA; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Software</a>
+    </div>
+  </nav>
+</div>
+
+<script>
+const group = document.querySelector('.controller-options');
+const choices = [...group.querySelectorAll('[role="radio"]')];
+function selectController(choice) {
+  for (const button of choices) {
+    const selected = button === choice;
+    button.setAttribute('aria-checked', String(selected));
+    button.tabIndex = selected ? 0 : -1;
+  }
+  document.querySelector('#controller-help').textContent = choice.dataset.help;
+}
+for (const choice of choices) {
+  choice.addEventListener('click', () => selectController(choice));
+  choice.addEventListener('keydown', event => {
+    const delta = {ArrowLeft:-1, ArrowUp:-1, ArrowRight:1, ArrowDown:1}[event.key];
+    if (delta !== undefined) {
+      event.preventDefault();
+      const next = choices[(choices.indexOf(choice) + delta + choices.length) % choices.length];
+      selectController(next);
+      next.focus();
+    }
+  });
+}
+</script>
+</body>
+</html>

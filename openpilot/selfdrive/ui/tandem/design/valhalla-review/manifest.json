@@ -1,0 +1,636 @@
+{
+  "title": "Valhalla UI approval review",
+  "status": "pending owner approval",
+  "scope": "Only the Valhalla feature diff against HEAD on branch valhalla.",
+  "effectiveOn": "Persistent Use offline routes is on or TANDEM_ROUTING=1, unless TANDEM_ROUTING=0 or any of TANDEM_SETTINGS/HOME/ONROAD/SIDEBAR=0 overrides it.",
+  "groups": [
+    {
+      "id": "onroad",
+      "title": "Driving screen",
+      "count": 17
+    },
+    {
+      "id": "settings",
+      "title": "Navigation settings and search",
+      "count": 6
+    },
+    {
+      "id": "places",
+      "title": "Saved places and old recents",
+      "count": 4
+    },
+    {
+      "id": "preview",
+      "title": "Route preview",
+      "count": 16
+    },
+    {
+      "id": "data",
+      "title": "Routing data management",
+      "count": 18
+    },
+    {
+      "id": "link",
+      "title": "Package link keyboard",
+      "count": 2
+    },
+    {
+      "id": "mapbox",
+      "title": "Mapbox help",
+      "count": 1
+    }
+  ],
+  "findings": [
+    "These are retrospective approval drafts. The earlier implementation did not receive owner approval of its UI. No screen in this set is marked approved.",
+    "Normal driving status is unchanged visually when instructions are fresh. Waiting/error text appears only with offline routing on and an active destination; it replaces arrival/time-left/street. Turn-card freshness is checked separately.",
+    "New settings entry/search wording appears even while offline routing is off. The local badge, preview notes, optional Mapbox subtitle and driving status require effective offline routing on.",
+    "Legacy name-only recents currently lose their attempted query when opening search; the public-key notice can mask the new no-coordinates message. Both the visible fallback and stored error text are included.",
+    "Package URL and software-timeout errors currently reuse inappropriate route wording. A busy removal says Trying again but does not schedule an automatic management retry. These are review findings, not fixes applied in this design-only pass.",
+    "The separate existing Display › Map screen still has its older routing-without-a-connection description. Only Navigation and the search index were corrected in the implementation.",
+    "The implementation updated 12 translation catalogs and added 11 fallback-font characters. The approval drafts here show English; there was no intended redesign of existing translated screens."
+  ],
+  "states": [
+    {
+      "id": "nav-entry",
+      "file": "valhalla-nav-entry",
+      "group": "settings",
+      "title": "Navigation entry point",
+      "when": "Open Tandem Settings › Driving › Speed & Steering › Navigation, with offline routing either on or off.",
+      "change": "Adds the Offline routes / Manage row below End Route When Parked. Standard rows scroll.",
+      "approval": "pending"
+    },
+    {
+      "id": "nav-online",
+      "file": "valhalla-nav-online",
+      "group": "settings",
+      "title": "Navigation, offline routing off",
+      "when": "Scroll down in Navigation with offline routing off and no Mapbox keys.",
+      "change": "The new Manage row is still available; Offline Maps now explicitly describes speed limits and street names.",
+      "approval": "pending"
+    },
+    {
+      "id": "nav-local",
+      "file": "valhalla-nav-local",
+      "group": "settings",
+      "title": "Navigation, offline routing on",
+      "when": "Scroll down in Navigation while effective offline routing is on; Mapbox keys are absent.",
+      "change": "Mapbox keys are described as optional for online search and speed-limit filling.",
+      "approval": "pending"
+    },
+    {
+      "id": "nav-local-keys",
+      "file": "valhalla-nav-local-keys",
+      "group": "settings",
+      "title": "Navigation, keys already saved",
+      "when": "Same as above, but both Mapbox keys have been saved.",
+      "change": "The helper action says How to change; the saved-keys subtitle uses the existing green treatment.",
+      "approval": "pending"
+    },
+    {
+      "id": "search-valhalla",
+      "file": "valhalla-search-valhalla",
+      "group": "settings",
+      "title": "Settings search: Valhalla",
+      "when": "Open settings search and type valhalla, offline routes, or another matching term. This works before enabling the feature.",
+      "change": "The new Offline routes setting is indexed; selecting it goes to Navigation.",
+      "approval": "pending"
+    },
+    {
+      "id": "search-road-data",
+      "file": "valhalla-search-road-data",
+      "group": "settings",
+      "title": "Settings search: road-data wording",
+      "when": "Search for street names and press Search to show all results.",
+      "change": "The updated Offline Maps details now match this query in Navigation and Display › Map; details affect matching, while the result displays its location.",
+      "approval": "pending"
+    },
+    {
+      "id": "places-ready",
+      "file": "valhalla-places-ready",
+      "group": "places",
+      "title": "Saved places: data ready",
+      "when": "Open Where to? from Home, settings, or the driving bar while offline routing is on and the runtime plus selected bundle pass readiness checks.",
+      "change": "The badge says Offline route data ready; the footer opens Offline routes, including when entered from the driving screen.",
+      "approval": "pending"
+    },
+    {
+      "id": "places-not-ready",
+      "file": "valhalla-places-not-ready",
+      "group": "places",
+      "title": "Saved places: setup/data missing",
+      "when": "Open Where to? with offline routing on but no usable runtime, no active bundle, or incompatible data.",
+      "change": "The data-ready badge is absent. Offline routes still opens management; selecting a saved place explains the blocking reason in its preview.",
+      "approval": "pending"
+    },
+    {
+      "id": "recent-no-coordinates",
+      "file": "valhalla-recent-no-coordinates",
+      "group": "places",
+      "title": "Name-only old recent: current search fallback",
+      "when": "Tap a recent that contains a name but no usable coordinates, with no public Mapbox key.",
+      "change": "It opens the existing search screen instead of reusing a previous destination. Current code clears the attempted query and shows the public-key notice; this is an implementation gap, not a proposed new design.",
+      "approval": "pending",
+      "finding": "The _pick path sets the query before _go(SEARCH), which clears it. The public-key notice also masks the new missing-coordinate error. This pass does not fix either behavior."
+    },
+    {
+      "id": "recent-coordinate-error",
+      "file": "valhalla-recent-coordinate-error",
+      "group": "places",
+      "title": "Name-only recent: added error wording",
+      "when": "The controller rejects a saved place without coordinates. This text is stored as the search error and can appear in the full-results view if a new search has not replaced it.",
+      "change": "Added error wording: This saved place has no coordinates. Search again when online. The ordinary keyboard path can mask it, as noted in the adjacent state.",
+      "approval": "pending",
+      "finding": "Review the error wording, but do not treat this as proof that the current ordinary tap path displays it reliably."
+    },
+    {
+      "id": "preview-ready",
+      "file": "valhalla-preview-ready",
+      "group": "preview",
+      "title": "Preview ready",
+      "when": "Choose a coordinate-bearing saved place while offline routing is on; the current local preview succeeds.",
+      "change": "Uses local route geometry and estimates. Start is enabled; the second note describes the independent road data.",
+      "approval": "pending"
+    },
+    {
+      "id": "preview-alternative",
+      "file": "valhalla-preview-alternative",
+      "group": "preview",
+      "title": "Saved Mapbox alternative",
+      "when": "Preview a saved destination with a routeId beginning alt-.",
+      "change": "The old provider-specific alternative is recalculated locally. The second note says Recalculates the saved route locally.",
+      "approval": "pending"
+    },
+    {
+      "id": "preview-pending",
+      "file": "valhalla-preview-pending",
+      "group": "preview",
+      "title": "Preview: pending",
+      "when": "Offline routing is on. A local preview request is in progress, including refresh after its start position, bundle, language or destination changes.",
+      "change": "The map shows the reason, estimates are empty, and Start is disabled; the existing back and save controls remain.",
+      "approval": "pending"
+    },
+    {
+      "id": "preview-no-gps",
+      "file": "valhalla-preview-no-gps",
+      "group": "preview",
+      "title": "Preview: no gps",
+      "when": "Offline routing is on. Neither a usable live GPS position nor a saved parked position is available for the preview.",
+      "change": "The map shows the reason, estimates are empty, and Start is disabled; the existing back and save controls remain.",
+      "approval": "pending"
+    },
+    {
+      "id": "preview-runtime",
+      "file": "valhalla-preview-runtime",
+      "group": "preview",
+      "title": "Preview: runtime",
+      "when": "Offline routing is on. The dedicated runtime or matching runtime receipt is missing.",
+      "change": "The map shows the reason, estimates are empty, and Start is disabled; the existing back and save controls remain.",
+      "approval": "pending"
+    },
+    {
+      "id": "preview-missing",
+      "file": "valhalla-preview-missing",
+      "group": "preview",
+      "title": "Preview: missing",
+      "when": "Offline routing is on. No routing bundle is selected/installed. Existing speed-limit maps alone do not satisfy this check.",
+      "change": "The map shows the reason, estimates are empty, and Start is disabled; the existing back and save controls remain.",
+      "approval": "pending"
+    },
+    {
+      "id": "preview-incompatible",
+      "file": "valhalla-preview-incompatible",
+      "group": "preview",
+      "title": "Preview: incompatible",
+      "when": "Offline routing is on. The selected graph/manifest is incompatible, incomplete, or fails verification.",
+      "change": "The map shows the reason, estimates are empty, and Start is disabled; the existing back and save controls remain.",
+      "approval": "pending"
+    },
+    {
+      "id": "preview-coverage",
+      "file": "valhalla-preview-coverage",
+      "group": "preview",
+      "title": "Preview: coverage",
+      "when": "Offline routing is on. The route endpoints are outside the selected routing graph coverage precheck.",
+      "change": "The map shows the reason, estimates are empty, and Start is disabled; the existing back and save controls remain.",
+      "approval": "pending"
+    },
+    {
+      "id": "preview-no-route",
+      "file": "valhalla-preview-no-route",
+      "group": "preview",
+      "title": "Preview: no route",
+      "when": "Offline routing is on. The native router cannot find an automobile path for the trip.",
+      "change": "The map shows the reason, estimates are empty, and Start is disabled; the existing back and save controls remain.",
+      "approval": "pending"
+    },
+    {
+      "id": "preview-busy",
+      "file": "valhalla-preview-busy",
+      "group": "preview",
+      "title": "Preview: busy",
+      "when": "Offline routing is on. The local broker queue is full. The preview retries after its existing delay.",
+      "change": "The map shows the reason, estimates are empty, and Start is disabled; the existing back and save controls remain.",
+      "approval": "pending"
+    },
+    {
+      "id": "preview-timeout",
+      "file": "valhalla-preview-timeout",
+      "group": "preview",
+      "title": "Preview: timeout",
+      "when": "Offline routing is on. The preview request reaches its finite deadline; a later retry can recover.",
+      "change": "The map shows the reason, estimates are empty, and Start is disabled; the existing back and save controls remain.",
+      "approval": "pending"
+    },
+    {
+      "id": "preview-worker",
+      "file": "valhalla-preview-worker",
+      "group": "preview",
+      "title": "Preview: worker",
+      "when": "Offline routing is on. The broker/native worker is absent, exits, or cannot be reached.",
+      "change": "The map shows the reason, estimates are empty, and Start is disabled; the existing back and save controls remain.",
+      "approval": "pending"
+    },
+    {
+      "id": "preview-invalid-response",
+      "file": "valhalla-preview-invalid-response",
+      "group": "preview",
+      "title": "Preview: invalid response",
+      "when": "Offline routing is on. The normalizer rejects a malformed native result before it can become a preview.",
+      "change": "The map shows the reason, estimates are empty, and Start is disabled; the existing back and save controls remain.",
+      "approval": "pending"
+    },
+    {
+      "id": "preview-invalid-place",
+      "file": "valhalla-preview-invalid-place",
+      "group": "preview",
+      "title": "Preview: invalid place",
+      "when": "Offline routing is on. An invalid coordinate request reaches the provider; ordinary invalid saved picks are redirected to search earlier.",
+      "change": "The map shows the reason, estimates are empty, and Start is disabled; the existing back and save controls remain.",
+      "approval": "pending"
+    },
+    {
+      "id": "preview-updated",
+      "file": "valhalla-preview-updated",
+      "group": "preview",
+      "title": "Preview: updated",
+      "when": "Offline routing is on. A response was superseded by a newer request or routing-data generation.",
+      "change": "The map shows the reason, estimates are empty, and Start is disabled; the existing back and save controls remain.",
+      "approval": "pending"
+    },
+    {
+      "id": "preview-unknown",
+      "file": "valhalla-preview-unknown",
+      "group": "preview",
+      "title": "Preview: unknown",
+      "when": "Offline routing is on. An unrecognized provider error is mapped to the generic message.",
+      "change": "The map shows the reason, estimates are empty, and Start is disabled; the existing back and save controls remain.",
+      "approval": "pending"
+    },
+    {
+      "id": "onroad-gps",
+      "file": "valhalla-onroad-gps",
+      "group": "onroad",
+      "title": "Driving: gps",
+      "when": "Effective offline routing is on, a destination is set, and navInstruction is invalid or last arrived more than 2.5 seconds ago. The active route has no usable live GPS fix, or its timestamp is older than 2.5 seconds or in the future.",
+      "change": "The bottom bar replaces arrival/time-left/street with this reason and keeps End route. The turn card is hidden when its own instruction state is missing/invalid or outside the 0–2.5 second freshness window. The green engagement styling here is sample state, not part of this change.",
+      "approval": "pending"
+    },
+    {
+      "id": "onroad-finding",
+      "file": "valhalla-onroad-finding",
+      "group": "onroad",
+      "title": "Driving: finding",
+      "when": "Effective offline routing is on, a destination is set, and navInstruction is invalid or last arrived more than 2.5 seconds ago. The first local route is being calculated, so there is not yet a valid instruction/arrival estimate.",
+      "change": "The bottom bar replaces arrival/time-left/street with this reason and keeps End route. The turn card is hidden when its own instruction state is missing/invalid or outside the 0–2.5 second freshness window. The green engagement styling here is sample state, not part of this change.",
+      "approval": "pending"
+    },
+    {
+      "id": "onroad-rerouting",
+      "file": "valhalla-onroad-rerouting",
+      "group": "onroad",
+      "title": "Driving: rerouting",
+      "when": "Effective offline routing is on, a destination is set, and navInstruction is invalid or last arrived more than 2.5 seconds ago. The car is off the route or its bearing disagrees with the route, and a replacement is being calculated.",
+      "change": "The bottom bar replaces arrival/time-left/street with this reason and keeps End route. The turn card is hidden when its own instruction state is missing/invalid or outside the 0–2.5 second freshness window. The green engagement styling here is sample state, not part of this change.",
+      "approval": "pending"
+    },
+    {
+      "id": "onroad-busy",
+      "file": "valhalla-onroad-busy",
+      "group": "onroad",
+      "title": "Driving: busy",
+      "when": "Effective offline routing is on, a destination is set, and navInstruction is invalid or last arrived more than 2.5 seconds ago. The broker reports a busy queue while the route has no valid instruction.",
+      "change": "The bottom bar replaces arrival/time-left/street with this reason and keeps End route. The turn card is hidden when its own instruction state is missing/invalid or outside the 0–2.5 second freshness window. The green engagement styling here is sample state, not part of this change.",
+      "approval": "pending"
+    },
+    {
+      "id": "onroad-timeout",
+      "file": "valhalla-onroad-timeout",
+      "group": "onroad",
+      "title": "Driving: timeout",
+      "when": "Effective offline routing is on, a destination is set, and navInstruction is invalid or last arrived more than 2.5 seconds ago. The active-route request exceeded its deadline and instructions remain invalid.",
+      "change": "The bottom bar replaces arrival/time-left/street with this reason and keeps End route. The turn card is hidden when its own instruction state is missing/invalid or outside the 0–2.5 second freshness window. The green engagement styling here is sample state, not part of this change.",
+      "approval": "pending"
+    },
+    {
+      "id": "onroad-worker",
+      "file": "valhalla-onroad-worker",
+      "group": "onroad",
+      "title": "Driving: worker",
+      "when": "Effective offline routing is on, a destination is set, and navInstruction is invalid or last arrived more than 2.5 seconds ago. The routing worker stopped or the status snapshot is absent/stale. The latter defaults to this wording after 2.5 seconds.",
+      "change": "The bottom bar replaces arrival/time-left/street with this reason and keeps End route. The turn card is hidden when its own instruction state is missing/invalid or outside the 0–2.5 second freshness window. The green engagement styling here is sample state, not part of this change.",
+      "approval": "pending"
+    },
+    {
+      "id": "onroad-missing",
+      "file": "valhalla-onroad-missing",
+      "group": "onroad",
+      "title": "Driving: missing",
+      "when": "Effective offline routing is on, a destination is set, and navInstruction is invalid or last arrived more than 2.5 seconds ago. The selected bundle is missing while a destination remains set.",
+      "change": "The bottom bar replaces arrival/time-left/street with this reason and keeps End route. The turn card is hidden when its own instruction state is missing/invalid or outside the 0–2.5 second freshness window. The green engagement styling here is sample state, not part of this change.",
+      "approval": "pending"
+    },
+    {
+      "id": "onroad-runtime",
+      "file": "valhalla-onroad-runtime",
+      "group": "onroad",
+      "title": "Driving: runtime",
+      "when": "Effective offline routing is on, a destination is set, and navInstruction is invalid or last arrived more than 2.5 seconds ago. The dedicated runtime/readiness receipt is missing while a destination remains set.",
+      "change": "The bottom bar replaces arrival/time-left/street with this reason and keeps End route. The turn card is hidden when its own instruction state is missing/invalid or outside the 0–2.5 second freshness window. The green engagement styling here is sample state, not part of this change.",
+      "approval": "pending"
+    },
+    {
+      "id": "onroad-incompatible",
+      "file": "valhalla-onroad-incompatible",
+      "group": "onroad",
+      "title": "Driving: incompatible",
+      "when": "Effective offline routing is on, a destination is set, and navInstruction is invalid or last arrived more than 2.5 seconds ago. The active routing package is corrupt or incompatible.",
+      "change": "The bottom bar replaces arrival/time-left/street with this reason and keeps End route. The turn card is hidden when its own instruction state is missing/invalid or outside the 0–2.5 second freshness window. The green engagement styling here is sample state, not part of this change.",
+      "approval": "pending"
+    },
+    {
+      "id": "onroad-coverage",
+      "file": "valhalla-onroad-coverage",
+      "group": "onroad",
+      "title": "Driving: coverage",
+      "when": "Effective offline routing is on, a destination is set, and navInstruction is invalid or last arrived more than 2.5 seconds ago. Local routing reports that the endpoints need more coverage.",
+      "change": "The bottom bar replaces arrival/time-left/street with this reason and keeps End route. The turn card is hidden when its own instruction state is missing/invalid or outside the 0–2.5 second freshness window. The green engagement styling here is sample state, not part of this change.",
+      "approval": "pending"
+    },
+    {
+      "id": "onroad-no-route",
+      "file": "valhalla-onroad-no-route",
+      "group": "onroad",
+      "title": "Driving: no route",
+      "when": "Effective offline routing is on, a destination is set, and navInstruction is invalid or last arrived more than 2.5 seconds ago. No replacement route can be found and guidance is invalid.",
+      "change": "The bottom bar replaces arrival/time-left/street with this reason and keeps End route. The turn card is hidden when its own instruction state is missing/invalid or outside the 0–2.5 second freshness window. The green engagement styling here is sample state, not part of this change.",
+      "approval": "pending"
+    },
+    {
+      "id": "onroad-invalid-response",
+      "file": "valhalla-onroad-invalid-response",
+      "group": "onroad",
+      "title": "Driving: invalid response",
+      "when": "Effective offline routing is on, a destination is set, and navInstruction is invalid or last arrived more than 2.5 seconds ago. The route result failed normalization, so guidance is invalid.",
+      "change": "The bottom bar replaces arrival/time-left/street with this reason and keeps End route. The turn card is hidden when its own instruction state is missing/invalid or outside the 0–2.5 second freshness window. The green engagement styling here is sample state, not part of this change.",
+      "approval": "pending"
+    },
+    {
+      "id": "onroad-invalid-place",
+      "file": "valhalla-onroad-invalid-place",
+      "group": "onroad",
+      "title": "Driving: invalid place",
+      "when": "Effective offline routing is on, a destination is set, and navInstruction is invalid or last arrived more than 2.5 seconds ago. A malformed active destination reaches the provider.",
+      "change": "The bottom bar replaces arrival/time-left/street with this reason and keeps End route. The turn card is hidden when its own instruction state is missing/invalid or outside the 0–2.5 second freshness window. The green engagement styling here is sample state, not part of this change.",
+      "approval": "pending"
+    },
+    {
+      "id": "onroad-updated",
+      "file": "valhalla-onroad-updated",
+      "group": "onroad",
+      "title": "Driving: updated",
+      "when": "Effective offline routing is on, a destination is set, and navInstruction is invalid or last arrived more than 2.5 seconds ago. A route result is superseded by a newer request or data generation.",
+      "change": "The bottom bar replaces arrival/time-left/street with this reason and keeps End route. The turn card is hidden when its own instruction state is missing/invalid or outside the 0–2.5 second freshness window. The green engagement styling here is sample state, not part of this change.",
+      "approval": "pending"
+    },
+    {
+      "id": "onroad-unknown",
+      "file": "valhalla-onroad-unknown",
+      "group": "onroad",
+      "title": "Driving: unknown",
+      "when": "Effective offline routing is on, a destination is set, and navInstruction is invalid or last arrived more than 2.5 seconds ago. An unrecognized backend status is mapped to the generic message.",
+      "change": "The bottom bar replaces arrival/time-left/street with this reason and keeps End route. The turn card is hidden when its own instruction state is missing/invalid or outside the 0–2.5 second freshness window. The green engagement styling here is sample state, not part of this change.",
+      "approval": "pending"
+    },
+    {
+      "id": "onroad-fresh",
+      "file": "valhalla-onroad-fresh",
+      "group": "onroad",
+      "title": "Driving: fresh guidance (reference)",
+      "when": "An active local route has fresh, valid GPS/instructions.",
+      "change": "Reference: normal turn card, arrival/time-left and street use the existing design. This shows what returns after a waiting/error state clears.",
+      "approval": "pending",
+      "reference": true
+    },
+    {
+      "id": "onroad-stale-card",
+      "file": "valhalla-onroad-stale-card",
+      "group": "onroad",
+      "title": "Driving: turn card expires separately",
+      "when": "Offline routing is on and the card's NavInstructionState timestamp is missing, malformed, in the future or older than 2.5 seconds. In this example navInstruction on the message bus is still fresh.",
+      "change": "Only the turn card is hidden by its new freshness check. The bottom bar checks a separate message timestamp, so its arrival/time-left can remain until that message also expires.",
+      "approval": "pending"
+    },
+    {
+      "id": "data-setup",
+      "file": "valhalla-data-setup",
+      "group": "data",
+      "title": "First setup",
+      "when": "Open Offline routes before installing the runtime or any bundle.",
+      "change": "New management page. Mutating rows are disabled while an operation is busy or the parked/no-destination guard fails. Cancel appears only while busy. Use/Remove are compact row actions; no new removal-confirmation dialog was added.",
+      "approval": "pending"
+    },
+    {
+      "id": "data-empty",
+      "file": "valhalla-data-empty",
+      "group": "data",
+      "title": "Software ready, no package",
+      "when": "The runtime is installed, but no routing package is installed yet.",
+      "change": "New management page. Mutating rows are disabled while an operation is busy or the parked/no-destination guard fails. Cancel appears only while busy. Use/Remove are compact row actions; no new removal-confirmation dialog was added.",
+      "approval": "pending"
+    },
+    {
+      "id": "data-installed",
+      "file": "valhalla-data-installed",
+      "group": "data",
+      "title": "Installed, not selected",
+      "when": "A valid package is installed but no package is selected (for example after a CLI install).",
+      "change": "New management page. Mutating rows are disabled while an operation is busy or the parked/no-destination guard fails. Cancel appears only while busy. Use/Remove are compact row actions; no new removal-confirmation dialog was added.",
+      "approval": "pending"
+    },
+    {
+      "id": "data-ready",
+      "file": "valhalla-data-ready",
+      "group": "data",
+      "title": "Active package, feature on",
+      "when": "Iowa is selected and the persistent Use offline routes switch is on.",
+      "change": "New management page. Mutating rows are disabled while an operation is busy or the parked/no-destination guard fails. Cancel appears only while busy. Use/Remove are compact row actions; no new removal-confirmation dialog was added.",
+      "approval": "pending"
+    },
+    {
+      "id": "data-off",
+      "file": "valhalla-data-off",
+      "group": "data",
+      "title": "Active package, feature off",
+      "when": "Iowa remains selected, but the persistent offline-routing switch is off.",
+      "change": "New management page. Mutating rows are disabled while an operation is busy or the parked/no-destination guard fails. Cancel appears only while busy. Use/Remove are compact row actions; no new removal-confirmation dialog was added.",
+      "approval": "pending"
+    },
+    {
+      "id": "data-preparing",
+      "file": "valhalla-data-preparing",
+      "group": "data",
+      "title": "Preparing software",
+      "when": "Set up is running, or installation has not yet reported a byte total.",
+      "change": "New management page. Mutating rows are disabled while an operation is busy or the parked/no-destination guard fails. Cancel appears only while busy. Use/Remove are compact row actions; no new removal-confirmation dialog was added.",
+      "approval": "pending"
+    },
+    {
+      "id": "data-downloading",
+      "file": "valhalla-data-downloading",
+      "group": "data",
+      "title": "Downloading package",
+      "when": "The link installer has a byte total; this example is 42% complete.",
+      "change": "New management page. Mutating rows are disabled while an operation is busy or the parked/no-destination guard fails. Cancel appears only while busy. Use/Remove are compact row actions; no new removal-confirmation dialog was added.",
+      "approval": "pending"
+    },
+    {
+      "id": "data-locked",
+      "file": "valhalla-data-locked",
+      "group": "data",
+      "title": "Controls locked",
+      "when": "The car is onroad, or a destination is still set even though the car is offroad.",
+      "change": "New management page. Mutating rows are disabled while an operation is busy or the parked/no-destination guard fails. Cancel appears only while busy. Use/Remove are compact row actions; no new removal-confirmation dialog was added.",
+      "approval": "pending"
+    },
+    {
+      "id": "data-done",
+      "file": "valhalla-data-done",
+      "group": "data",
+      "title": "Operation complete",
+      "when": "Setup, package activation, installation, or removal completed successfully.",
+      "change": "New management page. Mutating rows are disabled while an operation is busy or the parked/no-destination guard fails. Cancel appears only while busy. Use/Remove are compact row actions; no new removal-confirmation dialog was added.",
+      "approval": "pending"
+    },
+    {
+      "id": "data-cancelled",
+      "file": "valhalla-data-cancelled",
+      "group": "data",
+      "title": "Installation cancelled",
+      "when": "The user pressed Cancel and the worker has finished cancelling.",
+      "change": "New management page. Mutating rows are disabled while an operation is busy or the parked/no-destination guard fails. Cancel appears only while busy. Use/Remove are compact row actions; no new removal-confirmation dialog was added.",
+      "approval": "pending"
+    },
+    {
+      "id": "data-failed",
+      "file": "valhalla-data-failed",
+      "group": "data",
+      "title": "Installation failed",
+      "when": "A setup/download operation raised an unclassified exception (such as a failed connection).",
+      "change": "New management page. Mutating rows are disabled while an operation is busy or the parked/no-destination guard fails. Cancel appears only while busy. Use/Remove are compact row actions; no new removal-confirmation dialog was added.",
+      "approval": "pending"
+    },
+    {
+      "id": "data-no-space",
+      "file": "valhalla-data-no-space",
+      "group": "data",
+      "title": "Not enough storage",
+      "when": "The installer cannot retain its storage reserve while staging the package.",
+      "change": "New management page. Mutating rows are disabled while an operation is busy or the parked/no-destination guard fails. Cancel appears only while busy. Use/Remove are compact row actions; no new removal-confirmation dialog was added.",
+      "approval": "pending"
+    },
+    {
+      "id": "data-incompatible",
+      "file": "valhalla-data-incompatible",
+      "group": "data",
+      "title": "Package verification failed",
+      "when": "The manifest/runtime version, file size, or SHA-256 validation fails.",
+      "change": "New management page. Mutating rows are disabled while an operation is busy or the parked/no-destination guard fails. Cancel appears only while busy. Use/Remove are compact row actions; no new removal-confirmation dialog was added.",
+      "approval": "pending"
+    },
+    {
+      "id": "data-exists",
+      "file": "valhalla-data-exists",
+      "group": "data",
+      "title": "Conflicting package ID",
+      "when": "A different package uses an immutable ID that is already installed.",
+      "change": "New management page. Mutating rows are disabled while an operation is busy or the parked/no-destination guard fails. Cancel appears only while busy. Use/Remove are compact row actions; no new removal-confirmation dialog was added.",
+      "approval": "pending"
+    },
+    {
+      "id": "data-busy",
+      "file": "valhalla-data-busy",
+      "group": "data",
+      "title": "Package still in use",
+      "when": "Removal cannot obtain the native reader lease.",
+      "change": "New management page. Mutating rows are disabled while an operation is busy or the parked/no-destination guard fails. Cancel appears only while busy. Use/Remove are compact row actions; no new removal-confirmation dialog was added.",
+      "approval": "pending",
+      "finding": "The message promises a retry, but the management action does not automatically retry."
+    },
+    {
+      "id": "data-guard",
+      "file": "valhalla-data-guard",
+      "group": "data",
+      "title": "Parked state changed",
+      "when": "The car starts a drive or acquires a destination during a mutation.",
+      "change": "New management page. Mutating rows are disabled while an operation is busy or the parked/no-destination guard fails. Cancel appears only while busy. Use/Remove are compact row actions; no new removal-confirmation dialog was added.",
+      "approval": "pending"
+    },
+    {
+      "id": "data-bad-link",
+      "file": "valhalla-data-bad-link",
+      "group": "data",
+      "title": "Non-HTTPS link rejected",
+      "when": "A link with at least 8 characters passes the keyboard length gate but fails the installer HTTPS check.",
+      "change": "New management page. Mutating rows are disabled while an operation is busy or the parked/no-destination guard fails. Cancel appears only while busy. Use/Remove are compact row actions; no new removal-confirmation dialog was added.",
+      "approval": "pending",
+      "finding": "Shared route-error wording is inappropriate for a package URL. This is shown faithfully for review; a copy fix is pending approval."
+    },
+    {
+      "id": "data-setup-timeout",
+      "file": "valhalla-data-setup-timeout",
+      "group": "data",
+      "title": "Setup timed out",
+      "when": "The software installer reaches its setup subprocess deadline.",
+      "change": "New management page. Mutating rows are disabled while an operation is busy or the parked/no-destination guard fails. Cancel appears only while busy. Use/Remove are compact row actions; no new removal-confirmation dialog was added.",
+      "approval": "pending",
+      "finding": "Shared route-timeout wording is inappropriate for software setup. This is shown faithfully for review; a copy fix is pending approval."
+    },
+    {
+      "id": "link-empty",
+      "file": "valhalla-link-empty",
+      "group": "link",
+      "title": "Package link: empty",
+      "when": "Tap Install from link on the management page while mutations are allowed.",
+      "change": "Uses the existing Essentials keyboard with a new title, explanatory line, and Install action. Install is disabled until at least 8 characters are entered.",
+      "approval": "pending"
+    },
+    {
+      "id": "link-entered",
+      "file": "valhalla-link-entered",
+      "group": "link",
+      "title": "Package link: entered",
+      "when": "The package-link field has at least 8 characters. This example is an illustrative HTTPS address, not a published Iowa download URL.",
+      "change": "Install becomes enabled by length; HTTPS/manifest validity is checked after submission. The URL is ordinary unmasked text.",
+      "approval": "pending"
+    },
+    {
+      "id": "mapbox-help",
+      "file": "valhalla-mapbox-help",
+      "group": "mapbox",
+      "title": "Optional Mapbox help",
+      "when": "Open How to add / How to change from Navigation while effective offline routing is on.",
+      "change": "Only the subtitle changes to Optional: online search and speed-limit filling. The existing four steps and their online-route wording remain.",
+      "approval": "pending"
+    }
+  ]
+}

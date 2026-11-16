@@ -1,0 +1,69 @@
+# Tandem
+
+Tandem is this fork of StarPilot. Its design language is **Essentials**: fewer choices and better defaults, with the car explaining what it's doing. This package holds the Essentials component library. The mocks, screenshots and tokens are in [`design/`](design/). It's built on raylib and the existing `Widget` base class. Screens are put together from these pieces instead of drawing with raylib directly.
+
+This branch ports Tandem onto StarPilot 7. [`PORTING.md`](PORTING.md) has the stages; so far the component library, fonts and translation catalog are here, and no screen is. Until stage 2, the device runs StarPilot 7's own UI.
+
+| Module | Contents |
+| --- | --- |
+| `fonts.py` | `font(face)`: maps upstream weight identifiers to our Figtree and Noto files, plus ExtraBold and JetBrains Mono. All load on first use without replacing upstream fonts. |
+| `tokens.py` | Colors, type sizes, radii, layout sizes and timings in device pixels. `px()` converts mock pixels and `font_px()` converts mock font sizes. |
+| `layout.py` | Rectangle math: `row`, `column`, `grid` (fixed sizes plus `FILL`), `inset`, `place`, `grow`. It doesn't draw. |
+| `draw.py` | Rounded fills, single-line text (aligned and elided), captions, wrapped paragraphs, and `icon()`, which draws the mocks' line icons tinted. |
+| `icons/` | The mocks' icons: `svg/` holds each one copied from the mocks, and the PNGs beside it are rasterized from them by `tools/build_icons.js` (needs Playwright's Chromium). |
+| `base.py` | `Component`: a `Widget` with `preferred_size()`, plus a touch area grown to `MIN_TOUCH`. `resolve()` for values that may be getters. |
+| `controls.py` | `Button`, `ButtonRow`, `ValueButton`, `ToggleButton`, `Switch`, `Segmented`, `ChoiceCards`, `Stepper`, `Slider`, `Badge`, `Chip`, `ProgressBar` |
+| `rows.py` | `SettingRow`, `SectionHeader`, `Text`, `Banner`, `OptionList`, `Padded`, and `ListPanel`, which stacks rows with dividers, scrolls when they overflow, and can pin a footer |
+| `chrome.py` | `BottomNav`, `Sidebar`, `PageHeader`, `HubTile`, `HubGrid`, and `SettingsPage`, which assembles a full screen |
+| `blocks.py` | Layout blocks for the mocks' card layouts: `Stack`, `Card`, `Columns`, `Grid`, `Label`, `ValueLine`, `IconTitle`, `InfoCard`, `Field`, `Icon`, `Inline`, `Sized`, `Surface` |
+| `overlays.py` | `Sheet` (slides up), `Dialog` (confirm; `Tone.DANGER` gives a destructive button), `Toast` |
+| `scroll.py` | Gesture rejection for Tandem's lists; upstream's scroll panel keeps its behavior. |
+| `i18n.py`, `arabic.py`, `thai.py` | Translation (see Translations), Arabic joining and right-to-left order, and Thai clusters. |
+| `prefs.py` | Tandem's own on/off preferences, kept as marker files beside the params folder. |
+| `tools/` | `shoot_mocks.js` (mock screenshots), `render/` (headless renders: `snap.py` and `scene_*.py`), `compare.py` (the mock-beside-build page), `build_icons.js`, the font builders (`bmfont.py`, `build_figtree_fonts.py`, `fallback_font.py`, `crop_font_atlases.py`, `thai_font.py`), `translations.py` and `typecheck.py`. |
+
+## Conventions
+
+- **Values may be getters.** Any `Bindable` argument takes either a plain value or a zero-argument callable that is read every frame. That lets a row stay in sync with Params without extra glue. Changes go out through `on_change` / `on_click` callbacks.
+- **Containers lay out their children.** A container asks each child for `preferred_size(max_width)` and decides where it goes, so pages never hard-code positions.
+- **Touch.** A control smaller than `MIN_TOUCH` (112 px) still responds across a 112 px area. Containers turn that off with `grow_touch_target = False`. Rows inside a `ListPanel` ignore taps that are really scrolls.
+- **Color and size only come from `tokens`.** If a screen needs a value that isn't there, add a token rather than a hex code.
+- **Raylib.** UI code uses StarPilot 7's binding, `from openpilot.starpilot.ui.raylib import rl` (raylib 6). Its structs are plain values: they aren't callable and have no `ffi`.
+- **Types and docstrings.** Every function in Tandem's code is annotated, and `tools/typecheck.py` (mypy over `openpilot/selfdrive/ui/tandem` and `openpilot/starpilot/tandem`) must pass. Docstrings use the Google format: every public class gets one, and so does any function whose name and types don't say enough, with `Args:`, `Returns:` and `Raises:` sections for what needs explaining. A one-line summary is enough when that says it all.
+- **Text.** Use `draw.text`, `draw.caption` and `draw.paragraph`. They apply `FONT_SCALE` and elide with "…". The font atlases are pre-baked, so a character that isn't baked in draws as "?". Add it to `DESIGN_CHARS` in `tools/build_figtree_fonts.py` and run that script.
+
+## Keeping merges easy
+
+Tandem merges StarPilot 7 (`Dom`). New behavior, presentation, assets, tools and tests live in owned paths: `openpilot/selfdrive/ui/tandem/`, `openpilot/starpilot/tandem/`, the Figtree, JetBrains Mono and Noto font files and licenses, `AGENTS.md`, and the top entry of `RELEASES.md`.
+
+**Upstream integration:** every external edit is listed here. Each defaults to upstream's behavior.
+
+| File | Integration |
+| --- | --- |
+| `openpilot/system/ui/lib/application.py` | `KEEP_FONT = False` and an empty `TEXT_SHAPERS` list. `font_fallback` skips the language-wide Noto fallback while `KEEP_FONT` is set, and the `rl.draw_text_ex` wrapper runs `TEXT_SHAPERS` over the text. Tandem sets both only while drawing its own text (`draw._own_font`) and restores them afterward. |
+| `openpilot/system/ui/lib/text_measure.py` | `measure_text_cached` runs `TEXT_SHAPERS` too, so measuring matches drawing. |
+
+**Font atlases:** `openpilot/selfdrive/assets/.gitignore` ignores `fonts/*.fnt` and `fonts/*.png`, left from StarPilot 6's generator. Tandem's own atlases are committed with `git add -f` rather than by editing that file; once tracked, git keeps them. After rebuilding an atlas, `git add -f` it again.
+
+Not carried over from `release`: lazy loading of upstream's Inter faces and freeing glyph images after loading. StarPilot 7 draws Inter from TTF files at startup, and its raylib binding has no safe way to free a font's glyph images. Tandem's memory use is measured again on a device before either comes back (`PORTING.md`).
+
+## Translations
+
+Tandem's screens are written in English, and the text a driver reads is marked where it's written (`i18n.py`):
+
+| Mark | For | Translated |
+| --- | --- | --- |
+| `N_("Driving Style")` | Text in tables, labels and constants | Where it's drawn, so a language change applies at once |
+| `N_("Set up", context="action")` | English that means two things | The same, with its own entry |
+| `t_("Sets {} options", count)` | Text built at runtime | Now, with the values in its `{}` holes |
+| `tn_("{} alert", "{} alerts", n)` | Counts | Now, in each language's plural forms |
+
+- **Catalog:** `translations/` is `release`'s, complete for every screen, ported or not. Don't run `tools/translations.py update` until the screens are ported: it would drop the strings of the rest, and their translations.
+- **Fonts:** each string is drawn in Figtree when Figtree has all its letters, otherwise in the Noto fallback. Figtree has no Vietnamese, which StarPilot 7 adds, so Vietnamese draws in the fallback. StarPilot 7 also drops Arabic from its language picker; Tandem's Arabic catalog stays until stage 4 decides the language list.
+- **Fallback atlas:** rebuilt for StarPilot 7's translations from Noto Sans 500 Medium (`@expo-google-fonts` packages on npm). It leaves out Braille, which StarPilot 7 uses only for Galaxy's web drag handle ("Drag ⠿ to reorder"), and no Noto font has.
+
+## Third-party
+
+Figtree is © 2022 The Figtree Project Authors (<https://github.com/erikdkennedy/figtree>), used under the SIL Open Font License 1.1. The license text is in `openpilot/selfdrive/assets/fonts/Figtree-OFL.txt`. The `.ttf` files are unmodified; the `.fnt`/`.png` atlases are generated from them by `tools/build_figtree_fonts.py`. Noto Sans and JetBrains Mono are also under the SIL Open Font License 1.1 (`NotoSans-OFL.txt`, `JetBrainsMono-OFL.txt`).
+
+`tools/bmfont.py` is StarPilot 6's `selfdrive/assets/fonts/process.py` (MIT, as openpilot), with its paths and fallback languages changed.

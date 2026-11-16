@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Report a Problem</title>
+</head>
+<body>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7DBBF9}a:hover{color:#A9D3FB}
+</style>
+
+<div style="width: 1125px; height: 563px; box-sizing: border-box; background: #000000; color: #F2F5F9; font-family: Figtree, system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden;">
+  <div style="flex-grow: 1; display: flex; gap: 18px; padding: 18px 20px 14px; min-height: 0;">
+    <div style="width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 6px; padding-top: 8px;">
+      <span style="font-size: 14px; font-weight: 700; letter-spacing: 1.8px; color: #7DBBF9; padding: 0 16px 8px;">DEVICE</span>
+      <a href="devicetab.html" style="text-decoration: none; height: 56px; border-radius: 14px; color: #C9D0DA; font-size: 18px; font-weight: 600; padding: 0 16px; display: flex; align-items: center;">This Device</a>
+      <a href="system.html" style="text-decoration: none; height: 56px; border-radius: 14px; color: #C9D0DA; font-size: 18px; font-weight: 600; padding: 0 16px; display: flex; align-items: center;">General</a>
+      <a href="systembackups.html" style="text-decoration: none; height: 56px; border-radius: 14px; color: #C9D0DA; font-size: 18px; font-weight: 600; padding: 0 16px; display: flex; align-items: center;">Backups</a>
+      <a href="systemstorage.html" style="text-decoration: none; height: 56px; border-radius: 14px; color: #C9D0DA; font-size: 18px; font-weight: 600; padding: 0 16px; display: flex; align-items: center;">Storage &amp; Data</a>
+      <a href="systemreport.html" aria-current="page" style="text-decoration: none; height: 56px; border-radius: 14px; background: #1F2E45; color: #F2F5F9; font-size: 18px; font-weight: 600; padding: 0 16px; display: flex; align-items: center;">Report a Problem</a>
+    </div>
+    <div style="flex-grow: 1; min-width: 0; background: #16191D; border-radius: 22px; display: grid; grid-template-columns: 1.25fr 1fr; overflow: hidden;">
+      <div style="display: flex; flex-direction: column; border-right: 1px solid #23272E; min-height: 0;">
+        <div style="padding: 14px 20px 8px; display: flex; flex-direction: column; gap: 3px;"><h2 style="margin: 0; font-size: 22px; font-weight: 700;">What happened?</h2></div>
+        <div role="radiogroup" aria-label="Problem type" style="display: flex; flex-direction: column; padding: 0 10px 10px; gap: 4px;">
+          <button type="button" role="radio" aria-checked="false" style="font-family: inherit; text-align: left; height: 48px; border: 0; border-radius: 12px; background: transparent; color: #E6EAF0; font-size: 15px; font-weight: 600; padding: 0 12px;">Acceleration felt harsh or jerky</button>
+          <button type="button" role="radio" aria-checked="true" style="font-family: inherit; text-align: left; height: 48px; border: 2px solid #5AAAF8; border-radius: 12px; background: #182434; color: #F2F5F9; font-size: 15px; font-weight: 700; padding: 0 12px;">Braking was too sudden</button>
+          <button type="button" role="radio" aria-checked="false" style="font-family: inherit; text-align: left; height: 48px; border: 0; border-radius: 12px; background: transparent; color: #E6EAF0; font-size: 15px; font-weight: 600; padding: 0 12px;">It disengaged when I didn't expect it</button>
+          <button type="button" role="radio" aria-checked="false" style="font-family: inherit; text-align: left; height: 48px; border: 0; border-radius: 12px; background: transparent; color: #E6EAF0; font-size: 15px; font-weight: 600; padding: 0 12px;">It felt slow to respond</button>
+          <button type="button" role="radio" aria-checked="false" style="font-family: inherit; text-align: left; height: 48px; border: 0; border-radius: 12px; background: transparent; color: #E6EAF0; font-size: 15px; font-weight: 600; padding: 0 12px;">An alert was unclear</button>
+          <button type="button" role="radio" aria-checked="false" style="font-family: inherit; text-align: left; height: 48px; border: 0; border-radius: 12px; background: transparent; color: #E6EAF0; font-size: 15px; font-weight: 600; padding: 0 12px;">Something else</button>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px; padding: 16px 18px;">
+        <label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600; color: #C9D0DA;">Details (optional)
+          <textarea rows="3" placeholder="Where and when it happened" style="font-family: inherit; resize: none; border: 1px solid #2A2F36; border-radius: 12px; background: #1E2227; color: #F2F5F9; font-size: 15px; padding: 10px 12px;"></textarea>
+        </label>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 16px; font-weight: 600;">Attach last drive</span><span style="font-size: 13px; color: #AEB6C2;">Logs only, no video</span></div>
+          <button type="button" role="switch" aria-checked="true" aria-label="Attach last drive" style="width: 64px; height: 38px; border-radius: 19px; border: 0; background: #5AAAF8; padding: 4px; display: flex; justify-content: flex-end;"><span style="width: 30px; height: 30px; border-radius: 15px; background: #0E1520; display: block;"></span></button>
+        </div>
+        <label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600; color: #C9D0DA;">Discord name (optional)
+          <input type="text" placeholder="So we can follow up" style="font-family: inherit; height: 44px; border: 1px solid #2A2F36; border-radius: 12px; background: #1E2227; color: #F2F5F9; font-size: 15px; padding: 0 12px;">
+        </label>
+        <div style="flex-grow: 1;"></div>
+        <button type="button" style="font-family: inherit; height: 56px; border: 0; border-radius: 14px; background: #5AAAF8; color: #0B1A2B; font-size: 17px; font-weight: 800;">Send report</button>
+      </div>
+    </div>
+  </div>
+  <nav style="height: 102px; flex-shrink: 0; border-top: 1px solid #1F242B; background: #0E1013; display: flex; align-items: center; gap: 10px; padding: 0 16px;">
+    <a href="hub.html" aria-label="Close settings" style="width: 74px; height: 74px; flex-shrink: 0; border-radius: 18px; background: #1F2328; display: flex; align-items: center; justify-content: center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F2F5F9" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></a>
+    <div style="flex-grow: 1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px;">
+      <a href="hub.html" style="text-decoration: none; height: 74px; border-radius: 18px; color: #C9D0DA; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Driving</a>
+      <a href="devicetab.html" aria-current="page" style="text-decoration: none; height: 74px; border-radius: 18px; background: #5AAAF8; color: #0B1A2B; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center;">Device</a>
+      <a href="connections.html" style="text-decoration: none; height: 74px; border-radius: 18px; color: #C9D0DA; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Connections</a>
+      <a href="softwaretab.html" style="text-decoration: none; height: 74px; border-radius: 18px; color: #C9D0DA; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Software</a>
+    </div>
+  </nav>
+</div>
+
+</body>
+</html>

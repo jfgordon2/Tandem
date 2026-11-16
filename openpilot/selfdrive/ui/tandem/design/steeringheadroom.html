@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Steering headroom</title>
+</head>
+<body>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7DBBF9}a:hover{color:#A9D3FB}
+</style>
+
+<div style="width: 1125px; height: 563px; box-sizing: border-box; background: #000000; color: #F2F5F9; font-family: Figtree, system-ui, sans-serif; padding: 22px; display: flex; flex-direction: column; gap: 14px;">
+  <div style="display: flex; align-items: baseline; gap: 16px;">
+    <h1 style="margin: 0; font-size: 26px; font-weight: 800;">Steering headroom</h1>
+    <span style="font-size: 16px; color: #AEB6C2;">Always on. The arc shows how much steering the car is using, and warns before it runs out.</span>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; flex-grow: 1;">
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="height: 372px; border: 6px solid #1F9A55; border-radius: 16px; background: #0F1A24; position: relative; overflow: hidden;">
+        <svg width="338" height="360" viewBox="0 0 338 360" style="position: absolute; left: 0; top: 0;" aria-hidden="true">
+          <rect x="0" y="140" width="338" height="220" fill="#132231"></rect>
+          <path d="M152 140 L40 360" stroke="#5C6B7A" stroke-width="4" stroke-linecap="round"></path>
+          <path d="M186 140 L298 360" stroke="#5C6B7A" stroke-width="4" stroke-linecap="round"></path>
+          <path d="M162 142 L176 142 L232 360 L106 360 Z" fill="#3A73B3" fill-opacity="0.5"></path>
+          <path d="M34 336 Q169 300 304 336" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="9" fill="none" stroke-linecap="round"></path>
+          <path d="M34 336 Q169 300 304 336" pathLength="100" stroke="#FFFFFF" stroke-opacity="0.9" stroke-width="9" fill="none" stroke-linecap="round" stroke-dasharray="12 200" stroke-dashoffset="-50"></path>
+          <circle cx="169" cy="318" r="5" fill="#B6B6B6"></circle>
+        </svg>
+        <div style="position: absolute; left: 50%; top: 14px; transform: translateX(-50%); font-size: 40px; font-weight: 800;">58</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px; padding: 0 4px;">
+        <span style="font-size: 18px; font-weight: 700;">Comfortable · under 60%</span>
+        <span style="font-size: 14px; color: #AEB6C2;">Thin white arc that grows toward the turn. No sound.</span>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="height: 372px; border: 6px solid #1F9A55; border-radius: 16px; background: #0F1A24; position: relative; overflow: hidden;">
+        <svg width="338" height="360" viewBox="0 0 338 360" style="position: absolute; left: 0; top: 0;" aria-hidden="true">
+          <rect x="0" y="140" width="338" height="220" fill="#132231"></rect>
+          <path d="M210 140 Q100 250 40 360" stroke="#5C6B7A" stroke-width="4" fill="none" stroke-linecap="round"></path>
+          <path d="M244 140 Q240 260 298 360" stroke="#5C6B7A" stroke-width="4" fill="none" stroke-linecap="round"></path>
+          <path d="M220 142 L234 142 Q215 260 232 360 L106 360 Q140 250 220 142 Z" fill="#3A73B3" fill-opacity="0.5"></path>
+          <path d="M34 336 Q169 300 304 336" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="12" fill="none" stroke-linecap="round"></path>
+          <path d="M34 336 Q169 300 304 336" pathLength="100" stroke="#F0B35A" stroke-opacity="0.4" stroke-width="12" fill="none" stroke-dasharray="46 200" stroke-dashoffset="-50"></path>
+          <path d="M34 336 Q169 300 304 336" pathLength="100" stroke="#F0B35A" stroke-width="12" fill="none" stroke-linecap="round" stroke-dasharray="34 200" stroke-dashoffset="-50"></path>
+        </svg>
+        <div style="position: absolute; left: 50%; top: 14px; transform: translateX(-50%); font-size: 40px; font-weight: 800;">58</div>
+        <div style="position: absolute; right: 12px; bottom: 54px; background: #0B0D10E6; border-radius: 10px; padding: 5px 10px; font-size: 13px; font-weight: 600; color: #F0D2A0;">Curve ahead needs more</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px; padding: 0 4px;">
+        <span style="font-size: 18px; font-weight: 700;">Working · 60–85%</span>
+        <span style="font-size: 14px; color: #AEB6C2;">Amber and thicker. A faint extension previews the curve ahead, 2–3 s early.</span>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="height: 372px; border: 6px solid #E0A23A; border-radius: 16px; background: #0F1A24; position: relative; overflow: hidden;">
+        <svg width="338" height="360" viewBox="0 0 338 360" style="position: absolute; left: 0; top: 0;" aria-hidden="true">
+          <rect x="0" y="140" width="338" height="220" fill="#132231"></rect>
+          <path d="M240 140 Q100 240 40 360" stroke="#FF8A4D" stroke-width="5" fill="none" stroke-linecap="round"></path>
+          <path d="M276 140 Q270 260 298 360" stroke="#FF8A4D" stroke-width="5" fill="none" stroke-linecap="round"></path>
+          <path d="M250 142 L264 142 Q240 260 232 360 L106 360 Q140 240 250 142 Z" fill="#3A73B3" fill-opacity="0.5"></path>
+          <path d="M34 264 Q169 228 304 264" stroke="#FFFFFF" stroke-opacity="0.25" stroke-width="16" fill="none" stroke-linecap="round"></path>
+          <path d="M34 264 Q169 228 304 264" pathLength="100" stroke="#FF6A3D" stroke-width="16" fill="none" stroke-linecap="round" stroke-dasharray="49 200" stroke-dashoffset="-50"></path>
+        </svg>
+        <div style="position: absolute; left: 50%; top: 14px; transform: translateX(-50%); font-size: 40px; font-weight: 800;">58</div>
+        <div style="position: absolute; left: 10px; right: 10px; bottom: 10px; background: #3A2C14F2; border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;">
+          <span style="font-size: 20px; font-weight: 800; color: #FFD08A;">Help steer</span>
+          <span style="font-size: 14px; color: #F0DDBD;">Steering is at its limit for this curve</span>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px; padding: 0 4px;">
+        <span style="font-size: 18px; font-weight: 700;">At limit · over 85%</span>
+        <span style="font-size: 14px; color: #AEB6C2;">Orange-red, lane lines tint, one chime. The Warning alert card, in the bar's place; the arc moves above it.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

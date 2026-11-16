@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>First-run setup</title>
+</head>
+<body>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7DBBF9}a:hover{color:#A9D3FB}
+</style>
+
+<div style="width: 1125px; height: 563px; box-sizing: border-box; background: #000000; color: #F2F5F9; font-family: Figtree, system-ui, sans-serif; padding: 28px 32px 22px; display: flex; flex-direction: column; gap: 20px;">
+  <div style="display: flex; align-items: center; gap: 18px;">
+    <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 6px;">
+      <span style="font-size: 14px; font-weight: 700; letter-spacing: 1.6px; color: #7DBBF9;">STEP 1 OF 3</span>
+      <h1 style="margin: 0; font-size: 34px; font-weight: 800;">How should your car drive?</h1>
+    </div>
+    <div aria-hidden="true" style="display: flex; gap: 8px;">
+      <span style="width: 34px; height: 8px; border-radius: 4px; background: #5AAAF8; display: block;"></span>
+      <span style="width: 34px; height: 8px; border-radius: 4px; background: #2A2F36; display: block;"></span>
+      <span style="width: 34px; height: 8px; border-radius: 4px; background: #2A2F36; display: block;"></span>
+    </div>
+  </div>
+  <div role="radiogroup" aria-label="Driving style" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; flex-grow: 1;">
+    <button type="button" role="radio" aria-checked="false" style="font-family: inherit; text-align: left; border: 2px solid transparent; border-radius: 24px; background: #16191D; color: #F2F5F9; padding: 24px; display: flex; flex-direction: column; gap: 10px;">
+      <span style="font-size: 26px; font-weight: 800;">Relaxed</span>
+      <span style="font-size: 16px; color: #AEB6C2; line-height: 1.4;">Longer following gap, gentle starts and early, soft braking.</span>
+    </button>
+    <button type="button" role="radio" aria-checked="true" style="font-family: inherit; text-align: left; border: 2px solid #5AAAF8; border-radius: 24px; background: #182434; color: #F2F5F9; padding: 24px; display: flex; flex-direction: column; gap: 10px;">
+      <span style="display: flex; align-items: center; gap: 10px;"><span style="font-size: 26px; font-weight: 800;">Standard</span><span style="font-size: 13px; font-weight: 700; color: #0B1A2B; background: #5AAAF8; border-radius: 8px; padding: 4px 8px;">RECOMMENDED</span></span>
+      <span style="font-size: 16px; color: #C9D8EA; line-height: 1.4;">Keeps pace with traffic. A good fit for most drivers and roads.</span>
+    </button>
+    <button type="button" role="radio" aria-checked="false" style="font-family: inherit; text-align: left; border: 2px solid transparent; border-radius: 24px; background: #16191D; color: #F2F5F9; padding: 24px; display: flex; flex-direction: column; gap: 10px;">
+      <span style="font-size: 26px; font-weight: 800;">Sport</span>
+      <span style="font-size: 16px; color: #AEB6C2; line-height: 1.4;">Shorter gap, quicker acceleration and later braking.</span>
+    </button>
+  </div>
+  <div style="display: flex; align-items: center; gap: 14px;">
+    <span style="flex-grow: 1; font-size: 16px; color: #8FA0B5;">Next: speed limits, then lane changes. You can change all of these later.</span>
+    <button type="button" style="font-family: inherit; height: 64px; padding: 0 28px; border: 0; border-radius: 16px; background: transparent; color: #C9D0DA; font-size: 18px; font-weight: 600;">Use defaults</button>
+    <button type="button" style="font-family: inherit; height: 64px; padding: 0 40px; border: 0; border-radius: 16px; background: #5AAAF8; color: #0B1A2B; font-size: 19px; font-weight: 800;">Next</button>
+  </div>
+</div>
+
+</body>
+</html>

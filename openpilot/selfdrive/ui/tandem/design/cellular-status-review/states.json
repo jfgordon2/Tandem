@@ -1,0 +1,47 @@
+[
+  {
+    "mock": "cellular-status-connected",
+    "state": "connected",
+    "title": "Cellular \u00b7 Connected"
+  },
+  {
+    "mock": "cellular-status-no-signal",
+    "state": "no-signal",
+    "title": "Cellular \u00b7 No signal"
+  },
+  {
+    "mock": "cellular-apn-connected",
+    "state": "connected",
+    "title": "Roaming, APN and IP address \u00b7 Connected"
+  },
+  {
+    "mock": "cellular-apn-connecting",
+    "state": "connecting",
+    "title": "Roaming, APN and IP address \u00b7 Connecting\u2026"
+  },
+  {
+    "mock": "cellular-apn-no-signal",
+    "state": "no-signal",
+    "title": "Roaming, APN and IP address \u00b7 No signal"
+  },
+  {
+    "mock": "cellular-apn-not-connected",
+    "state": "not-connected",
+    "title": "Roaming, APN and IP address \u00b7 Not connected"
+  },
+  {
+    "mock": "cellular-apn-no-sim",
+    "state": "no-sim",
+    "title": "Roaming, APN and IP address \u00b7 No SIM"
+  },
+  {
+    "mock": "cellular-apn-wifi",
+    "state": "wifi",
+    "title": "Roaming, APN and IP address \u00b7 Wi-Fi in use"
+  },
+  {
+    "mock": "cellular-apn-checking",
+    "state": "checking",
+    "title": "Roaming, APN and IP address \u00b7 Checking\u2026"
+  }
+]

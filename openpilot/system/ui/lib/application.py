@@ -95,6 +95,8 @@ FONT_SCALE = 1.242 if BIG_UI else 1.16
 
 ASSETS_DIR = files("openpilot.selfdrive").joinpath("assets")
 FONT_DIR = ASSETS_DIR.joinpath("fonts")
+KEEP_FONT = False  # Tandem opts out of language-wide fallback only while drawing its own text
+TEXT_SHAPERS: list[Callable[[str], str]] = []  # Tandem: what to draw for a line, e.g. Arabic joined and right to left
 EXTRA_FONT_CHARS = "–‑✓×°§•X⚙✕◀▶✔⌫⇧␣○●↳çêüñ–‑✓×°§•€£¥"
 NOTO_FONTS = {
   "ja": "NotoSansCJKjp-Regular.otf",
@@ -132,7 +134,7 @@ class TextAlignmentVertical(IntEnum):
 
 def font_fallback(font: rl.Font) -> rl.Font:
   """Use a Noto fallback for languages not covered by Inter."""
-  if multilang.requires_font_fallback():
+  if multilang.requires_font_fallback() and not KEEP_FONT:
     return gui_app.fallback_font()
   return font
 
@@ -849,6 +851,8 @@ class GuiApplication:
 
     def _draw_text_ex_scaled(font, text, position, font_size, spacing, tint):
       font = font_fallback(font)
+      for shaper in TEXT_SHAPERS:
+        text = shaper(text)
       return rl._orig_draw_text_ex(font, text, position, font_size * FONT_SCALE, spacing, tint)
 
     rl.draw_text_ex = _draw_text_ex_scaled

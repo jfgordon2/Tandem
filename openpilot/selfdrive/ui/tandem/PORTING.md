@@ -1,7 +1,13 @@
 # Porting Tandem to StarPilot 7.0
 
-`development` starts as upstream's `Dom` branch (StarPilot 7.0) at 1abbbc6d19, unchanged. Tandem is ported onto it in
-stages. Until a stage is done, `development` boots as stock StarPilot 7.0.
+`development` starts as upstream's `Dom` branch (StarPilot 7.0) at 1abbbc6d19. Tandem is ported onto it in stages. Until
+stage 2 is done, `development` boots as stock StarPilot 7.0.
+
+| Stage | State |
+|---|---|
+| 1. Foundation | Done; see below |
+| 2. Entry point | Decided: Tandem sits on openpilot's original screens |
+| 3 to 6 | Not started |
 
 ## Why a port and not a merge
 
@@ -44,9 +50,10 @@ or memory. Tandem stays off until stage 2 picks it.
    loading for Dom's runtime atlases, and redo the four text hooks (`KEEP_FONT`, `TEXT_SHAPERS`, the `text_measure.py`
    shapers, the `inputbox.py` font getter) on Dom's `application.py`. The lazy loading and atlas cropping from
    `idle-memory` don't carry over as written; measure Dom's font memory on a device first.
-2. **Entry point.** Decide where Tandem sits: in place of `StarMainLayout` as a third choice in `select_ui`, or over
-   upstream's `MainLayout` as on `release`. Either way one small hook, with `STARPILOT_UI=upstream` and Tandem's own
-   switch still giving their screens back.
+2. **Entry point.** Tandem sits on openpilot's original screens (`MainLayout`), as on `release`, and isn't offered as a
+   choice next to StarPilot 7's UI: Tandem's point is fewer choices. The owner decided this on 2026-11-16. It needs one
+   small hook where `ui.py` builds the layout, with `STARPILOT_UI=upstream` and Tandem's own switch still giving
+   upstream's screens back.
 3. **State.** Map what Tandem reads to Dom: `ui_state`, the services above, and each of the 119 missing params to its
    Dom key, document or owner, or to "dropped". Settings must write Dom's stores, not old keys. Keep the map in this
    file or a test, so a Dom merge that moves something fails a test.
@@ -80,3 +87,37 @@ or memory. Tandem stays off until stage 2 picks it.
 | `system/manager/process_config.py`, `system/athena/athenad.py`, `system/loggerd/uploader.py`, `system/sentry.py` | Kept |
 | `system/version.py` | Gone; `openpilot/common/version.py` |
 | `.github/workflows/*` | Dom has its own set; review in stage 6 |
+
+## Stage 1: what was done
+
+- The component library and what it needs (`tokens`, `layout`, `draw`, `controls`, `rows`, `blocks`, `chrome`, `overlays`,
+  `base`, `scroll`, `fonts`, `i18n`, `arabic`, `thai`, `prefs`), the mocks, icons, translation catalog, font files and
+  the tools that don't depend on unported screens. Raylib is StarPilot 7's binding (`openpilot.starpilot.ui.raylib`).
+- Two upstream hooks again, in `application.py` and `text_measure.py` (README › Upstream integration). Upstream's UI
+  tests give the same results with and without them. The `inputbox.py` font getter comes back with the keyboard.
+- Figtree Regular is keyed on `FontWeight.NORMAL` (Inter Regular on the big UI); StarPilot 6's `ROMAN` is gone.
+- `NotoSans-Fallback` rebuilt for StarPilot 7's languages (Vietnamese added) with `tools/bmfont.py`, StarPilot 6's
+  `.fnt` generator, kept in Tandem's tools since StarPilot 7 no longer ships it.
+- Not carried over: lazy Inter loading and freeing glyph images (README › Keeping merges easy). Measure on a device first.
+- Checked by rendering `tools/render/scene_components.py` on both branches: the same apart from raylib 6's antialiasing,
+  and Vietnamese, which `release` draws as "?".
+
+## Tests still on `release` only
+
+Ported so far: `test_fallback_font.py`, the component tests of `test_tandem.py`, the catalog-mechanics tests of
+`test_translations.py`, the atlas crop tests of `test_font_loading.py`, and the text hook test of
+`test_upstream_integration.py`. Each of the rest comes back with the code it tests. When one comes back, take it from `release` whole.
+
+| `release` test | Waits for |
+|---|---|
+| `test_tandem.py` from `test_traffic_chip_only_while_braking...` on | Onroad, home and settings screens (stage 4) |
+| `test_translations.py`: the template, metadata, coverage and completed-language checks, Developer View labels, picker languages | Every screen ported, then `tools/translations.py update` (end of stage 4) |
+| `test_font_loading.py`: lazy fonts, glyph release and alert faces | Lazy fonts and glyph release if they come back; alert faces with onroad alerts (stage 4) |
+| `test_upstream_integration.py`: all but the text hooks | Their hooks and modules (stages 2 to 6) |
+| `test_larger_text.py`, `test_bar.py`, `test_compass.py`, `test_streets.py`, `test_turn_signals.py`, `test_lead_tag.py`, `test_onroad*.py`, `test_alert_levels.py`, `test_chip_events.py`, `test_headroom_warning.py`, `test_limit_follower.py`, `test_limit_offers.py`, `test_developer_view.py` | Onroad (stage 4) |
+| `test_home_layout.py`, `test_forecast.py`, `test_menu_idle.py`, `test_ram.py`, `test_keyboard.py`, `test_voice.py`, `test_speech_native.py` | Home, sidebar and keyboard (stage 4) |
+| `test_settings.py`, `test_developer.py`, `test_software_dialogs.py`, `test_hotspot_name.py`, `test_network_touches.py`, `test_storage_sizes.py`, `test_prebuilt_params.py` | Settings (stages 3 and 4) |
+| `test_destinations.py`, `test_routemap.py`, `test_routing_ui.py`, `test_map_progress.py` | Navigation and routing (stage 5) |
+| `test_bluetooth_*.py`, `test_remote_actions.py`, `test_can_recorder.py`, `test_obd.py`, `test_cellular_status.py`, `test_network_test.py`, `test_galaxy_signals.py` | Services (stage 5) |
+| `test_workflow_policy.py` | Workflows (stage 6) |
+| `starpilot/tandem/tests/` | The services they test (stage 5) |

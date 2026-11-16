@@ -1,0 +1,2 @@
+import stubs
+stubs.install()

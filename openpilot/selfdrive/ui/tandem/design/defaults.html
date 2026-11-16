@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Defaults map</title>
+</head>
+<body>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7DBBF9}a:hover{color:#A9D3FB}
+</style>
+
+<div style="width: 1560px; height: 1240px; box-sizing: border-box; background: #000000; color: #F2F5F9; font-family: Figtree, system-ui, sans-serif; padding: 44px 48px; display: flex; flex-direction: column; gap: 26px;">
+  <div style="display: flex; align-items: flex-end; gap: 40px;">
+    <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 8px;">
+      <h1 style="margin: 0; font-size: 38px; font-weight: 800;">About 190 settings become 14 controls</h1>
+      <span style="font-size: 18px; color: #AEB6C2;">Each control writes several existing params. Defaults in bold. Keys are from the current panels.</span>
+    </div>
+  </div>
+  <div style="display: flex; gap: 28px; flex-grow: 1; min-height: 0;">
+    <div style="flex-grow: 1; min-width: 0; background: #13161A; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column;">
+      <div style="display: grid; grid-template-columns: 210px 300px minmax(0, 1fr); gap: 20px; padding: 14px 24px; background: #1A1D22; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; color: #8FA0B5;">
+        <span>CONTROL</span><span>CHOICES</span><span>SETS</span>
+      </div>
+      <div style="padding: 10px 24px 4px; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; color: #7DBBF9;">DRIVING</div>
+      <div style="display: grid; grid-template-columns: 210px 300px minmax(0, 1fr); gap: 20px; padding: 10px 24px; border-bottom: 1px solid #22262C; align-items: baseline;">
+        <span style="font-size: 17px; font-weight: 700;">Driving Style</span><span style="font-size: 16px; color: #AEB6C2;">Relaxed · <b style="color: #F2F5F9;">Standard</b> · Sport</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9FAABA;">LongitudinalPersonality AccelProfile DecelProfile HumanLaneChanges</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 210px 300px minmax(0, 1fr); gap: 20px; padding: 10px 24px; border-bottom: 1px solid #22262C; align-items: baseline;">
+        <span style="font-size: 17px; font-weight: 700;">Speed Limits</span><span style="font-size: 16px; color: #AEB6C2;">Off · Show · <b style="color: #F2F5F9;">Match</b>, offset +3, higher: <b style="color: #F2F5F9;">tap to confirm</b> · automatic</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9FAABA;">ShowSpeedLimits SetSpeedLimit SLCConfirmation SLCConfirmationLower SLCConfirmationHigher SLCFallback SLCPriority SLCMapboxFiller VisionSpeedLimit ConfigureOffsets UseVienna (by region)</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 210px 300px minmax(0, 1fr); gap: 20px; padding: 10px 24px; border-bottom: 1px solid #22262C; align-items: baseline;">
+        <span style="font-size: 17px; font-weight: 700;">Lane Changes</span><span style="font-size: 16px; color: #AEB6C2;"><b style="color: #F2F5F9;">Nudge</b> · Auto</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9FAABA;">NudgelessLaneChange OneLaneChange LaneChangeTime MinimumLaneChangeSpeed LaneDetectionWidth LaneChangeSmoothing</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 210px 300px minmax(0, 1fr); gap: 20px; padding: 10px 24px; border-bottom: 1px solid #22262C; align-items: baseline;">
+        <span style="font-size: 17px; font-weight: 700;">Smart Slowdowns</span><span style="font-size: 16px; color: #AEB6C2;"><b style="color: #F2F5F9;">On</b> · Off</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9FAABA;">ConditionalExperimental CECurves CEStopLights CEStoppedLead CESlowerLead CurveSpeedController MapDecel</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 210px 300px minmax(0, 1fr); gap: 20px; padding: 10px 24px; border-bottom: 1px solid #22262C; align-items: baseline;">
+        <span style="font-size: 17px; font-weight: 700;">Always-On Steering</span><span style="font-size: 16px; color: #AEB6C2;"><b style="color: #F2F5F9;">On</b> · Off</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9FAABA;">AlwaysOnLateral</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 210px 300px minmax(0, 1fr); gap: 20px; padding: 10px 24px; border-bottom: 1px solid #22262C; align-items: baseline;">
+        <span style="font-size: 17px; font-weight: 700;">Vehicle Profile</span><span style="font-size: 16px; color: #AEB6C2;"><b style="color: #F2F5F9;">Car</b> · EV · Truck · Towing</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9FAABA;">EVTuning TruckTuning TrailerLoad</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 210px 300px minmax(0, 1fr); gap: 20px; padding: 10px 24px; border-bottom: 1px solid #22262C; align-items: baseline;">
+        <span style="font-size: 17px; font-weight: 700;">Weather</span><span style="font-size: 16px; color: #AEB6C2;"><b style="color: #F2F5F9;">Auto</b> · Off</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9FAABA;">WeatherPresets LowVisibility Rain RainStorm Snow</span>
+      </div>
+      <div style="padding: 14px 24px 4px; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; color: #7DBBF9;">DISPLAY AND ALERTS</div>
+      <div style="display: grid; grid-template-columns: 210px 300px minmax(0, 1fr); gap: 20px; padding: 10px 24px; border-bottom: 1px solid #22262C; align-items: baseline;">
+        <span style="font-size: 17px; font-weight: 700;">Path Style</span><span style="font-size: 16px; color: #AEB6C2;"><b style="color: #F2F5F9;">Standard</b> · Thin · Rainbow · Accel</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9FAABA;">PathColor PathWidth PathEdgeWidth PathEdgesColor LaneLinesColor LaneLinesWidth RoadEdgesWidth RainbowPath AccelerationPath DynamicPathWidth</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 210px 300px minmax(0, 1fr); gap: 20px; padding: 10px 24px; border-bottom: 1px solid #22262C; align-items: baseline;">
+        <span style="font-size: 17px; font-weight: 700;">Driving Style Banner</span><span style="font-size: 16px; color: #AEB6C2;">On · <b style="color: #F2F5F9;">Off</b></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9FAABA;">HideDistanceProfileBanner AdvancedCustomUI</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 210px 300px minmax(0, 1fr); gap: 20px; padding: 10px 24px; border-bottom: 1px solid #22262C; align-items: baseline;">
+        <span style="font-size: 17px; font-weight: 700;">Compass</span><span style="font-size: 16px; color: #AEB6C2;"><b style="color: #F2F5F9;">On</b> · Off</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9FAABA;">Compass</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 210px 300px minmax(0, 1fr); gap: 20px; padding: 10px 24px; border-bottom: 1px solid #22262C; align-items: baseline;">
+        <span style="font-size: 17px; font-weight: 700;">Blind Spot Highlights</span><span style="font-size: 16px; color: #AEB6C2;"><b style="color: #F2F5F9;">On</b> · Off</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9FAABA;">BlindSpotPath BlindSpotMetrics SignalMetrics BorderWidth</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 210px 300px minmax(0, 1fr); gap: 20px; padding: 10px 24px; border-bottom: 1px solid #22262C; align-items: baseline;">
+        <span style="font-size: 17px; font-weight: 700;">Alert Volume</span><span style="font-size: 16px; color: #AEB6C2;">Quiet · <b style="color: #F2F5F9;">Normal</b> · Loud</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9FAABA;">EngageVolume DisengageVolume PromptVolume PromptDistractedVolume RefuseVolume WarningSoftVolume WarningImmediateVolume BelowSteerSpeedVolume</span>
+      </div>
+      <div style="padding: 14px 24px 4px; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; color: #F0B35A;">POWER USER</div>
+      <div style="display: grid; grid-template-columns: 210px 300px minmax(0, 1fr); gap: 20px; padding: 10px 24px; border-bottom: 1px solid #22262C; align-items: baseline;">
+        <span style="font-size: 17px; font-weight: 700;">Developer View</span><span style="font-size: 16px; color: #AEB6C2;">On · <b style="color: #F2F5F9;">Off</b></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9FAABA;">DeveloperSidebar DeveloperSidebarMetrics DeveloperMetrics FPSCounter ShowCPU ShowGPU NumericalTemp ShowMemoryUsage AdjacentPathMetrics ShowCSCStatus ShowSLCOffset SpeedLimitSources</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 210px 300px minmax(0, 1fr); gap: 20px; padding: 10px 24px; border-bottom: 1px solid #22262C; align-items: baseline;">
+        <span style="font-size: 17px; font-weight: 700;">Lead Insights</span><span style="font-size: 16px; color: #AEB6C2;">On · <b style="color: #F2F5F9;">Off</b></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9FAABA;">LeadInfo RadarTracksUI ShowStoppingPoint ShowStoppingPointMetrics AdjacentPath PedalsOnUI</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 210px 300px minmax(0, 1fr); gap: 20px; padding: 10px 24px; align-items: baseline;">
+        <span style="font-size: 17px; font-weight: 700;">Tuner Mode</span><span style="font-size: 16px; color: #AEB6C2;">On · <b style="color: #F2F5F9;">Off</b>, unhides only</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9FAABA;">SteerDelay UseAutoSteerDelay SteerFriction SteerKP NNFF NNFFLite ForceTorqueController ForceAutoTune ActuatorDelay MaxAccel StartAccel StopAccel StoppingRate StartSpeed StopSpeed LeadDetection CustomCruise, plus per-item bundle overrides</span>
+      </div>
+    </div>
+    <div style="width: 380px; flex-shrink: 0; display: flex; flex-direction: column; gap: 16px;">
+      <div style="background: #13161A; border-radius: 22px; padding: 22px 24px; display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 20px; font-weight: 700;">Fixed, no longer shown</span>
+        <span style="font-size: 15px; color: #AEB6C2;">Set once to a sensible value. Reachable only through Tuner Mode.</span>
+        <div style="display: flex; flex-direction: column; gap: 9px; font-size: 15px; margin-top: 4px;">
+          <div style="display: flex; justify-content: space-between; gap: 12px;"><span>Holiday themes (<code style="font-family: 'JetBrains Mono', monospace; font-size: 13px;">HolidayThemes</code>)</span><b>Off</b></div>
+          <div style="display: flex; justify-content: space-between; gap: 12px;"><span>Rotating wheel</span><b>On</b></div>
+          <div style="display: flex; justify-content: space-between; gap: 12px;"><span>Stopped timer</span><b>On</b></div>
+          <div style="display: flex; justify-content: space-between; gap: 12px;"><span>Wheel speed</span><b>Off</b></div>
+          <div style="display: flex; justify-content: space-between; gap: 12px;"><span>Reverse cruise increase</span><b>Off</b></div>
+          <div style="display: flex; justify-content: space-between; gap: 12px;"><span>Pulse and glide</span><b>Off</b></div>
+          <div style="display: flex; justify-content: space-between; gap: 12px;"><span>Map gears</span><b>Off</b></div>
+          <div style="display: flex; justify-content: space-between; gap: 12px;"><span>Force stops, force standstill</span><b>Off</b></div>
+          <div style="display: flex; justify-content: space-between; gap: 12px;"><span>Model randomizer</span><b>Off</b></div>
+          <div style="display: flex; justify-content: space-between; gap: 12px;"><span>Onroad style toggle</span><b>Removed</b></div>
+        </div>
+      </div>
+      <div style="background: #13161A; border-radius: 22px; padding: 22px 24px; display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 20px; font-weight: 700;">Never hidden</span>
+        <span style="font-size: 15px; color: #AEB6C2;">Safety information stays on screen. These hide toggles are removed.</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9FAABA; line-height: 1.6;">HideSpeed HideMaxSpeed HideAlerts HideSteeringWheel HideDMIcon HideLeadMarker</span>
+      </div>
+      <div style="background: #13161A; border-radius: 22px; padding: 22px 24px; display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-size: 20px; font-weight: 700;">Folded into the Driving tab</span>
+        <span style="font-size: 15px; color: #AEB6C2;">The Toggles and Developer tabs go away. Metric units and language move to Device › General. SSH, ADB and joystick move under Tuner Mode.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

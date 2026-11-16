@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Volume editor</title>
+</head>
+<body>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7DBBF9}a:hover{color:#A9D3FB}
+</style>
+
+<div style="width: 1125px; height: 563px; box-sizing: border-box; background: #050608; color: #F2F5F9; font-family: Figtree, system-ui, sans-serif; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; position: relative;">
+  <div aria-hidden="true" style="position: absolute; left: 20px; right: 20px; top: 18px; height: 70px; border-radius: 22px; background: #0C0E11;"></div>
+  <section aria-label="Warning volume" style="position: relative; height: 455px; box-sizing: border-box; background: #16191D; border-radius: 26px 26px 0 0; border-top: 1px solid #262B33; padding: 14px 26px 22px; display: flex; flex-direction: column; gap: 16px;">
+    <div style="align-self: center; width: 64px; height: 6px; border-radius: 3px; background: #3A414C;"></div>
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 4px;"><h2 style="margin: 0; font-size: 28px; font-weight: 800;">Driver Attention Volume</h2><span style="font-size: 15px; color: #AEB6C2;">The chime that asks you to look at the road</span></div>
+      <a href="alerts.html" style="text-decoration: none; height: 60px; padding: 0 30px; border-radius: 16px; background: #5AAAF8; color: #0B1A2B; font-size: 18px; font-weight: 800; display: flex; align-items: center;">Done</a>
+    </div>
+    <div style="display: flex; align-items: center; gap: 28px; padding: 6px 0;">
+      <div style="display: flex; align-items: baseline; gap: 6px; width: 200px;"><span style="font-size: 72px; font-weight: 800; line-height: 1;">80</span><span style="font-size: 26px; font-weight: 700; color: #AEB6C2;">%</span></div>
+      <button type="button" style="font-family: inherit; height: 64px; padding: 0 22px; border: 0; border-radius: 18px; background: #23272E; color: #F2F5F9; font-size: 17px; font-weight: 700; display: flex; align-items: center; gap: 12px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="#7DBBF9" aria-hidden="true"><path d="M8 5l11 7-11 7z"></path></svg>Play sample</button>
+      <span style="flex-grow: 1; font-size: 15px; color: #AEB6C2;">Plays through your car speakers if they're connected.</span>
+    </div>
+    <div style="position: relative; height: 92px; margin: 0 14px;">
+      <div aria-hidden="true" style="position: absolute; left: 0; width: 25%; top: 30px; height: 14px; border-radius: 7px 0 0 7px; background: repeating-linear-gradient(135deg, #3A2026 0 6px, #2A1A1E 6px 12px);"></div>
+      <div aria-hidden="true" style="position: absolute; left: 25%; right: 0; top: 30px; height: 14px; border-radius: 0 7px 7px 0; background: #2A2F36;"></div>
+      <div aria-hidden="true" style="position: absolute; left: 25%; width: 55%; top: 30px; height: 14px; background: #5AAAF8;"></div>
+      <div aria-hidden="true" style="position: absolute; left: 80%; top: 21px; width: 32px; height: 32px; margin-left: -16px; border-radius: 16px; background: #F2F5F9; border: 4px solid #5AAAF8; box-sizing: border-box;"></div>
+      <span style="position: absolute; left: 0; top: 0; font-size: 13px; font-weight: 600; color: #F2A7B1;">Minimum 25% for safety alerts</span>
+      <span style="position: absolute; left: 25%; top: 54px; transform: translateX(-50%); font-size: 13px; color: #8FA0B5; text-align: center;">│<br>Quiet</span>
+      <span style="position: absolute; left: 60%; top: 54px; transform: translateX(-50%); font-size: 13px; color: #8FA0B5; text-align: center;">│<br>Normal</span>
+      <span style="position: absolute; left: 100%; top: 54px; transform: translateX(-100%); font-size: 13px; color: #8FA0B5; text-align: right;">│<br>Loud</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span style="flex-grow: 1; font-size: 14px; color: #8FA0B5;">Custom levels set the Alert Volume preset to Custom.</span>
+      <button type="button" style="font-family: inherit; height: 44px; padding: 0 16px; border: 0; border-radius: 12px; background: transparent; color: #7DBBF9; font-size: 16px; font-weight: 700;">Reset to Normal</button>
+    </div>
+  </section>
+</div>
+
+</body>
+</html>

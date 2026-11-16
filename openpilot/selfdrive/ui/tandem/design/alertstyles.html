@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Onroad alert levels</title>
+</head>
+<body>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7DBBF9}a:hover{color:#A9D3FB}
+</style>
+
+<div style="width: 1125px; height: 563px; box-sizing: border-box; background: #000000; color: #F2F5F9; font-family: Figtree, system-ui, sans-serif; padding: 22px; display: flex; flex-direction: column; gap: 16px;">
+  <div style="display: flex; align-items: baseline; gap: 16px;">
+    <h1 style="margin: 0; font-size: 26px; font-weight: 800;">Three alert levels</h1>
+    <span style="font-size: 16px; color: #AEB6C2;">Border color, banner size and sound rise together. Safety alerts always stay visible.</span>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; flex-grow: 1;">
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="flex-grow: 1; border: 6px solid #1F9A55; border-radius: 16px; background: #0F1A24; position: relative; overflow: hidden;">
+        <div style="position: absolute; left: 50%; top: 14px; transform: translateX(-50%); font-size: 40px; font-weight: 800;">62</div>
+        <div style="position: absolute; left: 12px; right: 12px; bottom: 12px; background: #1A1D22F2; border-radius: 14px; padding: 12px 14px; display: flex; align-items: center; gap: 12px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9D0DA" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg>
+          <span style="font-size: 17px; font-weight: 600;">Gas pressed · Will not brake</span>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px; padding: 0 4px; height: 58px; box-sizing: border-box;">
+        <span style="font-size: 18px; font-weight: 700;">Info</span>
+        <span style="font-size: 14px; color: #AEB6C2;">Small banner, border stays engaged green. One soft chime or none.</span>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="flex-grow: 1; border: 6px solid #E0A23A; border-radius: 16px; background: #0F1A24; position: relative; overflow: hidden;">
+        <div style="position: absolute; left: 50%; top: 14px; transform: translateX(-50%); font-size: 40px; font-weight: 800;">62</div>
+        <div style="position: absolute; left: 12px; right: 12px; bottom: 12px; background: #3A2C14F2; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px;">
+          <span style="font-size: 22px; font-weight: 800; color: #FFD08A;">Pay attention</span>
+          <span style="font-size: 15px; color: #F0DDBD;">Look at the road ahead</span>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px; padding: 0 4px; height: 58px; box-sizing: border-box;">
+        <span style="font-size: 18px; font-weight: 700;">Warning</span>
+        <span style="font-size: 14px; color: #AEB6C2;">Amber border and two-line banner. Repeating chime, at least 25%.</span>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="flex-grow: 1; border: 6px solid #D9434F; border-radius: 16px; background: #2A0E12; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 16px; text-align: center;">
+        <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="2.5"></circle><path d="M3.5 10.5h6M14.5 10.5h6M12 14.5V21"></path></svg>
+        <span style="font-size: 28px; font-weight: 800; line-height: 1.1;">TAKE CONTROL IMMEDIATELY</span>
+        <span style="font-size: 16px; color: #F5C6CB;">[Reason, e.g. steering unavailable]</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px; padding: 0 4px; height: 58px; box-sizing: border-box;">
+        <span style="font-size: 18px; font-weight: 700;">Critical</span>
+        <span style="font-size: 14px; color: #AEB6C2;">Full-screen takeover, red border. Loud alarm at 100%.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

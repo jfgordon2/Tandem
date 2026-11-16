@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Remote Access</title>
+</head>
+<body>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7DBBF9}a:hover{color:#A9D3FB}
+</style>
+
+<div style="width: 1125px; height: 563px; box-sizing: border-box; background: #000000; color: #F2F5F9; font-family: Figtree, system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden;">
+  <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 14px; padding: 20px 20px 14px; min-height: 0;">
+    <div style="display: flex; align-items: baseline; gap: 16px; padding: 0 6px;">
+      <h1 style="margin: 0; font-size: 28px; font-weight: 800;">Remote Access</h1>
+      <span style="font-size: 16px; color: #AEB6C2;">Reach this device from the Galaxy web app</span>
+    </div>
+    <div style="display: grid; grid-template-columns: 1.25fr 1fr; gap: 14px; flex-grow: 1; min-height: 0;">
+      <div style="background: #16191D; border-radius: 22px; padding: 20px 22px; display: flex; flex-direction: column; gap: 22px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;"><span style="font-size: 13px; font-weight: 700; letter-spacing: 1.6px; color: #7DBBF9;">GALAXY</span><span style="font-size: 15px; font-weight: 600; color: #AEB6C2;">Not set up</span></div>
+        <div style="display: flex; align-items: flex-start; gap: 16px;">
+          <span style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 20px; background: #1F2E45; color: #7DBBF9; font-size: 19px; font-weight: 800; display: flex; align-items: center; justify-content: center;">1</span>
+          <div style="display: flex; flex-direction: column; gap: 3px; padding-top: 2px;"><span style="font-size: 20px; font-weight: 700;">Choose a password</span><span style="font-size: 15px; color: #AEB6C2;">At least 6 characters. Galaxy asks for it when you sign in</span></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 16px;">
+          <span style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 20px; background: #1F2E45; color: #7DBBF9; font-size: 19px; font-weight: 800; display: flex; align-items: center; justify-content: center;">2</span>
+          <div style="display: flex; flex-direction: column; gap: 3px; padding-top: 2px;"><span style="font-size: 20px; font-weight: 700;">Scan the code</span><span style="font-size: 15px; color: #AEB6C2;">It opens this device's page in Galaxy</span></div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 16px;">
+          <span style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 20px; background: #1F2E45; color: #7DBBF9; font-size: 19px; font-weight: 800; display: flex; align-items: center; justify-content: center;">3</span>
+          <div style="display: flex; flex-direction: column; gap: 3px; padding-top: 2px;"><span style="font-size: 20px; font-weight: 700;">Bookmark the page</span><span style="font-size: 15px; color: #AEB6C2;">The link stays the same until you unpair</span></div>
+        </div>
+        <div style="flex-grow: 1;"></div>
+        <button type="button" style="font-family: inherit; height: 58px; border: 0; border-radius: 14px; background: #5AAAF8; color: #0B1A2B; font-size: 18px; font-weight: 800;">Set up</button>
+      </div>
+      <div style="background: #16191D; border-radius: 22px; padding: 20px 22px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;">
+        <div style="width: 268px; height: 268px; box-sizing: border-box; border-radius: 18px; border: 2px solid #343A44; display: flex; align-items: center; justify-content: center; padding: 28px; text-align: center; font-size: 16px; font-weight: 600; color: #8FA0B5;">Your code appears here once you choose a password</div>
+        <span style="font-size: 15px; color: #8FA0B5;">Choosing a password creates this device's link</span>
+      </div>
+    </div>
+  </div>
+  <nav style="height: 102px; flex-shrink: 0; border-top: 1px solid #1F242B; background: #0E1013; display: flex; align-items: center; gap: 10px; padding: 0 16px;">
+    <a href="devicetab.html" aria-label="Back" style="width: 74px; height: 74px; flex-shrink: 0; border-radius: 18px; background: #1F2328; display: flex; align-items: center; justify-content: center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F2F5F9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></a>
+    <div style="flex-grow: 1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px;">
+      <a href="hub.html" style="text-decoration: none; height: 74px; border-radius: 18px; color: #C9D0DA; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Driving</a>
+      <a href="devicetab.html" aria-current="page" style="text-decoration: none; height: 74px; border-radius: 18px; background: #5AAAF8; color: #0B1A2B; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center;">Device</a>
+      <a href="connections.html" style="text-decoration: none; height: 74px; border-radius: 18px; color: #C9D0DA; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Connections</a>
+      <a href="softwaretab.html" style="text-decoration: none; height: 74px; border-radius: 18px; color: #C9D0DA; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Software</a>
+    </div>
+  </nav>
+</div>
+
+</body>
+</html>

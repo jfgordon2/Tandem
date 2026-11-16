@@ -1,5 +1,5 @@
 from openpilot.starpilot.ui.raylib import rl
-from openpilot.system.ui.lib.application import FONT_SCALE, font_fallback
+from openpilot.system.ui.lib.application import FONT_SCALE, TEXT_SHAPERS, font_fallback
 from openpilot.system.ui.lib.lru_cache import LRUCache
 
 _CACHE_MAXSIZE = 1024
@@ -9,6 +9,8 @@ _cache: LRUCache[int, rl.Vector2] = LRUCache(_CACHE_MAXSIZE)
 def measure_text_cached(font: rl.Font, text: str, font_size: int, spacing: float = 0) -> rl.Vector2:
   """Caches text measurements to avoid redundant calculations."""
   font = font_fallback(font)
+  for shaper in TEXT_SHAPERS:
+    text = shaper(text)
   spacing = round(spacing, 4)
   key = hash((font.texture.id, text, font_size, spacing))
   cached = _cache.get(key)

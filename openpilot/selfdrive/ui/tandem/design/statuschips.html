@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Status chips</title>
+</head>
+<body>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7DBBF9}a:hover{color:#A9D3FB}
+</style>
+
+<div style="width: 1560px; height: 1500px; box-sizing: border-box; background: #000000; color: #F2F5F9; font-family: Figtree, system-ui, sans-serif; padding: 40px 48px; display: flex; flex-direction: column; gap: 24px;">
+  <div style="display: flex; flex-direction: column; gap: 8px;">
+    <h1 style="margin: 0; font-size: 36px; font-weight: 800;">Status chips: why is the car doing that?</h1>
+    <span style="font-size: 18px; color: #AEB6C2;">Bottom left of the onroad view, just above the bar. Shown only while the car changes speed or steering on its own. Up to four at once, newest nearest the bar.</span>
+  </div>
+  <div style="display: grid; grid-template-columns: 1.15fr 1fr 0.85fr; gap: 20px;">
+    <div style="background: #13161A; border-radius: 22px; padding: 22px 24px; display: flex; flex-direction: column; gap: 16px;">
+      <span style="font-size: 13px; font-weight: 700; letter-spacing: 1.6px; color: #7DBBF9;">SPEED · BLUE</span>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #1F2E45; color: #DCEBFF; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19c8 0 8-14 16-14"></path></svg>Slowing for curve</div>
+        <span style="font-size: 13px; color: #9FAABA;">Curve · <span style="font-family: 'JetBrains Mono', monospace;">CurveSpeedController</span></span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #1F2E45; color: #DCEBFF; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"></rect></svg>Stopping ahead</div>
+        <span style="font-size: 13px; color: #9FAABA;">Stop · the model predicts a stop, at a light or a sign · <span style="font-family: 'JetBrains Mono', monospace;">CEStopLights</span></span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #1F2E45; color: #DCEBFF; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"></rect></svg>Stopped</div>
+        <span style="font-size: 13px; color: #9FAABA;">Stop · stopped at a light or a sign</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #1F2E45; color: #DCEBFF; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.3 2.5h7.4l5.8 5.8v7.4l-5.8 5.8H8.3l-5.8-5.8V8.3z"></path><path d="M8 12h8"></path></svg>Stopping for stop sign</div>
+        <span style="font-size: 13px; color: #9FAABA;">Octagon · the car's dashboard confirms a stop sign</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #1F2E45; color: #DCEBFF; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.3 2.5h7.4l5.8 5.8v7.4l-5.8 5.8H8.3l-5.8-5.8V8.3z"></path><path d="M8 12h8"></path></svg>Stopped for stop sign</div>
+        <span style="font-size: 13px; color: #9FAABA;">Octagon · stopped at the sign</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #1F2E45; color: #DCEBFF; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 14l1.6-5A2 2 0 0 1 8.5 7.6h7a2 2 0 0 1 1.9 1.4L19 14"></path><rect x="3.5" y="14" width="17" height="4.5" rx="1.5"></rect><path d="M6.5 18.5v1.5M17.5 18.5v1.5"></path></svg>Slowing for traffic</div>
+        <span style="font-size: 13px; color: #9FAABA;">Car rear · <span style="font-family: 'JetBrains Mono', monospace;">CESlowerLead CEStoppedLead</span></span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #1F2E45; color: #DCEBFF; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 21V11a3 3 0 0 1 3-3h8"></path><path d="M14 4l4 4-4 4"></path></svg>Slowing for turn</div>
+        <span style="font-size: 13px; color: #9FAABA;">Turn arrow · <span style="font-family: 'JetBrains Mono', monospace;">NavDesiresAllowed</span> (route)</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #1F2E45; color: #DCEBFF; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17a8 8 0 1 1 16 0"></path><path d="M12 17l4-5"></path></svg>Matching limit 45</div>
+        <span style="font-size: 13px; color: #9FAABA;">Gauge · <span style="font-family: 'JetBrains Mono', monospace;">SetSpeedLimit</span> after a change</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #1F2E45; color: #DCEBFF; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 15a4 4 0 1 1 .9-7.9A5 5 0 0 1 17.5 9a3.5 3.5 0 0 1-.5 6z"></path><path d="M8 18.5l-1 2M12 18.5l-1 2M16 18.5l-1 2"></path></svg>Rain · longer gap</div>
+        <span style="font-size: 13px; color: #9FAABA;">Cloud and rain · <span style="font-family: 'JetBrains Mono', monospace;">WeatherPresets</span></span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #1F2E45; color: #DCEBFF; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"></path></svg>Snow in 15 min</div>
+        <span style="font-size: 13px; color: #9FAABA;">Forecast · up from 15 min out until it ends; a brief heads-up and one soft chime when first seen within the hour</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #1F2E45; color: #DCEBFF; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 14a4 4 0 1 1 .9-7.9A5 5 0 0 1 17.5 8a3.5 3.5 0 0 1-.5 6z"></path><path d="M12 15l-2 4h4l-2 4"></path></svg>Thunderstorm in 10 min</div>
+        <span style="font-size: 13px; color: #9FAABA;">Forecast · named as it is: Light rain, Freezing rain, Fog…</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #1F2E45; color: #DCEBFF; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 15a4 4 0 1 1 .9-7.9A5 5 0 0 1 17.5 9a3.5 3.5 0 0 1-.5 6z"></path><path d="M8 18.5l-1 2M12 18.5l-1 2M16 18.5l-1 2"></path></svg>Light rain until 8:15 PM</div>
+        <span style="font-size: 13px; color: #9FAABA;">Forecast · while it lasts; in place of the longer-gap chip</span>
+      </div>
+    </div>
+    <div style="background: #13161A; border-radius: 22px; padding: 22px 24px; display: flex; flex-direction: column; gap: 16px;">
+      <span style="font-size: 13px; font-weight: 700; letter-spacing: 1.6px; color: #F0B35A;">STEERING · AMBER WHEN PAUSED OR BLOCKED</span>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #3A2E1B; color: #FFE3B8; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F0B35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M10 9v6M14 9v6"></path></svg>Steering paused</div>
+        <span style="font-size: 13px; color: #9FAABA;">Wheel with pause · the wheel's Pause steering button</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #3A2E1B; color: #FFE3B8; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F0B35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M10 9v6M14 9v6"></path></svg>Steering paused · under 20 mph</div>
+        <span style="font-size: 13px; color: #9FAABA;">Wheel with pause · <span style="font-family: 'JetBrains Mono', monospace;">PauseLateralSpeed</span>, your setting, not the car's minimum (openpilot shows that in its own alert)</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #3A2E1B; color: #FFE3B8; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F0B35A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 6l-6 6 6 6"></path><path d="M18 6l-6 6 6 6"></path></svg>Steering paused for signal</div>
+        <span style="font-size: 13px; color: #9FAABA;">Signal chevrons · <span style="font-family: 'JetBrains Mono', monospace;">PauseLateralOnSignal</span></span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #3A2E1B; color: #FFE3B8; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F0B35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M10 9v6M14 9v6"></path></svg>Steering paused after turn</div>
+        <span style="font-size: 13px; color: #9FAABA;">Wheel with pause · a few seconds after the signal ends, when the car slowed for the turn · <span style="font-family: 'JetBrains Mono', monospace;">LateralResumeDelay</span></span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #3A2E1B; color: #FFE3B8; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F0B35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3M12 9.5v3M12 16v3"></path><rect x="15" y="7" width="6" height="10" rx="2"></rect><path d="M4 8l5 5M9 8l-5 5"></path></svg>Lane change blocked</div>
+        <span style="font-size: 13px; color: #9FAABA;">Lane with car and cross · a car in the blind spot; replaces openpilot's Car Detected in Blindspot banner, chime kept</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #1F2E45; color: #DCEBFF; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21v-5c0-3 8-3 8-7V3"></path><path d="M13 6l3-3 3 3"></path></svg>Changing lanes right</div>
+        <span style="font-size: 13px; color: #9FAABA;">Lane-shift arrow · <span style="font-family: 'JetBrains Mono', monospace;">NudgelessLaneChange</span></span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #1F2E45; color: #DCEBFF; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="2.5"></circle><path d="M3.5 10.5h6M14.5 10.5h6M12 14.5V21"></path></svg>Steering only</div>
+        <span style="font-size: 13px; color: #9FAABA;">Steering wheel · <span style="font-family: 'JetBrains Mono', monospace;">AlwaysOnLateral</span>, cruise off</span>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+      <div style="background: #13161A; border-radius: 22px; padding: 22px 24px; display: flex; flex-direction: column; gap: 16px;">
+        <span style="font-size: 13px; font-weight: 700; letter-spacing: 1.6px; color: #6FD8A0;">WAITING ON YOU · GREEN</span>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #13301F; color: #D2F5E1; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6FD8A0" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M8 5l11 7-11 7z"></path></svg>Ready · tap resume</div>
+          <span style="font-size: 13px; color: #9FAABA;">Play · stopped and waiting</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #13301F; color: #D2F5E1; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6FD8A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v6M9 5.5l3-3 3 3"></path><path d="M5.5 17l1.3-3.5a2 2 0 0 1 1.9-1.3h6.6a2 2 0 0 1 1.9 1.3l1.3 3.5"></path><rect x="4" y="17" width="16" height="3.5" rx="1.2"></rect></svg>Car ahead moved</div>
+          <span style="font-size: 13px; color: #9FAABA;">Car with up arrow · <span style="font-family: 'JetBrains Mono', monospace;">LeadDepartingAlert</span></span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #13301F; color: #D2F5E1; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6FD8A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="2" width="8" height="20" rx="3"></rect><circle cx="12" cy="17" r="1.8" fill="#6FD8A0"></circle></svg>Light is green</div>
+          <span style="font-size: 13px; color: #9FAABA;">Traffic light, bottom lit · <span style="font-family: 'JetBrains Mono', monospace;">GreenLightAlert</span></span>
+        </div>
+      </div>
+      <div style="background: #13161A; border-radius: 22px; padding: 22px 24px; display: flex; flex-direction: column; gap: 16px;">
+        <span style="font-size: 13px; font-weight: 700; letter-spacing: 1.6px; color: #9FAABA;">YOUR WHEEL-BUTTON MODES</span>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #3A2E1B; color: #FFE3B8; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F0B35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16a9 9 0 0 1 18 0"></path><path d="M10 11v5M14 11v5"></path></svg>Speed control paused</div>
+          <span style="font-size: 13px; color: #9FAABA;">Gauge with pause · Pause speed control: you drive the gas and brake · <span style="font-family: 'JetBrains Mono', monospace;">pauseLongitudinal</span></span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #1F2E45; color: #DCEBFF; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h14M13 8l4 4-4 4M21 6v12"></path></svg>Coasting</div>
+          <span style="font-size: 13px; color: #9FAABA;">Coast arrow · Force coast, until either pedal · <span style="font-family: 'JetBrains Mono', monospace;">forceCoast</span></span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #1F2E45; color: #DCEBFF; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-10 5 10 4-6 4 6"></path></svg>Pulse &amp; glide</div>
+          <span style="font-size: 13px; color: #9FAABA;">Pulse wave · speeding up or holding · <span style="font-family: 'JetBrains Mono', monospace;">pulseAndGlide</span></span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="align-self: flex-start; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #1F2E45; color: #DCEBFF; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-10 5 10 4-6 4 6"></path></svg>Pulse &amp; glide · gliding</div>
+          <span style="font-size: 13px; color: #9FAABA;">Pulse wave · coasting down to the lower speed · <span style="font-family: 'JetBrains Mono', monospace;">pulseGlideCoasting</span></span>
+        </div>
+      </div>
+      <div style="background: #13161A; border-radius: 22px; padding: 22px 24px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1;">
+        <span style="font-size: 18px; font-weight: 700;">Rules</span>
+        <span style="font-size: 15px; color: #C9D0DA; line-height: 1.45;">Up to four at once, newest nearest the bar. With more, the highest priority show: paused or blocked, then stopping, then slowing, then waiting.</span>
+        <span style="font-size: 15px; color: #C9D0DA; line-height: 1.45;">Each stays while its reason holds, renews when it fires again, then after 2 s fades and the ones above slide down. All hide while an alert is up.</span>
+        <span style="font-size: 15px; color: #C9D0DA; line-height: 1.45;">Icon plus four words or fewer. Nothing shown means nothing unusual.</span>
+      </div>
+    </div>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; height: 290px;">
+    <div style="border: 5px solid #1F9A55; border-radius: 16px; background: #0F1A24; position: relative; overflow: hidden;">
+      <svg width="722" height="280" viewBox="0 0 722 280" style="position: absolute; left: 0; top: 0;" aria-hidden="true">
+        <rect x="0" y="100" width="722" height="180" fill="#132231"></rect>
+        <path d="M345 98 L76 280" stroke="#5C6B7A" stroke-width="4"></path>
+        <path d="M377 98 L646 280" stroke="#5C6B7A" stroke-width="4"></path>
+        <path d="M354 100 L368 100 L483 280 L239 280 Z" fill="#3A73B3" fill-opacity="0.5"></path>
+      </svg>
+      <div style="position: absolute; left: 50%; top: 12px; transform: translateX(-50%); font-size: 40px; font-weight: 800;">34</div>
+      <div style="position: absolute; left: 14px; bottom: 66px; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #1F2E45; color: #DCEBFF; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 15a4 4 0 1 1 .9-7.9A5 5 0 0 1 17.5 9a3.5 3.5 0 0 1-.5 6z"></path><path d="M8 18.5l-1 2M12 18.5l-1 2M16 18.5l-1 2"></path></svg>Rain · longer gap</div>
+      <div style="position: absolute; left: 14px; bottom: 14px; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #1F2E45; color: #DCEBFF; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DBBF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"></rect></svg>Stopping ahead</div>
+    </div>
+    <div style="border: 5px solid #1F9A55; border-radius: 16px; background: #0F1A24; position: relative; overflow: hidden;">
+      <svg width="722" height="280" viewBox="0 0 722 280" style="position: absolute; left: 0; top: 0;" aria-hidden="true">
+        <rect x="0" y="100" width="722" height="180" fill="#132231"></rect>
+        <path d="M345 98 L76 280" stroke="#5C6B7A" stroke-width="4"></path>
+        <path d="M377 98 L646 280" stroke="#5C6B7A" stroke-width="4"></path>
+        <path d="M354 100 L368 100 L483 280 L239 280 Z" fill="#5C6B7A" fill-opacity="0.35"></path>
+      </svg>
+      <div style="position: absolute; left: 50%; top: 12px; transform: translateX(-50%); font-size: 40px; font-weight: 800;">17</div>
+      <div style="position: absolute; left: 14px; bottom: 14px; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 12px; border-radius: 14px; background: #3A2E1B; color: #FFE3B8; font-size: 17px; font-weight: 600;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F0B35A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M10 9v6M14 9v6"></path></svg>Steering paused · under 20 mph</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

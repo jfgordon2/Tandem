@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Numeric value editor</title>
+</head>
+<body>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7DBBF9}a:hover{color:#A9D3FB}
+</style>
+
+<div style="width: 1125px; height: 563px; box-sizing: border-box; background: #050608; color: #F2F5F9; font-family: Figtree, system-ui, sans-serif; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; position: relative;">
+  <div aria-hidden="true" style="position: absolute; left: 20px; right: 20px; top: 18px; height: 70px; border-radius: 22px; background: #0C0E11;"></div>
+  <section aria-label="Speed Limit Offset" style="position: relative; height: 455px; box-sizing: border-box; background: #16191D; border-radius: 26px 26px 0 0; border-top: 1px solid #262B33; padding: 14px 26px 22px; display: flex; flex-direction: column; gap: 14px;">
+    <div style="align-self: center; width: 64px; height: 6px; border-radius: 3px; background: #3A414C;"></div>
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 4px;"><h2 style="margin: 0; font-size: 28px; font-weight: 800;">Speed Limit Offset</h2><span style="font-size: 15px; color: #AEB6C2;">Added to every matched speed limit</span></div>
+      <a href="driving.html" style="text-decoration: none; height: 60px; padding: 0 30px; border-radius: 16px; background: #5AAAF8; color: #0B1A2B; font-size: 18px; font-weight: 800; display: flex; align-items: center;">Done</a>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 40px; padding-top: 4px;">
+      <button type="button" aria-label="Decrease" style="font-family: inherit; width: 88px; height: 88px; border: 0; border-radius: 24px; background: #23272E; color: #F2F5F9; font-size: 44px; font-weight: 500;">−</button>
+      <div style="width: 260px; display: flex; flex-direction: column; align-items: center; line-height: 1;">
+        <span style="font-size: 76px; font-weight: 800;">+3</span>
+        <span style="font-size: 18px; color: #AEB6C2; margin-top: 6px;">mph</span>
+      </div>
+      <button type="button" aria-label="Increase" style="font-family: inherit; width: 88px; height: 88px; border: 0; border-radius: 24px; background: #23272E; color: #F2F5F9; font-size: 44px; font-weight: 500;">+</button>
+    </div>
+    <div style="position: relative; height: 66px; margin: 0 12px;">
+      <span style="position: absolute; left: 52%; top: 0; transform: translateX(-50%); font-size: 12px; font-weight: 700; letter-spacing: 1.2px; color: #8FA0B5;">DEFAULT</span>
+      <div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 30px; height: 10px; border-radius: 5px; background: #2A2F36;"></div>
+      <div aria-hidden="true" style="position: absolute; left: 0; width: 52%; top: 30px; height: 10px; border-radius: 5px; background: #5AAAF8;"></div>
+      <div aria-hidden="true" style="position: absolute; left: 52%; top: 21px; width: 28px; height: 28px; margin-left: -14px; border-radius: 14px; background: #F2F5F9; border: 4px solid #5AAAF8; box-sizing: border-box;"></div>
+      <span style="position: absolute; left: 0; top: 48px; font-size: 13px; color: #8FA0B5;">−10</span>
+      <span style="position: absolute; right: 0; top: 48px; font-size: 13px; color: #8FA0B5;">+15</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span style="font-size: 14px; color: #AEB6C2; margin-right: 6px;">Quick picks</span>
+      <button type="button" style="font-family: inherit; height: 44px; padding: 0 18px; border: 0; border-radius: 12px; background: #23272E; color: #F2F5F9; font-size: 16px; font-weight: 600;">+0</button>
+      <button type="button" aria-pressed="true" style="font-family: inherit; height: 44px; padding: 0 18px; border: 0; border-radius: 12px; background: #5AAAF8; color: #0B1A2B; font-size: 16px; font-weight: 700;">+3</button>
+      <button type="button" style="font-family: inherit; height: 44px; padding: 0 18px; border: 0; border-radius: 12px; background: #23272E; color: #F2F5F9; font-size: 16px; font-weight: 600;">+5</button>
+      <button type="button" style="font-family: inherit; height: 44px; padding: 0 18px; border: 0; border-radius: 12px; background: #23272E; color: #F2F5F9; font-size: 16px; font-weight: 600;">+10</button>
+      <span style="flex-grow: 1; text-align: right; font-size: 14px; color: #8FA0B5;">Steps of 1. Hold − or + to move faster.</span>
+      <button type="button" style="font-family: inherit; height: 44px; padding: 0 16px; border: 0; border-radius: 12px; background: transparent; color: #7DBBF9; font-size: 16px; font-weight: 700;">Reset to default</button>
+    </div>
+  </section>
+</div>
+
+</body>
+</html>

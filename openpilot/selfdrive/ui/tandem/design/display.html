@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Display settings</title>
+</head>
+<body>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7DBBF9}a:hover{color:#A9D3FB}
+</style>
+
+<div style="width: 1125px; height: 563px; box-sizing: border-box; background: #000000; color: #F2F5F9; font-family: Figtree, system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden;">
+  <div style="flex-grow: 1; display: flex; gap: 18px; padding: 18px 20px 14px; min-height: 0;">
+    <div style="width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 6px; padding-top: 8px;">
+      <span style="font-size: 14px; font-weight: 700; letter-spacing: 1.8px; color: #7DBBF9; padding: 0 16px 8px;">DISPLAY</span>
+      <button type="button" style="font-family: inherit; text-align: left; height: 56px; border: 0; border-radius: 14px; background: #1F2E45; color: #F2F5F9; font-size: 18px; font-weight: 600; padding: 0 16px;">Driving Screen</button>
+      <a href="displaytheme.html" style="text-decoration: none; height: 56px; border-radius: 14px; color: #C9D0DA; font-size: 18px; font-weight: 600; padding: 0 16px; display: flex; align-items: center; justify-content: space-between;">Theme &amp; Startup</a>
+      <a href="displaymap.html" style="text-decoration: none; height: 56px; border-radius: 14px; color: #C9D0DA; font-size: 18px; font-weight: 600; padding: 0 16px; display: flex; align-items: center; justify-content: space-between;">Map</a>
+    </div>
+    <div style="flex-grow: 1; min-width: 0; background: #16191D; border-radius: 22px; display: flex; flex-direction: column; overflow: hidden;">
+      <div style="padding: 16px 22px 12px; border-bottom: 1px solid #23272E;">
+        <h2 style="margin: 0; font-size: 24px; font-weight: 700;">Driving Screen</h2>
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px; padding: 0 16px 0 22px; height: 70px; flex-shrink: 0; border-bottom: 1px solid #23272E;">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 19px; font-weight: 600;">Text Size</span><span style="font-size: 14px; color: #AEB6C2;">Larger text and icons on the driving screen</span></div>
+        <div role="radiogroup" aria-label="Text size" style="display: flex; background: #23272E; border-radius: 13px; padding: 4px;">
+          <button type="button" role="radio" aria-checked="false" style="font-family: inherit; border: 0; background: transparent; color: #C9D0DA; height: 42px; padding: 0 16px; border-radius: 10px; font-size: 16px; font-weight: 600;">Standard</button>
+          <button type="button" role="radio" aria-checked="true" style="font-family: inherit; border: 0; background: #5AAAF8; color: #0B1A2B; height: 42px; padding: 0 16px; border-radius: 10px; font-size: 16px; font-weight: 700;">Larger</button>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px; padding: 0 22px; height: 70px; flex-shrink: 0; border-bottom: 1px solid #23272E;">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 19px; font-weight: 600;">Reduce Motion</span><span style="font-size: 14px; color: #AEB6C2;">Long street names end in … instead of scrolling</span></div>
+        <button type="button" role="switch" aria-checked="false" aria-label="Reduce Motion" style="width: 72px; height: 42px; flex-shrink: 0; border-radius: 21px; border: 0; background: #343A44; padding: 4px; display: flex; justify-content: flex-start;"><span style="width: 34px; height: 34px; border-radius: 17px; background: #F2F5F9; display: block;"></span></button>
+      </div>
+      <div style="flex-shrink: 0; display: flex; align-items: center; gap: 16px; padding: 0 16px 0 22px; height: 70px; border-bottom: 1px solid #23272E;">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 19px; font-weight: 600;">Camera View</span><span style="font-size: 14px; color: #AEB6C2;">Wide shows more of the road at low speed</span></div>
+        <div role="radiogroup" aria-label="Camera view" style="display: flex; background: #23272E; border-radius: 13px; padding: 4px;">
+          <button type="button" role="radio" aria-checked="false" style="font-family: inherit; border: 0; background: transparent; color: #C9D0DA; height: 42px; padding: 0 16px; border-radius: 10px; font-size: 16px; font-weight: 600;">Auto</button>
+          <button type="button" role="radio" aria-checked="true" style="font-family: inherit; border: 0; background: #5AAAF8; color: #0B1A2B; height: 42px; padding: 0 16px; border-radius: 10px; font-size: 16px; font-weight: 700;">Standard</button>
+          <button type="button" role="radio" aria-checked="false" style="font-family: inherit; border: 0; background: transparent; color: #C9D0DA; height: 42px; padding: 0 16px; border-radius: 10px; font-size: 16px; font-weight: 600;">Wide</button>
+        </div>
+      </div>
+      <div style="flex-shrink: 0; display: flex; align-items: center; gap: 16px; padding: 0 22px; height: 70px; border-bottom: 1px solid #23272E;">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 19px; font-weight: 600;">Driver Camera in Reverse</span><span style="font-size: 14px; color: #AEB6C2;">Shows the inside camera while backing up</span></div>
+        <button type="button" role="switch" aria-checked="false" aria-label="Driver Camera in Reverse" style="width: 72px; height: 42px; border-radius: 21px; border: 0; background: #343A44; padding: 4px; display: flex; justify-content: flex-start;"><span style="width: 34px; height: 34px; border-radius: 17px; background: #F2F5F9; display: block;"></span></button>
+      </div>
+      <div style="flex-shrink: 0; display: flex; align-items: center; gap: 16px; padding: 0 22px; height: 56px; border-bottom: 1px solid #23272E;">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0;">
+          <span style="font-size: 19px; font-weight: 600;">Driving Style Banner</span>
+          <span style="font-size: 14px; color: #AEB6C2;">Shows the current style when it changes</span>
+        </div>
+        <button type="button" role="switch" aria-checked="false" aria-label="Driving Style Banner" style="width: 72px; height: 42px; border-radius: 21px; border: 0; background: #343A44; padding: 4px; display: flex; justify-content: flex-start;"><span style="width: 34px; height: 34px; border-radius: 17px; background: #F2F5F9; display: block;"></span></button>
+      </div>
+      <div style="flex-shrink: 0; display: flex; align-items: center; gap: 16px; padding: 0 22px; height: 56px; border-bottom: 1px solid #23272E;">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0;">
+          <span style="font-size: 19px; font-weight: 600;">Compass</span>
+          <span style="font-size: 14px; color: #AEB6C2;">Heading beside the street name, like NE</span>
+        </div>
+        <button type="button" role="switch" aria-checked="true" aria-label="Compass" style="width: 72px; height: 42px; border-radius: 21px; border: 0; background: #5AAAF8; padding: 4px; display: flex; justify-content: flex-end;"><span style="width: 34px; height: 34px; border-radius: 17px; background: #0E1520; display: block;"></span></button>
+      </div>
+      <div style="flex-shrink: 0; display: flex; align-items: center; gap: 16px; padding: 0 22px; height: 56px; border-bottom: 1px solid #23272E;">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0;">
+          <span style="font-size: 19px; font-weight: 600;">Blind Spot Highlights</span>
+          <span style="font-size: 14px; color: #AEB6C2;">Colors the screen edge and lane when a car is beside you</span>
+        </div>
+        <button type="button" role="switch" aria-checked="true" aria-label="Blind Spot Highlights" style="width: 72px; height: 42px; border-radius: 21px; border: 0; background: #5AAAF8; padding: 4px; display: flex; justify-content: flex-end;"><span style="width: 34px; height: 34px; border-radius: 17px; background: #0E1520; display: block;"></span></button>
+      </div>
+      <div style="flex-shrink: 0; display: flex; align-items: center; gap: 16px; padding: 0 22px; height: 56px; border-bottom: 1px solid #23272E;">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0;">
+          <span style="font-size: 19px; font-weight: 600;">Lead Car Tag</span>
+          <span style="font-size: 14px; color: #AEB6C2;">Numbers above the car ahead. Off keeps only the bar under it</span>
+        </div>
+        <button type="button" role="switch" aria-checked="true" aria-label="Lead Car Tag" style="width: 72px; height: 42px; border-radius: 21px; border: 0; background: #5AAAF8; padding: 4px; display: flex; justify-content: flex-end;"><span style="width: 34px; height: 34px; border-radius: 17px; background: #0E1520; display: block;"></span></button>
+      </div>
+      <div style="flex-shrink: 0; padding: 0 22px; height: 30px; display: flex; align-items: flex-end; background: #13161A;">
+        <span style="font-size: 13px; font-weight: 700; letter-spacing: 1.6px; color: #8FA0B5;">POWER USER</span>
+      </div>
+      <div style="flex-shrink: 0; display: flex; align-items: center; gap: 16px; padding: 0 22px; height: 56px; border-bottom: 1px solid #23272E; background: #13161A;">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0;">
+          <span style="font-size: 19px; font-weight: 600;">Developer View</span>
+          <span style="font-size: 14px; color: #AEB6C2;">Side panel with system and controls data. <a href="bundlesheet.html" style="font-weight: 600;">Sets 12 options</a></span>
+        </div>
+        <button type="button" role="switch" aria-checked="false" aria-label="Developer View" style="width: 72px; height: 42px; border-radius: 21px; border: 0; background: #343A44; padding: 4px; display: flex; justify-content: flex-start;"><span style="width: 34px; height: 34px; border-radius: 17px; background: #F2F5F9; display: block;"></span></button>
+      </div>
+      <div style="flex-shrink: 0; display: flex; align-items: center; gap: 16px; padding: 0 22px; height: 56px; background: #13161A; flex-grow: 1;">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0;">
+          <span style="font-size: 19px; font-weight: 600;">Lead Insights</span>
+          <span style="font-size: 14px; color: #AEB6C2;">Distance, gap and speed of the car ahead, plus radar points. <a href="bundlesheet.html" style="font-weight: 600;">Sets 6 options</a></span>
+        </div>
+        <button type="button" role="switch" aria-checked="false" aria-label="Lead Insights" style="width: 72px; height: 42px; border-radius: 21px; border: 0; background: #343A44; padding: 4px; display: flex; justify-content: flex-start;"><span style="width: 34px; height: 34px; border-radius: 17px; background: #F2F5F9; display: block;"></span></button>
+      </div>
+    </div>
+  </div>
+  <nav style="height: 102px; flex-shrink: 0; border-top: 1px solid #1F242B; background: #0E1013; display: flex; align-items: center; gap: 10px; padding: 0 16px;">
+    <a href="hub.html" aria-label="Back" style="width: 74px; height: 74px; flex-shrink: 0; border-radius: 18px; background: #1F2328; display: flex; align-items: center; justify-content: center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F2F5F9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></a>
+    <div style="flex-grow: 1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px;">
+      <a href="hub.html" aria-current="page" style="text-decoration: none; height: 74px; border-radius: 18px; background: #5AAAF8; color: #0B1A2B; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center;">Driving</a>
+      <a href="devicetab.html" style="text-decoration: none; height: 74px; border-radius: 18px; color: #C9D0DA; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Device</a>
+      <a href="connections.html" style="text-decoration: none; height: 74px; border-radius: 18px; color: #C9D0DA; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Connections</a>
+      <a href="softwaretab.html" style="text-decoration: none; height: 74px; border-radius: 18px; color: #C9D0DA; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Software</a>
+    </div>
+  </nav>
+</div>
+
+</body>
+</html>
