@@ -4,6 +4,8 @@ import pytest
 from openpilot.starpilot.tandem import network_test as N
 
 MBPS = 1e6
+WIFI = N.Route("/active/wifi", "wlan0", unmetered=True)
+CELLULAR = N.Route("/active/cellular", "wwan0", unmetered=False)
 
 
 class FakeLink:
@@ -47,11 +49,11 @@ def finished(budget=N.UNMETERED, **link):
   clock = [100.0]
   made = []
 
-  def connect():
+  def connect(_route: N.Route | None, _check: N.Check) -> N.Link:
     made.append(FakeLink(clock, **link))
     return made[0]
 
-  test = N.NetworkTest(connect, clock=lambda: clock[0], now=lambda: 1_700_000_000.0, spawn=lambda work: work())
+  test = N.NetworkTest(connect, clock=lambda: clock[0], now=lambda: 1_700_000_000.0, spawn=lambda work: work(), read_route=lambda: WIFI)
   test.start(budget)
   return test, made[0] if made else None
 
@@ -109,9 +111,9 @@ def test_an_upload_that_never_arrives_fails_and_keeps_the_download():
   (N.Refused("403"), N.Problem.REFUSED),
 ])
 def test_a_test_that_cannot_start_says_why(error, problem):
-  def connect():
+  def connect(_route: N.Route | None, _check: N.Check) -> N.Link:
     raise error
-  test = N.NetworkTest(connect, spawn=lambda work: work())
+  test = N.NetworkTest(connect, spawn=lambda work: work(), read_route=lambda: WIFI)
   test.start(N.UNMETERED)
   result = test.result()
   assert result.phase is N.Phase.FAILED and result.problem is problem and result.used == 0 and not result.running
@@ -142,11 +144,11 @@ def test_stop_ends_the_test_and_keeps_what_it_measured():
 
   clock = [0.0]
 
-  def connect():
+  def connect(_route: N.Route | None, _check: N.Check) -> N.Link:
     box["link"] = FakeLink(clock, on_chunk=on_chunk)
     return box["link"]
 
-  box["test"] = test = N.NetworkTest(connect, clock=lambda: clock[0], spawn=lambda work: work())
+  box["test"] = test = N.NetworkTest(connect, clock=lambda: clock[0], spawn=lambda work: work(), read_route=lambda: WIFI)
   test.start(N.UNMETERED)
   result, chunks = test.result(), count[0]
   assert result.phase is N.Phase.STOPPED and not result.running
@@ -156,18 +158,69 @@ def test_stop_ends_the_test_and_keeps_what_it_measured():
   assert test.result() == result
 
 
-def test_a_stopped_test_cannot_write_over_the_next_one():
-  held = []
-  test = N.NetworkTest(lambda: FakeLink([0.0]), spawn=held.append)
+def test_stop_before_the_worker_runs_does_not_connect_and_delays_restart() -> None:
+  held: list[N.Check] = []
+  links: list[FakeLink] = []
+  clock = [0.0]
+
+  def connect(_route: N.Route | None, _check: N.Check) -> FakeLink:
+    link = FakeLink(clock)
+    links.append(link)
+    return link
+
+  test = N.NetworkTest(connect, clock=lambda: clock[0], spawn=held.append, read_route=lambda: WIFI)
   test.start(N.METERED)
   test.start(N.UNMETERED)                 # already running: no second test
   assert len(held) == 1 and test.result().budget is N.METERED
   test.stop()
   test.start(N.UNMETERED)
-  held[0]()                               # the stopped test's work runs late
-  assert test.result() == N.Result(N.Phase.DOWNLOAD, budget=N.UNMETERED)
+  assert len(held) == 1 and test.result().phase is N.Phase.STOPPED
+  held[0]()                               # the stopped worker runs late
+  assert not links and test.result().used == 0
+  test.start(N.UNMETERED)
+  assert len(held) == 2 and test.result() == N.Result(N.Phase.DOWNLOAD, budget=N.UNMETERED)
   held[1]()
-  assert test.result().phase is N.Phase.DONE
+  assert test.result().phase is N.Phase.DONE and len(links) == 1 and links[0].closed
+
+
+def test_restart_waits_for_a_cancelled_worker_to_close_its_socket() -> None:
+  held: list[N.Check] = []
+  clock = [0.0]
+
+  class ClosingLink(FakeLink):
+    def close(self) -> None:
+      assert test.result().phase is N.Phase.STOPPED
+      test.start(N.UNMETERED)
+      assert len(held) == 1
+      super().close()
+
+  link = ClosingLink(clock, on_chunk=lambda: test.stop())
+  test = N.NetworkTest(lambda _route, _check: link, clock=lambda: clock[0], spawn=held.append, read_route=lambda: WIFI)
+  test.start(N.UNMETERED)
+  held[0]()
+  assert link.closed
+  test.start(N.UNMETERED)
+  assert len(held) == 2
+
+
+@pytest.mark.parametrize("actual_route", [CELLULAR, None, N.Route("/active/hotspot", "wlan0", unmetered=False)])
+def test_large_budget_is_capped_if_the_worker_cannot_confirm_unmetered_service(actual_route: N.Route | None) -> None:
+  held: list[N.Check] = []
+  clock = [0.0]
+  link = FakeLink(clock, down=400 * MBPS, up=100 * MBPS)
+  current = [WIFI]
+
+  def connect(route: N.Route | None, _check: N.Check) -> FakeLink:
+    assert route == actual_route
+    return link
+
+  test = N.NetworkTest(connect, clock=lambda: clock[0], spawn=held.append, read_route=lambda: current[0])
+  test.start(N.UNMETERED)
+  current[0] = actual_route
+  held[0]()
+  result = test.result()
+  assert result.phase is N.Phase.DONE and result.budget == N.METERED
+  assert sum(link.downloads) <= N.METERED.download and sum(link.uploads) <= N.METERED.upload
 
 
 def test_the_running_download_speed_shows_before_the_round_ends():
@@ -175,11 +228,11 @@ def test_the_running_download_speed_shows_before_the_round_ends():
   box = {}
   clock = [0.0]
 
-  def connect():
+  def connect(_route: N.Route | None, _check: N.Check) -> N.Link:
     box["link"] = FakeLink(clock, down=8 * MBPS, on_chunk=lambda: seen.append(box["test"].result().download))
     return box["link"]
 
-  box["test"] = N.NetworkTest(connect, clock=lambda: clock[0], spawn=lambda work: work())
+  box["test"] = N.NetworkTest(connect, clock=lambda: clock[0], spawn=lambda work: work(), read_route=lambda: WIFI)
   box["test"].start(N.UNMETERED)
   first = len(box["link"].downloads) and N.FIRST_DOWNLOAD // 50_000
   assert seen[0] is None and seen[first + 1] is None                    # nothing in a round's first moments
@@ -243,14 +296,14 @@ class FakeSocket:
     return ("192.0.2.1", 443)
 
 
-def cloudflare(status=200):
+def cloudflare(status=200, **kwargs):
   clock = [0.0]
 
   def tick():
     clock[0] += 0.001
     return clock[0]
 
-  link = N.Cloudflare(clock=tick)
+  link = N.Cloudflare(clock=tick, **kwargs)
   link._http = FakeHttp(status)
   return link, link._http
 
@@ -289,3 +342,104 @@ def test_cloudflare_refusal_is_its_own_error_and_leaves_the_connection_usable():
   with pytest.raises(N.Refused):
     link.download(1_000_000, 1e9, lambda count, seconds: None)
   assert http.closed == 1
+
+
+@pytest.mark.parametrize("kind,metered,unmetered", [("802-11-wireless", 4, True), ("802-3-ethernet", 2, True),
+                                                    ("802-11-wireless", 3, False), ("802-11-wireless", 0, False),
+                                                    ("gsm", 2, False)])
+def test_route_reads_the_active_data_interface_and_metered_state(monkeypatch: pytest.MonkeyPatch, kind: str,
+                                                                metered: int, unmetered: bool) -> None:
+  from openpilot.starpilot.tandem import cellular
+  from openpilot.system.ui.lib.networkmanager import NM_PATH
+
+  class Bus:
+    def props(self, _bus: str, path: str, _interface: str) -> dict:
+      return {
+        NM_PATH: {"PrimaryConnection": WIFI.connection},
+        WIFI.connection: {"Type": kind, "Default": True, "Devices": ["/device"]},
+        "/device": {"ActiveConnection": WIFI.connection, "State": 100, "IpInterface": "data0", "Metered": metered},
+      }[path]
+
+    def close(self) -> None:
+      pass
+
+  monkeypatch.setattr(N.socket, "SO_BINDTODEVICE", 25, raising=False)
+  monkeypatch.setattr(cellular, "Reader", Bus)
+
+  def bind(_sock: N.socket.socket, interface: str) -> None:
+    assert interface == "data0"
+
+  monkeypatch.setattr(N, "_bind_interface", bind)
+  assert N.current_route() == N.Route(WIFI.connection, "data0", unmetered)
+
+  def denied(_sock: N.socket.socket, _interface: str) -> None:
+    raise PermissionError("Interface binding is restricted")
+
+  monkeypatch.setattr(N, "_bind_interface", denied)
+  assert N.current_route() is None
+
+
+@pytest.mark.parametrize("next_route", [CELLULAR, None, N.Route("/active/hotspot", "wlan0", unmetered=False)])
+def test_cloudflare_stops_before_another_request_if_the_active_connection_changes(next_route: N.Route | None) -> None:
+  route = [WIFI]
+  link, http = cloudflare(route=WIFI, read_route=lambda: route[0])
+
+  def moved(_count: int, _seconds: float) -> None:
+    route[0] = next_route
+
+  with pytest.raises(ConnectionError, match="changed"):
+    link.download(200_000, 1e9, moved)  # two 100 kB requests in the same round
+  assert len(http.asked) == 1
+  with pytest.raises(ConnectionError, match="changed"):
+    link.upload(100_000, 1e9, moved)
+  assert not http.sent
+
+
+def test_tcp_connections_and_ping_bind_to_the_original_interface(monkeypatch: pytest.MonkeyPatch) -> None:
+  peer = ("192.0.2.1", 443)
+  events = []
+
+  class BoundSocket:
+    def __enter__(self) -> "BoundSocket":
+      return self
+
+    def __exit__(self, *_exc: object) -> None:
+      pass
+
+    def settimeout(self, _timeout: float) -> None:
+      pass
+
+    def setsockopt(self, level: int, option: int, value: bytes) -> None:
+      events.append((level, option, value))
+
+    def connect(self, address: tuple[str, int]) -> None:
+      events.append(address)
+
+  monkeypatch.setattr(N.socket, "SO_BINDTODEVICE", 25, raising=False)
+  link = N.Cloudflare(route=WIFI, read_route=lambda: WIFI)
+  monkeypatch.setattr(N.socket, "socket", lambda *_args: BoundSocket())
+  monkeypatch.setattr(N.socket, "getaddrinfo", lambda *_args, **_kwargs: [(N.socket.AF_INET, N.socket.SOCK_STREAM, 0, "", peer)])
+  link._http._create_connection((N.HOST, 443), N.TIMEOUT)
+  link.ping()
+  assert events == [(N.socket.SOL_SOCKET, 25, b"wlan0\0"), peer] * 2
+
+
+def test_stop_during_connect_does_not_start_an_http_request(monkeypatch: pytest.MonkeyPatch) -> None:
+  stopped = False
+
+  def check() -> None:
+    if stopped:
+      raise N.Stopped
+
+  link, http = cloudflare(check=check)
+  connect = http.connect
+
+  def stop_during_connect() -> None:
+    nonlocal stopped
+    connect()
+    stopped = True
+
+  monkeypatch.setattr(http, "connect", stop_during_connect)
+  with pytest.raises(N.Stopped):
+    link.download(200_000, 1e9, lambda *_args: None)
+  assert not http.asked

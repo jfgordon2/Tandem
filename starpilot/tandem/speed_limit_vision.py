@@ -23,6 +23,15 @@ class TandemSpeedLimitVisionDaemon(SpeedLimitVisionDaemon):
     super().__init__(use_runtime=use_runtime, load_models=False)
     self._next_model_attempt = -float("inf")
 
+  def _update_memory_pressure(self) -> str:
+    """Keep models paused until StarPilot confirms its recovery thresholds."""
+    was_critical = self.memory_pressure_state == "critical"
+    state: str = super()._update_memory_pressure()
+    if was_critical and state != "normal":
+      self.memory_pressure_state = "critical"
+      return "critical"
+    return state
+
   def _prepare_models(self, started: bool, now: float) -> bool:
     if not started or self.memory_pressure_state == "critical":
       if self.net is not None:

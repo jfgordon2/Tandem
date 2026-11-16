@@ -8,6 +8,7 @@ caller sets how much data a test may use. Nothing is saved: the last result last
 from __future__ import annotations
 
 from collections.abc import Callable
+from contextlib import closing
 from dataclasses import dataclass, replace
 from datetime import datetime
 from enum import Enum
@@ -50,6 +51,48 @@ class Budget:
 
 UNMETERED = Budget(200 * 2**20, 100 * 2**20)
 METERED = Budget(20 * 2**20, 10 * 2**20)     # cellular, a phone's hotspot, or a connection that isn't known
+
+
+@dataclass(frozen=True)
+class Route:
+  """The active NetworkManager connection and its data interface."""
+  connection: str
+  interface: str
+  unmetered: bool
+
+
+def _bind_interface(sock: socket.socket, interface: str) -> None:
+  sock.setsockopt(socket.SOL_SOCKET, socket.SO_BINDTODEVICE, interface.encode() + b"\0")
+
+
+def current_route() -> Route | None:
+  """Read the active default connection, when it can be pinned to an interface."""
+  if not hasattr(socket, "SO_BINDTODEVICE"):
+    return None
+
+  from openpilot.starpilot.tandem.cellular import Reader
+  from openpilot.system.ui.lib.networkmanager import NM, NM_ACTIVE_CONNECTION_IFACE, NM_DEVICE_IFACE, NM_PATH, NMDeviceState
+
+  try:
+    with closing(Reader()) as reader:
+      primary = reader.props(NM, NM_PATH, NM).get("PrimaryConnection", "/")
+      if primary == "/":
+        return None
+      active = reader.props(NM, primary, NM_ACTIVE_CONNECTION_IFACE)
+      devices = active.get("Devices", ())
+      if len(devices) != 1 or not (active.get("Default") or active.get("Default6")):
+        return None
+      device = reader.props(NM, devices[0], NM_DEVICE_IFACE)
+      interface = device.get("IpInterface")
+      if not interface or device.get("ActiveConnection") != primary or device.get("State") != NMDeviceState.ACTIVATED:
+        return None
+      # Older kernels can require privileges for this socket option. Check it before giving the test a large budget.
+      with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as probe:
+        _bind_interface(probe, interface)
+      unmetered = active.get("Type") in ("802-11-wireless", "802-3-ethernet") and device.get("Metered") in (2, 4)  # NO or GUESS_NO
+      return Route(primary, interface, unmetered)
+  except Exception:
+    return None  # An unavailable bus or an activation racing this read cannot authorize the larger budget.
 
 
 class Phase(Enum):
@@ -104,6 +147,7 @@ class Sample:
 
 
 Moved = Callable[[int, float], None]   # the bytes that just moved, and the transfer's seconds so far
+Check = Callable[[], None]
 
 
 class Link(Protocol):
@@ -131,12 +175,48 @@ def download_requests(size: int) -> tuple[int, int]:
 class Cloudflare:
   """Transfers to Cloudflare's speed test over one HTTPS connection, kept open between requests."""
 
-  def __init__(self, clock: Callable[[], float] = time.monotonic) -> None:
+  def __init__(self, clock: Callable[[], float] = time.monotonic, *, route: Route | None = None, check: Check = lambda: None,
+               read_route: Callable[[], Route | None] = current_route) -> None:
     self._clock = clock
+    self._route, self._check, self._read_route = route, check, read_route
     self._http = http.client.HTTPSConnection(HOST, timeout=TIMEOUT, context=ssl.create_default_context())
+    # Replace HTTPConnection's TCP dialer so HTTPS still handles TLS and hostname verification.
+    self._http._create_connection = self._dial  # type: ignore[attr-defined]
     self._buffer = bytearray(DOWNLOAD_CHUNK)
     self._zeros = bytes(UPLOAD_CHUNK)
     self._peer: tuple[socket.AddressFamily, Any] | None = None
+
+  def _before_request(self) -> None:
+    self._check()
+    if self._route is not None and self._read_route() != self._route:
+      raise ConnectionError("The connection changed during the test")
+    self._check()
+
+  def _configure_socket(self, sock: socket.socket, timeout: float) -> None:
+    sock.settimeout(timeout)
+    if self._route is not None:
+      _bind_interface(sock, self._route.interface)
+
+  def _dial(self, address: tuple[str, int], timeout: float, source_address: tuple[str, int] | None = None) -> socket.socket:
+    self._check()
+    error: OSError = ConnectionError("No address for the speed test")
+    for family, kind, protocol, _, peer in socket.getaddrinfo(*address, type=socket.SOCK_STREAM):
+      self._check()
+      sock = socket.socket(family, kind, protocol)
+      try:
+        self._configure_socket(sock, timeout)
+        if source_address is not None:
+          sock.bind(source_address)
+        self._check()
+        sock.connect(peer)
+        return sock
+      except OSError as exc:
+        error = exc
+      except BaseException:
+        sock.close()
+        raise
+      sock.close()
+    raise error
 
   def _answer(self) -> http.client.HTTPResponse:
     response = self._http.getresponse()
@@ -159,11 +239,14 @@ class Cloudflare:
     for _ in range(count):
       if self._clock() >= until:
         return Sample(got, seconds, whole=False)
+      self._before_request()
       self._open()
+      self._check()
       self._http.request("GET", f"/__down?bytes={step}", headers=HEADERS)
       response = self._answer()
       start, left = self._clock(), step
       while left > 0:
+        self._check()
         if self._clock() >= until:
           self._http.close()   # the rest of the body is unread, so the next request opens a new connection
           return Sample(got, seconds + self._clock() - start, whole=False)
@@ -178,15 +261,19 @@ class Cloudflare:
 
   def upload(self, size: int, until: float, moved: Moved) -> Sample:
     """Times from the first byte sent to the answer, which comes once the far end has the whole body."""
-    self._open()
-    start, left = self._clock(), size
+    seconds, left = 0.0, size
     while left > 0:
+      self._before_request()
+      self._open()
+      self._check()
+      start = self._clock()
       want = min(left, UPLOAD_MAX)
       self._http.putrequest("POST", "/__up")
       for name, value in {**HEADERS, "Content-Type": "application/octet-stream", "Content-Length": str(want)}.items():
         self._http.putheader(name, value)
       self._http.endheaders()
       while want > 0:
+        self._check()
         if self._clock() >= until:
           self._http.close()
           return Sample(0, 0.0, whole=False)   # bytes handed to the socket aren't bytes delivered
@@ -194,18 +281,22 @@ class Cloudflare:
         self._http.send(self._zeros[:count])
         want -= count
         left -= count
-        moved(count, self._clock() - start)
+        moved(count, seconds + self._clock() - start)
+      self._check()
       self._answer().read()
-    return Sample(size, self._clock() - start)
+      seconds += self._clock() - start
+    return Sample(size, seconds)
 
   def ping(self) -> float:
     """The time to open a TCP connection to the server the transfers used: one round trip, with the name already looked up."""
+    self._before_request()
     if self._peer is None:
       family, _, _, _, address = socket.getaddrinfo(HOST, 443, type=socket.SOCK_STREAM)[0]
       self._peer = (family, address)
     family, address = self._peer
     with socket.socket(family, socket.SOCK_STREAM) as sock:
-      sock.settimeout(TIMEOUT)
+      self._configure_socket(sock, TIMEOUT)
+      self._check()
       start = self._clock()
       sock.connect(address)
       return self._clock() - start
@@ -228,19 +319,23 @@ def on_thread(work: Callable[[], None]) -> None:
 class NetworkTest:
   """Runs one test at a time in the background, and holds what it has measured for the page to draw."""
 
-  def __init__(self, connect: Callable[[], Link] = Cloudflare, clock: Callable[[], float] = time.monotonic,
-               now: Callable[[], float] = time_of_day, spawn: Callable[[Callable[[], None]], None] = on_thread) -> None:
+  def __init__(self, connect: Callable[[Route | None, Check], Link] | None = None, clock: Callable[[], float] = time.monotonic,
+               now: Callable[[], float] = time_of_day, spawn: Callable[[Check], None] = on_thread,
+               *, read_route: Callable[[], Route | None] = current_route) -> None:
     """Makes a tester.
 
     Args:
-      connect: Makes the link a test's transfers go over.
+      connect: Makes the link with the confirmed route and a cancellation check.
       clock: The clock rounds are timed with.
       now: The time of day, for when a test ended.
       spawn: Runs a test's work; a thread of its own unless a test replaces it.
+      read_route: Reads the currently active connection from the worker.
     """
-    self._connect, self._clock, self._now, self._spawn = connect, clock, now, spawn
+    self._connect = connect or (lambda route, check: Cloudflare(clock, route=route, check=check, read_route=read_route))
+    self._clock, self._now, self._spawn, self._read_route = clock, now, spawn, read_route
     self._lock = threading.Lock()
     self._result = Result()
+    self._working = False
     self._run = 0   # goes up with each start and stop, so a test that was stopped can't write over what followed
 
   def result(self) -> Result:
@@ -254,15 +349,22 @@ class NetworkTest:
       budget: The most data it may use.
     """
     with self._lock:
-      if self._result.running:
+      if self._working:
         return
+      self._working = True
       self._run += 1
       run = self._run
       self._result = Result(Phase.DOWNLOAD, budget=budget)
-    self._spawn(lambda: self.run(run, budget))
+    try:
+      self._spawn(lambda: self.run(run, budget))
+    except RuntimeError:
+      with self._lock:
+        self._working = False
+        if run == self._run:
+          self._result = replace(self._result, phase=Phase.FAILED, problem=Problem.UNREACHABLE, finished=self._now())
 
   def stop(self) -> None:
-    """Stops the running test, keeping what it had measured. Its thread ends at its next chunk of data."""
+    """Request cancellation at the worker's next I/O check and keep measured results."""
     with self._lock:
       if self._result.running:
         self._run += 1
@@ -275,17 +377,27 @@ class NetworkTest:
       run: The run start() gave it; it stops once that's no longer the current one.
       budget: The most data it may use.
     """
+    def check() -> None:
+      with self._lock:
+        if run != self._run:
+          raise Stopped
+
     link: Link | None = None
     try:
-      link = self._connect()
-      download = self._measure(run, link.download, FIRST_DOWNLOAD, budget.download, PHASE_SECONDS, live=True)
+      check()
+      route = self._read_route()
+      if route is None or not route.unmetered:
+        budget = Budget(min(budget.download, METERED.download), min(budget.upload, METERED.upload))
+      self._set(run, budget=budget)
+      link = self._connect(route, check)
+      download = self._measure(run, check, link.download, FIRST_DOWNLOAD, budget.download, PHASE_SECONDS, live=True)
       self._set(run, phase=Phase.UPLOAD, download=download)
-      upload = self._measure(run, link.upload, FIRST_UPLOAD, budget.upload, UPLOAD_LIMIT)
+      upload = self._measure(run, check, link.upload, FIRST_UPLOAD, budget.upload, UPLOAD_LIMIT)
       self._set(run, phase=Phase.PING, upload=upload)
       pings = []
       for _ in range(PINGS):
+        check()
         pings.append(link.ping())
-        self._set(run)
       self._set(run, phase=Phase.DONE, ping=min(pings), finished=self._now())
     except Stopped:
       pass
@@ -295,8 +407,12 @@ class NetworkTest:
           problem = Problem.REFUSED if isinstance(error, Refused) else Problem.DROPPED if self._result.used else Problem.UNREACHABLE
           self._result = replace(self._result, phase=Phase.FAILED, problem=problem, finished=self._now())
     finally:
-      if link is not None:
-        link.close()
+      try:
+        if link is not None:
+          link.close()
+      finally:
+        with self._lock:
+          self._working = False
 
   def _set(self, run: int, moved: int = 0, **changes: Any) -> None:
     with self._lock:
@@ -304,11 +420,12 @@ class NetworkTest:
         raise Stopped
       self._result = replace(self._result, used=self._result.used + moved, **changes)
 
-  def _measure(self, run: int, transfer: Transfer, first: int, budget: int, limit: float, live: bool = False) -> float:
+  def _measure(self, run: int, check: Check, transfer: Transfer, first: int, budget: int, limit: float, live: bool = False) -> float:
     """Times rounds of growing size until one takes long enough to trust.
 
     Args:
       run: The test's run.
+      check: Raises when the run has been cancelled.
       transfer: The link's download or upload.
       first: The first round's size in bytes.
       budget: The most bytes all rounds may move.
@@ -332,6 +449,7 @@ class NetworkTest:
       self._set(run, count, **({"download": in_round * 8 / seconds} if live and seconds >= LIVE_AFTER else {}))
 
     while True:
+      check()
       in_round = 0
       sample = transfer(min(size, budget - spent), began + limit, moved)
       if sample.size and sample.seconds > 0:

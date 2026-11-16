@@ -58,6 +58,34 @@ def test_failed_model_load_retries_without_spinning(monkeypatch: pytest.MonkeyPa
   assert attempts == ["load", "load"]
 
 
+def test_vision_only_reloads_after_memory_recovery(monkeypatch: pytest.MonkeyPatch) -> None:
+  class Messages(dict):
+    valid = {"procLog": True, "deviceState": True}
+
+  daemon = vision.TandemSpeedLimitVisionDaemon(use_runtime=False)
+  daemon.sm = Messages()
+  loads: list[None] = []
+
+  def load() -> None:
+    loads.append(None)
+    daemon.net = object()
+
+  def tick(available_mib: int, used_percent: int) -> str:
+    daemon.sm["procLog"] = SimpleNamespace(mem=SimpleNamespace(available=available_mib * 1024))
+    daemon.sm["deviceState"] = SimpleNamespace(memoryUsagePercent=used_percent)
+    state = daemon._update_memory_pressure()
+    daemon._prepare_models(True, 10.0)
+    return state
+
+  monkeypatch.setattr(daemon, "_load_model", load)
+  monkeypatch.setattr(vision, "trim_heap", lambda: None)
+  assert tick(900, 70) == "normal" and len(loads) == 1
+  for available, used in ((245, 94), (300, 92), (245, 94), (700, 80), (800, 85)):
+    assert tick(available, used) == "critical"
+    assert daemon.net is None and len(loads) == 1
+  assert tick(800, 80) == "normal" and len(loads) == 2
+
+
 @pytest.mark.parametrize(("started", "status"), [(False, "Idle - offroad"), (True, "Memory pressure - inference paused")])
 def test_idle_vision_loop_clears_previous_sign(monkeypatch: pytest.MonkeyPatch, started: bool, status: str) -> None:
   class SubMaster(dict):
