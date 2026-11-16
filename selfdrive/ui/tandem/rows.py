@@ -61,16 +61,28 @@ class SectionHeader(Component):
       self._child(trailing)
 
   def preferred_size(self, max_width: float) -> tuple[float, float]:
-    return max_width, T.px(40)
+    trailing_height = size_of(self._trailing, max_width)[1] if self._trailing is not None else 0
+    return max_width, max(T.px(40), trailing_height + T.px(16))
+
+  def set_touch_valid_callback(self, callback: Callable[[], bool]) -> None:
+    super().set_touch_valid_callback(callback)
+    if self._trailing is not None:
+      self._trailing.set_touch_valid_callback(callback)
+
+  def set_parent_rect(self, rect: rl.Rectangle) -> None:
+    super().set_parent_rect(rect)
+    if self._trailing is not None:
+      self._trailing.set_parent_rect(rect)
 
   def _render(self, rect: rl.Rectangle) -> None:
     if self._background is not None:
       draw.fill(rect, self._background)
     body = inset(rect, left=T.PANEL_HEADER_INSET, right=T.px(16), top=T.px(12), bottom=T.px(4))
-    draw.caption(body, self._label, self._color)
     if self._trailing is not None:
       w, h = size_of(self._trailing, body.width)
       self._trailing.render(place(body, w, h, Align.END))
+      body = inset(body, right=w + T.px(12))
+    draw.caption(body, self._label, self._color)
 
 
 class SettingRow(Component):

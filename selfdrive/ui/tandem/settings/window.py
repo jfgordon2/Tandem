@@ -27,6 +27,7 @@ from openpilot.selfdrive.ui.tandem.settings.model import Models
 from openpilot.selfdrive.ui.tandem.settings.ram import ram_panel
 from openpilot.selfdrive.ui.tandem.ram import now_percent, shared_log
 from openpilot.selfdrive.ui.tandem.settings.network_tab import Network, advanced_panel
+from openpilot.selfdrive.ui.tandem.settings.network_test import Connection, NetworkTestModel, device_connection
 from openpilot.selfdrive.ui.tandem.settings.software_tab import Software, SoftwarePage
 from openpilot.selfdrive.ui.tandem.settings.driving_tab import driving_hub
 from openpilot.selfdrive.ui.tandem.settings.live import Live
@@ -45,6 +46,7 @@ if TYPE_CHECKING:
   from openpilot.selfdrive.ui.tandem.settings.vehicle import CarCatalog, CarExtras
   from openpilot.selfdrive.ui.tandem.settings.model import ModelSource
   from openpilot.selfdrive.ui.tandem.ram import RamLog
+  from openpilot.starpilot.tandem.network_test import NetworkTest
   from openpilot.starpilot.tandem.wifi import WifiManager
 
 
@@ -89,6 +91,11 @@ def _upstream_device() -> Device:
 def _upstream_wifi() -> WifiManager:
   from openpilot.selfdrive.ui.tandem.settings.network_tab import upstream_wifi
   return upstream_wifi()
+
+
+def _shared_network_test() -> NetworkTest:
+  from openpilot.starpilot.tandem.network_test import shared
+  return shared()
 
 
 def _upstream_wheel() -> WheelSource:
@@ -144,7 +151,8 @@ class SettingsWindow(Widget):
                bluetooth: Callable[[], BluetoothDevices] | None = None, updates: Callable[[], UpdateActions] | None = None,
                maps_source: Callable[[], MapsSource] | None = None, boot_logos: Callable[[], BootLogoSource] | None = None,
                developer_source: Callable[[], DeveloperSource] | None = None, car_extras: Callable[[], CarExtras] | None = None,
-               ram_log: Callable[[], RamLog] | None = None, ram_now: Callable[[], int] | None = None) -> None:
+               ram_log: Callable[[], RamLog] | None = None, ram_now: Callable[[], int] | None = None,
+               network_test: Callable[[], NetworkTest] | None = None, connection: Callable[[], Connection] | None = None) -> None:
     """The arguments replace device-backed state and StarPilot data in tests; each defaults to the real one."""
     super().__init__()
     self._store = store
@@ -163,6 +171,8 @@ class SettingsWindow(Widget):
     self.boot_logos = boot_logos or _upstream_boot_logos
     self.ram_log = ram_log or shared_log
     self.ram_now = ram_now or now_percent
+    self.network_test = network_test or _shared_network_test
+    self.connection = connection or device_connection
     self._tab = Tab.DRIVING
     self._roots: list[Callable[[], Widget]] = [self._driving, self._device, self._connections, self._software]
     self._stacks: list[list[Widget]] = [[] for _ in TABS]
@@ -378,8 +388,9 @@ class SettingsWindow(Widget):
 
   def _connections(self) -> Widget:
     network = Network(self.wifi(), self.store)
+    test = NetworkTestModel(self.network_test(), lambda: network.wifi.connected_ssid, self.connection)
     return connections.connections_page(network, lambda: self.push(PanelPage(advanced_panel(network))), WheelButtons(self.wheel()),
-                                        self.bluetooth(), self)
+                                        self.bluetooth(), self, test)
 
   def _software(self) -> Widget:
     model = Software(self.store, self.updates(), lambda: apply_essentials(self.store, self.boot_logos))

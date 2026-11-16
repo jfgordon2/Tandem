@@ -53,7 +53,8 @@ def main():
 
   try:
     ui_state.ui_params.start()
-    gui_app.init_window("UI")
+    from openpilot.selfdrive.ui.tandem.fonts import lazy_upstream_fonts
+    gui_app.init_window("UI", lazy_fonts=BIG_UI and lazy_upstream_fonts())
     stall_monitor.progress("ui.after_init_window")
     gui_app.set_progress_hook(stall_monitor.progress)
     kick_watchdog()

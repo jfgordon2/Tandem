@@ -1,4 +1,5 @@
 """Render every implemented screen with sample data, named after its mock."""
+import datetime
 import runpy
 import os
 import sys
@@ -7,9 +8,11 @@ import pyray as rl
 from test_settings import FakeCache, FakeDevice
 from openpilot.selfdrive.ui.tandem.settings import window as W
 from openpilot.selfdrive.ui.tandem.settings.live import FakeLive
+from openpilot.selfdrive.ui.tandem.settings.network_test import Connection, Via
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
-from openpilot.selfdrive.ui.tandem.tests.fakes import (FakeBluetooth, FakeBootLogos, FakeCars, FakeData, FakeMaps, FakeModels, FakeUpdates,
-                                                       FakeWheel, FakeWifi)
+from openpilot.selfdrive.ui.tandem.tests.fakes import (FakeBluetooth, FakeBootLogos, FakeCars, FakeData, FakeMaps, FakeModels, FakeNetworkTest,
+                                                       FakeUpdates, FakeWheel, FakeWifi, home_wifi)
+from openpilot.starpilot.tandem.network_test import METERED, UNMETERED, Phase, Result
 
 VALUES = {
   "NudgelessLaneChange": True, "SpeedLimitController": True, "ShowSpeedLimits": True, "SLCConfirmation": True, "Offset1": 3.0,
@@ -40,7 +43,6 @@ VALUES = {
 
 def sample_ram(out):
   """Device › RAM's three drives as the mock shows them: today 4:46, 4:25 and 3:31 PM."""
-  import datetime
   import json
   from pathlib import Path
   from openpilot.selfdrive.ui.tandem.ram import RamLog
@@ -61,9 +63,11 @@ def main(frame, save, out, tap, gui_app):
   cache = FakeCache(dict(VALUES))
   models, wheel, maps = FakeModels(), FakeWheel(), FakeMaps()
   ram = sample_ram(out)
+  network_test, connection = FakeNetworkTest(), [home_wifi()]
   win = W.SettingsWindow(store=SettingsStore(cache, lambda: None), live=FakeLive(), model_source=lambda: models, car_catalog=FakeCars,
                          device_data=FakeData, device=FakeDevice, wifi=FakeWifi, wheel=lambda: wheel, bluetooth=FakeBluetooth,
-                         updates=FakeUpdates, maps_source=lambda: maps, boot_logos=FakeBootLogos, ram_log=lambda: ram, ram_now=lambda: 38)
+                         updates=FakeUpdates, maps_source=lambda: maps, boot_logos=FakeBootLogos, ram_log=lambda: ram, ram_now=lambda: 38,
+                         network_test=lambda: network_test, connection=lambda: connection[0])
   win.show_event()
   rect = rl.Rectangle(0, 0, 2160, 1080)
   draw = lambda: win.render(rect)  # noqa: E731
@@ -229,12 +233,20 @@ def main(frame, save, out, tap, gui_app):
   win.top.current._panel._content.items[-1]._click_callback()
   shot("wheelbuttonlearn", 30)
   win.back()
+  # Network Test as the mocks show it: a finished test on Wi-Fi at 3:42 PM, then one measuring its download on cellular
+  tested = datetime.datetime.now().replace(hour=15, minute=42, second=0, microsecond=0).timestamp()
+  network_test.shown = Result(Phase.DONE, 86.4e6, 11.2e6, 0.024, 148 * 2**20, UNMETERED, tested)
+  win.top.select(4)
+  shot("connectionstest")
+  network_test.shown, connection[0] = Result(Phase.DOWNLOAD, 23.5e6, used=6 * 2**20, budget=METERED), Connection(Via.CELLULAR, "LTE", True)
+  shot("connectionstestrunning")
   win.select_tab(W.Tab.SOFTWARE)
   shot("softwaretab")
 
   # The other screens have scenes of their own.
   for scene in ("scene_onroad.py", "scene_sidebar.py", "scene_setup.py", "scene_alerts.py", "scene_extras.py", "scene_dev.py",
                 "scene_homealerts.py", "scene_destinations.py", "scene_keyboard.py", "scene_bundlesheet.py", "scene_camera.py",
-                "scene_lead.py", "scene_mapbox.py", "scene_hotspot.py", "scene_cellular.py", "scene_can_recorder.py", "scene_bootlogo.py", "scene_routing.py"):
+                "scene_lead.py", "scene_mapbox.py", "scene_hotspot.py", "scene_cellular.py", "scene_radios.py", "scene_can_recorder.py",
+                "scene_bootlogo.py", "scene_routing.py"):
     runpy.run_path(os.path.join(os.path.dirname(os.path.abspath(__file__)), scene))["main"](
       frame=frame, save=save, out=out, tap=tap, gui_app=gui_app)

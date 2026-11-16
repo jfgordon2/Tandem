@@ -52,6 +52,8 @@ Open any `.html` file in this folder in a browser. Each screen is 1125×563, the
 | Connections: Cellular | [connectionscellular.html](connectionscellular.html) |
 | Connections: Bluetooth Remote | [connectionsremote.html](connectionsremote.html) |
 | Connections: Car Audio & Devices | [connectionsaudio.html](connectionsaudio.html) |
+| Connections: Network Test | [connectionstest.html](connectionstest.html) |
+| Network Test, measuring | [connectionstestrunning.html](connectionstestrunning.html) |
 | Software tab | [softwaretab.html](softwaretab.html) |
 | Assign a wheel button | [wheelbuttonlearn.html](wheelbuttonlearn.html) |
 | Driving › Vehicle Profile | [drivingvehicle.html](drivingvehicle.html) |
@@ -220,7 +222,7 @@ Rules:
 
 ## Device, Connections and Software tabs
 
-The bottom bar has four tabs: Driving, Device, Connections and Software. The current tab is highlighted. Connections holds what were the Network and Bluetooth tabs, as four sections: Wi-Fi, Cellular, Bluetooth Remote, and Car Audio & Devices.
+The bottom bar has four tabs: Driving, Device, Connections and Software. The current tab is highlighted. Connections holds what were the Network and Bluetooth tabs, as five sections: Wi-Fi, Cellular, Bluetooth Remote, Car Audio & Devices, and Network Test.
 
 - **Device** has a sidebar: This Device, General, Backups, Storage & Data, Report a Problem. Everything about the hardware and its data lives here.
   - This Device: Phone App pairing (Pair opens [pairing.html](pairing.html): three steps for comma connect beside the QR code, on a white tile so it scans; the Galaxy web app is Remote Access, under More, which opens [remoteaccess.html](remoteaccess.html): choose a password to create the link, then its code and Unpair), driver camera preview, camera recalibration, and "How It Works" (the training guide).
@@ -236,6 +238,11 @@ The bottom bar has four tabs: Driving, Device, Connections and Software. The cur
   - **Press to find.** While this tab is open, the wheel controls test mode (`WheelControlTestActive`) is on, both parked and onroad. Pressing a button on the remote highlights its row and marks it PRESSED, and its action does not run. An unassigned button highlights Add a button instead, including before any buttons are mapped. Leaving the tab or closing settings ends testing and cancels pending button learning; normal mapped actions keep their previous enabled state. This replaces the separate Test button.
   - **Add a button** opens a two-step sheet. Step 1: press the button on the remote; listening stops after 20 seconds. Step 2: pick an action (driving style, screen, save a clip, run a favorite, always-on steering, coast, engage, disengage). Favorites are the saved settings/actions; each choice shows its configured name. Removing or moving a mapping releases its action slot when no other button uses it.
   - Pulse and glide and driver selfie are only in Tuner Mode.
+- **Connections › Network Test** ([connectionstest.html](connectionstest.html)): download, upload and ping of the connection the device is using, named under the title.
+  - Each row says what that number is for: maps, models and updates coming in; drive video and logs going out; how quickly the internet answers.
+  - The button reads Start, then Stop while a test runs ([connectionstestrunning.html](connectionstestrunning.html)), then Test again. The row being measured is blue, and the download shows its speed as it goes.
+  - The footnote says how much data a test may use before it starts (less on cellular), and how much it used after. The sidebar shows the last download speed.
+  - Leaving the section stops the test.
   - This uses the existing wheel controls service (`WheelControlMappings`, `ControllerActionSlots`, `WheelControlLearnSlot`).
   - Car audio (Test sound) and Nearby devices sit in a smaller column. Pairing waits until the car is parked.
 - **Software:**

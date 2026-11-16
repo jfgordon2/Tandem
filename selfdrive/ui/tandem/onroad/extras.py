@@ -216,11 +216,6 @@ class ModelChip:
 
 # ── Compass ──
 
-def heading(compass_text: str | None) -> str:
-  """StarPilot's compass text ("- NE -") as the bar's tag ("NE")."""
-  return (compass_text or "").strip(" -")
-
-
 # ── On the road ──
 
 def path_end(projected: np.ndarray) -> tuple[rl.Vector2, rl.Vector2] | None:

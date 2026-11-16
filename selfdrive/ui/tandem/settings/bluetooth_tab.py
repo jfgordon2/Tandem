@@ -15,9 +15,9 @@ import pyray as rl
 from functools import partial
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.system.ui.widgets import Widget
-from openpilot.selfdrive.ui.tandem.base import Component
+from openpilot.selfdrive.ui.tandem.base import Component, size_of
 from openpilot.selfdrive.ui.tandem.blocks import Label, Stack
-from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle
+from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, HeaderControls, Switch
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, grid, inset, place, row
 from openpilot.selfdrive.ui.tandem.overlays import Sheet
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, OptionList, SectionHeader, SettingRow, Text
@@ -221,7 +221,7 @@ class AssignSheet(Component):
     draw.text(foot, N_("Pulse and glide and driver selfie are in Tuner Mode."), T.SIZE_SUBTITLE, T.TEXT_MUTED)
 
 
-def wheel_panel(model: WheelButtons, window: SettingsWindow) -> Component:
+def wheel_panel(model: WheelButtons, window: SettingsWindow, bt: BluetoothDevices | None = None) -> Component:
   """Connections › Bluetooth Remote: the remote's buttons and their actions, with Add button."""
   def change(mapping: dict) -> Callable[[], None]:
     def show() -> None:
@@ -262,7 +262,11 @@ def wheel_panel(model: WheelButtons, window: SettingsWindow) -> Component:
 
   def build() -> ListPanel:
     rows = [WheelRow(i, m, model, change(m)) for i, m in enumerate(model.buttons())]
-    return ListPanel([WheelHeader(model), *rows, AddButtonRow(model, add)],
+    add_button = AddButtonRow(model, add)
+    if bt is not None:
+      for widget in [*rows, add_button]:
+        widget.set_enabled(lambda: bt.status().enabled and bt.status().powered)
+    return ListPanel([WheelHeader(model, bt), *rows, add_button],
                      footnote=N_("Buttons don't run their actions while this screen is open."))
 
   return Rebuilding(lambda: tuple((m["id"], m["slot"]) for m in model.buttons()), build)
@@ -273,21 +277,38 @@ class WheelHeader(Component):
   a button finds it."""
   grow_touch_target = False
 
-  def __init__(self, model: WheelButtons):
+  def __init__(self, model: WheelButtons, bt: BluetoothDevices | None = None):
     super().__init__()
     self._model = model
+    self._bt = bt
+    self._power = self._child(bluetooth_switch(bt)) if bt is not None else None
 
   def preferred_size(self, max_width: float) -> tuple[float, float]:
     return max_width, T.px(76)
+
+  def set_touch_valid_callback(self, callback: Callable[[], bool]) -> None:
+    super().set_touch_valid_callback(callback)
+    if self._power is not None:
+      self._power.set_touch_valid_callback(callback)
+
+  def set_parent_rect(self, rect: rl.Rectangle) -> None:
+    super().set_parent_rect(rect)
+    if self._power is not None:
+      self._power.set_parent_rect(rect)
 
   def _render(self, rect: rl.Rectangle) -> None:
     body = inset(rect, left=T.px(20), right=T.px(14))
     well = place(body, T.px(48), T.px(48), Align.START)
     draw.fill(well, T.ACCENT_SURFACE, T.px(14))
     draw.icon(well, "wheel", T.ACCENT_TEXT, T.px(26))
+    if self._power is not None:
+      w, h = size_of(self._power, body.width / 2)
+      self._power.render(place(body, w, h, Align.END))
+      body = inset(body, right=w + T.px(14))
+    off = self._bt is not None and bluetooth_off(self._bt)
     hint = N_("Press any button to find it")
     chip_w = draw.text_width(hint, T.SIZE_SUBTITLE, T.FONT_SEMIBOLD) + T.px(52)
-    if self._model.buttons():
+    if not off and self._model.buttons() and body.width - chip_w >= T.px(210):
       chip = place(body, chip_w, T.px(40), Align.END)
       draw.fill(chip, T.ACCENT_SURFACE, T.px(12))
       draw.icon(rl.Rectangle(chip.x + T.px(12), chip.y, T.px(16), chip.height), "locate", T.ACCENT_TEXT, T.px(16))
@@ -297,7 +318,9 @@ class WheelHeader(Component):
     lines = [draw.line_height(T.font_px(20)), draw.line_height(T.SIZE_SUBTITLE)]
     title, line = column(place(text, text.width, sum(lines) + T.px(2)), lines, T.px(2))
     draw.text(title, N_("Bluetooth Remote"), T.font_px(20), T.TEXT, T.FONT_BOLD)
-    draw.text(line, self._model.remote_name(), T.SIZE_SUBTITLE, T.SUCCESS_TEXT if self._model.buttons() else T.TEXT_TERTIARY)
+    detail = N_("Bluetooth is off") if off else self._model.remote_name()
+    color = T.SUCCESS_TEXT if not off and self._model.buttons() else T.TEXT_TERTIARY
+    draw.text(line, detail, T.SIZE_SUBTITLE, color)
 
 
 class WheelRow(Component):
@@ -312,7 +335,7 @@ class WheelRow(Component):
     return max_width, T.px(60)
 
   def _render(self, rect: rl.Rectangle) -> None:
-    pressed = self._model.is_pressed(self._mapping)
+    pressed = self.enabled and self._model.is_pressed(self._mapping)
     if pressed:
       draw.fill(rect, T.ACCENT_SELECTED)
       draw.stroke(rect, T.ACCENT, 0, T.px(2))
@@ -321,15 +344,16 @@ class WheelRow(Component):
     body = inset(rect, left=T.px(20), right=T.px(12))
     label = t_("Button {}", self._index + 1)
     chip = place(body, draw.text_width(label, T.SIZE_SUBTITLE, T.FONT_EXTRABOLD) + T.px(32), T.px(34), Align.START)
-    draw.fill(chip, T.ACCENT if pressed else T.CONTROL, T.px(10))
-    draw.text(chip, label, T.SIZE_SUBTITLE, T.ACCENT_INK if pressed else T.TEXT_SECONDARY, T.FONT_EXTRABOLD if pressed else T.FONT_BOLD,
+    alpha = 1.0 if self.enabled else T.DISABLED_ALPHA
+    draw.fill(chip, draw.alpha(T.ACCENT if pressed else T.CONTROL, alpha), T.px(10))
+    draw.text(chip, label, T.SIZE_SUBTITLE, draw.alpha(T.ACCENT_INK if pressed else T.TEXT_SECONDARY, alpha), T.FONT_EXTRABOLD if pressed else T.FONT_BOLD,
               Align.CENTER)
-    draw.chevron(rl.Rectangle(body.x + body.width - T.px(18), body.y, T.px(18), body.height), T.TEXT_TERTIARY, T.px(18))
+    draw.chevron(rl.Rectangle(body.x + body.width - T.px(18), body.y, T.px(18), body.height), draw.alpha(T.TEXT_TERTIARY, alpha), T.px(18))
     text = inset(body, left=chip.width + T.px(14), right=T.px(30))
     if pressed:
       w = draw.text(text, N_("PRESSED"), T.SIZE_CAPTION, T.ACCENT_TEXT, T.FONT_BOLD, Align.END)
       text = inset(text, right=w + T.px(12))
-    draw.text(text, self._model.action_name(self._mapping), T.font_px(18), T.TEXT, T.FONT_BOLD if pressed else T.FONT_SEMIBOLD)
+    draw.text(text, self._model.action_name(self._mapping), T.font_px(18), draw.alpha(T.TEXT, alpha), T.FONT_BOLD if pressed else T.FONT_SEMIBOLD)
 
 
 class AddButtonRow(Component):
@@ -344,13 +368,13 @@ class AddButtonRow(Component):
     return max_width, T.px(58)
 
   def _render(self, rect: rl.Rectangle) -> None:
-    unassigned = self._model.unassigned_pressed()
+    unassigned = self.enabled and self._model.unassigned_pressed()
     if unassigned:
       draw.fill(rect, T.SUCCESS_CARD)
     if self.is_pressed:
       draw.pressed(rect)
     body = inset(rect, x=T.px(20))
-    ink = T.SUCCESS_TEXT if unassigned else T.ACCENT_TEXT
+    ink = draw.alpha(T.SUCCESS_TEXT if unassigned else T.ACCENT_TEXT, 1.0 if self.enabled else T.DISABLED_ALPHA)
     draw.icon(rl.Rectangle(body.x, body.y, T.px(20), body.height), "plus", ink, T.px(20))
     label = N_("That button isn't assigned yet. Tap to add it.") if unassigned else N_("Add a button")
     draw.text(inset(body, left=T.px(32)), label, T.font_px(17), ink, T.FONT_BOLD)
@@ -362,6 +386,8 @@ class BluetoothDevices(Protocol):
   def tick(self) -> None: ...
   def set_active(self, active: bool) -> None: ...
   def status(self) -> BluetoothStatus: ...
+  def set_power(self, enabled: bool) -> None: ...
+  def power_busy(self) -> bool: ...
   def select(self, address: str) -> bool: ...      # pairs or connects; True when it's connected and its actions should show
   def test_audio(self, address: str) -> None: ...
   def audio_test_text(self) -> str: ...            # the running test's countdown, result or error
@@ -370,6 +396,17 @@ class BluetoothDevices(Protocol):
   def use_for_audio(self, address: str) -> None: ...   # "" stops using any device for openpilot's sounds
   def prompt(self) -> dict | None: ...             # a pairing prompt from the device: id, name, kind, value, display_only
   def respond(self, prompt_id: str, accept: bool, value: str = "") -> None: ...
+
+
+def bluetooth_off(bt: BluetoothDevices) -> bool:
+  status = bt.status()
+  return status.available and not status.enabled
+
+
+def bluetooth_switch(bt: BluetoothDevices) -> HeaderControls:
+  power = Switch(lambda: bt.status().enabled, bt.set_power)
+  power.set_enabled(lambda: bt.status().available and bt.status().offroad and not bt.power_busy())
+  return HeaderControls(Label(N_("Bluetooth"), T.SIZE_SUBTITLE, T.TEXT_SECONDARY, T.FONT_SEMIBOLD, fit=True), power)
 
 
 def sound_test(bt: BluetoothDevices, address: str, window: SettingsWindow | None) -> None:
@@ -457,21 +494,24 @@ def devices_panel(bt: BluetoothDevices, window: SettingsWindow | None = None) ->
   def build() -> Widget:
     """Car audio on its own card; nearby devices on a card below it, as in the mock."""
     status = bt.status()
+    header = SectionHeader(N_("CAR AUDIO"), trailing=bluetooth_switch(bt))
+    if bluetooth_off(bt):
+      return ListPanel([header, Text(N_("Bluetooth is off"))])
     audio = [d for d in status.devices if d.audio and d.paired]
     nearby = [d for d in status.devices if not (d.audio and d.paired) and not d.controller]
     scanning = Label(lambda: N_("Scanning…") if bt.status().discovering else "", T.SIZE_SUBTITLE, T.ACCENT_TEXT, T.FONT, fit=True)
     audio_rows: list[Widget] = [audio_row(d) for d in audio] or [Text(N_("No car audio paired."))]
     nearby_rows: list[Widget] = [nearby_row(d) for d in nearby] or [Text(N_("No devices found yet."))]
     return Stack([
-      ListPanel([SectionHeader(N_("CAR AUDIO")), *audio_rows]),
+      ListPanel([header, *audio_rows]),
       ListPanel([SectionHeader(N_("NEARBY"), trailing=scanning, divider=True),
                  *nearby_rows],
                 footnote=N_("Pairing waits until you're parked.")),
     ], gap=T.px(14), grow=1)
 
-  def key() -> tuple[tuple[tuple[str, bool, bool], ...], bool]:
+  def key() -> tuple[tuple[tuple[str, bool, bool], ...], bool, bool]:
     status = bt.status()
-    return tuple((d.address, d.paired, d.connected) for d in status.devices), status.discovering
+    return tuple((d.address, d.paired, d.connected) for d in status.devices), status.discovering, bluetooth_off(bt)
 
   last_prompt = [""]
 
@@ -590,27 +630,18 @@ class UpstreamBluetooth:
     self._manager = BluetoothManager()
     self._manager.set_active(False)
     self._active = False
-    self._power_requested = False
     self._scan_requested = False
 
   def tick(self) -> None:
-    """Our panel replaces upstream's _update_state: wait for its asynchronous status before starting the radio or scan."""
+    """Discover devices only after the radio was enabled and reports powered."""
     if not self._active:
       return
     status = self.status()
     if not status.offroad:
-      self._power_requested = self._scan_requested = False
+      self._scan_requested = False
       return
-    if not status.available or status.error:
+    if not status.available or status.error or not status.enabled or not status.powered or self.power_busy():
       return
-    if not status.enabled:
-      if not self._power_requested:
-        self._power_requested = True
-        self._manager.set_power(True)
-      return
-    if not status.powered:
-      return
-    self._power_requested = False
     if status.discovering:
       self._scan_requested = False
     elif not self._scan_requested and not status.pairing_address:
@@ -629,12 +660,21 @@ class UpstreamBluetooth:
       return
     self._active = active
     status = self.status()
-    if not active and (self._scan_requested or status.discovering) and status.offroad:
+    if not active and (self._scan_requested or status.discovering) and status.offroad and not self.power_busy():
       self._manager.set_scanning(False)   # a start may still be queued before the first discovering=True poll
-    self._power_requested = self._scan_requested = False
+    self._scan_requested = False
     self._manager.set_active(active)
     if active:
       self.tick()
+
+  def set_power(self, enabled: bool) -> None:
+    status = self.status()
+    if status.available and status.offroad and status.enabled != enabled and not self.power_busy():
+      self._scan_requested = False
+      self._manager.set_power(enabled)
+
+  def power_busy(self) -> bool:
+    return bool(self._manager._power_pending)
 
   def status(self) -> BluetoothStatus:
     status = self._manager.status

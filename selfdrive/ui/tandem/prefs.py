@@ -97,8 +97,8 @@ class Text:
           pass
     return None
 
-  def set(self, value: str) -> None:
-    """Saves the text atomically (a temporary file, then a rename). A read-only disk is ignored."""
+  def set(self, value: str) -> bool:
+    """Save the text atomically. Return False if the write fails."""
     path = self._file()
     temporary = None
     try:
@@ -106,8 +106,9 @@ class Text:
         temporary = Path(stream.name)
         stream.write(value)
       temporary.replace(path)
+      return True
     except OSError:
-      pass
+      return False
     finally:
       if temporary is not None:
         try:
@@ -117,7 +118,7 @@ class Text:
 
 
 BACKUP_DIR = ".tandem_prefs"          # inside a settings backup, beside the copied params
-NOT_BACKED_UP = {".tandem_forecast.json"}   # a cache, not a setting
+NOT_BACKED_UP = {".tandem_forecast.json", ".tandem_compass_heading"}   # caches, not settings
 
 
 def pref_files(folder: Path | None = None) -> list[Path]:

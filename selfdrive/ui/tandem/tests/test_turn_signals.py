@@ -239,6 +239,27 @@ def test_close_is_idempotent_and_reenabling_loads_immediately(scene):
   assert len(scene.uploaded) == 14
 
 
+def test_frames_are_given_back_when_the_drive_ends_and_load_again_on_the_next(scene):
+  compass = SimpleNamespace(ended=[], offroad=lambda now: compass.ended.append(now))
+  namespace = {"ui_state": scene.state, "time": SimpleNamespace(monotonic=lambda: 42.0)}
+  view = _source_class("selfdrive/ui/tandem/onroad/view.py", "EssentialsOnroadView", {"_drive_transition"}, namespace)()
+  view._turn_signals, view._compass = scene.renderer, compass
+
+  scene.renderer.render(scene.rect, scene.state)
+  view._drive_transition()   # the car turning on leaves the frames alone
+  assert (len(scene.uploaded), scene.unloaded, compass.ended) == (7, [], [])
+
+  scene.state.started = False
+  view._drive_transition()
+  assert sorted(t.id for t in scene.unloaded) == [t.id for t in scene.uploaded[:7]] and compass.ended == [42.0]
+  scene.renderer.render(scene.rect, scene.state, enabled=False)   # what the parked view calls each frame
+  assert len(scene.uploaded) == 7
+
+  scene.state.started = True
+  scene.renderer.render(scene.rect, scene.state)
+  assert len(scene.uploaded) == 14 and scene.draws[-1].texture in scene.uploaded[7:]
+
+
 def test_random_theme_uses_active_signals_even_when_saved_selection_is_stock(scene, monkeypatch, tmp_path):
   (tmp_path / "turn_signal.png").touch()
   monkeypatch.setattr(turn_signals, "ACTIVE_SIGNALS_PATH", tmp_path)

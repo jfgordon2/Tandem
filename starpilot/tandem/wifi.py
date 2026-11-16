@@ -9,6 +9,7 @@ import threading
 from dataclasses import replace
 
 from openpilot.system.ui.lib import wifi_manager as upstream
+from openpilot.starpilot.tandem.radios import RadioControls
 
 HOTSPOT_PROFILE = "Tandem hotspot"
 
@@ -34,6 +35,7 @@ class WifiManager(upstream.WifiManager):
     self.tethering_name_busy = False
     self.tethering_name_failed = False
     super().__init__(active)
+    self.radios = None if self._fake_networking or self._backend_unavailable else RadioControls()
 
   def _init_connections(self) -> None:
     super()._init_connections()

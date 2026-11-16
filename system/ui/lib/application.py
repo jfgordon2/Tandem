@@ -165,6 +165,7 @@ class FontWeight(StrEnum):
 
 
 KEEP_FONT = False  # Tandem opts out of language-wide fallback only while drawing its own text
+LOADED_AT_START = (FontWeight.NORMAL, FontWeight.UNIFONT, FontWeight.BRAND)  # Tandem: lazy fonts load the other faces' atlases when first drawn
 TEXT_SHAPERS: list[Callable[[str], str]] = []  # Tandem: what to draw for a line, e.g. Arabic joined and right to left
 
 
@@ -495,11 +496,20 @@ class MouseState:
       self._prev_mouse_event[ev.slot] = ev
 
 
+def release_glyph_images(font: rl.Font) -> None:
+  """Free raylib's CPU copy of each glyph. Text draws from the atlas texture and glyph metrics, which stay."""
+  for i in range(font.glyphCount):
+    if font.glyphs[i].image.data != rl.ffi.NULL:
+      rl.unload_image(font.glyphs[i].image)
+      font.glyphs[i].image.data = rl.ffi.NULL
+
+
 class GuiApplication:
   def __init__(self, width: int | None = None, height: int | None = None):
     self._set_log_callback()
 
     self._fonts: dict[FontWeight, rl.Font] = {}
+    self._lazy_atlases: dict[int, FontWeight] = {}
     self._width = width if width is not None else GuiApplication._default_width()
     self._height = height if height is not None else GuiApplication._default_height()
 
@@ -634,7 +644,7 @@ class GuiApplication:
       or WHITE_LUMINANCE_CAP < 1.0
     )
 
-  def init_window(self, title: str, fps: int = _DEFAULT_FPS):
+  def init_window(self, title: str, fps: int = _DEFAULT_FPS, *, lazy_fonts: bool = False):
     with self._startup_profile_context():
       def _request_close(sig, frame):
         self.request_close()
@@ -703,7 +713,7 @@ class GuiApplication:
       self._full_target_fps = fps
       self._target_fps = fps
       self._set_styles()
-      self._load_fonts()
+      self._load_fonts(lazy=lazy_fonts)
       self._patch_text_functions()
       self._patch_scissor_mode()
       if BURN_IN_MODE and self._burn_in_shader is None:
@@ -1016,6 +1026,7 @@ class GuiApplication:
     for font in self._fonts.values():
       rl.unload_font(font)
     self._fonts = {}
+    self._lazy_atlases = {}
 
     if self._render_texture is not None:
       rl.unload_render_texture(self._render_texture)
@@ -1226,16 +1237,48 @@ class GuiApplication:
   def height(self):
     return self._height
 
-  def _load_fonts(self):
+  def _load_fonts(self, *, lazy: bool = False):
+    self._lazy_atlases = {}
     for font_weight_file in FontWeight:
       with as_file(FONT_DIR) as fspath:
         fnt_path = fspath / font_weight_file
         font = rl.load_font(fnt_path.as_posix())
-        if font_weight_file != FontWeight.UNIFONT:
+        if lazy and font_weight_file not in LOADED_AT_START:
+          self._drop_font_atlas(font_weight_file, font)  # Tandem: the face measures from its metrics until it's first drawn
+        elif font_weight_file != FontWeight.UNIFONT:
           rl.gen_texture_mipmaps(font.texture)
           rl.set_texture_filter(font.texture, rl.TextureFilter.TEXTURE_FILTER_TRILINEAR)
+        if lazy:
+          release_glyph_images(font)
         self._fonts[font_weight_file] = font
     rl.gui_set_font(self._fonts[FontWeight.NORMAL])
+
+  def _drop_font_atlas(self, weight: FontWeight, font: rl.Font) -> None:
+    """Tandem: swap a face's atlas for a 1x1 stand-in. Text still measures and wraps from the face's metrics."""
+    rl.unload_texture(font.texture)
+    pixel = rl.gen_image_color(1, 1, rl.BLANK)
+    font.texture = rl.load_texture_from_image(pixel)
+    rl.unload_image(pixel)
+    self._lazy_atlases[font.texture.id] = weight
+
+  def _font_with_atlas(self, stand_in: int) -> rl.Font:
+    """Tandem: the face a stand-in texture belongs to, with its atlas loaded into the font widgets already hold.
+
+    The stand-in is never unloaded, so no later texture takes the id that text caches keyed on it.
+    """
+    weight = self._lazy_atlases[stand_in]
+    font = self._fonts[weight]
+    if font.texture.id == stand_in:
+      with as_file(FONT_DIR) as fspath:
+        face = rl.load_font((fspath / weight).as_posix())
+      rl.gen_texture_mipmaps(face.texture)
+      rl.set_texture_filter(face.texture, rl.TextureFilter.TEXTURE_FILTER_TRILINEAR)
+      glyphs, glyph_count, recs = font.glyphs, font.glyphCount, font.recs
+      rl.ffi.addressof(font)[0] = face
+      rl.unload_font_data(glyphs, glyph_count)
+      rl.mem_free(recs)
+      release_glyph_images(font)
+    return font
 
   def _set_styles(self):
     rl.gui_set_style(rl.GuiControl.DEFAULT, rl.GuiControlProperty.BORDER_WIDTH, 0)
@@ -1251,11 +1294,24 @@ class GuiApplication:
 
     def _draw_text_ex_scaled(font, text, position, font_size, spacing, tint):
       font = font_fallback(font)
+      if font.texture.id in self._lazy_atlases:
+        font = self._font_with_atlas(font.texture.id)  # Tandem: a lazy face gets its atlas the first time it's drawn
       for shaper in TEXT_SHAPERS:
         text = shaper(text)
       return rl._orig_draw_text_ex(font, text, position, font_size * FONT_SCALE, spacing, tint)
 
     rl.draw_text_ex = _draw_text_ex_scaled
+
+    if self._lazy_atlases and not hasattr(rl, "_orig_gui_set_font"):
+      # Tandem: raygui draws with the font it's given, so a lazy face gets its atlas before it's set.
+      rl._orig_gui_set_font = rl.gui_set_font
+
+      def _gui_set_font_loaded(font):
+        if font.texture.id in self._lazy_atlases:
+          font = self._font_with_atlas(font.texture.id)
+        return rl._orig_gui_set_font(font)
+
+      rl.gui_set_font = _gui_set_font_loaded
 
   def _patch_scissor_mode(self):
     if not hasattr(rl, "_orig_begin_scissor_mode"):

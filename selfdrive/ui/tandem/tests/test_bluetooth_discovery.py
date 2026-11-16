@@ -15,6 +15,7 @@ class Manager:
   def __init__(self):
     self.status = BluetoothStatus()
     self.calls = []
+    self._power_pending = False
 
   def set_active(self, active):
     self.calls.append(("active", active))
@@ -57,6 +58,8 @@ def test_first_open_waits_for_status_power_and_adapter_then_renews_scan(adapter)
   manager.status = BluetoothStatus(available=True, offroad=True)
   for _ in range(3):
     bt.tick()
+  assert manager.calls == [("active", True)]   # opening the page respects the Off setting
+  bt.set_power(True)
   assert manager.calls == [("active", True), ("power", True)]
   manager.status = replace(manager.status, enabled=True)
   bt.tick()
@@ -78,11 +81,12 @@ def test_open_while_driving_waits_until_parked(adapter, enabled):
   bt, manager = adapter.bt, adapter.manager
   manager.status = BluetoothStatus(available=True, enabled=enabled, powered=enabled, offroad=False)
   bt.set_active(True)
+  bt.set_power(not enabled)
   bt.tick()
   assert manager.calls == [("active", True)]
   manager.status = replace(manager.status, offroad=True)
   bt.tick()
-  assert manager.calls[-1] == (("scan", True) if enabled else ("power", True))
+  assert manager.calls[-1] == (("scan", True) if enabled else ("active", True))
 
 
 @pytest.mark.parametrize("discovering", [False, True])
@@ -102,6 +106,7 @@ def test_leaving_while_power_starts_does_not_scan_later(adapter):
   bt, manager = adapter.bt, adapter.manager
   manager.status = BluetoothStatus(available=True, offroad=True)
   bt.set_active(True)
+  bt.set_power(True)
   bt.set_active(False)
   manager.status = replace(manager.status, enabled=True, powered=True)
   bt.tick()

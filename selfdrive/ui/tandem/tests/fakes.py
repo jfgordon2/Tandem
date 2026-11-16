@@ -1,6 +1,10 @@
 """Stand-ins for StarPilot's model controller and car catalog, for tests and headless renders."""
+from dataclasses import replace
+
 from openpilot.selfdrive.ui.tandem.settings.model import ModelInfo
+from openpilot.selfdrive.ui.tandem.settings.network_test import Connection, Via
 from openpilot.selfdrive.ui.tandem.settings.vehicle import CarOption, WheelButton
+from openpilot.starpilot.tandem.network_test import Phase, Result
 
 
 class FakeModels:
@@ -150,8 +154,27 @@ class FakeCellular:
     return self.model.status()
 
 
+class FakeRadios:
+  def __init__(self):
+    from openpilot.starpilot.tandem.radios import Radio, RadioState
+    self.states = {radio: RadioState(True, True, True) for radio in Radio}
+    self.writing = self.read_failed = False
+    self.failed = None
+
+  def refresh(self):
+    pass
+
+  def state(self, radio):
+    return self.states.get(radio)
+
+  def set_enabled(self, radio, enabled):
+    from dataclasses import replace
+    self.states[radio] = replace(self.states[radio], enabled=enabled)
+
+
 class FakeWifi:
   def __init__(self):
+    self.radios = FakeRadios()
     self.cellular_status = FakeCellular()
     self.networks = [FakeNet("Home Wi-Fi", 90), FakeNet("Coffee Shop", 60, 0), FakeNet("Neighbor", 30)]
     self.saved = {"Home Wi-Fi"}
@@ -266,6 +289,7 @@ class FakeDevice_:
 
 class FakeBtStatus:
   def __init__(self):
+    self.available = self.enabled = self.powered = True
     self.devices = (FakeDevice_("AA", "Car Audio", True, True, audio=True), FakeDevice_("BB", "Pixel 9"),
                     FakeDevice_("CC", "Wheel Remote", True, True, controller=True))
     self.selected_audio = "AA"
@@ -286,6 +310,14 @@ class FakeBluetooth:
 
   def status(self):
     return self._status
+
+  def set_power(self, enabled):
+    self.calls.append(("power", enabled))
+    self._status.enabled = self._status.powered = enabled
+    self._status.discovering = enabled
+
+  def power_busy(self):
+    return False
 
   def select(self, address):
     self.calls.append(("select", address))
@@ -600,3 +632,28 @@ class FakeCarExtras:
 
   def set_timer(self, seconds):
     self.seconds = seconds
+
+
+class FakeNetworkTest:
+  """The network tester, showing the result a test or render gives it. Nothing is sent anywhere."""
+
+  def __init__(self, shown=None):
+    self.shown = shown or Result()
+    self.calls = []
+
+  def result(self):
+    return self.shown
+
+  def start(self, budget):
+    self.calls.append(("start", budget))
+    self.shown = Result(Phase.DOWNLOAD, budget=budget)
+
+  def stop(self):
+    self.calls.append("stop")
+    if self.shown.running:
+      self.shown = replace(self.shown, phase=Phase.STOPPED, finished=0.0)
+
+
+def home_wifi():
+  """The connection FakeWifi's device is on."""
+  return Connection(Via.WIFI)

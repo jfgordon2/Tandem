@@ -295,6 +295,18 @@
       "match": true
     },
     {
+      "mock": "connectionstest",
+      "title": "Connections › Network Test",
+      "note": "Matches: download, upload and ping from the last test, with the time and the data it used. Before the first test the rows are empty and the button reads Start. The Wi-Fi name comes from the sample network.",
+      "match": true
+    },
+    {
+      "mock": "connectionstestrunning",
+      "title": "Network Test, measuring",
+      "note": "Matches: the row being measured turns blue and the button reads Stop. On cellular or a metered connection a test uses up to 30 MB. The sidebar's Wi-Fi value stays, as the sample data keeps its Wi-Fi network.",
+      "match": true
+    },
+    {
       "mock": "wheelbuttonlearn",
       "title": "Assign a button",
       "note": "Matches. The action grid lists what the remote offers, including each favorite by its saved name, so it differs from the mock's sample list.",
@@ -309,7 +321,7 @@
     {
       "mock": "onroad",
       "title": "Onroad",
-      "note": "Matches: Essentials' speed with its turn signal, the sign, the chip bottom left and the driver monitor tile top right. The street name and its road icon are 28 px; a name that doesn't fit scrolls (onroad/scroll.py) instead of ending in an ellipsis. The stand-in road stands for the camera. Page ground uses true black (#000000).",
+      "note": "Matches: Essentials' speed with its turn signal, the sign, the chip bottom left and the driver monitor tile top right. The 28 px street name can use the full text area and scrolls if it doesn't fit. The stand-in road stands for the camera. Page ground uses true black (#000000).",
       "match": true,
       "built": "onroad_default"
     },
@@ -329,13 +341,20 @@
       "mock": "onroadlarge-nav",
       "title": "Onroad › Larger text, navigating",
       "match": true,
-      "note": "Arrival and time left take turns with the street name (6 s, then the street until a long name has scrolled through, at least 4 s), crossfading; the render shows arrival's turn. The turn card's instruction scrolls when it doesn't fit. Page ground uses true black (#000000)."
+      "note": "When Arrive and Left fit side by side, they share a 6 s turn. The street name takes the next turn for at least 4 s, longer when it scrolls. The turn card's instruction scrolls when it doesn't fit. Page ground uses true black (#000000)."
     },
     {
       "mock": "onroadlarge-nav-street",
       "title": "Onroad › Larger text, navigating, the street's turn",
       "match": false,
-      "note": "The same bar in the street's turn; not rendered separately (the render scene shows arrival's turn). Page ground uses true black (#000000)."
+      "note": "The street name uses the full space before End route. The render scene shows arrival's turn. Page ground uses true black (#000000)."
+    },
+    {
+      "mock": "onroadlarge-nav-tight",
+      "title": "Onroad › Larger text, separate navigation turns",
+      "note": "When Arrive and Left exceed the space between the compass and End route, each gets its own 6 s turn, followed by the street name. The sample street scrolls in the render because the built controls leave less text width than the mock.",
+      "match": false,
+      "built": ["onroadlarge-nav-arrive", "onroadlarge-nav-left", "onroadlarge-nav-tight-street"]
     },
     {
       "mock": "onroadlarge-alert",
@@ -763,6 +782,54 @@
       "mock": "valhalla5-paired-ready",
       "title": "Paired downloads · All maps ready",
       "note": "Approved November 4. All maps ready uses the approved plain wording. All four steps and every region receive green checks after verified activation. The existing shared Install and Checking states remain unchanged. Native device capture inspected beside the approved Chromium mock; layout, counters and wording match. The shared settings header/footer are retained.",
+      "match": true
+    },
+    {
+      "mock": "radio-wifi-on",
+      "title": "Connections › Wi-Fi, radio on",
+      "note": "The top-right switch controls Wi-Fi. The network list and join action are absent while Wi-Fi is off.",
+      "match": true
+    },
+    {
+      "mock": "radio-wifi-off",
+      "title": "Connections › Wi-Fi, radio off",
+      "note": "The top-right switch controls Wi-Fi. The network list and join action are absent while Wi-Fi is off.",
+      "match": true
+    },
+    {
+      "mock": "radio-cellular-on",
+      "title": "Connections › Cellular, radio on",
+      "note": "The status badge and radio switch share the header. The hotspot and saved cellular settings remain available.",
+      "match": true
+    },
+    {
+      "mock": "radio-cellular-off",
+      "title": "Connections › Cellular, radio off",
+      "note": "The status badge and radio switch share the header. The hotspot and saved cellular settings remain available.",
+      "match": true
+    },
+    {
+      "mock": "radio-remote-on",
+      "title": "Connections › Bluetooth Remote, radio on",
+      "note": "The right-hand Bluetooth switch is shared with Car Audio & Devices. Saved wheel mappings stay visible while Bluetooth is off.",
+      "match": true
+    },
+    {
+      "mock": "radio-remote-off",
+      "title": "Connections › Bluetooth Remote, radio off",
+      "note": "The right-hand Bluetooth switch is shared with Car Audio & Devices. Saved wheel mappings stay visible while Bluetooth is off.",
+      "match": true
+    },
+    {
+      "mock": "radio-audio-on",
+      "title": "Connections › Car Audio & Devices, radio on",
+      "note": "The header uses the same Bluetooth radio as Bluetooth Remote. Nearby discovery only runs while Bluetooth is on.",
+      "match": true
+    },
+    {
+      "mock": "radio-audio-off",
+      "title": "Connections › Car Audio & Devices, radio off",
+      "note": "The header uses the same Bluetooth radio as Bluetooth Remote. Nearby discovery only runs while Bluetooth is on.",
       "match": true
     },
     {

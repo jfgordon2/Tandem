@@ -170,6 +170,8 @@ def install():
   rl.draw_rectangle_rounded_lines_ex = lambda r, n, _, w, c: rectangle(r, c, n * min(r.width, r.height) / 2, w)
   rl.draw_circle_v = lambda p, r, c: circle(p, r, c)
   rl.draw_circle_lines_v = lambda p, r, c: circle(p, r, c, 1)
+  rl.draw_ring = lambda p, inner, outer, start, end, _segments, c: paint(lambda pen, _: pen.arc(
+    (p.x - outer, p.y - outer, p.x + outer, p.y + outer), start, end, fill=rgba(c), width=max(1, round(outer - inner))))
   rl.draw_line_ex = lambda a, b, w, c: paint(lambda pen, _: pen.line((a.x, a.y, b.x, b.y), rgba(c), max(1, round(w))))
   rl.draw_triangle = lambda a, b, c, color: polygon([a, b, c], color)
   rl.draw_triangle_strip = lambda p, n, c: [polygon([p[i], p[i+1], p[i+2]], c) for i in range(n-2)]

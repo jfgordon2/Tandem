@@ -867,6 +867,60 @@ def test_save_data_marks_cellular_and_current_wifi_metered():
   assert cache.values["GsmMetered"] and ("gsm", False, "fast.apn", True) in wifi.calls and ("metered", 1) in wifi.calls
 
 
+def test_radio_switches_stop_wifi_scanning_and_keep_cellular_independent() -> None:
+  from openpilot.starpilot.tandem.radios import Radio
+  net, wifi, _, _ = _network()
+  wifi_switch = net.radio_switch(Radio.WIFI)
+  cell_switch = net.radio_switch(Radio.CELLULAR)
+  assert wifi_switch is not None and cell_switch is not None
+  net.set_wifi_page(True)
+  assert wifi.calls[-1] == ("active", True)
+
+  wifi_switch._on_change(False)
+  net.tick()
+  assert wifi.calls[-1] == ("active", False)
+  assert not net.networks() and net.summary() == "Off"
+  assert cell_switch.value
+  net.set_hotspot(True)
+  assert not wifi.tethering
+
+  wifi_switch._on_change(True)
+  net.tick()
+  cell_switch._on_change(False)
+  assert wifi_switch.value and wifi.calls[-1] == ("active", True)
+  assert net.cellular_label() == "Off" and net.cellular_address() == "Not connected"
+  assert net.cellular_meta() == "Mobile broadband is off"
+  net.set_hotspot(True)
+  assert wifi.tethering
+
+
+def test_radio_switches_use_confirmed_state_after_failed_refresh() -> None:
+  from openpilot.starpilot.tandem.radios import Radio
+  net, wifi, _, _ = _network()
+  for radio in Radio:
+    switch = net.radio_switch(radio)
+    assert switch is not None
+    wifi.radios.read_failed = True
+    assert switch.enabled and switch.value
+    wifi.radios.writing = True
+    assert not switch.enabled and switch.value
+    wifi.radios.writing = False
+    assert switch.enabled and switch.value
+
+
+def test_bluetooth_header_switches_share_one_setting() -> None:
+  from openpilot.selfdrive.ui.tandem.settings.bluetooth_tab import bluetooth_switch
+  from openpilot.selfdrive.ui.tandem.tests.fakes import FakeBluetooth
+  adapter = FakeBluetooth()
+  remote, audio = bluetooth_switch(adapter).right, bluetooth_switch(adapter).right
+  assert remote.value and audio.value
+  remote._on_change(False)
+  assert not remote.value and not audio.value
+  audio._on_change(True)
+  assert remote.value and audio.value
+  assert adapter.calls == [("power", False), ("power", True)]
+
+
 def test_wheel_buttons_highlight_and_assign():
   from openpilot.selfdrive.ui.tandem.settings.bluetooth_tab import AssignSheet, WheelButtons
   from openpilot.selfdrive.ui.tandem.tests.fakes import FakeWheel
@@ -903,12 +957,15 @@ def test_cancelling_assignment_removes_a_learned_button():
   assert [m["id"] for m in source.maps] == ["a", "b"] and source.learning is None
 
 
-def _connections(window, wheel, bt, section):
+def _connections(window, wheel, bt, section, test=None):
   from openpilot.selfdrive.ui.tandem.settings import connections
   from openpilot.selfdrive.ui.tandem.settings.bluetooth_tab import WheelButtons
   from openpilot.selfdrive.ui.tandem.settings.network_tab import Network
-  from openpilot.selfdrive.ui.tandem.tests.fakes import FakeWifi
-  page = connections.connections_page(Network(FakeWifi(), window.store), lambda: None, WheelButtons(wheel), bt, window)
+  from openpilot.selfdrive.ui.tandem.settings.network_test import NetworkTestModel
+  from openpilot.selfdrive.ui.tandem.tests.fakes import FakeNetworkTest, FakeWifi, home_wifi
+  wifi = FakeWifi()
+  model = NetworkTestModel(test or FakeNetworkTest(), lambda: wifi.connected_ssid, home_wifi)
+  page = connections.connections_page(Network(wifi, window.store), lambda: None, WheelButtons(wheel), bt, window, model)
   page.select(section)
   return page
 
@@ -923,7 +980,7 @@ def test_connections_sections_keep_radios_busy_only_while_shown():
   window._roots[Tab.CONNECTIONS] = lambda: page
   window.show_event()
   window.select_tab(Tab.CONNECTIONS)
-  assert [s.label for s in page._sections] == ["Wi-Fi", "Cellular", "Bluetooth Remote", "Car Audio & Devices"]
+  assert [s.label for s in page._sections] == ["Wi-Fi", "Cellular", "Bluetooth Remote", "Car Audio & Devices", "Network Test"]
   assert not source.state["testing"] and ("active", True) not in bt.calls     # Wi-Fi open: Bluetooth idle
   page.select(connections.AUDIO)
   assert bt.calls[-1] == ("active", True)
@@ -1301,18 +1358,21 @@ def _search_window():
   from openpilot.selfdrive.ui.tandem.settings import window as W
   from openpilot.selfdrive.ui.tandem.settings.bundles import TUNER_MODE
   from openpilot.selfdrive.ui.tandem.tests.fakes import (FakeBluetooth, FakeBootLogos, FakeCarExtras, FakeCars, FakeData,
-                                                         FakeDeveloperSource, FakeMaps, FakeModels, FakeUpdates, FakeWheel, FakeWifi)
+                                                         FakeDeveloperSource, FakeMaps, FakeModels, FakeNetworkTest, FakeUpdates,
+                                                         FakeWheel, FakeWifi, home_wifi)
   models, wheel, maps = FakeModels(), FakeWheel(), FakeMaps()
   window = W.SettingsWindow(store=SettingsStore(FakeCache(), lambda: None), live=FakeLive(), model_source=lambda: models,
                             car_catalog=FakeCars, device_data=FakeData, device=FakeDevice, wifi=FakeWifi, wheel=lambda: wheel,
                             bluetooth=FakeBluetooth, updates=FakeUpdates, maps_source=lambda: maps, boot_logos=FakeBootLogos,
-                            developer_source=FakeDeveloperSource, car_extras=FakeCarExtras)
+                            developer_source=FakeDeveloperSource, car_extras=FakeCarExtras, network_test=FakeNetworkTest,
+                            connection=home_wifi)
   TUNER_MODE.set(window.store, True)
   return window
 
 
-# Rows named after data (networks, backups, devices, the car's own buttons), not settings
-DATA_ROWS = {"Home Wi-Fi", "Coffee Shop", "Neighbor", "Car Audio", "Pixel 9", "Home", "Work", "Distance", "LKAS", "Cruise main"}
+# Rows named after data (networks, backups, devices, the car's own buttons, what the network test measures), not settings
+DATA_ROWS = {"Home Wi-Fi", "Coffee Shop", "Neighbor", "Car Audio", "Pixel 9", "Home", "Work", "Distance", "LKAS", "Cruise main",
+             "Download", "Upload", "Ping"}
 
 
 def test_search_index_matches_every_settings_screen():

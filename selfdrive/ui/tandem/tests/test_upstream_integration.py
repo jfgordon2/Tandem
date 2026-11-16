@@ -184,7 +184,7 @@ def test_font_shaping_and_fallback_are_scoped_to_tandem(monkeypatch):
   with draw._own_font:
     assert application.KEEP_FONT and len(application.TEXT_SHAPERS) == len(before) + 2
   assert not application.KEEP_FONT and application.TEXT_SHAPERS == before
-  monkeypatch.setattr(fonts.rl, "load_font", lambda path: SimpleNamespace(texture=SimpleNamespace(id=1), source=path))
+  monkeypatch.setattr(fonts.rl, "load_font", lambda path: SimpleNamespace(texture=SimpleNamespace(id=1), source=path, glyphCount=0, glyphs=[]))
   monkeypatch.setattr(fonts.rl, "gen_texture_mipmaps", lambda _: None)
   monkeypatch.setattr(fonts.rl, "set_texture_filter", lambda *args: None)
   monkeypatch.setattr(fonts, "_loaded", {})

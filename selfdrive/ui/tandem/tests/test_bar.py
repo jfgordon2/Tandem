@@ -1,6 +1,9 @@
 """The drive screen's bar: Where to? beside MAX without a route (design/onroadwhereto.html), none while navigating."""
 import pyray as rl
+import pytest
 
+from openpilot.selfdrive.ui.tandem.layout import Align
+from openpilot.selfdrive.ui.tandem.onroad import layers
 from openpilot.selfdrive.ui.tandem.onroad.layers import BarState, OnroadBar
 
 RECT = rl.Rectangle(0, 0, 2160, 1080)
@@ -30,3 +33,21 @@ def test_the_button_opens_where_to():
   bar = _bar(BarState(), lambda: opened.append(True))
   bar._where._click_callback()
   assert opened == [True]
+
+
+@pytest.mark.parametrize(("alignment", "text_width", "x", "width"), [
+  (Align.CENTER, 160, 40, 160),
+  (Align.START, 160, 20, 160),
+  (Align.START, 240, 20, 200),
+])
+def test_street_uses_the_full_text_area(monkeypatch: pytest.MonkeyPatch, alignment: Align, text_width: int, x: int, width: int) -> None:
+  bar = _bar(BarState())
+  boxes: list[tuple[float, float]] = []
+
+  def record(box: rl.Rectangle, *_args: object, **_kwargs: object) -> None:
+    boxes.append((box.x, box.width))
+
+  monkeypatch.setattr(layers.draw, "text_width", lambda *_args: text_width)
+  monkeypatch.setattr(bar._street_scroll, "draw", record)
+  bar._street(rl.Rectangle(20, 0, 200, 90), "University Ave", alignment, RECT)
+  assert boxes == [(x, width)]

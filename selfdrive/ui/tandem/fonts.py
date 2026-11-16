@@ -8,10 +8,11 @@ from __future__ import annotations
 
 from enum import StrEnum
 from importlib.resources import as_file
+import os
 
 import pyray as rl
 
-from openpilot.system.ui.lib.application import FONT_DIR, FontWeight
+from openpilot.system.ui.lib.application import FONT_DIR, FontWeight, release_glyph_images
 
 
 class ExtraFont(StrEnum):
@@ -33,18 +34,27 @@ FONT_FILES: dict[Face, str] = {
 _loaded: dict[str, rl.Font] = {}
 
 
+def lazy_upstream_fonts() -> bool:
+  return all(os.getenv(switch, "1") != "0" for switch in ("TANDEM_HOME", "TANDEM_SETTINGS", "TANDEM_ONROAD", "TANDEM_SIDEBAR"))
+
+
 def font_file(face: Face) -> str:
   return FONT_FILES.get(face, str(face))
 
 
 def font(face: Face) -> rl.Font:
-  """The face's font, loaded the first time it's asked for and kept, with mipmaps so scaled text stays smooth."""
+  """The face's font, loaded the first time it's asked for and kept, with mipmaps so scaled text stays smooth.
+
+  raylib's CPU copy of each glyph is freed once the atlas is on the GPU: text draws from the texture and the glyph
+  metrics, so the copies only held RAM (about 1.7 MB a face, 9 MB for the fallback).
+  """
   filename = font_file(face)
   if filename not in _loaded:
     with as_file(FONT_DIR) as path:
       loaded = rl.load_font((path / filename).as_posix())
     rl.gen_texture_mipmaps(loaded.texture)
     rl.set_texture_filter(loaded.texture, rl.TextureFilter.TEXTURE_FILTER_TRILINEAR)
+    release_glyph_images(loaded)
     _loaded[filename] = loaded
   return _loaded[filename]
 

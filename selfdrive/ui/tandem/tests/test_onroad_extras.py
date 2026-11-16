@@ -23,8 +23,7 @@ def test_pedals_follow_starpilots_modes():
   assert brake == 0.25 and gas == 0.6
 
 
-def test_compass_heading_and_stop_distance():
-  assert X.heading("- NE -") == "NE" and X.heading(None) == ""
+def test_stop_distance():
   assert X.stop_text(45, True) == "45 m" and X.stop_text(45, False) == "148 ft"
 
 
