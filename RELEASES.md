@@ -1,3 +1,11 @@
+Tandem 2026.11.16
+========================
+* New Network Test in Connections: measures download speed, upload speed and ping
+* Turn Wi-Fi, cellular and Bluetooth on or off from their sections in Connections
+* Uses less memory while parked and driving, mostly from smaller fonts
+* Street names get more room on the driving screen, and trip estimates take turns when Text Size needs the space
+* The driving compass keeps its last reliable heading
+
 Tandem 2026.11.11
 ========================
 * Fixed a memory leak in navigation turn status during drives
