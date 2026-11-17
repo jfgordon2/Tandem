@@ -19,6 +19,16 @@ stage 2 is done, `development` boots as stock StarPilot 7.0.
   release's Bluetooth Remote screen sets buttons through StarPilot's owners. Release's own wheel service isn't ported.
 - **Settings StarPilot 7 dropped:** their rows are left out; rows whose meaning changed use StarPilot 7's owners (the param
   map below). Nothing dropped is rebuilt in Tandem.
+- **Driving Style:** Relaxed = Relaxed personality with Comfort acceleration and braking; Standard = Standard with StarPilot
+  Default for both; Sport = Aggressive with Sport for both (StarPilot 7's `profile:global_acceleration` and
+  `profile:global_braking`).
+- **Smart Slowdowns:** on = Driving Mode Automatic and the Curve Speed Controller on; off = Chill and the controller off.
+- **MAX follows limits stays:** when it's on and the car is engaged on StarPilot's own cruise, each newly accepted limit
+  is adopted once through StarPilot's adopt action (`SlcActionKind.ADOPT`), which moves SET to the adjusted limit. Where the
+  car's cruise owns SET, StarPilot can't move it, and the row says so. StarPilot 7 already keeps the car under each
+  accepted limit plus offset whatever SET is.
+- **Gone with StarPilot 7:** Vehicle Profile's EV and Towing (truck tuning is GM-only and shows with that car's options),
+  Weather's driving presets (Weather heads-up stays).
 - **Languages:** Tandem's picker is StarPilot 7's list plus Arabic. Vietnamese shows Tandem's screens in English until
   translated.
 
