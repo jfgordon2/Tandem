@@ -15,8 +15,11 @@ from openpilot.common.constants import CV
 from openpilot.selfdrive.ui.onroad.augmented_road_view import AugmentedRoadView
 from openpilot.selfdrive.ui.tandem.onroad import alerts, size as Z
 from openpilot.selfdrive.ui.tandem.onroad.compass import DriveCompass
+from openpilot.selfdrive.ui.tandem.onroad import developer
+from openpilot.selfdrive.ui.tandem.onroad.lead import GapTagState, GapTracker, detailed_tag_on, lead_anchor, read_lead_sample
+from openpilot.selfdrive.ui.tandem.onroad.layers import bar_height, bar_margin
 from openpilot.selfdrive.ui.tandem.onroad.limits import LimitFollower
-from openpilot.selfdrive.ui.tandem.prefs import MAX_FOLLOWS_LIMIT
+from openpilot.selfdrive.ui.tandem.prefs import LEAD_TAG, MAX_FOLLOWS_LIMIT
 from openpilot.selfdrive.ui.tandem.onroad.binding import driving_alert, lane_change, proposal
 from openpilot.selfdrive.ui.tandem.onroad.layers import AT_LIMIT, ArcState, BarState, Headroom
 from openpilot.selfdrive.ui.tandem.onroad.overlay import OnroadOverlay, road_rect
@@ -55,6 +58,14 @@ class EssentialsOnroad(AugmentedRoadView):
     self._display = DriveDisplay()
     self._compass = DriveCompass()
     self._follower = LimitFollower()
+    self._gap_tracker = GapTracker()
+    self._gap_state: GapTagState | None = None
+    self._lead_tag_on, self._lead_tag_read = True, -1.0   # prefs.LEAD_TAG, read once a second
+    self._dev: developer.DevData | None = None            # Developer View's values while StarPilot's sidebar setting is on
+    self._road = rl.Rectangle(0, 0, 0, 0)                  # the road view's inner rect, for the lead tag's bounds
+    # The lead tag takes the place of the text StarPilot's renderer draws above its lead marker (its Lead Info).
+    self._stock_lead_info = self.model_renderer._draw_lead_info
+    self.model_renderer._draw_lead_info = self._draw_lead_info  # type: ignore[method-assign]
     self._native: OnroadState | None = None
     self._road_sm: messaging.SubMaster | None = None
     self._ram = RamWatch()
@@ -206,7 +217,47 @@ class EssentialsOnroad(AugmentedRoadView):
       proposal=limit_offer(state, allowed and not self._safe, now_ns),
     )
     self._follow_limit(state, allowed and not self._safe)
+    self._update_lead(state)
+    self._dev = developer.read(sm, state, bool(state.metric)) if state.appearance.show_developer_sidebar else None
     return visible_alert is not None and visible_alert.level == alerts.CRITICAL
+
+  LEAD_THRESHOLD = 0.35   # the model's confidence for a sure lead (release's Lead Detection Sensitivity default)
+
+  def _update_lead(self, state: OnroadState) -> None:
+    """The lead tag's state, and what StarPilot's renderer draws above its lead marker: our tag when it's on, otherwise
+    StarPilot's Lead Info. The marker shows as on StarPilot's own screen."""
+    now = time.monotonic()
+    if now - self._lead_tag_read >= 1.0:   # Display › Driving Screen › Lead Car Tag
+      self._lead_tag_on, self._lead_tag_read = LEAD_TAG.get(), now
+    appearance = state.appearance
+    mode = 1 if self._lead_tag_on else int(appearance.lead_info_mode)   # any mode but Off asks the renderer for the text
+    self.model_renderer.lead_display = (True, mode, appearance.lead_info_metric)
+    self._gap_state = self._gap_tracker.update(read_lead_sample(ui_state, self.LEAD_THRESHOLD), now) if self._lead_tag_on else None
+
+  def _draw_lead_info(self, lead: Any, text: str) -> None:
+    """Above the lead marker: Tandem's tag, or StarPilot's own text when the tag is off."""
+    if not self._lead_tag_on:
+      self._stock_lead_info(lead, text)
+      return
+    state, anchor = self._gap_state, lead_anchor(lead.chevron)
+    native = self._native
+    if state is None or anchor is None or native is None:
+      return
+    developer.draw_lead_tag(anchor.x, anchor.y, state.lead, compact=not detailed_tag_on(native.appearance), value=state.label,
+                            anchored=True, opacity=state.opacity, progress=state.progress, bounds=self._road, floor=self._tag_floor())
+
+  def _strip_rect(self, inner: rl.Rectangle) -> rl.Rectangle | None:
+    """Developer View's strip, just above the bar, when it has metrics to show."""
+    if self._dev is None or not self._dev.strip:
+      return None
+    bottom = inner.y + inner.height - bar_margin() - bar_height() - developer.strip_gap()
+    return rl.Rectangle(inner.x, bottom - developer.strip_h(), inner.width, developer.strip_h())
+
+  def _tag_floor(self) -> float:
+    """The lowest a lead tag may sit: above the metrics strip when it's shown, otherwise above the bar."""
+    inner = self._road
+    strip = self._strip_rect(inner)
+    return (strip.y if strip is not None else inner.y + inner.height - bar_margin() - bar_height()) - developer.strip_gap()
 
   def _follow_limit(self, state: OnroadState, allowed: bool) -> None:
     """MAX follows limits: adopt each new posted limit once through StarPilot's ADOPT, where StarPilot sets MAX."""
@@ -232,6 +283,10 @@ class EssentialsOnroad(AugmentedRoadView):
     if state is None:
       return
     critical = self._display.alert is not None and self._display.alert.level == alerts.CRITICAL
+    if self._dev is not None and not critical:   # Developer View's panel takes the right of the screen
+      developer.draw_panel(rl.Rectangle(rect.x + rect.width - developer.WIDTH, rect.y, developer.WIDTH, rect.height), self._dev)
+      rect = rl.Rectangle(rect.x, rect.y, rect.width - developer.WIDTH, rect.height)
+    self._road = road_rect(rect)
     if not critical:
       inner = road_rect(rect)
       rl.begin_scissor_mode(int(inner.x), int(inner.y), int(inner.width), int(inner.height))
@@ -241,6 +296,9 @@ class EssentialsOnroad(AugmentedRoadView):
       finally:
         rl.end_scissor_mode()
     self._overlay.render(rect)
+    strip = self._strip_rect(self._road)
+    if strip is not None and self._dev is not None and self._display.alert is None and not self._display.help_steer:
+      developer.draw_strip(strip, self._dev)
 
   def _can_act(self) -> bool:
     state = self._native
@@ -270,6 +328,8 @@ class EssentialsOnroad(AugmentedRoadView):
 
   def hide_event(self) -> None:
     super().hide_event()
+    self._gap_tracker.reset()
+    self._gap_state = None
     self._display, self._native = DriveDisplay(), None
     self._prepared = False
     self._headroom.stage(0.0, 0.0, active=False)

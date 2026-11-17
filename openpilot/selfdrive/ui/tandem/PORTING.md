@@ -499,6 +499,18 @@ WarningImmediateVolume WarningSoftVolume
   is pending, so a higher limit is followed after the driver accepts it. `tests/test_limit_follower.py` is rewritten for
   this; release's checked MAX values Tandem worked out itself.
 
+## Stage 4: lead tag and Developer View
+
+- The lead tag (`onroad/lead.py`) takes the place of the text StarPilot 7's model renderer draws above its lead marker:
+  the view sets `model_renderer.lead_display` as StarPilot's own screen does and draws Tandem's tag from
+  `_draw_lead_info` (the stock text when Lead Car Tag is off). StarPilot's marker stays its own; release's lead bars
+  and adjacent-lead markers relied on StarPilot 6's renderer hooks and aren't ported.
+- Developer View (`onroad/developer.py`) shows when StarPilot's Developer Sidebar setting is on: the panel takes the right
+  of the screen, its Controls section lists StarPilot 7's developer metrics, and the strip sits above the bar. StarPilot
+  7 publishes no planned jerk or danger factor, so the strip offers the other seven metrics.
+- `tests/test_lead_tag.py` keeps release's tracker and drawing tests; its view tests targeted StarPilot 6's renderer.
+  `tools/render/scene_developer.py` renders `onroaddev` and `gaptag`.
+
 ## Tests still on `release` only
 
 Ported so far: `test_fallback_font.py`, `test_compass.py`, `test_network_test.py` (but its settings search test), `test_cellular_status.py`, `test_hotspot_name.py`, `test_network_touches.py` (StarPilot 7 has no PC-only touch path), `test_alert_levels.py`, `test_bar.py`, `test_streets.py`, `test_keyboard.py`,
@@ -512,7 +524,7 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
 | `test_translations.py`: the template, metadata, coverage and completed-language checks, Developer View labels, picker languages | Every screen ported, then `tools/translations.py update` (end of stage 4) |
 | `test_font_loading.py`: lazy fonts, glyph release and alert faces | Glyph release when restored, then lazy loading and alert faces with the screen port (stage 4) |
 | `test_upstream_integration.py`: all but the text hooks and the sidebar factory | Their hooks and modules (stages 3 to 6) |
-| `test_turn_signals.py`, `test_lead_tag.py`, `test_onroad*.py`, `test_chip_events.py` (StarPilot 6's message reader; its rules are covered by the chip tests), `test_headroom_warning.py`, `test_limit_offers.py`, `test_developer_view.py` | Onroad (stage 4) |
+| `test_turn_signals.py`, `test_onroad*.py`, `test_chip_events.py` (StarPilot 6's message reader; its rules are covered by the chip tests), `test_headroom_warning.py`, `test_limit_offers.py`, `test_developer_view.py` | Onroad (stage 4) |
 | `test_forecast.py`, `test_menu_idle.py`, `test_ram.py` | Home and sidebar (stage 4) |
 | `test_developer.py`, `test_software_dialogs.py`, `test_storage_sizes.py`, `test_prebuilt_params.py` | Settings screens and owner integration (stage 4) |
 | `test_destinations.py`, `test_routemap.py`, `test_routing_ui.py`, `test_map_progress.py` | Navigation and routing (stage 5) |
