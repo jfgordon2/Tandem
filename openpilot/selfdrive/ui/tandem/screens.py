@@ -11,7 +11,7 @@ from __future__ import annotations
 
 from collections.abc import Callable, Mapping
 import os
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from openpilot.system.ui.widgets import Widget
 
@@ -46,6 +46,26 @@ def ui_selection(selection: UiSelection, big_ui: bool, environment: Mapping[str,
 
 def _enabled(name: str, environment: Mapping[str, str] = os.environ) -> bool:
   return environment.get("STARPILOT_UI") != "upstream" and environment.get(name, "1") != "0"
+
+
+def star_input(layout: Any, big_ui: bool, environment: Mapping[str, str] = os.environ) -> tuple[Any, Any]:
+  """StarPilot 7's wheel buttons, favorites, controllers and Android Auto taps for Tandem's MainLayout (star_input.py), as
+  (session, per-frame input) for ui.py's frame loop; (None, None) without Tandem's screens, as on openpilot's own layout.
+
+  Args:
+    layout: The MainLayout ui.py made.
+    big_ui: Whether this is the big UI.
+    environment: The process environment.
+  """
+  if not essentials_ui(big_ui, environment):
+    return None, None
+  try:
+    from openpilot.selfdrive.ui.tandem.star_input import star_input as make
+    return make(layout)
+  except Exception:   # the screens must come up even if StarPilot's input can't: they'd be as before
+    from openpilot.common.swaglog import cloudlog
+    cloudlog.exception("Tandem: StarPilot's input could not start")
+    return None, None
 
 
 _settings: list[Widget] = []   # Tandem's settings window, once MainLayout has made it

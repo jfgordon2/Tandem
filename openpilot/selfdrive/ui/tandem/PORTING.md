@@ -523,6 +523,19 @@ WarningImmediateVolume WarningSoftVolume
   on openpilot's `CabinCameraDialog`; attention comes from `driverMonitoringState.awarenessStatus`) are ported.
 - Waits for routing: Home's destinations, route map, Mapbox help and routing status.
 
+## Stage 6: StarPilot's input on Tandem's screens
+
+- StarPilot 7 runs wheel buttons, favorites, controllers (Bluetooth remotes, keyboards, gamepads) and Android Auto taps
+  from its own app's session, which Tandem replaces. `star_input.py`'s `TandemStarSession` is that session for input
+  only: it subclasses `StarShellSession`, sets what the input methods read the way StarPilot's `__init__` does, skips
+  the drawing (fonts, view, PiP, map layer, favorite tiles), and inherits every decision. ui.py's frame loop polls it
+  as it does StarPilot's (one line, `screens.star_input`), and `TandemInput` adds the wheel while driving and StarPilot's
+  `ControllerRuntime`. Bookmark, personality and Experimental mode come from openpilot's MainLayout, toggles and button.
+- `tests/test_star_input.py` fails when a merge changes what those methods read or how StarPilot sets it.
+- Starting it can't take the screens down: a failure to start leaves Tandem as before, and a failing poll is logged once.
+- Still to check on the device: a wheel button press while driving, and a Bluetooth remote.
+- Next: Connections' Bluetooth Remote (the controller owner's bindings) and Car Audio & Devices (`BluetoothOwner`).
+
 ## Tests still on `release` only
 
 Ported so far: `test_fallback_font.py`, `test_compass.py`, `test_network_test.py` (but its settings search test), `test_cellular_status.py`, `test_hotspot_name.py`, `test_network_touches.py` (StarPilot 7 has no PC-only touch path), `test_alert_levels.py`, `test_bar.py`, `test_streets.py`, `test_keyboard.py`,

@@ -13,7 +13,7 @@ from openpilot.selfdrive.ui.ui_state import device, ui_state
 from openpilot.starpilot.ui.presentation import Profile
 from openpilot.starpilot.ui.startup import select_ui
 from openpilot.starpilot.ui.wheel_input import poll_screen_off_wheel
-from openpilot.selfdrive.ui.tandem.screens import ui_selection
+from openpilot.selfdrive.ui.tandem.screens import star_input, ui_selection
 
 BIG_UI = gui_app.big_ui()
 
@@ -82,6 +82,7 @@ def main():
 
   pm = messaging.PubMaster(['uiDebug'])
   star = layout.star if star_ui else None
+  star, controllers = (star, controllers) if star_ui else star_input(layout, BIG_UI)  # Tandem: StarPilot's input on its screens
   try:
     poll_arabesque = layout.poll_arabesque if BIG_UI else None
     for should_render, frame_time, cpu_time in gui_app.render(before_frame=lambda: update_frame(preview, controllers, star, poll_game_mode, poll_arabesque)):
