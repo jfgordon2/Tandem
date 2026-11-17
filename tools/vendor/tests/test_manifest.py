@@ -208,7 +208,7 @@ class TestManifestSourceTrees(unittest.TestCase):
     with self.assertRaises(ValueError):
       validate_worktree(self.repo)
     (folder / '.git').rmdir()
-    (folder / 'AGENTS.md').write_text('Excluded metadata')
+    (folder / '.gitmodules').write_text('Excluded metadata')
     self.commit()
     self.assert_invalid_revision_and_worktree()
 
@@ -260,8 +260,20 @@ class TestManifestSourceTrees(unittest.TestCase):
     self.git("commit", "-m", "Nested gitlink fixture")
     self.assert_invalid_revision_and_worktree()
 
+  def test_agents_md_is_allowed(self):
+    # Tandem keeps its AGENTS.md; a dependency's own is still kept out by its exclude list.
+    for path in (self.repo / "AGENTS.md", self.repo / "panda" / "nested" / "agents.md"):
+      with self.subTest(path=path):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("Agent instructions\n")
+        self.commit()
+        self.assertEqual(validate_revision(self.repo, "HEAD"), self.manifest)
+        self.assertEqual(validate_worktree(self.repo), self.manifest)
+        path.unlink()
+        self.commit()
+
   def test_tracked_metadata_is_rejected(self):
-    for name in (".gitmodules", "AGENTS.md", "nested/agents.md"):
+    for name in (".gitmodules", "nested/.gitmodules", "nested/.GITMODULES"):
       with self.subTest(name=name):
         path = self.repo / "panda" / name
         path.parent.mkdir(parents=True, exist_ok=True)

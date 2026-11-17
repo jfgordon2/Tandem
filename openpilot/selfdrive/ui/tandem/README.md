@@ -60,6 +60,7 @@ Tandem merges StarPilot 7 (`Dom`). New behavior, presentation, assets, tools and
 | `openpilot/system/manager/process_config.py` | The automatic uploader uses Tandem’s release Off, Parked and Always predicate. Missing preferences and the recovery switches leave the process on its native schedule. Network policy remains in the uploader. |
 | `openpilot/starpilot/maps/operation_owner.py` | Dispatches Tandem’s local snapshot removal request to code that shares the native admission lock and parked authority. |
 | `openpilot/starpilot/navigation/navtilesd.py` | Handles the local map removal request between tile writes and acknowledges cleanup to the parked map owner. |
+| `openpilot/common/vendor_manifest.py`, `tools/vendor/tests/test_manifest.py` | The source check no longer refuses a tracked file named `AGENTS.md` (it still refuses `.gitmodules`), so a device can install a branch that keeps Tandem's `AGENTS.md`. A dependency's own `AGENTS.md` stays out through its `exclude` list in `upstream-sync.json`. The tests check that `AGENTS.md` is allowed and `.gitmodules` refused. A device running a build with upstream's check refuses this branch until it's installed once by hand. |
 
 **After a merge:** if StarPilot changed `raylib_extra.cc` or its `_raylib_extra.so`, keep upstream's versions, add Tandem's
 `release_font_glyph_images` method to the source again, rebuild the extension on a comma (AGNOS, ARM64), and refresh
