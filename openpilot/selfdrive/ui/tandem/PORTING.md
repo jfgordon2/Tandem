@@ -363,8 +363,14 @@ WarningImmediateVolume WarningSoftVolume
   unused native HUD and sidebar fonts. Inter Regular, Bold, Unifont and the selected language fallback are ready
   at startup. Inter keeps its atlas and metrics and releases its CPU glyph images after each texture upload.
   A host render kept identical text pixels and metrics after releasing the glyphs twice and unloading the font.
-  Stock and recovery paths keep their font storage and loading order. The device prebuilt needs the updated native
-  raylib extension before testing boot memory and the first alert on the comma. Older artifacts retain their CPU glyphs.
+  Stock and recovery paths keep their font storage and loading order. The bundled Linux/ARM64 raylib extension
+  was rebuilt in a temporary directory on AGNOS 20.5.2 with the pinned nanobind and raylib headers. The other
+  native artifacts and their build inputs match the upstream prebuilt. The device artifact and Params registry
+  checks passed.
+- An isolated font-loader run on the parked comma rendered identical text and loaded Inter Medium on demand.
+  Regular and Bold released 13.5 MiB of CPU glyph images at startup. The measured RSS added by font loading
+  dropped by about 8 MiB compared with lazy loading alone and about 53 MiB compared with eager loading.
+  Full UI boot and first-alert checks are pending.
 
 ## Stage 4: Device › Backups
 
