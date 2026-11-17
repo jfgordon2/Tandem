@@ -11,6 +11,21 @@ stage 2 is done, `development` boots as stock StarPilot 7.0.
 | 4. Screens | Parked Home, driving overlays, Software, This Device and RAM ported |
 | 5 to 6 | Not started |
 
+## Decisions for the rest of the port (owner, 2026-11-16)
+
+- **Offline routing:** port Tandem's Valhalla routing as a provider inside StarPilot 7's navigation, keeping Offline maps
+  only and Online / Offline. It goes last.
+- **Wheel buttons, favorites, Android Auto actions:** Tandem starts StarPilot 7's controller runtime with its own screens;
+  release's Bluetooth Remote screen sets buttons through StarPilot's owners. Release's own wheel service isn't ported.
+- **Settings StarPilot 7 dropped:** their rows are left out; rows whose meaning changed use StarPilot 7's owners (the param
+  map below). Nothing dropped is rebuilt in Tandem.
+- **Languages:** Tandem's picker is StarPilot 7's list plus Arabic. Vietnamese shows Tandem's screens in English until
+  translated.
+
+Order: Connections; the Driving tab; Device's remaining pieces and settings search; the rest of the driving screen; Home's
+navigation pieces and first-run setup; StarPilot's controller runtime and the services; Valhalla routing; fork-wide
+policies, workflows and the translation catalog.
+
 ## Why a port and not a merge
 
 `Dom` has no history in common with `release`. It is rebuilt on openpilot's full history, so `git merge` refuses it
