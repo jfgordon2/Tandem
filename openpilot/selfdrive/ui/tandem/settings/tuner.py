@@ -41,7 +41,8 @@ class Tunable:
 
 
 # Each section's StarPilot pages: every row they list for this car, in StarPilot's order, without the master switches.
-STEERING_PAGES = ("lane", "torque", "tuning")
+# StarPilot's "tuning" page (its manual steering tune, dozens of per-side values) stays on StarPilot's own screens.
+STEERING_PAGES = ("lane", "torque")
 STEERING_SKIP = {"LaneCentering"}
 GAS_BRAKE = [Tunable("profiles", key) for key in ("profile:global_acceleration", "profile:global_braking", "ForceStopDistanceOffset",
                                                   "profile:stopped_gap", "FasterLeadTakeoff", "LeadApproachBuffer", "ExperimentalSpeedNudge")]

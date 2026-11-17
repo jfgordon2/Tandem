@@ -158,3 +158,11 @@ def test_tuner_marks_overrides_against_starpilots_defaults_and_resets_them(owner
   assert [t.key for t in tuner.steering()] == ["LaneCenterOffset"]
   tuner.reset_all()
   assert page(owner, "relaxed")["RelaxedFollow"] == "1.6" and tuner.following_changes() == 0
+
+
+def test_tuner_leaves_starpilots_manual_steering_tune_on_its_own_screens(owner: Owner) -> None:
+  owner.pages["tuning"] = {"torque:surface:ff_gain_left": Owner({"x": {"k": "0.0"}}).pages["x"]["k"]}
+  owner.pages["tuning"]["torque:surface:ff_gain_left"] = replace(owner.pages["tuning"]["torque:surface:ff_gain_left"],
+                                                                  key="torque:surface:ff_gain_left", step=0.01)
+  owner.pages["torque"] = {"torque:friction:value": replace(owner.pages["tuning"]["torque:surface:ff_gain_left"], key="torque:friction:value")}
+  assert [t.key for t in Tuner(owner.rows).steering()] == ["torque:friction:value"]
