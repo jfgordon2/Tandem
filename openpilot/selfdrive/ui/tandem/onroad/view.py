@@ -15,6 +15,8 @@ from openpilot.common.constants import CV
 from openpilot.selfdrive.ui.onroad.augmented_road_view import AugmentedRoadView
 from openpilot.selfdrive.ui.tandem.onroad import alerts, size as Z
 from openpilot.selfdrive.ui.tandem.onroad.compass import DriveCompass
+from openpilot.selfdrive.ui.tandem.onroad.limits import LimitFollower
+from openpilot.selfdrive.ui.tandem.prefs import MAX_FOLLOWS_LIMIT
 from openpilot.selfdrive.ui.tandem.onroad.binding import driving_alert, lane_change, proposal
 from openpilot.selfdrive.ui.tandem.onroad.layers import AT_LIMIT, ArcState, BarState, Headroom
 from openpilot.selfdrive.ui.tandem.onroad.overlay import OnroadOverlay, road_rect
@@ -24,7 +26,7 @@ from openpilot.selfdrive.ui.tandem.onroad.streets import short_street
 from openpilot.selfdrive.ui.tandem.ram import RamLog, shared_log
 from openpilot.selfdrive.ui.ui_state import device, ui_state
 from openpilot.starpilot.controllers import cruise_action, mode_actions
-from openpilot.starpilot.ui.onroad_state import AlertSize, OnroadState, SlcActionKind, SlcUiRequest, manual_slc_confirmation
+from openpilot.starpilot.ui.onroad_state import AlertSize, ObservationKind, OnroadState, SlcActionKind, SlcUiRequest, manual_slc_confirmation
 from openpilot.starpilot.ui.presentation import Profile
 from openpilot.starpilot.ui.raylib import rl
 from openpilot.starpilot.ui.runtime_snapshot import RuntimeSnapshotAdapter, current_message, display_message
@@ -52,6 +54,7 @@ class EssentialsOnroad(AugmentedRoadView):
     self._snapshot: RuntimeSnapshotAdapter | None = None
     self._display = DriveDisplay()
     self._compass = DriveCompass()
+    self._follower = LimitFollower()
     self._native: OnroadState | None = None
     self._road_sm: messaging.SubMaster | None = None
     self._ram = RamWatch()
@@ -202,7 +205,20 @@ class EssentialsOnroad(AugmentedRoadView):
       arc=arc, help_steer=help_steer, chips=tuple(chips), alert=visible_alert,
       proposal=limit_offer(state, allowed and not self._safe, now_ns),
     )
+    self._follow_limit(state, allowed and not self._safe)
     return visible_alert is not None and visible_alert.level == alerts.CRITICAL
+
+  def _follow_limit(self, state: OnroadState, allowed: bool) -> None:
+    """MAX follows limits: adopt each new posted limit once through StarPilot's ADOPT, where StarPilot sets MAX."""
+    obs, cp = state.speed_limit, ui_state.CP
+    pending = obs.pending_speed_limit_mps is not None or obs.automatic_adoption_pending
+    valid = obs.kind == ObservationKind.VALID and obs.source != "none"
+    if not self._follower.update(obs.speed_limit_mps, valid, pending, bool(state.engaged)):
+      return
+    if (allowed and MAX_FOLLOWS_LIMIT.get() and cp is not None and not cp.pcmCruise and ui_state.replay_clock is None and
+        obs.session_id and obs.decision_id is not None and obs.presentation_id and obs.speed_limit_mps):
+      self._limit_actions.dispatch(SlcUiRequest(SlcActionKind.ADOPT, obs.session_id, obs.decision_id, obs.presentation_id,
+                                                obs.speed_limit_mps))
 
   def requires_full_view(self) -> bool:
     """MainLayout asks before drawing: a critical alert takes the whole screen, so the sidebar closes."""
