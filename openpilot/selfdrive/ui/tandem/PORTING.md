@@ -453,6 +453,23 @@ WarningImmediateVolume WarningSoftVolume
   StarPilot owns SET. Sentry goes through StarPilot's Sentry owner (parked and confirmed). Vehicle Profile and
   Navigation wait for their stages.
 
+## Stage 4: the Driving tab
+
+- The Driving hub replaces openpilot's Toggles panel (`settings/essentials.py`, `settings/driving_tab.py`). Every page
+  reads and writes StarPilot 7's owners through `FeatureRows`: Sounds (Alerts), Appearance and the onroad layout's road
+  colors (Display), the model manager (Driving Model), vehicle selection and the `wheel` and `vehicle` pages (Vehicle),
+  and the lane, torque, profiles and personality pages (Tuner Mode). Their permissions are StarPilot's: changes only
+  while settings are open, and Sounds, Appearance, the path, models, the car and door locks only while parked.
+- Dropped with StarPilot 7: Compass, Turn Signal animations, Boot Logo, Startup Message, Thin path, the Speed Limit
+  Change chime, the volume for steering below its minimum speed, Use recommended's automatic downloads (it now means
+  StarPilot's default model), the door lock timer, and Tuner Mode's raw gas and brake values, steering controller
+  choice, cruise step and bundle overrides.
+- Tuner Mode is Tandem's own preference now (StarPilot 7 has no tuning level). Developer View is StarPilot's developer
+  sidebar; Lead Insights is its lead indicator, lead distance and gas and brake display.
+- Waits for later stages: Display › Map and Speed & Steering › Navigation (routing), Vehicle Profile, the onroad
+  drawing of Developer View and the lead tag (onroad), settings search and Reset Settings' defaults (stage 3).
+- `tools/render/scene_driving.py` renders each page under its mock's name.
+
 ## Tests still on `release` only
 
 Ported so far: `test_fallback_font.py`, `test_alert_levels.py`, `test_bar.py`, `test_streets.py`, `test_keyboard.py`,

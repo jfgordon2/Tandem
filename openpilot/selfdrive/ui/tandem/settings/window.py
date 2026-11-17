@@ -89,6 +89,11 @@ class SettingsWindow(Widget):
     if section is not None and isinstance(self.top, SectionPage):
       self.top.select(section)
 
+  @property
+  def shown(self) -> bool:
+    """Whether the window is open (StarPilot changes driver preferences only while its settings are shown)."""
+    return self._shown
+
   def notice(self, title: str, message: str) -> None:
     """A message from StarPilot, in our dialog, where its own screen showed an alert box."""
     self.present(Dialog(title, message, "OK", lambda _: self.dismiss(), cancel_label=None))

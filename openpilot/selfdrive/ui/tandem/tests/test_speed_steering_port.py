@@ -24,6 +24,13 @@ class Row:
   capability: tuple | None = None
   dependencies: tuple = ()
   display_unit: str = ""
+  choices: tuple[str, ...] = ()
+  default_value: str = ""
+  label: str = ""
+  reason: str = ""
+  unit: str = ""
+  minimum: float = 0.0
+  maximum: float = 10.0
 
 
 @dataclass(frozen=True)

@@ -74,6 +74,11 @@ StarPilot 7’s raylib binding retains glyph images for TTF fonts. Tandem defers
 
 ## Where the code differs from the mocks
 
+- **Driving (StarPilot 7):** rows for settings StarPilot 7 dropped are gone (PORTING.md › the Driving tab). Display has
+  Driving Screen and Path sections (Theme & Startup and Map aren't built); Path Style offers Standard, Rainbow and
+  Acceleration. Vehicle adds Auto-Unlock Doors under Auto-Lock and lists StarPilot's wheel presses by its names. Tuner
+  Mode shows StarPilot's tuning rows by their labels, and has no Bundle Overrides section. Rows StarPilot changes only
+  while parked are dimmed while driving.
 - **Stage 4 Settings:** the four-tab frame is from release. Unported pages currently show their openpilot panels. Device › RAM uses the release panel. The footer and report attachment match release. The release list scrolls to show the last process row.
 - **Device › General:** the approved release capture is authoritative. The older General HTML still shows an Automatic Backups row. The built preview uses release’s five rows and Device rail with StarPilot 7’s language names.
 - **Device › Backups:** the approved release capture is authoritative. The running release shows the saved snapshots and Back up now. The older HTML has a schedule row. The preview reuses the running release panel and confirmations.

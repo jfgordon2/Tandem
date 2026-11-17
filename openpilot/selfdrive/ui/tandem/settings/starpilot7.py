@@ -117,12 +117,32 @@ class StarPilotOwners:
     self._pages: dict[str, FeatureRows] = {}
 
   def rows(self, page: str) -> FeatureRows:
-    """One FeatureRows per page, shared by every model that reads it. "sentry" is StarPilot's Sentry owner."""
+    """One FeatureRows per page, shared by every model that reads it.
+
+    "sentry", "sounds", "appearance" and "display" are StarPilot's owners of those names, all parked-only. Display is read
+    for the comma's screen (StarPilot's large profile); appearance is read with every row it has (compact, with the large
+    rows), since the large profile leaves out the camera and lead rows. Every other page is the feature-settings owner's.
+    """
     if page not in self._pages:
+      params, parked = self._ui.params, self.configuration_allowed
       if page == "sentry":
         from openpilot.starpilot.ui.sentry_owner import SentryOwner
-        sentry = SentryOwner(self._ui.params, self.configuration_allowed)
+        sentry = SentryOwner(params, parked)
         self._pages[page] = FeatureRows(sentry.snapshot, sentry.apply)
+      elif page == "sounds":
+        from openpilot.starpilot.ui.sounds_owner import SoundsOwner
+        sounds = SoundsOwner(params, parked)
+        self._pages[page] = FeatureRows(sounds.snapshot, sounds.apply)
+      elif page in ("appearance", "display"):
+        from openpilot.starpilot.ui.presentation import Profile
+        from openpilot.starpilot.ui.appearance_owner import AppearanceOwner
+        from openpilot.starpilot.ui.display_owner import DisplayOwner
+        if page == "appearance":
+          appearance = AppearanceOwner(params, parked)
+          self._pages[page] = FeatureRows(lambda: appearance.snapshot(Profile.COMPACT, include_large=True), appearance.apply)
+        else:
+          display = DisplayOwner(params, parked)
+          self._pages[page] = FeatureRows(lambda: display.snapshot(Profile.LARGE), display.apply)
       else:
         def read() -> Any:
           return self.owner.snapshot(page, parked=self.configuration_allowed(), system_long=self.feature_authority("long"),
@@ -178,3 +198,46 @@ class StarPilotOwners:
     if group in ("long",):
       return bool(cp.openpilotLongitudinalControl and vehicle_ok)
     return False
+
+
+class RoadStyle:
+  """The path's look on the comma's screen, kept in StarPilot's onroad layout (its "large" profile's road colors).
+
+  A change is written as StarPilot's own layout actions write it: read the saved layout, change it, check it with
+  StarPilot's validator, then save it only if it's unchanged since it was read, and only while parked.
+
+  Args:
+    params: StarPilot's Params.
+    parked: Whether StarPilot confirms the car is parked.
+    profile: The layout profile to read and write.
+  """
+
+  def __init__(self, params: Any, parked: Callable[[], bool], profile: str = "large"):
+    self._params, self._parked, self._profile = params, parked, profile
+
+  def get(self) -> dict:
+    """The profile's road colors and path mode, as saved (empty for StarPilot's defaults)."""
+    from openpilot.starpilot.ui.onroad_customization import read_customization
+    return dict(read_customization(self._params)["roadColors"][self._profile])
+
+  def editable(self) -> bool:
+    return bool(self._parked())
+
+  def set(self, changes: dict[str, str]) -> bool:
+    """Merge changes into the profile's road colors; True when saved."""
+    import json
+    from openpilot.starpilot.saved_document import commit_exact
+    from openpilot.starpilot.saved_source import read_saved
+    from openpilot.starpilot.ui.onroad_customization import MAX_BYTES, PARAM_KEY, decode_document, default_document, validate_document
+    raw, readable = read_saved(self._params, PARAM_KEY, MAX_BYTES)
+    if not readable or not self._parked():
+      return False
+    try:
+      document = decode_document(raw) if raw is not None else default_document()
+      document["roadColors"][self._profile].update(changes)
+      encoded = json.dumps(validate_document(document), separators=(",", ":"), allow_nan=False).encode()
+    except (ValueError, TypeError, UnicodeError, RecursionError, KeyError):
+      return False
+    result = commit_exact(self._params, key=PARAM_KEY, max_bytes=MAX_BYTES, raw=encoded, expected=raw,
+                          authorized=self._parked, temp_prefix=".tandem-road-")
+    return bool(result.committed and result.verified)

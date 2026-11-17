@@ -86,6 +86,23 @@ class DeviceOwner:
       self._label = Calibration.CALIBRATING
       self._next = 0.0
 
+  def driver_camera(self) -> None:
+    """openpilot's cabin camera preview, while the car is off (as its device panel)."""
+    from openpilot.selfdrive.ui.onroad.cabin_camera_dialog import CabinCameraDialog
+    from openpilot.system.ui.lib.application import gui_app
+    if self.is_offroad():
+      gui_app.push_widget(CabinCameraDialog())
+
+  def can_reset_driver_monitoring(self) -> bool:
+    """openpilot's rule: car off, not engaged, and the driver camera preview closed."""
+    return self.is_offroad() and not self._ui.engaged and not self._ui.params.get_bool("IsDriverViewEnabled")
+
+  def reset_driver_monitoring(self) -> None:
+    """Forget the learned driver side, as openpilot's device panel does after its confirmation."""
+    if self.can_reset_driver_monitoring():
+      self._ui.params.remove("IsRhdDetected")
+      self._ui.params.put_bool("OnroadCycleRequested", True, block=True)
+
   def restart(self) -> None:
     """Use the native reboot request after a fresh engagement check."""
     if self._local() and not self._ui.engaged:

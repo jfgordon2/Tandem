@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Sequence
-from typing import Protocol
+from typing import Any, Protocol
 
 from openpilot.starpilot.ui.raylib import rl
 
@@ -18,6 +18,27 @@ from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 from openpilot.system.ui.widgets import Widget
 from openpilot.selfdrive.ui.tandem.settings.pages import PanelPage, Section, SectionPage, TitledPage
 from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow, confirm
+
+
+def driver_monitoring_rows(device: object, ask: Callable | None = None) -> list[SettingRow]:
+  """The Driver Camera preview and the driver monitoring reset, for Driving › Assistance. ask(title, message, label, action,
+  danger, icon) shows our confirm dialog before the reset.
+
+  Args:
+    device: DeviceOwner (driver_camera, is_offroad, can_reset_driver_monitoring, reset_driver_monitoring).
+    ask: The confirm dialog; without it the reset runs at once.
+  """
+  ask = ask or (lambda title, message, label, action, danger, icon: action())
+  owner: Any = device
+  preview = Button(N_("Preview"), owner.driver_camera, ButtonStyle.SECONDARY)
+  preview.set_enabled(owner.is_offroad)
+  reset = Button(N_("Reset"), lambda: ask(N_("Reset driver monitoring?"),
+                 N_("It forgets which side of the car the driver sits on and learns it again on the next drive."), N_("Reset"),
+                                          owner.reset_driver_monitoring, False, "restart"),
+                 ButtonStyle.SECONDARY)
+  reset.set_enabled(owner.can_reset_driver_monitoring)
+  return [SettingRow(N_("Driver Camera"), N_("Check that it can see your face. The car must be off."), preview),
+          SettingRow(N_("Driver Monitoring"), N_("Forget which side of the car the driver sits on"), reset)]
 
 
 class Calibration:

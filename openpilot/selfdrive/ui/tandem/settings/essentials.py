@@ -93,6 +93,14 @@ def essentials_settings(on_open_arabesque: Callable[[], None] | None, arabesque_
     """Share the native toggle owner with Storage & Data."""
     return TogglesLayout()
 
+  shared_storage: list[StorageOwner] = []
+
+  def storage_owner(offroad: Callable[[], bool] | None = None) -> StorageOwner:
+    """One Storage & Data owner, shared with the Driving Model catalog's storage card."""
+    if not shared_storage:
+      shared_storage.append(StorageOwner(ui_state.params, toggles().request_toggle, local, offroad or parked, lambda: bool(ui_state.engaged)))
+    return shared_storage[0]
+
   def storage() -> Widget:
     """Read and change data through native owners on their appropriate threads."""
     import threading
@@ -110,8 +118,7 @@ def essentials_settings(on_open_arabesque: Callable[[], None] | None, arabesque_
         contexts.owner = LiveContextSource(ui_state.params)
       return bool(contexts.owner.offroad())
 
-    return StoragePanel(StorageOwner(ui_state.params, toggles().request_toggle, local, offroad,
-                                     lambda: bool(ui_state.engaged)), window)
+    return StoragePanel(storage_owner(offroad), window)
 
   def uninstall() -> None:
     if ui_state.is_offroad() and not ui_state.projection_read_only and ui_state.replay_clock is None:
@@ -140,8 +147,37 @@ def essentials_settings(on_open_arabesque: Callable[[], None] | None, arabesque_
     Section(N_("Developer"), lambda: DeveloperPanel(DeveloperLayout(on_open_arabesque, arabesque_available),
                                                     ui_state.params, SshKeyFetcher(ui_state.params), local, parked, edit), visible=TUNER_MODE.get),
   ]
+  def driving() -> Widget:
+    """Release's Driving hub on StarPilot 7's settings owners, with its permissions: open settings, parked where it says."""
+    from openpilot.selfdrive.ui.tandem.settings.alerts import sound_player
+    from openpilot.selfdrive.ui.tandem.settings.driving_tab import DrivingServices, driving_hub
+    from openpilot.selfdrive.ui.tandem.settings.live import Live
+    from openpilot.selfdrive.ui.tandem.settings.model import StarPilotModels
+    from openpilot.selfdrive.ui.tandem.settings.starpilot7 import RoadStyle, StarPilotOwners
+    from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
+    from openpilot.selfdrive.ui.tandem.settings.vehicle import ToyotaDoors, Vehicle
+    from openpilot.starpilot.models.manager import ModelManager
+    from openpilot.starpilot.vehicle_selection import VehicleSelectionOwner
+
+    owners = StarPilotOwners(ui_state, lambda: window.shown)
+    allowed = owners.configuration_allowed
+
+    def car() -> Vehicle:
+      return Vehicle(VehicleSelectionOwner(ui_state.params, lambda: local() and ui_state.is_offroad()), owners.rows,
+                     ToyotaDoors(ui_state.params, lambda: ui_state.CP, allowed), lambda: str(getattr(ui_state.CP, "carFingerprint", "") or ""))
+
+    def recount() -> None:
+      storage_owner().poll(refresh=True)
+
+    services = DrivingServices(
+      SettingsStore(), Live(), owners.rows, RoadStyle(ui_state.params, allowed),
+      lambda: StarPilotModels(ModelManager(parked=allowed), lambda message: window.notice(N_("Driving Model"), message)),
+      car, owner, lambda: ui_state.CP is not None and not ui_state.CP.pcmCruise, sound_player(allowed),
+      lambda: storage_owner().sample.usage, recount)
+    return driving_hub(window, services)
+
   window = SettingsWindow({
-    Tab.DRIVING: lambda: PanelPage(toggles()),
+    Tab.DRIVING: driving,
     Tab.DEVICE: lambda: device_page(window, owner, device_sections),
     Tab.CONNECTIONS: network,
     Tab.SOFTWARE: lambda: SoftwarePage(Software(shared_software(), ui_state.params.get, uninstall), window),
