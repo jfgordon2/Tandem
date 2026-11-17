@@ -437,6 +437,22 @@ WarningImmediateVolume WarningSoftVolume
 - The RAM section appears after the first snapshot and opening it clears the unread indicator. It sits before Developer
   in the release section list. The release footer and snapshot attachment are active on Report a Problem.
 
+## Stage 4: Driving tab data layer
+
+- `settings/store.py` and `settings/live.py` come from release unchanged but for StarPilot 7's typed Params (no
+  `get_int`; `put` takes the value's own type).
+- `settings/starpilot7.py` reads StarPilot 7's feature-settings pages. `FeatureRows` reads a page at most every
+  half second and sends each change as `row_request` for the row as shown, so StarPilot refuses a change to a row
+  that moved under it. `StarPilotOwners` makes the owners with `runtime_app`'s permissions: changes only while
+  settings are open, parked-only groups only when StarPilot confirms parked, car groups only with a matching car.
+  Recheck `_feature_authority` after each upstream merge.
+- `settings/speed_steering.py` keeps release's choices on those rows, as the owner decided: Driving Style sets
+  the personality and the acceleration and braking presets, Higher and Lower limits are the one `SLCConfirmation`
+  choice, the offset is written to all seven `slc:offset` ranges, lane changes need the driver's confirmation,
+  Smart Slowdowns is the Automatic driving mode with the curve controller, and MAX follows limits only applies where
+  StarPilot owns SET. Sentry goes through StarPilot's Sentry owner (parked and confirmed). Vehicle Profile and
+  Navigation wait for their stages.
+
 ## Tests still on `release` only
 
 Ported so far: `test_fallback_font.py`, `test_alert_levels.py`, `test_bar.py`, `test_streets.py`, `test_keyboard.py`,
