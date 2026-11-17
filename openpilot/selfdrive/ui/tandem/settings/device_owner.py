@@ -87,11 +87,11 @@ class DeviceOwner:
       self._next = 0.0
 
   def driver_camera(self) -> None:
-    """openpilot's cabin camera preview, while the car is off (as its device panel)."""
-    from openpilot.selfdrive.ui.onroad.cabin_camera_dialog import CabinCameraDialog
+    """openpilot's cabin camera preview with Tandem's overlay, while the car is off (as its device panel)."""
+    from openpilot.selfdrive.ui.tandem.drivercamera import driver_camera
     from openpilot.system.ui.lib.application import gui_app
     if self.is_offroad():
-      gui_app.push_widget(CabinCameraDialog())
+      gui_app.push_widget(driver_camera())   # openpilot's preview with release's overlay (design/drivercamera.html)
 
   def can_reset_driver_monitoring(self) -> bool:
     """openpilot's rule: car off, not engaged, and the driver camera preview closed."""

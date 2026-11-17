@@ -1,0 +1,188 @@
+"""First-run setup: three questions (driving style, speed limits, lane changes), or Use defaults.
+
+It runs once, after upstream's onboarding (terms and training). Either way out applies the Essentials defaults first,
+then the answers, so everything the questions don't cover starts from a good default too. On StarPilot 7 they go through
+its settings owners (settings/defaults.py); Auto lane changes ask StarPilot's confirmation, as the settings row does.
+"""
+from __future__ import annotations
+
+from collections.abc import Callable
+from dataclasses import dataclass
+from pathlib import Path
+from typing import TYPE_CHECKING
+
+from openpilot.starpilot.ui.raylib import rl
+
+from functools import partial
+from openpilot.selfdrive.ui.tandem import draw, tokens as T
+from openpilot.selfdrive.ui.tandem.base import Component
+from openpilot.selfdrive.ui.tandem.controls import SETUP_CARDS, Button, ButtonStyle, ChoiceCards
+from openpilot.selfdrive.ui.tandem.layout import FILL, column, inset, row
+from openpilot.selfdrive.ui.tandem.settings.speed_steering import Confirm, Rows
+from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_, translate
+
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.tandem.settings.starpilot7 import RoadStyle
+
+MARKER = ".tandem_setup_done"   # beside the params folder, so no new param key (upstream's registry stays untouched)
+
+
+@dataclass(frozen=True)
+class Question:
+  """A first-run question: its param name, its title, the (title, subtitle) choices and the one preselected."""
+  name: str
+  title: str
+  options: list[tuple[str, str]]
+  default: int
+
+
+QUESTIONS = [
+  Question(N_("driving style"), N_("How should your car drive?"), [
+    (N_("Relaxed"), N_("Longer following gap, gentle starts and early, soft braking.")),
+    (N_("Standard · recommended"), N_("Keeps pace with traffic. A good fit for most drivers and roads.")),
+    (N_("Sport"), N_("Shorter gap, quicker acceleration and later braking.")),
+  ], 1),
+  Question(N_("speed limits"), N_("What should it do with speed limits?"), [
+    (N_("Off"), N_("Speed limits aren't shown or used.")),
+    (N_("Show"), N_("Shows the limit next to your speed. You set the speed.")),
+    (N_("Match · recommended"), N_("Sets cruise to the limit plus 3. Asks before speeding up.")),
+  ], 2),
+  Question(N_("lane changes"), N_("How should lane changes start?"), [
+    (N_("Nudge · recommended"), N_("Signal, then nudge the wheel toward the lane.")),
+    (N_("Auto"), N_("Signal and the car changes lanes when it's clear.")),
+  ], 0),
+]
+
+
+class Setup:
+  """The first-run setup: the questions, the answers so far, and applying them."""
+
+  def __init__(self, store: SettingsStore, rows: Rows, road: RoadStyle, done: Callable[[], None],
+               confirm: Confirm = lambda title, message, label, action: action()):
+    """Makes the setup.
+
+    Args:
+      store: Where settings are written.
+      done: Runs once setup is finished or skipped.
+      rows: StarPilot's settings pages.
+      road: The path's look.
+      confirm: Asks StarPilot's confirmation for Auto lane changes before they're saved.
+    """
+    self._store = store
+    self._done = done
+    self._rows, self._road, self._confirm = rows, road, confirm
+    self.step = 0
+    self.answers = [q.default for q in QUESTIONS]
+
+  @property
+  def question(self) -> Question:
+    return QUESTIONS[self.step]
+
+  def answer(self, step: int) -> int:
+    """The option picked for question step: the default until the driver picks."""
+    return int(self.answers[step])
+
+  def pick(self, index: int) -> None:
+    self.answers[self.step] = index
+
+  def back(self) -> None:
+    self.step = max(0, self.step - 1)
+
+  def next(self) -> None:
+    if self.step < len(QUESTIONS) - 1:
+      self.step += 1
+    else:
+      self.finish(use_answers=True)
+
+  def finish(self, use_answers: bool) -> None:
+    """Applies the Essentials defaults and, unless the driver skipped, their answers; then closes setup."""
+    from openpilot.selfdrive.ui.tandem.settings.defaults import apply_essentials
+    from openpilot.selfdrive.ui.tandem.settings.speed_steering import SpeedSteering
+    apply_essentials(self._store, self._rows, self._road)
+    speed = SpeedSteering(self._store, self._rows, self._confirm)
+    if use_answers:
+      speed.set_style(self.answers[0])
+      speed.set_speed_limits(self.answers[1])
+    self._done()
+    if use_answers:
+      speed.set_lane_changes(self.answers[2])   # after setup closes: Auto asks StarPilot's confirmation over Home
+
+
+class SetupWindow(Component):
+  """The first-run setup screen, drawn as design/setup.html."""
+  grow_touch_target = False
+
+  def __init__(self, setup: Setup):
+    super().__init__()
+    self._setup = setup
+    self._cards = [self._child(ChoiceCards(q.options, partial(setup.answer, i), setup.pick, columns=3, large=SETUP_CARDS))
+                   for i, q in enumerate(QUESTIONS)]
+    self._defaults = self._child(Button(N_("Use defaults"), lambda: setup.finish(use_answers=False), ButtonStyle.GHOST))
+    self._back = self._child(Button(N_("Back"), setup.back, ButtonStyle.SECONDARY))
+    self._back.set_visible(lambda: setup.step > 0)
+    self._next = self._child(Button(lambda: N_("Next") if setup.step < len(QUESTIONS) - 1 else N_("Start driving"), setup.next,
+                                    ButtonStyle.PRIMARY, weight=T.FONT_EXTRABOLD))
+
+  def _render(self, rect: rl.Rectangle) -> None:
+    draw.fill(rect, T.BG)
+    s = self._setup
+    body = inset(rect, x=T.px(28), y=T.px(24))
+    header, cards, footer = column(body, [T.px(24) + T.px(6) + draw.line_height(T.font_px(34)), FILL, T.px(64)], T.px(18))
+    cap, title = column(header, [T.px(24), FILL], T.px(6))
+    draw.caption(cap, t_("STEP {} OF {}", s.step + 1, len(QUESTIONS)), T.ACCENT_TEXT)
+    draw.text(title, s.question.title, T.font_px(34), T.TEXT, T.FONT_EXTRABOLD)
+    for i in range(len(QUESTIONS)):   # progress dots, top right
+      dot = rl.Rectangle(header.x + header.width - (len(QUESTIONS) - i) * T.px(42) + T.px(8), header.y + T.px(8), T.px(34), T.px(8))
+      draw.fill(dot, T.ACCENT if i <= s.step else T.TRACK, T.px(4))
+
+    card = self._cards[s.step]
+    card.render(cards)
+    remaining = [q.name for q in QUESTIONS[s.step + 1:]]
+    hint = N_("You can change all of these later in Settings › Driving.")
+    note = hint if not remaining else t_("Next: {}. You can change all of these later.", translate(N_(", then ")).join(translate(r) for r in remaining))
+    widths = [self._defaults.preferred_size(footer.width)[0], T.px(140) if s.step > 0 else 0, T.px(200)]
+    text, defaults, back, nxt = row(footer, [FILL, *widths], T.px(14))
+    draw.text(text, note, T.font_px(16), T.TEXT_TERTIARY)
+    self._defaults.render(defaults)
+    if s.step > 0:
+      self._back.render(back)
+    self._next.render(nxt)
+
+
+def setup_done_marker() -> Path:
+  from openpilot.common.params import Params
+  return Path(Params().get_param_path()).parent / MARKER
+
+
+def maybe_show_setup() -> bool:
+  """Push setup once nothing else (onboarding, a dialog) is on top of the main layout.
+
+  Returns True once handled (shown now, or done before); False means try again later.
+  """
+  from openpilot.system.ui.lib.application import gui_app
+  if len(getattr(gui_app, "_nav_stack", [])) != 1:
+    return False
+  marker = setup_done_marker()
+  if marker.exists():
+    return True
+  from openpilot.selfdrive.ui.ui_state import ui_state
+  from openpilot.selfdrive.ui.tandem.settings.starpilot7 import RoadStyle, StarPilotOwners
+  from openpilot.selfdrive.ui.tandem.overlays import Dialog
+  from openpilot.selfdrive.ui.tandem.controls import Tone
+  from openpilot.system.ui.widgets import DialogResult
+
+  def done() -> None:
+    marker.touch()
+    gui_app.pop_widget()
+
+  def confirm(title: str, message: str, label: str, action: Callable[[], None]) -> None:
+    def answered(result: DialogResult) -> None:
+      gui_app.pop_widget()
+      if result == DialogResult.CONFIRM:
+        action()
+    gui_app.push_widget(Dialog(title, message, label, answered, tone=Tone.ACCENT, glyph=lambda r, c, sz: draw.icon(r, "warning", c, sz)))
+
+  owners = StarPilotOwners(ui_state, lambda: True)   # setup is a settings screen: driver preferences may change
+  gui_app.push_widget(SetupWindow(Setup(SettingsStore(), owners.rows, RoadStyle(ui_state.params, owners.configuration_allowed), done, confirm)))
+  return True

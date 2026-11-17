@@ -71,7 +71,9 @@ def onroad() -> Widget:
   if not _enabled("TANDEM_ONROAD"):
     from openpilot.selfdrive.ui.onroad.augmented_road_view import AugmentedRoadView
     return AugmentedRoadView()
+  from openpilot.selfdrive.ui.tandem.menu_idle import watch
   from openpilot.selfdrive.ui.tandem.onroad.view import EssentialsOnroad
+  watch()   # the menu's timeout while driving also closes what's open on top of settings
   return EssentialsOnroad()
 
 

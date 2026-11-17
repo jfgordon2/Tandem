@@ -34,17 +34,22 @@ UPDATER_STATES = {Stage.READING: N_("Reading software status"), Stage.CHECKING: 
 class Software:
   """The Software tab: the version, update state and action, Automatic Updates and branch, read from the shared watch."""
 
-  def __init__(self, watch: SoftwareWatch, read: Callable[[str], object], uninstall: Callable[[], None]):
+  def __init__(self, watch: SoftwareWatch, read: Callable[[str], object], uninstall: Callable[[], None],
+               reset: Callable[[], None] | None = None, can_reset: Callable[[], bool] = lambda: True):
     """Makes the tab's model.
 
     Args:
       watch: StarPilot's software state and actions (tandem/software.py's shared_software).
       read: Reads a param, for the installed version's description.
       uninstall: Uninstalls openpilot, after the driver confirms.
+      reset: Applies the Essentials defaults (settings/defaults.py), after the driver confirms; None leaves it unavailable.
+      can_reset: Whether a reset can run now (StarPilot changes most of it only while parked).
     """
     self.watch = watch
     self._read = read
     self._uninstall = uninstall
+    self._reset = reset
+    self._can_reset = can_reset
 
   def tick(self) -> None:
     self.watch.poll()
@@ -130,6 +135,14 @@ class Software:
     branch = self.watch.state.branch or str(self._read("GitBranch") or "")
     return {"release": N_("Stable"), "release3": N_("Stable"), "master": N_("Stable"), "staging": N_("Beta")}.get(branch, branch or N_("Stable"))
 
+  def can_reset(self) -> bool:
+    return self._reset is not None and self._can_reset()
+
+  def reset_settings(self) -> None:
+    """Apply the Essentials defaults, if they can be applied now."""
+    if self._reset is not None and self.can_reset():
+      self._reset()
+
   def tuner(self) -> bool:
     """Share the release Tuner Mode preference with the Device rail."""
     from openpilot.selfdrive.ui.tandem.prefs import TUNER_MODE
@@ -188,9 +201,13 @@ def software_page(model: Software, window: SettingsWindow) -> Widget:
   channel.set_enabled(model.tuner)
   automatic = SettingRow(N_("Automatic Updates"), N_("Download and install while parked"), Switch(lambda: model.automatic, model.set_automatic))
   automatic.set_enabled(model.can_set_automatic)
-  # Reset Settings returns once the Essentials defaults are ported (PORTING.md); until then it shows, as release's, but can't run.
-  reset = SettingRow(N_("Reset Settings"), N_("Back to the Essentials defaults. Backups are kept."), Button(N_("Reset")))
-  reset.set_enabled(False)
+  def ask_reset() -> None:
+    from openpilot.selfdrive.ui.tandem.settings.window import confirm
+    confirm(window, N_("Reset settings?"), N_("Every setting goes back to the Essentials default. Your backups are kept."), N_("Reset"),
+            model.reset_settings, icon="restart")
+  reset = SettingRow(N_("Reset Settings"), lambda: N_("Back to the Essentials defaults. Backups are kept.") if model.can_reset() else
+                     N_("Park to reset settings"), Button(N_("Reset"), ask_reset))
+  reset.set_enabled(model.can_reset)
   settings = ListPanel([automatic, channel, reset],
                        footer=Button(N_("Uninstall"), lambda: uninstall(model, window), ButtonStyle.DANGER_SOFT, height=T.px(52)))
   return FillPage(Columns([version, settings], [1, 1.15]))

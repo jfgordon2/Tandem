@@ -54,6 +54,7 @@ class EssentialsHome(HomeLayout):
     super().__init__()
     self._summary = ""
     self._next_summary = 0.0
+    self._setup_checked = False   # first-run setup (setup.py), once onboarding has closed
     self._notes_target: InstallTarget | None = None
     self._software = software()   # the same watch as the Software tab
     self._position: LastPositionStore | None = None
@@ -151,6 +152,9 @@ class EssentialsHome(HomeLayout):
     elif self.current_state == HomeLayoutState.UPDATE:
       self._update_view.render(content)
     else:
+      if not self._setup_checked:
+        from openpilot.selfdrive.ui.tandem.setup import maybe_show_setup
+        self._setup_checked = maybe_show_setup()
       if now >= self._next_summary:
         self._summary = setup_line(self.params)
         self._next_summary = now + 5.0

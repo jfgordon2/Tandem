@@ -3,11 +3,15 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from functools import cache
+from typing import TYPE_CHECKING
 
 from openpilot.selfdrive.ui.tandem.i18n import N_
 from openpilot.selfdrive.ui.tandem.settings.pages import PanelPage, Section
 from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow, Tab
 from openpilot.system.ui.widgets import Widget
+
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.tandem.settings.starpilot7 import StarPilotOwners
 
 def essentials_settings(on_open_arabesque: Callable[[], None] | None, arabesque_available: Callable[[], bool]) -> SettingsWindow:
   """Build the window with StarPilot 7's owners.
@@ -150,19 +154,33 @@ def essentials_settings(on_open_arabesque: Callable[[], None] | None, arabesque_
     Section(N_("Developer"), lambda: DeveloperPanel(DeveloperLayout(on_open_arabesque, arabesque_available),
                                                     ui_state.params, SshKeyFetcher(ui_state.params), local, parked, edit), visible=TUNER_MODE.get),
   ]
+  @cache
+  def starpilot_owners() -> StarPilotOwners:
+    """StarPilot 7's settings owners, with its settings screen's permissions (changes only while settings are shown)."""
+    from openpilot.selfdrive.ui.tandem.settings.starpilot7 import StarPilotOwners
+    return StarPilotOwners(ui_state, lambda: window.shown)
+
+  def reset_settings() -> None:
+    """Software › Reset Settings: the Essentials defaults through StarPilot's owners (settings/defaults.py)."""
+    from openpilot.selfdrive.ui.tandem.settings.defaults import apply_essentials
+    from openpilot.selfdrive.ui.tandem.settings.starpilot7 import RoadStyle
+    from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
+    owners = starpilot_owners()
+    apply_essentials(SettingsStore(), owners.rows, RoadStyle(ui_state.params, owners.configuration_allowed))
+
   def driving() -> Widget:
     """Release's Driving hub on StarPilot 7's settings owners, with its permissions: open settings, parked where it says."""
     from openpilot.selfdrive.ui.tandem.settings.alerts import sound_player
     from openpilot.selfdrive.ui.tandem.settings.driving_tab import DrivingServices, driving_hub
     from openpilot.selfdrive.ui.tandem.settings.live import Live
     from openpilot.selfdrive.ui.tandem.settings.model import StarPilotModels
-    from openpilot.selfdrive.ui.tandem.settings.starpilot7 import RoadStyle, StarPilotOwners
+    from openpilot.selfdrive.ui.tandem.settings.starpilot7 import RoadStyle
     from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
     from openpilot.selfdrive.ui.tandem.settings.vehicle import ToyotaDoors, Vehicle
     from openpilot.starpilot.models.manager import ModelManager
     from openpilot.starpilot.vehicle_selection import VehicleSelectionOwner
 
-    owners = StarPilotOwners(ui_state, lambda: window.shown)
+    owners = starpilot_owners()
     allowed = owners.configuration_allowed
 
     def car() -> Vehicle:
@@ -183,6 +201,7 @@ def essentials_settings(on_open_arabesque: Callable[[], None] | None, arabesque_
     Tab.DRIVING: driving,
     Tab.DEVICE: lambda: device_page(window, owner, device_sections),
     Tab.CONNECTIONS: network,
-    Tab.SOFTWARE: lambda: SoftwarePage(Software(shared_software(), ui_state.params.get, uninstall), window),
+    Tab.SOFTWARE: lambda: SoftwarePage(Software(shared_software(), ui_state.params.get, uninstall, reset_settings,
+                                                lambda: local() and starpilot_owners().configuration_allowed()), window),
   }, sections={"DEVELOPER": 6}, auxiliary={"FIREHOSE": lambda: PanelPage(FirehoseLayout())})
   return window

@@ -469,7 +469,7 @@ WarningImmediateVolume WarningSoftVolume
 - Tuner Mode is Tandem's own preference now (StarPilot 7 has no tuning level). Developer View is StarPilot's developer
   sidebar; Lead Insights is its lead indicator, lead distance and gas and brake display.
 - Waits for later stages: Display › Map and Speed & Steering › Navigation (routing), Vehicle Profile, the onroad
-  drawing of Developer View and the lead tag (onroad), and Reset Settings' defaults.
+  drawing of Developer View and the lead tag (onroad).
 - `tools/render/scene_driving.py` renders each page under its mock's name.
 
 ## Stage 4: Connections
@@ -511,6 +511,18 @@ WarningImmediateVolume WarningSoftVolume
 - `tests/test_lead_tag.py` keeps release's tracker and drawing tests; its view tests targeted StarPilot 6's renderer.
   `tools/render/scene_developer.py` renders `onroaddev` and `gaptag`.
 
+## Stage 4: defaults, first-run setup and Home's other pieces
+
+- `settings/defaults.py` applies the Essentials defaults through StarPilot 7's owners; a value StarPilot won't change
+  now (sounds, display and path while driving) is left as it is. Software › Reset Settings runs it after the release
+  confirmation, while parked. Release's boot logo, compass param, Speed Limit Change chime and holiday themes are gone.
+- First-run setup (`setup.py`) applies the defaults, then the three answers; choosing Auto lane changes asks StarPilot's
+  confirmation once setup has closed. Home checks for it as release's did; the existing `.tandem_setup_done` marker
+  keeps it from showing again on a device that already ran it.
+- `menu_idle.py` (the menu's timeout closes what's open on top of settings) and `drivercamera.py` (release's overlay
+  on openpilot's `CabinCameraDialog`; attention comes from `driverMonitoringState.awarenessStatus`) are ported.
+- Waits for routing: Home's destinations, route map, Mapbox help and routing status.
+
 ## Tests still on `release` only
 
 Ported so far: `test_fallback_font.py`, `test_compass.py`, `test_network_test.py` (but its settings search test), `test_cellular_status.py`, `test_hotspot_name.py`, `test_network_touches.py` (StarPilot 7 has no PC-only touch path), `test_alert_levels.py`, `test_bar.py`, `test_streets.py`, `test_keyboard.py`,
@@ -525,7 +537,7 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
 | `test_font_loading.py`: lazy fonts, glyph release and alert faces | Glyph release when restored, then lazy loading and alert faces with the screen port (stage 4) |
 | `test_upstream_integration.py`: all but the text hooks and the sidebar factory | Their hooks and modules (stages 3 to 6) |
 | `test_turn_signals.py`, `test_onroad*.py`, `test_chip_events.py` (StarPilot 6's message reader; its rules are covered by the chip tests), `test_headroom_warning.py`, `test_limit_offers.py`, `test_developer_view.py` | Onroad (stage 4) |
-| `test_forecast.py`, `test_menu_idle.py`, `test_ram.py` | Home and sidebar (stage 4) |
+| `test_forecast.py`, `test_ram.py` | Home and sidebar (stage 4) |
 | `test_developer.py`, `test_software_dialogs.py`, `test_storage_sizes.py`, `test_prebuilt_params.py` | Settings screens and owner integration (stage 4) |
 | `test_destinations.py`, `test_routemap.py`, `test_routing_ui.py`, `test_map_progress.py` | Navigation and routing (stage 5) |
 | `test_bluetooth_*.py`, `test_remote_actions.py`, `test_galaxy_signals.py` | Bluetooth and controllers (stage 6) |
