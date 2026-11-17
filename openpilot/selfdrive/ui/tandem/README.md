@@ -60,6 +60,12 @@ Tandem merges StarPilot 7 (`Dom`). New behavior, presentation, assets, tools and
 | `openpilot/starpilot/maps/operation_owner.py` | Dispatches Tandem’s local snapshot removal request to code that shares the native admission lock and parked authority. |
 | `openpilot/starpilot/navigation/navtilesd.py` | Handles the local map removal request between tile writes and acknowledges cleanup to the parked map owner. |
 
+**After a merge:** if StarPilot changed `raylib_extra.cc` or its `_raylib_extra.so`, keep upstream's versions, add Tandem's
+`release_font_glyph_images` method to the source again, rebuild the extension on a comma (AGNOS, ARM64), and refresh
+`prebuilt.json` with StarPilot's receipt tool; until then Tandem skips the glyph release (`application.py` checks for
+the method). Map removal uses names StarPilot's map owner and tile writer don't publish; `tests/test_map_removal_contract.py`
+fails when a merge renames one.
+
 **Font atlases:** `openpilot/selfdrive/assets/.gitignore` ignores `fonts/*.fnt` and `fonts/*.png`, left from StarPilot 6's generator. Tandem's own atlases are committed with `git add -f` rather than by editing that file; once tracked, git keeps them. After rebuilding an atlas, `git add -f` it again.
 
 StarPilot 7’s raylib binding retains glyph images for TTF fonts. Tandem defers Medium and SemiBold and releases the Inter glyph bitmaps after loading the atlas. Boot measurements with both changes are pending.
