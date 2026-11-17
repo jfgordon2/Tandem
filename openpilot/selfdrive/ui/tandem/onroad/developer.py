@@ -253,7 +253,7 @@ def _signed(value: float, digits: int = 2) -> str:
 
 def lead_of(lead: Any, v_ego: float, metric: bool) -> Lead | None:
   """radarState's lead, in the driver's units."""
-  if lead is None or not lead.status:
+  if lead is None or not lead.present:
     return None
   from openpilot.common.constants import CV
   distance = t_("{} m", round(lead.dRel)) if metric else t_("{} ft", round(lead.dRel * CV.METER_TO_FOOT))

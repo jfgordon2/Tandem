@@ -80,7 +80,7 @@ def read_lead_sample(state: Any, threshold: float) -> LeadSample | None:
                                   for name in ("radarState", "carState", "modelV2")):
     return None
   lead, car = sm["radarState"].leadOne, sm["carState"]
-  if not lead.status:
+  if not lead.present:
     return None
   distance, speed, relative = float(lead.dRel), float(car.vEgo), float(lead.vRel)
   if not all(math.isfinite(value) for value in (distance, speed, relative)) or not 0 < distance <= 1000 or speed < 0:

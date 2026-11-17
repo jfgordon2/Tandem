@@ -68,8 +68,8 @@ def draw_overlay(rect: rl.Rectangle, starting: bool, face: rl.Rectangle | None, 
 
 def driver_camera() -> Widget:
   """openpilot's driver camera with our overlay. Made on demand: its camera stream needs the device's libraries."""
-  import math
   from openpilot.selfdrive.ui.onroad.cabin_camera_dialog import CabinCameraDialog
+  from openpilot.selfdrive.ui.tandem.onroad.state import awareness
   from openpilot.selfdrive.ui.onroad.cameraview import CameraView
   from openpilot.selfdrive.ui.ui_state import ui_state
 
@@ -78,8 +78,8 @@ def driver_camera() -> Widget:
       CameraView._render(self, rect, poll_camera=poll_camera)   # the camera itself
       dm = self.driver_state_renderer
       dm._update_state()
-      awareness = float(ui_state.sm["driverMonitoringState"].awarenessStatus)
-      attentive = max(0.0, min(awareness, 1.0)) if math.isfinite(awareness) else 1.0
+      level = awareness(ui_state.sm["driverMonitoringState"])
+      attentive = level if level is not None else 1.0
       face, alpha = None, 0.0
       if self.frame:
         state = ui_state.sm["driverStateV2"]

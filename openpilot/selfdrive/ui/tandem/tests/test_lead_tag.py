@@ -3,6 +3,7 @@ import ast
 from dataclasses import replace
 from pathlib import Path
 from types import SimpleNamespace
+from typing import Any
 
 import pytest
 from openpilot.starpilot.ui.raylib import rl
@@ -12,10 +13,28 @@ from openpilot.selfdrive.ui.tandem.onroad.developer import draw_lead_tag, lead_t
 from openpilot.selfdrive.ui.tandem.onroad.lead import LEAD_UNSURE, GapTracker, LeadSample, detailed_tag_on, lead_anchor, read_lead_sample
 
 
+def _message(service: str) -> Any:
+  """A real StarPilot 7 message, so a field the code reads that doesn't exist fails here as it would on the device."""
+  from openpilot.cereal import log
+  return log.Event.new_message().init(service)
+
+
+def _radar() -> Any:
+  radar = _message("radarState")
+  lead = radar.leadOne
+  lead.present, lead.dRel, lead.vRel, lead.modelProb, lead.radar = True, 32.0, -2.0, 0.9, False
+  return radar
+
+
+def _car() -> Any:
+  car = _message("carState")
+  car.vEgo = 20.0
+  return car
+
+
 class Messages(dict):
   def __init__(self):
-    super().__init__(radarState=SimpleNamespace(leadOne=SimpleNamespace(status=True, dRel=32.0, vRel=-2.0, modelProb=0.9, radar=False)),
-                     carState=SimpleNamespace(vEgo=20.0), modelV2=object())
+    super().__init__(radarState=_radar(), carState=_car(), modelV2=object())
     self.valid = dict.fromkeys(self, True)
     self.alive = dict.fromkeys(self, True)
     self.recv_frame = dict.fromkeys(self, 10)
@@ -74,7 +93,7 @@ def test_offroad_and_lost_leads_have_no_tag():
   s.started = False
   assert read_lead_sample(s, 0.5) is None
   s.started = True
-  s.sm['radarState'].leadOne.status = False
+  s.sm['radarState'].leadOne.present = False
   assert read_lead_sample(s, 0.5) is None
 
 
@@ -225,15 +244,15 @@ def test_tag_never_sinks_below_the_floor_and_drops_the_anchor_there(painted):
 def test_developer_view_reads_starpilots_messages_and_metrics() -> None:
   from openpilot.selfdrive.ui.tandem.onroad import developer
   from openpilot.starpilot.ui.live_developer_sidebar import DeveloperMetric
-  messages = {
-    "carState": SimpleNamespace(vEgo=20.0, aEgo=0.31, steeringAngleDeg=-4.2),
-    "carControl": SimpleNamespace(actuators=SimpleNamespace(accel=0.42, torque=-0.3)),
-    "deviceState": SimpleNamespace(cpuUsagePercent=[40, 44], maxTempC=61.0, gpuUsagePercent=18.0, memoryUsagePercent=39.0),
-    "lateralDelay": SimpleNamespace(lateralDelay=0.18),
-    "controlsState": SimpleNamespace(curvature=0.003),
-    "radarState": SimpleNamespace(leadOne=SimpleNamespace(status=True, dRel=38.0, vRel=-1.0, radar=True)),
-    "vehicleParameters": SimpleNamespace(steerRatio=15.3),
-  }
+  car, control, device = _message("carState"), _message("carControl"), _message("deviceState")
+  car.vEgo, car.aEgo, car.steeringAngleDeg = 20.0, 0.31, -4.2
+  control.actuators.accel, control.actuators.torque = 0.42, -0.3
+  device.cpuUsagePercent, device.maxTempC, device.gpuUsagePercent, device.memoryUsagePercent = [40, 44], 61.0, 18, 39
+  delay, controls, radar, vehicle = _message("lateralDelay"), _message("controlsState"), _message("radarState"), _message("vehicleParameters")
+  delay.lateralDelay, controls.curvature, vehicle.steerRatio = 0.18, 0.003, 15.3
+  radar.leadOne.present, radar.leadOne.dRel, radar.leadOne.vRel, radar.leadOne.radar = True, 38.0, -1.0, True
+  messages = {"carState": car, "carControl": control, "deviceState": device, "lateralDelay": delay, "controlsState": controls,
+              "radarState": radar, "vehicleParameters": vehicle}
   sm = type("SM", (), {"valid": dict.fromkeys(messages, True), "__getitem__": lambda self, name: messages[name]})()
   state = SimpleNamespace(developer_metrics=(DeveloperMetric("STEER RATIO", "15.30000"),),
                           curve=None, speed_limit=SimpleNamespace(source="Map Data"))

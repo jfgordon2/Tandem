@@ -6,6 +6,7 @@ StarPilot 7 needs on top: the exact speed-limit proposal a card answers, and Sta
 from __future__ import annotations
 
 import math
+from typing import Any
 from dataclasses import dataclass, field
 
 from openpilot.selfdrive.ui.tandem.onroad.layers import ArcState, BarState, LimitOffer
@@ -57,6 +58,18 @@ class DriveDisplay:
   chips: tuple[tuple[Chip, float], ...] = ()   # (chip, opacity) nearest the bar first, from status.ChipStack
   alert: DrivingAlert | None = None
   proposal: Proposal | None = None
+
+
+def awareness(dm: Any) -> float | None:
+  """The driver's attention, 0 to 1, from StarPilot 7's driverMonitoringState: the active policy's awarenessPercent (the
+  camera's, or the wheel-touch fallback's). None when it can't be read."""
+  try:
+    vision = str(dm.activePolicy) == "vision"
+    policy = getattr(dm, "visionPolicyState" if vision else "wheeltouchPolicyState")
+    value = float(policy.awarenessPercent) / 100.0
+  except (AttributeError, TypeError, ValueError):
+    return None
+  return max(0.0, min(value, 1.0)) if math.isfinite(value) else None
 
 
 def displayed_speed(value: float | None, factor: float) -> float | None:

@@ -5,13 +5,14 @@ into release's state objects (BarState, Snapshot for the chips, ArcState, LimitO
 """
 from __future__ import annotations
 
-import math
 import time
+from collections.abc import Callable
 from functools import cached_property
 from typing import Any
 
 from openpilot.cereal import messaging
 from openpilot.common.constants import CV
+from openpilot.common.swaglog import cloudlog
 from openpilot.selfdrive.ui.onroad.augmented_road_view import AugmentedRoadView
 from openpilot.selfdrive.ui.tandem.onroad import alerts, size as Z
 from openpilot.selfdrive.ui.tandem.onroad.compass import DriveCompass
@@ -23,7 +24,7 @@ from openpilot.selfdrive.ui.tandem.prefs import LEAD_TAG, MAX_FOLLOWS_LIMIT
 from openpilot.selfdrive.ui.tandem.onroad.binding import driving_alert, lane_change, proposal
 from openpilot.selfdrive.ui.tandem.onroad.layers import AT_LIMIT, ArcState, BarState, Headroom
 from openpilot.selfdrive.ui.tandem.onroad.overlay import OnroadOverlay, road_rect
-from openpilot.selfdrive.ui.tandem.onroad.state import DriveDisplay, DrivingAlert, LimitDecision, Proposal, displayed_speed
+from openpilot.selfdrive.ui.tandem.onroad.state import awareness, DriveDisplay, DrivingAlert, LimitDecision, Proposal, displayed_speed
 from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, RamWatch, Snapshot
 from openpilot.selfdrive.ui.tandem.onroad.streets import short_street
 from openpilot.selfdrive.ui.tandem.ram import RamLog, shared_log
@@ -58,6 +59,7 @@ class EssentialsOnroad(AugmentedRoadView):
     self._display = DriveDisplay()
     self._compass = DriveCompass()
     self._follower = LimitFollower()
+    self._failed: set[str] = set()   # extras that failed once (_safely)
     self._gap_tracker = GapTracker()
     self._gap_state: GapTagState | None = None
     self._lead_tag_on, self._lead_tag_read = True, -1.0   # prefs.LEAD_TAG, read once a second
@@ -186,7 +188,7 @@ class EssentialsOnroad(AugmentedRoadView):
     car = display_message(sm, "carState", now_ns, after_frame=after)
     dm = display_message(sm, "driverMonitoringState", now_ns, after_frame=after)
     if ui_state.replay_clock is None:
-      self._compass.update(ui_state, time.monotonic(), bool(state.reversing))
+      self._safely("compass", lambda: self._compass.update(ui_state, time.monotonic(), bool(state.reversing)))
     factor = CV.MS_TO_KPH if state.metric else CV.MS_TO_MPH
     cruise = displayed_speed(state.cruise_kph, 1.0 if state.metric else CV.KPH_TO_MPH)
     can_adjust = cruise is not None and allowed and not self._safe and cruise_action.ui_authority(sm, cp, now_ns)
@@ -194,9 +196,7 @@ class EssentialsOnroad(AugmentedRoadView):
     posted = resolve_unified_speed(state).posted_text if state.appearance.show_speed_limit_sign else ""
     monitoring = None
     if dm is not None and str(dm.activePolicy) == "vision":
-      awareness = float(dm.awarenessStatus)
-      if math.isfinite(awareness):
-        monitoring = max(0.0, min(awareness, 1.0))
+      monitoring = awareness(dm)
     snapshot = self._chips_from(now_ns, state)
     if ui_state.started and not ui_state.projection_read_only and ui_state.replay_clock is None:
       self._ram_log.drive(after, time.monotonic())
@@ -216,9 +216,11 @@ class EssentialsOnroad(AugmentedRoadView):
       arc=arc, help_steer=help_steer, chips=tuple(chips), alert=visible_alert,
       proposal=limit_offer(state, allowed and not self._safe, now_ns),
     )
-    self._follow_limit(state, allowed and not self._safe)
-    self._update_lead(state)
-    self._dev = developer.read(sm, state, bool(state.metric)) if state.appearance.show_developer_sidebar else None
+    self._safely("max follows limits", lambda: self._follow_limit(state, allowed and not self._safe))
+    self._safely("lead tag", lambda: self._update_lead(state))
+    self._dev = None
+    if state.appearance.show_developer_sidebar:
+      self._safely("developer view", lambda: setattr(self, "_dev", developer.read(sm, state, bool(state.metric))))
     return visible_alert is not None and visible_alert.level == alerts.CRITICAL
 
   LEAD_THRESHOLD = 0.35   # the model's confidence for a sure lead (release's Lead Detection Sensitivity default)
@@ -234,7 +236,19 @@ class EssentialsOnroad(AugmentedRoadView):
     self.model_renderer.lead_display = (True, mode, appearance.lead_info_metric)
     self._gap_state = self._gap_tracker.update(read_lead_sample(ui_state, self.LEAD_THRESHOLD), now) if self._lead_tag_on else None
 
+  def _safely(self, name: str, step: Callable[[], object]) -> None:
+    """Run one of Tandem's driving-screen extras; a failure is logged once and skipped, never stopping the frame."""
+    try:
+      step()
+    except Exception:
+      if name not in self._failed:
+        self._failed.add(name)
+        cloudlog.exception(f"Tandem onroad: {name} failed")
+
   def _draw_lead_info(self, lead: Any, text: str) -> None:
+    self._safely("lead tag", lambda: self._draw_lead_tag(lead, text))
+
+  def _draw_lead_tag(self, lead: Any, text: str) -> None:
     """Above the lead marker: Tandem's tag, or StarPilot's own text when the tag is off."""
     if not self._lead_tag_on:
       self._stock_lead_info(lead, text)
