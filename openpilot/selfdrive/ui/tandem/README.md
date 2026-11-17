@@ -22,6 +22,7 @@ Tandem sits on openpilot's original layout (`MainLayout`), not on StarPilot 7's 
 | `scroll.py` | Gesture rejection for Tandem's lists; upstream's scroll panel keeps its behavior. |
 | `i18n.py`, `arabic.py`, `thai.py` | Translation (see Translations), Arabic joining and right-to-left order, and Thai clusters. |
 | `prefs.py` | Tandem's own on/off preferences, kept as marker files beside the params folder. |
+| `screenshot.py` | On the device, `touch /tmp/tandem-screenshot` saves the screen as `/tmp/tandem-screenshot.png` (waking it first if it sleeps). From a computer, `tools/device_screenshot.sh <address> [out.png]`. Nothing is stored or uploaded. |
 | `screens.py` | Where Tandem joins StarPilot 7's UI: `ui_selection()` for `ui.py`, and the screens `MainLayout` shows. |
 | `home.py`, `home_layout.py` | Parked Home, weather, release notes and offroad alerts. StarPilot’s software and alert owners supply state and actions. |
 | `sidebar.py` | The sidebar beside home and the onroad view (`design/home.html`, `onroadmenu.html`): upstream's `Sidebar`, redrawn, with a Maps row from StarPilot's map manager. |

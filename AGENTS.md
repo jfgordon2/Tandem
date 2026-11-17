@@ -70,7 +70,8 @@ Check every visual change by looking at it, not just by tests. All paths below a
    python3 openpilot/selfdrive/ui/tandem/tools/compare.py openpilot/selfdrive/ui/tandem/tools/out/renders openpilot/selfdrive/ui/tandem/tools/out/compare
    ```
    `design/compare.json` lists the screens in order: the mock, its title, the note (what matches, or what differs and why) and whether it matches; `built` names the render when it isn't the mock's name, or a list to stack several. Add an entry for a new screen and update the note when a screen changes.
-4. **Look at the results** (open the PNGs or `tools/out/compare/index.html`), fix what doesn't match the mock, and share the page with the owner when screens change.
+4. **On the device.** `openpilot/selfdrive/ui/tandem/tools/device_screenshot.sh <device address> out.png` saves what the comma's screen shows (a sleeping screen wakes first). Use it to check a change on the device, not only in host renders.
+5. **Look at the results** (open the PNGs or `tools/out/compare/index.html`), fix what doesn't match the mock, and share the page with the owner when screens change.
 
 ## Release notes
 
