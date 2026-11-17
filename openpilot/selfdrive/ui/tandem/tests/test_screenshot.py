@@ -42,7 +42,7 @@ def test_a_request_takes_one_frame_and_is_cleared(tmp_path: Path) -> None:
   request.touch()
   shots.before_present()
   assert request.exists()                    # looked for at most every CHECK_S
-  now[0] = screenshot.CHECK_S
+  now[0] = max(screenshot.CHECK_S, screenshot.SETTLE_S)
   shots.before_present()
   assert not request.exists() and len(unloaded) == 1
   deadline = time.monotonic() + 5
@@ -63,3 +63,24 @@ def test_install_wraps_end_drawing_once_and_a_failure_never_stops_the_frame(monk
   assert rl.end_drawing is first
   rl.end_drawing()
   assert presented == [True] and logged == ["Tandem screenshot failed"]
+
+
+def test_a_sleeping_screen_is_woken_and_settles_before_the_picture(tmp_path: Path) -> None:
+  rl = SimpleNamespace(load_image_from_screen=FakeImage, unload_image=lambda image: None)
+  request, output = tmp_path / "request", tmp_path / "shot.png"
+  now, awake, woken = [0.0], [False], []
+  shots = screenshot.Screenshots(rl, request, output, clock=lambda: now[0], awake=lambda: awake[0], wake=lambda: woken.append(now[0]))
+  request.touch()
+  shots.watch()
+  assert woken == [0.0]                      # asleep: wake it, as a touch would
+  awake[0] = True
+  shots.before_present()                     # first frame awake
+  now[0] = screenshot.SETTLE_S / 2
+  shots.before_present()
+  assert request.exists()                    # still settling
+  now[0] = screenshot.SETTLE_S
+  shots.before_present()
+  assert not request.exists()
+  shots.watch()
+  assert woken == [0.0]                      # nothing waiting: left alone
+

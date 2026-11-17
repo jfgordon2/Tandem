@@ -27,14 +27,14 @@ def test_tandem_takes_openpilots_layout_only_while_one_of_its_screens_is_on(big_
 def test_starpilots_own_choice_stands_when_tandem_is_off(monkeypatch):
   from openpilot.selfdrive.ui.tandem import screenshot
   installed = []
-  monkeypatch.setattr(screenshot, "install", installed.append)
+  monkeypatch.setattr(screenshot, "install", lambda rl, wake=False: installed.append(wake))
   from openpilot.starpilot.ui.startup import UiSelection
   starpilot = UiSelection(True, "reviewed StarPilot assets verified")
   assert screens.ui_selection(starpilot, True, dict.fromkeys(screens.SWITCHES, "0")) is starpilot
   assert screens.ui_selection(starpilot, False, {}) is starpilot
   assert not installed                              # StarPilot's own UI gets no screenshot hook
   tandem = screens.ui_selection(starpilot, True, {})
-  assert not tandem.custom and "Tandem" in tandem.reason and len(installed) == 1
+  assert not tandem.custom and "Tandem" in tandem.reason and installed == [True]
 
 
 @pytest.mark.parametrize("environment", [{"TANDEM_SIDEBAR": "0"}, {"STARPILOT_UI": "upstream"}])
