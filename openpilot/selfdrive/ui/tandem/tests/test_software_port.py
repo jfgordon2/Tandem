@@ -1,7 +1,6 @@
-"""Cover permissions, progress and revision binding in the ported Software panel."""
+"""The Software tab on StarPilot 7: release's tab and Home on one shared software watch, with revision binding."""
 from __future__ import annotations
 
-from dataclasses import replace
 import sys
 from types import ModuleType
 from typing import Any
@@ -10,9 +9,8 @@ from unittest.mock import Mock
 import pytest
 
 from openpilot.selfdrive.ui.tandem import screens
-from openpilot.selfdrive.ui.tandem.home_software import HomeSoftware, InstallTarget
-from openpilot.selfdrive.ui.tandem.settings.software import Page, SoftwarePanel
-from openpilot.selfdrive.ui.tandem.settings.software_state import InstallPreference, SoftwareState, SoftwareWatch, Stage, project
+from openpilot.selfdrive.ui.tandem.settings.software import Software
+from openpilot.selfdrive.ui.tandem.software import HomeSoftware, InstallPreference, InstallTarget, SoftwareState, SoftwareWatch, Stage, project
 from openpilot.starpilot.ui.raylib import rl
 from openpilot.system.ui.widgets import Widget
 
@@ -62,27 +60,63 @@ def test_staged_notes_require_matching_branch_and_commit() -> None:
   assert mismatch.stage != Stage.READY and mismatch.home.target is None
 
 
-def test_update_preferences_keep_their_separate_expected_values() -> None:
-  status, operations, params = fixtures()
+def _watch(status: dict[str, Any], operations: dict[str, Any], params: dict[str, Any], authorized: bool = True) -> tuple[SoftwareWatch, Mock]:
   owner = Mock()
   owner.snapshot.return_value = operations
   owner.status.snapshot.return_value = status
-  watch = SoftwareWatch(lambda: owner, params.get, lambda: True, Mock(), clock=lambda: 0.0)
+  watch = SoftwareWatch(lambda: owner, params.get, lambda: authorized, Mock(), clock=lambda: 0.0)
   watch.state = project(status, operations, params.get)
+  return watch, owner
+
+
+def test_automatic_updates_turn_downloads_and_installs_on_together() -> None:
+  status, operations, params = fixtures()
+  watch, owner = _watch(status, operations, params)
   try:
-    assert watch.automatic_downloads(False)
-    assert not watch.automatic_installs(True)
-    assert watch._pending is not None
-    watch._pending.result(timeout=5)
-    watch.poll()
-    assert watch.automatic_installs(True)
-    assert watch._pending is not None
+    assert watch.automatic is False                   # downloads on, installs off: not automatic
+    assert watch.set_automatic(True)
     watch._pending.result(timeout=5)
     assert [call.args for call in owner.action.call_args_list] == [
-      ("preferences", {"action": "preferences", "automaticDownloads": False, "expectedAutomaticDownloads": True}),
       ("install-preferences", {"action": "install-preferences", "automaticInstalls": True, "restartSchedule": "0 0 * * *",
                                "restartTimezone": "America/Chicago", "expectedRevision": "a" * 32}),
-    ]
+    ]                                                 # downloads were already on
+    watch.poll()                                      # the next frame collects the result, as on screen
+    owner.action.reset_mock()
+    watch.state = project(status, dict(operations, automaticInstalls=True), params.get)
+    assert watch.automatic is True
+    assert watch.set_automatic(False)
+    watch._pending.result(timeout=5)
+    assert [call.args[0] for call in owner.action.call_args_list] == ["preferences", "install-preferences"]
+    assert owner.action.call_args_list[0].args[1] == {"action": "preferences", "automaticDownloads": False, "expectedAutomaticDownloads": True}
+  finally:
+    watch.close()
+
+
+def test_automatic_updates_can_start_with_no_saved_schedule() -> None:
+  """Before anyone saved install preferences, StarPilot reports its default schedule and no revision to expect."""
+  status, operations, params = fixtures()
+  operations.update(automaticDownloads=False, automaticInstalls=None, installPreferenceRevision=None, restartTimezone="UTC")
+  watch, owner = _watch(status, operations, params)
+  try:
+    assert watch.state.installs == InstallPreference(False, "0 0 * * *", "UTC", None)
+    assert watch.set_automatic(True)
+    watch._pending.result(timeout=5)
+    assert owner.action.call_args_list[1].args[1]["expectedRevision"] is None
+  finally:
+    watch.close()
+
+
+def test_a_refused_first_change_stops_the_second() -> None:
+  status, operations, params = fixtures()
+  operations.update(automaticDownloads=False)
+  watch, owner = _watch(status, operations, params)
+  owner.action.side_effect = RuntimeError("Update preference changed; refresh before saving")
+  try:
+    assert watch.set_automatic(True)
+    watch._pending.result(timeout=5)
+    assert owner.action.call_count == 1
+    watch.poll()
+    assert watch.failed
   finally:
     watch.close()
 
@@ -107,34 +141,7 @@ def test_restart_carries_both_commit_ids() -> None:
     watch.close()
 
 
-def test_restart_expires_and_options_are_lazy() -> None:
-  target = InstallTarget("development", OLD, NEW)
-  owner = Mock()
-  watch = SoftwareWatch(lambda: owner, Mock(), lambda: True, Mock())
-  watch.state = SoftwareState(stage=Stage.READY, home=HomeSoftware(target=target))
-  native = Mock(spec=Widget)
-  make_options = Mock(return_value=native)
-  panel = SoftwarePanel(lambda _authorized: watch, make_options, lambda: True)
-  panel.show_event()
-  try:
-    make_options.assert_not_called()
-    panel._open_update_notes(target)
-    assert panel._can_restart()
-    watch.state = replace(watch.state, home=HomeSoftware(target=replace(target, prepared_commit="c" * 40)))
-    assert not panel._can_restart()
-    panel._restart_shown()
-    owner.action.assert_not_called()
-    panel._open_options()
-    make_options.assert_called_once()
-    native.show_event.assert_called_once()
-    panel.hide_event()
-    assert panel._page == Page.MAIN and panel._shown_target is None
-    native.hide_event.assert_called_once()
-  finally:
-    watch.close()
-
-
-def test_writes_are_blocked_when_panel_loses_authority() -> None:
+def test_writes_are_blocked_when_the_tab_loses_authority() -> None:
   owner = Mock()
   watch = SoftwareWatch(lambda: owner, Mock(), lambda: False, Mock())
   try:
@@ -142,22 +149,63 @@ def test_writes_are_blocked_when_panel_loses_authority() -> None:
                                 installs=InstallPreference(False, "0 0 * * *", "UTC", "a" * 32))
     assert not watch.check()
     assert not watch.download()
-    assert not watch.automatic_downloads(False)
-    assert not watch.automatic_installs(True)
+    assert not watch.set_automatic(False)
     assert watch._pending is None
   finally:
     watch.close()
 
 
+@pytest.mark.parametrize("stage,state,action", [
+  (Stage.CURRENT, "current", "Check now"), (Stage.CHECKING, "busy", "Working…"), (Stage.AVAILABLE, "available", "Download"),
+  (Stage.READY, "ready", "Restart to install"), (Stage.CHECK_FAILED, "failed", "Try again"), (Stage.PARK, "waiting", "Check now"),
+])
+def test_release_tab_states_follow_starpilots_stages(stage: Stage, state: str, action: str) -> None:
+  watch = SoftwareWatch(Mock, Mock(), lambda: True, Mock())
+  try:
+    watch.state = SoftwareState(stage=stage)
+    model = Software(watch, lambda key: "7.0.0 / development / 1abbbc6 / Nov 16", Mock())
+    assert model.state() == state and model.action_label() == action
+    assert model.version_parts() == ("7.0.0", "development · Nov 16")   # the commit stays out of sight
+    if state == "waiting":
+      assert model.status_line() == "Software actions are available while parked" and not model.can_act()
+  finally:
+    watch.close()
+
+
+def test_release_tab_acts_on_exactly_what_it_shows() -> None:
+  target = InstallTarget("development", OLD, NEW)
+  watch = SoftwareWatch(Mock, Mock(), lambda: True, Mock())
+  watch.install, watch.download, watch.check = Mock(), Mock(), Mock()   # type: ignore[method-assign]
+  try:
+    model = Software(watch, lambda key: None, Mock())
+    watch.state = SoftwareState(stage=Stage.READY, home=HomeSoftware(target=target))
+    model.act()
+    watch.install.assert_called_once_with(target)
+    watch.state = SoftwareState(stage=Stage.AVAILABLE, can_download=True, branch="development")
+    model.act()
+    watch.download.assert_called_once()
+    watch.state = SoftwareState(stage=Stage.CURRENT, can_check=True)
+    model.act()
+    watch.check.assert_called_once()
+  finally:
+    watch.close()
+
+
 @pytest.mark.parametrize("key,value", [("TANDEM_SETTINGS", "0"), ("STARPILOT_UI", "upstream")])
-def test_recovery_uses_original_software_widget(monkeypatch: pytest.MonkeyPatch, key: str, value: str) -> None:
-  class SoftwareLayout(Widget):
-    """A native-panel stand-in with the upstream widget contract."""
+def test_recovery_uses_openpilots_settings(monkeypatch: pytest.MonkeyPatch, key: str, value: str) -> None:
+  class SettingsLayout(Widget):
+    """A native-settings stand-in with the upstream widget contract."""
+    def __init__(self, **kwargs: Any) -> None:
+      super().__init__()
+      self.kwargs = kwargs
+
     def _render(self, rect: rl.Rectangle) -> None:
       pass
 
-  native = ModuleType("openpilot.selfdrive.ui.layouts.settings.software")
-  native.SoftwareLayout = SoftwareLayout
+  native = ModuleType("openpilot.selfdrive.ui.layouts.settings.settings")
+  native.SettingsLayout = SettingsLayout  # type: ignore[attr-defined]
   monkeypatch.setitem(sys.modules, native.__name__, native)
   monkeypatch.setenv(key, value)
-  assert type(screens.software()) is SoftwareLayout
+  opened = Mock()
+  layout = screens.settings(opened, lambda: True)
+  assert type(layout) is SettingsLayout and layout.kwargs["on_open_arabesque"] is opened

@@ -488,6 +488,8 @@ def _environment(sm, owner, map_enabled: bool, now_ns: int) -> Environment:
 def main() -> None:
   from openpilot.cereal import messaging
   from openpilot.starpilot.navigation.owner import NavigationOwner
+  from openpilot.common.params import Params
+  from openpilot.starpilot.tandem.tile_removal import consume_clear_tiles
   try:
     os.nice(10)
   except OSError:
@@ -495,6 +497,7 @@ def main() -> None:
   daemon = TileDaemon()
   google = GoogleTiles()
   owner = NavigationOwner()
+  params = Params()
   from openpilot.starpilot.gps.source import GPS_SERVICES
   sm = messaging.SubMaster(["deviceState", *GPS_SERVICES])
   map_enabled, layout_checked = False, -math.inf
@@ -504,6 +507,8 @@ def main() -> None:
     if now - layout_checked > LAYOUT_CHECK_S:
       layout_checked, map_enabled = now, _map_enabled()
     env = _environment(sm, owner, map_enabled, time.monotonic_ns())
+    if consume_clear_tiles(daemon, google, env, params, owner.read_routing):
+      continue
     daemon.plan(env)
     daemon.maintain()
     idle = False

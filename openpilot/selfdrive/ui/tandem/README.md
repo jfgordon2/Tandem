@@ -47,19 +47,29 @@ Tandem merges StarPilot 7 (`Dom`). New behavior, presentation, assets, tools and
 
 | File | Integration |
 | --- | --- |
-| `openpilot/system/ui/lib/application.py` | `KEEP_FONT = False` and an empty `TEXT_SHAPERS` list. `font_fallback` skips the language-wide Noto fallback while `KEEP_FONT` is set, and the `rl.draw_text_ex` wrapper runs `TEXT_SHAPERS` over the text. Tandem sets both only while drawing its own text (`draw._own_font`) and restores them afterward. |
+| `openpilot/system/ui/lib/application.py` | `KEEP_FONT = False` and an empty `TEXT_SHAPERS` list. `font_fallback` skips the language-wide Noto fallback while `KEEP_FONT` is set, and the `rl.draw_text_ex` wrapper runs `TEXT_SHAPERS` over the text. Tandem sets both only while drawing its own text (`draw._own_font`) and restores them afterward. Inter Medium and SemiBold load on demand with Tandem enabled. Inter Regular, Bold, Unifont and the current fallback are ready at startup. |
 | `openpilot/system/ui/lib/text_measure.py` | `measure_text_cached` runs `TEXT_SHAPERS` too, so measuring matches drawing. |
+| `openpilot/system/ui/widgets/inputbox.py` | The font getter defaults to the native face for draw, measure, and cursor placement. The release keyboard overrides it with the Tandem face. |
 | `openpilot/selfdrive/ui/ui.py` | `select_ui(...)` is wrapped in `screens.ui_selection(..., BIG_UI)`, which returns StarPilot's choice unchanged unless Tandem's screens are on, and then openpilot's layout with the reason logged. |
-| `openpilot/selfdrive/ui/layouts/main.py` | `Sidebar`, `SIDEBAR_WIDTH` and the Home factory come from `screens.py`. Home receives a callback to open the Software page. The onroad factory uses the existing camera and model. A critical alert closes the sidebar through its existing visibility setter. The factories return openpilot’s widgets when their switches are off. |
-| `openpilot/selfdrive/ui/layouts/settings/settings.py` | Use the Software panel factory from `screens.py`. `TANDEM_SETTINGS=0` restores the original widget. The existing Settings navigation and other panels stay in openpilot's layout. |
+| `openpilot/selfdrive/ui/layouts/main.py` | The sidebar, Home, Settings and onroad factories come from `screens.py`. The onroad factory uses the existing camera and model. A critical alert closes the sidebar through its existing visibility setter. The factories return openpilot’s widgets when their switches are off. |
+| `openpilot/starpilot/ui/native/raylib_extra.cc` | Exposes a native method to release the CPU copy of a font's glyph images, keeping its atlas and text metrics. Tandem calls it for Inter only. |
+| `openpilot/selfdrive/ui/onroad/augmented_road_view.py` | The stock HUD is prepared by default. Tandem's camera view passes `stock_hud=False` to keep unused Inter faces and assets out of the driving HUD. |
+| `openpilot/selfdrive/ui/layouts/sidebar.py` | Tandem's sidebar passes `stock_text=False` to use its own fonts. The native sidebar initializes its normal fonts as before. |
+| `openpilot/system/manager/process_config.py` | The automatic uploader uses Tandem’s release Off, Parked and Always predicate. Missing preferences and the recovery switches leave the process on its native schedule. Network policy remains in the uploader. |
+| `openpilot/starpilot/maps/operation_owner.py` | Dispatches Tandem’s local snapshot removal request to code that shares the native admission lock and parked authority. |
+| `openpilot/starpilot/navigation/navtilesd.py` | Handles the local map removal request between tile writes and acknowledges cleanup to the parked map owner. |
 
 **Font atlases:** `openpilot/selfdrive/assets/.gitignore` ignores `fonts/*.fnt` and `fonts/*.png`, left from StarPilot 6's generator. Tandem's own atlases are committed with `git add -f` rather than by editing that file; once tracked, git keeps them. After rebuilding an atlas, `git add -f` it again.
 
-Not carried over from `release`: lazy loading of upstream's Inter faces and freeing glyph images after loading. StarPilot 7 draws Inter from TTF files at startup, and its raylib binding has no safe way to free a font's glyph images. Tandem's memory use is measured again on a device before either comes back (`PORTING.md`).
+StarPilot 7’s raylib binding retains glyph images for TTF fonts. Tandem defers Medium and SemiBold and releases the Inter glyph bitmaps after loading the atlas. Boot measurements with both changes are pending.
 
 ## Where the code differs from the mocks
 
-- **Stage 4 Software:** More software options embeds the native list. StarPilot supplies its row labels, availability, spacing and dialogs. The fixed left rail follows openpilot’s actual navigation size.
+- **Stage 4 Settings:** the four-tab frame is from release. Unported pages currently show their openpilot panels. Device › RAM uses the release panel. The footer and report attachment match release. The release list scrolls to show the last process row.
+- **Device › General:** the approved release capture is authoritative. The older General HTML still shows an Automatic Backups row. The built preview uses release’s five rows and Device rail with StarPilot 7’s language names.
+- **Device › Backups:** the approved release capture is authoritative. The running release shows the saved snapshots and Back up now. The older HTML has a schedule row. The preview reuses the running release panel and confirmations.
+- **Device › Storage & Data:** the preview reuses the release layout and rows. Offline Maps Delete uses the approved confirmation for all downloaded map formats.
+  The native release dialog keeps its text spacing. The description wraps earlier than in the HTML mock.
 
 - **Stage 4 driving screen:** the stand-in road in the mock represents StarPilot’s live camera and model. Speed-limit confirmation waits for a wide enough road view when the sidebar is open.
 

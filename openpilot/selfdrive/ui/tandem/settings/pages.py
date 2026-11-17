@@ -1,4 +1,4 @@
-"""Settings pages with a section sidebar or a full-width body."""
+"""Page shapes the settings window is built from: a hub of tiles, and a sidebar of sections."""
 from __future__ import annotations
 
 from collections.abc import Callable, Sequence
@@ -8,9 +8,9 @@ from functools import partial
 from openpilot.starpilot.ui.raylib import rl
 
 from openpilot.system.ui.widgets import Widget
-from openpilot.selfdrive.ui.tandem import tokens as T
-from openpilot.selfdrive.ui.tandem.base import Bindable, Component, resolve
-from openpilot.selfdrive.ui.tandem.chrome import PageHeader, Sidebar, SidebarItem
+from openpilot.selfdrive.ui.tandem import draw, tokens as T
+from openpilot.selfdrive.ui.tandem.base import Bindable, Component, resolve, size_of
+from openpilot.selfdrive.ui.tandem.chrome import HubGrid, HubTile, PageHeader, Sidebar, SidebarItem
 from openpilot.selfdrive.ui.tandem.controls import Tone
 from openpilot.selfdrive.ui.tandem.layout import FILL, column, inset, row
 
@@ -29,6 +29,67 @@ def go_back(page: Widget) -> None:
 
 def body_rect(rect: rl.Rectangle) -> rl.Rectangle:
   return inset(rect, left=T.PAGE_INSET, right=T.PAGE_INSET, top=T.px(18), bottom=T.px(14))
+
+
+class HubPage(Component):
+  """Title and subtitle, a grid of tiles, then an optional strip (e.g. the power-user switches)."""
+  grow_touch_target = False
+
+  def __init__(self, title: str, subtitle: str, tiles: list[HubTile], rows: list[int] | None = None, strip: Component | None = None,
+               trailing: Widget | None = None):
+    """Makes a hub page.
+
+    Args:
+      title: The page's title.
+      subtitle: The line under it.
+      tiles: The hub's tiles.
+      rows: Tiles per row, top to bottom.
+      strip: A strip under the tiles.
+      trailing: A widget at the right of the title (the Search settings button).
+    """
+    super().__init__()
+    self._header = self._child(PageHeader(title, subtitle, trailing=trailing, size=T.font_px(30)))
+    self._grid = self._child(HubGrid(tiles, rows=rows))
+    self._strip = self._child(strip) if strip is not None else None
+    self.pages: dict[str, Callable[[], None]] = {}   # each page the hub opens, by name (settings search opens them)
+
+  def _render(self, rect: rl.Rectangle) -> None:
+    body = inset(body_rect(rect), top=T.px(6))   # the hub's 24 px top padding, against 18 on other pages
+    sizes = [self._header.preferred_height(body.width), self._grid.preferred_height(body.width)]
+    if self._strip is not None:
+      sizes.append(self._strip.preferred_height(body.width))
+    header, grid, *rest = column(body, sizes, T.px(14))
+    self._header.render(header)
+    self._grid.render(grid)
+    if self._strip is not None:
+      self._strip.render(rest[0])
+
+
+class Strip(Component):
+  """A tinted bar: caption, a short line, and controls on the right."""
+  grow_touch_target = False
+
+  def __init__(self, caption: str, text: str, controls: Sequence[Widget]):
+    super().__init__()
+    self._caption = caption
+    self._text = text
+    self._controls = [self._child(c) for c in controls]
+
+  def preferred_size(self, max_width: float) -> tuple[float, float]:
+    return max_width, T.px(60)
+
+  def _render(self, rect: rl.Rectangle) -> None:
+    draw.fill(rect, T.SURFACE_1, T.RADIUS_CARD)
+    draw.stroke(rect, T.STRIP_EDGE, T.RADIUS_CARD)
+    body = inset(rect, left=T.px(20), right=T.px(10), y=T.px(8))
+    x = body.x + body.width
+    for control in reversed(self._controls):
+      w, h = size_of(control, body.width / 3)
+      x -= w
+      control.render(rl.Rectangle(x, body.y + (body.height - h) / 2, w, h))
+      x -= T.px(12)
+    w = draw.caption(body, self._caption, T.TEXT_MUTED)
+    draw.text(rl.Rectangle(body.x + w + T.px(12), body.y, x - body.x - w - T.px(12), body.height), self._text, T.font_px(15), T.TEXT_TERTIARY)
 
 
 @dataclass
@@ -138,3 +199,60 @@ class TitledPage(Component):
     header, content = column(body, [self._header.preferred_height(body.width), FILL], T.px(14))
     self._header.render(header)
     self._body.render(content)
+
+
+class FillPage(Component):
+  """A body filling the page, for column layouts without a title (e.g. Vehicle)."""
+  grow_touch_target = False
+
+  def __init__(self, body: Widget):
+    super().__init__()
+    self._body = self._child(body)
+
+  def _render(self, rect: rl.Rectangle) -> None:
+    self._body.render(inset(body_rect(rect), top=T.px(2)))
+
+
+class Rebuilding(Component):
+  """Rebuilds its content when key() changes, e.g. a list of models after a download finishes."""
+  grow_touch_target = False
+
+  def __init__(self, key: Callable[[], object], build: Callable[[], Widget], tick: Callable[[], None] | None = None,
+               on_show: Callable[[], None] | None = None):
+    super().__init__()
+    self._on_show = on_show
+    self._key_fn = key
+    self._build = build
+    self._tick = tick
+    self._key: object = None
+    self._content: Widget | None = None
+    self._shown = False
+
+  def show_event(self) -> None:
+    super().show_event()
+    self._shown = True
+    if self._on_show is not None:
+      self._on_show()
+    if self._content is not None:
+      self._content.show_event()
+
+  def hide_event(self) -> None:
+    super().hide_event()
+    self._shown = False
+    if self._content is not None:
+      self._content.hide_event()
+
+  def _update_state(self) -> None:
+    if self._tick is not None:
+      self._tick()
+    key = self._key_fn()
+    if self._content is None or key != self._key:
+      if self._content is not None and self._shown:
+        self._content.hide_event()
+      self._key, self._content = key, self._build()
+      if self._shown:
+        self._content.show_event()
+
+  def _render(self, rect: rl.Rectangle) -> None:
+    if self._content is not None:
+      self._content.render(rect)

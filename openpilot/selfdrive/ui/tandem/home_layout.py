@@ -5,12 +5,11 @@ from collections.abc import Callable
 import time
 from typing import Any
 
-from openpilot.common.swaglog import cloudlog
 from openpilot.selfdrive.ui.layouts.home import HomeLayout, HomeLayoutState
 from openpilot.selfdrive.ui.tandem.forecast import ForecastService, Outlook, outlook, wall_clock
 from openpilot.selfdrive.ui.tandem.home import HomeContent, HomeState, home_content_rect
 from openpilot.selfdrive.ui.tandem.home_alerts import AlertsView, HomeAlert, UpdateView
-from openpilot.selfdrive.ui.tandem.home_software import HomeSoftwareWatch, InstallTarget, SoftwareOwner
+from openpilot.selfdrive.ui.tandem.software import InstallTarget, SoftwareWatch, shared_software
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 from openpilot.selfdrive.ui.tandem.prefs import WEATHER_HEADS_UP, celsius, prefs_dir
 from openpilot.selfdrive.ui.ui_state import ui_state
@@ -45,33 +44,41 @@ def setup_line(params: Any) -> str:
 class EssentialsHome(HomeLayout):
   """Retain native offroad alerts, onboarding callbacks, and the parked lifecycle."""
 
-  def __init__(self, on_software: Callable[[], None]):
+  def __init__(self, on_software: Callable[[], None] | None = None, software: Callable[[], SoftwareWatch] = shared_software):
+    """Makes Home.
+
+    Args:
+      on_software: Opens the Software tab; by default through MainLayout's settings callback, as on release.
+      software: The software watch Home shares with the Software tab.
+    """
     super().__init__()
     self._summary = ""
     self._next_summary = 0.0
     self._notes_target: InstallTarget | None = None
-    self._software = HomeSoftwareWatch(self._new_software_owner, self.params.get, self._can_mutate, self._software_error)
+    self._software = software()   # the same watch as the Software tab
     self._position: LastPositionStore | None = None
     self._forecast: ForecastService | None = None
-    self._content = self._child(HomeContent(self._state, self._open_alerts, self._open_notes, on_software, self._outlook))
+    self._content = self._child(HomeContent(self._state, self._open_alerts, self._open_notes, on_software or self._open_software,
+                                            self._outlook))
     self._alerts_view = self._child(AlertsView(self._home_alerts, self._back, self._alert_action))
-    self._update_view = self._child(UpdateView(lambda: self._software.state.version, lambda: self._software.state.notes, self._back,
-                                              self._restart, lambda: self._software.state.scheduled, self._can_restart))
-
-  def _new_software_owner(self) -> SoftwareOwner:
-    from openpilot.starpilot.galaxy.software_operations import SoftwareOperations
-    return SoftwareOperations(params=self.params)
-
-  @staticmethod
-  def _software_error(error: Exception) -> None:
-    cloudlog.warning("Tandem Home software status: %s", error)
+    self._update_view = self._child(UpdateView(lambda: self._software.state.home.version, lambda: self._software.state.home.notes, self._back,
+                                              self._restart, lambda: self._software.state.home.scheduled, self._can_restart))
 
   @staticmethod
   def _can_mutate() -> bool:
     return ui_state.is_offroad() and not ui_state.projection_read_only and ui_state.replay_clock is None
 
+  def _open_software(self) -> None:
+    """Settings at its Software tab: MainLayout opens settings as Home's settings button does, then the tab moves."""
+    from openpilot.selfdrive.ui.tandem.screens import show_settings_tab
+    from openpilot.selfdrive.ui.tandem.settings.window import Tab
+    callback = self.settings_callback
+    if callback is not None:
+      callback()
+      show_settings_tab(Tab.SOFTWARE)
+
   def _state(self) -> HomeState:
-    return HomeState(alerts=self.alert_count, ignition=ui_state.ignition, setup=self._summary, software=self._software.state)
+    return HomeState(alerts=self.alert_count, ignition=ui_state.ignition, setup=self._summary, software=self._software.state.home)
 
   def _home_alerts(self) -> list[HomeAlert]:
     return [HomeAlert(item.key, item.text, item.severity > 0) for item in self.offroad_alert.sorted_alerts if item.visible]
@@ -89,16 +96,16 @@ class EssentialsHome(HomeLayout):
       self._set_state(HomeLayoutState.ALERTS)
 
   def _open_notes(self) -> None:
-    if (target := self._software.state.target) is not None:
+    if (target := self._software.state.home.target) is not None:
       self._notes_target = target
       self._set_state(HomeLayoutState.UPDATE)
 
   def _can_restart(self) -> bool:
-    return self._notes_target is not None and self._notes_target == self._software.state.target and self._software.can_restart()
+    return self._software.can_install(self._notes_target)
 
   def _restart(self) -> None:
     if self._notes_target is not None and self._can_restart():
-      self._software.restart(self._notes_target)
+      self._software.install(self._notes_target)
 
   def _back(self) -> None:
     self._notes_target = None
@@ -135,7 +142,7 @@ class EssentialsHome(HomeLayout):
     if now - self.last_refresh >= 10.0:
       self._refresh()
       self.last_refresh = now
-    software = self._software.poll()
+    software = self._software.poll().home
     if self.current_state == HomeLayoutState.UPDATE and self._notes_target != software.target:
       self._back()
     content = home_content_rect(rect)

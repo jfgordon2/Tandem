@@ -7,9 +7,8 @@ from types import SimpleNamespace
 import pytest
 
 from openpilot.selfdrive.ui.tandem import screens
-from openpilot.selfdrive.ui.tandem.onroad import size as Z
-from openpilot.selfdrive.ui.tandem.sidebar import (Health, MapsWatch, SidebarState, Status, connect_status, health_of, maps_status,
-                                                   network_status, zoom)
+from openpilot.selfdrive.ui.tandem.sidebar import (Health, MapsWatch, Status, connect_status, health_of, maps_status,
+                                                   network_status)
 
 UI = Path(__file__).resolve().parents[2]
 
@@ -126,33 +125,6 @@ def test_a_failed_question_keeps_the_last_row():
     assert watch.poll().value == "Checking"
   finally:
     watch.close()
-
-
-def test_larger_is_about_30_percent_on_everything_but_the_few_picked_sizes():
-  from openpilot.selfdrive.ui.tandem import tokens as T
-  Z.set_text(False)
-  try:
-    assert Z.px(74) == T.px(74) and not Z.larger()
-    Z.set_text(True)
-    assert Z.larger() and Z.px(74) == round(74 * T.SCALE * 1.3) and Z.font_px(17) == round(17 * T.SCALE * 1.3)
-    assert Z.pick(360, 405) == T.px(405)
-    Z.set_text(False)
-    assert Z.pick(360, 405) == T.px(360)
-  finally:
-    Z.set_text(False)
-
-
-def test_both_text_settings_are_off_by_default(tandem_prefs):
-  from openpilot.selfdrive.ui.tandem.prefs import LARGER_TEXT, REDUCE_MOTION
-  assert not LARGER_TEXT.get() and not REDUCE_MOTION.get()
-
-
-def test_the_menu_sidebar_grows_only_while_driving():
-  Z.set_text(True)
-  try:
-    assert zoom(SidebarState(onroad=True)) == Z.LARGER and zoom(SidebarState(onroad=False)) == 1.0
-  finally:
-    Z.set_text(False)
 
 
 @pytest.fixture

@@ -13,7 +13,7 @@ import pytest
 
 from openpilot.selfdrive.ui.tandem import screens, tokens as T
 from openpilot.selfdrive.ui.tandem.home import home_content_rect, readiness, software_line
-from openpilot.selfdrive.ui.tandem.home_software import HomeSoftware, HomeSoftwareWatch, InstallTarget, project_software
+from openpilot.selfdrive.ui.tandem.software import HomeSoftware, InstallTarget, SoftwareState, SoftwareWatch, project_software
 from openpilot.starpilot.ui.raylib import rl
 from openpilot.system.ui.lib.application import MousePos, gui_app
 from openpilot.system.ui.widgets import Widget
@@ -67,11 +67,12 @@ def home_layout(monkeypatch: pytest.MonkeyPatch) -> Iterator[SimpleNamespace]:
   monkeypatch.setattr(layout.HomeLayout, "_render_header", lambda self: headers.append(self.current_state))
   monkeypatch.setattr(gui_app, "_mouse_events", [])
   software = Mock()
-  home = binding.EssentialsHome(software)
+  watch = SoftwareWatch(Mock, lambda _key: None, lambda: True, Mock())   # stands in for the shared watch
+  home = binding.EssentialsHome(software, lambda: watch)
   home.last_refresh = time.monotonic()
   home._next_summary = float("inf")
   target = InstallTarget("development", "a" * 40, "b" * 40)
-  home._software.state = HomeSoftware(installed="7.0.0", version="7.0.1", target=target)
+  home._software.state = SoftwareState(home=HomeSoftware(installed="7.0.0", version="7.0.1", target=target))
   monkeypatch.setattr(home._software, "poll", lambda: home._software.state)
   drawn = {}
   for name in ("_content", "_alerts_view", "_update_view"):
@@ -125,7 +126,7 @@ def test_home_card_opens_detail_and_back_returns(home_layout: SimpleNamespace, s
 def test_upstream_home_keeps_header_geometry_and_notification_buttons(home_layout: SimpleNamespace,
                                                                     monkeypatch: pytest.MonkeyPatch) -> None:
   monkeypatch.setenv("TANDEM_HOME", "0")
-  home = screens.home(home_layout.software)
+  home = screens.home()
   layout = home_layout.layout
   assert type(home) is layout.HomeLayout
   home.last_refresh = time.monotonic()
@@ -139,13 +140,13 @@ def test_upstream_home_keeps_header_geometry_and_notification_buttons(home_layou
   assert home.current_state == layout.HomeLayoutState.UPDATE
   monkeypatch.setenv("TANDEM_HOME", "1")
   monkeypatch.setenv("STARPILOT_UI", "upstream")
-  assert type(screens.home(home_layout.software)) is layout.HomeLayout
+  assert type(screens.home()) is layout.HomeLayout
 
 
 def test_refresh_returning_home_reclaims_header_in_the_same_frame(home_layout: SimpleNamespace) -> None:
   home = home_layout.home
   home._open_notes()
-  home._software.state = HomeSoftware(installed="7.0.0")
+  home._software.state = SoftwareState(home=HomeSoftware(installed="7.0.0"))
   home.render(rl.Rectangle(554, 30, 1606, 1050))
   assert home.current_state.name == "HOME"
   assert not home_layout.headers
@@ -185,16 +186,16 @@ def test_install_rechecks_park_and_the_revision_in_view() -> None:
   owner.status.snapshot.return_value = {"installed": {"version": "7.0.0"}, "updater": {}}
   owner.snapshot.return_value = {"canInstall": False}
   can_mutate = Mock(return_value=True)
-  watch = HomeSoftwareWatch(lambda: owner, lambda _key: None, can_mutate, Mock())
+  watch = SoftwareWatch(lambda: owner, lambda _key: None, can_mutate, Mock())
   target = InstallTarget("development", "a" * 40, "b" * 40)
-  watch.state = HomeSoftware(target=target)
+  watch.state = SoftwareState(home=HomeSoftware(target=target))
   try:
-    assert not watch.restart(InstallTarget("development", "a" * 40, "c" * 40))
+    assert not watch.install(InstallTarget("development", "a" * 40, "c" * 40))
     can_mutate.return_value = False
-    assert not watch.restart(target)
+    assert not watch.install(target)
     can_mutate.return_value = True
-    assert watch.restart(target)
-    assert not watch.restart(target)
+    assert watch.install(target)
+    assert not watch.install(target)
     assert watch._pending is not None
     watch._pending.result(timeout=3)
     owner.action.assert_called_once_with("install", {"action": "install", "branch": "development",
@@ -214,6 +215,6 @@ def test_replacing_details_releases_the_previous_scroll_panel(home_layout: Simpl
 
   update = home._update_view
   previous = update._panel()
-  home._software.state = HomeSoftware(notes="New release notes")
+  home._software.state = SoftwareState(home=HomeSoftware(notes="New release notes"))
   assert update._panel() is not previous
   assert previous not in update._children

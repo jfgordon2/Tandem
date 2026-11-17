@@ -45,18 +45,26 @@ def _enabled(name: str, environment: Mapping[str, str] = os.environ) -> bool:
   return environment.get("STARPILOT_UI") != "upstream" and environment.get(name, "1") != "0"
 
 
-def home(on_software: Callable[[], None]) -> Widget:
-  """Use the approved parked Home or openpilot's original layout."""
+_settings: list[Widget] = []   # Tandem's settings window, once MainLayout has made it
+
+
+def show_settings_tab(tab: int) -> None:
+  """After MainLayout has opened settings, move Tandem's window to a tab (Home's Software card opens Software)."""
+  if _settings:
+    _settings[0].open_at(tab)  # type: ignore[attr-defined]
+
+
+def home() -> Widget:
+  """The parked Home: release's Essentials Home, or openpilot's with TANDEM_HOME=0."""
   if not _enabled("TANDEM_HOME"):
     from openpilot.selfdrive.ui.layouts.home import HomeLayout
     return HomeLayout()
   from openpilot.selfdrive.ui.tandem.home_layout import EssentialsHome
-  return EssentialsHome(on_software)
-
+  return EssentialsHome()
 
 
 def onroad() -> Widget:
-  """Build the approved onroad view or openpilot's original road layout."""
+  """The driving view: release's Essentials layers over openpilot's camera and model, or openpilot's own view."""
   if not _enabled("TANDEM_ONROAD"):
     from openpilot.selfdrive.ui.onroad.augmented_road_view import AugmentedRoadView
     return AugmentedRoadView()
@@ -64,34 +72,27 @@ def onroad() -> Widget:
   return EssentialsOnroad()
 
 
-def onroad_requires_full_view(widget: Widget) -> bool:
-  """Tell the shell whether Tandem's current critical alert needs the whole screen."""
-  prepare = getattr(widget, "prepare_frame", None)
-  return bool(prepare()) if callable(prepare) else False
+def settings(on_open_arabesque: Callable[[], None] | None = None, arabesque_available: Callable[[], bool] = lambda: False) -> Widget:
+  """The settings MainLayout shows: release's Essentials window on the big UI, or openpilot's with TANDEM_SETTINGS=0.
 
-
-def software() -> Widget:
-  """Use the Essentials Software panel on the big UI or the original panel."""
-  from openpilot.selfdrive.ui.layouts.settings.software import SoftwareLayout
+  Args:
+    on_open_arabesque: Passed on to openpilot's Developer panel, which opens Arabesque through MainLayout.
+    arabesque_available: Whether Arabesque may open now.
+  """
   from openpilot.system.ui.lib.application import BIG_UI
-
   if not BIG_UI or not _enabled("TANDEM_SETTINGS"):
-    return SoftwareLayout()
-  from openpilot.common.swaglog import cloudlog
-  from openpilot.selfdrive.ui.tandem.home_software import SoftwareOwner
-  from openpilot.selfdrive.ui.tandem.settings.software import SoftwarePanel
-  from openpilot.selfdrive.ui.tandem.settings.software_state import SoftwareWatch
-  from openpilot.selfdrive.ui.ui_state import ui_state
+    from openpilot.selfdrive.ui.layouts.settings.settings import SettingsLayout
+    return SettingsLayout(on_open_arabesque=on_open_arabesque, arabesque_available=arabesque_available)
+  from openpilot.selfdrive.ui.tandem.settings.essentials import essentials_settings
+  window = essentials_settings(on_open_arabesque, arabesque_available)
+  _settings[:] = [window]
+  return window
 
-  def owner() -> SoftwareOwner:
-    from openpilot.starpilot.galaxy.software_operations import SoftwareOperations
-    return SoftwareOperations(params=ui_state.params)
 
-  def watch(authorized: Callable[[], bool]) -> SoftwareWatch:
-    return SoftwareWatch(owner, ui_state.params.get, lambda: authorized() and ui_state.is_offroad(),
-                         lambda error: cloudlog.warning("Tandem Software: %s", error))
-
-  return SoftwarePanel(watch, SoftwareLayout, lambda: not ui_state.projection_read_only and ui_state.replay_clock is None)
+def onroad_requires_full_view(widget: Widget) -> bool:
+  """Tell MainLayout whether the Tandem view needs the entire screen."""
+  full_view = getattr(type(widget), "requires_full_view", None)
+  return bool(full_view(widget)) if callable(full_view) else False
 
 
 def sidebar() -> Widget:

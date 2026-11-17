@@ -242,26 +242,37 @@
     {
       "mock": "system",
       "title": "General",
-      "note": "Uploads is Off, Parked or Always. Automatic weekly backups have no upstream support. Page ground uses true black (#000000).",
-      "match": false
+      "note": "The approved release capture is the reference. The General panel preserves its five rows and the full Device rail in the preview. The older HTML includes the unused Automatic Backups row. The Language sheet shows the StarPilot 7 catalog.",
+      "match": false,
+      "built": ["stage4-general", "stage4-general-language"]
     },
     {
       "mock": "systembackups",
       "title": "Backups",
-      "note": "No automatic schedule, for the same reason. Page ground uses true black (#000000).",
-      "match": false
+      "note": "The approved release capture is the reference for the saved list and Back up now. The older HTML includes a schedule. The other native captures show the release confirmations and the empty list.",
+      "match": false,
+      "built": ["stage4-backups", "stage4-backups-restore", "stage4-backups-delete", "stage4-backups-empty"]
     },
     {
       "mock": "systemstorage",
       "title": "Storage & Data",
-      "note": "Matches, with the Offline Maps and Unused Models rows, the note at the bottom and no line under the title. The rows scroll, with a glow. Page ground uses true black (#000000).",
-      "match": true
+      "note": "Reuses the release layout, existing rows and selection behavior. The native preview includes the scrolled rows and the drive and model confirmations.",
+      "match": false,
+      "built": ["stage4-storage", "stage4-storage-scrolled", "stage4-storage-delete-drives", "stage4-storage-remove-models"]
+    },
+    {
+      "mock": "stage4-map-delete",
+      "title": "Delete all downloaded maps",
+      "note": "The native release dialog uses the approved wording and buttons. Native font metrics wrap the description earlier and give it slightly more space.",
+      "match": false,
+      "built": "stage4-storage-delete-maps"
     },
     {
       "mock": "systemreport",
       "title": "Report a Problem",
-      "note": "Matches the two columns. No Attach last drive: StarPilot's report doesn't attach drives. Page ground uses true black (#000000).",
-      "match": true
+      "note": "The running release form is the reference. The native owner confirms delivery before the button changes and includes the last three low-RAM snapshots when present.",
+      "match": true,
+      "built": "stage4-device-report"
     },
     {
       "mock": "confirmdialog",
@@ -839,6 +850,13 @@
       "title": "Offline-only preview needs maps",
       "note": "Native device capture with sample data. Start stays disabled. Choose regions opens the existing region panes, rather than offering an online route or asking for a package URL.",
       "match": false
+    },
+    {
+      "mock": "stage4-ram",
+      "title": "StarPilot 7 Device RAM",
+      "note": "Release’s RAM panel in the current Device list, at rest and scrolled. Opening RAM clears the unread dot. The fixed footer leaves the last process row below the initial viewport.",
+      "match": true,
+      "built": ["stage4-ram", "stage4-ram-scrolled"]
     },
     {
       "mock": "systemram",

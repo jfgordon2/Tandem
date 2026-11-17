@@ -204,7 +204,7 @@ def essentials_sidebar() -> Widget:
 
   class EssentialsSidebar(Sidebar):
     def __init__(self) -> None:
-      super().__init__()
+      super().__init__(stock_text=False)
       self._view = SidebarView(self._state, lambda: self._call(self._on_settings_click), lambda: self._call(self._on_flag_click),
                                lambda: self._call(self._open_settings_callback))
       self._maps = MapsWatch()

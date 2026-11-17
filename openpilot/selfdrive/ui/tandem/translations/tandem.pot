@@ -8450,3 +8450,41 @@ msgstr ""
 #, python-brace-format
 msgid "{} · see drives and change settings on your phone"
 msgstr ""
+
+#: settings/ram.py:114
+msgid "The last three drives are kept. A reboot clears RAM."
+msgstr ""
+
+#: settings/backups.py:90
+#, python-brace-format
+msgid "Backup operation could not finish. {}"
+msgstr ""
+
+#: settings/storage.py:164
+#, python-brace-format
+msgid "Storage operation could not finish. {}"
+msgstr ""
+
+#: settings/storage.py:164
+msgid "Some files could not be removed."
+msgstr ""
+
+#: settings/essentials.py:53
+msgid "Galaxy password"
+msgstr ""
+
+#: settings/essentials.py:53
+msgid "Use your existing Galaxy password, or set a new one"
+msgstr ""
+
+#: settings/report.py:121
+msgid "The report could not be sent. Try again."
+msgstr ""
+
+#: settings/software.py:189
+msgid "Download and install while parked"
+msgstr ""
+
+#: settings/storage.py:142
+msgid "Remove all downloaded maps from this device. Your regions stay chosen."
+msgstr ""

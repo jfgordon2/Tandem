@@ -12,7 +12,7 @@ from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.controls import Button
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, place, row
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_, tn_
-from openpilot.selfdrive.ui.tandem.home_software import HomeSoftware
+from openpilot.selfdrive.ui.tandem.software import HomeSoftware
 
 if TYPE_CHECKING:
   from openpilot.selfdrive.ui.tandem.forecast import Outlook

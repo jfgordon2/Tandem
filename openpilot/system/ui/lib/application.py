@@ -242,6 +242,7 @@ class GuiApplication:
     self._set_log_callback()
 
     self._fonts: dict[FontWeight, rl.Font] = {}
+    self._deferred_faces: dict[FontWeight, list[int]] = {}
     self._fallback_fonts: dict[str, rl.Font] = {}
     self._width = width if width is not None else GuiApplication._default_width()
     self._height = height if height is not None else GuiApplication._default_height()
@@ -796,6 +797,9 @@ class GuiApplication:
       self._collect_frame_timing = None
 
   def font(self, font_weight: FontWeight = FontWeight.NORMAL) -> rl.Font:
+    if font_weight in self._deferred_faces:
+      self._load_face(font_weight, self._deferred_faces[font_weight])
+      del self._deferred_faces[font_weight]
     return self._fonts[font_weight]
 
   def fallback_font(self) -> rl.Font:
@@ -831,18 +835,30 @@ class GuiApplication:
       if code not in FONT_FALLBACK_LANGUAGES:
         base_chars.update(TRANSLATIONS_DIR.joinpath(f"app_{code}.po").read_text(encoding="utf-8"))
 
-    for font_weight_file in FontWeight:
-      with as_file(FONT_DIR) as fspath:
-        unifont = font_weight_file == FontWeight.UNIFONT
-        codepoints = sorted(map(ord, unifont_chars if unifont else base_chars))
-        font = rl.load_font_ex((fspath / font_weight_file).as_posix(), 16 if unifont else 200,
-                               codepoints, len(codepoints))
-        if font_weight_file != FontWeight.UNIFONT:
-          rl.gen_texture_mipmaps(font.texture)
-          rl.set_texture_filter(font.texture, rl.TextureFilter.TEXTURE_FILTER_TRILINEAR)
-        self._fonts[font_weight_file] = font
+    from openpilot.starpilot.tandem.font_loading import defer_inter
+    defer = defer_inter(BIG_UI)
+    codepoints = sorted(map(ord, base_chars))
+    for weight in FontWeight:
+      chars = sorted(map(ord, unifont_chars)) if weight == FontWeight.UNIFONT else codepoints
+      if defer and weight in (FontWeight.MEDIUM, FontWeight.SEMI_BOLD):
+        self._deferred_faces[weight] = chars
+      else:
+        self._load_face(weight, chars)
     if multilang.requires_font_fallback():
       self.fallback_font()
+
+  def _load_face(self, weight: FontWeight, codepoints: list[int]) -> None:
+    with as_file(FONT_DIR) as fspath:
+      font = rl.load_font_ex((fspath / weight).as_posix(), 16 if weight == FontWeight.UNIFONT else 200,
+                             codepoints, len(codepoints))
+    if weight != FontWeight.UNIFONT:
+      rl.gen_texture_mipmaps(font.texture)
+      rl.set_texture_filter(font.texture, rl.TextureFilter.TEXTURE_FILTER_TRILINEAR)
+      from openpilot.starpilot.tandem.font_loading import defer_inter
+      release_images = getattr(rl, "release_font_glyph_images", None)
+      if release_images is not None and defer_inter(BIG_UI):
+        release_images(font)
+    self._fonts[weight] = font
 
   def _patch_text_functions(self):
     # Wrap raylib text APIs to apply a global text size scale so our px sizes match Qt

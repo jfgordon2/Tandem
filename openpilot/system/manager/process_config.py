@@ -8,6 +8,7 @@ from openpilot.common.hardware import PC, COMMA_HARDWARE
 from openpilot.system.manager.process import PythonProcess, NativeProcess, DaemonProcess
 from openpilot.starpilot.maps.shadow_lifecycle import MapdShadowProcess
 from openpilot.starpilot.models.recovery_process import ModeldProcess
+from openpilot.starpilot.tandem.uploads import allow_uploads
 from openpilot.starpilot.system.jetlink.process import JetlinkProcess
 from openpilot.starpilot.sentry_mode.preferences import enabled as sentry_enabled
 from openpilot.starpilot.galaxy.camera_request import requested as camera_requested
@@ -234,7 +235,7 @@ procs = [
   PythonProcess("usage_stats", "openpilot.starpilot.analytics.runtime", always_run, enabled=COMMA_HARDWARE),
   PythonProcess("tombstoned", "openpilot.system.tombstoned", always_run, enabled=not PC),
   PythonProcess("updated", "openpilot.system.updated.updated", only_offroad, enabled=not PC),
-  PythonProcess("uploader", "openpilot.system.loggerd.uploader", always_run),
+  PythonProcess("uploader", "openpilot.system.loggerd.uploader", allow_uploads),
   # debug procs
   PythonProcess("webrtcd", "openpilot.system.webrtc.webrtcd", or_(livestream, notcar)),
   PythonProcess("joystick", "openpilot.tools.joystick.joystick_control", and_(joystick, iscar)),

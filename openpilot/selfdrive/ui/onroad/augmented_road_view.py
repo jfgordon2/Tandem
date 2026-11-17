@@ -1,3 +1,5 @@
+from functools import cached_property
+
 import numpy as np
 from openpilot.starpilot.ui.camera_selection import (selected_camera_stream, WIDE_CAM_MAX_SPEED as WIDE_CAM_MAX_SPEED,
                                                     ROAD_CAM_MIN_SPEED as ROAD_CAM_MIN_SPEED)
@@ -33,7 +35,7 @@ INF_POINT = np.array([1000.0, 0.0, 0.0])
 
 
 class AugmentedRoadView(CameraView):
-  def __init__(self, stream_type: VisionStreamType = VisionStreamType.VISION_STREAM_NARROW_ROAD):
+  def __init__(self, stream_type: VisionStreamType = VisionStreamType.VISION_STREAM_NARROW_ROAD, *, stock_hud: bool = True):
     super().__init__("camerad", stream_type)
     self._set_placeholder_color(BORDER_COLORS[UIStatus.DISENGAGED])
 
@@ -46,9 +48,14 @@ class AugmentedRoadView(CameraView):
     self._content_rect = rl.Rectangle()
 
     self.model_renderer = ModelRenderer()
-    self._hud_renderer = HudRenderer()
+    if stock_hud:
+      _ = self._hud_renderer
     self.alert_renderer = AlertRenderer()
     self.driver_state_renderer = DriverStateRenderer()
+
+  @cached_property
+  def _hud_renderer(self) -> HudRenderer:
+    return HudRenderer()
 
   def render_camera_model_layer(self, rect: rl.Rectangle, *, camera_view: int = CAMERA_VIEW_AUTO,
                                 reverse_driver: bool = False, road_style: dict | None = None,

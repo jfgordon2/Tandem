@@ -1,0 +1,213 @@
+import datetime
+import json
+
+from openpilot.selfdrive.ui.tandem.ram import DESCRIPTIONS, RamLog, Snapshot, process_name, report_text
+from openpilot.selfdrive.ui.tandem.onroad.status import RamWatch, Snapshot as Status, chips_for
+
+MB = 2**20
+PROCS = [("modeld", 1300 * MB), ("ui", 620 * MB), ("selfdrived", 410 * MB), ("mapd", 290 * MB), ("locationd", 240 * MB), ("camerad", 90 * MB)]
+
+
+def _log(tmp_path, clock=None):
+  reads = []
+
+  def read():
+    reads.append(1)
+    return PROCS, 7300 * MB
+  times = iter(range(1000, 2000)) if clock is None else clock
+  return RamLog(tmp_path / ".tandem_ram.json", read, lambda: float(next(times)), background=False), reads
+
+
+def test_low_ram_chip_holds_until_85_percent():
+  watch = RamWatch()
+  assert watch.update(True, 91)                  # StarPilot raises Low Memory above 90%
+  assert watch.update(False, 89)                 # its alert drops while RAM hovers: the chip stays
+  assert watch.update(False, 86)
+  assert not watch.update(False, 85)             # down to 85%: gone
+  assert not watch.update(False, 88)             # and doesn't come back until StarPilot raises it again
+  assert [c.key for c in chips_for(Status(low_ram=True, memory_percent=88))] == ["low_memory"]
+
+
+def test_one_snapshot_per_drive_at_its_peak(tmp_path):
+  log, reads = _log(tmp_path)
+  log.note(drive=1, percent=91)
+  for _ in range(50):                            # the chip shows every frame: no new capture at the same reading
+    log.note(drive=1, percent=91)
+  log.note(drive=1, percent=90)
+  assert len(reads) == 1
+  log.note(drive=1, percent=93)                  # a new peak replaces the drive's snapshot
+  assert len(reads) == 2
+  assert [(s.percent, s.drive) for s in log.snapshots()] == [(93, 1)]
+  top = log.snapshots()[0]
+  assert [n for n, _ in top.top] == ["modeld", "ui", "selfdrived", "mapd", "locationd"]
+  assert top.rest == 7300 * MB - sum(b for _, b in PROCS[:5])
+
+
+def test_keeps_the_last_three_drives_newest_first_and_survives_a_restart(tmp_path):
+  log, _ = _log(tmp_path)
+  for drive, percent in [(1, 91), (2, 92), (3, 93), (4, 94)]:
+    log.note(drive, percent)
+  assert [s.drive for s in log.snapshots()] == [4, 3, 2]
+  again = RamLog(tmp_path / ".tandem_ram.json")
+  assert [s.percent for s in again.snapshots()] == [94, 93, 92]
+
+
+def test_new_snapshot_is_unseen_until_the_panel_opens(tmp_path):
+  log, _ = _log(tmp_path)
+  assert not log.unseen()
+  log.note(1, 91)
+  assert log.unseen()
+  log.mark_seen()
+  assert not log.unseen() and not json.loads((tmp_path / ".tandem_ram.json").read_text())["unseen"]
+
+
+def test_a_failed_read_records_nothing(tmp_path):
+  def read():
+    raise OSError("no /proc")
+  log = RamLog(tmp_path / ".tandem_ram.json", read, background=False)
+  log.note(1, 91)
+  assert log.snapshots() == [] and not log.unseen()
+
+
+def test_process_names_as_a_device_shows_them():
+  # Command lines read from a comma device running Tandem
+  assert process_name("selfdrive.pandad.pandad", ["selfdrive.pandad.pandad"]) == "pandad"           # titled by manager
+  assert process_name("system.timed", ["system.timed", ""]) == "timed"
+  assert process_name("starpilot.system.bluetooth.daemon", ["starpilot.system.bluetooth.daemon"]) == "bluetooth.daemon"
+  assert process_name("/usr/local/venv", ["/usr/local/venv/bin/python3", "-m", "openpilot.selfdrive.ui.ui"]) == "ui"
+  assert process_name("python", ["python", "-m", "system.athena.manage_athenad"]) == "manage_athenad"
+  assert process_name("python3", ["python3", "./manager.py"]) == "manager"
+  assert process_name("python", ["/usr/local/venv/bin/python", "-u", "/usr/comma/magic.py"]) == "magic"
+  assert process_name("python", ["/usr/local/venv/bin/python", "-"]) == "python"                    # a script on stdin
+  assert process_name("kworker", []) == "kworker"
+
+
+def test_routing_process_names_have_ram_descriptions():
+  assert process_name("starpilot.tandem.routing.routingd", ["starpilot.tandem.routing.routingd"]) == "routingd"
+  assert process_name("python", ["python", "-u", "-m", "openpilot.starpilot.tandem.routing.native_worker"]) == "native_worker"
+  assert DESCRIPTIONS["routingd"] == DESCRIPTIONS["native_worker"] == "Routing"
+
+
+def test_report_lists_each_drive_for_the_developers():
+  snap = Snapshot(datetime.datetime(2026, 11, 3, 16, 12).timestamp(), 92, [("modeld", 1300 * MB), ("ui", 620 * MB)], 4500 * MB, 1)
+  assert report_text([snap]) == "Low on RAM 2026-11-03 16:12 92%: modeld 1300 MB, ui 620 MB, rest 4500 MB"
+
+
+def test_drive_labels_say_today_yesterday_or_the_date():
+  from openpilot.selfdrive.ui.tandem.settings.ram import drive_label, size_text
+  now = datetime.datetime(2026, 11, 3, 18, 0)
+  at = lambda *a: Snapshot(datetime.datetime(*a).timestamp(), 92)  # noqa: E731
+  assert drive_label(at(2026, 11, 3, 16, 12), now) == "Today 4:12 PM · 92%"
+  assert drive_label(at(2026, 11, 2, 8, 40), now) == "Yesterday 8:40 AM · 92%"
+  assert drive_label(at(2026, 10, 30, 9, 0), now) == "Oct 30 · 92%"
+  assert (size_text(1300 * MB), size_text(620 * MB)) == ("1.3 GB", "620 MB")
+
+
+def test_device_tab_has_ram_with_a_dot_until_opened(tmp_path):
+  from unittest.mock import Mock
+  from openpilot.selfdrive.ui.tandem.settings.pages import SectionPage
+  from openpilot.selfdrive.ui.tandem.settings.ram import ram_section
+  from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow, Tab
+
+  log, _ = _log(tmp_path)
+  log.note(1, 92)
+  section = ram_section(log, lambda: 54)
+  window = SettingsWindow({Tab.DEVICE: lambda: SectionPage("DEVICE", [section])}, Mock(), initial=Tab.DEVICE)
+  page = window.top
+  assert page._sidebar._items[0].dot()
+  window.show_event()
+  assert not page._sidebar._items[0].dot()
+
+
+def test_ram_is_hidden_until_a_drive_runs_low(tmp_path):
+  from openpilot.selfdrive.ui.tandem.base import resolve
+  from openpilot.selfdrive.ui.tandem.settings.ram import ram_section
+
+  log, _ = _log(tmp_path)
+  ram = ram_section(log)
+  assert not resolve(ram.visible)
+  log.note(1, 91)
+  assert resolve(ram.visible)
+
+
+def test_malformed_history_still_opens_device_settings(tmp_path):
+  path = tmp_path / ".tandem_ram.json"
+  path.write_text("[]")
+  assert RamLog(path).snapshots() == []
+
+
+def test_growth_is_measured_from_a_baseline_a_minute_into_the_drive(tmp_path):
+  sizes = {"starpilot_process": 100 * MB, "modeld": 300 * MB}
+
+  def read():
+    return sorted(sizes.items(), key=lambda kv: -kv[1]), 3000 * MB
+  log = RamLog(tmp_path / ".tandem_ram.json", read, lambda: 1000.0, background=False)
+  log.drive(7, now=10.0)
+  log.drive(7, now=69.0)                        # not a minute yet
+  sizes["starpilot_process"] = 120 * MB         # still settling in: not counted as growth
+  log.drive(7, now=70.0)                        # baseline taken here
+  sizes["starpilot_process"] = 390 * MB         # then it leaks
+  log.note(7, 95)
+  snap = log.snapshots()[0]
+  assert snap.grew == {"starpilot_process": 270 * MB, "modeld": 0}
+  assert "starpilot_process 390 MB (+270)" in report_text([snap])
+
+
+def test_a_new_drive_waits_for_its_own_baseline(tmp_path):
+  log, _ = _log(tmp_path)
+  log.drive(1, now=0.0)
+  log.drive(1, now=61.0)
+  log.drive(2, now=100.0)                       # the next drive starts: the old baseline doesn't apply
+  log.note(2, 91)
+  assert log.snapshots()[0].grew == {}
+
+
+def test_snapshots_saved_before_growth_still_load(tmp_path):
+  path = tmp_path / ".tandem_ram.json"
+  path.write_text(json.dumps({"drives": [{"when": 1.0, "percent": 92, "top": [["modeld", 300 * MB]], "rest": 0, "drive": 1}]}))
+  assert RamLog(path).snapshots()[0].grew == {}
+
+
+def test_pss_sums_a_processes_share_of_each_mapping():
+  from openpilot.selfdrive.ui.tandem.ram import pss_of
+  smaps = (b"7f00-7f10 r-xp 00000000 08:01 1 /lib/libc.so\nRss:   400 kB\nPss:   100 kB\nShared_Clean: 300 kB\n" +
+           b"7f20-7f30 rw-p 00000000 00:00 0\nRss:   50 kB\nPss:   50 kB\n")
+  assert pss_of(smaps) == 150 * 1024
+
+
+def test_growth_reads_as_a_signed_size():
+  from openpilot.selfdrive.ui.tandem.settings.ram import growth_text
+  assert (growth_text(270 * MB), growth_text(-3 * MB), growth_text(0)) == ("+270 MB", "-3 MB", "+0 MB")
+
+
+SMAPS = b"".join((
+  b"00400000-00500000 r-xp 00000000 08:01 12 /data/openpilot/starpilot/lib.so\nRss: 900 kB\nPss: 300 kB\n",
+  b"01000000-02000000 rw-p 00000000 00:00 0 [heap]\nRss: 4096 kB\nPss: 4096 kB\n",
+  b"7f000000-7f100000 rw-p 00000000 00:00 0 \nRss: 1024 kB\nPss: 1024 kB\n",
+  b"7f200000-7f300000 rw-s 00000000 00:05 9 /dev/shm/msgq_modelV2\nRss: 512 kB\nPss: 128 kB\n",
+  b"7f400000-7f500000 rw-s 00000000 00:06 3 /dev/kgsl-3d0\nRss: 256 kB\nPss: 256 kB\n",
+))
+
+
+def test_memory_splits_into_heap_files_shared_and_device():
+  from openpilot.selfdrive.ui.tandem.ram import kind_of, kinds_of
+  assert kinds_of(SMAPS) == {"heap": (4096 + 1024) * 1024, "files": 300 * 1024, "shared": 128 * 1024, "device": 256 * 1024}
+  assert [kind_of(p) for p in (b"", b"[stack]", b"/memfd:capnp (deleted)", b"/dev/ion", b"/usr/lib/libc.so.6")] == \
+    ["heap", "heap", "shared", "device", "files"]
+
+
+def test_snapshots_say_which_kind_of_memory_grew(tmp_path):
+  state = {"sp": 100 * MB, "heap": 60 * MB}
+
+  def read():
+    kinds = {"starpilot_process": {"heap": state["heap"], "files": 30 * MB, "shared": 10 * MB, "device": 0}}
+    return [("starpilot_process", state["sp"])], 3000 * MB, kinds
+  log = RamLog(tmp_path / ".tandem_ram.json", read, lambda: datetime.datetime(2026, 11, 4, 16, 46).timestamp(), background=False)
+  log.drive(1, now=0.0)
+  log.drive(1, now=61.0)                                    # baseline
+  state.update(sp=370 * MB, heap=325 * MB)                  # the leak is in the heap
+  log.note(1, 95)
+  snap = RamLog(tmp_path / ".tandem_ram.json").snapshots()[0]   # as saved
+  assert snap.kinds["starpilot_process"]["heap"] == 325 * MB
+  assert snap.kinds_grew["starpilot_process"] == {"heap": 265 * MB, "files": 0, "shared": 0, "device": 0}
+  assert report_text([snap]) == "Low on RAM 2026-11-04 16:46 95%: starpilot_process 370 MB (+270; heap +265), rest 2630 MB"

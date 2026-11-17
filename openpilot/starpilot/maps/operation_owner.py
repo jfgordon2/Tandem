@@ -802,6 +802,9 @@ class MapSnapshotOperationOwner:
       return self.snapshot()
     if op == 'start':
       return self.start(request)
+    if op == 'tandem_remove':
+      from openpilot.starpilot.tandem.map_removal import remove_all_maps
+      return remove_all_maps(self, request)
     if op == 'cancel' and set(request) == {'version', 'op', 'operationId'}:
       return self.cancel(request['operationId'])
     raise OperationError('invalid_request')

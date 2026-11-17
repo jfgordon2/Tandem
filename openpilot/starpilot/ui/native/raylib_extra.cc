@@ -132,6 +132,15 @@ NB_MODULE(_raylib_extra, module) {
       using Bytes = nb::ndarray<nb::memview, uint8_t, nb::ndim<1>, nb::device::cpu>;
       return nb::cast(Bytes(image.data, {static_cast<size_t>(size)}, object));
     });
+    target.def("release_font_glyph_images", [](Font &font) {
+      if (!font.glyphs) return;
+      const auto unload_image = symbol<decltype(&UnloadImage)>("UnloadImage");
+      for (int i = 0; i < font.glyphCount; ++i) {
+        Image &image = font.glyphs[i].image;
+        if (image.data) unload_image(image);
+        image.data = nullptr;
+      }
+    });
     target.def("_font_glyphs", [](nb::handle font) { return GlyphView{nb::borrow<nb::object>(font), &nb::cast<Font &>(font)}; });
     target.def("_font_recs", [](nb::handle font) { return RectangleView{nb::borrow<nb::object>(font), &nb::cast<Font &>(font)}; });
     auto property = nb::module_::import_("builtins").attr("property");

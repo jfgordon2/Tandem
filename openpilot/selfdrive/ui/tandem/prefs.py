@@ -154,11 +154,17 @@ def restore_prefs(backup: Path, folder: Path | None = None) -> bool:
   if not source.is_dir():
     return False
   folder = folder or prefs_dir()
-  for path in pref_files(folder):
-    path.unlink(missing_ok=True)
-  for path in source.glob(".tandem_*"):
-    if path.is_file() and path.name not in NOT_BACKED_UP:
-      shutil.copy2(path, folder / path.name)
+  saved = pref_files(source)
+  names = {path.name for path in saved}
+  with tempfile.TemporaryDirectory(prefix=".tandem-restore-", dir=folder) as staging:
+    staged = Path(staging)
+    for path in saved:
+      shutil.copy2(path, staged / path.name)
+    for path in saved:
+      (staged / path.name).replace(folder / path.name)
+    for path in pref_files(folder):
+      if path.name not in names:
+        path.unlink(missing_ok=True)
   return True
 
 
@@ -169,6 +175,7 @@ WEATHER_CHIME = Flag("weather_chime", True)           # Alerts › Chimes › We
 LARGER_TEXT = Flag("larger_text", False)              # Display › Driving Screen › Text Size: Larger (onroad/size.py)
 REDUCE_MOTION = Flag("reduce_motion", False)          # Display › Driving Screen › Reduce Motion (onroad/size.py)
 DEVELOPER_STRIP = Text("developer_strip_metrics", legacy="DeveloperStripMetrics")
+TUNER_MODE = Flag("tuner_mode", False)            # Driving › Power User
 TEMPERATURE = Choice("temperature", ("F", "C"))       # General › Temperature; until picked, it follows Units (km/h: °C)
 
 

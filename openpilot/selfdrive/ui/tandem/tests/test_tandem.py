@@ -249,3 +249,156 @@ def test_sheet_springs_back_from_a_short_slow_drag_and_ignores_drags_off_the_han
   assert not closed and sheet._snap is not None and sheet._drag == 0
   _sheet_drag([(700, 0.0), (900, 0.5), (1000, 1.0), (1000, 1.1)], lambda: closed.append(True))      # starts in the body
   assert not closed
+
+
+def test_traffic_chip_only_while_braking_and_ready_only_when_the_car_waits():
+  from openpilot.selfdrive.ui.tandem.onroad.status import Snapshot, chip_for
+  braking = Snapshot(engaged=True, slowing_for_lead=True, speed=12.0, accel=-1.2)
+  assert chip_for(braking).label == "Slowing for traffic"
+  assert chip_for(Snapshot(engaged=True, slowing_for_lead=True, speed=12.0, accel=0.1)) is None      # just following
+  stopped = Snapshot(engaged=True, slowing_for_lead=True, standstill=True, speed=0.0, accel=-0.4)
+  assert chip_for(stopped) is None                                   # stopped behind a car that will resume on its own
+  stopped.waiting_for_resume = True
+  assert chip_for(stopped).label == "Ready · tap resume"
+
+
+def test_stop_chips_say_stopped_once_the_car_is_stopped():
+  from openpilot.selfdrive.ui.tandem.onroad.status import Snapshot, chip_for
+  assert chip_for(Snapshot(red_light=True, speed=8.0)).label == "Stopping ahead"   # the model's stop: light or sign
+  assert chip_for(Snapshot(red_light=True, standstill=True)).label == "Stopped"
+  assert chip_for(Snapshot(stop_sign=True, standstill=True)).label == "Stopped for stop sign"
+
+
+def test_steer_saturated_is_the_alert_help_steer_replaces():
+  from openpilot.selfdrive.ui.tandem.onroad.alerts import replaced_by_headroom
+  assert replaced_by_headroom("steerSaturated/warning")
+  assert not replaced_by_headroom("promptDriverDistracted/warning") and not replaced_by_headroom("")
+
+
+def test_light_is_green_outranks_stopped_at_a_stop():
+  from openpilot.selfdrive.ui.tandem.onroad.status import Snapshot, chip_for
+  s = Snapshot(red_light=True, standstill=True, events={"greenLight"})
+  assert chip_for(s).label == "Light is green"
+  s.events = set()
+  assert chip_for(s).label == "Stopped"
+
+
+def test_every_steering_limit_alert_is_replaced_by_help_steer():
+  from types import SimpleNamespace
+  from openpilot.selfdrive.ui.tandem.onroad.alerts import replaced_by_headroom, steer_limit_alert
+  for name in ("steerSaturated/warning", "goatSteerSaturated/warning", "firefoxSteerSaturated/warning", "thisIsFineSteerSaturated/warning"):
+    assert replaced_by_headroom(name)
+  assert not replaced_by_headroom("promptDriverDistracted/warning")
+
+  class SM(dict):
+    valid = {"selfdriveState": True, "starpilotSelfdriveState": True}
+  sm = SM(selfdriveState=SimpleNamespace(alertType=""), starpilotSelfdriveState=SimpleNamespace(alertType="goatSteerSaturated/warning"))
+  assert steer_limit_alert(sm)
+  sm["starpilotSelfdriveState"] = SimpleNamespace(alertType="greenLight/permanent")
+  assert not steer_limit_alert(sm)
+
+
+def test_chip_stack_newest_nearest_the_bar_each_with_its_own_hold():
+  from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, Snapshot
+  stack = ChipStack()
+  keys = lambda shown: [c.key for c, _ in shown]  # noqa: E731
+  assert keys(stack.update(Snapshot(curve_control=True), 0.0, False)) == ["curve"]
+  shown = stack.update(Snapshot(curve_control=True, weather="Rain", weather_gap=True), 0.5, False)
+  assert keys(shown) == ["weather", "curve"]                    # the newer one sits nearest the bar
+  shown = stack.update(Snapshot(weather="Rain", weather_gap=True), 1.0, False)    # the curve ended at 0.5: still held
+  assert keys(shown) == ["weather", "curve"] and shown[1][1] == 1.0
+  shown = stack.update(Snapshot(weather="Rain", weather_gap=True), 2.6, False)    # past its hold: fading
+  assert keys(shown) == ["weather", "curve"] and 0.0 < shown[1][1] < 1.0
+  assert keys(stack.update(Snapshot(weather="Rain", weather_gap=True), 3.0, False)) == ["weather"]   # gone
+  assert stack.update(Snapshot(weather="Rain", weather_gap=True), 3.1, True) == []                     # hidden under an alert
+
+
+def test_chip_stack_keeps_the_four_highest_priority():
+  from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, Snapshot
+  stack = ChipStack()
+  busy = Snapshot(lateral_paused=True, curve_control=True, limit_changed=True, speed_limit=45, weather="Rain", weather_gap=True,
+                  always_on_lateral=True)
+  shown = [c.key for c, _ in stack.update(busy, 0.0, False)]
+  assert len(shown) == 4 and "pause_button" in shown and "steering_only" not in shown
+
+
+def test_low_memory_chip_is_red_in_arrival_order_and_lowest_priority():
+  from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, ChipTone, Snapshot, chips_for
+  low = {"events": {"lowMemory"}, "memory_percent": 91}
+  chip = chips_for(Snapshot(**low))[0]
+  assert (chip.key, chip.label, chip.tone, chip.icon) == ("low_memory", "Low on RAM · 91% used", ChipTone.ALERT, "memory")
+  assert chips_for(Snapshot(memory_percent=91)) == []                     # StarPilot decides when memory is low
+  stack = ChipStack()
+  keys = lambda shown: [c.key for c, _ in shown]  # noqa: E731
+  assert keys(stack.update(Snapshot(**low), 0.0, False)) == ["low_memory"]
+  assert keys(stack.update(Snapshot(curve_control=True, **low), 0.5, False)) == ["curve", "low_memory"]   # newest nearest the bar
+  busy = Snapshot(lateral_paused=True, curve_control=True, limit_changed=True, speed_limit=45, weather="Rain", weather_gap=True, **low)
+  assert chips_for(busy)[-1].key == "low_memory"
+  assert "low_memory" not in keys(ChipStack().update(busy, 0.0, False))  # the first to give way
+
+
+def test_steering_pause_chip_names_the_real_reason():
+  from openpilot.selfdrive.ui.tandem.onroad.status import Snapshot, chip_for
+  setting = {"pause_lateral_ms": 8.94, "pause_lateral_speed": 20}          # StarPilot's Pause steering below 20 mph
+  assert chip_for(Snapshot(lateral_paused=True, speed=25.0, **setting)).label == "Steering paused"        # a button, not speed
+  assert chip_for(Snapshot(steering_held=True, speed=5.0, **setting)).label == "Steering paused · under 20 mph"
+  assert chip_for(Snapshot(steering_held=True, speed=5.0, signal_on=True, pause_on_signal=True, **setting)).label == \
+    "Steering paused for signal"
+  # With Pause on signal, speed alone doesn't pause: a hold with the signal off is StarPilot's after-turn delay, at any speed
+  assert chip_for(Snapshot(steering_held=True, speed=5.0, pause_on_signal=True, **setting)).label == "Steering paused after turn"
+  assert chip_for(Snapshot(steering_held=True, speed=12.0, pause_on_signal=True, **setting)).label == "Steering paused after turn"
+  assert chip_for(Snapshot(steering_held=True, speed=12.0, **setting)).label == "Steering paused"
+  assert chip_for(Snapshot(steering_held=True, standstill=True, **setting)) is None                   # stopped: nothing to say
+  assert chip_for(Snapshot(speed=2.0, **setting)) is None              # the planner isn't holding steering: no chip
+
+
+def test_matching_limit_follows_an_accepted_change_until_reached():
+  from openpilot.selfdrive.ui.tandem.onroad.status import LimitWatch
+  w = LimitWatch()
+  assert not w.update(20.0, 20.0, True, False, 0.0, 20.0, 0.0)        # the first limit seen isn't a change
+  assert not w.update(20.0, 20.0, True, True, 0.0, 20.0, 1.0)         # a new limit is still being asked about: the card says it
+  assert not w.update(20.0, 20.0, True, False, 0.0, 20.0, 1.5)        # declined: the limit never changed
+  assert w.update(15.0, 15.0, True, False, 0.0, 20.0, 2.0)            # accepted 15: slowing to it
+  assert not w.update(15.0, 15.0, True, False, 3.0, 19.0, 2.5)        # the driver overrode the speed
+  assert w.update(15.0, 15.0, True, False, 0.0, 18.0, 3.0)
+  assert not w.update(15.0, 15.0, True, False, 0.0, 15.2, 4.0)        # reached
+  assert not w.update(15.0, 15.0, True, False, 0.0, 18.0, 5.0)        # and stays done
+  assert w.update(25.0, 25.0, True, False, 0.0, 15.0, 6.0)            # a raise under the set speed: speeding up to it
+  assert not w.update(30.0, 30.0, False, False, 0.0, 15.0, 7.0)       # above the set speed: the limit isn't holding the car
+  assert not w.update(30.0, 30.0, True, False, 0.0, 15.0, 30.0)       # too long ago
+
+
+def test_wheel_button_mode_chips():
+  from openpilot.selfdrive.ui.tandem.onroad.status import ChipTone, Snapshot, chip_for, chips_for
+  assert chip_for(Snapshot(engaged=True, speed_paused=True)).label == "Speed control paused"
+  assert chip_for(Snapshot(engaged=True, speed_paused=True)).tone == ChipTone.PAUSED
+  assert chip_for(Snapshot(engaged=True, coasting=True)).label == "Coasting"
+  assert chip_for(Snapshot(engaged=True, pulse_glide=True)).label == "Pulse & glide"
+  assert chip_for(Snapshot(engaged=True, pulse_glide=True, gliding=True)).label == "Pulse & glide · gliding"
+  assert chip_for(Snapshot(speed_paused=True, coasting=True, pulse_glide=True)) is None              # not engaged: nothing applies
+  # Paused speed control outranks the modes it switches off, and sits with the other pauses
+  both = Snapshot(engaged=True, speed_paused=True, coasting=True, pulse_glide=True, lateral_paused=True)
+  assert [c.key for c in chips_for(both)] == ["pause_button", "speed_paused"]
+  from openpilot.selfdrive.ui.tandem import draw
+  for name in ("gauge_pause", "pulse_glide", "coast"):
+    assert (draw.ICON_DIR / f"{name}.png").is_file()
+
+
+def test_lane_change_blocked_follows_the_blindspot_banner_it_replaces():
+  from openpilot.selfdrive.ui.tandem.onroad.status import Snapshot, chip_for
+  assert chip_for(Snapshot(events={"laneChangeBlocked"})).label == "Lane change blocked"
+  assert chip_for(Snapshot(events={"laneChangeBlockedLoud"})).label == "Lane change blocked"   # also without steering
+  assert chip_for(Snapshot(lane_change="pre", blindspot=True)).label == "Lane change blocked"
+
+
+def test_help_steer_is_a_bottom_warning_card_with_the_arc_above_it():
+  from openpilot.starpilot.ui.raylib import rl
+  from openpilot.selfdrive.ui.tandem.onroad import alerts
+  from openpilot.selfdrive.ui.tandem.onroad.layers import HELP_STEER, HeadroomArc, bar_height, bar_margin, help_steer_box
+  road = rl.Rectangle(0, 0, 2130, 1050)
+  card = help_steer_box(road)
+  same = alerts.box(road, alerts.WARNING, *HELP_STEER)                               # the same box as StarPilot's warnings
+  assert (card.x, card.y, card.width, card.height) == (same.x, same.y, same.width, same.height)
+  assert abs(card.y + card.height - (road.y + road.height - alerts.Z.px(alerts.MARGIN_PX))) < 0.01      # along the bottom
+  assert card.y <= road.y + road.height - bar_margin() - bar_height()                     # covering the bar's row
+  assert HeadroomArc.ABOVE_CARD > 0                                                   # the arc's ends sit above it

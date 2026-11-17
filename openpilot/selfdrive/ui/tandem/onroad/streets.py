@@ -5,6 +5,7 @@ A direction that is the name itself stays whole ("North Ave"), and a type that i
 """
 from __future__ import annotations
 
+import re
 from openpilot.selfdrive.ui.tandem.i18n import N_
 
 DIRECTIONS = {"north": "N", "south": "S", "east": "E", "west": "W", "northeast": "NE", "northwest": "NW", "southeast": "SE",
@@ -36,3 +37,12 @@ def short_street(name: str) -> str:
   if last > start and words[last].lower() in TYPES:
     words[last] = TYPES[words[last].lower()]
   return " ".join(words)
+
+
+_JOINS = re.compile(r"(\s+(?:onto|on|toward|towards|to|via|at|and)\s+|\s*[/,;]\s*)", re.IGNORECASE)
+
+
+def short_streets_in(text: str) -> str:
+  """Each street in a route instruction shortened ("Turn right onto North Main Street" reads "... onto N Main St"):
+  the text is split at joining words and separators, and each piece is shortened on its own."""
+  return "".join(part if i % 2 else short_street(part) for i, part in enumerate(_JOINS.split(text)))

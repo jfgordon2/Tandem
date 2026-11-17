@@ -8,7 +8,7 @@ stage 2 is done, `development` boots as stock StarPilot 7.0.
 | 1. Foundation | Done; see below |
 | 2. Entry point | Done; see below |
 | 3. State | Mapped and covered by contract tests |
-| 4. Screens | Parked Home, core driving overlays and Software ported |
+| 4. Screens | Parked Home, driving overlays, Software, This Device and RAM ported |
 | 5 to 6 | Not started |
 
 ## Why a port and not a merge
@@ -302,9 +302,8 @@ WarningImmediateVolume WarningSoftVolume
 
 ## Stage 4: Software
 
-- The approved Software variants are in `design/stage4-software-*.html`. The panel fits in openpilot's existing Settings
-  navigation. `TANDEM_SETTINGS=0` restores the native Software panel. More software options keeps the native controls
-  for branch selection, fast update, rollback, uninstall and error logs available.
+- Software uses the release Settings frame and cards, with StarPilot 7’s update owner. `TANDEM_SETTINGS=0` restores
+  openpilot’s original Settings window. The earlier panel variants in `design/stage4-software-*.html` record the first slice.
 - The StarPilot software owner qualifies whether a check, download or install is available and reports progress while
   it has a measured percentage. The staged notes and restart action bind to the installed and prepared commits.
   Automatic downloads and installs use separate expected values. Changing automatic installs preserves the saved
@@ -315,7 +314,7 @@ WarningImmediateVolume WarningSoftVolume
 
 - Use the running `release` UI at `a4dbe5bcc6` as the visual reference. It has four bottom tabs (Driving, Device,
   Connections, Software), independent page stacks, a back or close button, and a separate section rail inside Device.
-  The earlier Stage 4 Software slice lives inside the native openpilot frame until the release Settings window is ported.
+  MainLayout uses the four-tab window. Unported screens use openpilot’s panels in that window.
 - Port the presentation from `settings/window.py`, `settings/pages.py`, and the Device sections on `release`. This Device
   keeps Phone App, Remote Access, Camera Calibration, How It Works, the lower identity rows and the pinned power buttons.
   General keeps language, and Driving › Assistance keeps the driver camera and driver monitoring reset. The Device
@@ -331,12 +330,70 @@ WarningImmediateVolume WarningSoftVolume
   the release positions, controls and wording, with small raster differences. The Remote Access render
   also matched its layout with small raster differences. Host renders use sample data.
   End-to-end wiring and checks on the comma are pending.
-- The release Settings navigation, section layout, This Device, Phone App pairing, Remote Access and confirmations
-  are now implemented in Tandem-owned modules. The host fixture uses the real widgets with inert actions. The Device
-  adapter reuses the current pairing, Galaxy and calibration owners and rechecks the native power gates. The
-  remaining settings pages and the password-entry adapter still need connections. Carry forward the release
-  General, Backups, Storage & Data, RAM, Report and Developer widgets, then replace their old data sources. Reuse
-  the tested four-tab window when the page factories are complete.
+- The release Settings navigation and This Device are connected through MainLayout. Phone App uses the native token
+  flow. Remote Access uses the native Galaxy owner and keyboard. Driving and Connections still host the native panels.
+  Carry forward the release General, Backups, Storage & Data, Report and Developer widgets as their owner adapters land.
+
+## Stage 4: Device › General and the Device rail
+
+- Reuse the approved release Device screens and the release General row order, wording, controls and Language sheet.
+  Use the running release captures for comparison where the older HTML differs. The native language catalog includes
+  Vietnamese. The units action keeps the physical speed-limit offsets. Temperature still uses Tandem’s forecast
+  preference. Presets use StarPilot 7’s parked and driving brightness values and Standby uses its screen-off switch.
+- General, Backups, Storage & Data, RAM, Report a Problem and conditional Developer are mounted on the release
+  Device rail. Native onboarding opens Firehose via a separate Settings page. RAM appears after the first snapshot.
+  Developer and Release Channel use the same saved Tuner Mode presentation flag.
+- Report a Problem sends the release category, details, optional Discord name and RAM summaries through StarPilot's
+  manual issue project using the existing acknowledged Bugsink transport. The release keyboard is used for text entry. Developer uses the native toggle and SSH owners. CAN recording is stage 5.
+- The approved Delete offline maps dialog covers managed road snapshots, native navigation tiles, and downloaded
+  packages from release. Data removal uses the map admission lock and the tile writer's acknowledgement. Region
+  selections stay in place. A host check ran the map owner and tile writer against temporary map stores and verified
+  the parked, active-route, stale-selection and admission-lock guards. The parked comma still runs an earlier
+  development checkout. It has both native services and roughly 1.1 GiB of release maps. The live files were left in place.
+  Porting the routing service and its download screens remains stage 5.
+
+## Stage 4: keyboard
+
+- Reused release’s keyboard, voice panel, speech workers and tests. The native InputBox still owns cursor positioning,
+  editing and password masking. The only hook is its font getter. Passwords use the approved release keyboard.
+
+## Stage 4: native font loading
+
+- With Tandem active on the big UI, Inter Medium and SemiBold load on first use. Tandem's subclasses skip the
+  unused native HUD and sidebar fonts. Inter Regular, Bold, Unifont and the selected language fallback are ready
+  at startup. Inter keeps its atlas and metrics and releases its CPU glyph images after each texture upload.
+  A host render kept identical text pixels and metrics after releasing the glyphs twice and unloading the font.
+  Stock and recovery paths keep their font storage and loading order. The device prebuilt needs the updated native
+  raylib extension before testing boot memory and the first alert on the comma. Older artifacts retain their CPU glyphs.
+
+## Stage 4: Device › Backups
+
+- Reused the approved release Backups panel and its Delete and Restore confirmations. The running release capture is
+  the reference for the list, with the existing Device rail and no schedule controls.
+- StarPilot 7's `ToggleBackup` exports and restores through its settings and layout owners. The parked check covers the
+  restore, including while the owner writes. The old raw Params directory backups remain on disk. New settings
+  snapshots and copies of Tandem's preferences are stored under `/data/tandem_backups`.
+- File work and the native backup owner run in one worker per operation. The panel reports rejected, skipped and
+  incomplete restores through the existing notice dialog. Tandem preferences restore after a completed native restore.
+
+## Stage 4: Device › Storage & Data
+
+- Reused release’s Storage & Data rows, storage bar and confirmations. The usage scan runs in the background and
+  counts shared map tiles once across installed generations.
+- Recording settings delegate to the native toggle request so the restart and camera lock use StarPilot’s rules.
+  Delete all works on recognized drive segments through the native recording-root, inode and lock checks. Boot
+  and crash logs stay outside the drive list. Remove unused models rechecks the confirmed model set and delegates
+  deletion to the native model manager, which protects selected models.
+- Off, Parked and Always gate the automatic uploader through the manager, as on release. StarPilot 7's separate
+  network rules still apply. The panel is mounted. Offline Maps Delete uses the approved confirmation and the parked operation owner.
+
+## Stage 4: Device › RAM
+
+- Reused release’s recorder, process names, panel and recorder tests. The drive screen samples a baseline after
+  one minute of live driving, then updates the saved snapshot at new peaks while StarPilot reports low RAM. Playback
+  and projection do not write snapshots. The same three-drive history format loads existing release snapshots.
+- The RAM section appears after the first snapshot and opening it clears the unread indicator. It sits before Developer
+  in the release section list. The release footer and snapshot attachment are active on Report a Problem.
 
 ## Tests still on `release` only
 
@@ -351,7 +408,7 @@ Ported so far: `test_fallback_font.py`, the component tests of `test_tandem.py`,
 | `test_font_loading.py`: lazy fonts, glyph release and alert faces | Glyph release when restored, then lazy loading and alert faces with the screen port (stage 4) |
 | `test_upstream_integration.py`: all but the text hooks and the sidebar factory | Their hooks and modules (stages 3 to 6) |
 | `test_larger_text.py` (the size tests and the menu sidebar test are ported, in `test_screens.py`), `test_bar.py`, `test_compass.py`, `test_streets.py`, `test_turn_signals.py`, `test_lead_tag.py`, `test_onroad*.py`, `test_alert_levels.py`, `test_chip_events.py`, `test_headroom_warning.py`, `test_limit_follower.py`, `test_limit_offers.py`, `test_developer_view.py` | Onroad (stage 4) |
-| `test_forecast.py`, `test_menu_idle.py`, `test_ram.py`, `test_keyboard.py`, `test_voice.py`, `test_speech_native.py` | Home, sidebar and keyboard (stage 4) |
+| `test_forecast.py`, `test_menu_idle.py`, `test_keyboard.py`, `test_voice.py`, `test_speech_native.py` | Home, sidebar and keyboard (stage 4) |
 | `test_settings.py`, `test_developer.py`, `test_software_dialogs.py`, `test_hotspot_name.py`, `test_network_touches.py`, `test_storage_sizes.py`, `test_prebuilt_params.py` | Settings screens and owner integration (stage 4) |
 | `test_destinations.py`, `test_routemap.py`, `test_routing_ui.py`, `test_map_progress.py` | Navigation and routing (stage 5) |
 | `test_bluetooth_*.py`, `test_remote_actions.py`, `test_can_recorder.py`, `test_obd.py`, `test_cellular_status.py`, `test_network_test.py`, `test_galaxy_signals.py` | Services (stage 5) |

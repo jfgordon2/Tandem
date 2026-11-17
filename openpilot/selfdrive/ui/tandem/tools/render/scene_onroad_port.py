@@ -1,4 +1,4 @@
-"""Render the seven approved driving states with fake telemetry."""
+"""Render the seven approved driving states with fake telemetry, through release's layers (onroad/layers.py)."""
 from __future__ import annotations
 
 from collections.abc import Callable
@@ -7,8 +7,10 @@ from typing import Any
 
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.onroad import alerts, size as Z
+from openpilot.selfdrive.ui.tandem.onroad.layers import ArcState, BarState, LimitOffer
 from openpilot.selfdrive.ui.tandem.onroad.overlay import OnroadOverlay, road_rect
-from openpilot.selfdrive.ui.tandem.onroad.state import BarState, Chip, ChipTone, DriveDisplay, DrivingAlert, LimitDecision, LimitOffer
+from openpilot.selfdrive.ui.tandem.onroad.state import DriveDisplay, DrivingAlert, LimitDecision, Proposal
+from openpilot.selfdrive.ui.tandem.onroad.status import Chip, ChipTone
 from openpilot.starpilot.ui.raylib import rl
 
 
@@ -29,18 +31,19 @@ def mock_road(rect: rl.Rectangle) -> None:
 
 
 def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any) -> None:
-  base = DriveDisplay(BarState(True, True, True, 63, "County Road F31"), 62, posted="60", left=True, monitor=1.0, torque=0.29,
-                      chips=(Chip("curve", "Slowing for curve", "curve"),))
-  proposal = LimitOffer(LimitDecision("fixture", 1, 1, 55 / 2.236936), 55, 58, "mph", "map", 18, 30)
-  ram = Chip("ram", "Low on RAM · 91% used", "memory", ChipTone.ALERT)
+  curve = (Chip("curve", "Slowing for curve", ChipTone.INFO, "curve"), 1.0)
+  base = DriveDisplay(BarState(engaged=True, set_speed=63, street="County Road F31"), 62, posted="60", left=True, monitor=1.0,
+                      arc=ArcState(0.29, 0.0, True), chips=(curve,))
+  proposal = Proposal(LimitDecision("fixture", 1, 1, 55 / 2.236936), LimitOffer(55, 58, "mph", "map", 18, 30))
+  ram = (Chip("low_memory", "Low on RAM · 91% used", ChipTone.ALERT, "memory"), 1.0)
   cases = (
     ("engaged", False, base),
-    ("factory-cruise", False, replace(base, bar=replace(base.bar, adjust_speed=False), chips=())),
-    ("inactive", False, replace(base, bar=BarState(street=base.bar.street), left=False, torque=None, chips=())),
-    ("new-limit", True, replace(base, bar=replace(base.bar, set_speed=48), speed=45, left=False, offer=proposal, chips=())),
+    ("factory-cruise", False, replace(base, bar=replace(base.bar, can_adjust=False), chips=())),
+    ("inactive", False, replace(base, bar=BarState(street=base.bar.street), left=False, arc=ArcState(), chips=())),
+    ("new-limit", True, replace(base, bar=replace(base.bar, set_speed=48), speed=45, left=False, proposal=proposal, chips=())),
     ("warning", True, replace(base, attention_warning=True, alert=DrivingAlert(alerts.WARNING, "Pay attention", "Look at the road ahead"))),
     ("critical", False, DriveDisplay(alert=DrivingAlert(alerts.CRITICAL, "TAKE CONTROL IMMEDIATELY", "System Unresponsive"))),
-    ("low-ram", True, replace(base, chips=(*base.chips, ram))),
+    ("low-ram", True, replace(base, chips=(ram, curve))),
   )
   noop = lambda *args: None  # noqa: E731
   for name, larger, sample in cases:

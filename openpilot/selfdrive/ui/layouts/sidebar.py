@@ -63,7 +63,7 @@ class MetricData:
 
 
 class Sidebar(Widget):
-  def __init__(self):
+  def __init__(self, *, stock_text: bool = True):
     super().__init__()
     self._net_type = NETWORK_TYPES[NetworkType.none]
     self._net_strength = 0
@@ -79,7 +79,7 @@ class Sidebar(Widget):
     self._mic_img = gui_app.texture("icons/microphone.png", 30, 30)
     self._mic_indicator_rect = rl.Rectangle(0, 0, 0, 0)
     self._font_regular = gui_app.font(FontWeight.NORMAL)
-    self._font_bold = gui_app.font(FontWeight.SEMI_BOLD)
+    self._font_bold = gui_app.font(FontWeight.SEMI_BOLD) if stock_text else self._font_regular
 
     # Callbacks
     self._on_settings_click: Callable | None = None
