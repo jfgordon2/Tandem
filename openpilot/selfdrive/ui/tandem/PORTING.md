@@ -469,7 +469,7 @@ WarningImmediateVolume WarningSoftVolume
 - Tuner Mode is Tandem's own preference now (StarPilot 7 has no tuning level). Developer View is StarPilot's developer
   sidebar; Lead Insights is its lead indicator, lead distance and gas and brake display.
 - Waits for later stages: Display › Map and Speed & Steering › Navigation (routing), Vehicle Profile, the onroad
-  drawing of Developer View and the lead tag (onroad), settings search and Reset Settings' defaults (stage 3).
+  drawing of Developer View and the lead tag (onroad), and Reset Settings' defaults.
 - `tools/render/scene_driving.py` renders each page under its mock's name.
 
 ## Stage 4: Connections
@@ -481,6 +481,15 @@ WarningImmediateVolume WarningSoftVolume
 - Bluetooth Remote and Car Audio & Devices come back with stage 6, on StarPilot 7's `ControllerOwner` and
   `BluetoothOwner` (release's screens used StarPilot 6's wheel-controls daemon and Bluetooth manager).
 - `tests/fakes.py` holds release's network and Bluetooth stand-ins. `tools/render/scene_connections.py` renders the sections.
+
+## Stage 3: settings search
+
+- `settings/search.py` comes from release with its index rewritten for these screens: Speed & Steering has Everyday
+  and Weather, Display has Driving Screen and Path, Connections has Wi-Fi, Cellular and Network Test, and Tuner Mode's
+  sections are found by name and what they hold (StarPilot lists their rows for the detected car). The Driving hub has
+  the Search button; `SettingsWindow.open_at` opens a Driving page by name.
+- `tests/test_settings.py` builds Driving and Connections over the stand-ins and checks every row against the index;
+  Device and Software rows are checked against their screens' strings.
 
 ## Tests still on `release` only
 
@@ -497,7 +506,7 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
 | `test_upstream_integration.py`: all but the text hooks and the sidebar factory | Their hooks and modules (stages 3 to 6) |
 | `test_turn_signals.py`, `test_lead_tag.py`, `test_onroad*.py`, `test_chip_events.py` (StarPilot 6's message reader; its rules are covered by the chip tests), `test_headroom_warning.py`, `test_limit_follower.py`, `test_limit_offers.py`, `test_developer_view.py` | Onroad (stage 4) |
 | `test_forecast.py`, `test_menu_idle.py`, `test_ram.py` | Home and sidebar (stage 4) |
-| `test_settings.py`, `test_developer.py`, `test_software_dialogs.py`, `test_storage_sizes.py`, `test_prebuilt_params.py` | Settings screens and owner integration (stage 4) |
+| `test_developer.py`, `test_software_dialogs.py`, `test_storage_sizes.py`, `test_prebuilt_params.py` | Settings screens and owner integration (stage 4) |
 | `test_destinations.py`, `test_routemap.py`, `test_routing_ui.py`, `test_map_progress.py` | Navigation and routing (stage 5) |
 | `test_bluetooth_*.py`, `test_remote_actions.py`, `test_galaxy_signals.py` | Bluetooth and controllers (stage 6) |
 | `test_workflow_policy.py` | Workflows (stage 6) |

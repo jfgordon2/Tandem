@@ -74,18 +74,27 @@ class SettingsWindow(Widget):
     if factory is not None:
       self.push(factory())
 
-  def open_at(self, tab: Tab, section: int | None = None) -> None:
-    """Open a tab from its first page, at one of its sections."""
+  def open_at(self, tab: Tab, section: int | None = None, page: str | None = None) -> None:
+    """Open a tab from its first page, at one of its sections.
+
+    Args:
+      tab: The tab.
+      section: A section of the page that ends up on top.
+      page: A page the tab's first page opens by name (a hub's pages, as settings search opens them).
+    """
     from openpilot.selfdrive.ui.tandem.settings.pages import SectionPage
     self.dismiss()
     stack = self._stacks.get(tab)
     while stack is not None and len(stack) > 1:
-      page = stack.pop()
+      left = stack.pop()
       if self._shown and tab == self._tab:
-        page.hide_event()
+        left.hide_event()
         if len(stack) == 1:
           stack[0].show_event()
     self.select_tab(tab)
+    opener = getattr(self.top, "pages", {}).get(page) if page is not None else None
+    if opener is not None:
+      opener()
     if section is not None and isinstance(self.top, SectionPage):
       self.top.select(section)
 

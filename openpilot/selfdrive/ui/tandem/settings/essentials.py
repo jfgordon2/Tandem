@@ -176,7 +176,7 @@ def essentials_settings(on_open_arabesque: Callable[[], None] | None, arabesque_
       SettingsStore(), Live(), owners.rows, RoadStyle(ui_state.params, allowed),
       lambda: StarPilotModels(ModelManager(parked=allowed), lambda message: window.notice(N_("Driving Model"), message)),
       car, owner, lambda: ui_state.CP is not None and not ui_state.CP.pcmCruise, sound_player(allowed),
-      lambda: storage_owner().sample.usage, recount)
+      lambda: storage_owner().sample.usage, recount, lambda: bool(ram.snapshots()))
     return driving_hub(window, services)
 
   window = SettingsWindow({
