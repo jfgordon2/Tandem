@@ -37,7 +37,10 @@ def ui_selection(selection: UiSelection, big_ui: bool, environment: Mapping[str,
   """StarPilot 7's choice of UI, or openpilot's layout (MainLayout) for Tandem's screens. ui.py logs the reason given."""
   if not essentials_ui(big_ui, environment):
     return selection
+  from openpilot.selfdrive.ui.tandem import screenshot
+  from openpilot.starpilot.ui.raylib import rl
   from openpilot.starpilot.ui.startup import UiSelection
+  screenshot.install(rl)   # `touch /tmp/tandem-screenshot` saves the next frame (screenshot.py)
   return UiSelection(False, "Tandem's Essentials screens on openpilot's layout")
 
 
