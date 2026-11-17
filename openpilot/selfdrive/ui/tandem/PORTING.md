@@ -460,10 +460,12 @@ WarningImmediateVolume WarningSoftVolume
   colors (Display), the model manager (Driving Model), vehicle selection and the `wheel` and `vehicle` pages (Vehicle),
   and the lane, torque, profiles and personality pages (Tuner Mode). Their permissions are StarPilot's: changes only
   while settings are open, and Sounds, Appearance, the path, models, the car and door locks only while parked.
-- Dropped with StarPilot 7: Compass, Turn Signal animations, Boot Logo, Startup Message, Thin path, the Speed Limit
+- Dropped with StarPilot 7: Turn Signal animations, Boot Logo, Startup Message, Thin path, the Speed Limit
   Change chime, the volume for steering below its minimum speed, Use recommended's automatic downloads (it now means
   StarPilot's default model), the door lock timer, and Tuner Mode's raw gas and brake values, steering controller
   choice, cruise step and bundle overrides.
+- The compass is Tandem's own now (StarPilot 7 dropped its compass): `prefs.COMPASS`, on by default, and
+  `onroad/compass.py`, which reads the GPS source StarPilot selects from openpilot's UI subscriber.
 - Tuner Mode is Tandem's own preference now (StarPilot 7 has no tuning level). Developer View is StarPilot's developer
   sidebar; Lead Insights is its lead indicator, lead distance and gas and brake display.
 - Waits for later stages: Display › Map and Speed & Steering › Navigation (routing), Vehicle Profile, the onroad
@@ -472,7 +474,7 @@ WarningImmediateVolume WarningSoftVolume
 
 ## Tests still on `release` only
 
-Ported so far: `test_fallback_font.py`, `test_alert_levels.py`, `test_bar.py`, `test_streets.py`, `test_keyboard.py`,
+Ported so far: `test_fallback_font.py`, `test_compass.py`, `test_alert_levels.py`, `test_bar.py`, `test_streets.py`, `test_keyboard.py`,
 `test_voice.py`, `test_speech_native.py`, `test_larger_text.py` but its Display settings test, the component, chip and
 Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_translations.py`, the atlas crop tests of
 `test_font_loading.py`, and the text hook test of `test_upstream_integration.py`. Each of the rest comes back with the code it tests. When one comes back, take it from `release` whole.
@@ -483,7 +485,7 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
 | `test_translations.py`: the template, metadata, coverage and completed-language checks, Developer View labels, picker languages | Every screen ported, then `tools/translations.py update` (end of stage 4) |
 | `test_font_loading.py`: lazy fonts, glyph release and alert faces | Glyph release when restored, then lazy loading and alert faces with the screen port (stage 4) |
 | `test_upstream_integration.py`: all but the text hooks and the sidebar factory | Their hooks and modules (stages 3 to 6) |
-| `test_compass.py`, `test_turn_signals.py`, `test_lead_tag.py`, `test_onroad*.py`, `test_chip_events.py` (StarPilot 6's message reader; its rules are covered by the chip tests), `test_headroom_warning.py`, `test_limit_follower.py`, `test_limit_offers.py`, `test_developer_view.py` | Onroad (stage 4) |
+| `test_turn_signals.py`, `test_lead_tag.py`, `test_onroad*.py`, `test_chip_events.py` (StarPilot 6's message reader; its rules are covered by the chip tests), `test_headroom_warning.py`, `test_limit_follower.py`, `test_limit_offers.py`, `test_developer_view.py` | Onroad (stage 4) |
 | `test_forecast.py`, `test_menu_idle.py`, `test_ram.py` | Home and sidebar (stage 4) |
 | `test_settings.py`, `test_developer.py`, `test_software_dialogs.py`, `test_hotspot_name.py`, `test_network_touches.py`, `test_storage_sizes.py`, `test_prebuilt_params.py` | Settings screens and owner integration (stage 4) |
 | `test_destinations.py`, `test_routemap.py`, `test_routing_ui.py`, `test_map_progress.py` | Navigation and routing (stage 5) |

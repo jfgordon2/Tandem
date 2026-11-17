@@ -2,8 +2,8 @@
 
 StarPilot 7 keeps the camera, driver camera, style banner, blind spot border and power-user switches in its Appearance
 owner, and the path in its onroad layout; both change only while parked. Text size, reduce motion and the lead car tag
-are Tandem's own. StarPilot 7 dropped the compass, turn signal animations, boot logos and startup message, so those rows
-are gone; the map rows wait for routing.
+are Tandem's own. StarPilot 7 dropped its compass, so the compass is Tandem's own; it also dropped turn signal animations, boot logos and
+the startup message, so those rows are gone; the map rows wait for routing.
 """
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, place
 from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, Segmented, Switch, ValueButton
 from openpilot.selfdrive.ui.tandem.overlays import Sheet
-from openpilot.selfdrive.ui.tandem.prefs import LARGER_TEXT, LEAD_TAG, REDUCE_MOTION
+from openpilot.selfdrive.ui.tandem.prefs import COMPASS, LARGER_TEXT, LEAD_TAG, REDUCE_MOTION
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, SectionHeader, SettingRow
 from openpilot.selfdrive.ui.tandem.settings.bundles import APPEARANCE, DEVELOPER_VIEW, LEAD_INSIGHTS, Bundle
 from openpilot.selfdrive.ui.tandem.settings.speed_steering import Rows
@@ -85,6 +85,14 @@ class Display:
 
   def set_blind_spot(self, on: bool) -> None:
     self._set_appearance("BlindSpotMetrics", on)
+
+  @property
+  def compass(self) -> bool:
+    """Tandem's compass: the heading beside the street name in the onroad bar (prefs.COMPASS, onroad/compass.py)."""
+    return COMPASS.get()
+
+  def set_compass(self, on: bool) -> None:
+    COMPASS.set(on)
 
   @property
   def lead_tag(self) -> bool:
@@ -215,6 +223,7 @@ def driving_screen_panel(model: Display, window: SettingsWindow) -> ListPanel:
                           Switch(lambda: model.driver_camera_in_reverse, model.set_driver_camera_in_reverse)), "DriverCamera"),
     appearance(SettingRow(N_("Driving Style Banner"), N_("Shows the current style when it changes"),
                           Switch(lambda: model.driving_style_banner, model.set_driving_style_banner)), "HidePersonalityAlerts"),
+    SettingRow(N_("Compass"), N_("Heading beside the street name, like NE"), Switch(lambda: model.compass, model.set_compass)),
     appearance(SettingRow(N_("Blind Spot Highlights"), N_("Colors the screen edge when a car is beside you"),
                           Switch(lambda: model.blind_spot, model.set_blind_spot)), "BlindSpotMetrics"),
     SettingRow(N_("Lead Car Tag"), N_("Numbers above the car ahead. Off keeps only the bar under it"), Switch(lambda: model.lead_tag, model.set_lead_tag)),

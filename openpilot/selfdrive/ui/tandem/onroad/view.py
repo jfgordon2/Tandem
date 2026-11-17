@@ -14,6 +14,7 @@ from openpilot.cereal import messaging
 from openpilot.common.constants import CV
 from openpilot.selfdrive.ui.onroad.augmented_road_view import AugmentedRoadView
 from openpilot.selfdrive.ui.tandem.onroad import alerts, size as Z
+from openpilot.selfdrive.ui.tandem.onroad.compass import DriveCompass
 from openpilot.selfdrive.ui.tandem.onroad.binding import driving_alert, lane_change, proposal
 from openpilot.selfdrive.ui.tandem.onroad.layers import AT_LIMIT, ArcState, BarState, Headroom
 from openpilot.selfdrive.ui.tandem.onroad.overlay import OnroadOverlay, road_rect
@@ -50,6 +51,7 @@ class EssentialsOnroad(AugmentedRoadView):
     super().__init__(stock_hud=False)
     self._snapshot: RuntimeSnapshotAdapter | None = None
     self._display = DriveDisplay()
+    self._compass = DriveCompass()
     self._native: OnroadState | None = None
     self._road_sm: messaging.SubMaster | None = None
     self._ram = RamWatch()
@@ -146,6 +148,8 @@ class EssentialsOnroad(AugmentedRoadView):
     """Capture this frame before MainLayout decides whether the sidebar can show."""
     self._prepared = True
     if not ui_state.started and ui_state.replay_clock is None:
+      if self._native is not None:
+        self._compass.offroad(time.monotonic())   # the drive ended: keep its last heading
       self._display, self._native = DriveDisplay(), None
       return False
     Z.refresh()
@@ -167,6 +171,8 @@ class EssentialsOnroad(AugmentedRoadView):
     sm, cp, after = ui_state.sm, ui_state.CP, ui_state.started_frame
     car = display_message(sm, "carState", now_ns, after_frame=after)
     dm = display_message(sm, "driverMonitoringState", now_ns, after_frame=after)
+    if ui_state.replay_clock is None:
+      self._compass.update(ui_state, time.monotonic(), bool(state.reversing))
     factor = CV.MS_TO_KPH if state.metric else CV.MS_TO_MPH
     cruise = displayed_speed(state.cruise_kph, 1.0 if state.metric else CV.KPH_TO_MPH)
     can_adjust = cruise is not None and allowed and not self._safe and cruise_action.ui_authority(sm, cp, now_ns)
@@ -185,7 +191,7 @@ class EssentialsOnroad(AugmentedRoadView):
     chips = self._chip_stack.update(snapshot, now_ns / 1e9, visible_alert is not None or help_steer)
     unit = "km/h" if state.metric else "mph"
     self._display = DriveDisplay(
-      bar=BarState(engaged=state.engaged, set_speed=cruise or 0.0, unit=unit, street=self._street(time.monotonic_ns()),
+      bar=BarState(engaged=state.engaged, set_speed=cruise or 0.0, unit=unit, street=self._street(time.monotonic_ns()), heading=self._compass.heading(),
                    can_adjust=bool(can_adjust), can_disengage=bool(can_disengage)),
       speed=displayed_speed(state.speed_mps, factor), unit=unit, posted=posted,
       vienna=state.appearance.use_vienna_sign,
