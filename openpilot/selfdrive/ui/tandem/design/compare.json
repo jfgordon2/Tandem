@@ -88,7 +88,10 @@
     {
       "mock": "signalunicorn",
       "title": "Unicorn rider turn signal",
-      "built": ["signalpicker", "signal_unicorn_rider"],
+      "built": [
+        "signalpicker",
+        "signal_unicorn_rider"
+      ],
       "note": "Matches: the frames are the mock's own (tools/make_unicorn_rider_signals.py), crossing above the bar and mirrored for right turns; its Whimsy card shows a frame from the middle of the gallop, as the other cards do, where the mock shows the reaching pose.",
       "match": true
     },
@@ -244,21 +247,34 @@
       "title": "General",
       "note": "The approved release capture is the reference. The General panel preserves its five rows and the full Device rail in the preview. The older HTML includes the unused Automatic Backups row. The Language sheet shows the StarPilot 7 catalog.",
       "match": false,
-      "built": ["stage4-general", "stage4-general-language"]
+      "built": [
+        "stage4-general",
+        "stage4-general-language"
+      ]
     },
     {
       "mock": "systembackups",
       "title": "Backups",
       "note": "The approved release capture is the reference for the saved list and Back up now. The older HTML includes a schedule. The other native captures show the release confirmations and the empty list.",
       "match": false,
-      "built": ["stage4-backups", "stage4-backups-restore", "stage4-backups-delete", "stage4-backups-empty"]
+      "built": [
+        "stage4-backups",
+        "stage4-backups-restore",
+        "stage4-backups-delete",
+        "stage4-backups-empty"
+      ]
     },
     {
       "mock": "systemstorage",
       "title": "Storage & Data",
       "note": "Reuses the release layout, existing rows and selection behavior. The native preview includes the scrolled rows and the drive and model confirmations.",
       "match": false,
-      "built": ["stage4-storage", "stage4-storage-scrolled", "stage4-storage-delete-drives", "stage4-storage-remove-models"]
+      "built": [
+        "stage4-storage",
+        "stage4-storage-scrolled",
+        "stage4-storage-delete-drives",
+        "stage4-storage-remove-models"
+      ]
     },
     {
       "mock": "stage4-map-delete",
@@ -326,117 +342,26 @@
     {
       "mock": "softwaretab",
       "title": "Software",
-      "note": "Matches: the version card beside the update settings. Page ground uses true black (#000000).",
-      "match": true
-    },
-    {
-      "mock": "stage4-software-current",
-      "title": "Software up to date",
-      "note": "The owner reports a successful check for the installed branch.",
-      "match": true
-    },
-    {
-      "mock": "stage4-software-checking",
-      "title": "Checking for updates",
-      "note": "StarPilot’s check keeps its button disabled while metadata is in flight.",
-      "match": true
-    },
-    {
-      "mock": "stage4-software-available",
-      "title": "Update available",
-      "note": "Download addresses the selected branch after the owner reports a newer revision.",
-      "match": true
-    },
-    {
-      "mock": "stage4-software-downloading",
-      "title": "Downloading an update",
-      "note": "The bar uses the updater’s measured percentage.",
-      "match": true
-    },
-    {
-      "mock": "stage4-software-ready",
-      "title": "Ready to install",
-      "note": "Notes opens the qualified build. The next restart uses the saved time zone.",
-      "match": true
-    },
-    {
-      "mock": "stage4-software-park",
-      "title": "Park to update",
-      "note": "Controls follow current update and vehicle permission.",
-      "match": true
-    },
-    {
-      "mock": "stage4-software-error",
-      "title": "Update check failed",
-      "note": "The updater reported a failure, and Check now retries.",
-      "match": true
-    },
-    {
-      "mock": "stage4-software-notes",
-      "title": "Update notes",
-      "note": "Restart requests the installed and prepared commits shown in the notes.",
-      "match": true
-    },
-    {
-      "mock": "stage4-software-installed-notes",
-      "title": "Installed release notes",
-      "note": "This page uses the installed build’s release notes.",
-      "match": true
-    },
-    {
-      "mock": "stage4-software-options",
-      "title": "More software options",
-      "note": "The native widget supplies its own scrollable list and dialogs. The fixture stands in for native status.",
-      "match": false
-    },
-    {
-      "mock": "stage4-onroad-engaged",
-      "title": "StarPilot 7 onroad",
-      "note": "MAX and the green wheel use StarPilot’s cruise and disengage permissions. The stand-in road replaces the camera.",
-      "match": true
-    },
-    {
-      "mock": "stage4-onroad-factory-cruise",
-      "title": "StarPilot 7 onroad with car cruise",
-      "note": "The car supplies the value and the driver adjusts it with the car’s controls.",
-      "match": true
-    },
-    {
-      "mock": "stage4-onroad-inactive",
-      "title": "StarPilot 7 onroad with cruise inactive",
-      "note": "The gray wheel is status only. An unavailable MAX shows a dash.",
-      "match": true
-    },
-    {
-      "mock": "stage4-onroad-new-limit",
-      "title": "StarPilot 7 speed-limit confirmation",
-      "note": "Match and Ignore address the exact pending proposal. The timer comes from StarPilot’s confirmation window.",
-      "match": true
-    },
-    {
-      "mock": "stage4-onroad-warning",
-      "title": "StarPilot 7 driving warning",
-      "note": "The native warning takes the place of the action bar and preserves native wording.",
-      "match": true
-    },
-    {
-      "mock": "stage4-onroad-critical",
-      "title": "StarPilot 7 critical takeover",
-      "note": "An active critical alert fills the display and closes the sidebar.",
-      "match": true
-    },
-    {
-      "mock": "stage4-onroad-low-ram",
-      "title": "StarPilot 7 Low on RAM",
-      "note": "Memory is the lowest-priority chip. Larger text can show it below the primary driving status.",
-      "match": true
+      "note": "Release's tab on StarPilot 7's software owner, shared with Home. Automatic Updates turns StarPilot's automatic downloads and installation on together, so it reads \"Download and install while parked\". Release Channel shows the branch and opens in Tuner Mode, which isn't ported yet; Reset Settings is inactive until the Essentials defaults port. Park to update is StarPilot 7's parked-only rule.",
+      "match": false,
+      "built": [
+        "softwaretab",
+        "softwaretab-available",
+        "softwaretab-downloading",
+        "softwaretab-ready",
+        "softwaretab-park"
+      ]
     },
     {
       "mock": "onroad",
       "title": "Onroad",
-      "note": "Matches: Essentials' speed with its turn signal, the sign, the chip bottom left and the driver monitor tile top right. The 28 px street name can use the full text area and scrolls if it doesn't fit. The stand-in road stands for the camera. Page ground uses true black (#000000).",
+      "note": "Release's layers over openpilot's camera and model on StarPilot 7 (fixture road). On the car's own cruise, MAX − / + are inactive; the wheel only disengages, with StarPilot's permission.",
       "match": true,
-      "built": "onroad_default"
+      "built": [
+        "stage4-onroad-engaged",
+        "stage4-onroad-factory-cruise",
+        "stage4-onroad-inactive"
+      ]
     },
     {
       "mock": "onroadlarge",
@@ -448,7 +373,8 @@
       "mock": "onroadlarge-limit",
       "title": "Onroad › Larger text, new limit",
       "match": true,
-      "note": "The offer card is narrowed to end before the speed (405 mock px) with its larger text; its buttons are 72. Page ground uses true black (#000000)."
+      "note": "Release's card for StarPilot 7's pending decision: Match and Ignore answer that exact proposal, and the countdown is StarPilot's confirmation window.",
+      "built": "stage4-onroad-new-limit"
     },
     {
       "mock": "onroadlarge-nav",
@@ -467,7 +393,11 @@
       "title": "Onroad › Larger text, separate navigation turns",
       "note": "When Arrive and Left exceed the space between the compass and End route, each gets its own 6 s turn, followed by the street name. The sample street scrolls in the render because the built controls leave less text width than the mock.",
       "match": false,
-      "built": ["onroadlarge-nav-arrive", "onroadlarge-nav-left", "onroadlarge-nav-tight-street"]
+      "built": [
+        "onroadlarge-nav-arrive",
+        "onroadlarge-nav-left",
+        "onroadlarge-nav-tight-street"
+      ]
     },
     {
       "mock": "onroadlarge-alert",
@@ -539,12 +469,11 @@
     {
       "mock": "alertstyles",
       "title": "Onroad alert levels",
-      "note": "Matches the three levels, drawn from StarPilot's real alerts: openpilot Unavailable (info), Pay Attention (warning), BRAKE! (critical). Light Turned Green and Lead Departed show as their status chips instead. Page ground uses true black (#000000).",
+      "note": "Release's levels for StarPilot 7's selected alert; a critical one takes the screen and closes the sidebar.",
       "match": true,
       "built": [
-        "alert_unavailable",
-        "alert_pay_attention",
-        "alert_fcw"
+        "stage4-onroad-warning",
+        "stage4-onroad-critical"
       ]
     },
     {
@@ -856,7 +785,10 @@
       "title": "StarPilot 7 Device RAM",
       "note": "Release’s RAM panel in the current Device list, at rest and scrolled. Opening RAM clears the unread dot. The fixed footer leaves the last process row below the initial viewport.",
       "match": true,
-      "built": ["stage4-ram", "stage4-ram-scrolled"]
+      "built": [
+        "stage4-ram",
+        "stage4-ram-scrolled"
+      ]
     },
     {
       "mock": "systemram",
@@ -867,12 +799,9 @@
     {
       "mock": "memorychip",
       "title": "Onroad › Low RAM chip",
-      "note": "StarPilot's Low Memory notice (RAM, not storage) as a red Low on RAM chip instead of the bottom banner, in arrival order and the lowest priority. Fill, border, icon, text color and place match. The percentage is drawn in the label's color and weight, not bolder and whiter, so the sentence can be translated whole. Page ground uses true black (#000000). The second native capture verifies the owner-requested merge: routing precedes Low on RAM in priority, with RamWatch retaining its 85% clear threshold and the normal time/street bar.",
+      "note": "Release's chip rules: Low on RAM gives way first and holds until RAM falls to 85%.",
       "match": false,
-      "built": [
-        "memorychip",
-        "valhalla2-chip-ram"
-      ]
+      "built": "stage4-onroad-low-ram"
     },
     {
       "mock": "valhalla3-regions-update",

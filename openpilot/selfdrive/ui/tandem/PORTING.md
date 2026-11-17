@@ -290,25 +290,36 @@ WarningImmediateVolume WarningSoftVolume
 
 ## Stage 4: driving screen
 
-- The seven approved driving variants are in `design/stage4-onroad*.html`. `TANDEM_ONROAD=0` uses openpilot's
-  original road view. The port reuses the calibrated camera and model layer, typed StarPilot 7 snapshot, and the
-  native alert producers. A critical alert closes the sidebar and takes the entire display.
-- MAX adjustments, disengage, and speed-limit responses go through StarPilot's qualified action publishers.
-  Use the car's cruise controls to engage. Confirmation stays tied to the shown proposal and waits for the sidebar
-  to close if the available road view is too narrow. The Low on RAM chip clears at 85 percent and ranks after curve status.
-- The first slice covers the status and controls shown in the approved mocks. The navigation controls and the
-  existing Arrive, Left and street rotation come back with the navigation port. Developer View, optional onroad
-  extras, the weather chip and the remaining onroad tests come back with their screens.
+- Release's drawing and chip rules carry over whole: `onroad/layers.py` (bar, chips, steering arc, Help steer, new-limit
+  card, speed, sign, driver monitor tile), `onroad/status.py` (which chips show, their order and hold) and
+  `onroad/alerts.py` (the three alert levels). Only StarPilot 7's needs changed them: a missing speed draws "–", the
+  arc's round ends are triangle fans (raylib 6 has no circle sectors), chips stop at the road view's width, and the
+  bar's MAX − / + and wheel follow StarPilot's permissions (`BarState.can_adjust`, `can_disengage`).
+- `onroad/view.py` is StarPilot 7's: openpilot's camera and model view, StarPilot's runtime snapshot, its selected
+  alert and its action publishers. It fills release's state objects once a frame. The pure choices (which alert shows,
+  the new-limit offer, the model's lane change) are in `onroad/binding.py`, tested off the device.
+- MAX adjustments, disengage and speed-limit answers go through StarPilot's qualified publishers; the screen can't
+  engage. A card answers only the proposal it showed. A critical alert closes the sidebar and takes the screen.
+- Chips from StarPilot 7 so far: steering and speed pauses, coasting, pulse and glide, lane changes and blocked lane
+  changes, curves, green light, car ahead moved, ready to resume, steering only, turns, and Low on RAM. Stop lights and
+  signs, slowing for traffic, steering held, matching a new limit and weather wait for their StarPilot 7 sources
+  (stage 3 map). Help steer shows and replaces the steering-limit alert; its chime waits for the headroom service
+  (stage 5).
+- Not yet: the turn card, route progress, Where to? and End route (navigation, stage 5), Developer View, the compass,
+  lead tags, turn signal animations and the onroad extras. The comparison page uses release's `onroad`,
+  `onroadlarge-limit`, `alertstyles` and `memorychip` mocks.
 
 ## Stage 4: Software
 
-- Software uses the release Settings frame and cards, with StarPilot 7’s update owner. `TANDEM_SETTINGS=0` restores
-  openpilot’s original Settings window. The earlier panel variants in `design/stage4-software-*.html` record the first slice.
-- The StarPilot software owner qualifies whether a check, download or install is available and reports progress while
-  it has a measured percentage. The staged notes and restart action bind to the installed and prepared commits.
-  Automatic downloads and installs use separate expected values. Changing automatic installs preserves the saved
-  schedule and timezone.
-- The other settings tabs, Developer View, optional onroad extras and Inter boot-memory verification are still pending.
+- Release's Software tab (`design/softwaretab.html`) in release's settings window, on StarPilot 7's software owner.
+  Home and the tab share one watch (`tandem/software.py`), which reads the owner on a worker thread and sends every
+  action with the revision the driver saw.
+- Automatic Updates is one switch, as on release: it turns StarPilot's automatic downloads and automatic installation
+  on or off together, keeping the saved restart schedule and time zone (or the owner's default when none was saved).
+  Its subtitle says "Download and install while parked", since StarPilot 7 installs at a restart while parked.
+- Release Channel shows the branch; choosing another opens in Tuner Mode, which isn't ported yet. Reset Settings is
+  inactive until the Essentials defaults port. Uninstall asks once and sets `DoUninstall`, as StarPilot 7's own panel
+  does: StarPilot 7 has no factory-reset step, and clearing params wouldn't erase the settings it keeps elsewhere.
 
 ## Stage 4: match the release Settings layout
 
@@ -403,18 +414,19 @@ WarningImmediateVolume WarningSoftVolume
 
 ## Tests still on `release` only
 
-Ported so far: `test_fallback_font.py`, the component tests of `test_tandem.py`, the catalog-mechanics tests of
-`test_translations.py`, the atlas crop tests of `test_font_loading.py`, and the text hook test of
-`test_upstream_integration.py`. Each of the rest comes back with the code it tests. When one comes back, take it from `release` whole.
+Ported so far: `test_fallback_font.py`, `test_alert_levels.py`, `test_bar.py`, `test_streets.py`, `test_keyboard.py`,
+`test_voice.py`, `test_speech_native.py`, `test_larger_text.py` but its Display settings test, the component, chip and
+Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_translations.py`, the atlas crop tests of
+`test_font_loading.py`, and the text hook test of `test_upstream_integration.py`. Each of the rest comes back with the code it tests. When one comes back, take it from `release` whole.
 
 | `release` test | Waits for |
 |---|---|
-| `test_tandem.py` from `test_traffic_chip_only_while_braking...` on | Onroad, home and settings screens (stage 4) |
+| `test_tandem.py` from `test_release_notes_lead_with_a_tandem_entry` on | Home and settings screens (stage 4) |
 | `test_translations.py`: the template, metadata, coverage and completed-language checks, Developer View labels, picker languages | Every screen ported, then `tools/translations.py update` (end of stage 4) |
 | `test_font_loading.py`: lazy fonts, glyph release and alert faces | Glyph release when restored, then lazy loading and alert faces with the screen port (stage 4) |
 | `test_upstream_integration.py`: all but the text hooks and the sidebar factory | Their hooks and modules (stages 3 to 6) |
-| `test_larger_text.py` (the size tests and the menu sidebar test are ported, in `test_screens.py`), `test_bar.py`, `test_compass.py`, `test_streets.py`, `test_turn_signals.py`, `test_lead_tag.py`, `test_onroad*.py`, `test_alert_levels.py`, `test_chip_events.py`, `test_headroom_warning.py`, `test_limit_follower.py`, `test_limit_offers.py`, `test_developer_view.py` | Onroad (stage 4) |
-| `test_forecast.py`, `test_menu_idle.py`, `test_keyboard.py`, `test_voice.py`, `test_speech_native.py` | Home, sidebar and keyboard (stage 4) |
+| `test_compass.py`, `test_turn_signals.py`, `test_lead_tag.py`, `test_onroad*.py`, `test_chip_events.py` (StarPilot 6's message reader; its rules are covered by the chip tests), `test_headroom_warning.py`, `test_limit_follower.py`, `test_limit_offers.py`, `test_developer_view.py` | Onroad (stage 4) |
+| `test_forecast.py`, `test_menu_idle.py`, `test_ram.py` | Home and sidebar (stage 4) |
 | `test_settings.py`, `test_developer.py`, `test_software_dialogs.py`, `test_hotspot_name.py`, `test_network_touches.py`, `test_storage_sizes.py`, `test_prebuilt_params.py` | Settings screens and owner integration (stage 4) |
 | `test_destinations.py`, `test_routemap.py`, `test_routing_ui.py`, `test_map_progress.py` | Navigation and routing (stage 5) |
 | `test_bluetooth_*.py`, `test_remote_actions.py`, `test_can_recorder.py`, `test_obd.py`, `test_cellular_status.py`, `test_network_test.py`, `test_galaxy_signals.py` | Services (stage 5) |

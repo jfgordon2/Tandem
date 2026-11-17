@@ -3,8 +3,8 @@ from enum import IntEnum
 import openpilot.cereal.messaging as messaging
 from openpilot.system.ui.lib.application import gui_app
 from openpilot.system.ui.widgets import Widget
-from openpilot.selfdrive.ui.tandem.screens import (SIDEBAR_WIDTH, home as HomeLayout, onroad as AugmentedRoadView,
-                                                  onroad_requires_full_view, settings as SettingsLayout, sidebar as Sidebar)
+from openpilot.selfdrive.ui.tandem.screens import (SIDEBAR_WIDTH, home as HomeLayout, onroad as AugmentedRoadView,  # Tandem's screens,
+                                                  settings as SettingsLayout, sidebar as Sidebar)  # or openpilot's when off
 from openpilot.selfdrive.ui.layouts.arabesque import ArabesqueLayout
 from openpilot.selfdrive.ui.layouts.settings.settings import PanelType
 from openpilot.selfdrive.ui.ui_state import device, ui_state
@@ -156,7 +156,8 @@ class MainLayout(Widget):
     self._set_mode_for_state()
 
   def _render_main_content(self):
-    if self._current_mode == MainState.ONROAD and onroad_requires_full_view(self._layouts[MainState.ONROAD]):
+    full_view = getattr(type(onroad := self._layouts[MainState.ONROAD]), "requires_full_view", None)  # Tandem: a critical alert
+    if self._current_mode == MainState.ONROAD and full_view is not None and full_view(onroad):
       self._sidebar.set_visible(False)
     # Render sidebar
     if self._sidebar.is_visible:

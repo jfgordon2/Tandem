@@ -89,12 +89,6 @@ def settings(on_open_arabesque: Callable[[], None] | None = None, arabesque_avai
   return window
 
 
-def onroad_requires_full_view(widget: Widget) -> bool:
-  """Tell MainLayout whether the Tandem view needs the entire screen."""
-  full_view = getattr(type(widget), "requires_full_view", None)
-  return bool(full_view(widget)) if callable(full_view) else False
-
-
 def sidebar() -> Widget:
   """The sidebar beside home and the onroad view: ours, or openpilot's with TANDEM_SIDEBAR=0."""
   if not _enabled("TANDEM_SIDEBAR"):

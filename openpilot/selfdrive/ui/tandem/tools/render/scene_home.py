@@ -5,7 +5,7 @@ from typing import Any
 from openpilot.selfdrive.ui.tandem.forecast import HourTile, Outlook
 from openpilot.selfdrive.ui.tandem.home import HomeContent, HomeState, home_content_rect
 from openpilot.selfdrive.ui.tandem.home_alerts import AlertsView, HomeAlert, UpdateView
-from openpilot.selfdrive.ui.tandem.home_software import HomeSoftware, InstallTarget
+from openpilot.selfdrive.ui.tandem.software import HomeSoftware, InstallTarget
 from openpilot.selfdrive.ui.tandem.sidebar import WIDTH, Health, SidebarState, SidebarView, Status, connect_status, network_status
 from openpilot.starpilot.ui.raylib import rl
 from openpilot.system.ui.widgets import Widget

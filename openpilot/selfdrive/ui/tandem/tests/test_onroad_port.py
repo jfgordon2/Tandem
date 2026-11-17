@@ -121,13 +121,13 @@ def test_recovery_switch_keeps_upstream_view(monkeypatch: pytest.MonkeyPatch) ->
   monkeypatch.setenv("STARPILOT_UI", "upstream")
   view = screens.onroad()
   assert type(view) is StockView
-  assert not screens.onroad_requires_full_view(view)
-  class EssentialsView(StockView):
-    """The hook implemented by Tandem's onroad view."""
-    def requires_full_view(self) -> bool:
-      return True
-
-  assert screens.onroad_requires_full_view(EssentialsView())
+  # MainLayout reads requires_full_view from the view's class, so openpilot's view (or a test's Mock) is left alone.
+  assert getattr(type(view), "requires_full_view", None) is None
+  import ast
+  from pathlib import Path
+  source = ast.parse((Path(__file__).resolve().parents[1] / "onroad/view.py").read_text())   # device-only imports: read, don't import
+  view_class = next(n for n in source.body if isinstance(n, ast.ClassDef) and n.name == "EssentialsOnroad")
+  assert any(isinstance(n, ast.FunctionDef) and n.name == "requires_full_view" for n in view_class.body)
 
 
 @pytest.mark.parametrize("speed", [None, float("nan"), float("inf"), -1])
