@@ -41,8 +41,6 @@ def essentials_settings(on_open_arabesque: Callable[[], None] | None, arabesque_
   from openpilot.starpilot.ui.display_owner import DisplayOwner
   from openpilot.starpilot.ui.slc_offset_feature import native_parked
   from openpilot.system.ui.lib.multilang import multilang
-  from openpilot.system.ui.lib.wifi_manager import WifiManager
-  from openpilot.system.ui.widgets.network import NetworkUI
 
   def ask_password(minimum: int, entered: Callable[[str], None]) -> None:
     """Open the release password keyboard over the device page."""
@@ -125,9 +123,14 @@ def essentials_settings(on_open_arabesque: Callable[[], None] | None, arabesque_
       ui_state.params.put_bool("DoUninstall", True, block=True)
 
   def network() -> Widget:
-    wifi = WifiManager()
-    wifi.set_active(False)
-    return PanelPage(NetworkUI(wifi))
+    """Release's Connections: Wi-Fi, cellular and the network test, on Tandem's network services."""
+    from openpilot.selfdrive.ui.tandem.settings.connections import connections_page, shared_network_test
+    from openpilot.selfdrive.ui.tandem.settings.network_tab import Network, advanced_panel, upstream_wifi
+    from openpilot.selfdrive.ui.tandem.settings.network_test import NetworkTestModel
+    from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
+    model = Network(upstream_wifi(), SettingsStore())
+    test = NetworkTestModel(shared_network_test(), lambda: model.wifi.connected_ssid)
+    return connections_page(model, lambda: window.push(PanelPage(advanced_panel(model))), window, test)
 
   owner = DeviceOwner(ui_state, ask_password, lambda message: window.notice(N_("This Device"), message))
   ram = shared_log()
