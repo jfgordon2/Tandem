@@ -13,6 +13,7 @@ Returns mypy's exit status: 0 when the owned code is clean.
 """
 from __future__ import annotations
 
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -42,8 +43,10 @@ def main(argv: list[str]) -> int:
     mypy's exit status.
   """
   command = [sys.executable, "-m", "mypy", "--follow-imports=silent", "--platform=linux", "--disallow-untyped-defs",
-             "--disallow-incomplete-defs", *argv, *owned_files()]
-  return subprocess.call(command, cwd=ROOT)
+             "--disallow-incomplete-defs", "--disable-error-code=import-untyped", *argv, *owned_files()]
+  # StarPilot 7 keeps opendbc and panda in their own folders at the repository root, outside openpilot/.
+  env = {**os.environ, "MYPYPATH": os.pathsep.join(str(ROOT / name) for name in ("opendbc_repo", "."))}
+  return subprocess.call(command, cwd=ROOT, env=env)
 
 
 if __name__ == "__main__":
