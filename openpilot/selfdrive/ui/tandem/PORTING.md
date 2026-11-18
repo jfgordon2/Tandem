@@ -561,6 +561,13 @@ WarningImmediateVolume WarningSoftVolume
   crash dumps to Bugsink on its own; `starpilot/tandem/diagnostics.py` filters them so they stay on the device. Every
   SDK user in StarPilot 7 is automatic; Report a Problem uses StarPilot's separate Bugsink sender and is unaffected.
 
+## Stage 6: Help steer chime
+
+- The driving screen writes `starpilot/tandem/state.HEADROOM` when Help steer appears and clears it when it goes;
+  StarPilot 7's sound daemon (one-line hook in `main()`) plays its prompt chime once per warning, at the prompt volume,
+  only when nothing else sounds or shows. StarPilot 7's daemon has no alert filter, so release's quieting of the turn
+  steering-limit alert during Help steer is gone. The daemon picks this up when it next starts (a reboot).
+
 ## Tests still on `release` only
 
 Ported so far: `test_fallback_font.py`, `test_compass.py`, `test_network_test.py` (but its settings search test), `test_cellular_status.py`, `test_hotspot_name.py`, `test_network_touches.py` (StarPilot 7 has no PC-only touch path), `test_alert_levels.py`, `test_bar.py`, `test_streets.py`, `test_keyboard.py`,

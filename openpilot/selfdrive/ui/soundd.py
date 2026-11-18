@@ -307,7 +307,8 @@ class Soundd:
 
 
 def main():
-  s = Soundd()
+  from openpilot.starpilot.tandem.headroom import sound_type
+  s = sound_type(Soundd)()  # Tandem: the Help steer chime; Soundd itself with TANDEM_ONROAD=0
   s.soundd_thread()
 
 

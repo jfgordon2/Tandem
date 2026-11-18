@@ -60,6 +60,7 @@ class EssentialsOnroad(AugmentedRoadView):
     self._compass = DriveCompass()
     self._follower = LimitFollower()
     self._failed: set[str] = set()   # extras that failed once (_safely)
+    self._help_steer = False         # the Help steer warning was up last frame (its chime, starpilot/tandem/headroom.py)
     self._gap_tracker = GapTracker()
     self._gap_state: GapTagState | None = None
     self._lead_tag_on, self._lead_tag_read = True, -1.0   # prefs.LEAD_TAG, read once a second
@@ -180,6 +181,7 @@ class EssentialsOnroad(AugmentedRoadView):
     help_steer = arc.active and (arc.stage == AT_LIMIT or steer_limit)
     visible_alert = driving_alert(state.alert, fallback, help_steer)
     help_steer = help_steer and visible_alert is None   # other alerts keep priority, as on release
+    self._safely("help steer chime", lambda: self._signal_help_steer(help_steer))
     if now_ns - self._safe_at >= 1_000_000_000:
       self._safe_at = now_ns
       self._safe = bool(ui_state.params.get_bool("SafeMode"))
@@ -235,6 +237,14 @@ class EssentialsOnroad(AugmentedRoadView):
     mode = 1 if self._lead_tag_on else int(appearance.lead_info_mode)   # any mode but Off asks the renderer for the text
     self.model_renderer.lead_display = (True, mode, appearance.lead_info_metric)
     self._gap_state = self._gap_tracker.update(read_lead_sample(ui_state, self.LEAD_THRESHOLD), now) if self._lead_tag_on else None
+
+  def _signal_help_steer(self, warning: bool) -> None:
+    """Tell the sound daemon when Help steer appears (it chimes once) and when it goes away."""
+    if warning == self._help_steer or ui_state.replay_clock is not None:
+      return
+    from openpilot.starpilot.tandem.state import HEADROOM
+    HEADROOM.write(time.monotonic() if warning else 0.0)
+    self._help_steer = warning
 
   def _safely(self, name: str, step: Callable[[], object]) -> None:
     """Run one of Tandem's driving-screen extras; a failure is logged once and skipped, never stopping the frame."""
