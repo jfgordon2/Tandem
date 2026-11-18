@@ -99,3 +99,18 @@ def test_a_failure_to_start_leaves_the_screens_as_before(monkeypatch) -> None:
   monkeypatch.setitem(sys.modules, "openpilot.selfdrive.ui.tandem.star_input", broken)
   monkeypatch.setitem(sys.modules, "openpilot.common.swaglog", SimpleNamespace(cloudlog=SimpleNamespace(exception=logged.append)))
   assert star_input(object(), big_ui=True, environment={}) == (None, None) and logged
+
+
+def test_settings_are_tandems_on_a_comma_without_the_big_switch(monkeypatch) -> None:
+  """On the device BIG isn't set; the big UI comes from the device type (gui_app.big_ui), as ui.py decides it."""
+  import sys
+  from types import ModuleType
+  from openpilot.selfdrive.ui.tandem import screens
+  from openpilot.system.ui.lib import application
+  monkeypatch.delenv("BIG", raising=False)
+  monkeypatch.setattr(application, "BIG_UI", False)
+  monkeypatch.setattr(application.gui_app, "big_ui", lambda: True)   # a comma 3X
+  fake = ModuleType("openpilot.selfdrive.ui.tandem.settings.essentials")
+  fake.essentials_settings = lambda *args: "tandem settings"  # type: ignore[attr-defined]
+  monkeypatch.setitem(sys.modules, "openpilot.selfdrive.ui.tandem.settings.essentials", fake)
+  assert screens.settings() == "tandem settings"

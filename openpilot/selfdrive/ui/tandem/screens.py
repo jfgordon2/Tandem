@@ -97,6 +97,13 @@ def onroad() -> Widget:
   return EssentialsOnroad()
 
 
+def _big_ui() -> bool:
+  """The big UI as ui.py decides it (the comma 3 and 3X, or BIG=1 on a computer), not application.BIG_UI, which is only
+  the BIG=1 environment switch and is false on the device."""
+  from openpilot.system.ui.lib.application import gui_app
+  return bool(gui_app.big_ui())
+
+
 def settings(on_open_arabesque: Callable[[], None] | None = None, arabesque_available: Callable[[], bool] = lambda: False) -> Widget:
   """The settings MainLayout shows: release's Essentials window on the big UI, or openpilot's with TANDEM_SETTINGS=0.
 
@@ -104,8 +111,7 @@ def settings(on_open_arabesque: Callable[[], None] | None = None, arabesque_avai
     on_open_arabesque: Passed on to openpilot's Developer panel, which opens Arabesque through MainLayout.
     arabesque_available: Whether Arabesque may open now.
   """
-  from openpilot.system.ui.lib.application import BIG_UI
-  if not BIG_UI or not _enabled("TANDEM_SETTINGS"):
+  if not _big_ui() or not _enabled("TANDEM_SETTINGS"):
     from openpilot.selfdrive.ui.layouts.settings.settings import SettingsLayout
     return SettingsLayout(on_open_arabesque=on_open_arabesque, arabesque_available=arabesque_available)
   from openpilot.selfdrive.ui.tandem.settings.essentials import essentials_settings
