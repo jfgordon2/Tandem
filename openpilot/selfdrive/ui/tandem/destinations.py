@@ -1,0 +1,508 @@
+"""Where to? (design/destinations.html), its search (navsearch.html) and the route preview (routepreview.html).
+
+StarPilot 7's navigation owner still does the work: place search, favorites with Home and Work, recent places, starting
+and ending a route (places.py's StarPilotPlaces). This module only draws. One full-screen widget moves between three
+views: the list, search (with the Essentials keyboard built in), and the preview of a picked place: its route on a map
+(routemap.py) with when you'd arrive, then Start.
+"""
+from __future__ import annotations
+
+import time
+from collections.abc import Callable
+from typing import Any, Protocol
+
+from openpilot.starpilot.ui.raylib import rl
+
+from functools import partial
+from openpilot.system.ui.widgets import Widget
+from openpilot.selfdrive.ui.tandem import draw, tokens as T
+from openpilot.selfdrive.ui.tandem.base import Component, size_of
+from openpilot.selfdrive.ui.tandem.blocks import Icon
+from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, back_glyph
+from openpilot.selfdrive.ui.tandem.keyboard import KeyPad
+from openpilot.selfdrive.ui.tandem.layout import FILL, Size, column, grid, inset, place, row
+from openpilot.selfdrive.ui.tandem.routemap import RoutePlan, arrive_text, distance_text, draw_route_map, \
+  time_text
+from openpilot.selfdrive.ui.tandem.rows import ListPanel, SectionHeader, SettingRow, Text
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_
+
+SEARCH_PAUSE = 0.6          # seconds after the last key before searching as you type
+MIN_QUERY = 3               # StarPilot's minimum
+FIELD_FILL = T._hex("1A1D22")
+ROW = T.px(58)              # the list's rows, as in the mock
+TAG_FILL = rl.Color(0x0B, 0x0D, 0x10, 0xE6)   # back over the map
+DATA_LABEL = T._hex("9FAABA")
+
+
+def star_ink(places: Places, place: dict[str, Any]) -> rl.Color:
+  """The star's color beside a recent place: accent once it's a favorite."""
+  return T.ACCENT_TEXT if places.is_favorite(place) else T.TEXT_TERTIARY
+
+
+def place_name(place: dict[str, Any] | None) -> str:
+  return str((place or {}).get("name") or (place or {}).get("place_name") or "")
+
+
+def place_line(place: dict[str, Any] | None) -> str:
+  """A second line for a place: its address (StarPilot 7's address, or a full place name), without the name when it
+  starts with it."""
+  name, full = place_name(place), str((place or {}).get("address") or (place or {}).get("place_name") or "")
+  if not full or full == name:
+    return ""
+  return full[len(name) + 2:] if full.startswith(name + ", ") else full
+
+
+class Places(Protocol):
+  """What the screens need from StarPilot's navigation. places.StarPilotPlaces is the real one."""
+
+  def tick(self) -> None: ...
+  def refresh(self) -> None: ...
+  def active(self) -> dict | None: ...
+  def favorites(self) -> list[dict]: ...           # ordered: Home, Work, then by name
+  def recents(self) -> list[dict]: ...
+  def is_favorite(self, place: dict) -> bool: ...
+  def toggle_saved(self, place: dict) -> None: ...  # a recent's star
+  def search(self, query: str) -> None: ...
+  def results(self) -> list[tuple[str, str]]: ...   # (name, address)
+  def status(self) -> tuple[str, str] | None: ...   # searching, an error, or nothing found
+  def pick_result(self, index: int) -> None: ...    # may resolve in the background; draft() fills in
+  def pick(self, place: dict) -> None: ...
+  def draft(self) -> dict | None: ...
+  def clear_draft(self) -> None: ...
+  def saved_as(self) -> tuple[bool, bool, bool]: ...   # the draft: favorite, home, work
+  def toggle(self, kind: str) -> None: ...             # "favorite", "home" or "work"
+  def can_start(self) -> bool: ...                   # a route key and a picked place
+  def can_search(self) -> bool: ...                  # a key for place search
+  def start(self) -> bool: ...
+  def end_route(self) -> None: ...
+  def maps_ready(self) -> bool: ...
+  def route(self) -> tuple[RoutePlan | None, str]: ...   # the draft's route, or why there isn't one yet
+  def metric(self) -> bool: ...
+
+
+# ── Pieces ──
+
+def nav_button(on_click: Callable[[], None], size: float = T.NAV_BUTTON, radius: float = T.RADIUS_CARD) -> Button:
+  return Button(on_click=on_click, style=ButtonStyle.NAV, height=size, width=size, radius=radius, glyph=back_glyph)
+
+
+def icon_button(name: str, on_click: Callable[[], None], color: Callable[[], rl.Color]) -> Button:
+  return Button(on_click=on_click, style=ButtonStyle.GHOST, height=T.px(48), width=T.px(48), radius=T.px(12),
+                glyph=lambda r, c, s: draw.icon(r, name, color(), T.px(22)))
+
+
+class Footer(Component):
+  """The bottom bar: back, a line of explanation, and an action on the right (as in destinations.html)."""
+  grow_touch_target = False
+
+  def __init__(self, on_back: Callable[[], None], note: Callable[[], str], action: Widget | None = None):
+    super().__init__()
+    self._back = self._child(nav_button(on_back))
+    self._note = note
+    self._action = self._child(action) if action is not None else None
+
+  def _render(self, rect: rl.Rectangle) -> None:
+    draw.fill(rect, T.NAV_BAR)
+    draw.hline(rect.x, rect.y, rect.width, T.NAV_BAR_EDGE)
+    body = place(inset(rect, x=T.px(16)), rect.width - T.px(32), T.NAV_BUTTON)
+    action_w = size_of(self._action, body.width)[0] if self._action is not None and self._action.is_visible else 0
+    back, note, action = row(body, [T.NAV_BUTTON, FILL, action_w], T.px(10))
+    self._back.render(back)
+    draw.text(inset(note, left=T.px(10)), draw.fit(self._note(), T.font_px(16), T.FONT, note.width - T.px(10)), T.font_px(16),
+              T.TEXT_MUTED)
+    if self._action is not None and self._action.is_visible:
+      self._action.render(action)
+
+
+class Tile(Component):
+  """Home, Work or Add favorite: an icon well, a title and a line. dashed draws the empty slot's outline."""
+  grow_touch_target = False
+
+  def __init__(self, icon: str, title: Callable[[], str], line: Callable[[], str], on_click: Callable[[], None],
+               dashed: Callable[[], bool] = lambda: False):
+    super().__init__()
+    self._icon, self._title, self._line, self._dashed = icon, title, line, dashed
+    self.set_click_callback(on_click)
+
+  def _render(self, rect: rl.Rectangle) -> None:
+    empty = self._dashed()
+    if empty:
+      draw.stroke(rect, T._hex("343B45"), T.px(20), T.px(1))
+    else:
+      draw.fill(rect, FIELD_FILL, T.px(20))
+    if self.is_pressed:
+      draw.pressed(rect, T.px(20))
+    body = inset(rect, x=T.px(18))
+    well, words = row(body, [T.px(52), FILL], T.px(14))
+    well = place(well, T.px(52), T.px(52))
+    draw.fill(well, FIELD_FILL if empty else T.ACCENT_SURFACE, T.px(14))
+    draw.icon(well, self._icon, T.TEXT_TERTIARY if empty else T.ACCENT_TEXT, T.px(26))
+    title_h, line_h = draw.line_height(T.font_px(20)), draw.line_height(T.font_px(14))
+    block = place(words, words.width, title_h + T.px(3) + line_h)
+    draw.text(rl.Rectangle(block.x, block.y, block.width, title_h), draw.fit(self._title(), T.font_px(20), T.FONT_BOLD, block.width),
+              T.font_px(20), T.TEXT_SECONDARY if empty else T.TEXT, T.FONT_BOLD)
+    draw.text(rl.Rectangle(block.x, block.y + title_h + T.px(3), block.width, line_h),
+              draw.fit(self._line(), T.font_px(14), T.FONT, block.width), T.font_px(14), T.TEXT_MUTED if empty else T.TEXT_TERTIARY)
+
+
+class SearchPill(Component):
+  """A quiet search field that opens the keyboard: the list's entry, and the results view's field with its query."""
+  grow_touch_target = False
+
+  def __init__(self, on_click: Callable[[], None], text: Callable[[], str] = lambda: ""):
+    super().__init__()
+    self._text = text
+    self.set_click_callback(on_click)
+
+  def _render(self, rect: rl.Rectangle) -> None:
+    draw.fill(rect, FIELD_FILL, T.px(16))
+    draw.stroke(rect, T.TRACK, T.px(16), T.px(1))
+    if self.is_pressed:
+      draw.pressed(rect, T.px(16))
+    icon, words = row(inset(rect, x=T.px(20)), [T.px(22), FILL], T.px(14))
+    draw.icon(icon, "search", T.TEXT_TERTIARY, T.px(22))
+    text = self._text()
+    draw.text(words, draw.fit(text or N_("Search for a place or address"), T.font_px(18), T.FONT, words.width), T.font_px(18),
+              T.TEXT if text else T.TEXT_TERTIARY)
+
+
+class ResultCard(Component):
+  """A result while typing: a pin, the name and the address."""
+  grow_touch_target = False
+
+  def __init__(self, index: int, places: Places, on_pick: Callable[[int], None]):
+    super().__init__()
+    self._index, self._places = index, places
+    self.set_click_callback(lambda: on_pick(index))
+    self.set_visible(lambda: index < len(places.results()))
+
+  def _render(self, rect: rl.Rectangle) -> None:
+    results = self._places.results()
+    if self._index >= len(results):
+      return
+    name, line = results[self._index]
+    draw.fill(rect, T.SURFACE_2, T.px(14))
+    if self.is_pressed:
+      draw.pressed(rect, T.px(14))
+    icon, words = row(inset(rect, x=T.px(16)), [T.px(20), FILL], T.px(12))
+    draw.icon(icon, "pin", T.ACCENT_TEXT, T.px(20))
+    title_h, line_h = draw.line_height(T.font_px(17)), draw.line_height(T.font_px(13))
+    block = place(words, words.width, title_h + (line_h if line else 0))
+    draw.text(rl.Rectangle(block.x, block.y, block.width, title_h), draw.fit(name, T.font_px(17), T.FONT_BOLD, block.width),
+              T.font_px(17), T.TEXT, T.FONT_BOLD)
+    if line:
+      draw.text(rl.Rectangle(block.x, block.y + title_h, block.width, line_h), draw.fit(line, T.font_px(13), T.FONT, block.width),
+                T.font_px(13), T.TEXT_TERTIARY)
+
+
+# ── The screen ──
+
+LIST, SEARCH, RESULTS, PREVIEW = "list", "search", "results", "preview"
+
+
+class DestinationsScreen(Component):
+  """Full screen: the list, search, and the preview. on_close leaves (pops the screen); open_maps, when given, shows
+  Offline Maps from the list's footer."""
+  grow_touch_target = False
+
+  def __init__(self, places: Places, on_close: Callable[[], None], open_maps: Callable[[], None] | None = None):
+    super().__init__()
+    self._places = places
+    self._on_close = on_close
+    self._view = LIST
+    self._history: list[str] = []
+    self._intent: str | None = None      # "home" or "work" when a tile is setting one
+    self._awaiting = False               # a picked result is resolving
+    self._typed, self._typed_at, self._searched = "", 0.0, ""
+    self._keys = KeyPad(self._search_now, N_("Search"), MIN_QUERY,
+                        voice_hint=N_("Say a place or an address. Tap the mic when you're done."), voice_style="address")
+
+    # List
+    self._search_pill = self._child(SearchPill(lambda: self._go(SEARCH)))
+    self._tiles = [self._child(Tile("home", lambda: N_("Home") if self._special("is_home") else N_("Set Home"),
+                                    lambda: self._address("is_home") or N_("Search for your home address"),
+                                    lambda: self._open_special("is_home"), lambda: self._special("is_home") is None)),
+                   self._child(Tile("work", lambda: N_("Work") if self._special("is_work") else N_("Set Work"),
+                                    lambda: self._address("is_work") or N_("Search for your work address"),
+                                    lambda: self._open_special("is_work"), lambda: self._special("is_work") is None)),
+                   self._child(Tile("plus", lambda: N_("Add favorite"), lambda: N_("Search for a place"), lambda: self._go(SEARCH),
+                                    lambda: True))]
+    maps = Button(N_("Offline maps"), open_maps, ButtonStyle.NAV, height=T.NAV_BUTTON, font_size=T.font_px(18),
+                  radius=T.RADIUS_CARD, padding=T.px(26)) if open_maps is not None else None
+    self._list_footer = self._child(Footer(self._back, lambda: N_("Turns and speed follow the route automatically while navigating"), maps))
+    self._list_panel: ListPanel | None = None
+    self._list_key: object = None
+
+    # Search
+    self._search_back = self._child(nav_button(self._back, T.px(56), T.px(14)))
+    self._clear = self._child(Button(on_click=lambda: self._keys.set_text(""), style=ButtonStyle.SECONDARY, height=T.px(36),
+                                     width=T.px(36), radius=T.px(18), glyph=lambda r, c, s: draw.icon(r, "close", T.TEXT_SECONDARY, T.px(16))))
+    self._cards = [self._child(ResultCard(i, places, self._pick_result)) for i in range(4)]
+    self._results_back = self._child(nav_button(self._back, T.px(56), T.px(14)))
+    self._results_field = self._child(SearchPill(self._reopen_keyboard, lambda: self._searched))
+    self._results_panel: ListPanel | None = None
+    self._results_key: object = None
+
+    # Preview
+    self._preview_back = self._child(Button(on_click=self._back, style=ButtonStyle.GHOST, width=T.px(60), height=T.px(60),
+                                            radius=T.px(16), glyph=lambda r, c, s: back_glyph(r, T.TEXT, T.px(26))))
+    self._star = self._child(Button(on_click=lambda: places.toggle("favorite"), style=ButtonStyle.SECONDARY, width=T.px(64),
+                                    height=T.px(64), radius=T.px(16), glyph=lambda r, c, s: draw.icon(
+                                      r, "star", T.ACCENT if places.saved_as()[0] else T.TEXT, T.px(24))))
+    self._start_button = self._child(Button(N_("Start"), self._start, ButtonStyle.PRIMARY, height=T.px(64), font_size=T.font_px(20),
+                                            radius=T.px(16), weight=T.FONT_EXTRABOLD))
+    self._start_button.set_enabled(places.can_start)
+
+  # Navigation between views
+
+  def show_event(self) -> None:
+    super().show_event()
+    self._places.refresh()
+
+  def _go(self, view: str) -> None:
+    if view == SEARCH:
+      self._keys.set_text(self._searched if self._view == RESULTS else "")
+    self._history.append(self._view)
+    self._view = view
+
+  def _back(self) -> None:
+    if self._view == PREVIEW:
+      self._places.clear_draft()
+    if not self._history:
+      self._on_close()
+      return
+    self._view = self._history.pop()
+    if self._view == LIST:
+      self._intent = None
+
+  def _address(self, key: str) -> str:
+    favorite = self._special(key)
+    return (place_line(favorite) or str(favorite.get("address") or favorite.get("place_name") or "")) if favorite else ""
+
+  def _special(self, key: str) -> dict | None:
+    return next((f for f in self._places.favorites() if f.get(key)), None)
+
+  def _open_special(self, key: str) -> None:
+    favorite = self._special(key)
+    if favorite is not None:
+      self._places.pick(favorite)
+      self._go(PREVIEW)
+    else:
+      self._intent = "home" if key == "is_home" else "work"
+      self._go(SEARCH)
+
+  def _pick(self, place: dict) -> None:
+    self._places.pick(place)
+    if self._places.draft() is None:
+      self._keys.set_text(place_name(place))
+      self._searched = place_name(place)
+      self._go(SEARCH)
+    else:
+      self._go(PREVIEW)
+
+  def _pick_result(self, index: int) -> None:
+    self._places.pick_result(index)
+    self._awaiting = True
+
+  def _search_now(self) -> None:
+    """The Search key: search what's typed and show every result without the keyboard."""
+    text = self._keys.text.strip()
+    if len(text) < MIN_QUERY:
+      return
+    if text != self._searched:
+      self._places.search(text)
+      self._searched = text
+    self._go(RESULTS)
+
+  def _reopen_keyboard(self) -> None:
+    self._keys.set_text(self._searched)
+    self._typed = self._searched
+    self._view = SEARCH
+
+  def _start(self) -> None:
+    if self._places.start():
+      self._on_close()
+
+  def _update_state(self) -> None:
+    self._places.tick()
+    if self._view == SEARCH:
+      text = self._keys.text.strip()
+      now = time.monotonic()
+      if text != self._typed:
+        self._typed, self._typed_at = text, now
+      elif len(text) >= MIN_QUERY and text != self._searched and now - self._typed_at > SEARCH_PAUSE:
+        self._places.search(text)
+        self._searched = text
+    if self._awaiting and self._places.draft() is not None:
+      self._awaiting = False
+      if self._intent and not self._places.saved_as()[1 if self._intent == "home" else 2]:
+        self._places.toggle(self._intent)       # the tile asked for this place to become Home or Work
+      self._go(PREVIEW)
+
+  # Drawing
+
+  def _render(self, rect: rl.Rectangle) -> None:
+    draw.fill(rect, T.BG)
+    {LIST: self._render_list, SEARCH: self._render_search, RESULTS: self._render_results, PREVIEW: self._render_preview}[self._view](rect)
+
+  def _render_list(self, rect: rl.Rectangle) -> None:
+    body, footer = column(rect, [FILL, T.NAV_HEIGHT])
+    self._list_footer.render(footer)
+    body = inset(body, left=T.px(20), right=T.px(20), top=T.px(20), bottom=T.px(14))
+    header, tiles, panel = column(body, [T.px(60), T.px(86), FILL], T.px(14))
+    chip_w = 0   # release's "Offline maps ready" chip waits for offline routing (PORTING.md)
+    title, pill, chip = row(header, [T.px(170), FILL, chip_w], T.px(14))
+    draw.text(inset(title, left=T.px(6)), N_("Where to?"), T.font_px(28), T.TEXT, T.FONT_EXTRABOLD)
+    self._search_pill.render(pill)
+    if chip_w:
+      chip = place(chip, chip.width, T.px(44))
+      draw.fill(chip, T.SUCCESS_CARD, T.px(12))
+      icon, words = row(inset(chip, x=T.px(14)), [T.px(16), FILL], T.px(8))
+      draw.icon(icon, "check", T.SUCCESS_TEXT, T.px(16))
+      draw.text(words, N_("Offline maps ready"), T.font_px(15), T.SUCCESS_TEXT, T.FONT_SEMIBOLD)
+    for tile, cell in zip(self._tiles, row(tiles, [FILL, FILL, FILL], T.px(12)), strict=True):
+      tile.render(cell)
+    self._list().render(panel)
+
+  def _list(self) -> ListPanel:
+    """Favorites other than Home and Work, then recents; rebuilt when they change."""
+    places = self._places
+    active, favorites, recents = places.active(), places.favorites(), places.recents()
+    others = [f for f in favorites if not f.get("is_home") and not f.get("is_work")]
+    key = (place_name(active), tuple(place_name(f) for f in others), tuple(place_name(r) for r in recents),
+           tuple(places.is_favorite(r) for r in recents))
+    if self._list_panel is None or key != self._list_key:
+      items: list[Widget] = []
+      if active is not None:
+        items += [SectionHeader(N_("ON A ROUTE")),
+                  SettingRow(t_("To {}", place_name(active)), place_line(active) or None,
+                             Button(N_("End route"), places.end_route, ButtonStyle.DANGER_SOFT), leading=Icon("navigate"), height=ROW)]
+      if others:
+        items.append(SectionHeader(N_("FAVORITES")))
+        items += [SettingRow(place_name(f), place_line(f) or None, on_click=partial(self._pick, f), leading=Icon("star"),
+                             chevron=False, height=ROW) for f in others]
+      items.append(SectionHeader(N_("RECENT")))
+      if recents:
+        items += [SettingRow(place_name(r), place_line(r) or None,
+                             icon_button("star", partial(places.toggle_saved, r), partial(star_ink, places, r)),
+                             on_click=partial(self._pick, r), leading=Icon("recent", color=T.TEXT_MUTED), chevron=False, height=ROW)
+                  for r in recents]
+      else:
+        items.append(Text(N_("Places you navigate to show up here.")))
+      self._list_panel = self._child(ListPanel(items, header_divider=False))
+      self._list_key = key
+    return self._list_panel
+
+  def _render_field(self, rect: rl.Rectangle) -> None:
+    """Search's field while typing: back, then the field with the accent edge, what's typed and a clear button."""
+    back, field = row(rect, [T.px(56), FILL], T.px(10))
+    self._search_back.render(back)
+    draw.fill(field, FIELD_FILL, T.px(14))
+    draw.stroke(field, T.ACCENT, T.px(14), T.px(2))
+    icon, text, clear = row(inset(field, left=T.px(16), right=T.px(10)), [T.px(20), FILL, T.px(36)], T.px(12))
+    draw.icon(icon, "search", T.TEXT_TERTIARY, T.px(20))
+    self._keys.render_text(text)
+    if self._keys.text:
+      self._clear.render(place(clear, T.px(36), T.px(36)))
+
+  def _render_search(self, rect: rl.Rectangle) -> None:
+    if self._keys.voice_active:           # design/voicelistening.html: the field, then voice typing below it
+      top, panel = column(rect, [T.px(80), FILL])
+      self._render_field(inset(top, left=T.px(16), right=T.px(16), top=T.px(14), bottom=T.px(10)))
+      self._keys.render_keys(panel)
+      return
+    top, keys = column(rect, [T.px(206), FILL])
+    body = inset(top, left=T.px(16), right=T.px(16), top=T.px(14), bottom=T.px(10))
+    field, strip = column(body, [T.px(56), FILL], T.px(10))
+    self._render_field(field)
+    status = self._places.status() if self._searched else None
+    if not self._places.can_search():   # no public Mapbox key: search would quietly find nothing
+      draw.text(inset(strip, left=T.px(6)), N_("Search needs the public Mapbox key · see Settings › Driving › Speed & Steering › Navigation"),
+                T.font_px(15), T.WARNING)
+    elif status is not None or not self._places.results():
+      title, line = status or (N_("Type a place or address"), t_("Results show as you type, from {} letters", MIN_QUERY))
+      draw.text(inset(strip, left=T.px(6)), f"{title} · {line}", T.font_px(15), T.TEXT_TERTIARY)
+    else:
+      for card, cell in zip(self._cards, grid(strip, 2, 2, T.px(8)), strict=True):
+        card.render(cell)
+    self._keys.render_keys(keys)
+
+  def _render_results(self, rect: rl.Rectangle) -> None:
+    """Every result after Search, without the keyboard; tapping the field brings it back."""
+    body = inset(rect, left=T.px(16), right=T.px(16), top=T.px(14), bottom=T.px(14))
+    field, panel = column(body, [T.px(56), FILL], T.px(12))
+    back, pill = row(field, [T.px(56), FILL], T.px(10))
+    self._results_back.render(back)
+    self._results_field.render(pill)
+    self._results().render(panel)
+
+  def _results(self) -> ListPanel:
+    results, status = self._places.results(), self._places.status()
+    key = (tuple(results), status)
+    if self._results_panel is None or key != self._results_key:
+      items: list[Widget] = [Text(f"{status[0]} · {status[1]}")] if status else []
+      items += [SettingRow(name, line or None, on_click=partial(self._pick_result, i), leading=Icon("pin"), chevron=False, height=ROW)
+                for i, (name, line) in enumerate(results)]
+      self._results_panel = self._child(ListPanel(items, header_divider=False))
+      self._results_key = key
+    return self._results_panel
+
+  def _render_preview(self, rect: rl.Rectangle) -> None:
+    """The map on the left with back over it; the place, its arrival estimate and Start on the right."""
+    plan, status = self._places.route()
+    body = inset(rect, T.px(14))
+    map_rect, side = row(body, [FILL, T.px(400)], T.px(14))
+    draw_route_map(map_rect, plan, status)
+    back = rl.Rectangle(map_rect.x + T.px(14), map_rect.y + T.px(14), T.px(60), T.px(60))
+    draw.fill(back, TAG_FILL, T.px(16))
+    self._preview_back.render(back)
+    self._render_place(side, plan, status)
+
+  def _render_place(self, rect: rl.Rectangle, plan: RoutePlan | None, status: str = "") -> None:
+    draft = self._places.draft()
+    draw.fill(rect, T.SURFACE_2, T.RADIUS_PANEL)
+    inner = inset(rect, T.px(24))
+    name, line = place_name(draft), place_line(draft)
+    title_h, line_h = draw.line_height(T.font_px(28)), draw.line_height(T.font_px(16))
+    label_h, value_h = draw.line_height(T.font_px(13)), draw.line_height(T.font_px(22))
+    tile_h = T.px(12) * 2 + label_h + T.px(4) + value_h
+    check_h = draw.line_height(T.font_px(15))
+    head, tiles, checks, suggestion, actions = column(inner, [title_h + (T.px(6) + line_h if line else 0), tile_h, check_h * 2 + T.px(10), FILL,
+                                                     T.px(64)], T.px(18))
+    draw.text(rl.Rectangle(head.x, head.y, head.width, title_h), draw.fit(name, T.font_px(28), T.FONT_EXTRABOLD, head.width),
+              T.font_px(28), T.TEXT, T.FONT_EXTRABOLD)
+    if line:
+      draw.text(rl.Rectangle(head.x, head.y + title_h + T.px(6), head.width, line_h), draw.fit(line, T.font_px(16), T.FONT, head.width),
+                T.font_px(16), T.TEXT_TERTIARY)
+    facts = ((N_("Arrive"), arrive_text(plan)), (N_("Time"), time_text(plan)), (N_("Distance"), distance_text(plan, self._places.metric())))
+    # As the mock's flex row: each tile is as wide as its words, then the spare room is shared
+    basis = [max(draw.text_width(label, T.font_px(13)), draw.text_width(value, T.font_px(22), T.FONT_BOLD)) + T.px(28)
+             for label, value in facts]
+    spare = (tiles.width - T.px(10) * 2 - sum(basis)) / 3
+    widths: list[Size] = [w + spare for w in basis] if spare > 0 else [FILL] * 3
+    for (label, value), cell in zip(facts, row(tiles, widths, T.px(10)), strict=True):
+      draw.fill(cell, T.SURFACE_4, T.px(14))
+      words = inset(cell, x=T.px(14), y=T.px(12))
+      top, bottom = column(words, [label_h, value_h], T.px(4))
+      draw.text(top, label, T.font_px(13), DATA_LABEL)
+      draw.text(bottom, draw.fit(value, T.font_px(22), T.FONT_BOLD, bottom.width), T.font_px(22), T.TEXT, T.FONT_BOLD)
+    second = N_("Road data still supplies speed limits")
+    _ = suggestion   # release's "Choose maps" button waits for offline routing (PORTING.md)
+    for cell, sentence in zip(column(checks, [check_h, check_h], T.px(10)), (N_("Slows ahead of turns on the route"), second), strict=True):
+      icon, sentence_box = row(cell, [T.px(18), FILL], T.px(10))
+      draw.icon(icon, "check", T.SUCCESS_TEXT, T.px(18))
+      size = next((z for z in (T.font_px(15), T.font_px(14)) if draw.text_width(sentence, z) <= sentence_box.width), T.font_px(14))
+      draw.text(sentence_box, sentence, size, T.TEXT_SECONDARY)
+    star, start = row(actions, [T.px(64), FILL], T.px(10))
+    self._star.render(star)
+    self._start_button.render(start)
+
+
+def destinations_screen(on_close: Callable[[], None], open_maps: Callable[[], None] | None = None,
+                        places: Places | None = None) -> DestinationsScreen:
+  if places is None:
+    from openpilot.selfdrive.ui.ui_state import ui_state
+    from openpilot.selfdrive.ui.tandem.places import StarPilotPlaces
+    places = StarPilotPlaces(allowed=lambda: ui_state.replay_clock is None and not ui_state.projection_read_only,
+                             metric=lambda: bool(ui_state.is_metric))
+  return DestinationsScreen(places, on_close, open_maps)

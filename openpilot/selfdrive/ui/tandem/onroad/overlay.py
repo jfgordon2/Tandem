@@ -39,10 +39,12 @@ class OnroadOverlay(Component):
 
   def __init__(self, state: Callable[[], DriveDisplay], menu: Callable[[], None], speed: Callable[[int], None],
                disengage: Callable[[], None], resolve: Callable[[LimitDecision, bool], None],
-               clock: Callable[[], float] = time.monotonic):
+               clock: Callable[[], float] = time.monotonic, end_route: Callable[[], None] = lambda: None,
+               where_to: Callable[[], None] | None = None):
     super().__init__()
     self._state, self._resolve, self._clock = state, resolve, clock
     self._menu, self._change_speed, self._disengage = menu, speed, disengage
+    self._end_route, self._where_to = end_route, where_to
     self._bar = self._new_bar()
     self._bar_context: tuple[bool, bool, bool] | None = None
     self._chips = self._child(layers.StatusChip(lambda: list(self._state().chips)))
@@ -52,9 +54,8 @@ class OnroadOverlay(Component):
     self._decision: LimitDecision | None = None
 
   def _new_bar(self) -> layers.OnroadBar:
-    # No route or destinations yet on StarPilot 7 (PORTING.md, stage 5): End route never shows and Where to? is left out.
-    return self._child(layers.OnroadBar(lambda: self._state().bar, self._menu, self._change_speed, self._disengage, lambda: None,
-                                        clock=self._clock))
+    return self._child(layers.OnroadBar(lambda: self._state().bar, self._menu, self._change_speed, self._disengage, self._end_route,
+                                        self._where_to, clock=self._clock))
 
   def _replace_bar(self) -> None:
     self._bar.hide_event()
@@ -109,6 +110,9 @@ class OnroadOverlay(Component):
         self._limit.render(inner)
       elif state.posted:
         layers.draw_speed_limit(layers.sign_tile(inner), state.posted, state.vienna)
+      if state.turn is not None:
+        corner = self._limit is not None or bool(state.posted)
+        layers.draw_turn_card(inner, *state.turn, top=layers.turn_below_sign() if corner else layers.turn_card_top())
       if attention is not None:
         alerts.draw_alert(alerts.box(inner, attention.level, attention.title, attention.detail),
                           attention.level, attention.title, attention.detail, 1.0)

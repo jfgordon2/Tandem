@@ -301,3 +301,122 @@ def connections_window() -> object:
                                         FakeBluetooth())
   window = SettingsWindow({Tab.CONNECTIONS: page}, initial=Tab.CONNECTIONS)
   return window
+
+
+class FakePlaces:
+  """Places for the destination screens: Home and Work saved, two recents, and canned search results."""
+
+  def __init__(self, routing=True, maps=True):
+    self.favs = [{"name": "Home", "place_name": "1428 SE Elm St, Portland", "is_home": True, "latitude": 1, "longitude": 1},
+                 {"name": "Work", "place_name": "200 Market St, Portland", "is_work": True, "latitude": 2, "longitude": 2},
+                 {"name": "Powell's Books", "place_name": "1005 W Burnside St, Portland", "latitude": 3, "longitude": 3}]
+    self.recent = [{"name": "Hardware Store", "place_name": "Hardware Store, 3550 SE Hawthorne Blvd, Portland", "latitude": 4, "longitude": 4},
+                   {"name": "Laurelhurst Park", "place_name": "Laurelhurst Park, SE Cesar E Chavez Blvd, Portland", "latitude": 5,
+                    "longitude": 5}]
+    self.found: list[tuple[str, str]] = []
+    self.queries: list[str] = []
+    self.chosen: dict | None = None
+    self.navigating: dict | None = None
+    self.routing, self.maps = routing, maps
+
+  def tick(self):
+    pass
+
+  def refresh(self):
+    pass
+
+  def active(self):
+    return self.navigating
+
+  def favorites(self):
+    return self.favs
+
+  def recents(self):
+    return self.recent
+
+  def _fav(self, place):
+    return next((f for f in self.favs if f["name"] == place.get("name")), None)
+
+  def is_favorite(self, place):
+    return self._fav(place) is not None
+
+  def toggle_saved(self, place):
+    fav = self._fav(place)
+    if fav:
+      self.favs.remove(fav)
+    else:
+      self.favs.append(dict(place))
+
+  def search(self, query):
+    self.queries.append(query)
+    self.found = [("Hardware Store", "3550 SE Hawthorne Blvd, Portland"), ("Hardware Sales", "2034 SE 11th Ave, Portland"),
+                  ("Hardware Park", "SE 12th & Stark, Portland")]
+
+  def results(self):
+    return self.found
+
+  def status(self):
+    return None if self.found or not self.queries else ("Nothing found", "Try a different place or address")
+
+  def pick_result(self, index):
+    name, line = self.found[index]
+    self.chosen = {"name": name, "place_name": f"{name}, {line}", "latitude": 9, "longitude": 9}
+
+  def pick(self, place):
+    self.chosen = dict(place)
+
+  def draft(self):
+    return self.chosen
+
+  def clear_draft(self):
+    self.chosen = None
+
+  def saved_as(self):
+    fav = self._fav(self.chosen or {})
+    return (fav is not None, bool(fav and fav.get("is_home")), bool(fav and fav.get("is_work")))
+
+  def toggle(self, kind):
+    fav = self._fav(self.chosen)
+    if kind == "favorite":
+      if fav:
+        self.favs.remove(fav)
+      else:
+        self.favs.append(dict(self.chosen))
+      return
+    if fav is None:
+      fav = dict(self.chosen)
+      self.favs.append(fav)
+    key = "is_home" if kind == "home" else "is_work"
+    fav[key] = not fav.get(key)
+
+  def can_start(self):
+    return self.routing
+
+  def can_search(self):
+    return self.routing
+
+  def start(self):
+    if not self.routing:
+      return False
+    self.navigating, self.chosen = self.chosen, None
+    return True
+
+  def end_route(self):
+    self.navigating = None
+
+  def maps_ready(self):
+    return self.maps
+
+  def route(self):
+    from openpilot.selfdrive.ui.tandem.routemap import NOT_SET_UP, RoutePlan
+    if not self.routing:
+      return None, NOT_SET_UP
+    if self.chosen is None:
+      return None, ""
+    path = ((45.512, -122.658), (45.512, -122.650), (45.518, -122.650), (45.521, -122.642), (45.523, -122.636), (45.527, -122.636),
+            (45.527, -122.628))
+    return RoutePlan(path, 5310.0, 1080.0), ""
+
+  def metric(self):
+    return False
+

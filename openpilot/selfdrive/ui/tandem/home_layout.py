@@ -60,7 +60,7 @@ class EssentialsHome(HomeLayout):
     self._position: LastPositionStore | None = None
     self._forecast: ForecastService | None = None
     self._content = self._child(HomeContent(self._state, self._open_alerts, self._open_notes, on_software or self._open_software,
-                                            self._outlook))
+                                            self._outlook, self._open_where_to))
     self._alerts_view = self._child(AlertsView(self._home_alerts, self._back, self._alert_action))
     self._update_view = self._child(UpdateView(lambda: self._software.state.home.version, lambda: self._software.state.home.notes, self._back,
                                               self._restart, lambda: self._software.state.home.scheduled, self._can_restart))
@@ -68,6 +68,12 @@ class EssentialsHome(HomeLayout):
   @staticmethod
   def _can_mutate() -> bool:
     return ui_state.is_offroad() and not ui_state.projection_read_only and ui_state.replay_clock is None
+
+  def _open_where_to(self) -> None:
+    """Where to? (destinations.py) over Home, on StarPilot 7's navigation."""
+    from openpilot.system.ui.lib.application import gui_app
+    from openpilot.selfdrive.ui.tandem.destinations import destinations_screen
+    gui_app.push_widget(destinations_screen(gui_app.pop_widget))
 
   def _open_software(self) -> None:
     """Settings at its Software tab: MainLayout opens settings as Home's settings button does, then the tab moves."""

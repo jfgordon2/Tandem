@@ -479,13 +479,13 @@
     {
       "mock": "stage4-home",
       "title": "StarPilot 7 Home",
-      "note": "Parked Home with the installed version. The Software card opens openpilot’s Software page. The existing Settings button label is centered.",
+      "note": "Parked Home with the installed version. The Software card opens openpilot’s Software page. Where to? is back beside it, as in home.html, now that it runs on StarPilot 7's navigation. The existing Settings button label is centered.",
       "match": false
     },
     {
       "mock": "stage4-home-update-ready",
       "title": "StarPilot 7 Home with update ready",
-      "note": "Only rendered for a qualified, installable update. Notes opens the staged revision. The existing Settings button label is centered.",
+      "note": "Only rendered for a qualified, installable update. Notes opens the staged revision. Where to? is back beside it, as in home.html, now that it runs on StarPilot 7's navigation. The existing Settings button label is centered.",
       "match": false
     },
     {
@@ -509,7 +509,7 @@
     {
       "mock": "stage4-home-weather",
       "title": "StarPilot 7 Home with weather",
-      "note": "The weather strip appears while Weather heads-up is enabled and there is a usable forecast. The existing Settings button label is centered.",
+      "note": "The weather strip appears while Weather heads-up is enabled and there is a usable forecast. Where to? is back beside it, as in home.html, now that it runs on StarPilot 7's navigation. The existing Settings button label is centered.",
       "match": false
     },
     {

@@ -5,12 +5,17 @@ StarPilot 7 needs on top: the exact speed-limit proposal a card answers, and Sta
 """
 from __future__ import annotations
 
+import datetime
 import math
-from typing import Any
+from typing import TYPE_CHECKING, Any
 from dataclasses import dataclass, field
 
 from openpilot.selfdrive.ui.tandem.onroad.layers import ArcState, BarState, LimitOffer
+from openpilot.selfdrive.ui.tandem.i18n import t_
 from openpilot.selfdrive.ui.tandem.onroad.status import Chip
+
+if TYPE_CHECKING:
+  from openpilot.starpilot.ui.navigation_state import NavigationDisplay
 
 
 @dataclass(frozen=True)
@@ -60,6 +65,7 @@ class DriveDisplay:
   proposal: Proposal | None = None
   pedals: tuple[float, float] | None = None   # (brake, gas) tiles under the monitor tile (extras.Pedals), None when off
   border: tuple[Any, Any] = (None, None)      # each side's highlight color (extras.border_halves), None for none
+  turn: tuple[str, str, str, str] | None = None   # the next turn while guiding: (distance, instruction, maneuver, modifier)
 
 
 def awareness(dm: Any) -> float | None:
@@ -77,3 +83,30 @@ def awareness(dm: Any) -> float | None:
 def displayed_speed(value: float | None, factor: float) -> float | None:
   """Leave missing or nonfinite speed unavailable in the HUD."""
   return value * factor if value is not None and math.isfinite(value) and value >= 0 else None
+
+
+def turn(navigation: NavigationDisplay | None, metric: bool) -> tuple[str, str, str, str] | None:
+  """The turn card's distance, instruction, maneuver and direction from StarPilot's guidance, or None without a route.
+  The distance is rounded as StarPilot's own card rounds it."""
+  if navigation is None:
+    return None
+  from openpilot.starpilot.ui.navigation_state import distance_text
+  if navigation.arrived:
+    return "", navigation.text, "arrive", ""
+  return distance_text(navigation.distance_m, metric), navigation.text, navigation.maneuver_type, navigation.modifier
+
+
+def route_progress(navigation: NavigationDisplay | None, metric: bool, now: datetime.datetime) -> tuple[str, str]:
+  """The bar's arrival time and what's left ("12 min · 8.4 mi") from StarPilot's guidance, or blanks without a route.
+
+  Args:
+    navigation: StarPilot's navigation display (OnroadState.navigation), guiding or arrived.
+    metric: Kilometers instead of miles.
+    now: The wall clock, for the arrival time.
+  """
+  if navigation is None:
+    return "", ""
+  seconds, meters = navigation.remaining_seconds, navigation.remaining_distance_m
+  arrive = (now + datetime.timedelta(seconds=seconds)).strftime("%-I:%M %p")
+  distance = t_("{} km", f"{meters / 1000:.1f}") if metric else t_("{} mi", f"{meters / 1609.344:.1f}")
+  return arrive, t_("{} min · {}", max(1, round(seconds / 60)), distance)

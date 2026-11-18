@@ -35,13 +35,13 @@ def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any)
   ]
   noop = lambda: None  # noqa: E731
   samples: tuple[tuple[str, Widget], ...] = (
-    ("stage4-home", HomeContent(lambda: HomeState(setup=setup, software=installed), noop, noop, noop)),
-    ("stage4-home-update-ready", HomeContent(lambda: HomeState(setup=setup, software=update), noop, noop, noop)),
+    ("stage4-home", HomeContent(lambda: HomeState(setup=setup, software=installed), noop, noop, noop, on_where_to=noop)),
+    ("stage4-home-update-ready", HomeContent(lambda: HomeState(setup=setup, software=update), noop, noop, noop, on_where_to=noop)),
     ("stage4-home-update-notes", UpdateView(lambda: "7.0.1", lambda: notes, noop, noop, lambda: False, lambda: True)),
     ("stage4-home-update-scheduled", UpdateView(lambda: "7.0.1", lambda: notes, noop, noop, lambda: True, lambda: True)),
     ("stage4-home-alerts", AlertsView(lambda: alerts, noop, lambda: ("Snooze update", noop))),
     ("stage4-home-weather", HomeContent(lambda: HomeState(ignition=True, setup=setup, software=update), noop, noop, noop,
-                                        lambda: forecast)),
+                                        lambda: forecast, noop)),
   )
   for name, widget in samples:
     def render(view: Widget = widget) -> None:

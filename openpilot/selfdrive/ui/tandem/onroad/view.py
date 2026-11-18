@@ -5,6 +5,7 @@ into release's state objects (BarState, Snapshot for the chips, ArcState, LimitO
 """
 from __future__ import annotations
 
+import datetime
 import time
 from dataclasses import replace
 from collections.abc import Callable
@@ -25,9 +26,10 @@ from openpilot.selfdrive.ui.tandem.prefs import LEAD_TAG, MAX_FOLLOWS_LIMIT
 from openpilot.selfdrive.ui.tandem.onroad.binding import driving_alert, lane_change, proposal
 from openpilot.selfdrive.ui.tandem.onroad.layers import AT_LIMIT, ArcState, BarState, Headroom
 from openpilot.selfdrive.ui.tandem.onroad.overlay import OnroadOverlay, road_rect
-from openpilot.selfdrive.ui.tandem.onroad.state import awareness, DriveDisplay, DrivingAlert, LimitDecision, Proposal, displayed_speed
+from openpilot.selfdrive.ui.tandem.onroad.state import awareness, route_progress, turn, DriveDisplay, DrivingAlert, LimitDecision, Proposal, displayed_speed
 from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, RamWatch, Snapshot
 from openpilot.selfdrive.ui.tandem.onroad.streets import short_street
+from openpilot.selfdrive.ui.tandem.places import StarPilotPlaces
 from openpilot.selfdrive.ui.tandem.ram import RamLog, shared_log
 from openpilot.selfdrive.ui.ui_state import device, ui_state
 from openpilot.starpilot.controllers import cruise_action, mode_actions
@@ -79,7 +81,8 @@ class EssentialsOnroad(AugmentedRoadView):
     self._safe = True
     self._safe_at = -1_000_000_000
     self._prepared = False
-    self._overlay = self._child(OnroadOverlay(lambda: self._display, self._menu, self._step, self._disengage, self._resolve))
+    self._overlay = self._child(OnroadOverlay(lambda: self._display, self._menu, self._step, self._disengage, self._resolve,
+                                              end_route=self._end_route, where_to=self._where_to))
 
   @cached_property
   def _ram_log(self) -> RamLog:
@@ -119,8 +122,8 @@ class EssentialsOnroad(AugmentedRoadView):
 
   def _chips_from(self, now_ns: int, state: OnroadState) -> Snapshot:
     """Release's chip inputs from StarPilot 7. Planner reasons StarPilot 7 doesn't publish the same way yet (stop lights and
-    signs, slowing for traffic, steering held, turns, matching a new limit, weather) stay off until their sources are mapped
-    (PORTING.md)."""
+    signs, slowing for traffic, steering held, matching a new limit, weather) stay off until their sources are mapped
+    (PORTING.md). Slowing for a route turn asks StarPilot's own rule (navigation/intent.py) with the set speed."""
     sm, after = ui_state.sm, ui_state.started_frame
     snap = Snapshot(engaged=state.engaged, metric=state.metric, speed=state.speed_mps or 0.0,
                     curve_control=bool(state.curve is not None and state.curve.controlling))
@@ -142,11 +145,24 @@ class EssentialsOnroad(AugmentedRoadView):
     snap.events = {str(event.name) for event in events} if events is not None else set()
     if state.alert.size != AlertSize.NONE and state.alert.alert_type:   # held alerts outlast their one-frame events
       snap.events.add(state.alert.alert_type.split("/", 1)[0])
+    cruise_kph = state.cruise_kph
+    if ui_state.CP is not None and cruise_kph and ui_state.replay_clock is None:
+      self._safely("turn chip", lambda: self._turn_chip(snap, now_ns, float(cruise_kph) * CV.KPH_TO_MS))
     memory = current_message(sm, "deviceState", now_ns)
     if memory is not None:
       snap.memory_percent = int(memory.memoryUsagePercent)
     snap.low_ram = self._ram.update("lowMemory" in snap.events, snap.memory_percent)
     return snap
+
+  @staticmethod
+  def _turn_chip(snap: Snapshot, now_ns: int, cruise_mps: float) -> None:
+    """Slowing for turn while StarPilot's planner caps the set speed for the route's next turn, and the car is above it."""
+    from openpilot.starpilot.navigation.intent import cruise_ceiling, current_instruction
+    target = cruise_ceiling(ui_state.sm, ui_state.CP, now_ns, cruise_mps)
+    nav = current_instruction(ui_state.sm, now_ns) if target is not None else None
+    if target is not None and nav is not None and snap.speed > target + 0.5:
+      snap.nav_turn = True
+      snap.nav_turn_maneuver, snap.nav_turn_modifier = str(nav.instruction.maneuverType), str(nav.instruction.maneuverModifier)
 
   def _arc(self, state: OnroadState, now_ns: int) -> ArcState:
     """Release's steering arc from StarPilot 7's torque use, with the planned path's need PREVIEW_SECONDS ahead."""
@@ -208,8 +224,10 @@ class EssentialsOnroad(AugmentedRoadView):
         self._ram_log.note(after, snapshot.memory_percent)
     chips = self._chip_stack.update(snapshot, now_ns / 1e9, visible_alert is not None or help_steer)
     unit = "km/h" if state.metric else "mph"
+    arrive, left = route_progress(state.navigation, bool(state.metric), datetime.datetime.now())
     self._display = DriveDisplay(
       bar=BarState(engaged=state.engaged, set_speed=cruise or 0.0, unit=unit, street=self._street(time.monotonic_ns()), heading=self._compass.heading(),
+                   navigating=state.navigation is not None, arrive=arrive, left=left,
                    can_adjust=bool(can_adjust), can_disengage=bool(can_disengage)),
       speed=displayed_speed(state.speed_mps, factor), unit=unit, posted=posted,
       vienna=state.appearance.use_vienna_sign,
@@ -219,6 +237,7 @@ class EssentialsOnroad(AugmentedRoadView):
                                                 and "distract" in state.alert.alert_type.lower()),
       arc=arc, help_steer=help_steer, chips=tuple(chips), alert=visible_alert,
       proposal=limit_offer(state, allowed and not self._safe, now_ns),
+      turn=turn(state.navigation, bool(state.metric)),
     )
     self._safely("pedals and border", lambda: self._extras(state, car, now_ns))
     self._safely("max follows limits", lambda: self._follow_limit(state, allowed and not self._safe))
@@ -352,6 +371,23 @@ class EssentialsOnroad(AugmentedRoadView):
   def _disengage(self) -> None:
     if self._can_act() and self._display.bar.engaged and self._display.bar.can_disengage:
       self._mode_actions.dispatch("disengage", ui_state.sm, ui_state.CP, self._publisher, now_ns=time.monotonic_ns())
+
+  @cached_property
+  def _places(self) -> StarPilotPlaces:
+    return StarPilotPlaces(allowed=lambda: ui_state.replay_clock is None and not ui_state.projection_read_only,
+                           metric=lambda: bool(ui_state.is_metric))
+
+  def _where_to(self) -> None:
+    """The bar's Where to? (without a route): the same screen as the parked card, over the driving view."""
+    from openpilot.system.ui.lib.application import gui_app
+    from openpilot.selfdrive.ui.tandem.destinations import destinations_screen
+    if self._can_act():
+      gui_app.push_widget(destinations_screen(gui_app.pop_widget, places=self._places))
+
+  def _end_route(self) -> None:
+    """End route clears StarPilot's destination; its navigation process stops guiding."""
+    if self._can_act() and self._display.bar.navigating:
+      self._safely("end route", self._places.end_route)
 
   def _resolve(self, identity: LimitDecision, match: bool) -> None:
     proposal = self._display.proposal

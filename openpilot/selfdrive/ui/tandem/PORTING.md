@@ -310,8 +310,8 @@ WarningImmediateVolume WarningSoftVolume
   widget still supplies active alerts, priority, Snooze update, and Acknowledge excessive actuation.
 - Home shows weather from the current validated fix or StarPilot's last recorded navigation location. The forecast
   cache and temperature unit preference carry forward. The onroad weather chip and chime return with onroad.
-- The approved Home variants give the bottom row to Software until stage 5 can reconnect Where to? to the
-  StarPilot 7 navigation owner. The Tandem setup choices and settings remain to port.
+- Where to? is back beside Software (as in `home.html`), on StarPilot 7's navigation owner (stage 5). The Tandem setup
+  choices and settings remain to port.
 
 ## Stage 4: driving screen
 
@@ -330,8 +330,9 @@ WarningImmediateVolume WarningSoftVolume
   signs, slowing for traffic, steering held, matching a new limit and weather wait for their StarPilot 7 sources
   (stage 3 map). Help steer shows and replaces the steering-limit alert; its chime waits for the headroom service
   (stage 5).
-- Not yet: the turn card, route progress, Where to? and End route (navigation, stage 5), Developer View, the compass,
-  lead tags, turn signal animations and the onroad extras. The comparison page uses release's `onroad`,
+- Navigation (stage 5): the turn card, ARRIVE and LEFT, End route and the bar's Where to? read StarPilot's guidance
+  (`OnroadState.navigation`); Slowing for turn asks StarPilot's own turn speed rule (`navigation/intent.py`) with the set
+  speed, since the planner doesn't publish it. The comparison page uses release's `onroad`,
   `onroadlarge-limit`, `alertstyles` and `memorychip` mocks.
 
 ## Stage 4: Software
@@ -582,7 +583,8 @@ WarningImmediateVolume WarningSoftVolume
 
 ## Tests still on `release` only
 
-Ported so far: `test_fallback_font.py`, `test_compass.py`, `test_network_test.py` (but its settings search test), `test_cellular_status.py`, `test_hotspot_name.py`, `test_network_touches.py` (StarPilot 7 has no PC-only touch path), `test_alert_levels.py`, `test_bar.py`, `test_streets.py`, `test_keyboard.py`,
+Ported so far: `test_destinations.py` (but StarPilot 6's search client and Mapbox key help), `test_routemap.py` (but the
+StarPilot 6 position readers), `test_fallback_font.py`, `test_compass.py`, `test_network_test.py` (but its settings search test), `test_cellular_status.py`, `test_hotspot_name.py`, `test_network_touches.py` (StarPilot 7 has no PC-only touch path), `test_alert_levels.py`, `test_bar.py`, `test_streets.py`, `test_keyboard.py`,
 `test_voice.py`, `test_speech_native.py`, `test_larger_text.py` but its Display settings test, the component, chip and
 Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_translations.py`, the atlas crop tests of
 `test_font_loading.py`, and the text hook test of `test_upstream_integration.py`. Each of the rest comes back with the code it tests. When one comes back, take it from `release` whole.
@@ -596,7 +598,19 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
 | `test_turn_signals.py`, `test_onroad*.py`, `test_chip_events.py` (StarPilot 6's message reader; its rules are covered by the chip tests), `test_headroom_warning.py`, `test_limit_offers.py`, `test_developer_view.py` | Onroad (stage 4) |
 | `test_forecast.py`, `test_ram.py` | Home and sidebar (stage 4) |
 | `test_developer.py`, `test_software_dialogs.py`, `test_storage_sizes.py`, `test_prebuilt_params.py` | Settings screens and owner integration (stage 4) |
-| `test_destinations.py`, `test_routemap.py`, `test_routing_ui.py`, `test_map_progress.py` | Navigation and routing (stage 5) |
+| `test_routing_ui.py`, `test_map_progress.py` | Offline routing (stage 5, phase B) |
 | `test_remote_actions.py`, `test_galaxy_signals.py` | Controllers and Galaxy (stage 6) |
 | `test_workflow_policy.py` | Workflows (stage 6) |
 | `starpilot/tandem/tests/` | The services they test (stage 5) |
+
+## Stage 5: navigation (phase A)
+
+- `places.py` (StarPilotPlaces) gives Where to? StarPilot 7's `NavigationOwner`: its place search, favorites with Home and
+  Work as labels, recents, and revision-checked changes. Start turns StarPilot's navigation on if it's off, then sets the
+  destination. The preview route comes from StarPilot's own route engine (Mapbox, or Google with its key) from the
+  last saved position, with the driver's avoidances.
+- Release's `UpstreamPlaces`, its direct Mapbox fetch and the LastGPSPosition readers are gone with StarPilot 6.
+- Waits for its own mock: an Offline Maps page on `OfflineMapsOwner` (areas around a point, not release's regions).
+  Where to?'s Offline maps button shows only when a maps page is given.
+- Phase B: Valhalla as a route provider (release's offline-maps chip and "Choose regions" in the preview come back then).
+- Still to port: Speed & Steering › Navigation (keys, provider, avoidances) and Display › Map.

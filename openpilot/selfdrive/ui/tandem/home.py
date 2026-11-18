@@ -120,13 +120,17 @@ class Card(Component):
 
 
 class HomeContent(Component):
-  """Readiness, optional weather, and the Software or Update ready card."""
+  """Readiness, optional weather, then Where to? (design/home.html) beside the Software or Update ready card."""
 
   grow_touch_target = False
 
   def __init__(self, state: Callable[[], HomeState], on_alerts: Callable[[], None],
-               on_notes: Callable[[], None], on_software: Callable[[], None], forecast: Callable[[], Outlook | None] = lambda: None):
+               on_notes: Callable[[], None], on_software: Callable[[], None], forecast: Callable[[], Outlook | None] = lambda: None,
+               on_where_to: Callable[[], None] | None = None):
+    """Without on_where_to, Software takes the whole row."""
     super().__init__()
+    self._where = self._child(Card("navigate", lambda: N_("Where to?"), lambda: N_("Home · Work · Recent"),
+                                   on_where_to)) if on_where_to is not None else None
     self._hero = self._child(Hero(state, on_alerts, forecast))
     notes = Button(N_("Notes"), on_notes, font_size=T.font_px(16), height=T.px(48), radius=T.px(12),
                    padding=T.px(16))
@@ -138,6 +142,9 @@ class HomeContent(Component):
   def _render(self, rect: rl.Rectangle) -> None:
     top, bottom = column(rect, [FILL, T.px(92)], T.px(14))
     self._hero.render(top)
+    if self._where is not None:
+      where, bottom = row(bottom, [FILL, FILL], T.px(14))
+      self._where.render(where)
     self._update.render(bottom)
 
 

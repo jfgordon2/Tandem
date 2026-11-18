@@ -44,6 +44,8 @@ def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any)
     ("warning", True, replace(base, attention_warning=True, alert=DrivingAlert(alerts.WARNING, "Pay attention", "Look at the road ahead"))),
     ("critical", False, DriveDisplay(alert=DrivingAlert(alerts.CRITICAL, "TAKE CONTROL IMMEDIATELY", "System Unresponsive"))),
     ("low-ram", True, replace(base, chips=(ram, curve))),
+    ("nav", False, replace(base, bar=replace(base.bar, navigating=True, arrive="4:52 PM", left="12 min · 8.4 mi", street="SE Hawthorne Blvd"),
+                           chips=(), turn=("0.4 mi", "Turn right onto SE 39th Ave", "turn", "right"))),
   )
   noop = lambda *args: None  # noqa: E731
   for name, larger, sample in cases:
@@ -59,4 +61,6 @@ def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any)
     for _ in range(2):
       frame(render)
     save(f"{out}/stage4-onroad-{name}.png")
+    if name == "nav":
+      save(f"{out}/onroad_nav.png")   # design/onroadnav.html
   Z.set_text(False)
