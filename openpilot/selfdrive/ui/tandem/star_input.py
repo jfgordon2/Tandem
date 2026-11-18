@@ -176,6 +176,15 @@ class TandemInput:
       self.runtime.close()
 
 
+_running: list[TandemInput] = []   # the input ui.py polls, for Settings' Bluetooth Remote
+
+
+def controller_owner() -> Any | None:
+  """StarPilot's ControllerOwner, the one the running controller runtime feeds presses to; None without it."""
+  runtime = _running[0].runtime if _running else None
+  return runtime.owner if runtime is not None else None
+
+
 def star_input(layout: Any) -> tuple[TandemStarSession, TandemInput]:
   """StarPilot's input for Tandem's MainLayout: (session for ui.py's projection and screen-off polling, the per-frame input).
 
@@ -207,4 +216,6 @@ def star_input(layout: Any) -> tuple[TandemStarSession, TandemInput]:
     authority = LiveContextSource(ui_state.params, messages=ui_state.sm, borrowed_messages=True, evidence_wait_ms=0)
     runtime = ControllerRuntime(ui_state.params, actions=session._favorite_actions, favorites=session.favorites_owner.snapshot,
                                 invoke_favorite=session.favorites_owner.invoke, authority=authority)
-  return session, TandemInput(session, runtime, lambda: layout._current_mode == MainState.ONROAD)
+  inputs = TandemInput(session, runtime, lambda: layout._current_mode == MainState.ONROAD)
+  _running[:] = [inputs]
+  return session, inputs

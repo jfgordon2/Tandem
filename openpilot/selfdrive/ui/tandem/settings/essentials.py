@@ -134,7 +134,11 @@ def essentials_settings(on_open_arabesque: Callable[[], None] | None, arabesque_
     from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
     model = Network(upstream_wifi(), SettingsStore())
     test = NetworkTestModel(shared_network_test(), lambda: model.wifi.connected_ssid)
-    return connections_page(model, lambda: window.push(PanelPage(advanced_panel(model))), window, test)
+    from openpilot.selfdrive.ui.tandem.settings.bluetooth_sources import StarPilotBluetooth, StarPilotControllers
+    from openpilot.selfdrive.ui.tandem.settings.bluetooth_tab import WheelButtons
+    from openpilot.selfdrive.ui.tandem.star_input import controller_owner
+    wheel = WheelButtons(StarPilotControllers(controller_owner))
+    return connections_page(model, lambda: window.push(PanelPage(advanced_panel(model))), window, test, wheel, StarPilotBluetooth(parked))
 
   owner = DeviceOwner(ui_state, ask_password, lambda message: window.notice(N_("This Device"), message))
   ram = shared_log()

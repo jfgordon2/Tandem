@@ -29,7 +29,7 @@ SECTIONS = {"speed_steering": [N_("Everyday"), N_("Weather")],
             "display": [N_("Driving Screen"), N_("Path")],
             "tuner": [N_("Steering"), N_("Gas & Brake"), N_("Following & Stops")],
             1: [N_("This Device"), N_("General"), N_("Backups"), N_("Storage & Data"), N_("RAM"), N_("Report a Problem"), N_("Developer")],
-            2: [N_("Wi-Fi"), N_("Cellular"), N_("Network Test")]}
+            2: [N_("Wi-Fi"), N_("Cellular"), N_("Bluetooth Remote"), N_("Bluetooth Devices"), N_("Network Test")]}
 MIN_QUERY = 2
 CARDS = 4   # results shown above the keyboard; Search lists them all
 
@@ -181,7 +181,11 @@ ENTRIES: list[Entry] = [
   Entry(N_("Save Data"), N_("No large uploads on cellular or phone hotspots"), 2, section=1, words="metered"),
   Entry(N_("Roaming, APN and IP address"), N_("Roaming, APN and the cellular IP address"), 2, section=1, words="ip modem mobile data"),
   _place(N_("Cellular IP address"), N_("The modem's mobile data address"), 2, section=1, words="ip gsm lte sim"),
-  _place(N_("Network Test"), N_("Download speed, upload speed and ping of this device's connection"), 2, section=2,
+  _place(N_("Bluetooth Remote"), N_("A wheel remote's buttons and what they do"), 2, section=2, words="wheel buttons bluetooth radio on off"),
+  _place(N_("Bluetooth Devices"), N_("Pair and connect phones, speakers and remotes"), 2, section=3, words="bluetooth pair phone speaker radio on off"),
+  _place(N_("Disconnect"), N_("It reconnects the next time you choose it"), 2, section=3, words="bluetooth"),
+  _place(N_("Forget"), N_("Removes the pairing. Change it with the car off."), 2, section=3, words="bluetooth unpair"),
+  _place(N_("Network Test"), N_("Download speed, upload speed and ping of this device's connection"), 2, section=4,
          words="speed test internet wifi cellular mbps latency bandwidth slow"),
   # Software
   _place(N_("Software"), N_("Updates and the release notes"), 3, words="version update"),

@@ -1,4 +1,4 @@
-"""Render Connections' Wi-Fi, Cellular and Network Test sections over the test stand-ins, each under its mock's name."""
+"""Render each Connections section over the test stand-ins, each under its mock's name."""
 from __future__ import annotations
 
 from collections.abc import Callable
@@ -14,7 +14,8 @@ def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any)
   window: Any = connections_window()
   window.show_event()
   bounds = rl.Rectangle(0, 0, 2160, 1080)
-  for index, mock in ((connections.WIFI, "connections"), (connections.CELLULAR, "connectionscellular"), (connections.TEST, "connectionstest")):
+  for index, mock in ((connections.WIFI, "connections"), (connections.CELLULAR, "connectionscellular"),
+                      (connections.REMOTE, "connectionsremote"), (connections.DEVICES, "connectionsaudio"), (connections.TEST, "connectionstest")):
     window.top.select(index)
     frame(lambda: window.render(bounds))
     frame(lambda: window.render(bounds))

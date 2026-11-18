@@ -74,6 +74,9 @@ StarPilot 7’s raylib binding retains glyph images for TTF fonts. Tandem defers
 
 ## Where the code differs from the mocks
 
+- **Connections (StarPilot 7):** Car Audio & Devices (`connectionsaudio`) is Bluetooth Devices, with Paired and Nearby
+  cards and a device sheet of Disconnect and Forget: StarPilot 7 has no openpilot sounds over Bluetooth, so the car
+  audio switch and sound test are gone. Bluetooth Remote's actions are StarPilot's list, without Favorite 1-3.
 - **Driving (StarPilot 7):** rows for settings StarPilot 7 dropped are gone (PORTING.md › the Driving tab). Display has
   Driving Screen and Path sections (Theme & Startup and Map aren't built); Path Style offers Standard, Rainbow and
   Acceleration. Vehicle adds Auto-Unlock Doors under Auto-Lock and lists StarPilot's wheel presses by its names. Tuner

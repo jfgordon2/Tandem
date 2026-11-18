@@ -1,8 +1,9 @@
-"""Connections: Wi-Fi, cellular and the network test, as sections of one tab (design/connections*.html).
+"""Connections: Wi-Fi, cellular, the Bluetooth remote, Bluetooth devices and the network test, as sections of one tab
+(design/connections*.html).
 
-Each section keeps its radio busy only while it's shown: Wi-Fi scans while Wi-Fi is open, and a network test stops
-when its section is left. Release's Bluetooth Remote and Car Audio & Devices sections come back with StarPilot 7's
-controller and Bluetooth owners (PORTING.md).
+Each section keeps its radio busy only while it's shown: Wi-Fi scans while Wi-Fi is open, Bluetooth searches (and the
+remote's buttons are in test mode) while Bluetooth Remote or Bluetooth Devices is open, and a network test stops when
+its section is left.
 """
 from __future__ import annotations
 
@@ -17,12 +18,13 @@ from openpilot.selfdrive.ui.tandem.settings.network_tab import Network, cellular
 from openpilot.selfdrive.ui.tandem.settings.network_test import NetworkTestModel, network_test_panel
 from openpilot.starpilot.tandem.network_test import NetworkTest
 from openpilot.selfdrive.ui.tandem.settings.pages import Section, SectionPage
-from openpilot.selfdrive.ui.tandem.i18n import N_
+from openpilot.selfdrive.ui.tandem.i18n import N_, tn_
+from openpilot.selfdrive.ui.tandem.settings.bluetooth_tab import BluetoothDevices, WheelButtons, devices_panel, wheel_panel
 
 if TYPE_CHECKING:
   from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow
 
-WIFI, CELLULAR, TEST = range(3)
+WIFI, CELLULAR, REMOTE, DEVICES, TEST = range(5)
 
 
 class WhileShown(Component):
@@ -57,11 +59,44 @@ def shared_network_test() -> NetworkTest:
   return shared()
 
 
-def connections_page(network: Network, open_advanced: Callable[[], None], window: SettingsWindow, test: NetworkTestModel) -> SectionPage:
-  """The Connections tab: Wi-Fi, cellular and the network test, each a section of its sidebar."""
+def buttons_label(count: int) -> str:
+  """The remote's button count beside its section, short enough to leave "Bluetooth Remote" whole."""
+  return tn_("{} button", "{} buttons", count) if count else ""
+
+
+def connections_page(network: Network, open_advanced: Callable[[], None], window: SettingsWindow, test: NetworkTestModel,
+                     wheel: WheelButtons, bt: BluetoothDevices) -> SectionPage:
+  """The Connections tab: Wi-Fi, cellular, the Bluetooth remote, Bluetooth devices and the network test."""
+  testing = False
+
+  def bluetooth_tick() -> None:
+    nonlocal testing
+    bt.tick()
+    enabled = bt.status().enabled
+    if enabled and not testing:
+      wheel.start_testing()
+    elif testing and not enabled:
+      wheel.source.cancel_learning()
+      wheel.source.stop_testing()
+    testing = enabled
+
+  def bluetooth_on() -> None:
+    bt.set_active(True)
+    bluetooth_tick()
+
+  def bluetooth_off() -> None:
+    nonlocal testing
+    wheel.source.cancel_learning()
+    wheel.source.stop_testing()
+    testing = False
+    bt.set_active(False)
+
   return SectionPage(N_("CONNECTIONS"), [
     Section(N_("Wi-Fi"), lambda: WhileShown(wifi_panel(network), lambda: network.set_wifi_page(True), lambda: network.set_wifi_page(False)),
             value=network.summary),
     Section(N_("Cellular"), lambda: cellular_panel(network, open_advanced), value=network.cellular_summary),
+    Section(N_("Bluetooth Remote"), lambda: WhileShown(wheel_panel(wheel, window, bt), bluetooth_on, bluetooth_off, bluetooth_tick),
+            value=lambda: buttons_label(len(wheel.buttons()))),
+    Section(N_("Bluetooth Devices"), lambda: WhileShown(devices_panel(bt, window), bluetooth_on, bluetooth_off, bluetooth_tick)),
     Section(N_("Network Test"), lambda: WhileShown(network_test_panel(test), lambda: None, test.stop), value=test.summary),
   ])

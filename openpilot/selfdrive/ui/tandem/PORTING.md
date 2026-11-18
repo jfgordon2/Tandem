@@ -534,7 +534,6 @@ WarningImmediateVolume WarningSoftVolume
 - `tests/test_star_input.py` fails when a merge changes what those methods read or how StarPilot sets it.
 - Starting it can't take the screens down: a failure to start leaves Tandem as before, and a failing poll is logged once.
 - Still to check on the device: a wheel button press while driving, and a Bluetooth remote.
-- Next: Connections' Bluetooth Remote (the controller owner's bindings) and Car Audio & Devices (`BluetoothOwner`).
 
 ## Boot logo
 
@@ -542,6 +541,19 @@ WarningImmediateVolume WarningSoftVolume
   StarPilot 6 replaced it on each start; StarPilot 7 doesn't. `starpilot/tandem/boot_logo.py` does it the same way when
   the UI starts with Tandem's screens (owner, 2026-11-17): only when the images differ from Tandem's logo
   (`selfdrive/ui/tandem/assets/boot_logo.jpg`) does it remount `/` read-write, copy them, and restore the mount options.
+
+## Stage 6: Connections' Bluetooth
+
+- Bluetooth Remote and Bluetooth Devices are back in Connections (`settings/bluetooth_tab.py` from release, with
+  `settings/bluetooth_sources.py`). `StarPilotControllers` drives the `ControllerOwner` the running controller runtime
+  feeds (`star_input.controller_owner()`): a button is learned into a free action slot and the slot holds its action;
+  StarPilot moves a learned button only by learning it again, so a button on a Quick Select or shared slot can only be
+  removed and added again, and remotes don't offer release's Favorite 1-3. `StarPilotBluetooth` drives
+  `NativeBluetoothOwner` on one worker thread with a pairing session per visit, as StarPilot's own page does.
+- StarPilot 7 plays no openpilot sounds through Bluetooth (Soloist plays a phone's music), so release's Car Audio
+  switch and sound test are gone and the section is Bluetooth Devices: paired, then nearby.
+- `tests/test_bluetooth_sources.py` runs the remote against StarPilot's real `ControllerOwner`. Release's
+  `test_bluetooth_discovery.py` and `test_bluetooth_policy.py` tested StarPilot 6's manager and are replaced by it.
 
 ## Tests still on `release` only
 
@@ -560,6 +572,6 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
 | `test_forecast.py`, `test_ram.py` | Home and sidebar (stage 4) |
 | `test_developer.py`, `test_software_dialogs.py`, `test_storage_sizes.py`, `test_prebuilt_params.py` | Settings screens and owner integration (stage 4) |
 | `test_destinations.py`, `test_routemap.py`, `test_routing_ui.py`, `test_map_progress.py` | Navigation and routing (stage 5) |
-| `test_bluetooth_*.py`, `test_remote_actions.py`, `test_galaxy_signals.py` | Bluetooth and controllers (stage 6) |
+| `test_remote_actions.py`, `test_galaxy_signals.py` | Controllers and Galaxy (stage 6) |
 | `test_workflow_policy.py` | Workflows (stage 6) |
 | `starpilot/tandem/tests/` | The services they test (stage 5) |

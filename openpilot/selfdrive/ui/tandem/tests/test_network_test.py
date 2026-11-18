@@ -125,7 +125,9 @@ def test_leaving_the_section_or_settings_stops_the_test():
   network = Network(FakeWifi(), SettingsStore(FakeCache(), lambda: None), cellular=FakeWifi().cellular_status)
   model = NetworkTestModel(test, lambda: network.wifi.connected_ssid, lambda: Connection(Via.WIFI, "Home Wi-Fi", False))
   window = SettingsWindow({Tab.CONNECTIONS: lambda: page}, initial=Tab.CONNECTIONS)
-  page = connections.connections_page(network, lambda: None, window, model)
+  from openpilot.selfdrive.ui.tandem.settings.bluetooth_tab import WheelButtons
+  from openpilot.selfdrive.ui.tandem.tests.fakes import FakeBluetooth, FakeWheel
+  page = connections.connections_page(network, lambda: None, window, model, WheelButtons(FakeWheel()), FakeBluetooth())
   window.show_event()
   assert test.calls == [] and resolve(page._sections[connections.TEST].value) == ""
   page.select(connections.TEST)

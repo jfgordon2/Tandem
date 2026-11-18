@@ -99,6 +99,7 @@ def test_connections_match_the_index() -> None:
   window.show_event()
   networks = {"Home Wi-Fi", "Coffee Shop", "Neighbor"}   # the stand-in's nearby networks, each a row
   networks |= {"Download", "Upload", "Ping"}               # the network test's results: measurements, not settings
+  networks |= {"Car Audio", "Pixel 9", "Wheel Remote"}     # the stand-in's Bluetooth devices
   for index, rows in enumerate(section_titles(window.top)):
     assert rows - networks == indexed(2, section=index), index
 

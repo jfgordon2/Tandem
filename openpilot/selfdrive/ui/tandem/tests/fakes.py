@@ -296,6 +296,8 @@ def connections_window() -> object:
 
   def page() -> object:
     test = NetworkTestModel(FakeNetworkTest(), lambda: net.wifi.connected_ssid, lambda: Connection(Via.WIFI, "Home Wi-Fi", False))
-    return connections.connections_page(net, lambda: window.push(PanelPage(advanced_panel(net))), window, test)
+    from openpilot.selfdrive.ui.tandem.settings.bluetooth_tab import WheelButtons
+    return connections.connections_page(net, lambda: window.push(PanelPage(advanced_panel(net))), window, test, WheelButtons(FakeWheel()),
+                                        FakeBluetooth())
   window = SettingsWindow({Tab.CONNECTIONS: page}, initial=Tab.CONNECTIONS)
   return window
