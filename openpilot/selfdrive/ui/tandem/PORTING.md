@@ -536,6 +536,13 @@ WarningImmediateVolume WarningSoftVolume
 - Still to check on the device: a wheel button press while driving, and a Bluetooth remote.
 - Next: Connections' Bluetooth Remote (the controller owner's bindings) and Car Audio & Devices (`BluetoothOwner`).
 
+## Boot logo
+
+- AGNOS shows `/usr/comma/bg.png` (older AGNOS `bg.jpg`) while the comma starts, and every AGNOS update rewrites it.
+  StarPilot 6 replaced it on each start; StarPilot 7 doesn't. `starpilot/tandem/boot_logo.py` does it the same way when
+  the UI starts with Tandem's screens (owner, 2026-11-17): only when the images differ from Tandem's logo
+  (`selfdrive/ui/tandem/assets/boot_logo.jpg`) does it remount `/` read-write, copy them, and restore the mount options.
+
 ## Tests still on `release` only
 
 Ported so far: `test_fallback_font.py`, `test_compass.py`, `test_network_test.py` (but its settings search test), `test_cellular_status.py`, `test_hotspot_name.py`, `test_network_touches.py` (StarPilot 7 has no PC-only touch path), `test_alert_levels.py`, `test_bar.py`, `test_streets.py`, `test_keyboard.py`,

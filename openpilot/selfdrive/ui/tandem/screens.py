@@ -41,6 +41,8 @@ def ui_selection(selection: UiSelection, big_ui: bool, environment: Mapping[str,
   from openpilot.starpilot.ui.raylib import rl
   from openpilot.starpilot.ui.startup import UiSelection
   screenshot.install(rl, wake=True)   # `touch /tmp/tandem-screenshot` saves the screen (screenshot.py)
+  from openpilot.starpilot.tandem.boot_logo import apply_in_background
+  apply_in_background()   # Tandem's logo on the boot screen, after AGNOS updates reset it (boot_logo.py)
   return UiSelection(False, "Tandem's Essentials screens on openpilot's layout")
 
 
