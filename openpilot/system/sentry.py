@@ -16,6 +16,7 @@ from openpilot.common.params import Params
 from openpilot.common.swaglog import cloudlog
 from openpilot.common.version import get_build_metadata
 from openpilot.system.crash_storage import writer, write_text
+from openpilot.starpilot.tandem.diagnostics import sentry_options  # Tandem: unattended reports stay on the device
 
 
 class SentryProject(Enum):
@@ -60,7 +61,7 @@ def init(project: SentryProject = SentryProject.SELFDRIVE) -> bool:
                transport=BoundedHttpTransport, transport_queue_size=TRANSPORT_QUEUE_SIZE,
                shutdown_timeout=EXIT_FLUSH_TIMEOUT, enable_backpressure_handling=False, auto_session_tracking=False,
                max_value_length=8192, traces_sample_rate=0.0,
-               release=os.getenv("GIT_COMMIT", "unknown"), environment="Release")
+               release=os.getenv("GIT_COMMIT", "unknown"), environment="Release", **sentry_options())
       _initialized_pid = os.getpid()
     if sdk is None:
       return False

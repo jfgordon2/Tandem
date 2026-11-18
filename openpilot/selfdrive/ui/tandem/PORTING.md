@@ -555,6 +555,12 @@ WarningImmediateVolume WarningSoftVolume
 - `tests/test_bluetooth_sources.py` runs the remote against StarPilot's real `ControllerOwner`. Release's
   `test_bluetooth_discovery.py` and `test_bluetooth_policy.py` tested StarPilot 6's manager and are replaced by it.
 
+## Stage 6: diagnostics policy
+
+- Release's fork-wide policy is back: StarPilot 7's crash-reporting SDK (`system/sentry.py`) sends exceptions and native
+  crash dumps to Bugsink on its own; `starpilot/tandem/diagnostics.py` filters them so they stay on the device. Every
+  SDK user in StarPilot 7 is automatic; Report a Problem uses StarPilot's separate Bugsink sender and is unaffected.
+
 ## Tests still on `release` only
 
 Ported so far: `test_fallback_font.py`, `test_compass.py`, `test_network_test.py` (but its settings search test), `test_cellular_status.py`, `test_hotspot_name.py`, `test_network_touches.py` (StarPilot 7 has no PC-only touch path), `test_alert_levels.py`, `test_bar.py`, `test_streets.py`, `test_keyboard.py`,
