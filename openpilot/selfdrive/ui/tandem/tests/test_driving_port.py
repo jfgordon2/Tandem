@@ -166,3 +166,14 @@ def test_tuner_leaves_starpilots_manual_steering_tune_on_its_own_screens(owner: 
                                                                   key="torque:surface:ff_gain_left", step=0.01)
   owner.pages["torque"] = {"torque:friction:value": replace(owner.pages["tuning"]["torque:surface:ff_gain_left"], key="torque:friction:value")}
   assert [t.key for t in Tuner(owner.rows).steering()] == ["torque:friction:value"]
+
+
+def test_model_names_drop_starpilots_emoji_markers() -> None:
+  from openpilot.selfdrive.ui.tandem.settings.model import model_name
+  assert model_name("Regret Driven Framework V4 👀📡") == "Regret Driven Framework V4"
+  assert model_name("Pop Model V2 😢") == "Pop Model V2"
+  assert model_name("Watermelon Indigo v11") == "Watermelon Indigo v11"
+  assert model_name("👀") == "👀"   # never empty
+  manager = FakeManager()
+  manager.models[1]["label"] = "Green Watermelon v8 👀📡"
+  assert StarPilotModels(manager, clock=lambda: 0.0).models()[1].name == "Green Watermelon v8"

@@ -291,7 +291,7 @@ def model_page(models: Models, open_catalog: Callable[[], None]) -> Widget:
     active = Card([
       Inline(Badge(N_("ACTIVE"), solid=True)),
       Label(models.current_name, T.font_px(26), weight=T.FONT_EXTRABOLD),
-      Text(lambda: N_("Chosen for your car. Swaps to newer recommended models automatically.") if models.use_recommended
+      Text(lambda: N_("StarPilot's default model, used until you pick another.") if models.use_recommended
            else N_("Picked by you"), T.font_px(16), T.TEXT_TERTIARY, padding=(0, 0)),
       SPACER,
       Surface(SettingRow(N_("Use recommended"), N_("Turn off to pick your own"), Switch(lambda: models.use_recommended,
@@ -302,7 +302,7 @@ def model_page(models: Models, open_catalog: Callable[[], None]) -> Widget:
     other = ListPanel([
       SectionHeader(N_("OTHER MODELS"), trailing=browse),
       *[model_row(models, m) for m in others],
-      Text(N_("Available when Use recommended is off. Model randomizer and blacklist are in Tuner Mode."), T.SIZE_SUBTITLE),
+      Text(N_("Available when Use recommended is off. A new model applies on your next drive."), T.SIZE_SUBTITLE),
     ])
     return Columns([active, other], [1, 1.2])
 
@@ -357,6 +357,13 @@ class CatalogPage(Component):
     self._side.render(right)
 
 
+def model_name(label: str) -> str:
+  """A catalog name without the markers StarPilot puts after it (emoji such as 👀📡), which Tandem's fonts don't draw."""
+  import unicodedata
+  kept = "".join(c for c in str(label) if unicodedata.category(c) not in ("So", "Sk", "Cs", "Co", "Cn") and c not in "\u200d\ufe0f")
+  return " ".join(kept.split()) or str(label)
+
+
 class StarPilotModels:
   """ModelSource backed by StarPilot 7's model manager. It reads the manager at most every REFRESH_S.
 
@@ -396,7 +403,7 @@ class StarPilotModels:
     self._snapshot()
 
   def models(self) -> list[ModelInfo]:
-    return [ModelInfo(m["value"], m["label"], bool(m["installed"]), bool(m["communityFavorite"]), bool(m["requiresGpu"]),
+    return [ModelInfo(m["value"], model_name(m["label"]), bool(m["installed"]), bool(m["communityFavorite"]), bool(m["requiresGpu"]),
                       not m["builtin"]) for m in self._snapshot().get("models", [])]
 
   def _model(self, key: str) -> dict | None:
