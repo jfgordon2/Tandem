@@ -58,6 +58,8 @@ class DriveDisplay:
   chips: tuple[tuple[Chip, float], ...] = ()   # (chip, opacity) nearest the bar first, from status.ChipStack
   alert: DrivingAlert | None = None
   proposal: Proposal | None = None
+  pedals: tuple[float, float] | None = None   # (brake, gas) tiles under the monitor tile (extras.Pedals), None when off
+  border: tuple[Any, Any] = (None, None)      # each side's highlight color (extras.border_halves), None for none
 
 
 def awareness(dm: Any) -> float | None:

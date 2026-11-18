@@ -10,7 +10,7 @@ from collections.abc import Callable
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.layout import inset
-from openpilot.selfdrive.ui.tandem.onroad import alerts, layers
+from openpilot.selfdrive.ui.tandem.onroad import alerts, extras, layers
 from openpilot.selfdrive.ui.tandem.onroad.state import DriveDisplay, LimitDecision, Proposal
 from openpilot.starpilot.ui.raylib import rl
 
@@ -103,6 +103,8 @@ class OnroadOverlay(Component):
       layers.draw_speed(inner, state.speed, state.unit, left=state.left, right=state.right, now=self._clock())
       if state.monitor is not None:
         layers.draw_driver_monitor(layers.dm_tile(inner), 1.0, 0.0 if state.attention_warning else state.monitor, True)
+      if state.pedals is not None:
+        extras.draw_pedals(layers.dm_tile(inner), state.pedals)
       if self._limit is not None:
         self._limit.render(inner)
       elif state.posted:
@@ -118,3 +120,5 @@ class OnroadOverlay(Component):
           self._chips.render(inner)
           self._bar.render(inner)
     draw.stroke(inset(rect, T.px(10)), border_color(state), T.px(18), T.px(6))
+    if attention is None or attention.level != alerts.CRITICAL:
+      extras.draw_border_halves(rect, inset(rect, T.px(10)), T.px(18), T.px(6), state.border)

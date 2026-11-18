@@ -568,6 +568,18 @@ WarningImmediateVolume WarningSoftVolume
   only when nothing else sounds or shows. StarPilot 7's daemon has no alert filter, so release's quieting of the turn
   steering-limit alert during Help steer is gone. The daemon picks this up when it next starts (a reboot).
 
+## Stage 4: onroad extras
+
+- `onroad/extras.py` draws StarPilot 7's pedal and border highlights on Tandem's screen: the pedal tiles follow its wheel
+  feedback (measured acceleration, with its fade) while its wheel brake and acceleration colors setting is on, and the
+  border's sides follow its signal and blind-spot border settings. StarPilot draws those borders only on the comma four;
+  Tandem shows them on the 3X, as release did.
+- Gone with StarPilot 7: the stopping point, adjacent-lane paths, radar points and signal animations (`turn_signals.py`,
+  `starpilot/tandem/signals.py`).
+- Not needed on StarPilot 7: the speed-sign model's memory hook (`vision_slc` runs only while driving) and Galaxy's
+  dashboard worker (drive statistics run in Galaxy's own process now).
+- Still to do: the external GPU model chip (`ModelChip`), which StarPilot 7 shows through its stock HUD.
+
 ## Tests still on `release` only
 
 Ported so far: `test_fallback_font.py`, `test_compass.py`, `test_network_test.py` (but its settings search test), `test_cellular_status.py`, `test_hotspot_name.py`, `test_network_touches.py` (StarPilot 7 has no PC-only touch path), `test_alert_levels.py`, `test_bar.py`, `test_streets.py`, `test_keyboard.py`,

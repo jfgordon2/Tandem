@@ -6,6 +6,7 @@ into release's state objects (BarState, Snapshot for the chips, ArcState, LimitO
 from __future__ import annotations
 
 import time
+from dataclasses import replace
 from collections.abc import Callable
 from functools import cached_property
 from typing import Any
@@ -16,7 +17,7 @@ from openpilot.common.swaglog import cloudlog
 from openpilot.selfdrive.ui.onroad.augmented_road_view import AugmentedRoadView
 from openpilot.selfdrive.ui.tandem.onroad import alerts, size as Z
 from openpilot.selfdrive.ui.tandem.onroad.compass import DriveCompass
-from openpilot.selfdrive.ui.tandem.onroad import developer
+from openpilot.selfdrive.ui.tandem.onroad import developer, extras
 from openpilot.selfdrive.ui.tandem.onroad.lead import GapTagState, GapTracker, detailed_tag_on, lead_anchor, read_lead_sample
 from openpilot.selfdrive.ui.tandem.onroad.layers import bar_height, bar_margin
 from openpilot.selfdrive.ui.tandem.onroad.limits import LimitFollower
@@ -60,6 +61,7 @@ class EssentialsOnroad(AugmentedRoadView):
     self._compass = DriveCompass()
     self._follower = LimitFollower()
     self._failed: set[str] = set()   # extras that failed once (_safely)
+    self._pedals = extras.Pedals()
     self._help_steer = False         # the Help steer warning was up last frame (its chime, starpilot/tandem/headroom.py)
     self._gap_tracker = GapTracker()
     self._gap_state: GapTagState | None = None
@@ -218,6 +220,7 @@ class EssentialsOnroad(AugmentedRoadView):
       arc=arc, help_steer=help_steer, chips=tuple(chips), alert=visible_alert,
       proposal=limit_offer(state, allowed and not self._safe, now_ns),
     )
+    self._safely("pedals and border", lambda: self._extras(state, car, now_ns))
     self._safely("max follows limits", lambda: self._follow_limit(state, allowed and not self._safe))
     self._safely("lead tag", lambda: self._update_lead(state))
     self._dev = None
@@ -237,6 +240,16 @@ class EssentialsOnroad(AugmentedRoadView):
     mode = 1 if self._lead_tag_on else int(appearance.lead_info_mode)   # any mode but Off asks the renderer for the text
     self.model_renderer.lead_display = (True, mode, appearance.lead_info_metric)
     self._gap_state = self._gap_tracker.update(read_lead_sample(ui_state, self.LEAD_THRESHOLD), now) if self._lead_tag_on else None
+
+  def _extras(self, state: OnroadState, car: Any, now_ns: int) -> None:
+    """StarPilot's pedal and border highlights, with its settings deciding when they show (onroad/extras.py)."""
+    appearance = state.appearance
+    pedals = self._pedals.update(state.wheel_acceleration, bool(appearance.wheel_pedal_feedback), now_ns, ui_state.started_frame)
+    fresh = car is not None and car.canValid and not car.canTimeout
+    border = extras.border_halves(bool(appearance.show_signal_border), bool(appearance.show_blindspot_border),
+                                  bool(fresh and car.leftBlinker), bool(fresh and car.rightBlinker),
+                                  bool(fresh and car.leftBlindspot), bool(fresh and car.rightBlindspot), now_ns / 1e9)
+    self._display = replace(self._display, pedals=pedals, border=border)
 
   def _signal_help_steer(self, warning: bool) -> None:
     """Tell the sound daemon when Help steer appears (it chimes once) and when it goes away."""
