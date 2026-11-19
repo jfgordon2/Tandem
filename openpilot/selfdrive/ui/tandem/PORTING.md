@@ -613,6 +613,18 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
 - Waits for its own mock: an Offline Maps page on `OfflineMapsOwner` (areas around a point, not release's regions).
   Where to?'s Offline maps button shows only when a maps page is given.
 - Phase B: Valhalla as a route provider (release's offline-maps chip and "Choose regions" in the preview come back then).
+  Owner, 2026-11-18: Offline Maps downloads both, as on release: choosing a state downloads its routing graph and asks
+  StarPilot 7's map owner (`starpilot/maps/operation_owner.py`) for the same region's road data.
+- Phase B, part 1 (engine), done: release's `starpilot/tandem/routing` broker, native worker, bundles, images,
+  downloads and catalog, with `routing/navigation.py` in place of release's navigationd subclass and policy engine.
+  StarPilot 7's `RouteRuntime` keeps following the route; Tandem's subclass only picks the provider (hooks in the
+  README). Avoidances reach Valhalla as its auto costing preferences. `regions.py` keeps the US state list that
+  StarPilot 6's `maps_selection`/`maps_catalog` held.
+- Phase B, part 2 (downloads and screens), to do: `handoff.py`, `paired.py` and `road.py` still drive StarPilot 6's road
+  downloader (its `update_maps` and `MapsDownloadProgress`); they move to StarPilot 7's map owner. Then the Offline Maps
+  page, Navigation's Offline maps only and Preferred maps rows, the routing status on the driving screen, and
+  `test_routing_paired.py`, `test_routing_road.py`, `test_routing_states.py` and `test_routing_policy_maps.py`
+  (not yet committed: they test the StarPilot 6 road path).
 - Speed & Steering › Navigation (`settings/navigation.py`, `design/stage5-drivingnav.html`) writes StarPilot's own
   navigation settings: on or off, directions (Google only with its key), avoidances and position. Saved Places opens
   Where to?. Keys are pasted in Galaxy; `map_keys.py` (`stage5-mapboxkey.html`) explains how. Release's End Route When

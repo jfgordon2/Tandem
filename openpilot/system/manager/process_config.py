@@ -9,6 +9,7 @@ from openpilot.system.manager.process import PythonProcess, NativeProcess, Daemo
 from openpilot.starpilot.maps.shadow_lifecycle import MapdShadowProcess
 from openpilot.starpilot.models.recovery_process import ModeldProcess
 from openpilot.starpilot.tandem.uploads import allow_uploads
+from openpilot.starpilot.tandem.routing.config import should_run as run_tandem_routing
 from openpilot.starpilot.system.jetlink.process import JetlinkProcess
 from openpilot.starpilot.sentry_mode.preferences import enabled as sentry_enabled
 from openpilot.starpilot.galaxy.camera_request import requested as camera_requested
@@ -177,6 +178,7 @@ procs = [
   PythonProcess("ui", "openpilot.selfdrive.ui.ui", always_run, restart_on_exit=True),
   PythonProcess("navigationd", "openpilot.starpilot.navigation.runtime", always_run),
   PythonProcess("navtilesd", "openpilot.starpilot.navigation.navtilesd", always_run, enabled=platform.system() == "Linux"),
+  PythonProcess("tandem_routingd", "openpilot.starpilot.tandem.routing.routingd", run_tandem_routing),
   PythonProcess("galaxy", "openpilot.starpilot.galaxy.managed", galaxy_local),
   PythonProcess(
     "galaxy_phone",

@@ -108,7 +108,7 @@ class RouteRuntime:
       self.retry_after = 0
       self.fetch_key = None  # reject an in-flight request from the saved origin
       self.preview_only = False
-    base_status = ('disabled' if not settings['enabled'] else 'needsKey' if not settings['token'] else
+    base_status = ('disabled' if not settings['enabled'] else 'needsKey' if not self._can_route(settings) else
                    'noDestination' if settings['destination'] is None else 'waitingForLocation')
     result = {'sessionId': self.session, 'frameMonoTime': now_ns, 'startedMonoTime': drive_id,
                   'revision': settings['revision'], 'enabled': settings['enabled'], 'status': base_status,
@@ -215,6 +215,9 @@ class RouteRuntime:
                                                  bearing if moving else None, exclusions)
     instruction['remainingDurationSeconds'] = static * self.eta_ratio
 
+  def _can_route(self, settings) -> bool:
+    return bool(settings['token'])
+
   def _fetcher(self, credentials):
     return (self._fetch_google, credentials) if credentials[1] else (self.engine.fetch, credentials[0])
 
@@ -296,7 +299,8 @@ def main():
   from openpilot.common.realtime import Ratekeeper
   from openpilot.common.swaglog import cloudlog
   owner = NavigationOwner()
-  runtime = RouteRuntime(owner)
+  from openpilot.starpilot.tandem.routing.navigation import runtime_class  # Tandem: offline routing
+  runtime = runtime_class(RouteRuntime)(owner)
   sm = messaging.SubMaster(['deviceState', *(service for service in GPS_SERVICES if service != 'starpilotNavigation')])
   pm = messaging.PubMaster(['starpilotNavigation'])
   # Forward new phone measurements promptly; held fixes still need only a 1 Hz heartbeat.

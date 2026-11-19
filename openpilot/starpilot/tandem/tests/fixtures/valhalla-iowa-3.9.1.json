@@ -1,0 +1,3570 @@
+{
+  "routes": [
+    {
+      "weight_name": "auto",
+      "weight": 574.756,
+      "duration": 237.297,
+      "distance": 2895.595,
+      "legs": [
+        {
+          "via_waypoints": [],
+          "annotation": {
+            "maxspeed": [
+              {
+                "speed": 40,
+                "unit": "km/h"
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "speed": 48,
+                "unit": "km/h"
+              },
+              {
+                "speed": 48,
+                "unit": "km/h"
+              },
+              {
+                "speed": 48,
+                "unit": "km/h"
+              },
+              {
+                "speed": 48,
+                "unit": "km/h"
+              },
+              {
+                "speed": 48,
+                "unit": "km/h"
+              },
+              {
+                "speed": 48,
+                "unit": "km/h"
+              },
+              {
+                "speed": 48,
+                "unit": "km/h"
+              },
+              {
+                "speed": 48,
+                "unit": "km/h"
+              },
+              {
+                "speed": 48,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "speed": 56,
+                "unit": "km/h"
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              },
+              {
+                "unknown": true
+              }
+            ]
+          },
+          "admins": [
+            {}
+          ],
+          "weight": 574.756,
+          "duration": 237.297,
+          "steps": [
+            {
+              "intersections": [
+                {
+                  "bearings": [
+                    344
+                  ],
+                  "entry": [
+                    true
+                  ],
+                  "admin_index": 0,
+                  "out": 0,
+                  "geometry_index": 0,
+                  "location": [
+                    -93.624959,
+                    41.586809
+                  ]
+                }
+              ],
+              "bannerInstructions": [
+                {
+                  "primary": {
+                    "type": "turn",
+                    "modifier": "right",
+                    "text": "Locust Street",
+                    "components": [
+                      {
+                        "text": "Locust Street",
+                        "type": "text"
+                      }
+                    ]
+                  },
+                  "distanceAlongGeometry": 3.651
+                }
+              ],
+              "speedLimitUnit": "km/h",
+              "maneuver": {
+                "instruction": "Drive north on 6th Avenue.",
+                "type": "depart",
+                "bearing_after": 344,
+                "bearing_before": 0,
+                "location": [
+                  -93.624959,
+                  41.586809
+                ]
+              },
+              "speedLimitSign": "vienna",
+              "name": "6th Avenue",
+              "duration": 0.329,
+              "distance": 3.651,
+              "driving_side": "left",
+              "weight": 0.378,
+              "mode": "driving",
+              "geometry": {
+                "coordinates": [
+                  [
+                    -93.624959,
+                    41.586809
+                  ],
+                  [
+                    -93.624971,
+                    41.58684
+                  ]
+                ],
+                "type": "LineString"
+              }
+            },
+            {
+              "intersections": [
+                {
+                  "entry": [
+                    true,
+                    false,
+                    false,
+                    true
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    74,
+                    164,
+                    256,
+                    345
+                  ],
+                  "duration": 8.209,
+                  "turn_weight": 23.75,
+                  "turn_duration": 7.622,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 24.426,
+                  "geometry_index": 1,
+                  "location": [
+                    -93.624971,
+                    41.58684
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    false,
+                    false
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    75,
+                    163,
+                    254,
+                    344
+                  ],
+                  "duration": 4.282,
+                  "turn_duration": 0.021,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 4.9,
+                  "geometry_index": 2,
+                  "location": [
+                    -93.624875,
+                    41.58686
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    true
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    75,
+                    255,
+                    345
+                  ],
+                  "duration": 1.414,
+                  "turn_weight": 1.25,
+                  "turn_duration": 0.018,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 2.855,
+                  "geometry_index": 3,
+                  "location": [
+                    -93.624209,
+                    41.586996
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    false
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    74,
+                    255,
+                    298
+                  ],
+                  "duration": 0.973,
+                  "turn_weight": 1.25,
+                  "turn_duration": 0.018,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 2.348,
+                  "geometry_index": 4,
+                  "location": [
+                    -93.62399,
+                    41.587041
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    false,
+                    false
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    74,
+                    165,
+                    254,
+                    346
+                  ],
+                  "duration": 0.682,
+                  "turn_duration": 0.021,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 0.76,
+                  "geometry_index": 5,
+                  "location": [
+                    -93.623835,
+                    41.587075
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    true,
+                    false,
+                    true
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    74,
+                    165,
+                    254,
+                    345
+                  ],
+                  "duration": 3.27,
+                  "turn_weight": 10,
+                  "turn_duration": 2.021,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 11.436,
+                  "geometry_index": 6,
+                  "location": [
+                    -93.623732,
+                    41.587097
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    false
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    74,
+                    184,
+                    254
+                  ],
+                  "duration": 6.559,
+                  "turn_weight": 1.25,
+                  "turn_duration": 0.021,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 8.77,
+                  "geometry_index": 7,
+                  "location": [
+                    -93.62354,
+                    41.587139
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    true
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    75,
+                    254,
+                    345
+                  ],
+                  "duration": 0.608,
+                  "turn_weight": 1.25,
+                  "turn_duration": 0.021,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 1.926,
+                  "geometry_index": 8,
+                  "location": [
+                    -93.622518,
+                    41.587364
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    false,
+                    false
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    74,
+                    162,
+                    255,
+                    344
+                  ],
+                  "duration": 3.765,
+                  "turn_duration": 0.018,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 4.309,
+                  "geometry_index": 9,
+                  "location": [
+                    -93.622425,
+                    41.587383
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    false
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    74,
+                    254,
+                    311
+                  ],
+                  "duration": 2.813,
+                  "turn_weight": 1.25,
+                  "turn_duration": 0.021,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 4.461,
+                  "geometry_index": 10,
+                  "location": [
+                    -93.621833,
+                    41.587511
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    false,
+                    false
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    74,
+                    163,
+                    254,
+                    344
+                  ],
+                  "duration": 0.755,
+                  "turn_duration": 0.021,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 0.845,
+                  "geometry_index": 11,
+                  "location": [
+                    -93.621393,
+                    41.587606
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    true,
+                    false,
+                    false
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    74,
+                    165,
+                    254,
+                    344
+                  ],
+                  "duration": 2.829,
+                  "turn_weight": 15,
+                  "turn_duration": 2.021,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 15.929,
+                  "geometry_index": 12,
+                  "location": [
+                    -93.621281,
+                    41.58763
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    false,
+                    false
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    74,
+                    166,
+                    254,
+                    346
+                  ],
+                  "duration": 6.266,
+                  "turn_duration": 0.021,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 7.182,
+                  "geometry_index": 13,
+                  "location": [
+                    -93.621158,
+                    41.587657
+                  ]
+                },
+                {
+                  "bearings": [
+                    74,
+                    166,
+                    254,
+                    346
+                  ],
+                  "entry": [
+                    true,
+                    false,
+                    false,
+                    false
+                  ],
+                  "in": 2,
+                  "turn_duration": 0.021,
+                  "admin_index": 0,
+                  "out": 0,
+                  "geometry_index": 14,
+                  "location": [
+                    -93.620178,
+                    41.587866
+                  ]
+                }
+              ],
+              "bannerInstructions": [
+                {
+                  "primary": {
+                    "type": "turn",
+                    "modifier": "left",
+                    "text": "2nd Avenue",
+                    "components": [
+                      {
+                        "text": "2nd Avenue",
+                        "type": "text"
+                      }
+                    ]
+                  },
+                  "distanceAlongGeometry": 427
+                }
+              ],
+              "speedLimitUnit": "km/h",
+              "maneuver": {
+                "modifier": "right",
+                "instruction": "Turn right onto Locust Street.",
+                "type": "turn",
+                "bearing_after": 74,
+                "bearing_before": 344,
+                "location": [
+                  -93.624971,
+                  41.58684
+                ]
+              },
+              "speedLimitSign": "vienna",
+              "name": "Locust Street",
+              "duration": 43.253,
+              "distance": 427,
+              "driving_side": "left",
+              "weight": 91.077,
+              "mode": "driving",
+              "geometry": {
+                "coordinates": [
+                  [
+                    -93.624971,
+                    41.58684
+                  ],
+                  [
+                    -93.624875,
+                    41.58686
+                  ],
+                  [
+                    -93.624209,
+                    41.586996
+                  ],
+                  [
+                    -93.62399,
+                    41.587041
+                  ],
+                  [
+                    -93.623835,
+                    41.587075
+                  ],
+                  [
+                    -93.623732,
+                    41.587097
+                  ],
+                  [
+                    -93.62354,
+                    41.587139
+                  ],
+                  [
+                    -93.622518,
+                    41.587364
+                  ],
+                  [
+                    -93.622425,
+                    41.587383
+                  ],
+                  [
+                    -93.621833,
+                    41.587511
+                  ],
+                  [
+                    -93.621393,
+                    41.587606
+                  ],
+                  [
+                    -93.621281,
+                    41.58763
+                  ],
+                  [
+                    -93.621158,
+                    41.587657
+                  ],
+                  [
+                    -93.620178,
+                    41.587866
+                  ],
+                  [
+                    -93.620055,
+                    41.587892
+                  ]
+                ],
+                "type": "LineString"
+              }
+            },
+            {
+              "intersections": [
+                {
+                  "entry": [
+                    true,
+                    false,
+                    false,
+                    true
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    75,
+                    163,
+                    254,
+                    344
+                  ],
+                  "duration": 4.68,
+                  "turn_weight": 12.5,
+                  "turn_duration": 4.005,
+                  "admin_index": 0,
+                  "out": 3,
+                  "weight": 13.276,
+                  "geometry_index": 15,
+                  "location": [
+                    -93.620055,
+                    41.587892
+                  ]
+                },
+                {
+                  "entry": [
+                    false,
+                    false,
+                    false,
+                    true
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    77,
+                    164,
+                    256,
+                    344
+                  ],
+                  "duration": 6.394,
+                  "turn_duration": 0.019,
+                  "admin_index": 0,
+                  "out": 3,
+                  "weight": 7.331,
+                  "geometry_index": 16,
+                  "location": [
+                    -93.620085,
+                    41.587969
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    false,
+                    false
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    3,
+                    72,
+                    177,
+                    253
+                  ],
+                  "duration": 0.928,
+                  "turn_duration": 0.028,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 1.058,
+                  "geometry_index": 22,
+                  "location": [
+                    -93.620289,
+                    41.588717
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    true,
+                    false,
+                    true
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    3,
+                    75,
+                    183,
+                    253
+                  ],
+                  "duration": 2.725,
+                  "turn_weight": 16.8,
+                  "turn_duration": 2.018,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 17.631,
+                  "geometry_index": 24,
+                  "location": [
+                    -93.620281,
+                    41.588827
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    false,
+                    false
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    1,
+                    73,
+                    183,
+                    253
+                  ],
+                  "duration": 5.344,
+                  "turn_duration": 0.008,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 6.269,
+                  "geometry_index": 25,
+                  "location": [
+                    -93.620275,
+                    41.588929
+                  ]
+                },
+                {
+                  "entry": [
+                    false,
+                    true,
+                    true
+                  ],
+                  "in": 0,
+                  "bearings": [
+                    179,
+                    270,
+                    360
+                  ],
+                  "duration": 2.333,
+                  "turn_weight": 1.4,
+                  "turn_duration": 0.019,
+                  "admin_index": 0,
+                  "out": 2,
+                  "weight": 4.119,
+                  "geometry_index": 28,
+                  "location": [
+                    -93.620274,
+                    41.589677
+                  ]
+                },
+                {
+                  "entry": [
+                    false,
+                    true,
+                    true
+                  ],
+                  "in": 0,
+                  "bearings": [
+                    180,
+                    270,
+                    360
+                  ],
+                  "duration": 3.489,
+                  "turn_weight": 1.4,
+                  "turn_duration": 0.018,
+                  "admin_index": 0,
+                  "out": 2,
+                  "weight": 5.479,
+                  "geometry_index": 29,
+                  "location": [
+                    -93.620276,
+                    41.589997
+                  ]
+                },
+                {
+                  "entry": [
+                    false,
+                    true,
+                    true
+                  ],
+                  "in": 0,
+                  "bearings": [
+                    180,
+                    270,
+                    360
+                  ],
+                  "duration": 3.553,
+                  "turn_weight": 4.2,
+                  "turn_duration": 0.018,
+                  "admin_index": 0,
+                  "out": 2,
+                  "weight": 8.354,
+                  "geometry_index": 30,
+                  "location": [
+                    -93.620278,
+                    41.590487
+                  ]
+                },
+                {
+                  "entry": [
+                    false,
+                    true,
+                    true
+                  ],
+                  "in": 0,
+                  "bearings": [
+                    180,
+                    270,
+                    359
+                  ],
+                  "duration": 2.193,
+                  "turn_weight": 1.4,
+                  "turn_duration": 0.007,
+                  "admin_index": 0,
+                  "out": 2,
+                  "weight": 3.968,
+                  "geometry_index": 31,
+                  "location": [
+                    -93.620282,
+                    41.590977
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    true
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    90,
+                    179,
+                    359
+                  ],
+                  "duration": 1.496,
+                  "turn_weight": 1.4,
+                  "turn_duration": 0.018,
+                  "admin_index": 0,
+                  "out": 2,
+                  "weight": 3.137,
+                  "geometry_index": 32,
+                  "location": [
+                    -93.620292,
+                    41.591281
+                  ]
+                },
+                {
+                  "entry": [
+                    false,
+                    false,
+                    false,
+                    true
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    89,
+                    179,
+                    269,
+                    358
+                  ],
+                  "duration": 0.586,
+                  "turn_duration": 0.007,
+                  "admin_index": 0,
+                  "out": 3,
+                  "weight": 0.68,
+                  "geometry_index": 33,
+                  "location": [
+                    -93.620299,
+                    41.591487
+                  ]
+                },
+                {
+                  "entry": [
+                    false,
+                    true,
+                    true
+                  ],
+                  "in": 0,
+                  "bearings": [
+                    178,
+                    270,
+                    358
+                  ],
+                  "duration": 2.598,
+                  "turn_weight": 1.4,
+                  "turn_duration": 2.019,
+                  "admin_index": 0,
+                  "out": 2,
+                  "weight": 2.08,
+                  "geometry_index": 34,
+                  "location": [
+                    -93.620302,
+                    41.59157
+                  ]
+                },
+                {
+                  "entry": [
+                    false,
+                    false,
+                    false,
+                    true
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    87,
+                    178,
+                    267,
+                    359
+                  ],
+                  "duration": 2.078,
+                  "turn_duration": 0.021,
+                  "admin_index": 0,
+                  "out": 3,
+                  "weight": 2.417,
+                  "geometry_index": 35,
+                  "location": [
+                    -93.620305,
+                    41.591655
+                  ]
+                },
+                {
+                  "entry": [
+                    false,
+                    true,
+                    true
+                  ],
+                  "in": 0,
+                  "bearings": [
+                    179,
+                    269,
+                    359
+                  ],
+                  "duration": 9.918,
+                  "turn_weight": 1.4,
+                  "turn_duration": 0.018,
+                  "admin_index": 0,
+                  "out": 2,
+                  "weight": 13.033,
+                  "geometry_index": 36,
+                  "location": [
+                    -93.62031,
+                    41.591942
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    false,
+                    false
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    2,
+                    99,
+                    180,
+                    279
+                  ],
+                  "duration": 0.598,
+                  "turn_duration": 0.019,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 0.68,
+                  "geometry_index": 38,
+                  "location": [
+                    -93.620327,
+                    41.593322
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    true
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    7,
+                    182,
+                    270
+                  ],
+                  "duration": 6.397,
+                  "turn_weight": 1.4,
+                  "turn_duration": 2.026,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 6.536,
+                  "geometry_index": 39,
+                  "location": [
+                    -93.620323,
+                    41.593399
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    true
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    22,
+                    198,
+                    270
+                  ],
+                  "duration": 1.053,
+                  "turn_weight": 1.4,
+                  "turn_duration": 0.024,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 2.609,
+                  "geometry_index": 45,
+                  "location": [
+                    -93.620144,
+                    41.593994
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    true
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    20,
+                    202,
+                    296
+                  ],
+                  "duration": 7.336,
+                  "turn_weight": 1.4,
+                  "turn_duration": 0.007,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 10.011,
+                  "geometry_index": 47,
+                  "location": [
+                    -93.620072,
+                    41.59413
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    false,
+                    false
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    4,
+                    93,
+                    184,
+                    273
+                  ],
+                  "duration": 0.661,
+                  "turn_duration": 0.018,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 0.755,
+                  "geometry_index": 53,
+                  "location": [
+                    -93.619806,
+                    41.595128
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    true,
+                    false,
+                    false,
+                    true
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    11,
+                    92,
+                    184,
+                    269,
+                    346
+                  ],
+                  "duration": 2.93,
+                  "turn_weight": 16.8,
+                  "turn_duration": 2.03,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 17.857,
+                  "geometry_index": 54,
+                  "location": [
+                    -93.619797,
+                    41.59522
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    4,
+                    191
+                  ],
+                  "duration": 7.393,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 8.687,
+                  "geometry_index": 55,
+                  "location": [
+                    -93.619766,
+                    41.595339
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    3,
+                    183
+                  ],
+                  "duration": 5.336,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 6.269,
+                  "geometry_index": 58,
+                  "location": [
+                    -93.619674,
+                    41.596369
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    1,
+                    181
+                  ],
+                  "duration": 2.25,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 2.644,
+                  "geometry_index": 60,
+                  "location": [
+                    -93.619632,
+                    41.597115
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    true
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    0,
+                    181,
+                    335
+                  ],
+                  "duration": 2.901,
+                  "turn_weight": 1.4,
+                  "lanes": [
+                    {
+                      "indications": [
+                        "left"
+                      ],
+                      "valid": false,
+                      "active": false
+                    },
+                    {
+                      "indications": [
+                        "straight"
+                      ],
+                      "valid_indication": "straight",
+                      "valid": true,
+                      "active": false
+                    },
+                    {
+                      "indications": [
+                        "straight"
+                      ],
+                      "valid_indication": "straight",
+                      "valid": true,
+                      "active": false
+                    },
+                    {
+                      "indications": [
+                        "straight"
+                      ],
+                      "valid_indication": "straight",
+                      "valid": true,
+                      "active": true
+                    }
+                  ],
+                  "turn_duration": 0.008,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 4.799,
+                  "geometry_index": 61,
+                  "location": [
+                    -93.619627,
+                    41.597425
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    false
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    1,
+                    180,
+                    229
+                  ],
+                  "duration": 2.205,
+                  "turn_weight": 1.4,
+                  "turn_duration": 0.019,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 3.968,
+                  "geometry_index": 62,
+                  "location": [
+                    -93.619624,
+                    41.597832
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    true,
+                    false,
+                    false
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    0,
+                    99,
+                    181,
+                    298
+                  ],
+                  "duration": 6.886,
+                  "turn_weight": 16.8,
+                  "turn_duration": 0.008,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 24.882,
+                  "geometry_index": 63,
+                  "location": [
+                    -93.619618,
+                    41.598138
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    false,
+                    true
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    0,
+                    92,
+                    180,
+                    234
+                  ],
+                  "duration": 1.303,
+                  "turn_weight": 5.6,
+                  "turn_duration": 0.018,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 7.111,
+                  "geometry_index": 64,
+                  "location": [
+                    -93.619615,
+                    41.599099
+                  ]
+                },
+                {
+                  "entry": [
+                    false,
+                    false,
+                    true
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    131,
+                    180,
+                    359
+                  ],
+                  "duration": 2.257,
+                  "turn_weight": 1.4,
+                  "turn_duration": 0.007,
+                  "admin_index": 0,
+                  "out": 2,
+                  "weight": 4.044,
+                  "geometry_index": 65,
+                  "location": [
+                    -93.619614,
+                    41.599282
+                  ]
+                },
+                {
+                  "entry": [
+                    false,
+                    true
+                  ],
+                  "in": 0,
+                  "bearings": [
+                    179,
+                    358
+                  ],
+                  "duration": 1.221,
+                  "admin_index": 0,
+                  "out": 1,
+                  "weight": 1.435,
+                  "geometry_index": 66,
+                  "location": [
+                    -93.619624,
+                    41.599597
+                  ]
+                },
+                {
+                  "lanes": [
+                    {
+                      "indications": [
+                        "straight"
+                      ],
+                      "valid": false,
+                      "active": false
+                    },
+                    {
+                      "indications": [
+                        "straight"
+                      ],
+                      "valid": false,
+                      "active": false
+                    },
+                    {
+                      "indications": [
+                        "right"
+                      ],
+                      "valid_indication": "right",
+                      "valid": true,
+                      "active": true
+                    }
+                  ],
+                  "entry": [
+                    false,
+                    true
+                  ],
+                  "in": 0,
+                  "bearings": [
+                    178,
+                    359
+                  ],
+                  "duration": 3.086,
+                  "admin_index": 0,
+                  "out": 1,
+                  "weight": 3.626,
+                  "geometry_index": 67,
+                  "location": [
+                    -93.619631,
+                    41.599763
+                  ]
+                },
+                {
+                  "bearings": [
+                    92,
+                    179,
+                    270,
+                    355
+                  ],
+                  "entry": [
+                    false,
+                    false,
+                    false,
+                    true
+                  ],
+                  "in": 1,
+                  "lanes": [
+                    {
+                      "indications": [
+                        "left"
+                      ],
+                      "valid": false,
+                      "active": false
+                    },
+                    {
+                      "indications": [
+                        "straight"
+                      ],
+                      "valid": false,
+                      "active": false
+                    },
+                    {
+                      "indications": [
+                        "straight"
+                      ],
+                      "valid": false,
+                      "active": false
+                    },
+                    {
+                      "indications": [
+                        "right"
+                      ],
+                      "valid_indication": "right",
+                      "valid": true,
+                      "active": true
+                    }
+                  ],
+                  "turn_duration": 0.009,
+                  "admin_index": 0,
+                  "out": 3,
+                  "geometry_index": 69,
+                  "location": [
+                    -93.619638,
+                    41.600191
+                  ]
+                }
+              ],
+              "bannerInstructions": [
+                {
+                  "primary": {
+                    "type": "turn",
+                    "modifier": "right",
+                    "text": "University Avenue",
+                    "components": [
+                      {
+                        "text": "University Avenue",
+                        "type": "text"
+                      }
+                    ]
+                  },
+                  "distanceAlongGeometry": 1385
+                },
+                {
+                  "distanceAlongGeometry": 400,
+                  "primary": {
+                    "type": "turn",
+                    "modifier": "right",
+                    "text": "University Avenue",
+                    "components": [
+                      {
+                        "text": "University Avenue",
+                        "type": "text"
+                      }
+                    ]
+                  },
+                  "sub": {
+                    "text": "",
+                    "components": [
+                      {
+                        "active": false,
+                        "text": "",
+                        "directions": [
+                          "left"
+                        ],
+                        "type": "lane"
+                      },
+                      {
+                        "active": false,
+                        "text": "",
+                        "directions": [
+                          "straight"
+                        ],
+                        "type": "lane"
+                      },
+                      {
+                        "active": false,
+                        "text": "",
+                        "directions": [
+                          "straight"
+                        ],
+                        "type": "lane"
+                      },
+                      {
+                        "active_direction": "right",
+                        "active": true,
+                        "text": "",
+                        "directions": [
+                          "right"
+                        ],
+                        "type": "lane"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "speedLimitUnit": "km/h",
+              "maneuver": {
+                "modifier": "left",
+                "instruction": "Turn left onto 2nd Avenue.",
+                "type": "turn",
+                "bearing_after": 344,
+                "bearing_before": 74,
+                "location": [
+                  -93.620055,
+                  41.587892
+                ]
+              },
+              "speedLimitSign": "vienna",
+              "name": "2nd Avenue",
+              "duration": 102.588,
+              "distance": 1385,
+              "driving_side": "left",
+              "weight": 195.275,
+              "mode": "driving",
+              "geometry": {
+                "coordinates": [
+                  [
+                    -93.620055,
+                    41.587892
+                  ],
+                  [
+                    -93.620085,
+                    41.587969
+                  ],
+                  [
+                    -93.620225,
+                    41.588343
+                  ],
+                  [
+                    -93.620251,
+                    41.588421
+                  ],
+                  [
+                    -93.620272,
+                    41.588513
+                  ],
+                  [
+                    -93.620283,
+                    41.588592
+                  ],
+                  [
+                    -93.620289,
+                    41.588657
+                  ],
+                  [
+                    -93.620289,
+                    41.588717
+                  ],
+                  [
+                    -93.620286,
+                    41.588763
+                  ],
+                  [
+                    -93.620281,
+                    41.588827
+                  ],
+                  [
+                    -93.620275,
+                    41.588929
+                  ],
+                  [
+                    -93.62027,
+                    41.589024
+                  ],
+                  [
+                    -93.620268,
+                    41.589306
+                  ],
+                  [
+                    -93.620274,
+                    41.589677
+                  ],
+                  [
+                    -93.620276,
+                    41.589997
+                  ],
+                  [
+                    -93.620278,
+                    41.590487
+                  ],
+                  [
+                    -93.620282,
+                    41.590977
+                  ],
+                  [
+                    -93.620292,
+                    41.591281
+                  ],
+                  [
+                    -93.620299,
+                    41.591487
+                  ],
+                  [
+                    -93.620302,
+                    41.59157
+                  ],
+                  [
+                    -93.620305,
+                    41.591655
+                  ],
+                  [
+                    -93.62031,
+                    41.591942
+                  ],
+                  [
+                    -93.620324,
+                    41.593055
+                  ],
+                  [
+                    -93.620327,
+                    41.593322
+                  ],
+                  [
+                    -93.620323,
+                    41.593399
+                  ],
+                  [
+                    -93.620314,
+                    41.593467
+                  ],
+                  [
+                    -93.620303,
+                    41.593529
+                  ],
+                  [
+                    -93.620281,
+                    41.593629
+                  ],
+                  [
+                    -93.620251,
+                    41.593735
+                  ],
+                  [
+                    -93.62021,
+                    41.593852
+                  ],
+                  [
+                    -93.620144,
+                    41.593994
+                  ],
+                  [
+                    -93.620102,
+                    41.594079
+                  ],
+                  [
+                    -93.620072,
+                    41.59413
+                  ],
+                  [
+                    -93.620011,
+                    41.594254
+                  ],
+                  [
+                    -93.619943,
+                    41.594404
+                  ],
+                  [
+                    -93.619891,
+                    41.594546
+                  ],
+                  [
+                    -93.619855,
+                    41.594687
+                  ],
+                  [
+                    -93.619838,
+                    41.594794
+                  ],
+                  [
+                    -93.619806,
+                    41.595128
+                  ],
+                  [
+                    -93.619797,
+                    41.59522
+                  ],
+                  [
+                    -93.619766,
+                    41.595339
+                  ],
+                  [
+                    -93.619736,
+                    41.595677
+                  ],
+                  [
+                    -93.619701,
+                    41.596036
+                  ],
+                  [
+                    -93.619674,
+                    41.596369
+                  ],
+                  [
+                    -93.619636,
+                    41.596846
+                  ],
+                  [
+                    -93.619632,
+                    41.597115
+                  ],
+                  [
+                    -93.619627,
+                    41.597425
+                  ],
+                  [
+                    -93.619624,
+                    41.597832
+                  ],
+                  [
+                    -93.619618,
+                    41.598138
+                  ],
+                  [
+                    -93.619615,
+                    41.599099
+                  ],
+                  [
+                    -93.619614,
+                    41.599282
+                  ],
+                  [
+                    -93.619624,
+                    41.599597
+                  ],
+                  [
+                    -93.619631,
+                    41.599763
+                  ],
+                  [
+                    -93.619638,
+                    41.600159
+                  ],
+                  [
+                    -93.619638,
+                    41.600191
+                  ],
+                  [
+                    -93.619645,
+                    41.600252
+                  ]
+                ],
+                "type": "LineString"
+              }
+            },
+            {
+              "intersections": [
+                {
+                  "entry": [
+                    true,
+                    false,
+                    false,
+                    true
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    90,
+                    175,
+                    270,
+                    358
+                  ],
+                  "duration": 6.509,
+                  "turn_weight": 26,
+                  "lanes": [
+                    {
+                      "indications": [
+                        "left"
+                      ],
+                      "valid": false,
+                      "active": false
+                    },
+                    {
+                      "indications": [
+                        "straight"
+                      ],
+                      "valid": false,
+                      "active": false
+                    },
+                    {
+                      "indications": [
+                        "straight"
+                      ],
+                      "valid": false,
+                      "active": false
+                    },
+                    {
+                      "indications": [
+                        "right"
+                      ],
+                      "valid_indication": "right",
+                      "valid": true,
+                      "active": true
+                    }
+                  ],
+                  "turn_duration": 5.93,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 26.68,
+                  "geometry_index": 70,
+                  "location": [
+                    -93.619645,
+                    41.600252
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    false,
+                    false
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    90,
+                    172,
+                    270,
+                    352
+                  ],
+                  "duration": 4.582,
+                  "turn_duration": 0.018,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 5.363,
+                  "geometry_index": 71,
+                  "location": [
+                    -93.619539,
+                    41.600252
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    90,
+                    270
+                  ],
+                  "duration": 1.414,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 1.662,
+                  "geometry_index": 72,
+                  "location": [
+                    -93.618685,
+                    41.600253
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    true,
+                    true,
+                    false
+                  ],
+                  "in": 3,
+                  "bearings": [
+                    1,
+                    90,
+                    182,
+                    270
+                  ],
+                  "duration": 4.196,
+                  "turn_weight": 5.6,
+                  "lanes": [
+                    {
+                      "indications": [
+                        "left"
+                      ],
+                      "valid": false,
+                      "active": false
+                    },
+                    {
+                      "indications": [
+                        "straight"
+                      ],
+                      "valid_indication": "straight",
+                      "valid": true,
+                      "active": true
+                    },
+                    {
+                      "indications": [
+                        "straight",
+                        "right"
+                      ],
+                      "valid_indication": "straight",
+                      "valid": true,
+                      "active": true
+                    }
+                  ],
+                  "turn_duration": 0.018,
+                  "admin_index": 0,
+                  "out": 1,
+                  "weight": 10.51,
+                  "geometry_index": 73,
+                  "location": [
+                    -93.61842,
+                    41.600254
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    90,
+                    270
+                  ],
+                  "duration": 2.443,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 2.87,
+                  "geometry_index": 74,
+                  "location": [
+                    -93.617639,
+                    41.600256
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    true,
+                    false,
+                    true
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    90,
+                    169,
+                    270,
+                    349
+                  ],
+                  "duration": 2.011,
+                  "turn_weight": 5.6,
+                  "turn_duration": 0.018,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 7.942,
+                  "geometry_index": 75,
+                  "location": [
+                    -93.617187,
+                    41.600257
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    true,
+                    false
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    88,
+                    170,
+                    270
+                  ],
+                  "duration": 2.193,
+                  "turn_weight": 1.4,
+                  "turn_duration": 0.007,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 3.968,
+                  "geometry_index": 76,
+                  "location": [
+                    -93.616816,
+                    41.600256
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    85,
+                    267
+                  ],
+                  "duration": 1.929,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 2.266,
+                  "geometry_index": 78,
+                  "location": [
+                    -93.616414,
+                    41.600269
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    true,
+                    false,
+                    true
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    83,
+                    177,
+                    265,
+                    358
+                  ],
+                  "duration": 4.186,
+                  "turn_weight": 5.6,
+                  "lanes": [
+                    {
+                      "indications": [
+                        "left"
+                      ],
+                      "valid": false,
+                      "active": false
+                    },
+                    {
+                      "indications": [
+                        "straight"
+                      ],
+                      "valid_indication": "straight",
+                      "valid": true,
+                      "active": true
+                    },
+                    {
+                      "indications": [
+                        "straight",
+                        "right"
+                      ],
+                      "valid_indication": "straight",
+                      "valid": true,
+                      "active": true
+                    }
+                  ],
+                  "turn_duration": 0.008,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 10.51,
+                  "geometry_index": 79,
+                  "location": [
+                    -93.616051,
+                    41.600294
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    true
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    90,
+                    263,
+                    277
+                  ],
+                  "duration": 9.095,
+                  "turn_weight": 1.4,
+                  "turn_duration": 0.03,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 12.051,
+                  "geometry_index": 80,
+                  "location": [
+                    -93.615278,
+                    41.600369
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    90,
+                    270
+                  ],
+                  "duration": 7.586,
+                  "turn_weight": 5,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 13.913,
+                  "geometry_index": 81,
+                  "location": [
+                    -93.613583,
+                    41.600371
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    90,
+                    270
+                  ],
+                  "duration": 0.964,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 1.133,
+                  "geometry_index": 82,
+                  "location": [
+                    -93.612169,
+                    41.600374
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    true,
+                    false
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    90,
+                    179,
+                    270
+                  ],
+                  "duration": 6.061,
+                  "turn_weight": 1.4,
+                  "turn_duration": 0.018,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 8.5,
+                  "geometry_index": 83,
+                  "location": [
+                    -93.611989,
+                    41.600375
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    true,
+                    true,
+                    false
+                  ],
+                  "in": 4,
+                  "bearings": [
+                    1,
+                    75,
+                    100,
+                    177,
+                    270
+                  ],
+                  "duration": 4.86,
+                  "turn_weight": 16.8,
+                  "turn_duration": 0.038,
+                  "admin_index": 0,
+                  "out": 2,
+                  "weight": 22.465,
+                  "geometry_index": 84,
+                  "location": [
+                    -93.61086,
+                    41.600376
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    90,
+                    271
+                  ],
+                  "duration": 2.7,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 3.172,
+                  "geometry_index": 88,
+                  "location": [
+                    -93.609968,
+                    41.600328
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    90,
+                    270
+                  ],
+                  "duration": 1.929,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 2.266,
+                  "geometry_index": 89,
+                  "location": [
+                    -93.609463,
+                    41.60033
+                  ]
+                },
+                {
+                  "bearings": [
+                    18,
+                    90,
+                    197,
+                    270
+                  ],
+                  "entry": [
+                    false,
+                    true,
+                    false,
+                    false
+                  ],
+                  "in": 3,
+                  "turn_duration": 0.018,
+                  "admin_index": 0,
+                  "out": 1,
+                  "geometry_index": 91,
+                  "location": [
+                    -93.609101,
+                    41.600332
+                  ]
+                }
+              ],
+              "bannerInstructions": [
+                {
+                  "primary": {
+                    "type": "turn",
+                    "modifier": "left",
+                    "text": "Pennsylvania Avenue",
+                    "components": [
+                      {
+                        "text": "Pennsylvania Avenue",
+                        "type": "text"
+                      }
+                    ]
+                  },
+                  "distanceAlongGeometry": 895
+                }
+              ],
+              "speedLimitUnit": "km/h",
+              "maneuver": {
+                "modifier": "right",
+                "instruction": "Turn right onto University Avenue.",
+                "type": "turn",
+                "bearing_after": 90,
+                "bearing_before": 355,
+                "location": [
+                  -93.619645,
+                  41.600252
+                ]
+              },
+              "speedLimitSign": "vienna",
+              "name": "University Avenue",
+              "duration": 63.639,
+              "distance": 895,
+              "driving_side": "left",
+              "weight": 136.404,
+              "mode": "driving",
+              "geometry": {
+                "coordinates": [
+                  [
+                    -93.619645,
+                    41.600252
+                  ],
+                  [
+                    -93.619539,
+                    41.600252
+                  ],
+                  [
+                    -93.618685,
+                    41.600253
+                  ],
+                  [
+                    -93.61842,
+                    41.600254
+                  ],
+                  [
+                    -93.617639,
+                    41.600256
+                  ],
+                  [
+                    -93.617187,
+                    41.600257
+                  ],
+                  [
+                    -93.616816,
+                    41.600256
+                  ],
+                  [
+                    -93.616605,
+                    41.600259
+                  ],
+                  [
+                    -93.616414,
+                    41.600269
+                  ],
+                  [
+                    -93.616051,
+                    41.600294
+                  ],
+                  [
+                    -93.615278,
+                    41.600369
+                  ],
+                  [
+                    -93.613583,
+                    41.600371
+                  ],
+                  [
+                    -93.612169,
+                    41.600374
+                  ],
+                  [
+                    -93.611989,
+                    41.600375
+                  ],
+                  [
+                    -93.61086,
+                    41.600376
+                  ],
+                  [
+                    -93.610719,
+                    41.60035
+                  ],
+                  [
+                    -93.61057,
+                    41.600339
+                  ],
+                  [
+                    -93.610184,
+                    41.600329
+                  ],
+                  [
+                    -93.609968,
+                    41.600328
+                  ],
+                  [
+                    -93.609463,
+                    41.60033
+                  ],
+                  [
+                    -93.609126,
+                    41.600332
+                  ],
+                  [
+                    -93.609101,
+                    41.600332
+                  ],
+                  [
+                    -93.608926,
+                    41.600332
+                  ]
+                ],
+                "type": "LineString"
+              }
+            },
+            {
+              "intersections": [
+                {
+                  "entry": [
+                    true,
+                    true,
+                    true,
+                    false
+                  ],
+                  "in": 3,
+                  "bearings": [
+                    15,
+                    90,
+                    190,
+                    270
+                  ],
+                  "duration": 1.817,
+                  "turn_weight": 13.4,
+                  "turn_duration": 0.935,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 14.436,
+                  "geometry_index": 92,
+                  "location": [
+                    -93.608926,
+                    41.600332
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    false,
+                    true
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    24,
+                    90,
+                    195,
+                    270
+                  ],
+                  "duration": 0.933,
+                  "turn_weight": 16.8,
+                  "turn_duration": 0.033,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 17.858,
+                  "geometry_index": 94,
+                  "location": [
+                    -93.608889,
+                    41.600436
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false,
+                    false,
+                    false
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    23,
+                    83,
+                    204,
+                    265
+                  ],
+                  "duration": 3.337,
+                  "turn_duration": 0.007,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 3.913,
+                  "geometry_index": 95,
+                  "location": [
+                    -93.608841,
+                    41.600518
+                  ]
+                },
+                {
+                  "entry": [
+                    true,
+                    false
+                  ],
+                  "in": 1,
+                  "bearings": [
+                    23,
+                    203
+                  ],
+                  "duration": 1.62,
+                  "admin_index": 0,
+                  "out": 0,
+                  "weight": 1.904,
+                  "geometry_index": 97,
+                  "location": [
+                    -93.608668,
+                    41.600824
+                  ]
+                },
+                {
+                  "bearings": [
+                    20,
+                    203
+                  ],
+                  "entry": [
+                    true,
+                    false
+                  ],
+                  "in": 1,
+                  "admin_index": 0,
+                  "out": 0,
+                  "geometry_index": 98,
+                  "location": [
+                    -93.608586,
+                    41.60097
+                  ]
+                }
+              ],
+              "bannerInstructions": [
+                {
+                  "primary": {
+                    "type": "turn",
+                    "modifier": "left",
+                    "text": "Turn left.",
+                    "components": [
+                      {
+                        "text": "Turn left.",
+                        "type": "text"
+                      }
+                    ]
+                  },
+                  "distanceAlongGeometry": 115
+                }
+              ],
+              "speedLimitUnit": "km/h",
+              "maneuver": {
+                "modifier": "left",
+                "instruction": "Turn left onto Pennsylvania Avenue.",
+                "type": "turn",
+                "bearing_after": 24,
+                "bearing_before": 90,
+                "location": [
+                  -93.608926,
+                  41.600332
+                ]
+              },
+              "speedLimitSign": "vienna",
+              "name": "Pennsylvania Avenue",
+              "duration": 11.127,
+              "distance": 115,
+              "driving_side": "left",
+              "weight": 42.128,
+              "mode": "driving",
+              "geometry": {
+                "coordinates": [
+                  [
+                    -93.608926,
+                    41.600332
+                  ],
+                  [
+                    -93.608908,
+                    41.600383
+                  ],
+                  [
+                    -93.608889,
+                    41.600436
+                  ],
+                  [
+                    -93.608841,
+                    41.600518
+                  ],
+                  [
+                    -93.608828,
+                    41.600542
+                  ],
+                  [
+                    -93.608668,
+                    41.600824
+                  ],
+                  [
+                    -93.608586,
+                    41.60097
+                  ],
+                  [
+                    -93.608513,
+                    41.601118
+                  ],
+                  [
+                    -93.608483,
+                    41.601193
+                  ],
+                  [
+                    -93.608457,
+                    41.601299
+                  ]
+                ],
+                "type": "LineString"
+              }
+            },
+            {
+              "intersections": [
+                {
+                  "entry": [
+                    true,
+                    true,
+                    false,
+                    true
+                  ],
+                  "in": 2,
+                  "bearings": [
+                    3,
+                    86,
+                    193,
+                    270
+                  ],
+                  "duration": 5.423,
+                  "turn_weight": 88.4,
+                  "turn_duration": 3.623,
+                  "admin_index": 0,
+                  "out": 3,
+                  "weight": 90.515,
+                  "geometry_index": 101,
+                  "location": [
+                    -93.608457,
+                    41.601299
+                  ]
+                },
+                {
+                  "bearings": [
+                    13,
+                    90,
+                    193,
+                    271
+                  ],
+                  "entry": [
+                    false,
+                    false,
+                    false,
+                    true
+                  ],
+                  "in": 1,
+                  "turn_duration": 0.018,
+                  "admin_index": 0,
+                  "out": 3,
+                  "geometry_index": 102,
+                  "location": [
+                    -93.608576,
+                    41.601299
+                  ]
+                }
+              ],
+              "bannerInstructions": [
+                {
+                  "primary": {
+                    "type": "turn",
+                    "modifier": "slight right",
+                    "text": "Bear right.",
+                    "components": [
+                      {
+                        "text": "Bear right.",
+                        "type": "text"
+                      }
+                    ]
+                  },
+                  "distanceAlongGeometry": 57
+                }
+              ],
+              "speedLimitUnit": "km/h",
+              "maneuver": {
+                "modifier": "left",
+                "instruction": "Turn left.",
+                "type": "turn",
+                "bearing_after": 270,
+                "bearing_before": 13,
+                "location": [
+                  -93.608457,
+                  41.601299
+                ]
+              },
+              "speedLimitSign": "vienna",
+              "name": "",
+              "duration": 13.901,
+              "distance": 57,
+              "driving_side": "left",
+              "weight": 100.455,
+              "mode": "driving",
+              "geometry": {
+                "coordinates": [
+                  [
+                    -93.608457,
+                    41.601299
+                  ],
+                  [
+                    -93.608576,
+                    41.601299
+                  ],
+                  [
+                    -93.609137,
+                    41.601303
+                  ]
+                ],
+                "type": "LineString"
+              }
+            },
+            {
+              "intersections": [
+                {
+                  "bearings": [
+                    91,
+                    270,
+                    298
+                  ],
+                  "entry": [
+                    false,
+                    true,
+                    true
+                  ],
+                  "in": 0,
+                  "turn_weight": 6.3,
+                  "turn_duration": 0.131,
+                  "admin_index": 0,
+                  "out": 2,
+                  "geometry_index": 103,
+                  "location": [
+                    -93.609137,
+                    41.601303
+                  ]
+                }
+              ],
+              "bannerInstructions": [
+                {
+                  "primary": {
+                    "type": "arrive",
+                    "modifier": "right",
+                    "text": "Your destination is on the right.",
+                    "components": [
+                      {
+                        "text": "Your destination is on the right.",
+                        "type": "text"
+                      }
+                    ]
+                  },
+                  "distanceAlongGeometry": 12.944
+                }
+              ],
+              "speedLimitUnit": "km/h",
+              "maneuver": {
+                "modifier": "slight right",
+                "instruction": "Bear right.",
+                "type": "turn",
+                "bearing_after": 298,
+                "bearing_before": 271,
+                "location": [
+                  -93.609137,
+                  41.601303
+                ]
+              },
+              "speedLimitSign": "vienna",
+              "name": "",
+              "duration": 2.461,
+              "distance": 12.944,
+              "driving_side": "left",
+              "weight": 9.038,
+              "mode": "driving",
+              "geometry": {
+                "coordinates": [
+                  [
+                    -93.609137,
+                    41.601303
+                  ],
+                  [
+                    -93.609274,
+                    41.601358
+                  ]
+                ],
+                "type": "LineString"
+              }
+            },
+            {
+              "intersections": [
+                {
+                  "bearings": [
+                    118
+                  ],
+                  "entry": [
+                    true
+                  ],
+                  "in": 0,
+                  "admin_index": 0,
+                  "geometry_index": 104,
+                  "location": [
+                    -93.609274,
+                    41.601358
+                  ]
+                }
+              ],
+              "bannerInstructions": [],
+              "speedLimitUnit": "km/h",
+              "maneuver": {
+                "modifier": "right",
+                "instruction": "Your destination is on the right.",
+                "type": "arrive",
+                "bearing_after": 0,
+                "bearing_before": 298,
+                "location": [
+                  -93.609274,
+                  41.601358
+                ]
+              },
+              "speedLimitSign": "vienna",
+              "name": "",
+              "duration": 0,
+              "distance": 0,
+              "driving_side": "left",
+              "weight": 0,
+              "mode": "driving",
+              "geometry": {
+                "coordinates": [
+                  [
+                    -93.609274,
+                    41.601358
+                  ],
+                  [
+                    -93.609274,
+                    41.601358
+                  ]
+                ],
+                "type": "LineString"
+              }
+            }
+          ],
+          "distance": 2895.595,
+          "summary": "2nd Avenue, University Avenue"
+        }
+      ],
+      "geometry": {
+        "coordinates": [
+          [
+            -93.624959,
+            41.586809
+          ],
+          [
+            -93.624971,
+            41.58684
+          ],
+          [
+            -93.624875,
+            41.58686
+          ],
+          [
+            -93.624209,
+            41.586996
+          ],
+          [
+            -93.62399,
+            41.587041
+          ],
+          [
+            -93.623835,
+            41.587075
+          ],
+          [
+            -93.623732,
+            41.587097
+          ],
+          [
+            -93.62354,
+            41.587139
+          ],
+          [
+            -93.622518,
+            41.587364
+          ],
+          [
+            -93.622425,
+            41.587383
+          ],
+          [
+            -93.621833,
+            41.587511
+          ],
+          [
+            -93.621393,
+            41.587606
+          ],
+          [
+            -93.621281,
+            41.58763
+          ],
+          [
+            -93.621158,
+            41.587657
+          ],
+          [
+            -93.620178,
+            41.587866
+          ],
+          [
+            -93.620055,
+            41.587892
+          ],
+          [
+            -93.620085,
+            41.587969
+          ],
+          [
+            -93.620225,
+            41.588343
+          ],
+          [
+            -93.620251,
+            41.588421
+          ],
+          [
+            -93.620272,
+            41.588513
+          ],
+          [
+            -93.620283,
+            41.588592
+          ],
+          [
+            -93.620289,
+            41.588657
+          ],
+          [
+            -93.620289,
+            41.588717
+          ],
+          [
+            -93.620286,
+            41.588763
+          ],
+          [
+            -93.620281,
+            41.588827
+          ],
+          [
+            -93.620275,
+            41.588929
+          ],
+          [
+            -93.62027,
+            41.589024
+          ],
+          [
+            -93.620268,
+            41.589306
+          ],
+          [
+            -93.620274,
+            41.589677
+          ],
+          [
+            -93.620276,
+            41.589997
+          ],
+          [
+            -93.620278,
+            41.590487
+          ],
+          [
+            -93.620282,
+            41.590977
+          ],
+          [
+            -93.620292,
+            41.591281
+          ],
+          [
+            -93.620299,
+            41.591487
+          ],
+          [
+            -93.620302,
+            41.59157
+          ],
+          [
+            -93.620305,
+            41.591655
+          ],
+          [
+            -93.62031,
+            41.591942
+          ],
+          [
+            -93.620324,
+            41.593055
+          ],
+          [
+            -93.620327,
+            41.593322
+          ],
+          [
+            -93.620323,
+            41.593399
+          ],
+          [
+            -93.620314,
+            41.593467
+          ],
+          [
+            -93.620303,
+            41.593529
+          ],
+          [
+            -93.620281,
+            41.593629
+          ],
+          [
+            -93.620251,
+            41.593735
+          ],
+          [
+            -93.62021,
+            41.593852
+          ],
+          [
+            -93.620144,
+            41.593994
+          ],
+          [
+            -93.620102,
+            41.594079
+          ],
+          [
+            -93.620072,
+            41.59413
+          ],
+          [
+            -93.620011,
+            41.594254
+          ],
+          [
+            -93.619943,
+            41.594404
+          ],
+          [
+            -93.619891,
+            41.594546
+          ],
+          [
+            -93.619855,
+            41.594687
+          ],
+          [
+            -93.619838,
+            41.594794
+          ],
+          [
+            -93.619806,
+            41.595128
+          ],
+          [
+            -93.619797,
+            41.59522
+          ],
+          [
+            -93.619766,
+            41.595339
+          ],
+          [
+            -93.619736,
+            41.595677
+          ],
+          [
+            -93.619701,
+            41.596036
+          ],
+          [
+            -93.619674,
+            41.596369
+          ],
+          [
+            -93.619636,
+            41.596846
+          ],
+          [
+            -93.619632,
+            41.597115
+          ],
+          [
+            -93.619627,
+            41.597425
+          ],
+          [
+            -93.619624,
+            41.597832
+          ],
+          [
+            -93.619618,
+            41.598138
+          ],
+          [
+            -93.619615,
+            41.599099
+          ],
+          [
+            -93.619614,
+            41.599282
+          ],
+          [
+            -93.619624,
+            41.599597
+          ],
+          [
+            -93.619631,
+            41.599763
+          ],
+          [
+            -93.619638,
+            41.600159
+          ],
+          [
+            -93.619638,
+            41.600191
+          ],
+          [
+            -93.619645,
+            41.600252
+          ],
+          [
+            -93.619539,
+            41.600252
+          ],
+          [
+            -93.618685,
+            41.600253
+          ],
+          [
+            -93.61842,
+            41.600254
+          ],
+          [
+            -93.617639,
+            41.600256
+          ],
+          [
+            -93.617187,
+            41.600257
+          ],
+          [
+            -93.616816,
+            41.600256
+          ],
+          [
+            -93.616605,
+            41.600259
+          ],
+          [
+            -93.616414,
+            41.600269
+          ],
+          [
+            -93.616051,
+            41.600294
+          ],
+          [
+            -93.615278,
+            41.600369
+          ],
+          [
+            -93.613583,
+            41.600371
+          ],
+          [
+            -93.612169,
+            41.600374
+          ],
+          [
+            -93.611989,
+            41.600375
+          ],
+          [
+            -93.61086,
+            41.600376
+          ],
+          [
+            -93.610719,
+            41.60035
+          ],
+          [
+            -93.61057,
+            41.600339
+          ],
+          [
+            -93.610184,
+            41.600329
+          ],
+          [
+            -93.609968,
+            41.600328
+          ],
+          [
+            -93.609463,
+            41.60033
+          ],
+          [
+            -93.609126,
+            41.600332
+          ],
+          [
+            -93.609101,
+            41.600332
+          ],
+          [
+            -93.608926,
+            41.600332
+          ],
+          [
+            -93.608908,
+            41.600383
+          ],
+          [
+            -93.608889,
+            41.600436
+          ],
+          [
+            -93.608841,
+            41.600518
+          ],
+          [
+            -93.608828,
+            41.600542
+          ],
+          [
+            -93.608668,
+            41.600824
+          ],
+          [
+            -93.608586,
+            41.60097
+          ],
+          [
+            -93.608513,
+            41.601118
+          ],
+          [
+            -93.608483,
+            41.601193
+          ],
+          [
+            -93.608457,
+            41.601299
+          ],
+          [
+            -93.608576,
+            41.601299
+          ],
+          [
+            -93.609137,
+            41.601303
+          ],
+          [
+            -93.609274,
+            41.601358
+          ]
+        ],
+        "type": "LineString"
+      }
+    }
+  ],
+  "waypoints": [
+    {
+      "distance": 3.532,
+      "name": "6th Avenue",
+      "location": [
+        -93.624959,
+        41.586809
+      ]
+    },
+    {
+      "distance": 30.578,
+      "name": "",
+      "location": [
+        -93.609274,
+        41.601358
+      ]
+    }
+  ],
+  "code": "Ok"
+}

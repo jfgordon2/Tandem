@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "runtime_version": "3.9.1",
+  "packages": [
+    {
+      "id": "iowa-squashfs-20261104-v1",
+      "title": "Iowa",
+      "regions": [
+        "us_state.IA"
+      ],
+      "bytes": 81522688,
+      "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-data-v1/iowa-squashfs-20261104-v1.json",
+      "sha256": "3bd5ca29aaa2edb21a8c04ea9dbb7fe23bade7f0d0744be10a254bbf06cb9b3f"
+    },
+    {
+      "id": "iowa-illinois-squashfs-20261104-v1",
+      "title": "Iowa and Illinois",
+      "regions": [
+        "us_state.IA",
+        "us_state.IL"
+      ],
+      "bytes": 258793472,
+      "manifest": "https://github.com/jfgordon2/Tandem/releases/download/routing-data-v1/iowa-illinois-squashfs-20261104-v1.json",
+      "sha256": "ed178c37ce22da0ec8182d7c91ecc725680799f90caf04589ed3886af1a7e47c"
+    }
+  ]
+}
