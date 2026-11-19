@@ -64,3 +64,42 @@ def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any)
     if name == "nav":
       save(f"{out}/onroad_nav.png")   # design/onroadnav.html
   Z.set_text(False)
+  routing_shots(frame, save, out)
+
+
+def routing_shots(frame: Callable, save: Callable, out: str) -> None:
+  """The routing chip in each approved state (design/valhalla2-chip-*.html): a route to Market Street, at 44 under a 45 sign."""
+  from openpilot.selfdrive.ui.tandem.onroad.status import routing_chip, routing_state
+  now = 100.0
+
+  def routing(navigation: str, tandem: dict | None = None, recalculating: bool = False, offline_only: bool = False) -> Chip:
+    chip = routing_chip(routing_state(navigation, tandem, tandem, recalculating, now), now, offline_only)
+    assert chip is not None
+    return chip
+  trip = BarState(engaged=True, set_speed=48, street="Market Street", navigating=True, arrive="5:18 PM", left="12 min · 8.4 mi")
+  waiting = replace(trip, arrive="", left="")
+  base = DriveDisplay(trip, 44, posted="45", monitor=1.0, arc=ArcState(0.18, 0.0, True))
+  paused = Chip("pause_signal", "Steering paused for signal", ChipTone.PAUSED, "signal")
+  offline = {"status": "ready", "provider": "offline", "fallback": True}
+  online = {"status": "ready", "provider": "online", "fallback": True}
+  cases = (
+    ("valhalla2-chip-recalculate", base, (routing("routing", recalculating=True),)),
+    ("valhalla2-chip-offline-fallback", base, (routing("guiding", offline),)),
+    ("valhalla2-chip-online-fallback", base, (routing("guiding", online),)),
+    ("valhalla2-chip-strict-unavailable", replace(base, bar=waiting), (routing("routeUnavailable", {"status": "no_route"}, offline_only=True),)),
+    ("valhalla2-chip-gps", base, (routing("waitingForLocation"),)),
+    ("valhalla2-chip-stack", base, (routing("routing", recalculating=True), paused)),   # newest nearest the bar (ChipStack)
+    ("valhalla2-chip-first-route", replace(base, bar=waiting), (routing("routing"),)),
+  )
+  noop = lambda *args: None  # noqa: E731
+  for name, sample, chips in cases:
+    shown = replace(sample, chips=tuple((chip, 1.0) for chip in chips))
+    rect = rl.Rectangle(0, 0, 2160, 1080)
+    overlay = OnroadOverlay(lambda shown=shown: shown, noop, noop, noop, noop, clock=lambda: .5)
+
+    def render(rect: rl.Rectangle = rect, overlay: OnroadOverlay = overlay) -> None:
+      mock_road(rect)
+      overlay.render(rect)
+    for _ in range(2):
+      frame(render)
+    save(f"{out}/{name}.png")

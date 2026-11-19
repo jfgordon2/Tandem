@@ -27,7 +27,7 @@ from openpilot.selfdrive.ui.tandem.onroad.binding import driving_alert, lane_cha
 from openpilot.selfdrive.ui.tandem.onroad.layers import AT_LIMIT, ArcState, BarState, Headroom
 from openpilot.selfdrive.ui.tandem.onroad.overlay import OnroadOverlay, road_rect
 from openpilot.selfdrive.ui.tandem.onroad.state import awareness, route_progress, turn, DriveDisplay, DrivingAlert, LimitDecision, Proposal, displayed_speed
-from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, RamWatch, Snapshot
+from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, RamWatch, Snapshot, routing_chip, routing_state
 from openpilot.selfdrive.ui.tandem.onroad.streets import short_street
 from openpilot.selfdrive.ui.tandem.places import StarPilotPlaces
 from openpilot.selfdrive.ui.tandem.ram import RamLog, shared_log
@@ -44,6 +44,9 @@ from openpilot.system.ui.lib.application import MousePos
 
 
 PREVIEW_SECONDS = 2.5   # how far ahead the arc's preview looks, as on release
+# StarPilot's navigation statuses with a destination: the bar shows the route (End route, ARRIVE and LEFT) even before
+# there's a route, as in design/valhalla2-chip-first-route.html.
+ROUTE_ACTIVE = frozenset({"routing", "waitingForLocation", "routeUnavailable", "guiding", "arrived"})
 
 
 def limit_offer(state: OnroadState, allowed: bool, now_ns: int) -> Proposal | None:
@@ -81,6 +84,9 @@ class EssentialsOnroad(AugmentedRoadView):
     self._safe = True
     self._safe_at = -1_000_000_000
     self._prepared = False
+    self._routing_key: tuple[int, str] | None = None
+    self._guided = False   # this drive had a route to this destination: a new request is a recalculation
+    self._nav_status = ""   # StarPilot's published navigation status
     self._overlay = self._child(OnroadOverlay(lambda: self._display, self._menu, self._step, self._disengage, self._resolve,
                                               end_route=self._end_route, where_to=self._where_to))
 
@@ -148,11 +154,37 @@ class EssentialsOnroad(AugmentedRoadView):
     cruise_kph = state.cruise_kph
     if ui_state.CP is not None and cruise_kph and ui_state.replay_clock is None:
       self._safely("turn chip", lambda: self._turn_chip(snap, now_ns, float(cruise_kph) * CV.KPH_TO_MS))
+    self._safely("navigation status", lambda: self._read_navigation(now_ns))
+    self._safely("routing chip", lambda: self._routing_chip(snap, now_ns))
     memory = current_message(sm, "deviceState", now_ns)
     if memory is not None:
       snap.memory_percent = int(memory.memoryUsagePercent)
     snap.low_ram = self._ram.update("lowMemory" in snap.events, snap.memory_percent)
     return snap
+
+  def _read_navigation(self, now_ns: int) -> None:
+    """StarPilot's published navigation status, and whether this drive already had a route to its destination."""
+    from openpilot.starpilot.navigation.wire import navigation_state
+    sm, after = ui_state.sm, ui_state.started_frame
+    message = display_message(sm, "starpilotNavigation", now_ns, after_frame=after)
+    state = navigation_state(message) if message is not None else None
+    self._nav_status = str(state.status) if state is not None else ""
+    key = (after, str(state.destinationName) if state is not None else "")
+    if key != self._routing_key:   # a new drive or destination starts with no route yet
+      self._routing_key, self._guided = key, False
+    self._guided |= self._nav_status == "guiding"
+
+  def _routing_chip(self, snap: Snapshot, now_ns: int) -> None:
+    """Tandem's routing chip (design/valhalla2-chip-*.html) from StarPilot's navigation status, with offline routing on:
+    finding or recalculating a route, waiting for GPS, which maps a fallback switched to, or why there's no route."""
+    from openpilot.starpilot.tandem.routing import config as C
+    from openpilot.starpilot.tandem.routing.navigation import STATUS
+    if not C.enabled():
+      return
+    status = self._nav_status
+    now = time.monotonic()
+    routing = routing_state(status, STATUS.read(max_age=60), STATUS.read(max_age=3), self._guided, now)
+    snap.routing = routing_chip(routing, now, C.policy()[0])
 
   @staticmethod
   def _turn_chip(snap: Snapshot, now_ns: int, cruise_mps: float) -> None:
@@ -227,7 +259,7 @@ class EssentialsOnroad(AugmentedRoadView):
     arrive, left = route_progress(state.navigation, bool(state.metric), datetime.datetime.now())
     self._display = DriveDisplay(
       bar=BarState(engaged=state.engaged, set_speed=cruise or 0.0, unit=unit, street=self._street(time.monotonic_ns()), heading=self._compass.heading(),
-                   navigating=state.navigation is not None, arrive=arrive, left=left,
+                   navigating=state.navigation is not None or self._nav_status in ROUTE_ACTIVE, arrive=arrive, left=left,
                    can_adjust=bool(can_adjust), can_disengage=bool(can_disengage)),
       speed=displayed_speed(state.speed_mps, factor), unit=unit, posted=posted,
       vienna=state.appearance.use_vienna_sign,

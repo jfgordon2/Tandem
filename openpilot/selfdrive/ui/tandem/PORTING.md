@@ -630,8 +630,10 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
   picker and download view against release's approved `valhalla2`/`valhalla3`/`valhalla4`/`valhalla5` mocks, and
   Navigation's Offline maps only, Preferred maps and Offline Maps rows (`stage5-drivingnav`, `stage5-drivingnav-end`).
   Where to?'s Offline maps button opens the page. Remove maps is Storage & Data's Delete.
-- Phase B, still to do: the routing status chips on the driving screen (`valhalla2-chip-*`), and the offline-maps chip
-  and "Choose regions" in Where to?'s preview.
+- Phase B, routing chips done: `onroad/status.routing_state` maps StarPilot 7's published navigation status
+  (`starpilotNavigation`) and Tandem's `routing-status.json` onto release's `routing_chip` (`valhalla2-chip-*`). The bar
+  shows a route (End route, dashes for estimates) for any StarPilot destination, not only while guiding.
+- Phase B, still to do: the offline-maps chip and "Choose regions" in Where to?'s preview.
 - Speed & Steering › Navigation (`settings/navigation.py`, `design/stage5-drivingnav.html`) writes StarPilot's own
   navigation settings: on or off, directions (Google only with its key), avoidances and position. Saved Places opens
   Where to?. Keys are pasted in Galaxy; `map_keys.py` (`stage5-mapboxkey.html`) explains how. Release's End Route When

@@ -747,43 +747,43 @@
     {
       "mock": "valhalla2-chip-recalculate",
       "title": "Recalculating route",
-      "note": "Chip placement and time/street layout match in the native device capture. Use the existing bottom-left status-chip placement and dark fill. Keep the time, distance-left and live street in the normal bottom bar. Hide stale turn guidance independently. The road background is synthetic; existing button/control state is retained.",
+      "note": "StarPilot 7: from StarPilot's published navigation status and Tandem's routing status (routing-status.json). Matches: Recalculating route once this drive has had a route to the destination; the trip estimates and street stay in the bar.",
       "match": true
     },
     {
       "mock": "valhalla2-chip-offline-fallback",
       "title": "Online failed; offline route works",
-      "note": "Chip placement and time/street layout match in the native device capture. Using offline maps appears briefly in the existing chip stack, then fades. The time/street layout stays in place. The road background is synthetic; existing button/control state is retained.",
+      "note": "StarPilot 7: from StarPilot's published navigation status and Tandem's routing status (routing-status.json). Matches: Using offline maps for 3 seconds after online routing failed and Valhalla answered.",
       "match": true
     },
     {
       "mock": "valhalla2-chip-online-fallback",
       "title": "Offline failed; online route works",
-      "note": "Chip placement and time/street layout match in the native device capture. Using online maps appears briefly in the same chip. This state must never occur with Offline maps only on. The road background is synthetic; existing button/control state is retained.",
+      "note": "StarPilot 7: from StarPilot's published navigation status and Tandem's routing status (routing-status.json). Matches: Using online maps for 3 seconds after Valhalla failed; never with Offline maps only.",
       "match": true
     },
     {
       "mock": "valhalla2-chip-strict-unavailable",
       "title": "Offline only, route unavailable",
-      "note": "Chip placement and time/street layout match in the native device capture. The warning uses the existing chip; no online request is made. This example has no previous route estimate, so the time fields show dashes while the available street stays visible. The road background is synthetic; existing button/control state is retained.",
+      "note": "StarPilot 7: from StarPilot's published navigation status and Tandem's routing status (routing-status.json). Matches: Offline maps unavailable with Offline maps only; the bar keeps End route with dashes for the estimates.",
       "match": true
     },
     {
       "mock": "valhalla2-chip-gps",
       "title": "Waiting for GPS",
-      "note": "Chip placement and time/street layout match in the native device capture. Show Waiting for GPS in the status chip. Last useful trip estimates may remain visible; they must not be treated as valid turn guidance. This mock illustrates a short interruption. The road background is synthetic; existing button/control state is retained.",
+      "note": "StarPilot 7: from StarPilot's published navigation status and Tandem's routing status (routing-status.json). Matches the chip. The estimates stay while StarPilot keeps publishing guidance; StarPilot decides when its guidance is stale.",
       "match": true
     },
     {
       "mock": "valhalla2-chip-stack",
       "title": "Routing and existing statuses together",
-      "note": "Chip placement and time/street layout match in the native device capture. Use the existing stack and spacing. Routing is informational and yields to safety alerts; it does not replace or recolor steering warnings. The road background is synthetic; existing button/control state is retained.",
+      "note": "StarPilot 7: from StarPilot's published navigation status and Tandem's routing status (routing-status.json). Matches: the existing stack, newest chip nearest the bar; routing yields to driving reasons.",
       "match": true
     },
     {
       "mock": "valhalla2-chip-first-route",
       "title": "First route, no previous estimate",
-      "note": "Chip placement and time/street layout match in the native device capture. The chip says Finding route. Time fields stay as dashes instead of invented values, and the street remains in its normal place. The road background is synthetic; existing button/control state is retained.",
+      "note": "StarPilot 7: from StarPilot's published navigation status and Tandem's routing status (routing-status.json). Matches: Finding route before the first route, with dashes for the estimates and End route in the bar.",
       "match": true
     },
     {

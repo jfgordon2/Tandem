@@ -167,6 +167,28 @@ def chips_for(s: Snapshot) -> list[Chip]:
   return out
 
 
+def routing_state(navigation: str, tandem: dict | None, fallback: dict | None, recalculating: bool, now: float) -> dict | None:
+  """routing_chip's state on StarPilot 7, from StarPilot's navigation status and Tandem's routing status.
+
+  Args:
+    navigation: StarPilot's published navigation status (routing, waitingForLocation, routeUnavailable, guiding, ...).
+    tandem: routing-status.json while it's current: why the last request found no route, or which provider answered.
+    fallback: routing-status.json only if written in the last 3 seconds, for the fallback chip.
+    recalculating: This drive already had a route to this destination, so a new request is a recalculation.
+    now: The time routing_chip compares with.
+  """
+  if navigation == "routing":
+    return {"status": "routing", "active": recalculating}
+  if navigation == "waitingForLocation":
+    return {"status": "gps_waiting"}
+  if navigation == "routeUnavailable":
+    code = (tandem or {}).get("status")
+    return {"status": code if code and code != "ready" else "no_route"}
+  if navigation == "guiding" and isinstance(fallback, dict) and fallback.get("status") == "ready" and fallback.get("fallback"):
+    return {"status": "ready", "provider": fallback.get("provider", ""), "fallback_at": now}
+  return None
+
+
 def routing_chip(state: dict | None, now: float, offline_only: bool = False) -> Chip | None:
   """The routing chip for navigationd's published state (routing-status.json).
 
