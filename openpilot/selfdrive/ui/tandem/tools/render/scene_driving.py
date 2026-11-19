@@ -9,6 +9,8 @@ from typing import Any
 
 from openpilot.selfdrive.ui.tandem import prefs
 from openpilot.selfdrive.ui.tandem.settings.alerts import GROUPS
+from openpilot.selfdrive.ui.tandem.places import StarPilotPlaces
+from openpilot.selfdrive.ui.tandem.tests.fakes import FakeNavigationOwner
 from openpilot.selfdrive.ui.tandem.settings.driving_tab import DrivingServices, driving_hub
 from openpilot.selfdrive.ui.tandem.settings.model import StarPilotModels
 from openpilot.selfdrive.ui.tandem.settings.vehicle import Vehicle
@@ -94,7 +96,8 @@ def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any)
     vehicle = Vehicle(FakeSelection(), owner.rows, FakeDoors(), lambda: "TOYOTA_RAV4H")
     services = DrivingServices(Store(LongitudinalPersonality=1, IsLdwEnabled=True, AlwaysOnDM=True), ExampleLive(), owner.rows,  # type: ignore[arg-type]
                                FakeRoad(), lambda: StarPilotModels(FakeManager(), clock=lambda: 0.0), lambda: vehicle, ExampleDevice(),
-                               lambda: True, storage=lambda: {"drives": 40.0, "models": 6.0, "maps": 12.0, "free": 42.0})
+                               lambda: True, storage=lambda: {"drives": 40.0, "models": 6.0, "maps": 12.0, "free": 42.0},
+                               navigation=lambda: StarPilotPlaces(FakeNavigationOwner))
     window: SettingsWindow
     window = SettingsWindow({Tab.DRIVING: lambda: hub}, initial=Tab.DRIVING)
     hub = driving_hub(window, services)
@@ -112,6 +115,16 @@ def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any)
       hub.pages[page]()
       shot(mock)
       window.back()
+    hub.pages["speed_steering"]()
+    window.top.select(2)   # Navigation
+    shot("stage5-drivingnav")
+    from openpilot.selfdrive.ui.tandem.map_keys import map_key_sheet
+    sheet = map_key_sheet(window.dismiss)
+    window.present(sheet)
+    sheet._shown_at = None   # fully open, without waiting for its slide
+    shot("stage5-mapboxkey")
+    window.dismiss()
+    window.back()
     hub.pages["tuner"]()
     for index, mock in ((1, "tunergas"), (2, "tunerfollowing")):
       window.top.select(index)

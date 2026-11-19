@@ -420,3 +420,26 @@ class FakePlaces:
   def metric(self):
     return False
 
+
+
+class FakeNavigationOwner:
+  """StarPilot 7's navigation owner as far as Speed & Steering › Navigation and Where to? use it: Mapbox key saved, a
+  Google key too, Home, Work and one favorite."""
+
+  def __init__(self, google: bool = True, mapbox: bool = True):
+    self.settings: dict = {"enabled": True, "routeProvider": "mapbox", "gpsSource": "backup", "avoidTolls": True,
+                           "avoidHighways": False, "avoidFerries": False, "hasKey": mapbox, "hasGoogleKey": google}
+    self.favorites = [{"id": "h", "name": "Home", "address": "1428 SE Elm St, Portland", "latitude": 1.0, "longitude": 1.0, "label": "home"},
+                      {"id": "w", "name": "Work", "address": "200 Market St, Portland", "latitude": 2.0, "longitude": 2.0, "label": "work"},
+                      {"id": "p", "name": "Powell's Books", "address": "1005 W Burnside St, Portland", "latitude": 3.0, "longitude": 3.0}]
+    self.revision = 0
+
+  def snapshot(self) -> dict:
+    return dict(self.settings, revision=str(self.revision), favorites=list(self.favorites), recents=[], destination=None)
+
+  def configure(self, patch: dict, revision: str, authorized: object) -> dict:
+    if revision != str(self.revision):
+      raise ValueError("Navigation changed; refresh and try again")
+    self.settings.update(patch)
+    self.revision += 1
+    return self.snapshot()

@@ -12,6 +12,8 @@ import pytest
 
 from openpilot.selfdrive.ui.tandem import prefs
 from openpilot.selfdrive.ui.tandem.base import resolve
+from openpilot.selfdrive.ui.tandem.places import StarPilotPlaces
+from openpilot.selfdrive.ui.tandem.tests.fakes import FakeNavigationOwner
 from openpilot.selfdrive.ui.tandem.rows import SettingRow
 from openpilot.selfdrive.ui.tandem.settings import connections, search
 from openpilot.selfdrive.ui.tandem.settings.pages import Rebuilding, SectionPage
@@ -64,7 +66,8 @@ def driving(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> tuple[SettingsWi
   owner = example_owner()
   vehicle = Vehicle(FakeSelection(), owner.rows, FakeDoors(), lambda: "TOYOTA_RAV4H")
   services = DrivingServices(Store(LongitudinalPersonality=1), ExampleLive(), owner.rows, FakeRoad(),  # type: ignore[arg-type]
-                             lambda: StarPilotModels(FakeManager(), clock=lambda: 0.0), lambda: vehicle, ExampleDevice(), lambda: True)
+                             lambda: StarPilotModels(FakeManager(), clock=lambda: 0.0), lambda: vehicle, ExampleDevice(), lambda: True,
+                             navigation=lambda: StarPilotPlaces(FakeNavigationOwner))
   window = SettingsWindow({Tab.DRIVING: lambda: hub}, initial=Tab.DRIVING)
   hub = driving_hub(window, services)
   window.show_event()

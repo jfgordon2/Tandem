@@ -613,4 +613,8 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
 - Waits for its own mock: an Offline Maps page on `OfflineMapsOwner` (areas around a point, not release's regions).
   Where to?'s Offline maps button shows only when a maps page is given.
 - Phase B: Valhalla as a route provider (release's offline-maps chip and "Choose regions" in the preview come back then).
-- Still to port: Speed & Steering › Navigation (keys, provider, avoidances) and Display › Map.
+- Speed & Steering › Navigation (`settings/navigation.py`, `design/stage5-drivingnav.html`) writes StarPilot's own
+  navigation settings: on or off, directions (Google only with its key), avoidances and position. Saved Places opens
+  Where to?. Keys are pasted in Galaxy; `map_keys.py` (`stage5-mapboxkey.html`) explains how. Release's End Route When
+  Parked has no StarPilot 7 setting.
+- Still to port: Display › Map.

@@ -25,7 +25,7 @@ from openpilot.selfdrive.ui.tandem.i18n import N_, t_
 TABS = [N_("Driving"), N_("Device"), N_("Connections"), N_("Software")]
 PAGES = {"speed_steering": N_("Speed & Steering"), "display": N_("Display"), "tuner": N_("Tuner Mode"), "alerts": N_("Alerts"), "model": N_("Driving Model"),
          "vehicle": N_("Vehicle"), "assistance": N_("Assistance")}
-SECTIONS = {"speed_steering": [N_("Everyday"), N_("Weather")],
+SECTIONS = {"speed_steering": [N_("Everyday"), N_("Weather"), N_("Navigation")],
             "display": [N_("Driving Screen"), N_("Path")],
             "tuner": [N_("Steering"), N_("Gas & Brake"), N_("Following & Stops")],
             1: [N_("This Device"), N_("General"), N_("Backups"), N_("Storage & Data"), N_("RAM"), N_("Report a Problem"), N_("Developer")],
@@ -91,6 +91,12 @@ ENTRIES: list[Entry] = [
   _place(N_("Weather"), N_("Rain, snow and storms ahead, from local weather"), 0, S, 1, "rain snow fog"),
   Entry(N_("Weather heads-up"), N_("Warns before rain, snow or storms start, and says when they should stop"), 0, S, 1,
         "forecast rain snow storm thunderstorm ice warning upcoming"),
+  Entry(N_("Navigation"), N_("Turn guidance on the driving screen"), 0, S, 2, "nav route directions maps gps turn"),
+  Entry(N_("Saved Places"), N_("Home, Work and favorites from Where to?"), 0, S, 2, "home work favorites destinations address"),
+  Entry(N_("Directions"), N_("Mapbox, or Google for live traffic"), 0, S, 2, "route provider google mapbox traffic"),
+  Entry(N_("Avoid"), N_("Tolls, highways or ferries when planning routes"), 0, S, 2, "tolls highways motorway ferries"),
+  Entry(N_("Position"), N_("Where the car's position comes from: the comma, the car or your phone"), 0, S, 2, "gps location phone"),
+  Entry(N_("Map Keys"), N_("The Mapbox and Google keys for search and routes"), 0, S, 2, "mapbox google token key api"),
   # Driving › Display
   _place(N_("Display"), N_("The driving screen and the path"), 0, D),
   Entry(N_("Text Size"), N_("Larger text and icons on the driving screen"), 0, D, 0, "font bigger large big read readable zoom"),

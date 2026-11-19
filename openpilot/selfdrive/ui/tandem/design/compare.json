@@ -44,6 +44,18 @@
       "built": "drivingnavrouting"
     },
     {
+      "mock": "stage5-drivingnav",
+      "title": "Navigation settings (StarPilot 7)",
+      "note": "Matches: the switch, Saved Places (opens Where to?), Directions, Avoid, Position and Map Keys, each writing StarPilot 7's navigation settings. Rows are 57 px against the mock's 58, as the shared panel header is a little taller, so all six show. Google directions need its key.",
+      "match": true
+    },
+    {
+      "mock": "stage5-mapboxkey",
+      "title": "Map key help (StarPilot 7)",
+      "note": "Matches: one public Mapbox token, pasted in Galaxy › Navigation › Setup while parked; a Google key is optional.",
+      "match": true
+    },
+    {
       "mock": "mapboxkey",
       "title": "Mapbox key help",
       "note": "Matches: four steps from an account to pasting both keys on Galaxy's App Keys page, with the secret token's scopes. Opens from Navigation's Mapbox Keys row. The mock bolds pk. and sk.; the wrapped text can't.",

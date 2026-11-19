@@ -70,6 +70,14 @@ class StarPilotPlaces:
       self.refresh()
     return self._snap
 
+  def snapshot(self) -> dict:
+    """StarPilot's navigation state, read at most every REFRESH_S."""
+    return self._snapshot()
+
+  def configure(self, patch: dict) -> bool:
+    """Changes StarPilot's navigation settings (configure); False when StarPilot refuses or the state moved on."""
+    return self._change(lambda o, r: o.configure(patch, r, self._allowed))
+
   def tick(self) -> None:
     search = self._search
     if search is not None and search.done():

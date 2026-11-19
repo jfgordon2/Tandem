@@ -12,12 +12,14 @@ from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.blocks import Columns
 from openpilot.selfdrive.ui.tandem.chrome import HubTile
 from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, ToggleButton
+from openpilot.selfdrive.ui.tandem.places import StarPilotPlaces
 from openpilot.selfdrive.ui.tandem.prefs import TUNER_MODE
 from openpilot.selfdrive.ui.tandem.settings.alerts import Alerts, alerts_page
 from openpilot.selfdrive.ui.tandem.settings.bundles import BUNDLES, Bundle
 from openpilot.selfdrive.ui.tandem.settings.device import driver_monitoring_rows
 from openpilot.selfdrive.ui.tandem.settings.display import Display, driving_screen_panel, path_panel
 from openpilot.selfdrive.ui.tandem.settings.model import CatalogPage, Models, ModelSource, model_page
+from openpilot.selfdrive.ui.tandem.settings.navigation import NavigationSettings, navigation_panel
 from openpilot.selfdrive.ui.tandem.settings.pages import FillPage, HubPage, Section, SectionPage, Strip
 from openpilot.selfdrive.ui.tandem.settings.speed_steering import (Assistance, Rows, SpeedSteering, Weather, assistance_panel,
                                                                    driver_monitoring_panel, everyday_panel, weather_panel)
@@ -66,15 +68,24 @@ class DrivingServices:
     storage: Storage & Data's sizes, for the model catalog.
     recount: Has Storage & Data measure again.
     ram: Whether Device › RAM is showing (a drive has run low), so search finds it.
+    navigation: StarPilot's navigation (places.py), made on first use; the real one by default.
   """
 
   def __init__(self, store: SettingsStore, live: Live, rows: Rows, road: RoadStyle, models: Callable[[], ModelSource],
                vehicle: Callable[[], Vehicle], device: Any, owns_set: Callable[[], bool], play: Callable[[str], None] | None = None,
                storage: Callable[[], dict[str, float]] = dict, recount: Callable[[], None] = lambda: None,
-               ram: Callable[[], bool] = lambda: False):
+               ram: Callable[[], bool] = lambda: False, navigation: Callable[[], StarPilotPlaces] | None = None):
     self.store, self.live, self.rows, self.road = store, live, rows, road
     self.models, self.vehicle, self.device, self.owns_set = models, vehicle, device, owns_set
     self.play, self.storage, self.recount, self.ram = play, storage, recount, ram
+    self.navigation = navigation or _device_navigation
+
+
+def _device_navigation() -> StarPilotPlaces:
+  """StarPilot's navigation on the device: changes while not replaying or projecting, as Where to? makes them."""
+  from openpilot.selfdrive.ui.ui_state import ui_state
+  return StarPilotPlaces(allowed=lambda: ui_state.replay_clock is None and not ui_state.projection_read_only,
+                         metric=lambda: bool(ui_state.is_metric))
 
 
 def driving_hub(window: SettingsWindow, services: DrivingServices) -> HubPage:
@@ -91,6 +102,8 @@ def driving_hub(window: SettingsWindow, services: DrivingServices) -> HubPage:
   screen = Display(rows, services.road)
   alerts = Alerts(rows, services.play)
   models = Lazy(lambda: Models(services.models(), services.recount))
+  places = Lazy(services.navigation)
+  navigation = Lazy(lambda: NavigationSettings(places.get()))
   vehicle = Lazy(services.vehicle)
 
   def set_bundle(bundle: Bundle, on: bool) -> None:
@@ -107,12 +120,24 @@ def driving_hub(window: SettingsWindow, services: DrivingServices) -> HubPage:
   def open_tuner() -> None:
     window.push(tuner_page(Tuner(rows), window))
 
+  def open_destinations() -> None:
+    """Where to? over the settings window, on the same navigation as this page."""
+    from openpilot.system.ui.lib.application import gui_app
+    from openpilot.selfdrive.ui.tandem.destinations import destinations_screen
+    gui_app.push_widget(destinations_screen(gui_app.pop_widget, places=places.get()))
+
+  def open_key_help() -> None:
+    from openpilot.selfdrive.ui.tandem.map_keys import map_key_sheet
+    window.present(map_key_sheet(window.dismiss))
+
   def speed_steering() -> Widget:
     tuner_button = Button(N_("Tuner Mode"), open_tuner, ButtonStyle.SECONDARY, width=T.SIDEBAR_WIDTH, accessory=chevron_glyph)
     tuner_button.set_visible(TUNER_MODE.get)
     return SectionPage(N_("SPEED & STEERING"), [
       Section(N_("Everyday"), lambda: everyday_panel(speed)),
       Section(N_("Weather"), lambda: weather_panel(weather), value=weather.summary),
+      Section(N_("Navigation"), lambda: navigation_panel(navigation.get(), open_destinations, open_key_help),
+              value=lambda: navigation.get().summary()),
     ], footer=[tuner_button])
 
   def assistance_page() -> Widget:

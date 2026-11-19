@@ -11,7 +11,7 @@ from openpilot.starpilot.ui.raylib import rl
 from openpilot.system.ui.lib.application import MousePos
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Bindable, Component, resolve, size_of
-from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, grid, inset, place, row
+from openpilot.selfdrive.ui.tandem.layout import FILL, Align, Size, column, grid, inset, place, row
 from openpilot.selfdrive.ui.tandem.i18n import N_
 from openpilot.system.ui.lib.application import MouseEvent
 from openpilot.selfdrive.ui.tandem.fonts import Face
@@ -209,6 +209,25 @@ class ToggleButton(Component):
     w = draw.text(body, self._label, T.font_px(16), T.TEXT, T.FONT_SEMIBOLD)
     draw.text(inset(body, left=w + T.px(10)), self._state(), T.font_px(14), T.ACCENT_TEXT if on else T.TEXT_MUTED, T.FONT_MEDIUM,
               elide=False)
+
+
+class ToggleGroup(Component):
+  """ToggleButtons side by side at their own widths, e.g. Navigation's Avoid: Tolls, Highways, Ferries."""
+  grow_touch_target = False
+
+  def __init__(self, toggles: list[ToggleButton], gap: float = T.px(10)):
+    super().__init__()
+    self._toggles = [self._child(t) for t in toggles]
+    self._gap = gap
+
+  def preferred_size(self, max_width: float) -> tuple[float, float]:
+    sizes = [t.preferred_size(max_width) for t in self._toggles]
+    return min(max_width, sum(w for w, _ in sizes) + self._gap * max(0, len(sizes) - 1)), max((h for _, h in sizes), default=0)
+
+  def _render(self, rect: rl.Rectangle) -> None:
+    widths: list[Size] = [t.preferred_size(rect.width)[0] for t in self._toggles]
+    for toggle, cell in zip(self._toggles, row(rect, widths, self._gap), strict=True):
+      toggle.render(cell)
 
 
 @dataclass(frozen=True)
