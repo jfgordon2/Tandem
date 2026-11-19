@@ -11,7 +11,7 @@ import time
 from collections.abc import Callable
 from typing import Any
 
-from openpilot.selfdrive.ui.tandem.i18n import N_, t_
+from openpilot.selfdrive.ui.tandem.i18n import N_, t_, tn_
 from openpilot.selfdrive.ui.tandem.settings.maps import Progress, Region, RegionProgress
 from openpilot.starpilot.tandem.routing import bundles, catalog, maps as jobs, road
 from openpilot.starpilot.tandem.routing.regions import NATION_US, STATE_GROUPS, STATE_PREFIX, STATE_TOKENS, STATES, name as state_name
@@ -135,7 +135,7 @@ class TandemMaps:
       return N_("Whole U.S.")
     if len(chosen) == 1:
       return self.name(next(iter(chosen)))
-    return t_("{} regions", len(chosen))
+    return tn_("{} region", "{} regions", len(chosen))
 
   def has_selection(self) -> bool:
     return bool(self.chosen())

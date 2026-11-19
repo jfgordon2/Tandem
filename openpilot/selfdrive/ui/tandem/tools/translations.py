@@ -9,7 +9,7 @@
   status           How much of each language is translated.
 
 Run update after changing Tandem's wording; tests/test_translations.py fails until then.
-Codes are StarPilot's (languages.json without "main_"): de, es, fr, ja, ko, pt-BR, tr, uk, ar, th, zh-CHS, zh-CHT.
+Codes are StarPilot 7's (languages.json): de, es, fr, ja, ko, pt-BR, tr, uk, th, vi, zh-CHS, zh-CHT, and Arabic (ar), which Tandem keeps.
 """
 from __future__ import annotations
 
@@ -25,15 +25,15 @@ ROOT = PACKAGE.parents[2]
 OUT = PACKAGE / "translations"
 SKIP_DIRS = {"tests", "tools", "translations", "design", "assets", "__pycache__"}
 MARKERS = {"N_": 1, "t_": 1, "tn_": 2}   # how many leading string arguments are catalog text
-# StarPilot screens Tandem's Upstream adapters read text from: their tr(), tr_noop() and trn() strings join the catalog
-UPSTREAM = ["selfdrive/ui/layouts/settings/starpilot/maps.py", "selfdrive/ui/layouts/settings/starpilot/model.py",
-            "selfdrive/ui/layouts/settings/starpilot/vehicle.py", "selfdrive/ui/layouts/settings/starpilot/navigation.py",
-            "selfdrive/ui/layouts/settings/software.py", "selfdrive/ui/layouts/settings/device.py",
+# openpilot's screens and alerts Tandem shows text from: their tr(), tr_noop() and trn() strings join the catalog.
+# StarPilot 7's own row labels (its features' labels and reasons) aren't marked in its code; i18n.translate falls back
+# to StarPilot's catalog (selfdrive/ui/translations) for them.
+UPSTREAM = ["selfdrive/ui/layouts/settings/software.py", "selfdrive/ui/layouts/settings/device.py",
             "selfdrive/ui/layouts/settings/developer.py", "selfdrive/ui/onroad/alert_renderer.py"]
 UPSTREAM_CALLS = {"tr": 1, "tr_noop": 1, "trn": 2}
 UPSTREAM_ALERTS = "selfdrive/selfdrived/alerts_offroad.json"   # the home screen's alert sentences ("%1" is filled in)
 ONROAD_ALERTS = "selfdrive/selfdrived/events.py"
-PLURAL_FORMS = {"ja": 1, "ko": 1, "zh-CHS": 1, "zh-CHT": 1, "th": 1, "uk": 3, "ar": 6}   # others: 2
+PLURAL_FORMS = {"ja": 1, "ko": 1, "zh-CHS": 1, "zh-CHT": 1, "th": 1, "vi": 1, "uk": 3, "ar": 6}   # others: 2
 PLURAL_EXPRESSIONS = {
   "fr": "n > 1", "pt-BR": "n > 1",
   "uk": "n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2",
@@ -108,10 +108,10 @@ def strings() -> dict[str, Entry]:
   for name in UPSTREAM:
     if (ROOT / name).is_file():
       _collect(found, ROOT / name, name, UPSTREAM_CALLS, upstream=True)
-  if "{} region selected" in found:
-    # DownloadView draws the controller's summary without " selected". Preserve its plural forms too.
-    entry = found.setdefault("{} region", Entry("{} region", plural="{} regions", drawn=True))
-    entry.where.append("settings/maps.py:DownloadView (summary without selected)")
+  if "{} region" in found:
+    # Offline Maps' summary ("2 regions", map_source.TandemMaps) is drawn again inside other text (DownloadView's
+    # heading), so draw-time matching keeps its plural forms.
+    found["{} region"].drawn = True
   if (ROOT / UPSTREAM_ALERTS).is_file():
     import json
     for alert_key, alert in json.loads((ROOT / UPSTREAM_ALERTS).read_text(encoding="utf-8")).items():

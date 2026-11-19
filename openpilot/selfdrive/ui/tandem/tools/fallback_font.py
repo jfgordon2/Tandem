@@ -148,7 +148,7 @@ def build() -> None:
     buf = rl.ffi.new("unsigned char[]", data)
     cp_buf = rl.ffi.new("int[]", cps)
     loaded = rl.load_font_data(rl.ffi.cast("unsigned char *", buf), len(data), size, rl.ffi.cast("int *", cp_buf), len(cps),
-                               rl.FontType.FONT_DEFAULT)
+                               rl.FontType.FONT_DEFAULT, rl.ffi.new("int *"))
     keep += [buf, cp_buf, loaded]
     shift = round((ref_ascent - ascent) * SIZE / ref_height)   # onto Noto Sans's baseline
     for i, cp in enumerate(cps):

@@ -60,3 +60,4 @@ class Snapshot:
 
 
 HEADROOM = Snapshot("headroom.json")
+WEATHER = Snapshot("weather-chime.json")   # Weather heads-up: one chime when an event is first seen within the hour

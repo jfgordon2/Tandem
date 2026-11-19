@@ -22,7 +22,8 @@ from openpilot.selfdrive.ui.tandem.onroad import developer, extras
 from openpilot.selfdrive.ui.tandem.onroad.lead import GapTagState, GapTracker, detailed_tag_on, lead_anchor, read_lead_sample
 from openpilot.selfdrive.ui.tandem.onroad.layers import bar_height, bar_margin
 from openpilot.selfdrive.ui.tandem.onroad.limits import LimitFollower
-from openpilot.selfdrive.ui.tandem.prefs import LEAD_TAG, MAX_FOLLOWS_LIMIT
+from openpilot.selfdrive.ui.tandem.forecast import Announcer, ForecastService, heads_up, now_conditions, shared_service, wall_clock
+from openpilot.selfdrive.ui.tandem.prefs import LEAD_TAG, MAX_FOLLOWS_LIMIT, WEATHER_CHIME, WEATHER_HEADS_UP
 from openpilot.selfdrive.ui.tandem.onroad.binding import driving_alert, lane_change, proposal
 from openpilot.selfdrive.ui.tandem.onroad.layers import AT_LIMIT, ArcState, BarState, Headroom
 from openpilot.selfdrive.ui.tandem.onroad.overlay import OnroadOverlay, road_rect
@@ -89,6 +90,7 @@ class EssentialsOnroad(AugmentedRoadView):
     self._nav_status = ""   # StarPilot's published navigation status
     self._jetlink: Any = None   # StarPilot's Jetlink status feed, made when its widget is first placed
     self._model_chip = extras.ModelChip()
+    self._announcer = Announcer()
     self._overlay = self._child(OnroadOverlay(lambda: self._display, self._menu, self._step, self._disengage, self._resolve,
                                               end_route=self._end_route, where_to=self._where_to))
 
@@ -156,6 +158,7 @@ class EssentialsOnroad(AugmentedRoadView):
     cruise_kph = state.cruise_kph
     if ui_state.CP is not None and cruise_kph and ui_state.replay_clock is None:
       self._safely("turn chip", lambda: self._turn_chip(snap, now_ns, float(cruise_kph) * CV.KPH_TO_MS))
+    self._safely("weather heads-up", lambda: self._apply_forecast(snap))
     self._safely("navigation status", lambda: self._read_navigation(now_ns))
     self._safely("routing chip", lambda: self._routing_chip(snap, now_ns))
     memory = current_message(sm, "deviceState", now_ns)
@@ -193,6 +196,32 @@ class EssentialsOnroad(AugmentedRoadView):
       cloudlog.exception("Tandem: model chip")
       jetlink = "off"
     return self._model_chip.update(jetlink, time.monotonic())
+
+  @cached_property
+  def _forecast(self) -> ForecastService:
+    return shared_service()   # Home shows the same forecast
+
+  def _apply_forecast(self, snap: Snapshot) -> None:
+    """Weather heads-up (forecast.py): its chip from 15 minutes before rain, snow or storms until they end, and one soft
+    chime (Tandem's WEATHER chime, through StarPilot's sound daemon) when an event is first seen within the hour."""
+    if not WEATHER_HEADS_UP.get() or ui_state.replay_clock is not None or ui_state.projection_read_only:
+      return
+    self._forecast.tick()
+    wall = wall_clock()
+    hint = heads_up(self._forecast.forecast, wall)
+    show, chime = self._announcer.update(hint, wall)
+    if chime and ui_state.started and WEATHER_CHIME.get():   # Alerts › Chimes › Weather heads-up
+      from openpilot.starpilot.tandem.state import WEATHER
+      WEATHER.write(time.monotonic())
+    if show and hint is not None:
+      snap.forecast, snap.forecast_active = (hint.text, hint.icon), hint.active
+
+  def _weather_now(self, metric: bool) -> tuple[str, str] | None:
+    """The forecast's current hour for the bar, without a route (Weather heads-up's forecast, General › Temperature)."""
+    if not WEATHER_HEADS_UP.get() or ui_state.replay_clock is not None:
+      return None
+    from openpilot.selfdrive.ui.tandem.prefs import celsius
+    return now_conditions(self._forecast.forecast, wall_clock(), celsius(metric))
 
   def _routing_chip(self, snap: Snapshot, now_ns: int) -> None:
     """Tandem's routing chip (design/valhalla2-chip-*.html) from StarPilot's navigation status, with offline routing on:
@@ -277,9 +306,10 @@ class EssentialsOnroad(AugmentedRoadView):
     chips = self._chip_stack.update(snapshot, now_ns / 1e9, visible_alert is not None or help_steer)
     unit = "km/h" if state.metric else "mph"
     arrive, left = route_progress(state.navigation, bool(state.metric), datetime.datetime.now())
+    navigating = state.navigation is not None or self._nav_status in ROUTE_ACTIVE
     self._display = DriveDisplay(
       bar=BarState(engaged=state.engaged, set_speed=cruise or 0.0, unit=unit, street=self._street(time.monotonic_ns()), heading=self._compass.heading(),
-                   navigating=state.navigation is not None or self._nav_status in ROUTE_ACTIVE, arrive=arrive, left=left,
+                   navigating=navigating, arrive=arrive, left=left, weather=None if navigating else self._weather_now(bool(state.metric)),
                    can_adjust=bool(can_adjust), can_disengage=bool(can_disengage)),
       speed=displayed_speed(state.speed_mps, factor), unit=unit, posted=posted,
       vienna=state.appearance.use_vienna_sign,

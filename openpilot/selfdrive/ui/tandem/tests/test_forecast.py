@@ -1,0 +1,225 @@
+"""Weather heads-up: the forecast's steps, when to fetch, what the chip says, and when it shows and chimes."""
+import json
+
+import pytest
+
+from openpilot.selfdrive.ui.tandem import forecast as F
+
+T0 = 1_700_000_000 - 1_700_000_000 % 900       # a quarter-hour boundary
+CLEAR, LIGHT_RAIN, SNOW, STORM = 0, 61, 73, 95
+
+
+def _forecast(codes, offset=0, fetched_at=T0, lat=41.6, lon=-93.6, hours=None):
+  hours = hours if hours is not None else [(T0 + h * 3600, CLEAR, 15.0, True) for h in range(24)]
+  return F.Forecast([(T0 + i * 900, c) for i, c in enumerate(codes)], 900, fetched_at, lat, lon, offset, hours)
+
+
+def test_parse_prefers_15_minute_steps_and_falls_back_to_hourly():
+  data = {"utc_offset_seconds": -18000, "minutely_15": {"time": [T0, T0 + 900], "weather_code": [0, 61]},
+          "hourly": {"time": [T0], "weather_code": [3]}}
+  fc = F.parse(data, T0, 1.0, 2.0)
+  assert fc.step_s == 900 and fc.steps == [(T0, 0), (T0 + 900, 61)] and fc.utc_offset == -18000
+  assert F.parse({"hourly": {"time": [T0], "weather_code": [3]}}, T0, 1.0, 2.0).step_s == 3600
+  assert F.parse({}, T0, 1.0, 2.0) is None
+  assert F.Forecast.from_json(json.loads(json.dumps(fc.to_json()))) == fc
+
+
+def test_fetch_at_most_hourly_unless_the_car_moved_20_miles():
+  fc = _forecast([CLEAR])
+  assert F.needs_fetch(None, T0, 41.6, -93.6)
+  assert not F.needs_fetch(fc, T0 + 3599, 41.6, -93.6)
+  assert F.needs_fetch(fc, T0 + 3600, 41.6, -93.6)
+  assert not F.needs_fetch(fc, T0 + 60, 41.6 + 0.25, -93.6)       # about 17 miles north
+  assert F.needs_fetch(fc, T0 + 60, 41.6 + 0.35, -93.6)           # about 24 miles
+  assert F.needs_fetch(_forecast([CLEAR], hours=[]), T0 + 60, 41.6, -93.6)   # stored before hours were kept
+
+
+def test_light_rain_is_named_and_says_when_it_stops():
+  fc = _forecast([LIGHT_RAIN, LIGHT_RAIN, LIGHT_RAIN, CLEAR], offset=-6 * 3600)
+  hint = F.heads_up(fc, T0 + 100)
+  assert hint.active and hint.label == "Light rain" and hint.icon == "rain"
+  assert hint.text == f"Light rain until {F.clock(T0 + 2400, -6 * 3600)}"   # halfway to the dry step (37.5 min), to 5 min
+  assert F.clock(T0 + 2400, -6 * 3600).endswith(("AM", "PM"))
+
+
+def test_upcoming_weather_counts_down_and_past_the_data_has_no_end():
+  fc = _forecast([CLEAR, CLEAR, STORM, STORM])
+  hint = F.heads_up(fc, T0 + 300)
+  # the storm's first step is at +30 min, so it starts halfway from the dry step before: +22.5 min, 17.5 from now
+  assert not hint.active and hint.minutes == 18 and hint.text == "Thunderstorm in 18 min" and hint.icon == "storm"
+  assert F.heads_up(fc, T0 + 1400).text == "Thunderstorm"       # falling, and still falling at the end of the data
+  assert F.heads_up(_forecast([CLEAR] * 6 + [SNOW]), T0) is None  # 90 minutes away: not yet
+
+
+def test_each_step_is_the_weather_at_its_moment_so_changes_fall_halfway():
+  fc = _forecast([CLEAR, LIGHT_RAIN, LIGHT_RAIN, CLEAR])   # rain at +15 and +30 min
+  assert F.heads_up(fc, T0 + 400).minutes == 1             # rain from +7.5 min
+  assert F.heads_up(fc, T0 + 500).active                    # ...so it's already falling at +8.3
+  assert F.heads_up(fc, T0 + 2300) is None                  # and over from +37.5 min
+  assert F.event_clock(T0 + 2250, 0) == F.clock(T0 + 2400, 0) and F.event_clock(T0 + 2240, 0) == F.clock(T0 + 2100, 0)
+
+
+def test_a_single_step_of_rain_is_not_announced_ahead_but_shows_while_due():
+  blip = _forecast([CLEAR, CLEAR, LIGHT_RAIN, CLEAR, SNOW, SNOW, CLEAR])
+  hint = F.heads_up(blip, T0)
+  assert hint.label == "Snow" and hint.minutes == 53        # the lone rain step at +30 min is skipped; snow from +52.5
+  assert F.heads_up(blip, T0 + 1800).text.startswith("Light rain until")   # but shows while it's due
+  assert F.Announcer().update(F.heads_up(blip, T0 + 1800), T0 + 1800) == (True, False)   # with no chime
+
+
+def test_refreshes_every_15_minutes_while_weather_is_near():
+  dry, wet = _forecast([CLEAR] * 96), _forecast([CLEAR] * 6 + [LIGHT_RAIN] * 4 + [CLEAR] * 86)   # rain from +82.5 min
+  assert not F.needs_fetch(dry, T0 + 900, 41.6, -93.6) and F.needs_fetch(wet, T0 + 900, 41.6, -93.6)
+  assert not F.needs_fetch(wet, T0 + 899, 41.6, -93.6)
+  later = _forecast([CLEAR] * 10 + [LIGHT_RAIN] * 2 + [CLEAR] * 84)                           # rain from +142.5 min
+  assert not F.needs_fetch(later, T0 + 900, 41.6, -93.6)                                       # more than 2 hours off
+
+
+def test_clock_reads_like_a_dashboard():
+  assert F.clock(20 * 3600 + 15 * 60, 0) == "8:15 PM"
+  assert F.clock(0, 0) == "12:00 AM" and F.clock(12 * 3600 + 5 * 60, 0) == "12:05 PM"
+
+
+def test_chip_from_15_minutes_out_until_it_ends_with_one_chime_and_an_early_heads_up():
+  fc = _forecast([CLEAR] * 4 + [SNOW, SNOW, CLEAR])   # snow from T0+3600 to T0+5400
+  a = F.Announcer()
+  assert a.update(F.heads_up(fc, T0 + 600), T0 + 600) == (True, True)       # first seen 50 min out: heads-up and chime
+  assert a.update(F.heads_up(fc, T0 + 620), T0 + 620) == (True, False)      # the brief heads-up...
+  assert a.update(F.heads_up(fc, T0 + 640), T0 + 640) == (False, False)     # ...then quiet
+  assert a.update(F.heads_up(fc, T0 + 2700), T0 + 2700) == (True, False)    # from 15 min out, no second chime
+  assert a.update(F.heads_up(fc, T0 + 4000), T0 + 4000) == (True, False)    # while it snows
+  assert a.update(F.heads_up(fc, T0 + 5500), T0 + 5500) == (False, False)   # over
+
+
+def test_turning_on_close_to_the_weather_still_warns_and_already_falling_does_not_chime():
+  fc = _forecast([CLEAR, SNOW, SNOW])
+  assert F.Announcer().update(F.heads_up(fc, T0 + 300), T0 + 300) == (True, True)   # 10 minutes away at start
+  assert F.Announcer().update(F.heads_up(fc, T0 + 1000), T0 + 1000) == (True, False)
+
+
+def test_status_chip_stands_in_for_the_longer_gap_chip_while_falling():
+  from openpilot.selfdrive.ui.tandem.onroad.status import Snapshot, chips_for
+  s = Snapshot(weather="Rain", weather_gap=True, forecast=("Light rain until 8:15 PM", "rain"), forecast_active=True)
+  assert [c.label for c in chips_for(s)] == ["Light rain until 8:15 PM"]
+  s.forecast, s.forecast_active = ("Snow in 12 min", "snow"), False
+  assert [c.label for c in chips_for(s)] == ["Snow in 12 min", "Rain · longer gap"]
+
+
+def test_service_fetches_when_due_stores_it_and_backs_off(tmp_path, monkeypatch):
+  monkeypatch.setattr(F.threading, "Thread", lambda target, args, daemon: type("T", (), {"start": lambda self: target(*args)})())
+  now = [float(T0)]
+  calls = []
+
+  def fetch(lat, lon):
+    calls.append((lat, lon))
+    return {"minutely_15": {"time": [T0], "weather_code": [SNOW]},
+            "hourly": {"time": [T0], "weather_code": [SNOW], "temperature_2m": [-1.0], "is_day": [1]}} if len(calls) > 1 else None
+  store = tmp_path / "forecast.json"
+  svc = F.ForecastService(store, lambda: (41.6, -93.6), lambda: True, fetch, lambda: now[0])
+  svc.tick()
+  assert calls and svc.forecast is None                  # failed: nothing stored
+  now[0] += 60
+  svc.tick()
+  assert len(calls) == 1                                 # backs off
+  now[0] += F.RETRY_S
+  svc.tick()
+  assert len(calls) == 2 and svc.forecast.steps == [(T0, SNOW)] and store.exists()
+  now[0] += 600
+  svc.tick()
+  assert len(calls) == 2                                 # fresh: no refetch
+  assert F.ForecastService(store, lambda: None, lambda: True, fetch).forecast.steps == [(T0, SNOW)]   # loads the stored one
+
+
+def test_the_switch_is_a_marker_file(tandem_prefs):
+  from openpilot.selfdrive.ui.tandem.prefs import WEATHER_HEADS_UP
+  assert WEATHER_HEADS_UP.get()
+  WEATHER_HEADS_UP.set(False)
+  assert not WEATHER_HEADS_UP.get() and list(tandem_prefs.iterdir())
+
+
+@pytest.mark.parametrize("code, name", [(71, "Light snow"), (73, "Snow"), (75, "Heavy snow"), (77, "Fine, icy snow"),
+                                        (85, "Light snow flurries"), (86, "Heavy snow"), (96, "Storm with hail"),
+                                        (99, "Storm with hail"), (61, "Light rain"), (65, "Heavy rain")])
+def test_snow_and_rain_are_named_by_strength(code, name):
+  assert F.HAZARDS[code][0] == name
+
+
+def _hours(spec, start=T0 + 3600):
+  """(code, °C, daytime) per hour from the next hour on."""
+  return [(start + i * 3600, code, temp, day) for i, (code, temp, day) in enumerate(spec)]
+
+
+def test_parse_keeps_hours_with_temperature_and_daylight():
+  data = {"minutely_15": {"time": [T0], "weather_code": [0]},
+          "hourly": {"time": [T0, T0 + 3600], "weather_code": [0, 2], "temperature_2m": [20.0, 18.5], "is_day": [1, 0]}}
+  assert F.parse(data, T0, 1.0, 2.0).hours == [(T0, 0, 20.0, True), (T0 + 3600, 2, 18.5, False)]
+
+
+def test_outlook_names_the_coming_snow_and_tints_its_hours():
+  hours = _hours([(3, 1.0, True)] * 3 + [(SNOW, -1.0, True)] * 3 + [(3, -2.0, False)] * 8)
+  codes = [CLEAR] * 4 + [CLEAR] * 7 + [SNOW] * 11 + [CLEAR] * 10   # snow from T0 + 11 steps for 11 steps
+  look = F.outlook(_forecast(codes, hours=hours), T0 + 600, metric=False)
+  assert look.hazard and look.icon == "snow" and len(look.tiles) == 12
+  assert look.summary == f"Snow from {F.event_clock(T0 + 11 * 900 - 450, 0)} to {F.event_clock(T0 + 22 * 900 - 450, 0)}"
+  assert [t.hazard for t in look.tiles[:6]] == [False] * 3 + [True] * 3
+  assert look.tiles[0].temp == 34 and look.tiles[0].time == F.hour_label(T0 + 3600, 0)   # °F
+
+
+def test_outlook_says_until_when_it_is_already_falling_and_uses_celsius_when_metric():
+  look = F.outlook(_forecast([LIGHT_RAIN] * 3 + [CLEAR] * 60, hours=_hours([(61, 9.6, True)] * 12)), T0 + 100, metric=True)
+  assert look.summary == f"Light rain until {F.clock(T0 + 2400, 0)}" and look.tiles[0].temp == 10
+
+
+def test_a_dry_outlook_reads_like_the_sky():
+  sunny = _hours([(1, 20.0, True)] * 7 + [(0, 15.0, False)] * 3 + [(2, 14.0, False)] * 2)
+  look = F.outlook(_forecast([CLEAR] * 60, hours=sunny), T0 + 100, metric=True)
+  assert not look.hazard and look.summary == "Mostly sunny" and look.icon == "sun"
+  night = _hours([(0, 5.0, False)] * 12)
+  assert F.outlook(_forecast([CLEAR] * 60, hours=night), T0 + 100, metric=True).summary == "Clear"
+  cloudy = _hours([(3, 5.0, True)] * 6 + [(2, 5.0, True)] * 6)          # a tie goes to the cloudier
+  assert F.outlook(_forecast([CLEAR] * 60, hours=cloudy), T0 + 100, metric=True).summary == "Cloudy"
+  assert [t.icon for t in F.outlook(_forecast([CLEAR] * 60, hours=sunny), T0 + 100, True).tiles][6:9] == ["sun", "moon", "moon"]
+
+
+def test_no_outlook_without_enough_forecast_ahead():
+  assert F.outlook(None, T0, True) is None
+  assert F.outlook(_forecast([CLEAR], hours=_hours([(0, 5.0, True)] * 2)), T0, True) is None
+
+
+def test_the_parked_screen_hands_its_forecast_to_the_ready_card():
+  from openpilot.selfdrive.ui.tandem.home import HomeContent, HomeState
+  look = F.Outlook("Mostly sunny", "sun", False, "2:10 PM", [F.HourTile("3 PM", "sun", 68, False)] * 12)
+  home = HomeContent(lambda: HomeState(), lambda: None, lambda: None, lambda: None, forecast=lambda: look)
+  assert home._hero._forecast() is look
+  assert HomeContent(lambda: HomeState(), lambda: None, lambda: None, lambda: None)._hero._forecast() is None   # no strip
+
+
+def test_temperature_is_its_own_choice_and_follows_units_until_picked(tandem_prefs):
+  from openpilot.selfdrive.ui.tandem.prefs import TEMPERATURE, celsius
+  assert celsius(True) and not celsius(False)          # not picked: km/h means °C
+  TEMPERATURE.set("F")
+  assert not celsius(True)                             # km/h with °F
+  TEMPERATURE.set("C")
+  assert celsius(False)                                # mph with °C
+  TEMPERATURE.set("K")
+  assert TEMPERATURE.get() == "C"                      # only °F or °C
+
+
+def test_parked_after_a_restart_the_saved_position_is_used(monkeypatch):
+  from types import SimpleNamespace
+  from openpilot.starpilot.gps import source
+  saved = [{"latitude": 40.0, "longitude": -90.0}]
+  monkeypatch.setattr(F, "_positions", [SimpleNamespace(read=lambda: saved[0])])
+  monkeypatch.setattr(source, "select_location", lambda sm, now: ("comma", SimpleNamespace(latitude=41.6, longitude=-93.6)))
+  assert F.where_now(object()) == (41.6, -93.6)       # the fix StarPilot selects first
+  monkeypatch.setattr(source, "select_location", lambda sm, now: None)
+  assert F.where_now(object()) == (40.0, -90.0)       # after a restart: the one StarPilot's navigation saved
+  saved[0] = None
+  assert F.where_now(object()) is None
+
+
+def test_the_bar_shows_the_hour_we_are_in():
+  fc = _forecast([CLEAR], hours=[(T0, 3, 1.0, True), (T0 + 3600, 0, 3.0, False)])
+  assert F.now_conditions(fc, T0 + 600, metric=False) == ("cloud", "34°")
+  assert F.now_conditions(fc, T0 + 3700, metric=True) == ("moon", "3°")
+  assert F.now_conditions(fc, T0 + 7300, metric=True) is None and F.now_conditions(None, T0, True) is None

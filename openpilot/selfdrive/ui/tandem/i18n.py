@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import math
 import os
+import time
 import re
 from collections.abc import Callable
 from pathlib import Path
@@ -249,11 +250,36 @@ def load(code: str) -> Catalog:
   return Catalog(parse_po(text), code, english_plurals(text), drawn_templates(text))
 
 
+_saved: tuple[float, str] | None = None
+
+
+def saved_language() -> str:
+  """The saved LanguageSetting's code, read at most once a second: StarPilot reads only its own languages, so Arabic,
+  which Tandem keeps, is only here."""
+  global _saved
+  now = time.monotonic()
+  if _saved is None or now - _saved[0] > 1.0:
+    try:
+      from openpilot.common.params import Params
+      _saved = (now, str(Params().get("LanguageSetting") or "en").removeprefix("main_"))
+    except Exception:
+      _saved = (now, "en")
+  return _saved[1]
+
+
+def forget_saved_language() -> None:
+  """Read the saved language again on the next lookup (after the picker changes it)."""
+  global _saved
+  _saved = None
+
+
 def _language() -> str:
   if os.environ.get("TANDEM_PSEUDO") == "1":
     return "pseudo"
   try:
     from openpilot.system.ui.lib.multilang import multilang
+    if multilang.language == "en" and saved_language() == "ar":
+      return "ar"
     return multilang.language
   except ImportError:   # headless tools without the full stack: English
     return "en"
@@ -297,11 +323,24 @@ def tn_(singular: str, plural: str, n: int, *values: object, context: str | None
 
 
 def translate(text: str) -> str:
-  """draw.py's lookup for everything it draws."""
+  """draw.py's lookup for everything it draws: Tandem's catalog, then StarPilot's own for text Tandem's doesn't have
+  (StarPilot 7's row labels, which StarPilot translates for its own screens)."""
   if not text:
     return text
   catalog = _catalog()
-  return text if catalog is None else catalog.translate(text)
+  if catalog is None:
+    return text
+  out = catalog.translate(text)
+  return _starpilot(text) if out == text else out
+
+
+def _starpilot(text: str) -> str:
+  """StarPilot's translation of text in the current language, or text; English or Arabic have none to give."""
+  try:
+    from openpilot.system.ui.lib.multilang import multilang
+    return str(multilang.tr(text))
+  except Exception:
+    return text
 
 
 def uppercase(text: str) -> str:

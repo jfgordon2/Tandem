@@ -1,0 +1,6456 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: vi\n"
+"Plural-Forms: nplurals=1; plural=(0);\n"
+"X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\n"
+
+#: controls.py:197
+#: settings/navigation.py:52
+msgid "On"
+msgstr "Bật"
+
+#: controls.py:197
+#: controls.py:200
+#: settings/navigation.py:52
+msgid "Off"
+msgstr "Tắt"
+
+#: controls.py:322
+msgid "RECOMMENDED"
+msgstr "ĐỀ XUẤT"
+
+#: controls.py:625
+#: settings/tuner.py:32
+msgid "Default"
+msgstr "Mặc định"
+
+#: destinations.py:492
+msgid "Road data still supplies speed limits"
+msgstr "Dữ liệu đường vẫn cung cấp giới hạn tốc độ"
+
+#: destinations.py:218
+#: settings/search.py:271
+msgid "Search"
+msgstr "Tìm kiếm"
+
+#: destinations.py:358
+#: home.py:132
+msgid "Where to?"
+msgstr "Đi đâu?"
+
+#: destinations.py:219
+msgid "Say a place or an address. Tap the mic when you're done."
+msgstr "Nói tên địa điểm hoặc địa chỉ. Chạm vào micrô khi nói xong."
+
+#: destinations.py:231
+msgid "Offline maps"
+msgstr "Bản đồ ngoại tuyến"
+
+#: destinations.py:253
+#: settings/network_test.py:121
+msgid "Start"
+msgstr "Bắt đầu"
+
+#: destinations.py:365
+msgid "Offline maps ready"
+msgstr "Bản đồ ngoại tuyến đã sẵn sàng"
+
+#: destinations.py:423
+msgid "Search needs the public Mapbox key · see Settings › Driving › Speed & Steering › Navigation"
+msgstr "Tìm kiếm cần khóa Mapbox công khai · xem Cài đặt › Lái xe › Tốc độ và lái › Dẫn đường"
+
+#: destinations.py:480
+msgid "Arrive"
+msgstr "Đến nơi"
+
+#: destinations.py:480
+msgid "Time"
+msgstr "Thời gian"
+
+#: destinations.py:480
+msgid "Distance"
+msgstr "Quãng đường"
+
+#: destinations.py:495
+msgid "Slows ahead of turns on the route"
+msgstr "Giảm tốc trước các khúc rẽ trên tuyến"
+
+#: destinations.py:166
+msgid "Search for a place or address"
+msgstr "Tìm địa điểm hoặc địa chỉ"
+
+#: destinations.py:233
+msgid "Turns and speed follow the route automatically while navigating"
+msgstr "Khi dẫn đường, rẽ và tốc độ tự động theo tuyến"
+
+#: destinations.py:257
+#: settings/maps.py:212
+msgid "Choose regions"
+msgstr "Chọn vùng"
+
+#: destinations.py:387
+msgid "RECENT"
+msgstr "GẦN ĐÂY"
+
+#: destinations.py:229
+msgid "Add favorite"
+msgstr "Thêm yêu thích"
+
+#: destinations.py:229
+msgid "Search for a place"
+msgstr "Tìm một địa điểm"
+
+#: destinations.py:380
+msgid "ON A ROUTE"
+msgstr "ĐANG DẪN ĐƯỜNG"
+
+#: destinations.py:381
+#, python-brace-format
+msgid "To {}"
+msgstr "Đến {}"
+
+#: destinations.py:384
+msgid "FAVORITES"
+msgstr "YÊU THÍCH"
+
+#: destinations.py:394
+msgid "Places you navigate to show up here."
+msgstr "Những nơi bạn dẫn đường đến sẽ hiện ở đây."
+
+#: destinations.py:426
+msgid "Type a place or address"
+msgstr "Nhập địa điểm hoặc địa chỉ"
+
+#: destinations.py:426
+#, python-brace-format
+msgid "Results show as you type, from {} letters"
+msgstr "Kết quả hiện khi bạn gõ, từ {} ký tự"
+
+#: destinations.py:223
+#: settings/navigation.py:57
+msgid "Home"
+msgstr "Nhà"
+
+#: destinations.py:223
+msgid "Set Home"
+msgstr "Đặt Nhà"
+
+#: destinations.py:224
+msgid "Search for your home address"
+msgstr "Tìm địa chỉ nhà của bạn"
+
+#: destinations.py:226
+#: settings/navigation.py:58
+msgid "Work"
+msgstr "Nơi làm việc"
+
+#: destinations.py:226
+msgid "Set Work"
+msgstr "Đặt Nơi làm việc"
+
+#: destinations.py:227
+msgid "Search for your work address"
+msgstr "Tìm địa chỉ nơi làm việc của bạn"
+
+#: destinations.py:382
+#: onroad/layers.py:120
+msgid "End route"
+msgstr "Kết thúc tuyến"
+
+#: drivercamera.py:19
+msgid "Sit as you do to drive. The box should follow your face."
+msgstr "Ngồi như khi lái xe. Khung sẽ đi theo khuôn mặt bạn."
+
+#: drivercamera.py:53
+msgid "Face found · driver monitoring can see you"
+msgstr "Đã thấy khuôn mặt · giám sát tài xế nhìn thấy bạn"
+
+#: drivercamera.py:53
+msgid "Looking for your face"
+msgstr "Đang tìm khuôn mặt bạn"
+
+#: drivercamera.py:44
+msgid "Starting the camera…"
+msgstr "Đang khởi động camera…"
+
+#: forecast.py:38
+#: forecast.py:38
+#: onroad/status.py:291
+msgid "Fog"
+msgstr "Sương mù"
+
+#: forecast.py:39
+#: forecast.py:41
+#: forecast.py:44
+msgid "Light rain"
+msgstr "Mưa nhỏ"
+
+#: forecast.py:39
+#: forecast.py:39
+msgid "Drizzle"
+msgstr "Mưa phùn"
+
+#: forecast.py:40
+#: forecast.py:40
+msgid "Freezing drizzle"
+msgstr "Mưa phùn đóng băng"
+
+#: forecast.py:41
+#: onroad/status.py:288
+msgid "Rain"
+msgstr "Mưa"
+
+#: forecast.py:41
+#: forecast.py:44
+#: onroad/status.py:289
+msgid "Heavy rain"
+msgstr "Mưa to"
+
+#: forecast.py:42
+#: forecast.py:42
+msgid "Freezing rain"
+msgstr "Mưa đóng băng"
+
+#: forecast.py:43
+msgid "Light snow"
+msgstr "Tuyết nhẹ"
+
+#: forecast.py:43
+#: onroad/status.py:290
+msgid "Snow"
+msgstr "Tuyết"
+
+#: forecast.py:43
+#: forecast.py:45
+msgid "Heavy snow"
+msgstr "Tuyết dày"
+
+#: forecast.py:43
+msgid "Fine, icy snow"
+msgstr "Tuyết mịn, đóng băng"
+
+#: forecast.py:44
+msgid "Rain showers"
+msgstr "Mưa rào"
+
+#: forecast.py:45
+msgid "Light snow flurries"
+msgstr "Tuyết rơi nhẹ"
+
+#: forecast.py:46
+msgid "Thunderstorm"
+msgstr "Giông bão"
+
+#: forecast.py:46
+#: forecast.py:46
+msgid "Storm with hail"
+msgstr "Bão kèm mưa đá"
+
+#: forecast.py:51
+msgid "Sunny"
+msgstr "Nắng"
+
+#: forecast.py:51
+msgid "Clear"
+msgstr "Quang đãng"
+
+#: forecast.py:51
+msgid "Mostly sunny"
+msgstr "Phần lớn có nắng"
+
+#: forecast.py:51
+msgid "Mostly clear"
+msgstr "Phần lớn quang đãng"
+
+#: forecast.py:51
+#: forecast.py:51
+msgid "Partly cloudy"
+msgstr "Có mây rải rác"
+
+#: forecast.py:52
+#: forecast.py:52
+msgid "Cloudy"
+msgstr "Nhiều mây"
+
+#: forecast.py:177
+#, python-brace-format
+msgid "{} in {} min"
+msgstr "{} sau {} phút"
+
+#: forecast.py:178
+#: forecast.py:354
+#, python-brace-format
+msgid "{} until {}"
+msgstr "{} đến {}"
+
+#: forecast.py:360
+msgid "No rain or snow ahead"
+msgstr "Không có mưa hay tuyết phía trước"
+
+#: forecast.py:356
+#, python-brace-format
+msgid "{} from {}"
+msgstr "{} từ {}"
+
+#: forecast.py:356
+#, python-brace-format
+msgid " to {}"
+msgstr " đến {}"
+
+#: home.py:34
+msgid "READY"
+msgstr "SẴN SÀNG"
+
+#: home.py:152
+#: home_alerts.py:161
+msgid "Update ready"
+msgstr "Bản cập nhật đã sẵn sàng"
+
+#: home.py:152
+#: settings/search.py:25
+#: settings/search.py:202
+msgid "Software"
+msgstr "Phần mềm"
+
+#: home.py:158
+#: settings/software.py:105
+msgid "Restart to install"
+msgstr "Khởi động lại để cài đặt"
+
+#: home.py:33
+msgid "NEEDS ATTENTION"
+msgstr "CẦN CHÚ Ý"
+
+#: home.py:33
+#, python-brace-format
+msgid "Check {} alert"
+msgid_plural "Check {} alerts"
+msgstr[0] "Xem {} cảnh báo"
+
+#: home.py:34
+msgid "Press cruise to engage"
+msgstr "Nhấn cruise để kích hoạt"
+
+#: home.py:34
+msgid "Start the car to drive"
+msgstr "Khởi động xe để lái"
+
+#: home.py:77
+#, python-brace-format
+msgid "Forecast · updated {}"
+msgstr "Dự báo · cập nhật {}"
+
+#: home.py:135
+msgid "Notes"
+msgstr "Ghi chú"
+
+#: home.py:160
+#, python-brace-format
+msgid "Up to date · {}"
+msgstr "Đã cập nhật · {}"
+
+#: home.py:160
+#: settings/software.py:83
+msgid "Up to date"
+msgstr "Đã cập nhật"
+
+#: home.py:132
+msgid "Home · Work · Recent"
+msgstr "Nhà · Nơi làm việc · Gần đây"
+
+#: home_alerts.py:23
+msgid "Cooling down"
+msgstr "Đang làm mát"
+
+#: home_alerts.py:24
+msgid "Connect soon"
+msgstr "Hãy kết nối sớm"
+
+#: home_alerts.py:25
+msgid "Needs a connection"
+msgstr "Cần kết nối"
+
+#: home_alerts.py:26
+msgid "Update failed"
+msgstr "Cập nhật thất bại"
+
+#: home_alerts.py:27
+msgid "Chestnut not found"
+msgstr "Không tìm thấy Chestnut"
+
+#: home_alerts.py:28
+msgid "Chestnut too hot"
+msgstr "Chestnut quá nóng"
+
+#: home_alerts.py:29
+msgid "Chestnut unavailable"
+msgstr "Chestnut không khả dụng"
+
+#: home_alerts.py:30
+msgid "Chestnut update failed"
+msgstr "Cập nhật Chestnut thất bại"
+
+#: home_alerts.py:31
+msgid "Chestnut link is slow"
+msgstr "Kết nối Chestnut chậm"
+
+#: home_alerts.py:32
+msgid "Not registered"
+msgstr "Chưa đăng ký"
+
+#: home_alerts.py:33
+msgid "Car not recognized"
+msgstr "Không nhận ra xe"
+
+#: home_alerts.py:34
+msgid "Device mount changed"
+msgstr "Giá đỡ thiết bị đã thay đổi"
+
+#: home_alerts.py:35
+msgid "Driver camera can't see well"
+msgstr "Camera tài xế nhìn không rõ"
+
+#: home_alerts.py:36
+msgid "Excessive actuation"
+msgstr "Tác động quá mức"
+
+#: home_alerts.py:162
+msgid "Restart and update"
+msgstr "Khởi động lại và cập nhật"
+
+#: home_alerts.py:188
+msgid "Automatic installation is scheduled while parked."
+msgstr "Đã lên lịch tự động cài đặt khi đỗ xe."
+
+#: home_alerts.py:121
+#, python-brace-format
+msgid "{} alert"
+msgid_plural "{} alerts"
+msgstr[0] "{} cảnh báo"
+
+#: home_alerts.py:122
+msgid "openpilot may not start until these are sorted out"
+msgstr "openpilot có thể không khởi động cho đến khi các mục này được xử lý"
+
+#: home_layout.py:22
+#: settings/speed_steering.py:25
+#: settings/tuner.py:52
+msgid "Sport"
+msgstr "Thể thao"
+
+#: home_layout.py:22
+#: settings/display.py:41
+#: settings/display.py:34
+msgid "Standard"
+msgstr "Tiêu chuẩn"
+
+#: home_layout.py:22
+#: settings/speed_steering.py:25
+#: settings/tuner.py:51
+msgid "Relaxed"
+msgstr "Thư thái"
+
+#: home_layout.py:28
+#, python-brace-format
+msgid "{} style"
+msgstr "Phong cách {}"
+
+#: home_layout.py:30
+#: settings/speed_steering.py:177
+msgid "Matching speed limits"
+msgstr "Theo giới hạn tốc độ"
+
+#: home_layout.py:37
+#, python-brace-format
+msgid "{} style · {} · {}"
+msgstr "Phong cách {} · {} · {}"
+
+#: home_layout.py:31
+#: settings/speed_steering.py:177
+msgid "Showing speed limits"
+msgstr "Hiển thị giới hạn tốc độ"
+
+#: home_layout.py:31
+#: settings/speed_steering.py:177
+msgid "Speed limits off"
+msgstr "Tắt giới hạn tốc độ"
+
+#: home_layout.py:35
+#: settings/speed_steering.py:173
+msgid "Auto lane change"
+msgstr "Tự động chuyển làn"
+
+#: home_layout.py:35
+#: settings/speed_steering.py:173
+msgid "Nudge to change lanes"
+msgstr "Đẩy nhẹ để chuyển làn"
+
+#: home_layout.py:91
+msgid "Acknowledge excessive actuation"
+msgstr "Xác nhận tác động quá mức"
+
+#: home_layout.py:92
+msgid "Snooze update"
+msgstr "Hoãn cập nhật"
+
+#: keyboard.py:44
+msgid "ABC"
+msgstr "ABC"
+
+#: keyboard.py:44
+msgid "space"
+msgstr "dấu cách"
+
+#: keyboard.py:129
+#: map_keys.py:73
+#: routing_status.py:9
+msgid "Done"
+msgstr "Xong"
+
+#: keyboard.py:130
+#: voice.py:196
+msgid "Speak now. Tap the mic when you're done."
+msgstr "Hãy nói. Chạm vào micrô khi nói xong."
+
+#: keyboard.py:135
+#: overlays.py:174
+#: settings/bluetooth_tab.py:259
+msgid "Cancel"
+msgstr "Hủy"
+
+#: map_keys.py:45
+msgid "The keys stay on this device. Search and routes work as soon as they're saved."
+msgstr "Các khóa được giữ trên thiết bị này. Tìm kiếm và tuyến đường hoạt động ngay khi lưu."
+
+#: map_keys.py:23
+msgid "Make a Mapbox account"
+msgstr "Tạo tài khoản Mapbox"
+
+#: map_keys.py:23
+msgid "At account.mapbox.com. The free tier covers personal driving."
+msgstr "Tại account.mapbox.com. Gói miễn phí đủ cho việc lái xe cá nhân."
+
+#: map_keys.py:24
+msgid "Copy the public token"
+msgstr "Sao chép token công khai"
+
+#: map_keys.py:24
+msgid "Under Access tokens, the Default public token, which starts with pk. A secret token isn't needed."
+msgstr "Trong Access tokens, Default public token bắt đầu bằng pk. Không cần token bí mật."
+
+#: map_keys.py:25
+msgid "Open Galaxy"
+msgstr "Mở Galaxy"
+
+#: map_keys.py:25
+msgid "On this device: Device › This Device › Remote Access › Set Up, then open its link on your phone."
+msgstr "Trên thiết bị này: Thiết bị › Thiết bị này › Truy cập từ xa › Thiết lập, rồi mở liên kết trên điện thoại."
+
+#: map_keys.py:26
+msgid "Paste it while parked"
+msgstr "Dán khi đang đỗ xe"
+
+#: map_keys.py:26
+msgid "In Galaxy: Navigation › Setup › Mapbox key. A Google key goes there too."
+msgstr "Trong Galaxy: Navigation › Setup › Mapbox key. Khóa Google cũng nhập ở đó."
+
+#: map_keys.py:39
+msgid "Not added · needed for place search and routes"
+msgstr "Chưa thêm · cần cho tìm địa điểm và tuyến đường"
+
+#: map_keys.py:72
+msgid "Add a map key"
+msgstr "Thêm khóa bản đồ"
+
+#: map_keys.py:72
+msgid "Mapbox finds places and plans routes. Google is optional, for traffic."
+msgstr "Mapbox tìm địa điểm và lập tuyến đường. Google là tùy chọn, dùng cho giao thông."
+
+#: map_keys.py:38
+msgid "Mapbox and Google added"
+msgstr "Đã thêm Mapbox và Google"
+
+#: map_keys.py:38
+msgid "Mapbox added · Google optional"
+msgstr "Đã thêm Mapbox · Google tùy chọn"
+
+#: onroad/binding.py:21
+msgid "map"
+msgstr "bản đồ"
+
+#: onroad/binding.py:22
+msgid "dashboard"
+msgstr "bảng đồng hồ"
+
+#: onroad/binding.py:23
+msgid "camera"
+msgstr "camera"
+
+#: onroad/binding.py:24
+msgid "online maps"
+msgstr "bản đồ trực tuyến"
+
+#: onroad/binding.py:74
+msgid "speed limit source"
+msgstr "nguồn giới hạn tốc độ"
+
+#: onroad/developer.py:97
+msgid "idle"
+msgstr "nghỉ"
+
+#: onroad/developer.py:98
+#: onroad/developer.py:152
+msgid "none"
+msgstr "không có"
+
+#: onroad/developer.py:102
+msgid "0.0 m/s²"
+msgstr "0.0 m/s²"
+
+#: onroad/developer.py:103
+msgid "0.00 s"
+msgstr "0.00 s"
+
+#: onroad/developer.py:56
+msgid "accel"
+msgstr "gia tốc"
+
+#: onroad/developer.py:56
+msgid "Acceleration now"
+msgstr "Gia tốc hiện tại"
+
+#: onroad/developer.py:57
+msgid "want"
+msgstr "muốn"
+
+#: onroad/developer.py:57
+msgid "Acceleration openpilot asks for"
+msgstr "Gia tốc openpilot yêu cầu"
+
+#: onroad/developer.py:58
+msgid "lat"
+msgstr "ngang"
+
+#: onroad/developer.py:58
+msgid "Lateral acceleration"
+msgstr "Gia tốc ngang"
+
+#: onroad/developer.py:59
+msgid "delay"
+msgstr "trễ"
+
+#: onroad/developer.py:59
+msgid "Steering delay"
+msgstr "Độ trễ lái"
+
+#: onroad/developer.py:60
+msgid "steer"
+msgstr "lái"
+
+#: onroad/developer.py:60
+msgid "Steering wheel angle"
+msgstr "Góc vô lăng"
+
+#: onroad/developer.py:61
+msgid "torque"
+msgstr "mô-men"
+
+#: onroad/developer.py:61
+msgid "Steering torque used"
+msgstr "Mô-men lái đang dùng"
+
+#: onroad/developer.py:62
+msgid "ratio"
+msgstr "tỉ số"
+
+#: onroad/developer.py:62
+msgid "Steer ratio"
+msgstr "Tỉ số lái"
+
+#: onroad/developer.py:147
+msgid "Lead"
+msgstr "Xe phía trước"
+
+#: onroad/developer.py:161
+#: settings/search.py:25
+#: settings/window.py:31
+msgid "Device"
+msgstr "Thiết bị"
+
+#: onroad/developer.py:165
+msgid "FPS"
+msgstr "FPS"
+
+#: onroad/developer.py:166
+msgid "Controls"
+msgstr "Điều khiển"
+
+#: onroad/developer.py:167
+msgid "curve spd"
+msgstr "tốc độ cua"
+
+#: onroad/developer.py:168
+msgid "limit src"
+msgstr "nguồn giới hạn"
+
+#: onroad/developer.py:259
+#: onroad/lead.py:146
+#: onroad/lead.py:156
+#, python-brace-format
+msgid "{} m"
+msgstr "{} m"
+
+#: onroad/developer.py:259
+#: onroad/lead.py:146
+#: onroad/lead.py:156
+#, python-brace-format
+msgid "{} ft"
+msgstr "{} ft"
+
+#: onroad/developer.py:261
+#: onroad/developer.py:304
+#: onroad/lead.py:157
+#, python-brace-format
+msgid "{} s"
+msgstr "{} s"
+
+#: onroad/developer.py:286
+#: settings/ram.py:31
+#: settings/storage.py:101
+#, python-brace-format
+msgid "{} GB"
+msgstr "{} GB"
+
+#: onroad/developer.py:291
+#, python-brace-format
+msgid "active · {} {}"
+msgstr "đang chạy · {} {}"
+
+#: onroad/developer.py:302
+#, python-brace-format
+msgid "{} m/s²"
+msgstr "{} m/s²"
+
+#: onroad/developer.py:150
+msgid "distance"
+msgstr "khoảng cách"
+
+#: onroad/developer.py:150
+msgid "gap"
+msgstr "giãn cách"
+
+#: onroad/developer.py:151
+msgid "rel speed"
+msgstr "tốc độ tương đối"
+
+#: onroad/developer.py:152
+msgid "source"
+msgstr "nguồn"
+
+#: onroad/developer.py:162
+msgid "CPU"
+msgstr "CPU"
+
+#: onroad/developer.py:163
+msgid "GPU"
+msgstr "GPU"
+
+#: onroad/developer.py:164
+#: settings/ram.py:121
+#: settings/ram.py:111
+msgid "RAM"
+msgstr "RAM"
+
+#: onroad/developer.py:262
+msgid "radar"
+msgstr "radar"
+
+#: onroad/developer.py:262
+msgid "vision"
+msgstr "camera"
+
+#: onroad/extras.py:105
+msgid "Loading model"
+msgstr "Đang tải mô hình"
+
+#: onroad/extras.py:106
+msgid "Big model"
+msgstr "Mô hình lớn"
+
+#: onroad/extras.py:107
+msgid "Big model failed"
+msgstr "Mô hình lớn lỗi"
+
+#: onroad/extras.py:108
+msgid "Small model in use"
+msgstr "Đang dùng mô hình nhỏ"
+
+#: onroad/layers.py:500
+msgid "Help steer"
+msgstr "Hãy hỗ trợ lái"
+
+#: onroad/layers.py:500
+msgid "Steering is at its limit for this curve"
+msgstr "Lái đã ở giới hạn cho khúc cua này"
+
+#: onroad/layers.py:171
+msgid "MAX"
+msgstr "TỐI ĐA"
+
+#: onroad/layers.py:202
+msgid "ARRIVE"
+msgstr "ĐẾN NƠI"
+
+#: onroad/layers.py:203
+msgid "LEFT"
+msgstr "CÒN LẠI"
+
+#: onroad/layers.py:585
+#, python-brace-format
+msgid "New limit {}"
+msgstr "Giới hạn mới {}"
+
+#: onroad/layers.py:586
+msgid "Slow down"
+msgstr "Giảm tốc"
+
+#: onroad/layers.py:586
+msgid "Speed up"
+msgstr "Tăng tốc"
+
+#: onroad/layers.py:587
+#, python-brace-format
+msgid "{} to {} {}?"
+msgstr "{} đến {} {}?"
+
+#: onroad/layers.py:588
+#, python-brace-format
+msgid "From {} · ignored in {} s"
+msgstr "Từ {} · bỏ qua sau {} s"
+
+#: onroad/layers.py:558
+#: settings/speed_steering.py:26
+msgid "Match"
+msgstr "Theo"
+
+#: onroad/layers.py:560
+msgid "Ignore"
+msgstr "Bỏ qua"
+
+#: onroad/state.py:112
+#, python-brace-format
+msgid "{} km"
+msgstr "{} km"
+
+#: onroad/state.py:112
+#, python-brace-format
+msgid "{} mi"
+msgstr "{} mi"
+
+#: onroad/state.py:113
+#, python-brace-format
+msgid "{} min · {}"
+msgstr "{} phút · {}"
+
+#: onroad/status.py:126
+#: onroad/status.py:131
+msgid "Stopped"
+msgstr "Đã dừng"
+
+#: onroad/status.py:126
+msgid "Stopping"
+msgstr "Đang dừng"
+
+#: onroad/status.py:208
+#: onroad/status.py:210
+msgid "Recalculating route"
+msgstr "Đang tính lại tuyến"
+
+#: onroad/status.py:208
+msgid "Finding route"
+msgstr "Đang tìm tuyến"
+
+#: onroad/status.py:100
+#: onroad/status.py:112
+msgid "Steering paused"
+msgstr "Tạm dừng lái"
+
+#: onroad/status.py:114
+msgid "Speed control paused"
+msgstr "Tạm dừng kiểm soát tốc độ"
+
+#: onroad/status.py:119
+msgid "Lane change blocked"
+msgstr "Không thể chuyển làn"
+
+#: onroad/status.py:124
+#: onroad/status.py:154
+msgid "Light is green"
+msgstr "Đèn đã xanh"
+
+#: onroad/status.py:133
+msgid "Slowing for curve"
+msgstr "Giảm tốc vào cua"
+
+#: onroad/status.py:135
+msgid "Slowing for turn"
+msgstr "Giảm tốc để rẽ"
+
+#: onroad/status.py:138
+msgid "Turning left"
+msgstr "Đang rẽ trái"
+
+#: onroad/status.py:142
+msgid "Slowing for traffic"
+msgstr "Giảm tốc theo dòng xe"
+
+#: onroad/status.py:144
+#, python-brace-format
+msgid "Matching limit {}"
+msgstr "Theo giới hạn {}"
+
+#: onroad/status.py:146
+msgid "Coasting"
+msgstr "Đang trôi xe"
+
+#: onroad/status.py:152
+#, python-brace-format
+msgid "{} · longer gap"
+msgstr "{} · giãn cách xa hơn"
+
+#: onroad/status.py:156
+msgid "Car ahead moved"
+msgstr "Xe phía trước đã chạy"
+
+#: onroad/status.py:158
+msgid "Ready · tap resume"
+msgstr "Sẵn sàng · nhấn resume"
+
+#: onroad/status.py:160
+msgid "Steering only"
+msgstr "Chỉ lái"
+
+#: onroad/status.py:166
+#, python-brace-format
+msgid "Low on RAM · {}% used"
+msgstr "Sắp hết RAM · đã dùng {}%"
+
+#: onroad/status.py:212
+msgid "Waiting for GPS"
+msgstr "Đang chờ GPS"
+
+#: onroad/status.py:121
+#, python-brace-format
+msgid "Changing lanes {}"
+msgstr "Đang chuyển làn {}"
+
+#: onroad/status.py:128
+#, python-brace-format
+msgid "{} for stop sign"
+msgstr "{} cho biển dừng"
+
+#: onroad/status.py:140
+msgid "Turning right"
+msgstr "Đang rẽ phải"
+
+#: onroad/status.py:148
+msgid "Pulse & glide · gliding"
+msgstr "Tăng tốc & trôi · đang trôi"
+
+#: onroad/status.py:148
+msgid "Pulse & glide"
+msgstr "Tăng tốc & trôi"
+
+#: onroad/status.py:106
+msgid "Steering paused for signal"
+msgstr "Tạm dừng lái khi bật xi nhan"
+
+#: onroad/status.py:220
+msgid "Using offline maps"
+msgstr "Đang dùng bản đồ ngoại tuyến"
+
+#: onroad/status.py:220
+msgid "Using online maps"
+msgstr "Đang dùng bản đồ trực tuyến"
+
+#: onroad/status.py:108
+msgid "Steering paused after turn"
+msgstr "Tạm dừng lái sau khi rẽ"
+
+#: onroad/status.py:131
+msgid "Stopping ahead"
+msgstr "Sắp dừng phía trước"
+
+#: onroad/status.py:224
+msgid "Offline maps unavailable"
+msgstr "Bản đồ ngoại tuyến không khả dụng"
+
+#: onroad/status.py:224
+#: routing_status.py:37
+msgid "Route unavailable"
+msgstr "Không có tuyến đường"
+
+#: onroad/status.py:110
+#, python-brace-format
+msgid "Steering paused · under {} {}"
+msgstr "Tạm dừng lái · dưới {} {}"
+
+#: onroad/streets.py:14
+msgid "St"
+msgstr "St"
+
+#: onroad/streets.py:14
+msgid "Ave"
+msgstr "Ave"
+
+#: onroad/streets.py:14
+msgid "Rd"
+msgstr "Rd"
+
+#: onroad/streets.py:14
+msgid "Blvd"
+msgstr "Blvd"
+
+#: onroad/streets.py:14
+msgid "Dr"
+msgstr "Dr"
+
+#: onroad/streets.py:14
+msgid "Ln"
+msgstr "Ln"
+
+#: onroad/streets.py:14
+msgid "Ct"
+msgstr "Ct"
+
+#: onroad/streets.py:14
+msgid "Pl"
+msgstr "Pl"
+
+#: onroad/streets.py:15
+msgid "Ter"
+msgstr "Ter"
+
+#: onroad/streets.py:15
+msgid "Pkwy"
+msgstr "Pkwy"
+
+#: onroad/streets.py:15
+msgid "Hwy"
+msgstr "Hwy"
+
+#: onroad/streets.py:15
+msgid "Expy"
+msgstr "Expy"
+
+#: onroad/streets.py:15
+msgid "Fwy"
+msgstr "Fwy"
+
+#: onroad/streets.py:15
+msgid "Cir"
+msgstr "Cir"
+
+#: onroad/streets.py:15
+msgid "Trl"
+msgstr "Trl"
+
+#: onroad/streets.py:16
+msgid "Sq"
+msgstr "Sq"
+
+#: onroad/streets.py:16
+msgid "Xing"
+msgstr "Xing"
+
+#: onroad/streets.py:16
+msgid "Tpke"
+msgstr "Tpke"
+
+#: onroad/streets.py:16
+msgid "Hts"
+msgstr "Hts"
+
+#: onroad/streets.py:16
+msgid "Ctr"
+msgstr "Ctr"
+
+#: onroad/streets.py:16
+msgid "Plz"
+msgstr "Plz"
+
+#: onroad/streets.py:16
+msgid "Pt"
+msgstr "Pt"
+
+#: onroad/streets.py:17
+msgid "Mtn"
+msgstr "Mtn"
+
+#: onroad/streets.py:17
+msgid "Jct"
+msgstr "Jct"
+
+#: onroad/streets.py:17
+msgid "Cres"
+msgstr "Cres"
+
+#: onroad/streets.py:17
+msgid "Aly"
+msgstr "Aly"
+
+#: onroad/streets.py:17
+msgid "Cswy"
+msgstr "Cswy"
+
+#: onroad/streets.py:17
+msgid "Byp"
+msgstr "Byp"
+
+#: places.py:153
+msgid "Searching…"
+msgstr "Đang tìm…"
+
+#: places.py:153
+msgid "Looking up places"
+msgstr "Đang tra cứu địa điểm"
+
+#: places.py:155
+msgid "Search unavailable"
+msgstr "Không thể tìm kiếm"
+
+#: places.py:157
+msgid "Nothing found"
+msgstr "Không tìm thấy gì"
+
+#: places.py:157
+msgid "Try a different place or address"
+msgstr "Thử địa điểm hoặc địa chỉ khác"
+
+#: ram.py:44
+msgid "Driving model"
+msgstr "Mô hình lái xe"
+
+#: ram.py:45
+msgid "Driver monitoring model"
+msgstr "Mô hình giám sát tài xế"
+
+#: ram.py:46
+msgid "This screen"
+msgstr "Màn hình này"
+
+#: ram.py:47
+msgid "Driving decisions"
+msgstr "Quyết định lái xe"
+
+#: ram.py:48
+msgid "Steering and speed control"
+msgstr "Lái và kiểm soát tốc độ"
+
+#: ram.py:49
+msgid "Speed planning"
+msgstr "Lập kế hoạch tốc độ"
+
+#: ram.py:50
+msgid "Radar"
+msgstr "Radar"
+
+#: ram.py:51
+msgid "Position and heading"
+msgstr "Vị trí và hướng đi"
+
+#: ram.py:52
+msgid "Car calibration"
+msgstr "Hiệu chỉnh xe"
+
+#: ram.py:53
+msgid "Camera calibration"
+msgstr "Hiệu chỉnh camera"
+
+#: ram.py:54
+msgid "Cameras"
+msgstr "Camera"
+
+#: ram.py:55
+msgid "Video recording"
+msgstr "Quay video"
+
+#: ram.py:56
+msgid "Drive logging"
+msgstr "Ghi nhật ký chuyến đi"
+
+#: ram.py:57
+#: settings/search.py:174
+#: settings/storage.py:157
+msgid "Uploads"
+msgstr "Tải lên"
+
+#: ram.py:58
+#: ram.py:59
+#: ram.py:69
+msgid "Remote access"
+msgstr "Truy cập từ xa"
+
+#: ram.py:60
+msgid "Speed limits and curves"
+msgstr "Giới hạn tốc độ và khúc cua"
+
+#: ram.py:61
+#: ram.py:62
+#: ram.py:63
+msgid "Routing"
+msgstr "Định tuyến"
+
+#: ram.py:64
+msgid "Sounds"
+msgstr "Âm thanh"
+
+#: ram.py:65
+msgid "Car interface"
+msgstr "Giao tiếp với xe"
+
+#: ram.py:66
+msgid "Starts and stops the rest"
+msgstr "Khởi động và dừng các phần còn lại"
+
+#: ram.py:67
+msgid "StarPilot's planning"
+msgstr "Lập kế hoạch của StarPilot"
+
+#: ram.py:68
+msgid "Speed limit sign reading"
+msgstr "Đọc biển giới hạn tốc độ"
+
+#: ram.py:70
+msgid "Power and temperature"
+msgstr "Nguồn và nhiệt độ"
+
+#: ram.py:71
+msgid "Bluetooth remote"
+msgstr "Điều khiển Bluetooth"
+
+#: ram.py:72
+msgid "Car connection"
+msgstr "Kết nối với xe"
+
+#: routemap.py:128
+#: routing_status.py:7
+#: routing_status.py:8
+msgid "Finding a route…"
+msgstr "Đang tìm tuyến đường…"
+
+#: routemap.py:129
+msgid "Needs a GPS fix to plan the route"
+msgstr "Cần định vị GPS để lập tuyến"
+
+#: routemap.py:130
+msgid "Couldn't find a route. Check the connection."
+msgstr "Không tìm được tuyến đường. Hãy kiểm tra kết nối."
+
+#: routemap.py:131
+msgid "Routes need a Mapbox or Google key: see Settings › Driving › Speed & Steering › Navigation"
+msgstr "Tuyến đường cần khóa Mapbox hoặc Google: xem Cài đặt › Lái xe › Tốc độ và lái › Dẫn đường"
+
+#: routemap.py:50
+#, python-brace-format
+msgid "{} min"
+msgstr "{} phút"
+
+#: routemap.py:50
+#, python-brace-format
+msgid "{} h {} min"
+msgstr "{} giờ {} phút"
+
+#: routing_status.py:10
+msgid "Installation failed. Check the connection and package."
+msgstr "Cài đặt thất bại. Hãy kiểm tra kết nối và gói dữ liệu."
+
+#: routing_status.py:11
+msgid "Online routing is selected"
+msgstr "Đang chọn định tuyến trực tuyến"
+
+#: routing_status.py:12
+msgid "Offline routing data ready"
+msgstr "Dữ liệu định tuyến ngoại tuyến đã sẵn sàng"
+
+#: routing_status.py:13
+#: routing_status.py:14
+msgid "Download maps for this region"
+msgstr "Tải bản đồ cho vùng này"
+
+#: routing_status.py:15
+msgid "Routing data needs to be installed again"
+msgstr "Cần cài lại dữ liệu định tuyến"
+
+#: routing_status.py:16
+msgid "This trip needs more routing data"
+msgstr "Chuyến đi này cần thêm dữ liệu định tuyến"
+
+#: routing_status.py:17
+msgid "No offline route found for this trip"
+msgstr "Không tìm thấy tuyến ngoại tuyến cho chuyến đi này"
+
+#: routing_status.py:18
+msgid "Routing is busy. Trying again…"
+msgstr "Định tuyến đang bận. Đang thử lại…"
+
+#: routing_status.py:19
+msgid "The route took too long. Trying again…"
+msgstr "Tính tuyến quá lâu. Đang thử lại…"
+
+#: routing_status.py:20
+msgid "Routing is unavailable. Trying again…"
+msgstr "Định tuyến không khả dụng. Đang thử lại…"
+
+#: routing_status.py:21
+msgid "Routing returned an unusable route"
+msgstr "Định tuyến trả về tuyến không dùng được"
+
+#: routing_status.py:22
+msgid "This place has no usable coordinates"
+msgstr "Địa điểm này không có tọa độ dùng được"
+
+#: routing_status.py:23
+msgid "Waiting for a fresh GPS fix"
+msgstr "Đang chờ định vị GPS mới"
+
+#: routing_status.py:24
+msgid "Finding another offline route…"
+msgstr "Đang tìm tuyến ngoại tuyến khác…"
+
+#: routing_status.py:25
+msgid "Park and end the route to change routing data"
+msgstr "Đỗ xe và kết thúc tuyến để thay đổi dữ liệu định tuyến"
+
+#: routing_status.py:26
+msgid "There is not enough storage for this package"
+msgstr "Không đủ dung lượng cho gói này"
+
+#: routing_status.py:27
+msgid "This package is already installed with different data"
+msgstr "Gói này đã được cài với dữ liệu khác"
+
+#: routing_status.py:28
+msgid "Installation cancelled"
+msgstr "Đã hủy cài đặt"
+
+#: routing_status.py:29
+msgid "Finding the updated route…"
+msgstr "Đang tìm tuyến đã cập nhật…"
+
+#: routing_status.py:30
+msgid "Map downloads are unavailable. Try again when connected."
+msgstr "Không thể tải bản đồ. Hãy thử lại khi có kết nối."
+
+#: routing_status.py:31
+msgid "Map download failed. Existing maps are kept."
+msgstr "Tải bản đồ thất bại. Bản đồ hiện có vẫn được giữ."
+
+#: routing_status.py:32
+msgid "Road data download did not finish. Try again when connected."
+msgstr "Chưa tải xong dữ liệu đường. Hãy thử lại khi có kết nối."
+
+#: routing_status.py:33
+msgid "Road data downloads aren't available right now. Try again in a moment."
+msgstr "Hiện chưa thể tải dữ liệu đường. Hãy thử lại sau giây lát."
+
+#: routing_status.py:34
+msgid "Another road data download is running. Try again when it finishes."
+msgstr "Đang có lượt tải dữ liệu đường khác. Hãy thử lại khi nó xong."
+
+#: routing_status.py:35
+#: settings/maps.py:494
+msgid "Paused. Downloads continue when parked on Wi-Fi."
+msgstr "Đã tạm dừng. Việc tải tiếp tục khi đỗ xe và có Wi-Fi."
+
+#: routing_status.py:36
+msgid "Offline routes are not available for every selected region."
+msgstr "Tuyến ngoại tuyến không có cho mọi vùng đã chọn."
+
+#: routing_status.py:38
+msgid "Online routing is unavailable"
+msgstr "Định tuyến trực tuyến không khả dụng"
+
+#: routing_status.py:43
+msgid "Routing is unavailable"
+msgstr "Định tuyến không khả dụng"
+
+#: settings/alerts.py:54
+#: settings/alerts.py:117
+#: settings/alerts.py:175
+msgid "Auto"
+msgstr "Tự động"
+
+#: settings/alerts.py:54
+#: settings/alerts.py:159
+msgid "Quiet"
+msgstr "Nhỏ"
+
+#: settings/alerts.py:54
+#: settings/alerts.py:159
+msgid "Normal"
+msgstr "Bình thường"
+
+#: settings/alerts.py:54
+#: settings/alerts.py:159
+msgid "Loud"
+msgstr "Lớn"
+
+#: settings/alerts.py:47
+msgid "Engage and disengage chimes"
+msgstr "Tiếng báo bật và tắt"
+
+#: settings/alerts.py:47
+msgid "When openpilot turns on or off"
+msgstr "Khi openpilot bật hoặc tắt"
+
+#: settings/alerts.py:48
+msgid "Prompts and reminders"
+msgstr "Lời nhắc"
+
+#: settings/alerts.py:48
+msgid "Gentle nudges, like when openpilot can't turn on"
+msgstr "Nhắc nhẹ, như khi openpilot không thể bật"
+
+#: settings/alerts.py:50
+msgid "Driver attention"
+msgstr "Chú ý của tài xế"
+
+#: settings/alerts.py:50
+msgid "The chime that asks you to look at the road"
+msgstr "Tiếng báo yêu cầu bạn nhìn đường"
+
+#: settings/alerts.py:52
+msgid "Take control warnings"
+msgstr "Cảnh báo cần điều khiển"
+
+#: settings/alerts.py:52
+msgid "When you need to steer or brake now"
+msgstr "Khi bạn cần lái hoặc phanh ngay"
+
+#: settings/alerts.py:57
+#: settings/search.py:121
+msgid "Green Light"
+msgstr "Đèn xanh"
+
+#: settings/alerts.py:57
+#: settings/search.py:121
+msgid "When the light turns green and you are stopped"
+msgstr "Khi đèn chuyển xanh và bạn đang dừng"
+
+#: settings/alerts.py:58
+#: settings/search.py:122
+msgid "Lead Departure"
+msgstr "Xe trước khởi hành"
+
+#: settings/alerts.py:58
+#: settings/search.py:122
+msgid "When the car ahead pulls away"
+msgstr "Khi xe phía trước chạy đi"
+
+#: settings/alerts.py:59
+#: settings/search.py:123
+msgid "Loud Blind Spot"
+msgstr "Điểm mù báo lớn"
+
+#: settings/alerts.py:59
+#: settings/search.py:123
+msgid "Signalling into an occupied lane, even when paused"
+msgstr "Bật xi nhan sang làn có xe, kể cả khi đang tạm dừng"
+
+#: settings/alerts.py:60
+#: settings/search.py:92
+#: settings/search.py:124
+msgid "Weather heads-up"
+msgstr "Báo trước thời tiết"
+
+#: settings/alerts.py:60
+#: settings/search.py:124
+msgid "Once, when rain, snow or storms are coming"
+msgstr "Một lần, khi sắp có mưa, tuyết hoặc bão"
+
+#: settings/alerts.py:218
+#: settings/driving_tab.py:203
+#: settings/search.py:26
+msgid "Alerts"
+msgstr "Cảnh báo"
+
+#: settings/alerts.py:218
+msgid "One volume for everything. Safety warnings never go below 25%."
+msgstr "Một mức âm lượng cho tất cả. Cảnh báo an toàn không bao giờ dưới 25%."
+
+#: settings/alerts.py:124
+msgid "Custom volume"
+msgstr "Âm lượng tùy chỉnh"
+
+#: settings/alerts.py:124
+#, python-brace-format
+msgid "{} volume"
+msgstr "Âm lượng {}"
+
+#: settings/alerts.py:128
+msgid "No extra chimes"
+msgstr "Không có tiếng báo thêm"
+
+#: settings/alerts.py:182
+msgid "Plays through your car speakers if they're connected."
+msgstr "Phát qua loa xe nếu đã kết nối."
+
+#: settings/alerts.py:186
+msgid "Changing a level sets the Alert Volume preset to Custom."
+msgstr "Thay đổi một mức sẽ chuyển cài sẵn Âm lượng cảnh báo sang Tùy chỉnh."
+
+#: settings/alerts.py:198
+msgid "Park to change alert volumes."
+msgstr "Đỗ xe để thay đổi âm lượng cảnh báo."
+
+#: settings/alerts.py:200
+msgid "Auto follows cabin noise. Tap a level to set it yourself."
+msgstr "Tự động theo tiếng ồn trong xe. Chạm vào một mức để tự đặt."
+
+#: settings/alerts.py:201
+msgid "Custom levels. Pick a preset to reset them."
+msgstr "Mức tùy chỉnh. Chọn một cài sẵn để đặt lại."
+
+#: settings/alerts.py:201
+msgid "Tap a level to fine-tune it."
+msgstr "Chạm vào một mức để tinh chỉnh."
+
+#: settings/alerts.py:217
+msgid "Chimes"
+msgstr "Tiếng báo"
+
+#: settings/alerts.py:153
+msgid "Play sample"
+msgstr "Phát thử"
+
+#: settings/alerts.py:160
+msgid "Reset to Normal"
+msgstr "Đặt lại Bình thường"
+
+#: settings/alerts.py:205
+#: settings/search.py:120
+msgid "Volume"
+msgstr "Âm lượng"
+
+#: settings/alerts.py:158
+#, python-brace-format
+msgid "Minimum {}% for safety alerts"
+msgstr "Tối thiểu {}% cho cảnh báo an toàn"
+
+#: settings/backups.py:94
+#, python-brace-format
+msgid "Backup {}"
+msgstr "Bản sao lưu {}"
+
+#: settings/backups.py:95
+#: settings/backups.py:96
+msgid "Restore"
+msgstr "Khôi phục"
+
+#: settings/backups.py:97
+#: settings/backups.py:97
+#: settings/storage.py:145
+msgid "Delete"
+msgstr "Xóa"
+
+#: settings/backups.py:106
+msgid "Back up now"
+msgstr "Sao lưu ngay"
+
+#: settings/backups.py:108
+#: settings/backups.py:90
+#: settings/essentials.py:155
+msgid "Backups"
+msgstr "Bản sao lưu"
+
+#: settings/backups.py:108
+msgid "Snapshots of your settings. Drives aren't included."
+msgstr "Ảnh chụp cài đặt của bạn. Không bao gồm các chuyến đi."
+
+#: settings/backups.py:90
+#, python-brace-format
+msgid "Backup operation could not finish. {}"
+msgstr "Không thể hoàn tất thao tác sao lưu. {}"
+
+#: settings/backups.py:95
+msgid "Restore this backup?"
+msgstr "Khôi phục bản sao lưu này?"
+
+#: settings/backups.py:95
+#, python-brace-format
+msgid "Your current settings are replaced with {}."
+msgstr "Cài đặt hiện tại sẽ được thay bằng {}."
+
+#: settings/backups.py:97
+msgid "Delete this backup?"
+msgstr "Xóa bản sao lưu này?"
+
+#: settings/backups.py:97
+#, python-brace-format
+msgid "{} can't be recovered."
+msgstr "{} không thể khôi phục."
+
+#: settings/backups.py:105
+msgid "No backups yet."
+msgstr "Chưa có bản sao lưu."
+
+#: settings/backups.py:108
+msgid "SAVED"
+msgstr "ĐÃ LƯU"
+
+#: settings/bluetooth_sources.py:235
+#: settings/bluetooth_sources.py:257
+#: settings/bluetooth_tab.py:344
+#, python-brace-format
+msgid "Button {}"
+msgstr "Nút {}"
+
+#: settings/bluetooth_tab.py:308
+msgid "Press any button to find it"
+msgstr "Nhấn nút bất kỳ để tìm"
+
+#: settings/bluetooth_tab.py:445
+#: settings/bluetooth_tab.py:450
+#: settings/bluetooth_tab.py:445
+msgid "Forget"
+msgstr "Quên"
+
+#: settings/bluetooth_tab.py:63
+msgid "Not set"
+msgstr "Chưa đặt"
+
+#: settings/bluetooth_tab.py:81
+msgid "No remote connected"
+msgstr "Chưa kết nối điều khiển"
+
+#: settings/bluetooth_tab.py:88
+#, python-brace-format
+msgid "{} wheel button"
+msgid_plural "{} wheel buttons"
+msgstr[0] "{} nút trên vô lăng"
+
+#: settings/bluetooth_tab.py:88
+msgid "No wheel buttons"
+msgstr "Không có nút trên vô lăng"
+
+#: settings/bluetooth_tab.py:177
+msgid "Remove another button to free an action slot, then try again."
+msgstr "Gỡ một nút khác để trống chỗ cho thao tác, rồi thử lại."
+
+#: settings/bluetooth_tab.py:194
+#, python-brace-format
+msgid "{} detected"
+msgstr "Đã phát hiện {}"
+
+#: settings/bluetooth_tab.py:194
+msgid "Press a different button on the remote to change it."
+msgstr "Nhấn nút khác trên điều khiển để đổi."
+
+#: settings/bluetooth_tab.py:209
+msgid "STEP 1 · PRESS IT"
+msgstr "BƯỚC 1 · NHẤN NÚT"
+
+#: settings/bluetooth_tab.py:215
+#, python-brace-format
+msgid "Listening stops after {} s."
+msgstr "Ngừng nghe sau {} s."
+
+#: settings/bluetooth_tab.py:218
+msgid "STEP 2 · CHOOSE WHAT IT DOES"
+msgstr "BƯỚC 2 · CHỌN CHỨC NĂNG"
+
+#: settings/bluetooth_tab.py:220
+msgid "StarPilot lists what a button can do on this car."
+msgstr "StarPilot liệt kê những gì một nút có thể làm trên xe này."
+
+#: settings/bluetooth_tab.py:319
+#: settings/connections.py:98
+#: settings/search.py:32
+msgid "Bluetooth Remote"
+msgstr "Điều khiển Bluetooth"
+
+#: settings/bluetooth_tab.py:320
+#: settings/bluetooth_tab.py:477
+msgid "Bluetooth is off"
+msgstr "Bluetooth đang tắt"
+
+#: settings/bluetooth_tab.py:378
+msgid "That button isn't assigned yet. Tap to add it."
+msgstr "Nút đó chưa được gán. Chạm để thêm."
+
+#: settings/bluetooth_tab.py:378
+msgid "Add a button"
+msgstr "Thêm nút"
+
+#: settings/bluetooth_tab.py:405
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
+#: settings/bluetooth_tab.py:414
+msgid "Bluetooth device"
+msgstr "Thiết bị Bluetooth"
+
+#: settings/bluetooth_tab.py:449
+#: settings/bluetooth_tab.py:449
+#: settings/search.py:197
+msgid "Disconnect"
+msgstr "Ngắt kết nối"
+
+#: settings/bluetooth_tab.py:449
+#: settings/search.py:197
+msgid "It reconnects the next time you choose it"
+msgstr "Sẽ kết nối lại vào lần tới bạn chọn"
+
+#: settings/bluetooth_tab.py:450
+#: settings/search.py:198
+msgid "Removes the pairing. Change it with the car off."
+msgstr "Xóa ghép nối. Thay đổi khi xe đã tắt."
+
+#: settings/bluetooth_tab.py:451
+#: settings/bluetooth_tab.py:464
+#: settings/network_tab.py:279
+msgid "Connected"
+msgstr "Đã kết nối"
+
+#: settings/bluetooth_tab.py:475
+msgid "PAIRED"
+msgstr "ĐÃ GHÉP NỐI"
+
+#: settings/bluetooth_tab.py:188
+msgid "Couldn't assign this button"
+msgstr "Không thể gán nút này"
+
+#: settings/bluetooth_tab.py:190
+msgid "All button slots are in use"
+msgstr "Tất cả vị trí nút đã được dùng"
+
+#: settings/bluetooth_tab.py:190
+msgid "Remove a button to add another."
+msgstr "Gỡ một nút để thêm nút khác."
+
+#: settings/bluetooth_tab.py:193
+msgid "Press the button on your remote"
+msgstr "Nhấn nút trên điều khiển"
+
+#: settings/bluetooth_tab.py:193
+#, python-brace-format
+msgid "Listening{}."
+msgstr "Đang nghe{}."
+
+#: settings/bluetooth_tab.py:259
+msgid "Assign a button"
+msgstr "Gán nút"
+
+#: settings/bluetooth_tab.py:269
+msgid "Buttons don't run their actions while this screen is open."
+msgstr "Các nút không thực hiện thao tác khi màn hình này đang mở."
+
+#: settings/bluetooth_tab.py:353
+msgid "PRESSED"
+msgstr "ĐÃ NHẤN"
+
+#: settings/bluetooth_tab.py:418
+#, python-brace-format
+msgid "Pairing with {}"
+msgstr "Đang ghép nối với {}"
+
+#: settings/bluetooth_tab.py:424
+#, python-brace-format
+msgid "Enter the {} for {}"
+msgstr "Nhập {} cho {}"
+
+#: settings/bluetooth_tab.py:424
+msgid "It's shown on the device, or in its manual"
+msgstr "Được hiển thị trên thiết bị hoặc trong sách hướng dẫn"
+
+#: settings/bluetooth_tab.py:432
+#, python-brace-format
+msgid "Check that the device shows {}."
+msgstr "Kiểm tra thiết bị hiển thị {}."
+
+#: settings/bluetooth_tab.py:432
+msgid "The device is asking to pair."
+msgstr "Thiết bị đang yêu cầu ghép nối."
+
+#: settings/bluetooth_tab.py:445
+#, python-brace-format
+msgid "Forget {}?"
+msgstr "Quên {}?"
+
+#: settings/bluetooth_tab.py:445
+msgid "You'll need to pair it again to use it."
+msgstr "Bạn sẽ cần ghép nối lại để sử dụng."
+
+#: settings/bluetooth_tab.py:235
+msgid "This button shares its slot. Remove it and add it again to change it."
+msgstr "Nút này dùng chung vị trí. Gỡ rồi thêm lại để thay đổi."
+
+#: settings/bluetooth_tab.py:418
+msgid "Follow the steps on the device."
+msgstr "Làm theo các bước trên thiết bị."
+
+#: settings/bluetooth_tab.py:423
+#: settings/bluetooth_tab.py:433
+#: settings/bluetooth_tab.py:468
+msgid "Pair"
+msgstr "Ghép nối"
+
+#: settings/bluetooth_tab.py:433
+#, python-brace-format
+msgid "Pair with {}?"
+msgstr "Ghép nối với {}?"
+
+#: settings/bluetooth_tab.py:462
+msgid "Options"
+msgstr "Tùy chọn"
+
+#: settings/bluetooth_tab.py:462
+#: settings/bluetooth_tab.py:468
+#: settings/network_tab.py:140
+msgid "Connect"
+msgstr "Kết nối"
+
+#: settings/bluetooth_tab.py:464
+#: settings/bluetooth_tab.py:470
+#: settings/device.py:266
+msgid "Paired"
+msgstr "Đã ghép nối"
+
+#: settings/bluetooth_tab.py:480
+msgid "Scanning…"
+msgstr "Đang quét…"
+
+#: settings/bluetooth_tab.py:481
+msgid "Nothing paired yet."
+msgstr "Chưa ghép nối thiết bị nào."
+
+#: settings/bluetooth_tab.py:482
+msgid "No devices found yet."
+msgstr "Chưa tìm thấy thiết bị nào."
+
+#: settings/bluetooth_tab.py:193
+#, python-brace-format
+msgid " · {} s left"
+msgstr " · còn {} s"
+
+#: settings/bluetooth_tab.py:241
+msgid "Button"
+msgstr "Nút"
+
+#: settings/bluetooth_tab.py:487
+msgid "Pairing waits until you're parked."
+msgstr "Việc ghép nối chờ đến khi bạn đỗ xe."
+
+#: settings/bluetooth_tab.py:259
+#: settings/essentials.py:73
+#: settings/network_tab.py:36
+msgid "Save"
+msgstr "Lưu"
+
+#: settings/bluetooth_tab.py:485
+msgid "NEARBY"
+msgstr "GẦN ĐÂY"
+
+#: settings/bluetooth_tab.py:244
+#: settings/vehicle.py:234
+msgid "What this button does while driving"
+msgstr "Chức năng của nút này khi lái xe"
+
+#: settings/bluetooth_tab.py:245
+#: settings/developer.py:71
+#: settings/maps.py:209
+msgid "Remove"
+msgstr "Gỡ bỏ"
+
+#: settings/bundles.py:50
+#: settings/search.py:115
+msgid "Developer View"
+msgstr "Chế độ nhà phát triển"
+
+#: settings/bundles.py:50
+msgid "Side panel with live system and controls data"
+msgstr "Bảng bên với dữ liệu hệ thống và điều khiển trực tiếp"
+
+#: settings/bundles.py:54
+#: settings/search.py:116
+msgid "Lead Insights"
+msgstr "Thông tin xe phía trước"
+
+#: settings/bundles.py:54
+msgid "Distance to the car ahead, and the pedals on screen"
+msgstr "Khoảng cách tới xe phía trước và bàn đạp trên màn hình"
+
+#: settings/bundles.py:51
+msgid "Developer sidebar"
+msgstr "Thanh bên nhà phát triển"
+
+#: settings/bundles.py:55
+msgid "Lead indicator"
+msgstr "Chỉ báo xe phía trước"
+
+#: settings/bundles.py:56
+msgid "Lead distance"
+msgstr "Khoảng cách xe phía trước"
+
+#: settings/bundles.py:57
+msgid "Gas and brake"
+msgstr "Ga và phanh"
+
+#: settings/can_recorder.py:19
+#: settings/map_source.py:169
+#: settings/maps.py:318
+msgid "Ready"
+msgstr "Sẵn sàng"
+
+#: settings/can_recorder.py:19
+msgid "Starting…"
+msgstr "Đang bắt đầu…"
+
+#: settings/can_recorder.py:19
+msgid "Recording"
+msgstr "Đang ghi"
+
+#: settings/can_recorder.py:20
+#: settings/network_tab.py:377
+msgid "Saving…"
+msgstr "Đang lưu…"
+
+#: settings/can_recorder.py:20
+#: settings/network_tab.py:119
+msgid "Saved"
+msgstr "Đã lưu"
+
+#: settings/can_recorder.py:20
+#: sidebar.py:124
+msgid "Error"
+msgstr "Lỗi"
+
+#: settings/can_recorder.py:21
+msgid "Discarding…"
+msgstr "Đang hủy bỏ…"
+
+#: settings/can_recorder.py:21
+msgid "Discarded"
+msgstr "Đã hủy bỏ"
+
+#: settings/can_recorder.py:47
+msgid "Start logging"
+msgstr "Bắt đầu ghi"
+
+#: settings/can_recorder.py:49
+msgid "Stop logging"
+msgstr "Dừng ghi"
+
+#: settings/can_recorder.py:51
+msgid "Abort"
+msgstr "Hủy bỏ"
+
+#: settings/can_recorder.py:54
+msgid "Mark lock"
+msgstr "Đánh dấu khóa"
+
+#: settings/can_recorder.py:55
+msgid "Mark unlock"
+msgstr "Đánh dấu mở khóa"
+
+#: settings/can_recorder.py:64
+msgid "OBD frames"
+msgstr "Khung OBD"
+
+#: settings/can_recorder.py:106
+msgid "Test discarded. Start a new test."
+msgstr "Đã hủy bài kiểm tra. Hãy bắt đầu bài mới."
+
+#: settings/can_recorder.py:116
+msgid "Couldn't save the log. Check storage and try again."
+msgstr "Không thể lưu nhật ký. Hãy kiểm tra bộ nhớ và thử lại."
+
+#: settings/can_recorder.py:118
+msgid "Saved: the car is no longer parked."
+msgstr "Đã lưu: xe không còn đỗ."
+
+#: settings/can_recorder.py:120
+msgid "Saved: storage is running low."
+msgstr "Đã lưu: bộ nhớ sắp đầy."
+
+#: settings/can_recorder.py:122
+msgid "Saved: the recording limit was reached."
+msgstr "Đã lưu: đã đạt giới hạn ghi."
+
+#: settings/can_recorder.py:124
+msgid "Saved: OBD test ended and normal input restored."
+msgstr "Đã lưu: kiểm tra OBD đã kết thúc và đầu vào bình thường đã được khôi phục."
+
+#: settings/can_recorder.py:127
+#, python-brace-format
+msgid "Last marker: {} at {}"
+msgstr "Dấu mốc cuối: {} lúc {}"
+
+#: settings/can_recorder.py:129
+msgid "Waiting for OBD traffic. Check the RJ45 cable."
+msgstr "Đang chờ dữ liệu OBD. Hãy kiểm tra cáp RJ45."
+
+#: settings/can_recorder.py:131
+msgid "Waiting for CAN traffic. Some channels sleep with the car off."
+msgstr "Đang chờ dữ liệu CAN. Một số kênh ngủ khi xe tắt."
+
+#: settings/can_recorder.py:132
+msgid "No markers yet."
+msgstr "Chưa có dấu mốc."
+
+#: settings/can_recorder.py:132
+#: settings/can_recorder.py:115
+msgid "Park the car to start a test."
+msgstr "Đỗ xe để bắt đầu kiểm tra."
+
+#: settings/can_recorder.py:45
+msgid "Camera"
+msgstr "Camera"
+
+#: settings/can_recorder.py:45
+msgid "OBD"
+msgstr "OBD"
+
+#: settings/can_recorder.py:63
+msgid "Test controls"
+msgstr "Điều khiển kiểm tra"
+
+#: settings/can_recorder.py:76
+msgid "Test status"
+msgstr "Trạng thái kiểm tra"
+
+#: settings/can_recorder.py:78
+msgid "CAN test recorder"
+msgstr "Bộ ghi kiểm tra CAN"
+
+#: settings/can_recorder.py:78
+msgid "Device › Developer"
+msgstr "Thiết bị › Nhà phát triển"
+
+#: settings/can_recorder.py:109
+msgid "Couldn't delete the log. Try Abort again."
+msgstr "Không thể xóa nhật ký. Hãy thử Hủy bỏ lại."
+
+#: settings/can_recorder.py:111
+msgid "Couldn't restore the input. Restart the device before another test."
+msgstr "Không thể khôi phục đầu vào. Hãy khởi động lại thiết bị trước khi kiểm tra tiếp."
+
+#: settings/can_recorder.py:113
+#: settings/can_recorder.py:115
+msgid "OBD needs the RJ45 cable and this Bolt on, in Park."
+msgstr "OBD cần cáp RJ45 và chiếc Bolt này đang bật, ở số P."
+
+#: settings/can_recorder.py:126
+msgid "Lock"
+msgstr "Khóa"
+
+#: settings/can_recorder.py:126
+msgid "Unlock"
+msgstr "Mở khóa"
+
+#: settings/can_recorder.py:57
+msgid "Tap a marker, then press the car's lock control."
+msgstr "Chạm vào một dấu mốc, rồi nhấn nút khóa của xe."
+
+#: settings/can_recorder.py:67
+msgid "Elapsed"
+msgstr "Đã trôi qua"
+
+#: settings/can_recorder.py:68
+msgid "CAN frames"
+msgstr "Khung CAN"
+
+#: settings/can_recorder.py:70
+msgid "Lock markers"
+msgstr "Dấu mốc khóa"
+
+#: settings/can_recorder.py:71
+msgid "Unlock markers"
+msgstr "Dấu mốc mở khóa"
+
+#: settings/can_recorder.py:75
+msgid "Full and focused logs stay on this device."
+msgstr "Nhật ký đầy đủ và nhật ký chọn lọc được giữ trên thiết bị này."
+
+#: settings/can_recorder.py:58
+msgid "Input"
+msgstr "Đầu vào"
+
+#: settings/can_recorder.py:61
+msgid "Abort deletes this test. OBD stops after 2 minutes."
+msgstr "Hủy bỏ sẽ xóa bài kiểm tra này. OBD dừng sau 2 phút."
+
+#: settings/can_recorder.py:62
+msgid "Stops after 10 minutes. Abort deletes this test."
+msgstr "Dừng sau 10 phút. Hủy bỏ sẽ xóa bài kiểm tra này."
+
+#: settings/can_recorder.py:73
+#, python-brace-format
+msgid "Log: {}"
+msgstr "Nhật ký: {}"
+
+#: settings/can_recorder.py:73
+msgid "Start logging to create a new test log."
+msgstr "Bắt đầu ghi để tạo nhật ký kiểm tra mới."
+
+#: settings/connections.py:64
+#, python-brace-format
+msgid "{} button"
+msgid_plural "{} buttons"
+msgstr[0] "{} nút"
+
+#: settings/connections.py:94
+msgid "CONNECTIONS"
+msgstr "KẾT NỐI"
+
+#: settings/connections.py:95
+#: settings/map_source.py:235
+#: settings/network_tab.py:367
+msgid "Wi-Fi"
+msgstr "Wi-Fi"
+
+#: settings/connections.py:97
+#: settings/network_tab.py:387
+#: settings/network_test.py:99
+msgid "Cellular"
+msgstr "Di động"
+
+#: settings/connections.py:100
+#: settings/search.py:32
+#: settings/search.py:196
+msgid "Bluetooth Devices"
+msgstr "Thiết bị Bluetooth"
+
+#: settings/connections.py:101
+#: settings/network_test.py:172
+#: settings/search.py:32
+msgid "Network Test"
+msgstr "Kiểm tra mạng"
+
+#: settings/developer.py:67
+#: settings/search.py:182
+msgid "openpilot Longitudinal (Alpha)"
+msgstr "Kiểm soát dọc openpilot (Alpha)"
+
+#: settings/developer.py:68
+msgid "Turns off the car's emergency braking. Off while engaged."
+msgstr "Tắt phanh khẩn cấp của xe. Tắt khi đang kích hoạt."
+
+#: settings/developer.py:73
+#: settings/search.py:181
+#: selfdrive/ui/layouts/settings/developer.py:67
+msgid "Joystick Debug Mode"
+msgstr "Chế độ gỡ lỗi Joystick"
+
+#: settings/developer.py:74
+msgid "Drive openpilot's controls from a joystick. Change it with the car off."
+msgstr "Điều khiển openpilot bằng joystick. Thay đổi khi xe đã tắt."
+
+#: settings/developer.py:55
+msgid "Getting keys from GitHub…"
+msgstr "Đang lấy khóa từ GitHub…"
+
+#: settings/developer.py:58
+#, python-brace-format
+msgid "Keys from GitHub user {}"
+msgstr "Khóa từ người dùng GitHub {}"
+
+#: settings/developer.py:58
+msgid "Adds every public key in a GitHub account. Never use someone else's."
+msgstr "Thêm mọi khóa công khai trong một tài khoản GitHub. Đừng bao giờ dùng tài khoản của người khác."
+
+#: settings/developer.py:84
+#: settings/essentials.py:159
+#: settings/search.py:31
+msgid "Developer"
+msgstr "Nhà phát triển"
+
+#: settings/developer.py:84
+msgid "openpilot's developer options. They're only here with Tuner Mode on."
+msgstr "Tùy chọn nhà phát triển của openpilot. Chỉ hiện khi bật Chế độ tinh chỉnh."
+
+#: settings/developer.py:50
+msgid "GitHub username"
+msgstr "Tên người dùng GitHub"
+
+#: settings/developer.py:77
+#: settings/search.py:178
+msgid "ADB"
+msgstr "ADB"
+
+#: settings/developer.py:77
+msgid "Connect over USB or the network (docs.comma.ai). Change it with the car off."
+msgstr "Kết nối qua USB hoặc mạng (docs.comma.ai). Thay đổi khi xe đã tắt."
+
+#: settings/developer.py:79
+#: settings/search.py:179
+msgid "SSH"
+msgstr "SSH"
+
+#: settings/developer.py:79
+msgid "Remote shell access with the keys below"
+msgstr "Truy cập shell từ xa bằng các khóa bên dưới"
+
+#: settings/developer.py:80
+#: settings/search.py:180
+#: selfdrive/ui/layouts/settings/developer.py:64
+msgid "SSH Keys"
+msgstr "Khóa SSH"
+
+#: settings/developer.py:83
+#: settings/search.py:183
+#: selfdrive/ui/layouts/settings/developer.py:97
+msgid "UI Debug Mode"
+msgstr "Chế độ gỡ lỗi giao diện"
+
+#: settings/developer.py:83
+#: settings/search.py:183
+msgid "Shows touches and the frame rate"
+msgstr "Hiển thị các lần chạm và tốc độ khung hình"
+
+#: settings/developer.py:71
+msgid "Adding…"
+msgstr "Đang thêm…"
+
+#: settings/developer.py:71
+msgid "Add"
+msgstr "Thêm"
+
+#: settings/device.py:46
+msgid "Calibrated"
+msgstr "Đã hiệu chỉnh"
+
+#: settings/device.py:47
+#: selfdrive/selfdrived/events.py:1074
+msgid "Calibrating"
+msgstr "Đang hiệu chỉnh"
+
+#: settings/device.py:48
+msgid "Not calibrated yet"
+msgstr "Chưa hiệu chỉnh"
+
+#: settings/device.py:33
+msgid "Preview"
+msgstr "Xem trước"
+
+#: settings/device.py:35
+#: settings/device.py:36
+#: settings/software.py:206
+msgid "Reset"
+msgstr "Đặt lại"
+
+#: settings/device.py:151
+#: settings/device_owner.py:187
+#: settings/model.py:147
+msgid "Not available"
+msgstr "Không khả dụng"
+
+#: settings/device.py:154
+#, python-brace-format
+msgid "{} · Paired"
+msgstr "{} · Đã ghép nối"
+
+#: settings/device.py:154
+#, python-brace-format
+msgid "{} · see drives and change settings on your phone"
+msgstr "{} · xem chuyến đi và đổi cài đặt trên điện thoại"
+
+#: settings/device.py:158
+msgid "Open connect.comma.ai"
+msgstr "Mở connect.comma.ai"
+
+#: settings/device.py:158
+msgid "Bookmark it to your home screen to use it like an app"
+msgstr "Thêm vào màn hình chính để dùng như một ứng dụng"
+
+#: settings/device.py:159
+msgid "Tap Add new device"
+msgstr "Chạm Add new device"
+
+#: settings/device.py:159
+msgid "Sign in first if it asks"
+msgstr "Đăng nhập trước nếu được yêu cầu"
+
+#: settings/device.py:160
+#: settings/device.py:164
+msgid "Scan the code"
+msgstr "Quét mã"
+
+#: settings/device.py:160
+msgid "The Phone App row shows Paired when it's done"
+msgstr "Hàng Ứng dụng điện thoại hiện Đã ghép nối khi xong"
+
+#: settings/device.py:163
+msgid "Choose a password"
+msgstr "Chọn mật khẩu"
+
+#: settings/device.py:163
+msgid "At least 6 characters. Galaxy asks for it when you sign in"
+msgstr "Ít nhất 6 ký tự. Galaxy sẽ hỏi khi bạn đăng nhập"
+
+#: settings/device.py:164
+msgid "It opens this device's page in Galaxy"
+msgstr "Mở trang của thiết bị này trong Galaxy"
+
+#: settings/device.py:165
+msgid "Bookmark the page"
+msgstr "Đánh dấu trang"
+
+#: settings/device.py:165
+msgid "The link stays the same until you unpair"
+msgstr "Liên kết giữ nguyên cho đến khi bạn hủy ghép nối"
+
+#: settings/device.py:268
+msgid "Pair the phone app"
+msgstr "Ghép nối ứng dụng điện thoại"
+
+#: settings/device.py:268
+msgid "Change settings and see drives from your phone"
+msgstr "Đổi cài đặt và xem chuyến đi từ điện thoại"
+
+#: settings/device.py:276
+msgctxt "action"
+msgid "Set up"
+msgstr "Thiết lập"
+
+#: settings/device.py:279
+#: settings/device.py:280
+msgid "Unpair"
+msgstr "Hủy ghép nối"
+
+#: settings/device.py:295
+#: settings/device.py:124
+#: settings/search.py:153
+msgid "Remote Access"
+msgstr "Truy cập từ xa"
+
+#: settings/device.py:295
+msgid "Reach this device from the Galaxy web app"
+msgstr "Truy cập thiết bị này từ ứng dụng web Galaxy"
+
+#: settings/device.py:308
+msgid "DEVICE"
+msgstr "THIẾT BỊ"
+
+#: settings/device.py:40
+#: settings/search.py:138
+msgid "Driver Camera"
+msgstr "Camera tài xế"
+
+#: settings/device.py:40
+msgid "Check that it can see your face. The car must be off."
+msgstr "Kiểm tra camera có thấy khuôn mặt bạn. Xe phải đang tắt."
+
+#: settings/device.py:41
+#: settings/search.py:139
+#: settings/speed_steering.py:346
+msgid "Driver Monitoring"
+msgstr "Giám sát tài xế"
+
+#: settings/device.py:41
+#: settings/search.py:139
+msgid "Forget which side of the car the driver sits on"
+msgstr "Quên vị trí ngồi của tài xế trong xe"
+
+#: settings/device.py:109
+#: settings/device.py:109
+#: settings/search.py:160
+msgid "Power Off"
+msgstr "Tắt nguồn"
+
+#: settings/device.py:112
+#: settings/device.py:113
+#: settings/search.py:159
+msgid "Restart"
+msgstr "Khởi động lại"
+
+#: settings/device.py:114
+#: settings/device.py:116
+msgid "Recalibrate"
+msgstr "Hiệu chỉnh lại"
+
+#: settings/device.py:153
+msgid "comma connect · Paired"
+msgstr "comma connect · Đã ghép nối"
+
+#: settings/device.py:153
+msgid "comma connect · see drives and change settings on your phone"
+msgstr "comma connect · xem chuyến đi và đổi cài đặt trên điện thoại"
+
+#: settings/device.py:258
+#: settings/device.py:131
+#: settings/search.py:156
+msgid "Regulatory"
+msgstr "Quy định"
+
+#: settings/device.py:293
+msgid "Choosing a password creates this device's link"
+msgstr "Chọn mật khẩu sẽ tạo liên kết của thiết bị này"
+
+#: settings/device.py:35
+msgid "Reset driver monitoring?"
+msgstr "Đặt lại giám sát tài xế?"
+
+#: settings/device.py:36
+msgid "It forgets which side of the car the driver sits on and learns it again on the next drive."
+msgstr "Thiết bị sẽ quên vị trí ngồi của tài xế và học lại trong chuyến đi tới."
+
+#: settings/device.py:109
+msgid "Power off?"
+msgstr "Tắt nguồn?"
+
+#: settings/device.py:109
+msgid "The device stays off until the car starts again."
+msgstr "Thiết bị sẽ tắt cho đến khi xe khởi động lại."
+
+#: settings/device.py:112
+msgid "Restart the device?"
+msgstr "Khởi động lại thiết bị?"
+
+#: settings/device.py:112
+msgid "openpilot shuts down and starts again. This takes about a minute."
+msgstr "openpilot sẽ tắt và khởi động lại. Mất khoảng một phút."
+
+#: settings/device.py:114
+msgid "Recalibrate the camera?"
+msgstr "Hiệu chỉnh lại camera?"
+
+#: settings/device.py:115
+msgid "Calibration starts over. openpilot relearns how the device is mounted over your next few minutes of driving."
+msgstr "Hiệu chỉnh bắt đầu lại. openpilot học lại cách lắp thiết bị trong vài phút lái xe tiếp theo."
+
+#: settings/device.py:134
+#: settings/device.py:308
+#: settings/essentials.py:144
+msgid "This Device"
+msgstr "Thiết bị này"
+
+#: settings/device.py:264
+#, python-brace-format
+msgid "Open {}"
+msgstr "Mở {}"
+
+#: settings/device.py:265
+msgid "ON YOUR PHONE"
+msgstr "TRÊN ĐIỆN THOẠI"
+
+#: settings/device.py:266
+msgid "A new code every 5 minutes"
+msgstr "Mã mới sau mỗi 5 phút"
+
+#: settings/device.py:267
+msgid "Getting a code…"
+msgstr "Đang lấy mã…"
+
+#: settings/device.py:279
+msgid "Unpair from Galaxy?"
+msgstr "Hủy ghép nối với Galaxy?"
+
+#: settings/device.py:279
+msgid "The link stops working. Setting up again makes a new one."
+msgstr "Liên kết sẽ ngừng hoạt động. Thiết lập lại sẽ tạo liên kết mới."
+
+#: settings/device.py:283
+msgid "Set up · protected by your password"
+msgstr "Đã thiết lập · bảo vệ bằng mật khẩu"
+
+#: settings/device.py:283
+msgid "Not set up"
+msgstr "Chưa thiết lập"
+
+#: settings/device.py:285
+msgid "GALAXY"
+msgstr "GALAXY"
+
+#: settings/device.py:294
+msgid "Your code appears here once you choose a password"
+msgstr "Mã của bạn sẽ hiện ở đây sau khi chọn mật khẩu"
+
+#: settings/device.py:121
+#: settings/search.py:152
+msgid "Phone App"
+msgstr "Ứng dụng điện thoại"
+
+#: settings/device.py:127
+#: settings/search.py:154
+msgid "Camera Calibration"
+msgstr "Hiệu chỉnh camera"
+
+#: settings/device.py:129
+#: settings/search.py:155
+msgid "How It Works"
+msgstr "Cách hoạt động"
+
+#: settings/device.py:129
+#: settings/search.py:155
+msgid "Rules, features and limits"
+msgstr "Quy tắc, tính năng và giới hạn"
+
+#: settings/device.py:130
+msgid "MORE"
+msgstr "THÊM"
+
+#: settings/device.py:132
+#: settings/search.py:157
+msgid "Device ID and Serial"
+msgstr "ID thiết bị và số sê-ri"
+
+#: settings/device.py:133
+#: settings/search.py:158
+msgid "IMEI"
+msgstr "IMEI"
+
+#: settings/device.py:129
+msgid "Review"
+msgstr "Xem lại"
+
+#: settings/device.py:124
+msgid "Galaxy · Set up"
+msgstr "Galaxy · Đã thiết lập"
+
+#: settings/device.py:124
+msgid "Galaxy · reach this device from a web browser"
+msgstr "Galaxy · truy cập thiết bị này từ trình duyệt web"
+
+#: settings/device.py:131
+msgid "View"
+msgstr "Xem"
+
+#: settings/device_owner.py:229
+msgid "Manage"
+msgstr "Quản lý"
+
+#: settings/device_owner.py:229
+msgid "Set Up"
+msgstr "Thiết lập"
+
+#: settings/display.py:41
+msgid "Larger"
+msgstr "Lớn hơn"
+
+#: settings/display.py:149
+#: settings/search.py:115
+msgid "Side panel with system and controls data."
+msgstr "Bảng bên với dữ liệu hệ thống và điều khiển."
+
+#: settings/display.py:150
+#: settings/search.py:116
+msgid "Distance to the car ahead, and the pedals on screen."
+msgstr "Khoảng cách tới xe phía trước và bàn đạp trên màn hình."
+
+#: settings/display.py:34
+msgid "A calm blue path"
+msgstr "Đường đi màu xanh dịu"
+
+#: settings/display.py:35
+msgid "Rainbow"
+msgstr "Cầu vồng"
+
+#: settings/display.py:35
+msgid "A rainbow path"
+msgstr "Đường đi màu cầu vồng"
+
+#: settings/display.py:36
+msgid "Acceleration"
+msgstr "Gia tốc"
+
+#: settings/display.py:36
+msgid "openpilot's path, colored by gas and braking"
+msgstr "Đường đi của openpilot, tô màu theo ga và phanh"
+
+#: settings/display.py:40
+msgid "Wide"
+msgstr "Rộng"
+
+#: settings/display.py:146
+#, python-brace-format
+msgid "{} path"
+msgstr "Đường đi {}"
+
+#: settings/display.py:243
+#: settings/display.py:239
+#: settings/search.py:117
+msgid "Path Style"
+msgstr "Kiểu đường đi"
+
+#: settings/display.py:243
+#: settings/display.py:240
+#: settings/search.py:117
+msgid "How the path ahead is drawn"
+msgstr "Cách vẽ đường đi phía trước"
+
+#: settings/display.py:143
+msgid "Style banner shown"
+msgstr "Hiện băng phong cách"
+
+#: settings/display.py:143
+msgid "Style banner hidden"
+msgstr "Ẩn băng phong cách"
+
+#: settings/display.py:186
+msgid "Switching off turns these back off."
+msgstr "Tắt công tắc sẽ tắt lại các mục này."
+
+#: settings/display.py:195
+#, python-brace-format
+msgid "{} sets"
+msgstr "Những gì {} bật"
+
+#: settings/display.py:196
+msgid "One switch for the details most drivers never need"
+msgstr "Một công tắc cho các chi tiết mà hầu hết tài xế không cần"
+
+#: settings/display.py:233
+#: settings/driving_tab.py:173
+#: settings/search.py:29
+msgid "Driving Screen"
+msgstr "Màn hình lái xe"
+
+#: settings/display.py:233
+msgid "StarPilot changes the camera, banner and highlights only while parked."
+msgstr "StarPilot chỉ thay đổi camera, băng thông báo và vùng làm nổi khi đỗ xe."
+
+#: settings/display.py:245
+#: settings/driving_tab.py:174
+#: settings/search.py:29
+msgid "Path"
+msgstr "Đường đi"
+
+#: settings/display.py:342
+msgid "Acceleration is openpilot's own path, colored by gas and braking."
+msgstr "Gia tốc là đường đi riêng của openpilot, tô màu theo ga và phanh."
+
+#: settings/display.py:210
+#: settings/display.py:213
+#, python-brace-format
+msgid "Sets {} options"
+msgstr "Đặt {} tùy chọn"
+
+#: settings/display.py:216
+#: settings/search.py:107
+msgid "Text Size"
+msgstr "Cỡ chữ"
+
+#: settings/display.py:216
+#: settings/search.py:107
+msgid "Larger text and icons on the driving screen"
+msgstr "Chữ và biểu tượng lớn hơn trên màn hình lái xe"
+
+#: settings/display.py:218
+#: settings/search.py:108
+msgid "Reduce Motion"
+msgstr "Giảm chuyển động"
+
+#: settings/display.py:218
+#: settings/search.py:108
+msgid "Long street names end in … instead of scrolling"
+msgstr "Tên đường dài kết thúc bằng … thay vì cuộn"
+
+#: settings/display.py:226
+#: settings/search.py:112
+msgid "Compass"
+msgstr "La bàn"
+
+#: settings/display.py:226
+#: settings/search.py:112
+msgid "Heading beside the street name, like NE"
+msgstr "Hướng đi bên cạnh tên đường, như NE"
+
+#: settings/display.py:229
+#: settings/search.py:114
+msgid "Lead Car Tag"
+msgstr "Nhãn xe phía trước"
+
+#: settings/display.py:229
+#: settings/search.py:114
+msgid "Numbers above the car ahead. Off keeps only the bar under it"
+msgstr "Số liệu phía trên xe phía trước. Khi tắt chỉ giữ thanh bên dưới"
+
+#: settings/display.py:230
+#: settings/driving_tab.py:188
+msgid "POWER USER"
+msgstr "NGƯỜI DÙNG NÂNG CAO"
+
+#: settings/display.py:220
+#: settings/search.py:109
+msgid "Camera View"
+msgstr "Góc nhìn camera"
+
+#: settings/display.py:220
+#: settings/search.py:109
+msgid "Wide shows more of the road at low speed"
+msgstr "Rộng hiển thị nhiều đường hơn ở tốc độ thấp"
+
+#: settings/display.py:222
+#: settings/search.py:110
+msgid "Driver Camera in Reverse"
+msgstr "Camera tài xế khi lùi"
+
+#: settings/display.py:222
+#: settings/search.py:110
+msgid "Shows the inside camera while backing up"
+msgstr "Hiển thị camera trong xe khi lùi"
+
+#: settings/display.py:224
+#: settings/search.py:111
+msgid "Driving Style Banner"
+msgstr "Băng phong cách lái"
+
+#: settings/display.py:224
+#: settings/search.py:111
+msgid "Shows the current style when it changes"
+msgstr "Hiển thị phong cách hiện tại khi thay đổi"
+
+#: settings/display.py:227
+#: settings/search.py:113
+msgid "Blind Spot Highlights"
+msgstr "Làm nổi điểm mù"
+
+#: settings/display.py:227
+#: settings/search.py:113
+msgid "Colors the screen edge when a car is beside you"
+msgstr "Tô màu mép màn hình khi có xe bên cạnh"
+
+#: settings/driving_tab.py:188
+msgid "Extra detail and fine tuning, each behind one switch"
+msgstr "Chi tiết thêm và tinh chỉnh, mỗi mục sau một công tắc"
+
+#: settings/driving_tab.py:200
+#: settings/search.py:25
+#: settings/window.py:31
+msgid "Driving"
+msgstr "Lái xe"
+
+#: settings/driving_tab.py:200
+msgid "Good defaults are on. Change only what matters to you."
+msgstr "Các mặc định tốt đã được bật. Chỉ thay đổi những gì bạn quan tâm."
+
+#: settings/driving_tab.py:154
+#: settings/driving_tab.py:189
+#: settings/search.py:26
+msgid "Tuner Mode"
+msgstr "Chế độ tinh chỉnh"
+
+#: settings/driving_tab.py:156
+msgid "SPEED & STEERING"
+msgstr "TỐC ĐỘ VÀ LÁI"
+
+#: settings/driving_tab.py:172
+msgid "DISPLAY"
+msgstr "HIỂN THỊ"
+
+#: settings/driving_tab.py:201
+#: settings/search.py:26
+#: settings/search.py:80
+msgid "Speed & Steering"
+msgstr "Tốc độ và lái"
+
+#: settings/driving_tab.py:202
+#: settings/search.py:26
+#: settings/search.py:106
+msgid "Display"
+msgstr "Hiển thị"
+
+#: settings/driving_tab.py:204
+#: settings/essentials.py:216
+#: settings/model.py:309
+msgid "Driving Model"
+msgstr "Mô hình lái"
+
+#: settings/driving_tab.py:205
+#: settings/search.py:27
+#: settings/search.py:127
+msgid "Vehicle"
+msgstr "Xe"
+
+#: settings/driving_tab.py:206
+#: settings/search.py:27
+#: settings/search.py:132
+msgid "Assistance"
+msgstr "Hỗ trợ"
+
+#: settings/driving_tab.py:157
+#: settings/search.py:28
+#: settings/speed_steering.py:217
+msgid "Everyday"
+msgstr "Hằng ngày"
+
+#: settings/driving_tab.py:158
+#: settings/search.py:28
+#: settings/search.py:91
+msgid "Weather"
+msgstr "Thời tiết"
+
+#: settings/driving_tab.py:159
+#: settings/navigation.py:150
+#: settings/navigation.py:141
+msgid "Navigation"
+msgstr "Dẫn đường"
+
+#: settings/editors.py:104
+#, python-brace-format
+msgid "Steps of {}{}. Hold − or + to move faster."
+msgstr "Bước {}{}. Giữ − hoặc + để chỉnh nhanh hơn."
+
+#: settings/editors.py:97
+msgid "Reset to default"
+msgstr "Đặt lại mặc định"
+
+#: settings/editors.py:114
+msgid "Quick picks"
+msgstr "Chọn nhanh"
+
+#: settings/essentials.py:56
+msgid "Galaxy password"
+msgstr "Mật khẩu Galaxy"
+
+#: settings/essentials.py:56
+msgid "Use your existing Galaxy password, or set a new one"
+msgstr "Dùng mật khẩu Galaxy hiện có, hoặc đặt mật khẩu mới"
+
+#: settings/essentials.py:74
+msgid "Optional"
+msgstr "Tùy chọn"
+
+#: settings/essentials.py:154
+#: settings/general.py:51
+#: settings/search.py:31
+msgid "General"
+msgstr "Chung"
+
+#: settings/essentials.py:156
+#: settings/search.py:31
+#: settings/search.py:168
+msgid "Storage & Data"
+msgstr "Bộ nhớ và dữ liệu"
+
+#: settings/essentials.py:158
+#: settings/report.py:121
+#: settings/search.py:31
+msgid "Report a Problem"
+msgstr "Báo cáo sự cố"
+
+#: settings/essentials.py:55
+msgid "Set up"
+msgstr "Thiết lập"
+
+#: settings/general.py:26
+#: settings/general.py:41
+#: settings/search.py:164
+msgid "Language"
+msgstr "Ngôn ngữ"
+
+#: settings/general.py:37
+#: settings/search.py:162
+msgid "Units"
+msgstr "Đơn vị"
+
+#: settings/general.py:37
+#: settings/search.py:162
+msgid "Speed and distance everywhere"
+msgstr "Tốc độ và khoảng cách ở mọi nơi"
+
+#: settings/general.py:39
+#: settings/search.py:163
+#: sidebar.py:227
+msgid "Temperature"
+msgstr "Nhiệt độ"
+
+#: settings/general.py:39
+#: settings/search.py:163
+msgid "For the weather forecast"
+msgstr "Cho dự báo thời tiết"
+
+#: settings/general.py:42
+#: settings/search.py:165
+msgid "Screen Brightness"
+msgstr "Độ sáng màn hình"
+
+#: settings/general.py:42
+#: settings/search.py:165
+msgid "Auto follows ambient light, day and night"
+msgstr "Tự động theo ánh sáng xung quanh, ngày và đêm"
+
+#: settings/general.py:44
+#: settings/search.py:166
+msgid "Standby"
+msgstr "Chờ"
+
+#: settings/general.py:44
+#: settings/search.py:166
+msgid "Screen sleeps while driving, wakes for alerts"
+msgstr "Màn hình tắt khi lái xe, bật khi có cảnh báo"
+
+#: settings/general.py:28
+msgid "For menus and alerts"
+msgstr "Cho menu và cảnh báo"
+
+#: settings/general_owner.py:16
+msgid "Dimmer"
+msgstr "Tối hơn"
+
+#: settings/general_owner.py:16
+msgid "Brighter"
+msgstr "Sáng hơn"
+
+#: settings/map_source.py:21
+msgid "Midwest"
+msgstr "Trung Tây"
+
+#: settings/map_source.py:21
+msgid "Northeast"
+msgstr "Đông Bắc"
+
+#: settings/map_source.py:21
+msgid "South"
+msgstr "Miền Nam"
+
+#: settings/map_source.py:21
+msgid "West"
+msgstr "Miền Tây"
+
+#: settings/map_source.py:22
+msgid "Territories"
+msgstr "Lãnh thổ"
+
+#: settings/map_source.py:138
+#, python-brace-format, drawn
+msgid "{} region"
+msgid_plural "{} regions"
+msgstr[0] "{} vùng"
+
+#: settings/map_source.py:197
+msgid "Download selected maps"
+msgstr "Tải bản đồ đã chọn"
+
+#: settings/map_source.py:133
+msgid "None selected"
+msgstr "Chưa chọn"
+
+#: settings/map_source.py:135
+#: settings/map_source.py:110
+msgid "Whole U.S."
+msgstr "Toàn nước Mỹ"
+
+#: settings/map_source.py:181
+#: settings/maps.py:409
+#: settings/maps.py:422
+msgid "All maps ready"
+msgstr "Tất cả bản đồ đã sẵn sàng"
+
+#: settings/map_source.py:182
+msgid "Choose where you drive"
+msgstr "Chọn nơi bạn lái xe"
+
+#: settings/map_source.py:192
+#: settings/maps.py:207
+msgid "Update maps"
+msgstr "Cập nhật bản đồ"
+
+#: settings/map_source.py:194
+msgid "Download road data"
+msgstr "Tải dữ liệu đường"
+
+#: settings/map_source.py:196
+#, python-brace-format
+msgid "Download {} MiB"
+msgstr "Tải {} MiB"
+
+#: settings/map_source.py:224
+msgid "All selected regions are installed together."
+msgstr "Tất cả vùng đã chọn được cài cùng lúc."
+
+#: settings/map_source.py:157
+msgid "Road data ready"
+msgstr "Dữ liệu đường đã sẵn sàng"
+
+#: settings/map_source.py:157
+#: sidebar.py:158
+msgid "Not downloaded"
+msgstr "Chưa tải"
+
+#: settings/map_source.py:158
+#: settings/maps.py:261
+msgid "Routes ready"
+msgstr "Tuyến đường đã sẵn sàng"
+
+#: settings/map_source.py:168
+msgid "Already downloaded"
+msgstr "Đã tải"
+
+#: settings/map_source.py:168
+msgid "Download missing road data"
+msgstr "Tải dữ liệu đường còn thiếu"
+
+#: settings/map_source.py:169
+msgid "Removed on update"
+msgstr "Bị gỡ khi cập nhật"
+
+#: settings/map_source.py:171
+msgid "Routing coverage is not available for every selected region."
+msgstr "Dữ liệu định tuyến không có cho mọi vùng đã chọn."
+
+#: settings/map_source.py:172
+msgid "Updates offline routes to match this selection."
+msgstr "Cập nhật tuyến ngoại tuyến theo lựa chọn này."
+
+#: settings/map_source.py:225
+msgid "Road data and offline routes are ready."
+msgstr "Dữ liệu đường và tuyến ngoại tuyến đã sẵn sàng."
+
+#: settings/map_source.py:235
+#: settings/storage.py:147
+msgid "Parked"
+msgstr "Đã đỗ xe"
+
+#: settings/map_source.py:110
+msgid "Every state and territory"
+msgstr "Mọi bang và lãnh thổ"
+
+#: settings/map_source.py:159
+msgid "Routes not downloaded"
+msgstr "Chưa tải tuyến đường"
+
+#: settings/map_source.py:159
+msgid "Routes not available yet"
+msgstr "Chưa có tuyến đường"
+
+#: settings/map_source.py:219
+msgid "Maps download one region at a time."
+msgstr "Bản đồ được tải từng vùng một."
+
+#: settings/map_source.py:170
+msgid "Not available for this region"
+msgstr "Không có cho vùng này"
+
+#: settings/map_source.py:170
+#: settings/maps.py:220
+#, python-brace-format
+msgid "{} MiB"
+msgstr "{} MiB"
+
+#: settings/map_source.py:226
+msgid "Some map data is shared between these states."
+msgstr "Một số dữ liệu bản đồ dùng chung giữa các bang này."
+
+#: settings/map_source.py:227
+msgid "Road data ready; offline routes downloading."
+msgstr "Dữ liệu đường đã sẵn sàng; đang tải tuyến ngoại tuyến."
+
+#: settings/map_source.py:111
+#, python-brace-format
+msgid "{} states"
+msgstr "{} bang"
+
+#: settings/maps.py:33
+#: settings/storage.py:142
+msgid "Remove all downloaded maps from this device. Your regions stay chosen."
+msgstr "Gỡ mọi bản đồ đã tải khỏi thiết bị này. Các vùng bạn chọn vẫn được giữ."
+
+#: settings/maps.py:319
+msgid "Pauses if you start driving or lose Wi-Fi, and picks up where it stopped. Keep the device powered."
+msgstr "Tạm dừng nếu bạn bắt đầu lái hoặc mất Wi-Fi, rồi tiếp tục từ chỗ đã dừng. Hãy giữ thiết bị có nguồn."
+
+#: settings/maps.py:318
+msgid "Prepare"
+msgstr "Chuẩn bị"
+
+#: settings/maps.py:318
+#: settings/model.py:147
+#: settings/network_test.py:40
+msgid "Download"
+msgstr "Tải xuống"
+
+#: settings/maps.py:318
+msgid "Install"
+msgstr "Cài đặt"
+
+#: settings/maps.py:209
+msgid "Remove maps"
+msgstr "Gỡ bản đồ"
+
+#: settings/maps.py:229
+#: settings/navigation.py:128
+#: settings/search.py:99
+msgid "Offline Maps"
+msgstr "Bản đồ ngoại tuyến"
+
+#: settings/maps.py:229
+#: settings/search.py:99
+msgid "Routes, speed limits and street names without a connection"
+msgstr "Tuyến đường, giới hạn tốc độ và tên đường khi không có kết nối"
+
+#: settings/maps.py:268
+msgid "U.S. regions"
+msgstr "Vùng của Mỹ"
+
+#: settings/maps.py:268
+msgid "U.S. states"
+msgstr "Các bang của Mỹ"
+
+#: settings/maps.py:268
+msgid "Other countries"
+msgstr "Quốc gia khác"
+
+#: settings/maps.py:404
+msgid "You can leave this screen. It keeps going in the background."
+msgstr "Bạn có thể rời màn hình này. Việc tải vẫn tiếp tục chạy nền."
+
+#: settings/maps.py:162
+msgid "Choose at least one region"
+msgstr "Chọn ít nhất một vùng"
+
+#: settings/maps.py:200
+#, python-brace-format
+msgid "{} of {} files · {}. Pauses if you drive or lose the connection."
+msgstr "{} trên {} tệp · {}. Tạm dừng nếu bạn lái xe hoặc mất kết nối."
+
+#: settings/maps.py:398
+#, python-brace-format
+msgid "{} download stopped"
+msgstr "Đã dừng tải {}"
+
+#: settings/maps.py:402
+#, python-brace-format
+msgid "{} ready"
+msgstr "{} đã sẵn sàng"
+
+#: settings/maps.py:432
+msgid " · Download stopped"
+msgstr " · Đã dừng tải"
+
+#: settings/maps.py:434
+#, python-brace-format
+msgid " · about {} min left"
+msgstr " · còn khoảng {} phút"
+
+#: settings/maps.py:163
+#, python-brace-format
+msgid "Waiting: {}"
+msgstr "Đang chờ: {}"
+
+#: settings/maps.py:182
+#: settings/maps.py:366
+msgid "Cancel download"
+msgstr "Hủy tải"
+
+#: settings/maps.py:209
+msgid "Remove offline maps?"
+msgstr "Gỡ bản đồ ngoại tuyến?"
+
+#: settings/maps.py:214
+msgid "DOWNLOADED REGIONS"
+msgstr "VÙNG ĐÃ TẢI"
+
+#: settings/maps.py:227
+msgid "Updates keep the current maps until the new maps are ready."
+msgstr "Khi cập nhật, bản đồ hiện tại được giữ cho đến khi bản đồ mới sẵn sàng."
+
+#: settings/maps.py:274
+msgid "Add map regions"
+msgstr "Thêm vùng bản đồ"
+
+#: settings/maps.py:274
+msgid "Pick where you drive. Maps for routes, speed limits and street names."
+msgstr "Chọn nơi bạn lái xe. Bản đồ cho tuyến đường, giới hạn tốc độ và tên đường."
+
+#: settings/maps.py:275
+#: settings/maps.py:457
+msgid "REGIONS"
+msgstr "VÙNG"
+
+#: settings/maps.py:287
+#: settings/maps.py:216
+msgid "Road data"
+msgstr "Dữ liệu đường"
+
+#: settings/maps.py:290
+#: settings/maps.py:220
+msgid "Offline routes"
+msgstr "Tuyến ngoại tuyến"
+
+#: settings/maps.py:296
+msgid "SELECTED"
+msgstr "ĐÃ CHỌN"
+
+#: settings/maps.py:367
+msgid "Retry download"
+msgstr "Thử tải lại"
+
+#: settings/maps.py:398
+#, python-brace-format
+msgid "{} maps ready"
+msgstr "Bản đồ {} đã sẵn sàng"
+
+#: settings/maps.py:419
+msgid "Download complete · Building maps"
+msgstr "Đã tải xong · Đang tạo bản đồ"
+
+#: settings/maps.py:456
+#, python-brace-format
+msgid "REGIONS · {} OF {} DOWNLOADED"
+msgstr "VÙNG · ĐÃ TẢI {} TRÊN {}"
+
+#: settings/maps.py:467
+#, python-brace-format
+msgid "+{} more"
+msgstr "+{} nữa"
+
+#: settings/maps.py:496
+msgid "Maps are ready. Existing saved places stay saved."
+msgstr "Bản đồ đã sẵn sàng. Các địa điểm đã lưu vẫn được giữ."
+
+#: settings/maps.py:497
+msgid "Both map sets are ready. Existing saved places stay saved."
+msgstr "Cả hai bộ bản đồ đã sẵn sàng. Các địa điểm đã lưu vẫn được giữ."
+
+#: settings/maps.py:216
+msgid "Speed limits and street names"
+msgstr "Giới hạn tốc độ và tên đường"
+
+#: settings/maps.py:226
+#: settings/model.py:334
+msgid "Storage"
+msgstr "Bộ nhớ"
+
+#: settings/maps.py:399
+#, python-brace-format
+msgid "Preparing {} maps"
+msgstr "Đang chuẩn bị bản đồ {}"
+
+#: settings/maps.py:409
+#: settings/maps.py:422
+msgid "Both map sets ready"
+msgstr "Cả hai bộ bản đồ đã sẵn sàng"
+
+#: settings/maps.py:420
+msgid "Download complete · Checking maps"
+msgstr "Đã tải xong · Đang kiểm tra bản đồ"
+
+#: settings/maps.py:420
+msgid "Download complete · Installing maps"
+msgstr "Đã tải xong · Đang cài bản đồ"
+
+#: settings/maps.py:457
+#, python-brace-format
+msgid "REGIONS · {} OF {} DONE"
+msgstr "VÙNG · XONG {} TRÊN {}"
+
+#: settings/maps.py:399
+#, python-brace-format
+msgid "Installing {}"
+msgstr "Đang cài {}"
+
+#: settings/maps.py:400
+#, python-brace-format
+msgid "Downloading {}"
+msgstr "Đang tải {}"
+
+#: settings/maps.py:425
+#, python-brace-format
+msgid "{} · {} of {}"
+msgstr "{} · {} trên {}"
+
+#: settings/maps.py:426
+#: settings/maps.py:430
+msgid "Getting ready"
+msgstr "Đang chuẩn bị"
+
+#: settings/maps.py:428
+#, python-brace-format
+msgid "Offline routes · {} of {} MiB"
+msgstr "Tuyến ngoại tuyến · {} trên {} MiB"
+
+#: settings/maps.py:280
+msgid "No regions available."
+msgstr "Không có vùng nào."
+
+#: settings/maps.py:430
+#, python-brace-format
+msgid "Road data · {} of {} files"
+msgstr "Dữ liệu đường · {} trên {} tệp"
+
+#: settings/model.py:309
+msgid "The neural network that steers and judges speed"
+msgstr "Mạng nơ-ron điều khiển lái và đánh giá tốc độ"
+
+#: settings/model.py:317
+msgid "All models"
+msgstr "Tất cả mô hình"
+
+#: settings/model.py:317
+msgid "Community picks"
+msgstr "Cộng đồng chọn"
+
+#: settings/model.py:317
+#: settings/model.py:165
+#: settings/model.py:163
+msgid "On device"
+msgstr "Trên thiết bị"
+
+#: settings/model.py:76
+msgid "Default model"
+msgstr "Mô hình mặc định"
+
+#: settings/model.py:121
+msgid "Recommended"
+msgstr "Đề xuất"
+
+#: settings/model.py:125
+#: sidebar.py:155
+msgid "Downloading"
+msgstr "Đang tải"
+
+#: settings/model.py:126
+msgid "StarPilot's default"
+msgstr "Mặc định của StarPilot"
+
+#: settings/model.py:126
+msgid "Chosen by you"
+msgstr "Bạn đã chọn"
+
+#: settings/model.py:147
+#: settings/model.py:144
+msgid "Use"
+msgstr "Dùng"
+
+#: settings/model.py:301
+msgid "Browse all"
+msgstr "Xem tất cả"
+
+#: settings/model.py:354
+msgid "Driving models"
+msgstr "Mô hình lái"
+
+#: settings/model.py:450
+msgid "Park to remove models"
+msgstr "Đỗ xe để gỡ mô hình"
+
+#: settings/model.py:452
+msgid "Wait for the download to finish"
+msgstr "Chờ tải xong"
+
+#: settings/model.py:143
+#: settings/model.py:292
+msgid "ACTIVE"
+msgstr "ĐANG DÙNG"
+
+#: settings/model.py:164
+#, python-brace-format
+msgid "Downloading · {}"
+msgstr "Đang tải · {}"
+
+#: settings/model.py:166
+msgid "Needs an eGPU"
+msgstr "Cần eGPU"
+
+#: settings/model.py:163
+msgid "Recommended · On device"
+msgstr "Đề xuất · Trên thiết bị"
+
+#: settings/model.py:167
+msgid "Community pick"
+msgstr "Cộng đồng chọn"
+
+#: settings/model.py:167
+msgid "Available to download"
+msgstr "Có thể tải"
+
+#: settings/model.py:303
+msgid "OTHER MODELS"
+msgstr "MÔ HÌNH KHÁC"
+
+#: settings/model.py:305
+msgid "Available when Use recommended is off. A new model applies on your next drive."
+msgstr "Có thể dùng khi tắt Dùng đề xuất. Mô hình mới áp dụng từ chuyến đi tới."
+
+#: settings/model.py:328
+#, python-brace-format
+msgid "Remove unused models ({})"
+msgstr "Gỡ mô hình không dùng ({})"
+
+#: settings/model.py:328
+msgid "Remove unused models"
+msgstr "Gỡ mô hình không dùng"
+
+#: settings/model.py:428
+msgid "starting"
+msgstr "đang bắt đầu"
+
+#: settings/model.py:428
+msgid "checking"
+msgstr "đang kiểm tra"
+
+#: settings/model.py:428
+msgid "installing"
+msgstr "đang cài"
+
+#: settings/model.py:297
+#: settings/search.py:126
+msgid "Use recommended"
+msgstr "Dùng đề xuất"
+
+#: settings/model.py:297
+msgid "Turn off to pick your own"
+msgstr "Tắt để tự chọn"
+
+#: settings/model.py:294
+msgid "StarPilot's default model, used until you pick another."
+msgstr "Mô hình mặc định của StarPilot, được dùng cho đến khi bạn chọn mô hình khác."
+
+#: settings/model.py:295
+msgid "Picked by you"
+msgstr "Bạn đã chọn"
+
+#: settings/model.py:338
+msgid "GOOD TO KNOW"
+msgstr "NÊN BIẾT"
+
+#: settings/model.py:339
+msgid "One download at a time, paused while driving."
+msgstr "Mỗi lần tải một mô hình, tạm dừng khi lái xe."
+
+#: settings/model.py:340
+msgid "A new model applies on your next drive."
+msgstr "Mô hình mới áp dụng từ chuyến đi tới."
+
+#: settings/model.py:326
+msgid "No models here yet."
+msgstr "Chưa có mô hình nào ở đây."
+
+#: settings/navigation.py:22
+msgid "Mapbox"
+msgstr "Mapbox"
+
+#: settings/navigation.py:22
+msgid "Turn-by-turn with lane arrows"
+msgstr "Chỉ đường từng khúc rẽ với mũi tên làn"
+
+#: settings/navigation.py:23
+msgid "Google"
+msgstr "Google"
+
+#: settings/navigation.py:23
+msgid "Follows live traffic. No lane arrows."
+msgstr "Theo giao thông trực tiếp. Không có mũi tên làn."
+
+#: settings/navigation.py:24
+msgid "Tolls"
+msgstr "Trạm thu phí"
+
+#: settings/navigation.py:24
+msgid "Highways"
+msgstr "Đường cao tốc"
+
+#: settings/navigation.py:24
+msgid "Ferries"
+msgstr "Phà"
+
+#: settings/navigation.py:25
+msgid "Phone backup"
+msgstr "Dự phòng bằng điện thoại"
+
+#: settings/navigation.py:25
+msgid "The phone fills in when the comma and car have no fix"
+msgstr "Điện thoại bổ sung khi comma và xe không định vị được"
+
+#: settings/navigation.py:26
+msgid "No phone"
+msgstr "Không dùng điện thoại"
+
+#: settings/navigation.py:26
+msgid "Only the comma's and car's GPS"
+msgstr "Chỉ GPS của comma và xe"
+
+#: settings/navigation.py:27
+msgid "Phone first"
+msgstr "Ưu tiên điện thoại"
+
+#: settings/navigation.py:27
+msgid "The phone whenever it has a recent fix"
+msgstr "Dùng điện thoại mỗi khi nó có định vị gần đây"
+
+#: settings/navigation.py:117
+#: settings/network_tab.py:255
+#: settings/network_test.py:97
+#, python-brace-format
+msgid "{} · {}"
+msgstr "{} · {}"
+
+#: settings/navigation.py:119
+#: settings/search.py:97
+msgid "Preferred maps (when available)"
+msgstr "Bản đồ ưu tiên (khi có)"
+
+#: settings/navigation.py:62
+#: settings/search.py:95
+msgid "Home, Work and favorites from Where to?"
+msgstr "Nhà, Nơi làm việc và yêu thích từ Đi đâu?"
+
+#: settings/navigation.py:77
+msgid "Mapbox, with lane arrows. Google needs its key."
+msgstr "Mapbox, có mũi tên làn. Google cần khóa riêng."
+
+#: settings/navigation.py:110
+msgid "Used when Offline maps only is off."
+msgstr "Dùng khi tắt Chỉ bản đồ ngoại tuyến."
+
+#: settings/navigation.py:116
+#, python-brace-format
+msgid "{} · routes, speed limits and street names ready"
+msgstr "{} · tuyến đường, giới hạn tốc độ và tên đường đã sẵn sàng"
+
+#: settings/navigation.py:124
+#: settings/search.py:96
+msgid "Offline maps only"
+msgstr "Chỉ bản đồ ngoại tuyến"
+
+#: settings/navigation.py:150
+msgid "While a route is active, the car slows for turns on it"
+msgstr "Khi đang có tuyến, xe giảm tốc trước các khúc rẽ trên tuyến"
+
+#: settings/navigation.py:61
+#, python-brace-format
+msgid "{} favorite"
+msgid_plural "{} favorites"
+msgstr[0] "{} yêu thích"
+
+#: settings/navigation.py:111
+msgid "Try online first; fall back to downloaded maps."
+msgstr "Thử trực tuyến trước; dự phòng bằng bản đồ đã tải."
+
+#: settings/navigation.py:111
+msgid "Try downloaded maps first; fall back to online."
+msgstr "Thử bản đồ đã tải trước; dự phòng bằng trực tuyến."
+
+#: settings/navigation.py:120
+#: sidebar.py:124
+msgid "Online"
+msgstr "Trực tuyến"
+
+#: settings/navigation.py:120
+#: sidebar.py:124
+#: sidebar.py:129
+msgid "Offline"
+msgstr "Ngoại tuyến"
+
+#: settings/navigation.py:141
+#: settings/search.py:94
+msgid "Turn guidance on the driving screen"
+msgstr "Hướng dẫn rẽ trên màn hình lái xe"
+
+#: settings/navigation.py:142
+#: settings/search.py:95
+msgid "Saved Places"
+msgstr "Địa điểm đã lưu"
+
+#: settings/navigation.py:144
+#: settings/search.py:101
+msgid "Directions"
+msgstr "Chỉ đường"
+
+#: settings/navigation.py:145
+#: settings/search.py:102
+msgid "Avoid"
+msgstr "Tránh"
+
+#: settings/navigation.py:145
+msgid "When planning routes"
+msgstr "Khi lập tuyến đường"
+
+#: settings/navigation.py:146
+#: settings/search.py:103
+msgid "Position"
+msgstr "Vị trí"
+
+#: settings/navigation.py:147
+#: settings/search.py:104
+msgid "Map Keys"
+msgstr "Khóa bản đồ"
+
+#: settings/navigation.py:124
+msgid "Never use online routing."
+msgstr "Không bao giờ dùng định tuyến trực tuyến."
+
+#: settings/navigation.py:125
+msgid "Use the preferred maps, with a fallback if needed."
+msgstr "Dùng bản đồ ưu tiên, có dự phòng khi cần."
+
+#: settings/navigation.py:148
+msgid "How to change"
+msgstr "Cách thay đổi"
+
+#: settings/navigation.py:148
+msgid "How to add"
+msgstr "Cách thêm"
+
+#: settings/network_tab.py:279
+#: settings/network_tab.py:118
+msgid "Connecting…"
+msgstr "Đang kết nối…"
+
+#: settings/network_tab.py:279
+#: settings/network_tab.py:276
+#: settings/network_tab.py:223
+msgid "Not connected"
+msgstr "Chưa kết nối"
+
+#: settings/network_tab.py:280
+msgid "No SIM"
+msgstr "Không có SIM"
+
+#: settings/network_tab.py:280
+msgid "No signal"
+msgstr "Không có sóng"
+
+#: settings/network_tab.py:280
+msgid "Wi-Fi in use"
+msgstr "Đang dùng Wi-Fi"
+
+#: settings/network_tab.py:280
+#: settings/network_tab.py:273
+#: settings/network_tab.py:364
+msgid "Checking…"
+msgstr "Đang kiểm tra…"
+
+#: settings/network_tab.py:281
+#: settings/network_tab.py:292
+msgid "Couldn’t change cellular"
+msgstr "Không thể thay đổi mạng di động"
+
+#: settings/network_tab.py:284
+msgid "Cellular data is connected."
+msgstr "Dữ liệu di động đã kết nối."
+
+#: settings/network_tab.py:285
+msgid "APN saved. Waiting for a cellular data connection."
+msgstr "Đã lưu APN. Đang chờ kết nối dữ liệu di động."
+
+#: settings/network_tab.py:286
+msgid "Cellular data is not connected. Check your APN, signal and carrier account."
+msgstr "Dữ liệu di động chưa kết nối. Hãy kiểm tra APN, sóng và tài khoản nhà mạng."
+
+#: settings/network_tab.py:287
+msgid "No SIM detected. Insert a SIM to use cellular data."
+msgstr "Không phát hiện SIM. Lắp SIM để dùng dữ liệu di động."
+
+#: settings/network_tab.py:288
+msgid "SIM detected. No cellular service. Your APN is saved."
+msgstr "Đã phát hiện SIM. Không có dịch vụ di động. APN của bạn đã được lưu."
+
+#: settings/network_tab.py:289
+msgid "Wi-Fi is connected. Cellular data is not confirmed yet."
+msgstr "Wi-Fi đã kết nối. Dữ liệu di động chưa được xác nhận."
+
+#: settings/network_tab.py:290
+msgid "Waiting for current modem status."
+msgstr "Đang chờ trạng thái modem hiện tại."
+
+#: settings/network_tab.py:291
+#: settings/network_tab.py:243
+msgid "Mobile broadband is off"
+msgstr "Băng thông rộng di động đang tắt"
+
+#: settings/network_tab.py:294
+msgid "Poor signal"
+msgstr "Sóng yếu"
+
+#: settings/network_tab.py:294
+msgid "Moderate signal"
+msgstr "Sóng trung bình"
+
+#: settings/network_tab.py:294
+msgid "Good signal"
+msgstr "Sóng tốt"
+
+#: settings/network_tab.py:294
+msgid "Great signal"
+msgstr "Sóng rất tốt"
+
+#: settings/network_tab.py:259
+msgid "SIM detected"
+msgstr "Đã phát hiện SIM"
+
+#: settings/network_tab.py:139
+#, python-brace-format
+msgid "for \"{}\""
+msgstr "cho \"{}\""
+
+#: settings/network_tab.py:152
+msgid "Network name"
+msgstr "Tên mạng"
+
+#: settings/network_tab.py:152
+#: setup.py:124
+msgid "Next"
+msgstr "Tiếp"
+
+#: settings/network_tab.py:166
+#, python-brace-format
+msgid "{} · Couldn't save"
+msgstr "{} · Không thể lưu"
+
+#: settings/network_tab.py:186
+msgid "Connected devices will need to reconnect."
+msgstr "Các thiết bị đã kết nối sẽ cần kết nối lại."
+
+#: settings/network_tab.py:189
+msgid "Hotspot password"
+msgstr "Mật khẩu điểm phát sóng"
+
+#: settings/network_tab.py:218
+#: settings/network_tab.py:393
+msgid "APN"
+msgstr "APN"
+
+#: settings/network_tab.py:218
+msgid "Leave empty for automatic"
+msgstr "Để trống để tự động"
+
+#: settings/network_tab.py:246
+msgid "Reading cellular status"
+msgstr "Đang đọc trạng thái di động"
+
+#: settings/network_tab.py:248
+msgid "Cellular data unavailable"
+msgstr "Không có dữ liệu di động"
+
+#: settings/network_tab.py:250
+msgid "SIM detected · No cellular service"
+msgstr "Đã phát hiện SIM · Không có dịch vụ di động"
+
+#: settings/network_tab.py:258
+#, python-brace-format
+msgid "SIM detected · {}"
+msgstr "Đã phát hiện SIM · {}"
+
+#: settings/network_tab.py:379
+#: settings/network_tab.py:377
+#: settings/network_tab.py:393
+msgid "Edit"
+msgstr "Sửa"
+
+#: settings/network_tab.py:396
+#: settings/network_tab.py:387
+#: settings/search.py:193
+msgid "Roaming, APN and IP address"
+msgstr "Chuyển vùng, APN và địa chỉ IP"
+
+#: settings/network_tab.py:396
+msgid "Status updates automatically while this page is open."
+msgstr "Trạng thái tự cập nhật khi trang này đang mở."
+
+#: settings/network_tab.py:139
+msgid "Wrong password"
+msgstr "Sai mật khẩu"
+
+#: settings/network_tab.py:139
+#: settings/network_tab.py:150
+msgid "Enter password"
+msgstr "Nhập mật khẩu"
+
+#: settings/network_tab.py:173
+#: settings/network_tab.py:383
+#: settings/search.py:190
+msgid "Hotspot name"
+msgstr "Tên điểm phát sóng"
+
+#: settings/network_tab.py:180
+msgid "A saved network already uses this name"
+msgstr "Một mạng đã lưu đang dùng tên này"
+
+#: settings/network_tab.py:362
+#: settings/search.py:187
+msgid "Join a hidden network"
+msgstr "Kết nối mạng ẩn"
+
+#: settings/network_tab.py:382
+#: settings/search.py:189
+msgid "Hotspot"
+msgstr "Điểm phát sóng"
+
+#: settings/network_tab.py:382
+#: settings/search.py:189
+msgid "Share this device's connection"
+msgstr "Chia sẻ kết nối của thiết bị này"
+
+#: settings/network_tab.py:385
+#: settings/search.py:191
+msgid "Hotspot Password"
+msgstr "Mật khẩu điểm phát sóng"
+
+#: settings/network_tab.py:385
+#: settings/search.py:191
+msgid "For phones joining this device's hotspot"
+msgstr "Cho điện thoại kết nối vào điểm phát sóng của thiết bị này"
+
+#: settings/network_tab.py:386
+#: settings/search.py:192
+msgid "Save Data"
+msgstr "Tiết kiệm dữ liệu"
+
+#: settings/network_tab.py:386
+#: settings/search.py:192
+msgid "No large uploads on cellular or phone hotspots"
+msgstr "Không tải lên dung lượng lớn qua mạng di động hoặc điểm phát sóng điện thoại"
+
+#: settings/network_tab.py:392
+msgid "Roaming"
+msgstr "Chuyển vùng"
+
+#: settings/network_tab.py:392
+msgid "Use cellular data outside your carrier's network"
+msgstr "Dùng dữ liệu di động ngoài mạng của nhà mạng"
+
+#: settings/network_tab.py:395
+#: settings/search.py:194
+msgid "Cellular IP address"
+msgstr "Địa chỉ IP di động"
+
+#: settings/network_tab.py:150
+#, python-brace-format
+msgid "for \"{}\", or leave empty for an open network"
+msgstr "cho \"{}\", hoặc để trống nếu là mạng mở"
+
+#: settings/network_tab.py:366
+msgid "Couldn’t change Wi-Fi"
+msgstr "Không thể thay đổi Wi-Fi"
+
+#: settings/network_tab.py:177
+msgid "Enter a hotspot name"
+msgstr "Nhập tên điểm phát sóng"
+
+#: settings/network_tab.py:177
+msgid "Name is too long. Use a shorter name."
+msgstr "Tên quá dài. Hãy dùng tên ngắn hơn."
+
+#: settings/network_tab.py:178
+msgid "Use letters, numbers, spaces or punctuation"
+msgstr "Dùng chữ cái, số, dấu cách hoặc dấu câu"
+
+#: settings/network_tab.py:351
+msgid "Secured"
+msgstr "Bảo mật"
+
+#: settings/network_tab.py:351
+msgid "Open"
+msgstr "Mở"
+
+#: settings/network_tab.py:361
+msgid "Scanning for networks…"
+msgstr "Đang quét mạng…"
+
+#: settings/network_tab.py:364
+msgid "Wi-Fi is off"
+msgstr "Wi-Fi đang tắt"
+
+#: settings/network_tab.py:393
+msgid "Automatic"
+msgstr "Tự động"
+
+#: settings/network_test.py:43
+msgid "Couldn't reach the speed test. Check the connection and try again."
+msgstr "Không thể kết nối tới bài kiểm tra tốc độ. Hãy kiểm tra kết nối và thử lại."
+
+#: settings/network_test.py:44
+msgid "The connection dropped during the test. Try again."
+msgstr "Kết nối bị ngắt trong lúc kiểm tra. Hãy thử lại."
+
+#: settings/network_test.py:45
+msgid "The speed test turned the request down. Try again later."
+msgstr "Bài kiểm tra tốc độ đã từ chối yêu cầu. Hãy thử lại sau."
+
+#: settings/network_test.py:65
+#, python-brace-format
+msgid "{} Mbps"
+msgstr "{} Mbps"
+
+#: settings/network_test.py:69
+#, python-brace-format
+msgid "{} ms"
+msgstr "{} ms"
+
+#: settings/network_test.py:40
+msgid "Maps, models and updates coming in"
+msgstr "Bản đồ, mô hình và bản cập nhật tải về"
+
+#: settings/network_test.py:41
+msgid "Upload"
+msgstr "Tải lên"
+
+#: settings/network_test.py:41
+msgid "Drive video and logs going out"
+msgstr "Video và nhật ký chuyến đi gửi đi"
+
+#: settings/network_test.py:42
+msgid "Ping"
+msgstr "Ping"
+
+#: settings/network_test.py:42
+msgid "How quickly the internet answers"
+msgstr "Tốc độ phản hồi của internet"
+
+#: settings/network_test.py:73
+msgid "under 1 MB"
+msgstr "dưới 1 MB"
+
+#: settings/network_test.py:159
+#, python-brace-format
+msgid "Uses Cloudflare's speed test and up to {} of data."
+msgstr "Dùng bài kiểm tra tốc độ của Cloudflare và tối đa {} dữ liệu."
+
+#: settings/network_test.py:100
+msgid "Ethernet"
+msgstr "Ethernet"
+
+#: settings/network_test.py:120
+msgid "Stop"
+msgstr "Dừng"
+
+#: settings/network_test.py:121
+msgid "Test again"
+msgstr "Kiểm tra lại"
+
+#: settings/network_test.py:138
+msgid "Testing…"
+msgstr "Đang kiểm tra…"
+
+#: settings/network_test.py:145
+#, python-brace-format
+msgid "Tested {} with Cloudflare's speed test. Used {} of data."
+msgstr "Đã kiểm tra {} bằng bài kiểm tra tốc độ của Cloudflare. Đã dùng {} dữ liệu."
+
+#: settings/network_test.py:147
+#, python-brace-format
+msgid "Stopped early. Used {} of data."
+msgstr "Đã dừng sớm. Đã dùng {} dữ liệu."
+
+#: settings/network_test.py:155
+#, python-brace-format
+msgid "Uses up to {} of data. Leaving this page stops the test."
+msgstr "Dùng tối đa {} dữ liệu. Rời trang này sẽ dừng kiểm tra."
+
+#: settings/network_test.py:158
+#, python-brace-format
+msgid "Uses Cloudflare's speed test and up to {} of cellular data."
+msgstr "Dùng bài kiểm tra tốc độ của Cloudflare và tối đa {} dữ liệu di động."
+
+#: settings/network_test.py:154
+#, python-brace-format
+msgid "Uses up to {} of cellular data. Leaving this page stops the test."
+msgstr "Dùng tối đa {} dữ liệu di động. Rời trang này sẽ dừng kiểm tra."
+
+#: settings/network_test.py:169
+msgid "Measuring…"
+msgstr "Đang đo…"
+
+#: settings/ram.py:51
+#, python-brace-format
+msgid "{} · {}%"
+msgstr "{} · {}%"
+
+#: settings/ram.py:31
+#: settings/storage.py:101
+#, python-brace-format
+msgid "{} MB"
+msgstr "{} MB"
+
+#: settings/ram.py:40
+#, python-brace-format
+msgid "Today {}"
+msgstr "Hôm nay {}"
+
+#: settings/ram.py:42
+#, python-brace-format
+msgid "Yesterday {}"
+msgstr "Hôm qua {}"
+
+#: settings/ram.py:75
+msgid "Other processes and the system"
+msgstr "Các tiến trình khác và hệ thống"
+
+#: settings/ram.py:103
+#, python-brace-format
+msgid "Now {}% used"
+msgstr "Hiện đã dùng {}%"
+
+#: settings/ram.py:112
+msgid "What was using it at each drive's peak, and how much it grew since the drive started."
+msgstr "Những gì đang dùng RAM lúc cao điểm của mỗi chuyến đi, và mức tăng từ lúc chuyến đi bắt đầu."
+
+#: settings/ram.py:114
+msgid "The last three drives are kept and added to Report a Problem. A reboot clears RAM."
+msgstr "Ba chuyến đi gần nhất được giữ và thêm vào Báo cáo sự cố. Khởi động lại sẽ giải phóng RAM."
+
+#: settings/ram.py:110
+msgid "No drive has run low on RAM yet."
+msgstr "Chưa có chuyến đi nào bị thiếu RAM."
+
+#: settings/report.py:20
+msgid "Acceleration felt harsh or jerky"
+msgstr "Tăng tốc gắt hoặc giật"
+
+#: settings/report.py:20
+msgid "Braking was too sudden"
+msgstr "Phanh quá đột ngột"
+
+#: settings/report.py:20
+msgid "It disengaged when I didn't expect it"
+msgstr "Nó tự ngắt khi tôi không ngờ tới"
+
+#: settings/report.py:21
+msgid "It felt slow to respond"
+msgstr "Phản hồi có vẻ chậm"
+
+#: settings/report.py:21
+msgid "An alert was unclear"
+msgstr "Một cảnh báo không rõ ràng"
+
+#: settings/report.py:21
+msgid "My steering wheel buttons aren't working"
+msgstr "Các nút trên vô lăng không hoạt động"
+
+#: settings/report.py:21
+msgid "Something else"
+msgstr "Vấn đề khác"
+
+#: settings/report.py:97
+msgid "Sent. Thank you!"
+msgstr "Đã gửi. Cảm ơn bạn!"
+
+#: settings/report.py:97
+msgid "Send report"
+msgstr "Gửi báo cáo"
+
+#: settings/report.py:105
+msgid "Details (optional)"
+msgstr "Chi tiết (tùy chọn)"
+
+#: settings/report.py:105
+msgid "Where and when it happened"
+msgstr "Xảy ra ở đâu và khi nào"
+
+#: settings/report.py:107
+msgid "Discord name (optional)"
+msgstr "Tên Discord (tùy chọn)"
+
+#: settings/report.py:107
+msgid "So we can follow up"
+msgstr "Để chúng tôi có thể liên hệ lại"
+
+#: settings/report.py:121
+msgid "The report could not be sent. Try again."
+msgstr "Không thể gửi báo cáo. Hãy thử lại."
+
+#: settings/report.py:101
+msgid "What happened?"
+msgstr "Đã xảy ra chuyện gì?"
+
+#: settings/report.py:106
+msgid "Details"
+msgstr "Chi tiết"
+
+#: settings/report.py:108
+msgid "Discord name"
+msgstr "Tên Discord"
+
+#: settings/search.py:25
+#: settings/window.py:31
+msgid "Connections"
+msgstr "Kết nối"
+
+#: settings/search.py:30
+#: settings/search.py:144
+#: settings/tuner.py:218
+msgid "Steering"
+msgstr "Lái"
+
+#: settings/search.py:30
+#: settings/search.py:146
+#: settings/tuner.py:224
+msgid "Gas & Brake"
+msgstr "Ga và phanh"
+
+#: settings/search.py:30
+#: settings/search.py:148
+#: settings/tuner.py:288
+msgid "Following & Stops"
+msgstr "Bám xe và dừng"
+
+#: settings/search.py:80
+#: settings/speed_steering.py:217
+msgid "Driving style, speed limits, lane changes and steering"
+msgstr "Phong cách lái, giới hạn tốc độ, chuyển làn và lái"
+
+#: settings/search.py:81
+#: settings/speed_steering.py:182
+msgid "Driving Style"
+msgstr "Phong cách lái"
+
+#: settings/search.py:81
+#: settings/speed_steering.py:183
+msgid "Sets following gap, acceleration and braking together"
+msgstr "Đặt cùng lúc giãn cách, tăng tốc và phanh"
+
+#: settings/search.py:82
+#: settings/speed_steering.py:203
+msgid "Speed Limits"
+msgstr "Giới hạn tốc độ"
+
+#: settings/search.py:82
+#: settings/speed_steering.py:203
+msgid "Match sets cruise to the posted limit"
+msgstr "Theo giới hạn sẽ đặt cruise bằng giới hạn trên biển"
+
+#: settings/search.py:83
+#: settings/speed_steering.py:185
+msgid "Offset"
+msgstr "Chênh lệch"
+
+#: settings/search.py:83
+#: settings/speed_steering.py:185
+msgid "Added to every matched limit"
+msgstr "Cộng vào mọi giới hạn được theo"
+
+#: settings/search.py:84
+#: settings/speed_steering.py:188
+msgid "Higher limits"
+msgstr "Giới hạn cao hơn"
+
+#: settings/search.py:84
+#: settings/speed_steering.py:188
+msgid "When a posted limit goes up"
+msgstr "Khi giới hạn trên biển tăng"
+
+#: settings/search.py:85
+#: settings/speed_steering.py:191
+msgid "Lower limits"
+msgstr "Giới hạn thấp hơn"
+
+#: settings/search.py:85
+#: settings/speed_steering.py:191
+msgid "When a posted limit goes down"
+msgstr "Khi giới hạn trên biển giảm"
+
+#: settings/search.py:86
+#: settings/speed_steering.py:194
+msgid "MAX follows limits"
+msgstr "TỐI ĐA theo giới hạn"
+
+#: settings/search.py:86
+#: settings/speed_steering.py:194
+msgid "Each new limit sets MAX, so it slows promptly for lower ones"
+msgstr "Mỗi giới hạn mới đặt lại TỐI ĐA, nên xe giảm tốc ngay khi giới hạn thấp hơn"
+
+#: settings/search.py:88
+#: settings/speed_steering.py:209
+msgid "Lane Changes"
+msgstr "Chuyển làn"
+
+#: settings/search.py:88
+msgid "Nudge or Auto"
+msgstr "Đẩy nhẹ hoặc Tự động"
+
+#: settings/search.py:89
+#: settings/speed_steering.py:211
+msgid "Smart Slowdowns"
+msgstr "Giảm tốc thông minh"
+
+#: settings/search.py:89
+#: settings/speed_steering.py:211
+msgid "Slows for curves, stop lights and stopped traffic on its own"
+msgstr "Tự giảm tốc khi vào cua, gặp đèn dừng và xe đang dừng"
+
+#: settings/search.py:90
+#: settings/speed_steering.py:213
+msgid "Always-On Steering"
+msgstr "Lái luôn bật"
+
+#: settings/search.py:90
+msgid "Keeps steering with cruise off"
+msgstr "Vẫn lái khi tắt cruise"
+
+#: settings/search.py:91
+#: settings/speed_steering.py:240
+msgid "Rain, snow and storms ahead, from local weather"
+msgstr "Mưa, tuyết và bão phía trước, theo thời tiết địa phương"
+
+#: settings/search.py:92
+#: settings/speed_steering.py:238
+msgid "Warns before rain, snow or storms start, and says when they should stop"
+msgstr "Cảnh báo trước khi mưa, tuyết hoặc bão bắt đầu, và cho biết khi nào sẽ ngừng"
+
+#: settings/search.py:96
+msgid "Routes only from downloaded maps, never online"
+msgstr "Tuyến đường chỉ từ bản đồ đã tải, không bao giờ trực tuyến"
+
+#: settings/search.py:97
+msgid "Online or downloaded maps first, with a fallback"
+msgstr "Ưu tiên bản đồ trực tuyến hoặc đã tải, có dự phòng"
+
+#: settings/search.py:101
+msgid "Mapbox, or Google for live traffic"
+msgstr "Mapbox, hoặc Google cho giao thông trực tiếp"
+
+#: settings/search.py:102
+msgid "Tolls, highways or ferries when planning routes"
+msgstr "Trạm thu phí, đường cao tốc hoặc phà khi lập tuyến"
+
+#: settings/search.py:103
+msgid "Where the car's position comes from: the comma, the car or your phone"
+msgstr "Nguồn vị trí của xe: comma, xe hoặc điện thoại"
+
+#: settings/search.py:104
+msgid "The Mapbox and Google keys for search and routes"
+msgstr "Khóa Mapbox và Google cho tìm kiếm và tuyến đường"
+
+#: settings/search.py:106
+msgid "The driving screen and the path"
+msgstr "Màn hình lái xe và đường đi"
+
+#: settings/search.py:119
+msgid "Volume and the optional chimes"
+msgstr "Âm lượng và các tiếng báo tùy chọn"
+
+#: settings/search.py:120
+msgid "One volume for everything, or each group on its own"
+msgstr "Một âm lượng cho tất cả, hoặc riêng từng nhóm"
+
+#: settings/search.py:125
+msgid "The model that drives, and downloading others"
+msgstr "Mô hình đang lái, và tải các mô hình khác"
+
+#: settings/search.py:126
+msgid "StarPilot's default driving model"
+msgstr "Mô hình lái mặc định của StarPilot"
+
+#: settings/search.py:127
+msgid "Your car, its steering wheel buttons and car-specific options"
+msgstr "Xe của bạn, các nút trên vô lăng và tùy chọn riêng của xe"
+
+#: settings/search.py:128
+#: settings/vehicle.py:265
+msgid "Steering Wheel Buttons"
+msgstr "Nút trên vô lăng"
+
+#: settings/search.py:128
+msgid "What the car's own buttons do while driving"
+msgstr "Chức năng các nút của xe khi lái"
+
+#: settings/search.py:129
+#: settings/vehicle.py:247
+msgid "Auto-Lock Doors"
+msgstr "Tự khóa cửa"
+
+#: settings/search.py:129
+#: settings/vehicle.py:247
+msgid "Locks when you shift out of park"
+msgstr "Khóa khi bạn chuyển khỏi số P"
+
+#: settings/search.py:130
+#: settings/vehicle.py:249
+msgid "Auto-Unlock Doors"
+msgstr "Tự mở khóa cửa"
+
+#: settings/search.py:130
+#: settings/vehicle.py:249
+msgid "Unlocks when you shift into park"
+msgstr "Mở khóa khi bạn chuyển về số P"
+
+#: settings/search.py:131
+#: settings/vehicle.py:264
+#: settings/vehicle.py:315
+msgid "More for your car"
+msgstr "Thêm cho xe của bạn"
+
+#: settings/search.py:131
+#: settings/vehicle.py:264
+msgid "Features specific to your make and model"
+msgstr "Tính năng riêng cho hãng và dòng xe của bạn"
+
+#: settings/search.py:132
+msgid "openpilot's core switches and driver monitoring"
+msgstr "Các công tắc chính của openpilot và giám sát tài xế"
+
+#: settings/search.py:133
+msgid "Adaptive cruise and lane keeping"
+msgstr "Cruise thích ứng và giữ làn"
+
+#: settings/search.py:134
+#: settings/speed_steering.py:327
+msgid "Disengage on Gas Pedal"
+msgstr "Ngắt khi nhấn ga"
+
+#: settings/search.py:134
+#: settings/speed_steering.py:327
+msgid "Pressing the accelerator turns openpilot off"
+msgstr "Nhấn chân ga sẽ tắt openpilot"
+
+#: settings/search.py:135
+#: settings/speed_steering.py:328
+msgid "Lane Departure Warnings"
+msgstr "Cảnh báo chệch làn"
+
+#: settings/search.py:135
+msgid "Alerts when you drift over a lane line without signaling"
+msgstr "Cảnh báo khi bạn lấn vạch làn mà không bật xi nhan"
+
+#: settings/search.py:136
+#: settings/speed_steering.py:329
+msgid "Safe Mode"
+msgstr "Chế độ an toàn"
+
+#: settings/search.py:136
+msgid "Stock tuning, the default model and Relaxed"
+msgstr "Tinh chỉnh gốc, mô hình mặc định và Thư thái"
+
+#: settings/search.py:137
+#: settings/speed_steering.py:337
+msgid "Always-On Driver Monitoring"
+msgstr "Giám sát tài xế luôn bật"
+
+#: settings/search.py:137
+#: settings/speed_steering.py:337
+msgid "Watches for distraction even when openpilot is off"
+msgstr "Theo dõi mất tập trung kể cả khi openpilot tắt"
+
+#: settings/search.py:138
+msgid "Check that it can see your face"
+msgstr "Kiểm tra camera có thấy khuôn mặt bạn"
+
+#: settings/search.py:140
+#: settings/speed_steering.py:341
+msgid "Sentry Mode"
+msgstr "Chế độ canh gác"
+
+#: settings/search.py:140
+#: settings/speed_steering.py:341
+msgid "Pictures in Galaxy if the parked car is bumped"
+msgstr "Ảnh trong Galaxy nếu xe đang đỗ bị va chạm"
+
+#: settings/search.py:141
+#: settings/speed_steering.py:343
+msgid "Sensitivity"
+msgstr "Độ nhạy"
+
+#: settings/search.py:141
+#: settings/speed_steering.py:343
+msgid "High notices smaller bumps"
+msgstr "Cao phát hiện va chạm nhỏ hơn"
+
+#: settings/search.py:142
+msgid "Fine-tuning screens for steering, gas, brake and following"
+msgstr "Màn hình tinh chỉnh cho lái, ga, phanh và bám xe"
+
+#: settings/search.py:144
+msgid "Lane centering and your car's steering tune"
+msgstr "Giữ giữa làn và tinh chỉnh lái của xe"
+
+#: settings/search.py:146
+msgid "Acceleration and braking profiles, stops and takeoffs"
+msgstr "Cấu hình tăng tốc và phanh, dừng và khởi hành"
+
+#: settings/search.py:148
+msgid "Following gaps and how the car stops"
+msgstr "Giãn cách bám xe và cách xe dừng"
+
+#: settings/search.py:149
+msgid "Following Gaps"
+msgstr "Giãn cách bám xe"
+
+#: settings/search.py:149
+msgid "Relaxed, Standard, Sport and Traffic"
+msgstr "Thư thái, Tiêu chuẩn, Thể thao và Kẹt xe"
+
+#: settings/search.py:151
+msgid "Pairing, remote access, calibration, restart and power"
+msgstr "Ghép nối, truy cập từ xa, hiệu chỉnh, khởi động lại và nguồn"
+
+#: settings/search.py:152
+msgid "comma connect: see drives and change settings on your phone"
+msgstr "comma connect: xem chuyến đi và đổi cài đặt trên điện thoại"
+
+#: settings/search.py:153
+msgid "Galaxy: reach this device from a web browser"
+msgstr "Galaxy: truy cập thiết bị này từ trình duyệt web"
+
+#: settings/search.py:154
+msgid "How the device is mounted"
+msgstr "Cách lắp thiết bị"
+
+#: settings/search.py:156
+msgid "Regulatory information"
+msgstr "Thông tin quy định"
+
+#: settings/search.py:157
+msgid "This device's IDs"
+msgstr "Các ID của thiết bị này"
+
+#: settings/search.py:158
+msgid "The cellular modem's ID"
+msgstr "ID của modem di động"
+
+#: settings/search.py:159
+msgid "Restart the device"
+msgstr "Khởi động lại thiết bị"
+
+#: settings/search.py:160
+msgid "Turn the device off until the car starts"
+msgstr "Tắt thiết bị cho đến khi xe khởi động"
+
+#: settings/search.py:161
+msgid "Units, language, brightness and standby"
+msgstr "Đơn vị, ngôn ngữ, độ sáng và chế độ chờ"
+
+#: settings/search.py:164
+msgid "Menus and alerts"
+msgstr "Menu và cảnh báo"
+
+#: settings/search.py:167
+msgid "Snapshots of your settings"
+msgstr "Ảnh chụp cài đặt của bạn"
+
+#: settings/search.py:168
+msgid "What's using space, and recording and uploads"
+msgstr "Những gì đang chiếm dung lượng, ghi hình và tải lên"
+
+#: settings/search.py:169
+#: settings/storage.py:151
+msgid "Recorded Drives"
+msgstr "Chuyến đi đã ghi"
+
+#: settings/search.py:169
+#: settings/storage.py:151
+msgid "Oldest drives are removed when space runs low"
+msgstr "Chuyến đi cũ nhất sẽ bị xóa khi sắp hết dung lượng"
+
+#: settings/search.py:170
+msgid "Delete downloaded map data"
+msgstr "Xóa dữ liệu bản đồ đã tải"
+
+#: settings/search.py:171
+#: settings/storage.py:153
+msgid "Unused Models"
+msgstr "Mô hình không dùng"
+
+#: settings/search.py:171
+msgid "Downloaded models that aren't in use"
+msgstr "Mô hình đã tải nhưng không dùng"
+
+#: settings/search.py:172
+#: settings/storage.py:155
+msgid "Record Driver Camera"
+msgstr "Ghi camera tài xế"
+
+#: settings/search.py:172
+msgid "Saved and uploaded with your drives"
+msgstr "Được lưu và tải lên cùng chuyến đi"
+
+#: settings/search.py:173
+#: settings/storage.py:156
+msgid "Record Microphone"
+msgstr "Ghi âm micrô"
+
+#: settings/search.py:173
+msgid "Cabin audio in your drive recordings"
+msgstr "Âm thanh trong xe trong bản ghi chuyến đi"
+
+#: settings/search.py:174
+#: settings/storage.py:157
+msgid "Drive logs and video for debugging"
+msgstr "Nhật ký và video chuyến đi để gỡ lỗi"
+
+#: settings/search.py:175
+msgid "What was using RAM on drives that ran low"
+msgstr "Những gì đã dùng RAM trong các chuyến đi bị thiếu"
+
+#: settings/search.py:176
+msgid "Send what happened to the developers"
+msgstr "Gửi sự việc cho nhà phát triển"
+
+#: settings/search.py:177
+msgid "ADB, SSH and debug modes"
+msgstr "ADB, SSH và chế độ gỡ lỗi"
+
+#: settings/search.py:178
+msgid "Connect over USB or the network"
+msgstr "Kết nối qua USB hoặc mạng"
+
+#: settings/search.py:179
+msgid "Remote shell access"
+msgstr "Truy cập shell từ xa"
+
+#: settings/search.py:180
+msgid "Adds every public key in a GitHub account"
+msgstr "Thêm mọi khóa công khai trong một tài khoản GitHub"
+
+#: settings/search.py:181
+msgid "Drive openpilot's controls from a joystick"
+msgstr "Điều khiển openpilot bằng joystick"
+
+#: settings/search.py:182
+msgid "Turns off the car's emergency braking"
+msgstr "Tắt phanh khẩn cấp của xe"
+
+#: settings/search.py:185
+msgid "Networks nearby, and joining one"
+msgstr "Mạng ở gần và kết nối vào mạng"
+
+#: settings/search.py:186
+msgid "IP Address"
+msgstr "Địa chỉ IP"
+
+#: settings/search.py:186
+msgid "This device's local address, beside the connected network"
+msgstr "Địa chỉ cục bộ của thiết bị, bên cạnh mạng đã kết nối"
+
+#: settings/search.py:187
+msgid "Enter its name and password"
+msgstr "Nhập tên và mật khẩu"
+
+#: settings/search.py:188
+msgid "Connection status, hotspot, data use, roaming and APN"
+msgstr "Trạng thái kết nối, điểm phát sóng, dữ liệu, chuyển vùng và APN"
+
+#: settings/search.py:190
+msgid "The name phones see when joining this device"
+msgstr "Tên điện thoại thấy khi kết nối vào thiết bị này"
+
+#: settings/search.py:193
+msgid "Roaming, APN and the cellular IP address"
+msgstr "Chuyển vùng, APN và địa chỉ IP di động"
+
+#: settings/search.py:194
+msgid "The modem's mobile data address"
+msgstr "Địa chỉ dữ liệu di động của modem"
+
+#: settings/search.py:195
+msgid "A wheel remote's buttons and what they do"
+msgstr "Các nút của điều khiển trên vô lăng và chức năng của chúng"
+
+#: settings/search.py:196
+msgid "Pair and connect phones, speakers and remotes"
+msgstr "Ghép nối và kết nối điện thoại, loa và điều khiển"
+
+#: settings/search.py:199
+msgid "Download speed, upload speed and ping of this device's connection"
+msgstr "Tốc độ tải về, tải lên và ping của kết nối thiết bị này"
+
+#: settings/search.py:202
+msgid "Updates and the release notes"
+msgstr "Cập nhật và ghi chú phát hành"
+
+#: settings/search.py:203
+#: settings/software.py:202
+msgid "Automatic Updates"
+msgstr "Cập nhật tự động"
+
+#: settings/search.py:203
+msgid "Download while parked, install when you turn off the car"
+msgstr "Tải khi đỗ xe, cài khi bạn tắt xe"
+
+#: settings/search.py:204
+#: settings/software.py:199
+msgid "Release Channel"
+msgstr "Kênh phát hành"
+
+#: settings/search.py:204
+msgid "The branch to download updates from"
+msgstr "Nhánh để tải bản cập nhật"
+
+#: settings/search.py:205
+#: settings/software.py:208
+msgid "Reset Settings"
+msgstr "Đặt lại cài đặt"
+
+#: settings/search.py:205
+msgid "Back to the Essentials defaults"
+msgstr "Về mặc định của Essentials"
+
+#: settings/search.py:206
+#: settings/software.py:180
+#: settings/software.py:212
+msgid "Uninstall"
+msgstr "Gỡ cài đặt"
+
+#: settings/search.py:206
+msgid "Remove this software from the device"
+msgstr "Gỡ phần mềm này khỏi thiết bị"
+
+#: settings/search.py:383
+#: settings/search.py:374
+msgid "Search settings"
+msgstr "Tìm cài đặt"
+
+#: settings/search.py:272
+msgid "Say a setting, like speed limit. Tap the mic when you're done."
+msgstr "Nói tên một cài đặt, như giới hạn tốc độ. Chạm vào micrô khi nói xong."
+
+#: settings/search.py:354
+#: settings/search.py:313
+#, python-brace-format
+msgid "No settings match “{}”"
+msgstr "Không có cài đặt nào khớp “{}”"
+
+#: settings/search.py:355
+msgid "Type a setting's name or what it does, like brightness or lane changes"
+msgstr "Nhập tên cài đặt hoặc chức năng của nó, như độ sáng hoặc chuyển làn"
+
+#: settings/software.py:28
+msgid "Updater unavailable"
+msgstr "Trình cập nhật không khả dụng"
+
+#: settings/software.py:28
+msgid "Park to update"
+msgstr "Đỗ xe để cập nhật"
+
+#: settings/software.py:28
+msgid "Updates are disabled"
+msgstr "Cập nhật đã bị tắt"
+
+#: settings/software.py:29
+msgid "Reading software status"
+msgstr "Đang đọc trạng thái phần mềm"
+
+#: settings/software.py:29
+msgid "Checking for an update"
+msgstr "Đang kiểm tra cập nhật"
+
+#: settings/software.py:30
+msgid "Downloading the update"
+msgstr "Đang tải bản cập nhật"
+
+#: settings/software.py:30
+msgid "Getting the update ready"
+msgstr "Đang chuẩn bị bản cập nhật"
+
+#: settings/software.py:31
+msgid "Restart pending"
+msgstr "Chờ khởi động lại"
+
+#: settings/software.py:102
+msgid "You have the latest version"
+msgstr "Bạn đang dùng phiên bản mới nhất"
+
+#: settings/software.py:202
+msgid "Download and install while parked"
+msgstr "Tải và cài khi đỗ xe"
+
+#: settings/software.py:89
+msgid "Software change could not be saved"
+msgstr "Không thể lưu thay đổi phần mềm"
+
+#: settings/software.py:95
+#, python-brace-format
+msgid "{} is ready to install"
+msgstr "{} đã sẵn sàng để cài"
+
+#: settings/software.py:97
+msgid "Couldn't check for updates. Check the connection and try again."
+msgstr "Không thể kiểm tra cập nhật. Hãy kiểm tra kết nối và thử lại."
+
+#: settings/software.py:99
+msgid "A new version is available to download"
+msgstr "Có phiên bản mới để tải"
+
+#: settings/software.py:101
+msgid "Software actions are available while parked"
+msgstr "Thao tác phần mềm có sẵn khi đỗ xe"
+
+#: settings/software.py:105
+msgid "Working…"
+msgstr "Đang xử lý…"
+
+#: settings/software.py:105
+msgid "Try again"
+msgstr "Thử lại"
+
+#: settings/software.py:106
+msgid "Check now"
+msgstr "Kiểm tra ngay"
+
+#: settings/software.py:164
+#, python-brace-format
+msgid "What's new in {}"
+msgstr "Có gì mới trong {}"
+
+#: settings/software.py:180
+msgid "Uninstall openpilot?"
+msgstr "Gỡ cài đặt openpilot?"
+
+#: settings/software.py:180
+msgid "The device removes openpilot and starts its setup again."
+msgstr "Thiết bị sẽ gỡ openpilot và bắt đầu thiết lập lại."
+
+#: settings/software.py:206
+msgid "Reset settings?"
+msgstr "Đặt lại cài đặt?"
+
+#: settings/software.py:206
+msgid "Every setting goes back to the Essentials default. Your backups are kept."
+msgstr "Mọi cài đặt trở về mặc định của Essentials. Các bản sao lưu vẫn được giữ."
+
+#: settings/software.py:61
+msgid "Unknown version"
+msgstr "Phiên bản không xác định"
+
+#: settings/software.py:92
+#, python-brace-format
+msgid "{}% downloaded"
+msgstr "Đã tải {}%"
+
+#: settings/software.py:93
+#: settings/software.py:82
+msgid "Updating"
+msgstr "Đang cập nhật"
+
+#: settings/software.py:136
+#: settings/software.py:136
+#: settings/software.py:136
+msgid "Stable"
+msgstr "Ổn định"
+
+#: settings/software.py:199
+msgid "Choose another branch"
+msgstr "Chọn nhánh khác"
+
+#: settings/software.py:199
+msgid "Other branches are in Tuner Mode"
+msgstr "Các nhánh khác có trong Chế độ tinh chỉnh"
+
+#: settings/software.py:208
+msgid "Back to the Essentials defaults. Backups are kept."
+msgstr "Về mặc định của Essentials. Các bản sao lưu vẫn được giữ."
+
+#: settings/software.py:209
+msgid "Park to reset settings"
+msgstr "Đỗ xe để đặt lại cài đặt"
+
+#: settings/software.py:82
+msgid "Ready to install"
+msgstr "Sẵn sàng để cài"
+
+#: settings/software.py:82
+msgid "Check failed"
+msgstr "Kiểm tra thất bại"
+
+#: settings/software.py:83
+msgid "Update available"
+msgstr "Có bản cập nhật"
+
+#: settings/software.py:95
+#: software.py:77
+msgid "A new version"
+msgstr "Phiên bản mới"
+
+#: settings/software.py:136
+msgid "Beta"
+msgstr "Beta"
+
+#: settings/software.py:191
+#, python-brace-format
+msgid "Version {}"
+msgstr "Phiên bản {}"
+
+#: settings/software.py:195
+msgid "What's new"
+msgstr "Có gì mới"
+
+#: settings/speed_steering.py:26
+#: setup.py:48
+msgid "Show"
+msgstr "Hiện"
+
+#: settings/speed_steering.py:27
+msgid "Update automatically"
+msgstr "Tự động cập nhật"
+
+#: settings/speed_steering.py:27
+msgid "Tap to confirm"
+msgstr "Chạm để xác nhận"
+
+#: settings/speed_steering.py:28
+msgid "Nudge"
+msgstr "Đẩy nhẹ"
+
+#: settings/speed_steering.py:247
+msgid "Low"
+msgstr "Thấp"
+
+#: settings/speed_steering.py:247
+msgid "High"
+msgstr "Cao"
+
+#: settings/speed_steering.py:153
+msgid "Starts one lane change per signal on its own."
+msgstr "Tự thực hiện một lần chuyển làn cho mỗi lần bật xi nhan."
+
+#: settings/speed_steering.py:153
+msgid "Changes lanes only when you nudge the wheel."
+msgstr "Chỉ chuyển làn khi bạn đẩy nhẹ vô lăng."
+
+#: settings/speed_steering.py:154
+msgid "Change lane changes?"
+msgstr "Thay đổi cách chuyển làn?"
+
+#: settings/speed_steering.py:213
+msgid "Keeps steering with cruise off."
+msgstr "Vẫn lái khi tắt cruise."
+
+#: settings/speed_steering.py:216
+#, python-brace-format
+msgid "{} settings"
+msgstr "Cài đặt {}"
+
+#: settings/speed_steering.py:233
+msgid "Heads-up on"
+msgstr "Đã bật báo trước"
+
+#: settings/speed_steering.py:241
+msgid "Needs an internet connection. Chips show it ahead and while it lasts."
+msgstr "Cần kết nối internet. Nhãn sẽ hiện trước và trong suốt thời gian thời tiết kéo dài."
+
+#: settings/speed_steering.py:286
+msgid "Gas pedal disengages"
+msgstr "Nhấn ga sẽ ngắt"
+
+#: settings/speed_steering.py:286
+msgid "Gas pedal doesn't disengage"
+msgstr "Nhấn ga không ngắt"
+
+#: settings/speed_steering.py:312
+msgid "Driver monitoring always on"
+msgstr "Giám sát tài xế luôn bật"
+
+#: settings/speed_steering.py:312
+msgid "Driver monitoring while engaged"
+msgstr "Giám sát tài xế khi kích hoạt"
+
+#: settings/speed_steering.py:331
+msgid "openpilot's core switches"
+msgstr "Các công tắc chính của openpilot"
+
+#: settings/speed_steering.py:346
+msgid "Watches that you're paying attention"
+msgstr "Theo dõi để bạn luôn chú ý"
+
+#: settings/speed_steering.py:182
+msgid "Relaxed while Safe Mode is on"
+msgstr "Thư thái khi Chế độ an toàn đang bật"
+
+#: settings/speed_steering.py:195
+msgid "Your car's cruise sets MAX on this car; the limit still caps the speed"
+msgstr "Trên xe này, cruise của xe đặt TỐI ĐA; giới hạn vẫn khống chế tốc độ"
+
+#: settings/speed_steering.py:209
+#, python-brace-format
+msgid "Auto starts one change per signal, above {} {}"
+msgstr "Tự động thực hiện một lần chuyển làn cho mỗi lần xi nhan, trên {} {}"
+
+#: settings/speed_steering.py:325
+msgid "Adaptive cruise and lane keeping. Your attention is required at all times."
+msgstr "Cruise thích ứng và giữ làn. Bạn luôn phải chú ý."
+
+#: settings/speed_steering.py:328
+msgid "Alerts when you drift over a lane line without signaling, above 31 mph (50 km/h)"
+msgstr "Cảnh báo khi bạn lấn vạch làn mà không bật xi nhan, trên 31 mph (50 km/h)"
+
+#: settings/speed_steering.py:329
+msgid "Uses stock tuning, the default model and Relaxed until turned off."
+msgstr "Dùng tinh chỉnh gốc, mô hình mặc định và Thư thái cho đến khi tắt."
+
+#: settings/speed_steering.py:340
+msgid "WHILE PARKED"
+msgstr "KHI ĐỖ XE"
+
+#: settings/speed_steering.py:318
+msgid " Restarts openpilot if the car is on."
+msgstr " Khởi động lại openpilot nếu xe đang bật."
+
+#: settings/speed_steering.py:342
+msgid "Turn off the car to change Sentry Mode"
+msgstr "Tắt xe để thay đổi Chế độ canh gác"
+
+#: settings/storage.py:21
+msgid "Drives"
+msgstr "Chuyến đi"
+
+#: settings/storage.py:21
+#: sidebar.py:158
+#: sidebar.py:155
+msgid "Maps"
+msgstr "Bản đồ"
+
+#: settings/storage.py:21
+msgid "Models"
+msgstr "Mô hình"
+
+#: settings/storage.py:134
+msgid "Delete all"
+msgstr "Xóa tất cả"
+
+#: settings/storage.py:65
+#, python-brace-format
+msgid "{} of {}"
+msgstr "{} trên {}"
+
+#: settings/storage.py:67
+#, python-brace-format
+msgid "{} of {} used"
+msgstr "Đã dùng {} trên {}"
+
+#: settings/storage.py:112
+msgid "Delete all drives?"
+msgstr "Xóa tất cả chuyến đi?"
+
+#: settings/storage.py:112
+msgid "Every recorded drive and its video is removed. This can't be undone."
+msgstr "Mọi chuyến đi đã ghi và video của nó sẽ bị xóa. Không thể hoàn tác."
+
+#: settings/storage.py:118
+#, python-brace-format
+msgid "{} downloaded model not in use"
+msgid_plural "{} downloaded models not in use"
+msgstr[0] "{} mô hình đã tải không được dùng"
+
+#: settings/storage.py:118
+msgid "Only the models you use are downloaded"
+msgstr "Chỉ các mô hình bạn dùng được tải"
+
+#: settings/storage.py:123
+msgid "Remove unused models?"
+msgstr "Gỡ mô hình không dùng?"
+
+#: settings/storage.py:124
+#, python-brace-format
+msgid "{} model you aren't using is removed. You can download it again from the model catalog."
+msgid_plural "{} models you aren't using are removed. You can download them again from the model catalog."
+msgstr[0] "{} mô hình bạn không dùng sẽ bị gỡ. Bạn có thể tải lại từ danh mục mô hình."
+
+#: settings/storage.py:147
+msgid "Always"
+msgstr "Luôn luôn"
+
+#: settings/storage.py:159
+msgid "High-quality recording, logging and error logs are in Tuner Mode."
+msgstr "Ghi hình chất lượng cao, ghi nhật ký và nhật ký lỗi có trong Chế độ tinh chỉnh."
+
+#: settings/storage.py:170
+#, python-brace-format
+msgid "Storage operation could not finish. {}"
+msgstr "Không thể hoàn tất thao tác bộ nhớ. {}"
+
+#: settings/storage.py:170
+msgid "Some files could not be removed."
+msgstr "Không thể xóa một số tệp."
+
+#: settings/storage.py:142
+msgid "Delete offline maps?"
+msgstr "Xóa bản đồ ngoại tuyến?"
+
+#: settings/storage.py:152
+msgid "Speed limits and curves work without a connection"
+msgstr "Giới hạn tốc độ và khúc cua hoạt động khi không có kết nối"
+
+#: settings/storage.py:154
+msgid "RECORDING & UPLOADS"
+msgstr "GHI HÌNH VÀ TẢI LÊN"
+
+#: settings/storage.py:155
+msgid "Saved and uploaded with your drives. Restarts openpilot if the car is on."
+msgstr "Được lưu và tải lên cùng chuyến đi. Khởi động lại openpilot nếu xe đang bật."
+
+#: settings/storage.py:156
+msgid "Cabin audio in your drive recordings. Restarts openpilot if the car is on."
+msgstr "Âm thanh trong xe trong bản ghi chuyến đi. Khởi động lại openpilot nếu xe đang bật."
+
+#: settings/tuner.py:291
+msgid "Every Tuner Mode change goes back to StarPilot's default. Your other settings stay as they are."
+msgstr "Mọi thay đổi trong Chế độ tinh chỉnh trở về mặc định của StarPilot. Các cài đặt khác giữ nguyên."
+
+#: settings/tuner.py:32
+#: settings/tuner.py:181
+msgid "Override"
+msgstr "Ghi đè"
+
+#: settings/tuner.py:32
+msgid "From style"
+msgstr "Theo phong cách"
+
+#: settings/tuner.py:52
+msgid "Traffic"
+msgstr "Kẹt xe"
+
+#: settings/tuner.py:150
+#, python-brace-format
+msgid "{} changed"
+msgstr "Đã đổi {}"
+
+#: settings/tuner.py:302
+msgid "TUNER MODE"
+msgstr "CHẾ ĐỘ TINH CHỈNH"
+
+#: settings/tuner.py:219
+msgid "StarPilot's defaults suit most cars. An override stays until you reset it."
+msgstr "Mặc định của StarPilot phù hợp với hầu hết các xe. Giá trị ghi đè được giữ cho đến khi bạn đặt lại."
+
+#: settings/tuner.py:225
+msgid "Driving Style sets the acceleration and braking profiles."
+msgstr "Phong cách lái đặt cấu hình tăng tốc và phanh."
+
+#: settings/tuner.py:270
+msgid "Following gap by style"
+msgstr "Giãn cách theo phong cách"
+
+#: settings/tuner.py:300
+msgid "Reset all tuning?"
+msgstr "Đặt lại mọi tinh chỉnh?"
+
+#: settings/tuner.py:265
+#, python-brace-format
+msgid "{} gap"
+msgstr "Giãn cách {}"
+
+#: settings/tuner.py:265
+msgid "Seconds behind the car ahead in this Driving Style"
+msgstr "Số giây sau xe phía trước trong Phong cách lái này"
+
+#: settings/tuner.py:218
+msgid "StarPilot lists your car's steering values once it's detected."
+msgstr "StarPilot liệt kê các giá trị lái của xe khi đã nhận diện được xe."
+
+#: settings/tuner.py:224
+msgid "Gas and brake tuning needs openpilot's speed control."
+msgstr "Tinh chỉnh ga và phanh cần kiểm soát tốc độ của openpilot."
+
+#: settings/tuner.py:309
+msgid "Reset all tuning"
+msgstr "Đặt lại mọi tinh chỉnh"
+
+#: settings/tuner.py:169
+#: settings/vehicle.py:284
+msgid "Change"
+msgstr "Thay đổi"
+
+#: settings/vehicle.py:87
+msgid "Detected on the first drive"
+msgstr "Nhận diện ở chuyến đi đầu tiên"
+
+#: settings/vehicle.py:136
+msgid "Car default"
+msgstr "Mặc định của xe"
+
+#: settings/vehicle.py:145
+#, python-brace-format
+msgid "{} buttons"
+msgstr "Nút {}"
+
+#: settings/vehicle.py:145
+msgid "Car default buttons"
+msgstr "Nút mặc định của xe"
+
+#: settings/vehicle.py:265
+msgid "Preset for your car. Tap a button to change what it does."
+msgstr "Cài sẵn cho xe của bạn. Chạm vào một nút để đổi chức năng."
+
+#: settings/vehicle.py:205
+msgid "MAKE"
+msgstr "HÃNG"
+
+#: settings/vehicle.py:205
+msgid "MODEL"
+msgstr "DÒNG XE"
+
+#: settings/vehicle.py:221
+msgid "Choose your car"
+msgstr "Chọn xe của bạn"
+
+#: settings/vehicle.py:238
+msgid "YOUR CAR"
+msgstr "XE CỦA BẠN"
+
+#: settings/vehicle.py:288
+#, python-brace-format
+msgid "Turn {} {}?"
+msgstr "Chuyển {} sang {}?"
+
+#: settings/vehicle.py:314
+msgid "Nothing extra for this car. Everything it supports is on the Vehicle page."
+msgstr "Không có gì thêm cho xe này. Mọi tính năng được hỗ trợ đều ở trang Xe."
+
+#: settings/vehicle.py:315
+msgid "Options only some makes and models have"
+msgstr "Tùy chọn chỉ có ở một số hãng và dòng xe"
+
+#: settings/vehicle.py:222
+msgid "Only needed if detection picked the wrong car. Choosing turns off automatic detection."
+msgstr "Chỉ cần khi nhận diện chọn sai xe. Tự chọn sẽ tắt nhận diện tự động."
+
+#: settings/vehicle.py:260
+msgid "StarPilot lists your car's buttons once it's detected."
+msgstr "StarPilot liệt kê các nút của xe khi đã nhận diện được xe."
+
+#: settings/vehicle.py:284
+msgid "This changes how StarPilot drives this car."
+msgstr "Điều này thay đổi cách StarPilot lái xe này."
+
+#: settings/vehicle.py:297
+#, python-brace-format
+msgid "Change {}?"
+msgstr "Thay đổi {}?"
+
+#: settings/vehicle.py:240
+msgid "Chosen manually"
+msgstr "Chọn thủ công"
+
+#: settings/vehicle.py:240
+msgid "Detected automatically"
+msgstr "Nhận diện tự động"
+
+#: settings/vehicle.py:288
+msgid "on"
+msgstr "bật"
+
+#: settings/vehicle.py:288
+msgid "off"
+msgstr "tắt"
+
+#: settings/vehicle.py:243
+msgid "Use detection instead"
+msgstr "Dùng nhận diện tự động"
+
+#: settings/vehicle.py:243
+msgid "Wrong car? Choose it manually"
+msgstr "Sai xe? Hãy chọn thủ công"
+
+#: setup.py:41
+msgid "driving style"
+msgstr "phong cách lái"
+
+#: setup.py:41
+msgid "How should your car drive?"
+msgstr "Xe của bạn nên lái thế nào?"
+
+#: setup.py:46
+msgid "speed limits"
+msgstr "giới hạn tốc độ"
+
+#: setup.py:46
+msgid "What should it do with speed limits?"
+msgstr "Xe nên làm gì với giới hạn tốc độ?"
+
+#: setup.py:51
+msgid "lane changes"
+msgstr "chuyển làn"
+
+#: setup.py:51
+msgid "How should lane changes start?"
+msgstr "Việc chuyển làn nên bắt đầu thế nào?"
+
+#: setup.py:142
+msgid "You can change all of these later in Settings › Driving."
+msgstr "Bạn có thể thay đổi tất cả sau trong Cài đặt › Lái xe."
+
+#: setup.py:133
+#, python-brace-format
+msgid "STEP {} OF {}"
+msgstr "BƯỚC {} / {}"
+
+#: setup.py:143
+#, python-brace-format
+msgid "Next: {}. You can change all of these later."
+msgstr "Tiếp theo: {}. Bạn có thể thay đổi tất cả sau."
+
+#: setup.py:42
+msgid "Longer following gap, gentle starts and early, soft braking."
+msgstr "Giãn cách xa hơn, khởi hành nhẹ nhàng và phanh sớm, êm."
+
+#: setup.py:43
+msgid "Standard · recommended"
+msgstr "Tiêu chuẩn · đề xuất"
+
+#: setup.py:43
+msgid "Keeps pace with traffic. A good fit for most drivers and roads."
+msgstr "Theo kịp dòng xe. Phù hợp với hầu hết tài xế và cung đường."
+
+#: setup.py:44
+msgid "Shorter gap, quicker acceleration and later braking."
+msgstr "Giãn cách ngắn hơn, tăng tốc nhanh hơn và phanh muộn hơn."
+
+#: setup.py:47
+msgid "Speed limits aren't shown or used."
+msgstr "Giới hạn tốc độ không được hiển thị hay sử dụng."
+
+#: setup.py:48
+msgid "Shows the limit next to your speed. You set the speed."
+msgstr "Hiển thị giới hạn bên cạnh tốc độ của bạn. Bạn tự đặt tốc độ."
+
+#: setup.py:49
+msgid "Match · recommended"
+msgstr "Theo giới hạn · đề xuất"
+
+#: setup.py:49
+msgid "Sets cruise to the limit plus 3. Asks before speeding up."
+msgstr "Đặt cruise bằng giới hạn cộng 3. Hỏi trước khi tăng tốc."
+
+#: setup.py:52
+msgid "Nudge · recommended"
+msgstr "Đẩy nhẹ · đề xuất"
+
+#: setup.py:52
+msgid "Signal, then nudge the wheel toward the lane."
+msgstr "Bật xi nhan, rồi đẩy nhẹ vô lăng về phía làn."
+
+#: setup.py:53
+msgid "Signal and the car changes lanes when it's clear."
+msgstr "Bật xi nhan và xe sẽ chuyển làn khi đường trống."
+
+#: setup.py:121
+msgid "Use defaults"
+msgstr "Dùng mặc định"
+
+#: setup.py:122
+msgid "Back"
+msgstr "Quay lại"
+
+#: setup.py:124
+msgid "Start driving"
+msgstr "Bắt đầu lái"
+
+#: setup.py:143
+msgid ", then "
+msgstr ", rồi "
+
+#: sidebar.py:124
+msgid "comma connect"
+msgstr "comma connect"
+
+#: sidebar.py:130
+#: sidebar.py:129
+msgid "Network"
+msgstr "Mạng"
+
+#: sidebar.py:179
+msgid "Checking"
+msgstr "Đang kiểm tra"
+
+#: sidebar.py:74
+msgid "Settings"
+msgstr "Cài đặt"
+
+#: sidebar.py:76
+msgid "Save a clip"
+msgstr "Lưu đoạn video"
+
+#: sidebar.py:78
+msgid "Recording audio"
+msgstr "Đang ghi âm"
+
+#: sidebar.py:222
+msgid "Good"
+msgstr "Tốt"
+
+#: sidebar.py:222
+msgid "Warm"
+msgstr "Ấm"
+
+#: sidebar.py:222
+msgid "Hot"
+msgstr "Nóng"
+
+#: software.py:60
+msgid "No release notes for this version."
+msgstr "Không có ghi chú phát hành cho phiên bản này."
+
+#: voice.py:37
+msgid "Didn't catch that. Tap the mic to try again."
+msgstr "Không nghe rõ. Chạm vào micrô để thử lại."
+
+#: voice.py:38
+msgid "The microphone isn't available right now."
+msgstr "Micrô hiện không khả dụng."
+
+#: voice.py:39
+msgid "Voice typing can't hear the microphone while driving right now. Try again parked."
+msgstr "Nhập bằng giọng nói hiện không nghe được micrô khi lái xe. Hãy thử lại khi đỗ xe."
+
+#: voice.py:40
+msgid "Couldn't download the speech model. Check the connection and try again."
+msgstr "Không thể tải mô hình giọng nói. Hãy kiểm tra kết nối và thử lại."
+
+#: voice.py:41
+msgid "Voice typing didn't work this time. Try again or type it."
+msgstr "Nhập bằng giọng nói không thành công lần này. Hãy thử lại hoặc gõ."
+
+#: voice.py:200
+msgid "Type instead"
+msgstr "Gõ thay thế"
+
+#: voice.py:214
+msgid "Listening"
+msgstr "Đang nghe"
+
+#: voice.py:209
+msgid "Getting voice typing ready"
+msgstr "Đang chuẩn bị nhập bằng giọng nói"
+
+#: voice.py:209
+msgid "One-time setup for the speech model and voice engine. Everything stays on this device."
+msgstr "Thiết lập một lần cho mô hình giọng nói và bộ xử lý giọng nói. Mọi thứ được giữ trên thiết bị này."
+
+#: voice.py:211
+msgid "Writing it down"
+msgstr "Đang ghi lại"
+
+#: voice.py:211
+msgid "This takes a few seconds. You can edit the words after."
+msgstr "Mất vài giây. Bạn có thể sửa chữ sau đó."
+
+#: voice.py:213
+msgid "Voice typing"
+msgstr "Nhập bằng giọng nói"
+
+#: selfdrive/ui/layouts/settings/software.py:22
+msgid "checking..."
+msgstr "đang kiểm tra..."
+
+#: selfdrive/ui/layouts/settings/software.py:23
+msgid "downloading..."
+msgstr "đang tải..."
+
+#: selfdrive/ui/layouts/settings/software.py:24
+msgid "finalizing update..."
+msgstr "đang hoàn tất cập nhật..."
+
+#: selfdrive/ui/layouts/settings/software.py:30
+msgid "never"
+msgstr "chưa bao giờ"
+
+#: selfdrive/ui/layouts/settings/software.py:41
+msgid "now"
+msgstr "bây giờ"
+
+#: selfdrive/ui/layouts/settings/software.py:107
+msgid "Restore the previous installed version and restart? Automatic downloads will be disabled."
+msgstr "Khôi phục phiên bản đã cài trước đó và khởi động lại? Tự động tải sẽ bị tắt."
+
+#: selfdrive/ui/layouts/settings/software.py:108
+msgid "Download and install the selected branch, then restart?"
+msgstr "Tải và cài nhánh đã chọn, rồi khởi động lại?"
+
+#: selfdrive/ui/layouts/settings/software.py:209
+#: selfdrive/ui/layouts/settings/software.py:70
+#: selfdrive/ui/layouts/settings/software.py:165
+msgid "CHECK"
+msgstr "KIỂM TRA"
+
+#: selfdrive/ui/layouts/settings/software.py:227
+msgid "Are you sure you want to uninstall?"
+msgstr "Bạn có chắc muốn gỡ cài đặt?"
+
+#: selfdrive/ui/layouts/settings/software.py:280
+msgid "Select a branch"
+msgstr "Chọn một nhánh"
+
+#: selfdrive/ui/layouts/settings/software.py:44
+#, python-brace-format, drawn
+msgid "{} minute ago"
+msgid_plural "{} minutes ago"
+msgstr[0] "{} phút trước"
+
+#: selfdrive/ui/layouts/settings/software.py:47
+#, python-brace-format, drawn
+msgid "{} hour ago"
+msgid_plural "{} hours ago"
+msgstr[0] "{} giờ trước"
+
+#: selfdrive/ui/layouts/settings/software.py:50
+#, python-brace-format, drawn
+msgid "{} day ago"
+msgid_plural "{} days ago"
+msgstr[0] "{} ngày trước"
+
+#: selfdrive/ui/layouts/settings/software.py:58
+msgid "Updates are only downloaded while the car is off."
+msgstr "Bản cập nhật chỉ được tải khi xe tắt."
+
+#: selfdrive/ui/layouts/settings/software.py:59
+msgid "Current Version"
+msgstr "Phiên bản hiện tại"
+
+#: selfdrive/ui/layouts/settings/software.py:61
+msgid "Automatically Download Updates"
+msgstr "Tự động tải bản cập nhật"
+
+#: selfdrive/ui/layouts/settings/software.py:62
+msgid "Automatically download updates while offroad. Manual checks and downloads remain available."
+msgstr "Tự động tải bản cập nhật khi không lái. Vẫn có thể kiểm tra và tải thủ công."
+
+#: selfdrive/ui/layouts/settings/software.py:68
+msgid "Fast Update"
+msgstr "Cập nhật nhanh"
+
+#: selfdrive/ui/layouts/settings/software.py:68
+#: selfdrive/ui/layouts/settings/software.py:109
+msgid "UPDATE"
+msgstr "CẬP NHẬT"
+
+#: selfdrive/ui/layouts/settings/software.py:69
+msgid "Previous Version"
+msgstr "Phiên bản trước"
+
+#: selfdrive/ui/layouts/settings/software.py:69
+#: selfdrive/ui/layouts/settings/software.py:109
+msgid "RESTORE"
+msgstr "KHÔI PHỤC"
+
+#: selfdrive/ui/layouts/settings/software.py:73
+msgid "Install Update"
+msgstr "Cài bản cập nhật"
+
+#: selfdrive/ui/layouts/settings/software.py:73
+#: selfdrive/ui/layouts/settings/software.py:196
+msgid "INSTALL"
+msgstr "CÀI ĐẶT"
+
+#: selfdrive/ui/layouts/settings/software.py:81
+msgid "Target Branch"
+msgstr "Nhánh đích"
+
+#: selfdrive/ui/layouts/settings/software.py:81
+msgid "SELECT"
+msgstr "CHỌN"
+
+#: selfdrive/ui/layouts/settings/software.py:85
+msgid "UNINSTALL"
+msgstr "GỠ CÀI ĐẶT"
+
+#: selfdrive/ui/layouts/settings/software.py:119
+msgid "Use Download for full update"
+msgstr "Dùng Tải xuống để cập nhật đầy đủ"
+
+#: selfdrive/ui/layouts/settings/software.py:154
+msgid "Checking for new versions"
+msgstr "Đang kiểm tra phiên bản mới"
+
+#: selfdrive/ui/layouts/settings/software.py:238
+msgid "No error log found."
+msgstr "Không tìm thấy nhật ký lỗi."
+
+#: selfdrive/ui/layouts/settings/software.py:239
+msgid "OK"
+msgstr "OK"
+
+#: selfdrive/ui/layouts/settings/software.py:164
+msgid "failed to check for update"
+msgstr "không thể kiểm tra cập nhật"
+
+#: selfdrive/ui/layouts/settings/software.py:167
+msgid "update available"
+msgstr "có bản cập nhật"
+
+#: selfdrive/ui/layouts/settings/software.py:168
+msgid "DOWNLOAD"
+msgstr "TẢI XUỐNG"
+
+#: selfdrive/ui/layouts/settings/software.py:98
+msgid "Error Log"
+msgstr "Nhật ký lỗi"
+
+#: selfdrive/ui/layouts/settings/software.py:98
+#: selfdrive/ui/layouts/settings/device.py:73
+msgid "VIEW"
+msgstr "XEM"
+
+#: selfdrive/ui/layouts/settings/software.py:175
+msgid "up to date, last checked never"
+msgstr "đã cập nhật, chưa kiểm tra lần nào"
+
+#: selfdrive/ui/layouts/settings/software.py:158
+msgid "Background download"
+msgstr "Tải nền"
+
+#: selfdrive/ui/layouts/settings/software.py:173
+#, python-brace-format, drawn
+msgid "up to date, last checked {}"
+msgstr "đã cập nhật, kiểm tra lần cuối {}"
+
+#: selfdrive/ui/layouts/settings/device.py:26
+msgid "Pair your device with comma connect (connect.comma.ai) and claim your comma prime offer."
+msgstr "Ghép nối thiết bị với comma connect (connect.comma.ai) và nhận ưu đãi comma prime."
+
+#: selfdrive/ui/layouts/settings/device.py:27
+msgid "Preview the cabin camera to ensure that driver monitoring has good visibility. (vehicle must be off)"
+msgstr "Xem trước camera trong xe để đảm bảo giám sát tài xế nhìn rõ. (xe phải đang tắt)"
+
+#: selfdrive/ui/layouts/settings/device.py:28
+msgid "Clears the saved driver monitoring wheel-side calibration."
+msgstr "Xóa hiệu chỉnh phía vô lăng đã lưu của giám sát tài xế."
+
+#: selfdrive/ui/layouts/settings/device.py:29
+msgid "openpilot requires the device to be mounted within 4° left or right and within 5° up or 9° down."
+msgstr "openpilot yêu cầu thiết bị được lắp lệch trái hoặc phải không quá 4°, lên không quá 5° hoặc xuống không quá 9°."
+
+#: selfdrive/ui/layouts/settings/device.py:30
+msgid "Review the rules, features, and limitations of openpilot"
+msgstr "Xem lại quy tắc, tính năng và giới hạn của openpilot"
+
+#: selfdrive/ui/layouts/settings/device.py:178
+msgid "openpilot is continuously calibrating, resetting is rarely required. Resetting calibration will restart openpilot if the car is powered on."
+msgstr "openpilot liên tục hiệu chỉnh, hiếm khi cần đặt lại. Đặt lại hiệu chỉnh sẽ khởi động lại openpilot nếu xe đang bật."
+
+#: selfdrive/ui/layouts/settings/device.py:101
+msgid "Select a language"
+msgstr "Chọn ngôn ngữ"
+
+#: selfdrive/ui/layouts/settings/device.py:117
+msgid "Are you sure you want to reset calibration?"
+msgstr "Bạn có chắc muốn đặt lại hiệu chỉnh?"
+
+#: selfdrive/ui/layouts/settings/device.py:161
+msgid "<br><br>Steering lag calibration is complete."
+msgstr "<br><br>Hiệu chỉnh độ trễ lái đã hoàn tất."
+
+#: selfdrive/ui/layouts/settings/device.py:192
+msgid "Are you sure you want to reboot?"
+msgstr "Bạn có chắc muốn khởi động lại?"
+
+#: selfdrive/ui/layouts/settings/device.py:192
+#: selfdrive/ui/layouts/settings/device.py:59
+msgid "Reboot"
+msgstr "Khởi động lại"
+
+#: selfdrive/ui/layouts/settings/device.py:204
+msgid "Are you sure you want to power off?"
+msgstr "Bạn có chắc muốn tắt nguồn?"
+
+#: selfdrive/ui/layouts/settings/device.py:49
+msgid "Pair Device"
+msgstr "Ghép nối thiết bị"
+
+#: selfdrive/ui/layouts/settings/device.py:49
+msgid "PAIR"
+msgstr "GHÉP NỐI"
+
+#: selfdrive/ui/layouts/settings/device.py:53
+msgid "Reset Calibration"
+msgstr "Đặt lại hiệu chỉnh"
+
+#: selfdrive/ui/layouts/settings/device.py:53
+#: selfdrive/ui/layouts/settings/device.py:68
+msgid "RESET"
+msgstr "ĐẶT LẠI"
+
+#: selfdrive/ui/layouts/settings/device.py:132
+msgid "Are you sure you want to reset driver monitoring calibration?"
+msgstr "Bạn có chắc muốn đặt lại hiệu chỉnh giám sát tài xế?"
+
+#: selfdrive/ui/layouts/settings/device.py:63
+msgid "Dongle ID"
+msgstr "Dongle ID"
+
+#: selfdrive/ui/layouts/settings/device.py:64
+msgid "Serial"
+msgstr "Số sê-ri"
+
+#: selfdrive/ui/layouts/settings/device.py:66
+msgid "Cabin Camera"
+msgstr "Camera trong xe"
+
+#: selfdrive/ui/layouts/settings/device.py:66
+msgid "PREVIEW"
+msgstr "XEM TRƯỚC"
+
+#: selfdrive/ui/layouts/settings/device.py:68
+msgid "Reset Driver Monitoring"
+msgstr "Đặt lại giám sát tài xế"
+
+#: selfdrive/ui/layouts/settings/device.py:71
+msgid "Review Training Guide"
+msgstr "Xem lại hướng dẫn"
+
+#: selfdrive/ui/layouts/settings/device.py:71
+msgid "REVIEW"
+msgstr "XEM LẠI"
+
+#: selfdrive/ui/layouts/settings/device.py:74
+msgid "Change Language"
+msgstr "Đổi ngôn ngữ"
+
+#: selfdrive/ui/layouts/settings/device.py:74
+msgid "CHANGE"
+msgstr "ĐỔI"
+
+#: selfdrive/ui/layouts/settings/device.py:107
+msgid "Disengage to Reset Calibration"
+msgstr "Ngắt kích hoạt để đặt lại hiệu chỉnh"
+
+#: selfdrive/ui/layouts/settings/device.py:159
+#, python-brace-format, drawn
+msgid "<br><br>Steering lag calibration is {}% complete."
+msgstr "<br><br>Hiệu chỉnh độ trễ lái đã hoàn tất {}%."
+
+#: selfdrive/ui/layouts/settings/device.py:185
+msgid "Disengage to Reboot"
+msgstr "Ngắt kích hoạt để khởi động lại"
+
+#: selfdrive/ui/layouts/settings/device.py:197
+msgid "Disengage to Power Off"
+msgstr "Ngắt kích hoạt để tắt nguồn"
+
+#: selfdrive/ui/layouts/settings/device.py:63
+#: selfdrive/ui/layouts/settings/device.py:64
+msgid "N/A"
+msgstr "Không có"
+
+#: selfdrive/ui/layouts/settings/device.py:173
+msgid " Steering torque response calibration is complete."
+msgstr " Hiệu chỉnh phản hồi mô-men lái đã hoàn tất."
+
+#: selfdrive/ui/layouts/settings/device.py:146
+#, python-brace-format, drawn
+msgid " Your device is pointed {}° {} and {}° {}."
+msgstr " Thiết bị của bạn hướng {}° {} và {}° {}."
+
+#: selfdrive/ui/layouts/settings/device.py:146
+msgid "down"
+msgstr "xuống"
+
+#: selfdrive/ui/layouts/settings/device.py:146
+msgid "up"
+msgstr "lên"
+
+#: selfdrive/ui/layouts/settings/device.py:147
+msgid "left"
+msgstr "trái"
+
+#: selfdrive/ui/layouts/settings/device.py:147
+msgid "right"
+msgstr "phải"
+
+#: selfdrive/ui/layouts/settings/device.py:171
+#, python-brace-format, drawn
+msgid " Steering torque response calibration is {}% complete."
+msgstr " Hiệu chỉnh phản hồi mô-men lái đã hoàn tất {}%."
+
+#: selfdrive/ui/layouts/settings/developer.py:20
+msgid "ADB (Android Debug Bridge) allows connecting to your device over USB or over the network. See https://docs.comma.ai/how-to/connect-to-comma for more info."
+msgstr "ADB (Android Debug Bridge) cho phép kết nối với thiết bị qua USB hoặc qua mạng. Xem https://docs.comma.ai/how-to/connect-to-comma để biết thêm."
+
+#: selfdrive/ui/layouts/settings/developer.py:24
+msgid "Warning: This grants SSH access to all public keys in your GitHub settings. Never enter a GitHub username other than your own. A comma employee will NEVER ask you to add their GitHub username."
+msgstr "Cảnh báo: Thao tác này cấp quyền truy cập SSH cho mọi khóa công khai trong cài đặt GitHub của bạn. Đừng bao giờ nhập tên người dùng GitHub không phải của bạn. Nhân viên comma sẽ KHÔNG BAO GIỜ yêu cầu bạn thêm tên người dùng GitHub của họ."
+
+#: selfdrive/ui/layouts/settings/developer.py:28
+msgid "<b>WARNING: openpilot longitudinal control is in alpha for this car and may disable Automatic Emergency Braking (AEB).</b><br><br>On this car, openpilot defaults to the car's built-in ACC instead of openpilot's longitudinal control. This saves a request for openpilot longitudinal control; an exact vehicle check and verified takeover are required at startup. Enabling Experimental mode is recommended when enabling openpilot longitudinal control alpha. Changing this setting will restart openpilot if the car is powered on."
+msgstr "<b>CẢNH BÁO: kiểm soát dọc của openpilot đang ở giai đoạn alpha cho xe này và có thể tắt Phanh khẩn cấp tự động (AEB).</b><br><br>Trên xe này, openpilot mặc định dùng ACC tích hợp của xe thay vì kiểm soát dọc của openpilot. Thao tác này lưu yêu cầu dùng kiểm soát dọc của openpilot; cần kiểm tra chính xác xe và xác minh tiếp quản khi khởi động. Nên bật chế độ Thử nghiệm khi bật kiểm soát dọc alpha của openpilot. Thay đổi cài đặt này sẽ khởi động lại openpilot nếu xe đang bật."
+
+#: selfdrive/ui/layouts/settings/developer.py:35
+msgid "Hang up cellular data and don't redial. The modem stays registered and the SIM is untouched. Remote access over cellular data is unavailable while this is enabled."
+msgstr "Ngắt dữ liệu di động và không quay số lại. Modem vẫn đăng ký và SIM không bị ảnh hưởng. Không thể truy cập từ xa qua dữ liệu di động khi bật mục này."
+
+#: selfdrive/ui/layouts/settings/developer.py:50
+msgid "Enable ADB"
+msgstr "Bật ADB"
+
+#: selfdrive/ui/layouts/settings/developer.py:59
+msgid "Enable SSH"
+msgstr "Bật SSH"
+
+#: selfdrive/ui/layouts/settings/developer.py:75
+#: selfdrive/selfdrived/events.py:404
+msgid "Longitudinal Maneuver Mode"
+msgstr "Chế độ thao tác dọc"
+
+#: selfdrive/ui/layouts/settings/developer.py:82
+#: selfdrive/selfdrived/events.py:419
+msgid "Lateral Maneuver Mode"
+msgstr "Chế độ thao tác ngang"
+
+#: selfdrive/ui/layouts/settings/developer.py:89
+msgid "openpilot Longitudinal Control (Alpha)"
+msgstr "Kiểm soát dọc openpilot (Alpha)"
+
+#: selfdrive/ui/layouts/settings/developer.py:105
+msgid "Disable Cellular"
+msgstr "Tắt mạng di động"
+
+#: selfdrive/ui/layouts/settings/developer.py:233
+msgid "Enable"
+msgstr "Bật"
+
+#: selfdrive/ui/layouts/settings/developer.py:112
+msgid "OPEN"
+msgstr "MỞ"
+
+#: selfdrive/ui/onroad/alert_renderer.py:51
+#: selfdrive/selfdrived/events.py:152
+msgid "openpilot Unavailable"
+msgstr "openpilot không khả dụng"
+
+#: selfdrive/ui/onroad/alert_renderer.py:52
+msgid "Waiting to start"
+msgstr "Đang chờ khởi động"
+
+#: selfdrive/ui/onroad/alert_renderer.py:58
+#: selfdrive/selfdrived/events.py:164
+#: selfdrive/selfdrived/events.py:179
+msgid "TAKE CONTROL IMMEDIATELY"
+msgstr "HÃY ĐIỀU KHIỂN NGAY"
+
+#: selfdrive/ui/onroad/alert_renderer.py:59
+#: selfdrive/ui/onroad/alert_renderer.py:65
+msgid "System Unresponsive"
+msgstr "Hệ thống không phản hồi"
+
+#: selfdrive/ui/onroad/alert_renderer.py:66
+msgid "Reboot Device"
+msgstr "Khởi động lại thiết bị"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_TemperatureTooHigh
+#, python-brace-format, drawn
+msgid "Device temperature too high. System cooling down before starting. Current internal component temperature: {}"
+msgstr "Nhiệt độ thiết bị quá cao. Hệ thống đang làm mát trước khi khởi động. Nhiệt độ linh kiện bên trong hiện tại: {}"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ConnectivityNeededPrompt
+#, python-brace-format, drawn
+msgid "Immediately connect to the internet to check for updates. If you do not connect to the internet, openpilot won't engage in {}"
+msgstr "Hãy kết nối internet ngay để kiểm tra cập nhật. Nếu không kết nối internet, openpilot sẽ không kích hoạt sau {}"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ConnectivityNeeded
+msgid "Connect to internet to check for updates. openpilot won't automatically start until it connects to internet to check for updates."
+msgstr "Kết nối internet để kiểm tra cập nhật. openpilot sẽ không tự khởi động cho đến khi kết nối internet để kiểm tra cập nhật."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_UpdateFailed
+#, python-brace-format, drawn
+msgid "Unable to download updates\n{}"
+msgstr "Không thể tải bản cập nhật\n{}"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ChestnutBranch
+msgid "Chestnut detected! Switch to the release-chestnut branch to use chestnut-class models."
+msgstr "Đã phát hiện Chestnut! Chuyển sang nhánh release-chestnut để dùng các mô hình loại chestnut."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ChestnutModelError
+msgid "Chestnut model error. Restart the car to retry."
+msgstr "Lỗi mô hình Chestnut. Khởi động lại xe để thử lại."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ChestnutNotDetected
+msgid "Chestnut not detected. Check USB and 12V connections, then restart the car."
+msgstr "Không phát hiện Chestnut. Kiểm tra kết nối USB và 12V, rồi khởi động lại xe."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ChestnutOverheated
+msgid "Chestnut overheated. Ensure good airflow."
+msgstr "Chestnut quá nhiệt. Hãy đảm bảo thông gió tốt."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ChestnutUpdateFailed
+msgid "Chestnut update failed. Check the USB cable."
+msgstr "Cập nhật Chestnut thất bại. Hãy kiểm tra cáp USB."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ChestnutUsbSlow
+#, python-brace-format, drawn
+msgid "Chestnut USB link is slow. Check the USB cable. The current speed is {}."
+msgstr "Kết nối USB của Chestnut chậm. Hãy kiểm tra cáp USB. Tốc độ hiện tại là {}."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_JetlinkUnavailable
+#, python-brace-format, drawn
+msgid "Jetlink unavailable: {}"
+msgstr "Jetlink không khả dụng: {}"
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_UnregisteredHardware
+msgid "Failed to register with comma.ai backend. It will not connect or upload to comma.ai servers, and receives no support from comma.ai. If this is a device purchased at comma.ai/shop, open a ticket at https://comma.ai/support."
+msgstr "Không thể đăng ký với máy chủ comma.ai. Thiết bị sẽ không kết nối hay tải lên máy chủ comma.ai và không nhận được hỗ trợ từ comma.ai. Nếu thiết bị được mua tại comma.ai/shop, hãy mở yêu cầu hỗ trợ tại https://comma.ai/support."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_UploadsIgnored
+msgid "Uploads ignored due to a potential detected safety policy violation. Contact comma.ai/support if you believe this was made in error."
+msgstr "Các lượt tải lên bị bỏ qua do phát hiện khả năng vi phạm chính sách an toàn. Liên hệ comma.ai/support nếu bạn cho rằng đây là nhầm lẫn."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_CarUnrecognized
+msgid "openpilot was unable to identify your car. Your car is either unsupported or its ECUs are not recognized. Please submit a pull request to add the firmware versions to the proper vehicle. Need help? Join discord.comma.ai."
+msgstr "openpilot không thể nhận diện xe của bạn. Xe không được hỗ trợ hoặc các ECU của xe không được nhận ra. Vui lòng gửi pull request để thêm phiên bản firmware vào đúng xe. Cần trợ giúp? Tham gia discord.comma.ai."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_Recalibration
+msgid "openpilot detected a change in the device's mounting position. Ensure the device is fully seated in the mount and the mount is firmly secured to the windshield."
+msgstr "openpilot phát hiện vị trí lắp thiết bị đã thay đổi. Hãy đảm bảo thiết bị được gắn chặt vào giá đỡ và giá đỡ được cố định chắc chắn vào kính chắn gió."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_DriverMonitoringUncertain
+msgid "Poor visibility detected for driver monitoring. Ensure the device has a clear view of the driver. This can be checked in the device settings. Extreme lighting conditions and/or unconventional mounting positions may also trigger this alert."
+msgstr "Phát hiện tầm nhìn kém cho giám sát tài xế. Hãy đảm bảo thiết bị nhìn rõ tài xế. Có thể kiểm tra trong cài đặt thiết bị. Điều kiện ánh sáng khắc nghiệt và/hoặc vị trí lắp bất thường cũng có thể gây ra cảnh báo này."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_ExcessiveActuation
+#, python-brace-format, drawn
+msgid "Excessive {} actuation detected on your last drive. Please contact support at https://comma.ai/support and share your device's Dongle ID for troubleshooting."
+msgstr "Phát hiện tác động {} quá mức trong chuyến đi gần nhất. Vui lòng liên hệ hỗ trợ tại https://comma.ai/support và cung cấp Dongle ID của thiết bị để khắc phục."
+
+#: selfdrive/selfdrived/alerts_offroad.json:Offroad_Pairing
+msgid "Finish setup. Pair your device with comma connect to view recent drives and bookmarked routes."
+msgstr "Hoàn tất thiết lập. Ghép nối thiết bị với comma connect để xem chuyến đi gần đây và tuyến đã đánh dấu."
+
+#: selfdrive/selfdrived/events.py:174
+msgid "openpilot will disengage"
+msgstr "openpilot sẽ ngắt kích hoạt"
+
+#: selfdrive/selfdrived/events.py:201
+msgid "Always keep hands on wheel and eyes on road"
+msgstr "Luôn giữ tay trên vô lăng và mắt nhìn đường"
+
+#: selfdrive/selfdrived/events.py:244
+msgid "WARNING: This branch is not tested"
+msgstr "CẢNH BÁO: Nhánh này chưa được kiểm thử"
+
+#: selfdrive/selfdrived/events.py:247
+#, python-brace-format, drawn
+msgid "Drive above {} to engage"
+msgstr "Lái trên {} để kích hoạt"
+
+#: selfdrive/selfdrived/events.py:252
+#, python-brace-format, drawn
+msgid "Steer Assist Unavailable Below {}"
+msgstr "Hỗ trợ lái không khả dụng dưới {}"
+
+#: selfdrive/selfdrived/events.py:261
+#, python-brace-format, drawn
+msgid "Calibrating: {}%"
+msgstr "Đang hiệu chỉnh: {}%"
+
+#: selfdrive/selfdrived/events.py:261
+#, python-brace-format, drawn
+msgid "Recalibrating: {}%"
+msgstr "Đang hiệu chỉnh lại: {}%"
+
+#: selfdrive/selfdrived/events.py:262
+#, python-brace-format, drawn
+msgid "Drive Above {}"
+msgstr "Lái trên {}"
+
+#: selfdrive/selfdrived/events.py:270
+msgid "Too Distracted"
+msgstr "Quá mất tập trung"
+
+#: selfdrive/selfdrived/events.py:270
+#, python-brace-format, drawn
+msgid "{} minute Left"
+msgid_plural "{} minutes Left"
+msgstr[0] "Còn {} phút"
+
+#: selfdrive/selfdrived/events.py:271
+msgid "Pay Attention to Engage"
+msgstr "Hãy chú ý để kích hoạt"
+
+#: selfdrive/selfdrived/events.py:278
+#: selfdrive/selfdrived/events.py:776
+msgid "Out of Storage"
+msgstr "Hết bộ nhớ"
+
+#: selfdrive/selfdrived/events.py:278
+#, python-brace-format, drawn
+msgid "{}% full"
+msgstr "Đầy {}%"
+
+#: selfdrive/selfdrived/events.py:285
+#, python-brace-format, drawn
+msgid "Speed Error: {} m/s"
+msgstr "Lỗi tốc độ: {} m/s"
+
+#: selfdrive/selfdrived/events.py:285
+#: selfdrive/selfdrived/events.py:900
+msgid "Posenet Speed Invalid"
+msgstr "Tốc độ Posenet không hợp lệ"
+
+#: selfdrive/selfdrived/events.py:291
+#: selfdrive/selfdrived/events.py:872
+msgid "Process Not Running"
+msgstr "Tiến trình không chạy"
+
+#: selfdrive/selfdrived/events.py:297
+#: selfdrive/selfdrived/events.py:856
+msgid "Communication Issue Between Processes"
+msgstr "Lỗi giao tiếp giữa các tiến trình"
+
+#: selfdrive/selfdrived/events.py:303
+#: selfdrive/selfdrived/events.py:637
+msgid "Camera Malfunction"
+msgstr "Camera bị lỗi"
+
+#: selfdrive/selfdrived/events.py:311
+msgid "Calibration Invalid"
+msgstr "Hiệu chỉnh không hợp lệ"
+
+#: selfdrive/selfdrived/events.py:311
+#, python-brace-format, drawn
+msgid "Remount Device (Pitch: {}°, Yaw: {}°)"
+msgstr "Lắp lại thiết bị (Pitch: {}°, Yaw: {}°)"
+
+#: selfdrive/selfdrived/events.py:328
+#: selfdrive/selfdrived/events.py:670
+msgid "paramsd Temporary Error"
+msgstr "Lỗi tạm thời paramsd"
+
+#: selfdrive/selfdrived/events.py:330
+msgid "Steer ratio mismatch"
+msgstr "Tỉ số lái không khớp"
+
+#: selfdrive/selfdrived/events.py:330
+msgid "Abnormal tire stiffness"
+msgstr "Độ cứng lốp bất thường"
+
+#: selfdrive/selfdrived/events.py:330
+msgid "Steering misalignment detected"
+msgstr "Phát hiện lái bị lệch"
+
+#: selfdrive/selfdrived/events.py:330
+#, python-brace-format, drawn
+msgid "Angle offset too high (Offset: {}°)"
+msgstr "Độ lệch góc quá cao (Lệch: {}°)"
+
+#: selfdrive/selfdrived/events.py:330
+#, python-brace-format, drawn
+msgid "Steering rack geometry may be off (Ratio: {})"
+msgstr "Hình học thước lái có thể bị lệch (Tỉ số: {})"
+
+#: selfdrive/selfdrived/events.py:330
+#, python-brace-format, drawn
+msgid "Check tires, pressure, or alignment (Factor: {})"
+msgstr "Kiểm tra lốp, áp suất hoặc độ chụm (Hệ số: {})"
+
+#: selfdrive/selfdrived/events.py:336
+#: selfdrive/selfdrived/events.py:804
+#: selfdrive/selfdrived/events.py:805
+msgid "System Overheated"
+msgstr "Hệ thống quá nhiệt"
+
+#: selfdrive/selfdrived/events.py:336
+#, python-brace-format, drawn
+msgid "{} °C"
+msgstr "{} °C"
+
+#: selfdrive/selfdrived/events.py:340
+msgid "Low Memory"
+msgstr "Thiếu bộ nhớ"
+
+#: selfdrive/selfdrived/events.py:340
+#, python-brace-format, drawn
+msgid "{}% used"
+msgstr "Đã dùng {}%"
+
+#: selfdrive/selfdrived/events.py:344
+#: selfdrive/selfdrived/events.py:889
+#: selfdrive/selfdrived/events.py:890
+msgid "Driving Model Lagging"
+msgstr "Mô hình lái bị trễ"
+
+#: selfdrive/selfdrived/events.py:344
+#, python-brace-format, drawn
+msgid "{}% frames dropped"
+msgstr "Mất {}% khung hình"
+
+#: selfdrive/selfdrived/events.py:351
+msgid "Enable Main Switch to Engage"
+msgstr "Bật công tắc chính để kích hoạt"
+
+#: selfdrive/selfdrived/events.py:351
+msgid "Enable Adaptive Cruise to Engage"
+msgstr "Bật cruise thích ứng để kích hoạt"
+
+#: selfdrive/selfdrived/events.py:358
+#: selfdrive/selfdrived/events.py:399
+msgid "Joystick Mode"
+msgstr "Chế độ joystick"
+
+#: selfdrive/selfdrived/events.py:358
+#, python-brace-format, drawn
+msgid "Gas: {}%, Steer: {}%"
+msgstr "Ga: {}%, Lái: {}%"
+
+#: selfdrive/selfdrived/events.py:373
+#, python-brace-format, drawn
+msgid "Driving Personality: {}"
+msgstr "Phong cách lái: {}"
+
+#: selfdrive/selfdrived/events.py:384
+#: selfdrive/selfdrived/events.py:457
+msgid "Invalid LKAS setting"
+msgstr "Cài đặt LKAS không hợp lệ"
+
+#: selfdrive/selfdrived/events.py:384
+msgid "Enable your car's LKAS to engage"
+msgstr "Bật LKAS của xe để kích hoạt"
+
+#: selfdrive/selfdrived/events.py:384
+msgid "Toggle stock LKAS on or off to engage"
+msgstr "Bật hoặc tắt LKAS gốc để kích hoạt"
+
+#: selfdrive/selfdrived/events.py:384
+msgid "Disable your car's stock LKAS to engage"
+msgstr "Tắt LKAS gốc của xe để kích hoạt"
+
+#: selfdrive/selfdrived/events.py:384
+msgid "Switch to Traffic-Aware Cruise Control to engage"
+msgstr "Chuyển sang Traffic-Aware Cruise Control để kích hoạt"
+
+#: selfdrive/selfdrived/events.py:405
+msgid "Ensure road ahead is clear"
+msgstr "Đảm bảo đường phía trước thông thoáng"
+
+#: selfdrive/selfdrived/events.py:409
+msgid "Big Model Loading"
+msgstr "Đang tải mô hình lớn"
+
+#: selfdrive/selfdrived/events.py:413
+msgid "Big Model Failed"
+msgstr "Mô hình lớn lỗi"
+
+#: selfdrive/selfdrived/events.py:414
+msgid "Big Model Failed "
+msgstr "Mô hình lớn lỗi "
+
+#: selfdrive/selfdrived/events.py:414
+msgid "Restart the car to retry,\nsmall model is still available"
+msgstr "Khởi động lại xe để thử lại,\nmô hình nhỏ vẫn khả dụng"
+
+#: selfdrive/selfdrived/events.py:423
+#: selfdrive/selfdrived/events.py:424
+msgid "System Initializing"
+msgstr "Hệ thống đang khởi tạo"
+
+#: selfdrive/selfdrived/events.py:428
+msgid "Be ready to take over at any time"
+msgstr "Luôn sẵn sàng tiếp quản bất cứ lúc nào"
+
+#: selfdrive/selfdrived/events.py:436
+#: selfdrive/selfdrived/events.py:437
+msgid "Dashcam mode"
+msgstr "Chế độ camera hành trình"
+
+#: selfdrive/selfdrived/events.py:441
+msgid "Dashcam mode for unsupported car"
+msgstr "Chế độ camera hành trình cho xe không được hỗ trợ"
+
+#: selfdrive/selfdrived/events.py:445
+#: selfdrive/selfdrived/events.py:451
+#: selfdrive/selfdrived/events.py:468
+msgid "Dashcam Mode"
+msgstr "Chế độ camera hành trình"
+
+#: selfdrive/selfdrived/events.py:446
+msgid "Security Key Not Available"
+msgstr "Không có khóa bảo mật"
+
+#: selfdrive/selfdrived/events.py:469
+msgid "Car Unrecognized"
+msgstr "Không nhận ra xe"
+
+#: selfdrive/selfdrived/events.py:475
+#: selfdrive/selfdrived/events.py:484
+#: selfdrive/selfdrived/events.py:497
+msgid "BRAKE!"
+msgstr "PHANH!"
+
+#: selfdrive/selfdrived/events.py:476
+msgid "Emergency Braking: Risk of Collision"
+msgstr "Phanh khẩn cấp: Nguy cơ va chạm"
+
+#: selfdrive/selfdrived/events.py:479
+msgid "AEB: Risk of Collision"
+msgstr "AEB: Nguy cơ va chạm"
+
+#: selfdrive/selfdrived/events.py:485
+#: selfdrive/selfdrived/events.py:488
+msgid "Stock AEB: Risk of Collision"
+msgstr "AEB gốc: Nguy cơ va chạm"
+
+#: selfdrive/selfdrived/events.py:492
+msgid "Stock LKAS: Lane Departure Detected"
+msgstr "LKAS gốc: Phát hiện chệch làn"
+
+#: selfdrive/selfdrived/events.py:498
+msgid "Risk of Collision"
+msgstr "Nguy cơ va chạm"
+
+#: selfdrive/selfdrived/events.py:505
+msgid "Lane Departure Detected"
+msgstr "Phát hiện chệch làn"
+
+#: selfdrive/selfdrived/events.py:515
+#: selfdrive/selfdrived/events.py:765
+msgid "Steering Assist Temporarily Unavailable"
+msgstr "Hỗ trợ lái tạm thời không khả dụng"
+
+#: selfdrive/selfdrived/events.py:523
+#: selfdrive/selfdrived/events.py:531
+#: selfdrive/selfdrived/events.py:1024
+msgid "Pay Attention"
+msgstr "Hãy chú ý"
+
+#: selfdrive/selfdrived/events.py:532
+#: selfdrive/selfdrived/events.py:540
+#: selfdrive/selfdrived/events.py:1032
+msgid "Driver Distracted"
+msgstr "Tài xế mất tập trung"
+
+#: selfdrive/selfdrived/events.py:539
+#: selfdrive/selfdrived/events.py:563
+msgid "DISENGAGE IMMEDIATELY"
+msgstr "NGẮT KÍCH HOẠT NGAY"
+
+#: selfdrive/selfdrived/events.py:547
+msgid "Touch Steering Wheel: No Face Detected"
+msgstr "Chạm vô lăng: Không phát hiện khuôn mặt"
+
+#: selfdrive/selfdrived/events.py:555
+msgid "Touch Steering Wheel"
+msgstr "Chạm vô lăng"
+
+#: selfdrive/selfdrived/events.py:556
+#: selfdrive/selfdrived/events.py:564
+msgid "Driver Unresponsive"
+msgstr "Tài xế không phản hồi"
+
+#: selfdrive/selfdrived/events.py:571
+msgid "TAKE CONTROL"
+msgstr "HÃY ĐIỀU KHIỂN"
+
+#: selfdrive/selfdrived/events.py:572
+msgid "Resume Driving Manually"
+msgstr "Tiếp tục lái thủ công"
+
+#: selfdrive/selfdrived/events.py:579
+msgid "Press Resume to Exit Standstill"
+msgstr "Nhấn Resume để thoát trạng thái dừng"
+
+#: selfdrive/selfdrived/events.py:591
+msgid "Steer Left to Start Lane Change Once Safe"
+msgstr "Đánh lái sang trái để chuyển làn khi an toàn"
+
+#: selfdrive/selfdrived/events.py:599
+msgid "Steer Right to Start Lane Change Once Safe"
+msgstr "Đánh lái sang phải để chuyển làn khi an toàn"
+
+#: selfdrive/selfdrived/events.py:607
+msgid "Car Detected in Blindspot"
+msgstr "Phát hiện xe trong điểm mù"
+
+#: selfdrive/selfdrived/events.py:615
+msgid "Changing Lanes"
+msgstr "Đang chuyển làn"
+
+#: selfdrive/selfdrived/events.py:623
+msgid "Take Control"
+msgstr "Hãy điều khiển"
+
+#: selfdrive/selfdrived/events.py:624
+msgid "Turn Exceeds Steering Limit"
+msgstr "Khúc cua vượt giới hạn lái"
+
+#: selfdrive/selfdrived/events.py:631
+msgid "Fan Malfunction"
+msgstr "Quạt bị lỗi"
+
+#: selfdrive/selfdrived/events.py:631
+#: selfdrive/selfdrived/events.py:786
+#: selfdrive/selfdrived/events.py:978
+msgid "Contact comma.ai/support"
+msgstr "Liên hệ comma.ai/support"
+
+#: selfdrive/selfdrived/events.py:638
+msgid "Camera Malfunction: Reboot Your Device"
+msgstr "Camera bị lỗi: Khởi động lại thiết bị"
+
+#: selfdrive/selfdrived/events.py:642
+#: selfdrive/selfdrived/events.py:643
+msgid "Camera Frame Rate Low"
+msgstr "Tốc độ khung hình camera thấp"
+
+#: selfdrive/selfdrived/events.py:642
+msgid "Reboot your Device"
+msgstr "Khởi động lại thiết bị"
+
+#: selfdrive/selfdrived/events.py:644
+msgid "Camera Frame Rate Low: Reboot Your Device"
+msgstr "Tốc độ khung hình camera thấp: Khởi động lại thiết bị"
+
+#: selfdrive/selfdrived/events.py:650
+#: selfdrive/selfdrived/events.py:651
+msgid "locationd Temporary Error"
+msgstr "Lỗi tạm thời locationd"
+
+#: selfdrive/selfdrived/events.py:655
+#: selfdrive/selfdrived/events.py:656
+#: selfdrive/selfdrived/events.py:657
+msgid "locationd Permanent Error"
+msgstr "Lỗi vĩnh viễn locationd"
+
+#: selfdrive/selfdrived/events.py:674
+#: selfdrive/selfdrived/events.py:675
+#: selfdrive/selfdrived/events.py:676
+msgid "paramsd Permanent Error"
+msgstr "Lỗi vĩnh viễn paramsd"
+
+#: selfdrive/selfdrived/events.py:695
+msgid "Cancel Pressed"
+msgstr "Đã nhấn Cancel"
+
+#: selfdrive/selfdrived/events.py:700
+msgid "Press Resume to Exit Brake Hold"
+msgstr "Nhấn Resume để thoát giữ phanh"
+
+#: selfdrive/selfdrived/events.py:708
+msgid "Parking Brake Engaged"
+msgstr "Phanh tay đang kéo"
+
+#: selfdrive/selfdrived/events.py:713
+msgid "Pedal Pressed"
+msgstr "Đang nhấn bàn đạp"
+
+#: selfdrive/selfdrived/events.py:719
+msgid "Steering Pressed"
+msgstr "Đang tác động vô lăng"
+
+#: selfdrive/selfdrived/events.py:724
+msgid "Release Brake to Engage"
+msgstr "Nhả phanh để kích hoạt"
+
+#: selfdrive/selfdrived/events.py:752
+msgid "Press Set to Engage"
+msgstr "Nhấn Set để kích hoạt"
+
+#: selfdrive/selfdrived/events.py:756
+msgid "Car Not Ready"
+msgstr "Xe chưa sẵn sàng"
+
+#: selfdrive/selfdrived/events.py:761
+msgid "Adaptive Cruise Disabled"
+msgstr "Cruise thích ứng đã tắt"
+
+#: selfdrive/selfdrived/events.py:766
+msgid "Steering Temporarily Unavailable"
+msgstr "Lái tạm thời không khả dụng"
+
+#: selfdrive/selfdrived/events.py:770
+#: selfdrive/selfdrived/events.py:771
+msgid "Vehicle Steering Time Limit"
+msgstr "Giới hạn thời gian lái của xe"
+
+#: selfdrive/selfdrived/events.py:785
+#: selfdrive/selfdrived/events.py:789
+#: selfdrive/selfdrived/events.py:790
+msgid "Sensor Data Invalid"
+msgstr "Dữ liệu cảm biến không hợp lệ"
+
+#: selfdrive/selfdrived/events.py:798
+#: selfdrive/selfdrived/events.py:799
+msgid "Excessive Actuation"
+msgstr "Tác động quá mức"
+
+#: selfdrive/selfdrived/events.py:809
+#: selfdrive/selfdrived/events.py:810
+msgid "Gear not D"
+msgstr "Không ở số D"
+
+#: selfdrive/selfdrived/events.py:820
+#: selfdrive/selfdrived/events.py:821
+msgid "Calibration Invalid: Remount Device & Recalibrate"
+msgstr "Hiệu chỉnh không hợp lệ: Lắp lại thiết bị và hiệu chỉnh lại"
+
+#: selfdrive/selfdrived/events.py:826
+#: selfdrive/selfdrived/events.py:1073
+msgid "Calibration Incomplete"
+msgstr "Hiệu chỉnh chưa hoàn tất"
+
+#: selfdrive/selfdrived/events.py:827
+msgid "Calibration in Progress"
+msgstr "Đang hiệu chỉnh"
+
+#: selfdrive/selfdrived/events.py:832
+msgid "Device Remount Detected: Recalibrating"
+msgstr "Phát hiện lắp lại thiết bị: Đang hiệu chỉnh lại"
+
+#: selfdrive/selfdrived/events.py:833
+msgid "Remount Detected: Recalibrating"
+msgstr "Phát hiện lắp lại: Đang hiệu chỉnh lại"
+
+#: selfdrive/selfdrived/events.py:837
+#: selfdrive/selfdrived/events.py:838
+msgid "Door Open"
+msgstr "Cửa đang mở"
+
+#: selfdrive/selfdrived/events.py:842
+#: selfdrive/selfdrived/events.py:843
+msgid "Seatbelt Unlatched"
+msgstr "Chưa thắt dây an toàn"
+
+#: selfdrive/selfdrived/events.py:847
+#: selfdrive/selfdrived/events.py:848
+msgid "Electronic Stability Control Disabled"
+msgstr "Cân bằng điện tử đã tắt"
+
+#: selfdrive/selfdrived/events.py:860
+#: selfdrive/selfdrived/events.py:861
+msgid "Low Communication Rate Between Processes"
+msgstr "Tốc độ giao tiếp giữa các tiến trình thấp"
+
+#: selfdrive/selfdrived/events.py:865
+msgid "System Lagging"
+msgstr "Hệ thống bị trễ"
+
+#: selfdrive/selfdrived/events.py:866
+msgid "Selfdrive Process Lagging: Reboot Your Device"
+msgstr "Tiến trình Selfdrive bị trễ: Khởi động lại thiết bị"
+
+#: selfdrive/selfdrived/events.py:876
+#: selfdrive/selfdrived/events.py:877
+msgid "Radar Error: Restart the Car"
+msgstr "Lỗi radar: Khởi động lại xe"
+
+#: selfdrive/selfdrived/events.py:881
+#: selfdrive/selfdrived/events.py:882
+msgid "Radar Temporarily Unavailable"
+msgstr "Radar tạm thời không khả dụng"
+
+#: selfdrive/selfdrived/events.py:905
+#: selfdrive/selfdrived/events.py:907
+msgid "Low Memory: Reboot Your Device"
+msgstr "Thiếu bộ nhớ: Khởi động lại thiết bị"
+
+#: selfdrive/selfdrived/events.py:911
+#: selfdrive/selfdrived/events.py:913
+msgid "Cruise Fault: Restart the Car"
+msgstr "Lỗi cruise: Khởi động lại xe"
+
+#: selfdrive/selfdrived/events.py:912
+msgid "Cruise Fault: Restart the car to engage"
+msgstr "Lỗi cruise: Khởi động lại xe để kích hoạt"
+
+#: selfdrive/selfdrived/events.py:917
+#: selfdrive/selfdrived/events.py:918
+msgid "Electronic Stability Control Active"
+msgstr "Cân bằng điện tử đang hoạt động"
+
+#: selfdrive/selfdrived/events.py:922
+#: selfdrive/selfdrived/events.py:923
+msgid "Controls Mismatch"
+msgstr "Điều khiển không khớp"
+
+#: selfdrive/selfdrived/events.py:931
+#: selfdrive/selfdrived/events.py:933
+#: selfdrive/selfdrived/events.py:937
+msgid "Unknown Vehicle Variant"
+msgstr "Phiên bản xe không xác định"
+
+#: selfdrive/selfdrived/events.py:941
+msgid "CAN Bus Disconnected"
+msgstr "Mất kết nối CAN Bus"
+
+#: selfdrive/selfdrived/events.py:943
+msgid "CAN Bus Disconnected: Likely Faulty Cable"
+msgstr "Mất kết nối CAN Bus: Có thể do cáp lỗi"
+
+#: selfdrive/selfdrived/events.py:947
+msgid "CAN Bus Disconnected: Check Connections"
+msgstr "Mất kết nối CAN Bus: Kiểm tra kết nối"
+
+#: selfdrive/selfdrived/events.py:951
+#: selfdrive/selfdrived/events.py:953
+msgid "LKAS Fault: Restart the Car"
+msgstr "Lỗi LKAS: Khởi động lại xe"
+
+#: selfdrive/selfdrived/events.py:952
+msgid "LKAS Fault: Restart the car to engage"
+msgstr "Lỗi LKAS: Khởi động lại xe để kích hoạt"
+
+#: selfdrive/selfdrived/events.py:958
+msgid "Reverse\nGear"
+msgstr "Số\nlùi"
+
+#: selfdrive/selfdrived/events.py:962
+#: selfdrive/selfdrived/events.py:963
+msgid "Reverse Gear"
+msgstr "Số lùi"
+
+#: selfdrive/selfdrived/events.py:969
+msgid "Cruise Is Off"
+msgstr "Cruise đang tắt"
+
+#: selfdrive/selfdrived/events.py:977
+#: selfdrive/selfdrived/events.py:978
+#: selfdrive/selfdrived/events.py:979
+msgid "Harness Relay Malfunction"
+msgstr "Rơ-le bộ dây bị lỗi"
+
+#: selfdrive/selfdrived/events.py:984
+msgid "openpilot Canceled"
+msgstr "openpilot đã hủy"
+
+#: selfdrive/selfdrived/events.py:985
+msgid "Speed too low"
+msgstr "Tốc độ quá thấp"
+
+#: selfdrive/selfdrived/events.py:993
+msgid "Speed Too High"
+msgstr "Tốc độ quá cao"
+
+#: selfdrive/selfdrived/events.py:994
+msgid "Model uncertain at this speed"
+msgstr "Mô hình không chắc chắn ở tốc độ này"
+
+#: selfdrive/selfdrived/events.py:997
+msgid "Slow down to engage"
+msgstr "Giảm tốc để kích hoạt"
+
+#: selfdrive/selfdrived/events.py:1001
+msgid "Vehicle Sensors Invalid"
+msgstr "Cảm biến xe không hợp lệ"
+
+#: selfdrive/selfdrived/events.py:1002
+#: selfdrive/selfdrived/events.py:1003
+msgid "Vehicle Sensors Calibrating"
+msgstr "Cảm biến xe đang hiệu chỉnh"
+
+#: selfdrive/selfdrived/events.py:1002
+msgid "Drive to Calibrate"
+msgstr "Lái xe để hiệu chỉnh"
+
+#: selfdrive/selfdrived/events.py:1011
+#: selfdrive/selfdrived/events.py:1015
+msgid "Bookmark Saved"
+msgstr "Đã lưu đánh dấu"
+
+#: selfdrive/selfdrived/events.py:1015
+msgid "pair to connect\nto view"
+msgstr "ghép nối connect\nđể xem"
+
+#: selfdrive/selfdrived/events.py:1038
+msgid "Press Resume"
+msgstr "Nhấn Resume"
+
+#: selfdrive/selfdrived/events.py:1045
+msgid "Steer Left"
+msgstr "Đánh lái trái"
+
+#: selfdrive/selfdrived/events.py:1046
+#: selfdrive/selfdrived/events.py:1053
+msgid "Confirm Lane Change"
+msgstr "Xác nhận chuyển làn"
+
+#: selfdrive/selfdrived/events.py:1052
+msgid "Steer Right"
+msgstr "Đánh lái phải"
+
+#: selfdrive/selfdrived/events.py:1059
+msgid "Car in Blindspot"
+msgstr "Xe trong điểm mù"
+
+#: selfdrive/selfdrived/events.py:1066
+msgid "take control"
+msgstr "hãy điều khiển"
+
+#: selfdrive/selfdrived/events.py:1067
+msgid "turn exceeds limit"
+msgstr "cua vượt giới hạn"
+
+#: selfdrive/selfdrived/events.py:1078
+#: selfdrive/selfdrived/events.py:1082
+#: selfdrive/selfdrived/events.py:1083
+msgid "Reverse"
+msgstr "Lùi"

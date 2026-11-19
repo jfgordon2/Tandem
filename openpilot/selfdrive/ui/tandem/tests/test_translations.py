@@ -168,7 +168,7 @@ def test_po_reader_round_trips_quotes_and_escapes(tmp_path):
 def test_the_strings_drivers_reported_missing_are_in_the_catalog():
   """Labels in .get() defaults, the keyboard's space bar, strftime names, captions and StarPilot's own text."""
   pot = i18n.parse_po((i18n.CATALOG_DIR / "tandem.pot").read_text(encoding="utf-8"))
-  for msgid in ("Check now", "Working…", "space", "Backup {}", "REGIONS", "{} region selected", "U.S. Midwest Region (12 States)"):
+  for msgid in ("Check now", "Working…", "space", "Backup {}", "REGIONS", "{} region", "Midwest"):
     assert msgid in pot, msgid
 
 
@@ -267,13 +267,14 @@ def test_tandem_templates_dont_rewrite_other_text_as_it_is_drawn():
   alert = "openpilot won't automatically start until it connects to internet to check for updates."
   assert es.translate(alert) == alert                       # not "{} hasta las {}"
   assert es.translate("2 regions") == "2 regiones"           # StarPilot's trn() text still matches
-  assert es.translate("Backup 2026-10-24 0910").startswith("Copia ")   # an N_() template
+  assert es.marked["Backup {}"] == "Copia {}"   # settings/backups.py fills it with t_() as it builds the name
+  assert es.translate("Backup 2026-10-24 0910") == "Backup 2026-10-24 0910"   # and not matched again as it's drawn
 
 
 def test_the_home_screen_alert_sentences_are_in_the_catalog():
   """StarPilot's offroad alerts (alerts_offroad.json), with %1 as a hole matched when drawn."""
   es = i18n.load("es")
-  assert es.translate("Taking camera snapshots. System won't start until finished.").startswith("Tomando capturas")
+  assert es.translate("Chestnut overheated. Ensure good airflow.") != "Chestnut overheated. Ensure good airflow."
   assert es.translate("Chestnut USB link is slow. Check the USB cable. The current speed is 480 Mbps.").endswith("es 480 Mbps.")
 
 
@@ -310,8 +311,8 @@ def test_operational_alerts_translate_in_every_completed_language(monkeypatch, c
                "Driver Distracted", "Driver Unresponsive", "Steering Assist Temporarily Unavailable", "Take Control",
                "Turn Exceeds Steering Limit", "Cancel Pressed", "Reverse\nGear"):
     assert i18n.translate(text) != text, (code, text)
-  for text in ("Drive above 30 km/h to engage", "Steer Unavailable Under 20 mph", "Calibrating: 42%",
-               "Speed Error: -3.5 m/s", "Detected Lane Width Is Only 2.1 Meters"):
+  for text in ("Drive above 30 km/h to engage", "Steer Assist Unavailable Below 20 mph", "Calibrating: 42%",
+               "Speed Error: -3.5 m/s"):
     translated = i18n.translate(text)
     assert translated != text, (code, text)
     assert re.findall(r"-?\d+(?:\.\d+)?", translated) == re.findall(r"-?\d+(?:\.\d+)?", text)
@@ -319,12 +320,9 @@ def test_operational_alerts_translate_in_every_completed_language(monkeypatch, c
 
 def test_onroad_alert_plurals_follow_the_selected_language(monkeypatch):
   monkeypatch.setattr(i18n, "_language", lambda: "main_uk")
-  for n, minute, second in ((1, "хвилина", "секунда"), (2, "хвилини", "секунди"), (5, "хвилин", "секунд"),
-                             (21, "хвилина", "секунда")):
+  for n, minute in ((1, "хвилина"), (2, "хвилини"), (5, "хвилин"), (21, "хвилина")):
     left = "Залишилася" if n in (1, 21) else "Залишилося"
     assert i18n.translate(f"{n} minute" + ("s" if n != 1 else "") + " Left") == f"{left} {n} {minute}"
-    assert i18n.translate(f"{n} second" + ("s" if n != 1 else "") + " remaining. Press again to save early.") == \
-      f"{left} {n} {second}. Натисніть ще раз, щоб зберегти раніше."
 
 
 @pytest.mark.parametrize("code,driving,takeover,direction", [
@@ -363,13 +361,13 @@ def test_joined_scripts_do_not_get_caption_letter_spacing(monkeypatch, code):
   assert called[0]["tracking"] == 0
 
 
-@pytest.mark.parametrize("code,auto,pair,lead,coast", [
-  ("ar", "تلقائي", "إقران", "المركبة الأمامية", "سير حر"),
-  ("th", "อัตโนมัติ", "จับคู่", "รถคันหน้า", "ไหลตามแรงเฉื่อย"),
+@pytest.mark.parametrize("code,auto,pair,lead", [
+  ("ar", "تلقائي", "إقران", "المركبة الأمامية"),
+  ("th", "อัตโนมัติ", "จับคู่", "รถคันหน้า"),
 ])
-def test_arabic_and_thai_labels_use_the_automotive_meaning(monkeypatch, code, auto, pair, lead, coast):
+def test_arabic_and_thai_labels_use_the_automotive_meaning(monkeypatch, code, auto, pair, lead):
   monkeypatch.setattr(i18n, "_language", lambda: code)
-  assert [i18n.translate(s) for s in ("Auto", "Pair", "Lead", "Coast")] == [auto, pair, lead, coast]
+  assert [i18n.translate(s) for s in ("Auto", "Pair", "Lead")] == [auto, pair, lead]
 
 
 @pytest.mark.parametrize("code", ["ar", "th"])
@@ -378,9 +376,8 @@ def test_arabic_and_thai_keep_service_names_domains_and_scopes(code):
   for source, tokens in (
     ("Chestnut not found", ("Chestnut",)),
     ("Open connect.comma.ai", ("connect.comma.ai",)),
-    ("Please post the 'Error Log' in the StarPilot Discord!", ("StarPilot", "Discord")),
-    ("Your default public token (pk.) is there already. Create a token, keep its public scopes, "
-     + "and also check DOWNLOADS:READ so it starts with sk.", ("pk.", "sk.", "DOWNLOADS:READ")),
+    ("In Galaxy: Navigation › Setup › Mapbox key. A Google key goes there too.", ("Galaxy", "Mapbox", "Google")),
+    ("Under Access tokens, the Default public token, which starts with pk. A secret token isn't needed.", ("pk.",)),
   ):
     translated = catalog.translate(source)
     assert translated != source

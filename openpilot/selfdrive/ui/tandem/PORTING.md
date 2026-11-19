@@ -29,8 +29,8 @@ stage 2 is done, `development` boots as stock StarPilot 7.0.
   accepted limit plus offset whatever SET is.
 - **Gone with StarPilot 7:** Vehicle Profile's EV and Towing (truck tuning is GM-only and shows with that car's options),
   Weather's driving presets (Weather heads-up stays).
-- **Languages:** Tandem's picker is StarPilot 7's list plus Arabic. Vietnamese shows Tandem's screens in English until
-  translated.
+- **Languages:** Tandem's picker is StarPilot 7's list plus Arabic. Every language, Vietnamese included, is translated
+  in full (owner, 2026-11-19: "Translate everything").
 
 Order: Connections; the Driving tab; Device's remaining pieces and settings search; the rest of the driving screen; Home's
 navigation pieces and first-run setup; StarPilot's controller runtime and the services; Valhalla routing; fork-wide
@@ -597,7 +597,7 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
 | `test_font_loading.py`: lazy fonts, glyph release and alert faces | Glyph release when restored, then lazy loading and alert faces with the screen port (stage 4) |
 | `test_upstream_integration.py`: all but the text hooks and the sidebar factory | Their hooks and modules (stages 3 to 6) |
 | `test_turn_signals.py`, `test_onroad*.py`, `test_chip_events.py` (StarPilot 6's message reader; its rules are covered by the chip tests), `test_headroom_warning.py`, `test_limit_offers.py`, `test_developer_view.py` | Onroad (stage 4) |
-| `test_forecast.py`, `test_ram.py` | Home and sidebar (stage 4) |
+| `test_ram.py` | Home and sidebar (stage 4) |
 | `test_developer.py`, `test_software_dialogs.py`, `test_storage_sizes.py`, `test_prebuilt_params.py` | Settings screens and owner integration (stage 4) |
 | `test_routing_ui.py`, `test_map_progress.py` | Offline routing (stage 5, phase B) |
 | `test_remote_actions.py`, `test_galaxy_signals.py` | Controllers and Galaxy (stage 6) |
@@ -644,3 +644,17 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
 - Display › Map is left out: StarPilot 7 dropped Turn-by-Turn on Screen (`NavigationUI`; Tandem's turn card shows
   with every route) and has no writer for the sign style (`UseVienna`), so only the Offline Maps link was left, and
   Speed & Steering › Navigation has it.
+
+## Stage 8: translations, Arabic and the weather heads-up
+
+- The catalog covers every ported screen (1,458 strings). The 12 languages release finished have the new and reworded
+  ones, release's English placeholders are translated, and Vietnamese is translated whole. `NotoSans-Fallback` is
+  rebuilt for the new characters; StarPilot 7's raylib adds `load_font_data`'s glyph count argument, which the font
+  tools now pass.
+- Text Tandem's catalog doesn't have falls back to StarPilot's own translation (`multilang.tr`), so StarPilot 7's row
+  labels read in the driver's language.
+- Arabic: StarPilot 7 has no Arabic, so General's picker saves `LanguageSetting` "ar" and StarPilot keeps drawing its
+  screens in English while Tandem's read Arabic.
+- The weather heads-up is back: `forecast.py`'s announcer shows the chip before rain, snow or storms and chimes once
+  through the headroom soundd subclass (`weather-chime.json`), with the position from StarPilot 7's location.
+

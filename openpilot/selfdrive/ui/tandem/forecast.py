@@ -1,4 +1,11 @@
-"""The approved twelve-hour Home outlook, backed by Tandem's cached weather forecast."""
+"""Tandem's weather forecast: the twelve-hour Home outlook, and the drive screen's Weather heads-up.
+
+Open-Meteo (free, no key) gives the weather in 15-minute steps. The forecast is kept on the device and fetched again
+when it's an hour old, every 15 minutes while rain or snow is falling or due within two hours, or when the car is more
+than 20 miles from where it was fetched. The drive screen's chip (onroad/status.py) shows "Snow in 12 min" from 15
+minutes before it starts, then "Snow until 8:15 PM" while it lasts; when an event is first seen within the hour, the
+chip shows briefly and one soft chime plays. Home and the drive screen share one forecast (shared_service).
+"""
 from __future__ import annotations
 
 import json
@@ -8,6 +15,7 @@ import time
 import urllib.parse
 import urllib.request
 from collections.abc import Callable
+from typing import Any
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
@@ -21,6 +29,9 @@ MIN_EVENT_S = 30 * 60               # weather to come is announced only when it 
 MOVED_KM = 20 * 1.609344            # ...unless the car is more than 20 miles from where it was fetched
 RETRY_S = 5 * 60                    # after a failed fetch
 CHECK_S = 30                        # how often the drive screen's tick looks at the location and the setting
+LOOKAHEAD_S = 60 * 60               # an event within the hour is announced
+SHOW_BEFORE_S = 15 * 60             # the chip stays up from 15 minutes before it starts
+FLASH_S = 30.0                      # the brief heads-up when an event is first seen earlier than that
 
 # WMO weather codes (Open-Meteo) -> what the chip calls it, and its icon. Clear and cloudy codes aren't hazards.
 HAZARDS: dict[int, tuple[str, str]] = {
@@ -145,6 +156,67 @@ def event_clock(ts: float, utc_offset: int) -> str:
   """When weather starts or stops, to the nearest 5 minutes: halfway between steps falls on 7.5 minutes past, and a
   forecast isn't that precise."""
   return clock(math.floor(ts / 300 + 0.5) * 300, utc_offset)
+
+
+@dataclass
+class HeadsUp:
+  """Weather heads-up for the drive screen: what's coming (rain, snow, storms or fog), its icon, and when it starts."""
+  label: str                        # "Light rain"
+  icon: str                         # rain, snow, storm, fog
+  start: int                        # when it starts (unix), for telling events apart
+  minutes: int = 0                  # until it starts; 0 when it's already happening
+  until: str = ""                   # when it should stop, "8:15 PM"; "" past the forecast's end
+
+  @property
+  def active(self) -> bool:
+    return self.minutes == 0
+
+  @property
+  def text(self) -> str:
+    if not self.active:
+      return t_("{} in {} min", self.label, self.minutes)
+    return t_("{} until {}", self.label, self.until) if self.until else self.label
+
+
+def heads_up(forecast: Forecast | None, now: float) -> HeadsUp | None:
+  """What's happening now, or the next hazard within the hour."""
+  if forecast is None or not forecast.steps:
+    return None
+  steps, half = forecast.steps, forecast.step_s / 2
+  for run in runs(forecast):
+    start, end = _edges(forecast, run)
+    if end is not None and end <= now:
+      continue
+    if start <= now:   # falling now, the step we're in named by its own strength
+      current = next(i for i in range(*run) if steps[i][0] - half <= now < steps[i][0] + half)
+      label, icon = HAZARDS[steps[current][1]]
+      return HeadsUp(label, icon, int(start), 0, event_clock(end, forecast.utc_offset) if end is not None else "")
+    if start > now + LOOKAHEAD_S:
+      return None
+    if _lasting(forecast, run):
+      label, icon = HAZARDS[steps[run[0]][1]]
+      return HeadsUp(label, icon, int(start), max(1, math.ceil((start - now) / 60)))
+  return None
+
+
+@dataclass
+class Announcer:
+  """When the chip shows, and the one chime: from 15 minutes before an event until it ends; and when an event is first
+  seen earlier in the hour, a brief heads-up with the chime."""
+  first_seen: dict[tuple[int, str], float] = field(default_factory=dict)
+
+  def update(self, hint: HeadsUp | None, now: float) -> tuple[bool, bool]:
+    """Returns (show the chip, chime now)."""
+    if hint is None:
+      return False, False
+    key = (hint.start, hint.label)
+    chime = False
+    if key not in self.first_seen:
+      self.first_seen = {k: v for k, v in self.first_seen.items() if k[0] > now - 2 * 86400}
+      self.first_seen[key] = now
+      chime = not hint.active          # a warning; weather already falling when first seen isn't news
+    show = hint.active or hint.minutes * 60 <= SHOW_BEFORE_S or now - self.first_seen[key] < FLASH_S
+    return show, chime
 
 
 class ForecastService:
@@ -290,3 +362,47 @@ def outlook(forecast: Forecast | None, now: float, metric: bool, hours: int = OU
   sky = max(set(codes), key=lambda c: (codes.count(c), c))       # the most hours; a tie goes to the cloudier
   day = sum(d for c, d in skies if c == sky) * 2 >= codes.count(sky)
   return Outlook(SKY[sky][0 if day else 1], hour_icon(sky, day), False, clock(forecast.fetched_at, off), tiles)
+
+
+def now_conditions(forecast: Forecast | None, now: float, metric: bool) -> tuple[str, str] | None:
+  """The hour we're in, for the drive screen's bar: (icon, "34°"). metric: °C (prefs.celsius)."""
+  if forecast is None:
+    return None
+  hour = next(((code, temp, day) for t, code, temp, day in forecast.hours if t <= now < t + 3600), None)
+  if hour is None:
+    return None
+  code, temp, day = hour
+  return hour_icon(code, day), f"{round(temp if metric else temp * 9 / 5 + 32)}°"
+
+
+_shared: list[ForecastService] = []
+_positions: list[Any] = []
+
+
+def where_now(sm: Any = None) -> tuple[float, float] | None:
+  """The car's position: the GPS fix StarPilot selects now, else the last one StarPilot's navigation saved.
+
+  Args:
+    sm: The messages to read the fix from; the UI's by default.
+  """
+  if sm is None:
+    from openpilot.selfdrive.ui.ui_state import ui_state
+    sm = ui_state.sm
+  from openpilot.starpilot.gps.source import select_location
+  if (fix := select_location(sm, time.monotonic_ns())) is not None:
+    _, gps = fix
+    return float(gps.latitude), float(gps.longitude)
+  if not _positions:
+    from openpilot.starpilot.navigation.position import LastPositionStore
+    from openpilot.starpilot.storage import starpilot_storage_root
+    _positions.append(LastPositionStore(starpilot_storage_root() / "navigation"))
+  position = _positions[0].read()
+  return (position["latitude"], position["longitude"]) if position else None
+
+
+def shared_service() -> ForecastService:
+  """One forecast for the drive screen and Home, kept beside the params folder."""
+  if not _shared:
+    from openpilot.selfdrive.ui.tandem.prefs import WEATHER_HEADS_UP, prefs_dir
+    _shared.append(ForecastService(prefs_dir() / ".tandem_forecast.json", where_now, WEATHER_HEADS_UP.get))
+  return _shared[0]

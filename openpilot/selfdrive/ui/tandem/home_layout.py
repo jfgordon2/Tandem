@@ -6,18 +6,15 @@ import time
 from typing import Any
 
 from openpilot.selfdrive.ui.layouts.home import HomeLayout, HomeLayoutState
-from openpilot.selfdrive.ui.tandem.forecast import ForecastService, Outlook, outlook, wall_clock
+from openpilot.selfdrive.ui.tandem.forecast import ForecastService, Outlook, outlook, shared_service, wall_clock
 from openpilot.selfdrive.ui.tandem.home import HomeContent, HomeState, home_content_rect
 from openpilot.selfdrive.ui.tandem.home_alerts import AlertsView, HomeAlert, UpdateView
 from openpilot.selfdrive.ui.tandem.software import InstallTarget, SoftwareWatch, shared_software
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_
-from openpilot.selfdrive.ui.tandem.prefs import WEATHER_HEADS_UP, celsius, prefs_dir
+from openpilot.selfdrive.ui.tandem.prefs import WEATHER_HEADS_UP, celsius
 from openpilot.selfdrive.ui.ui_state import ui_state
-from openpilot.starpilot.gps.source import select_location
 from openpilot.starpilot.lateral import lane_change_preferences
-from openpilot.starpilot.navigation.position import LastPositionStore
 from openpilot.starpilot.speed_limits import runtime_settings
-from openpilot.starpilot.storage import starpilot_storage_root
 from openpilot.starpilot.ui.raylib import rl
 from openpilot.system.ui.lib.application import MousePos
 from openpilot.system.ui.widgets import Widget
@@ -57,7 +54,6 @@ class EssentialsHome(HomeLayout):
     self._setup_checked = False   # first-run setup (setup.py), once onboarding has closed
     self._notes_target: InstallTarget | None = None
     self._software = software()   # the same watch as the Software tab
-    self._position: LastPositionStore | None = None
     self._forecast: ForecastService | None = None
     self._content = self._child(HomeContent(self._state, self._open_alerts, self._open_notes, on_software or self._open_software,
                                             self._outlook, self._open_where_to))
@@ -127,20 +123,11 @@ class EssentialsHome(HomeLayout):
       self._back()
     self._prev_alerts_present = self.alert_count > 0
 
-  def _position_now(self) -> tuple[float, float] | None:
-    if (fix := select_location(ui_state.sm, time.monotonic_ns())) is not None:
-      _, gps = fix
-      return float(gps.latitude), float(gps.longitude)
-    if self._position is None:
-      self._position = LastPositionStore(starpilot_storage_root() / "navigation")
-    position = self._position.read()
-    return (position["latitude"], position["longitude"]) if position else None
-
   def _outlook(self) -> Outlook | None:
     if not WEATHER_HEADS_UP.get() or ui_state.projection_read_only or ui_state.replay_clock is not None:
       return None
     if self._forecast is None:
-      self._forecast = ForecastService(prefs_dir() / ".tandem_forecast.json", self._position_now, WEATHER_HEADS_UP.get)
+      self._forecast = shared_service()   # the drive screen's Weather heads-up reads the same forecast
     self._forecast.tick()
     return outlook(self._forecast.forecast, wall_clock(), celsius(ui_state.is_metric))
 

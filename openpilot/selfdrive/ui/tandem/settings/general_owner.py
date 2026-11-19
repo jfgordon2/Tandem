@@ -5,7 +5,7 @@ from collections.abc import Callable
 from dataclasses import replace
 import time
 
-from openpilot.selfdrive.ui.tandem.i18n import N_
+from openpilot.selfdrive.ui.tandem.i18n import N_, forget_saved_language, saved_language
 from openpilot.selfdrive.ui.tandem.prefs import TEMPERATURE, celsius
 from openpilot.starpilot.galaxy.localization_settings import LocalizationSettingsOwner
 from openpilot.starpilot.ui.display_owner import DisplayOwner
@@ -22,6 +22,9 @@ def _level(value: int) -> str:
 
 
 _BRIGHTNESS_VALUES = [(_level(parked), _level(driving)) for _, parked, driving in BRIGHTNESS]
+
+
+ARABIC = "العربية"
 
 
 def _request(row: FeatureRow, value: str) -> FeatureSettingsRequest:
@@ -84,16 +87,30 @@ class General:
       TEMPERATURE.set("C" if index == 1 else "F")
 
   def language(self) -> FeatureRow:
-    """Return the active native name, supported names and source for the sheet."""
-    return self._local_rows["LanguageSetting"]
+    """Return the active native name, supported names and source for the sheet: StarPilot's languages, and Arabic,
+    which Tandem keeps (StarPilot 7 dropped it; its own screens show English then)."""
+    row = self._local_rows["LanguageSetting"]
+    choices = row.choices if ARABIC in row.choices else (*row.choices, ARABIC)
+    return replace(row, choices=choices, value=ARABIC if saved_language() == "ar" else row.value)
 
   def language_name(self) -> str:
     """Return the name of the selected language."""
     return self.language().value
 
   def set_language(self, row: FeatureRow, name: str) -> bool:
-    """Apply the choice from the open sheet and reload the live catalogs."""
-    accepted = self._localization.apply(_request(row, name))
+    """Apply the choice from the open sheet and reload the live catalogs. Arabic is saved by Tandem; the others by
+    StarPilot's localization owner."""
+    if name == ARABIC:
+      if not (row.available and self._authorized()):
+        return False
+      from openpilot.common.params import Params
+      Params().put("LanguageSetting", "ar")
+      forget_saved_language()
+      self._refresh_language()
+      self.refresh()
+      return True
+    accepted = self._localization.apply(_request(self._local_rows["LanguageSetting"], name))
+    forget_saved_language()
     if accepted:
       self._refresh_language()
     self.refresh()
