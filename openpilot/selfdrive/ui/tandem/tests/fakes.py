@@ -1,5 +1,6 @@
 """Stand-ins for the network, cellular, radio and Bluetooth services, for tests and headless renders."""
 from dataclasses import replace
+from typing import Any
 
 from openpilot.selfdrive.ui.tandem.settings.network_test import Connection, Via
 from openpilot.starpilot.tandem.network_test import Phase, Result
@@ -443,3 +444,25 @@ class FakeNavigationOwner:
     self.settings.update(patch)
     self.revision += 1
     return self.snapshot()
+
+
+def sample_maps(road_ready: frozenset[str] = frozenset({"us_state.IA"}), route_ready: frozenset[str] = frozenset({"us_state.IA"}),
+                chosen: frozenset[str] = frozenset({"us_state.IA"}), job: dict | None = None) -> Any:
+  """settings/map_source.TandemMaps with its readings set instead of read: Iowa's road data and routes ready by default,
+  Canada among the other countries, StarPilot's bundled routing catalog, and no file or map owner touched."""
+  from openpilot.selfdrive.ui.tandem.settings.map_source import TandemMaps
+  from openpilot.starpilot.tandem.routing import catalog
+
+  class SampleMaps(TandemMaps):
+    def tick(self) -> None:
+      if self._chosen is None:
+        self._chosen = set(chosen)
+        self.road_ready, self.route_ready = set(road_ready), set(route_ready)
+        self.countries = {"nation.CA": "Canada", "nation.MX": "Mexico"}
+        self.catalog = catalog.load()
+        self.job = dict(job or {})
+        self._routes_bytes = 280 * 1024**2 if route_ready else 0
+      self.removed = getattr(self, "removed", 0)
+
+  maps = SampleMaps(lambda: True, lambda: True, lambda: setattr(maps, "removed", maps.removed + 1))
+  return maps

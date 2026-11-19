@@ -36,6 +36,7 @@ def essentials_settings(on_open_arabesque: Callable[[], None] | None, arabesque_
   from openpilot.selfdrive.ui.tandem.settings.report import Report, report_section
   from openpilot.selfdrive.ui.tandem.settings.storage import StoragePanel
   from openpilot.selfdrive.ui.tandem.settings.storage_owner import StorageOwner
+  from openpilot.selfdrive.ui.tandem.settings.maps import MapsSource
   from openpilot.selfdrive.ui.tandem.settings.software import Software, SoftwarePage
   from openpilot.selfdrive.ui.tandem.software import shared_software
   from openpilot.selfdrive.ui.ui_state import ui_state
@@ -194,11 +195,28 @@ def essentials_settings(on_open_arabesque: Callable[[], None] | None, arabesque_
     def recount() -> None:
       storage_owner().poll(refresh=True)
 
+    def offline_maps() -> MapsSource:
+      """Offline Maps over Tandem's map jobs; Remove maps is Storage & Data's Delete, through StarPilot's map owner."""
+      from openpilot.selfdrive.ui.tandem.settings.map_source import TandemMaps
+
+      def wifi() -> bool:
+        sm = ui_state.sm
+        return bool(sm.valid.get("deviceState", False) and str(sm["deviceState"].networkType) == "wifi")
+
+      def remove() -> None:
+        generation = storage_owner().sample.map_generation
+        if generation is not None:
+          storage_owner().delete_maps(generation)
+      return TandemMaps(lambda: local() and ui_state.is_offroad(), wifi, remove)
+
+    from openpilot.starpilot.tandem.routing.config import enabled as offline_routing
+
     services = DrivingServices(
       SettingsStore(), Live(), owners.rows, RoadStyle(ui_state.params, allowed),
       lambda: StarPilotModels(ModelManager(parked=allowed), lambda message: window.notice(N_("Driving Model"), message)),
       car, owner, lambda: ui_state.CP is not None and not ui_state.CP.pcmCruise, sound_player(allowed),
-      lambda: storage_owner().sample.usage, recount, lambda: bool(ram.snapshots()))
+      lambda: storage_owner().sample.usage, recount, lambda: bool(ram.snapshots()),
+      maps=offline_maps if offline_routing() else None)
     return driving_hub(window, services)
 
   window = SettingsWindow({

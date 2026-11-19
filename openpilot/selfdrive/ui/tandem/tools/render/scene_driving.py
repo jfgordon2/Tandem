@@ -1,16 +1,17 @@
 """Render the Driving tab's pages on StarPilot 7's settings rows (test stand-ins), each under its release mock's name."""
 from __future__ import annotations
 
+import os
 from collections.abc import Callable
 from pathlib import Path
 import tempfile
 from dataclasses import replace
 from typing import Any
 
-from openpilot.selfdrive.ui.tandem import prefs
+from openpilot.selfdrive.ui.tandem import prefs, tokens as T
 from openpilot.selfdrive.ui.tandem.settings.alerts import GROUPS
 from openpilot.selfdrive.ui.tandem.places import StarPilotPlaces
-from openpilot.selfdrive.ui.tandem.tests.fakes import FakeNavigationOwner
+from openpilot.selfdrive.ui.tandem.tests.fakes import FakeNavigationOwner, sample_maps
 from openpilot.selfdrive.ui.tandem.settings.driving_tab import DrivingServices, driving_hub
 from openpilot.selfdrive.ui.tandem.settings.model import StarPilotModels
 from openpilot.selfdrive.ui.tandem.settings.vehicle import Vehicle
@@ -97,7 +98,7 @@ def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any)
     services = DrivingServices(Store(LongitudinalPersonality=1, IsLdwEnabled=True, AlwaysOnDM=True), ExampleLive(), owner.rows,  # type: ignore[arg-type]
                                FakeRoad(), lambda: StarPilotModels(FakeManager(), clock=lambda: 0.0), lambda: vehicle, ExampleDevice(),
                                lambda: True, storage=lambda: {"drives": 40.0, "models": 6.0, "maps": 12.0, "free": 42.0},
-                               navigation=lambda: StarPilotPlaces(FakeNavigationOwner))
+                               navigation=lambda: StarPilotPlaces(FakeNavigationOwner), maps=sample_maps)
     window: SettingsWindow
     window = SettingsWindow({Tab.DRIVING: lambda: hub}, initial=Tab.DRIVING)
     hub = driving_hub(window, services)
@@ -115,6 +116,10 @@ def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any)
       hub.pages[page]()
       shot(mock)
       window.back()
+    os.environ["TANDEM_ROUTING"] = "1"
+    os.environ["TANDEM_PREFS_DIR"] = str(Path(root) / "prefs")   # the routing policy, not this machine's
+    from openpilot.starpilot.tandem.routing import config as C
+    C.set_policy(offline_only=False, preferred="online")
     hub.pages["speed_steering"]()
     window.top.select(2)   # Navigation
     shot("stage5-drivingnav")
@@ -124,8 +129,44 @@ def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any)
     sheet._shown_at = None   # fully open, without waiting for its slide
     shot("stage5-mapboxkey")
     window.dismiss()
+    navigation = window.top._pages[2]
+    navigation._scroll.set_offset(-T.px(57) * 3)   # the end of the list
+    shot("stage5-drivingnav-end")
+    navigation._scroll.set_offset(0)
     window.back()
+    maps_shots(window, shot)
     hub.pages["tuner"]()
     for index, mock in ((1, "tunergas"), (2, "tunerfollowing")):
       window.top.select(index)
       shot(mock)
+
+
+def maps_shots(window: SettingsWindow, shot: Callable[[str], None]) -> None:
+  """Offline Maps, the region picker and a download's steps, each under its approved mock's name."""
+  from openpilot.selfdrive.ui.tandem.settings.maps import Maps, MapsPage, RegionsPage
+  sizes = lambda: {"Drives": 40e9, "Maps": 12e9, "Models": 6e9, "Free": 42e9, "Total": 100e9}  # noqa: E731
+  window.push(MapsPage(Maps(sample_maps()), lambda: None, sizes, window))
+  shot("valhalla2-maps-home")
+  window.back()
+  regions = RegionsPage(Maps(sample_maps(road_ready=frozenset({IA, IL}), route_ready=frozenset({IA, IL}))), lambda: None)
+  regions._select(1)
+  window.push(regions)
+  shot("valhalla3-regions-update")
+  window.back()
+  both = f"{IA},{IL}"
+  for mock, job in (
+      ("valhalla5-paired-iowa", {"id": "j", "selection": both, "phase": "road", "current_regions": [IA], "done": 1, "total": 4}),
+      ("valhalla4-shared-download", {"id": "j", "selection": both, "phase": "download", "current_regions": [IA, IL],
+                                     "done": 145 << 20, "total": 345 << 20}),
+      ("valhalla4-shared-install", {"id": "j", "selection": both, "phase": "install", "stage": "build", "current_regions": [IA, IL],
+                                    "done": 38, "total": 100}),
+      ("valhalla4-shared-ready", {"id": "j", "selection": both, "phase": "ready", "regions_ready": [IA, IL]})):
+    window.push(MapsPage(Maps(sample_maps(road_ready=frozenset({IA, IL}) if job["phase"] != "road" else frozenset(),
+                                          route_ready=frozenset({IA, IL}) if job["phase"] == "ready" else frozenset(),
+                                          chosen=frozenset({IA, IL}), job=job)), lambda: None, sizes, window))
+    window.top._download._dismissed = False   # as it shows when the download finishes on screen
+    shot(mock)
+    window.back()
+
+
+IA, IL = "us_state.IA", "us_state.IL"

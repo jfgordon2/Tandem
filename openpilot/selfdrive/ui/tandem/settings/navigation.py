@@ -17,6 +17,7 @@ from openpilot.selfdrive.ui.tandem.i18n import N_, t_, tn_
 from openpilot.selfdrive.ui.tandem.map_keys import status
 from openpilot.selfdrive.ui.tandem.places import StarPilotPlaces
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, SettingRow
+from openpilot.selfdrive.ui.tandem.settings.maps import Maps
 
 DIRECTIONS = [("mapbox", N_("Mapbox"), N_("Turn-by-turn with lane arrows")),
               ("google", N_("Google"), N_("Follows live traffic. No lane arrows."))]
@@ -94,15 +95,52 @@ class NavigationSettings:
     return status(bool(self._get("hasKey")), self.google_ready())
 
 
-def navigation_panel(model: NavigationSettings, open_destinations: Callable[[], None], open_key_help: Callable[[], None]) -> ListPanel:
-  """Speed & Steering › Navigation: on or off, saved places, directions, avoidances, position and keys."""
+def routing_rows(maps: Callable[[], Maps], open_maps: Callable[[], None], height: float) -> list[SettingRow]:
+  """Offline routing's rows (design/valhalla2-prefer-online.html): Offline maps only, the preferred maps, and Offline Maps.
+
+  Args:
+    maps: Offline Maps' state, for the row's summary.
+    open_maps: Opens Offline Maps.
+    height: The rows' height, as the panel's other rows.
+  """
+  from openpilot.starpilot.tandem.routing import config as C
+
+  def preferred_line() -> str:
+    only, first = C.policy()
+    return N_("Used when Offline maps only is off.") if only else \
+      N_("Try online first; fall back to downloaded maps.") if first == "online" else N_("Try downloaded maps first; fall back to online.")
+
+  def maps_line() -> str:
+    source = maps().source
+    if source.status() == N_("All maps ready"):
+      return t_("{} · routes, speed limits and street names ready", source.selection_summary())
+    return t_("{} · {}", source.selection_summary(), source.status())
+
+  preferred = SettingRow(N_("Preferred maps (when available)"), preferred_line,
+                         Segmented([N_("Online"), N_("Offline")], lambda: int(C.policy()[1] == "offline"),
+                                   lambda i: C.set_policy(preferred=("online", "offline")[i]), equal=True), height=height)
+  preferred.set_enabled(lambda: not C.policy()[0])
+  return [
+    SettingRow(N_("Offline maps only"), lambda: N_("Never use online routing.") if C.policy()[0] else
+               N_("Use the preferred maps, with a fallback if needed."),
+               Switch(lambda: C.policy()[0], lambda on: C.set_policy(offline_only=on)), height=height),
+    preferred,
+    SettingRow(N_("Offline Maps"), maps_line, on_click=open_maps, height=height),
+  ]
+
+
+def navigation_panel(model: NavigationSettings, open_destinations: Callable[[], None], open_key_help: Callable[[], None],
+                     maps: Callable[[], Maps] | None = None, open_maps: Callable[[], None] = lambda: None) -> ListPanel:
+  """Speed & Steering › Navigation (design/stage5-drivingnav.html): on or off, saved places, offline routing (with maps),
+  directions, avoidances, position and keys."""
   directions = Segmented([name for _, name, _ in DIRECTIONS], model.directions, model.set_directions)
   avoid = ToggleGroup([ToggleButton(name, partial(model.avoids, key), partial(model.set_avoid, key)) for key, name in AVOID])
   position = Segmented([name for _, name, _ in POSITION], model.position, model.set_position, font_size=T.font_px(15))
-  h = T.px(57)   # the mock's 58, less what the shared panel header adds, so all six rows show
+  h = T.px(57)   # the mock's 58, less what the shared panel header adds, so six rows show at once
   return ListPanel([
     SettingRow(N_("Navigation"), N_("Turn guidance on the driving screen"), Switch(lambda: model.enabled, model.set_enabled), height=h),
     SettingRow(N_("Saved Places"), model.saved_line, on_click=open_destinations, leading=Icon("star"), height=h),
+    *(routing_rows(maps, open_maps, h) if maps is not None else []),
     SettingRow(N_("Directions"), model.directions_line, directions, height=h),
     SettingRow(N_("Avoid"), N_("When planning routes"), avoid, height=h),
     SettingRow(N_("Position"), lambda: POSITION[model.position()][2], position, height=h),

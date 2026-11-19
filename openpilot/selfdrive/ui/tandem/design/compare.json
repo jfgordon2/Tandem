@@ -46,7 +46,13 @@
     {
       "mock": "stage5-drivingnav",
       "title": "Navigation settings (StarPilot 7)",
-      "note": "Matches: the switch, Saved Places (opens Where to?), Directions, Avoid, Position and Map Keys, each writing StarPilot 7's navigation settings. Rows are 57 px against the mock's 58, as the shared panel header is a little taller, so all six show. Google directions need its key.",
+      "note": "Matches: the switch, Saved Places (opens Where to?), Offline maps only, Preferred maps, Offline Maps, Directions, Avoid, Position and Map Keys, each writing StarPilot 7's navigation settings or Tandem's routing policy. Rows are 57 px against the mock's 58, as the shared panel header is a little taller. The list scrolls to its last rows (stage5-drivingnav-end).",
+      "match": true
+    },
+    {
+      "mock": "stage5-drivingnav-end",
+      "title": "Navigation settings, scrolled (StarPilot 7)",
+      "note": "Matches: the list's last rows, Preferred maps to Map Keys.",
       "match": true
     },
     {
@@ -683,7 +689,7 @@
     {
       "mock": "valhalla2-maps-home",
       "title": "One Offline Maps page",
-      "note": "Native device capture with sample data. The existing maps page shows both data types, a shared update schedule and Choose regions. No routing-software or URL page is needed. The existing global Remove maps action removes both datasets; per-region deletion is not exposed by mapd. Settings footer and device-wide storage bar are retained. The built screen retains the shared settings footer/page header.",
+      "note": "StarPilot 7: matches the regions card, with road data from StarPilot's map owner and Tandem's offline routes. The Keep up to date card is left out: StarPilot 7 has no scheduled map refresh. Storage takes the right column.",
       "match": false
     },
     {
@@ -818,8 +824,8 @@
     {
       "mock": "valhalla3-regions-update",
       "title": "Shared US build · Apply the checked states",
-      "note": "Approved state-selection update. Update keeps checked states and rebuilds from verified tiles already present; only missing or newer packs download. The built screen retains the existing shared settings footer. Readiness shown for other states is illustrative sample data.",
-      "match": false
+      "note": "StarPilot 7: matches the tabs, region cards and the selection's two map sets. The states list is alphabetical, so a sample selection can be below the first rows; other countries come from StarPilot's map catalog (road data only).",
+      "match": true
     },
     {
       "mock": "valhalla3-regions-empty",
@@ -836,13 +842,13 @@
     {
       "mock": "valhalla4-shared-download",
       "title": "Per-region download progress",
-      "note": "Approved November 4; native device capture matches the layout and counters. Each state shows its own progress through required shared packs; both are visible while downloading. The built screen retains the shared settings header and footer. Paired road/routing updates now use the approved valhalla5 single-bar states; this remains the routing-only reference.",
+      "note": "StarPilot 7: matches the layout and counters for the shared routing download, after each state's road data.",
       "match": true
     },
     {
       "mock": "valhalla4-shared-install",
       "title": "Measured shared installation",
-      "note": "Approved November 4; native device capture matches the layout and counters. Installation has its own measured counter. All selected regions are installed together and remain unready until activation. The built screen retains the shared settings header and footer.",
+      "note": "StarPilot 7: matches; installation stays below 100% until the verified activation.",
       "match": true
     },
     {
@@ -854,7 +860,7 @@
     {
       "mock": "valhalla4-shared-ready",
       "title": "Both map sets ready",
-      "note": "Approved November 4; native device capture matches the layout and counters. All four steps, including Ready, and both state tiles have green checks only after verified activation. The built screen retains the shared settings header and footer. Paired road/routing updates now use the approved valhalla5 single-bar states; this remains the routing-only reference.",
+      "note": "StarPilot 7: matches; all four steps done and both map sets ready.",
       "match": true
     },
     {
@@ -866,7 +872,7 @@
     {
       "mock": "valhalla5-paired-iowa",
       "title": "Paired downloads · Iowa",
-      "note": "Approved November 4. Iowa shows the slower of its road-file and routing-byte fractions (26% here); Illinois waits at 0%. The single overall bar is 13%. Two routing workers overlap with the current state’s road downloader. Native device capture inspected beside the approved Chromium mock; layout, counters and wording match. The shared settings header/footer are retained.",
+      "note": "StarPilot 7: road data now comes first, one state at a time from StarPilot's map owner, then the shared routing download. This is the road step: the current state's percent is StarPilot's map groups.",
       "match": true
     },
     {

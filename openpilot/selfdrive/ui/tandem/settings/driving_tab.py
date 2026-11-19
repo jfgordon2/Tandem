@@ -18,6 +18,7 @@ from openpilot.selfdrive.ui.tandem.settings.alerts import Alerts, alerts_page
 from openpilot.selfdrive.ui.tandem.settings.bundles import BUNDLES, Bundle
 from openpilot.selfdrive.ui.tandem.settings.device import driver_monitoring_rows
 from openpilot.selfdrive.ui.tandem.settings.display import Display, driving_screen_panel, path_panel
+from openpilot.selfdrive.ui.tandem.settings.maps import Maps, MapsPage, MapsSource, RegionsPage
 from openpilot.selfdrive.ui.tandem.settings.model import CatalogPage, Models, ModelSource, model_page
 from openpilot.selfdrive.ui.tandem.settings.navigation import NavigationSettings, navigation_panel
 from openpilot.selfdrive.ui.tandem.settings.pages import FillPage, HubPage, Section, SectionPage, Strip
@@ -69,16 +70,19 @@ class DrivingServices:
     recount: Has Storage & Data measure again.
     ram: Whether Device › RAM is showing (a drive has run low), so search finds it.
     navigation: StarPilot's navigation (places.py), made on first use; the real one by default.
+    maps: Offline Maps' source (settings/map_source.py), made on first use; None without offline routing.
   """
 
   def __init__(self, store: SettingsStore, live: Live, rows: Rows, road: RoadStyle, models: Callable[[], ModelSource],
                vehicle: Callable[[], Vehicle], device: Any, owns_set: Callable[[], bool], play: Callable[[str], None] | None = None,
                storage: Callable[[], dict[str, float]] = dict, recount: Callable[[], None] = lambda: None,
-               ram: Callable[[], bool] = lambda: False, navigation: Callable[[], StarPilotPlaces] | None = None):
+               ram: Callable[[], bool] = lambda: False, navigation: Callable[[], StarPilotPlaces] | None = None,
+               maps: Callable[[], MapsSource] | None = None):
     self.store, self.live, self.rows, self.road = store, live, rows, road
     self.models, self.vehicle, self.device, self.owns_set = models, vehicle, device, owns_set
     self.play, self.storage, self.recount, self.ram = play, storage, recount, ram
     self.navigation = navigation or _device_navigation
+    self.maps = maps
 
 
 def _device_navigation() -> StarPilotPlaces:
@@ -104,6 +108,19 @@ def driving_hub(window: SettingsWindow, services: DrivingServices) -> HubPage:
   models = Lazy(lambda: Models(services.models(), services.recount))
   places = Lazy(services.navigation)
   navigation = Lazy(lambda: NavigationSettings(places.get()))
+  make_maps = services.maps
+  maps = Lazy(lambda: Maps(make_maps())) if make_maps is not None else None
+
+  def open_maps() -> None:
+    """Offline Maps, and from it the region picker; a download goes back to the maps page, which shows its progress."""
+    if maps is None:
+      return
+    def open_regions() -> None:
+      def download() -> None:
+        maps.get().source.download()
+        window.back()
+      window.push(RegionsPage(maps.get(), download))
+    window.push(MapsPage(maps.get(), open_regions, services.storage, window))
   vehicle = Lazy(services.vehicle)
 
   def set_bundle(bundle: Bundle, on: bool) -> None:
@@ -124,7 +141,10 @@ def driving_hub(window: SettingsWindow, services: DrivingServices) -> HubPage:
     """Where to? over the settings window, on the same navigation as this page."""
     from openpilot.system.ui.lib.application import gui_app
     from openpilot.selfdrive.ui.tandem.destinations import destinations_screen
-    gui_app.push_widget(destinations_screen(gui_app.pop_widget, places=places.get()))
+    def maps_instead() -> None:
+      gui_app.pop_widget()
+      open_maps()
+    gui_app.push_widget(destinations_screen(gui_app.pop_widget, maps_instead if maps is not None else None, places=places.get()))
 
   def open_key_help() -> None:
     from openpilot.selfdrive.ui.tandem.map_keys import map_key_sheet
@@ -136,7 +156,8 @@ def driving_hub(window: SettingsWindow, services: DrivingServices) -> HubPage:
     return SectionPage(N_("SPEED & STEERING"), [
       Section(N_("Everyday"), lambda: everyday_panel(speed)),
       Section(N_("Weather"), lambda: weather_panel(weather), value=weather.summary),
-      Section(N_("Navigation"), lambda: navigation_panel(navigation.get(), open_destinations, open_key_help),
+      Section(N_("Navigation"), lambda: navigation_panel(navigation.get(), open_destinations, open_key_help,
+                                                         (lambda: maps.get()) if maps is not None else None, open_maps),
               value=lambda: navigation.get().summary()),
     ], footer=[tuner_button])
 
@@ -186,5 +207,6 @@ def driving_hub(window: SettingsWindow, services: DrivingServices) -> HubPage:
   ], rows=[3, 3], strip=strip, trailing=SearchButton(open_search))
   # Each page the hub opens, by name, for settings search to open a result's page.
   hub.pages = {"speed_steering": opener(speed_steering), "display": opener(display), "alerts": opener(lambda: alerts_page(alerts, window)),
-               "model": opener(model), "vehicle": opener(car), "assistance": opener(assistance_page), "tuner": open_tuner}
+               "model": opener(model), "vehicle": opener(car), "assistance": opener(assistance_page), "tuner": open_tuner,
+               "maps": open_maps}
   return hub

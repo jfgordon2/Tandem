@@ -78,6 +78,9 @@ StarPilot 7’s raylib binding retains glyph images for TTF fonts. Tandem defers
 
 ## Where the code differs from the mocks
 
+- **Offline Maps (StarPilot 7):** `valhalla2-maps-home` has no Keep up to date card: StarPilot 7 has no scheduled map
+  refresh to share, so Storage takes the right column. One map job gets road data from StarPilot's map owner, a state at
+  a time, then the shared routing download (`valhalla5-paired-*` showed both per state together).
 - **Connections (StarPilot 7):** Car Audio & Devices (`connectionsaudio`) is Bluetooth Devices, with Paired and Nearby
   cards and a device sheet of Disconnect and Forget: StarPilot 7 has no openpilot sounds over Bluetooth, so the car
   audio switch and sound test are gone. Bluetooth Remote's actions are StarPilot's list, without Favorite 1-3.

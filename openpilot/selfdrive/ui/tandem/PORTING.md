@@ -626,8 +626,12 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
   `handoff.py`, `paired.py` and road-tile pruning are gone with StarPilot 6's downloader, and so are the tests of its
   schedule and companion hook. StarPilot 7 has no scheduled map refresh, so release's Weekly and Monthly updates have
   nothing to hook into.
-- Phase B, part 2, still to do: the Offline Maps page, Navigation's Offline maps only and Preferred maps rows, and the
-  routing status on the driving screen.
+- Phase B, part 2, screens done: Offline Maps (`settings/maps.py` on `settings/map_source.TandemMaps`), its region
+  picker and download view against release's approved `valhalla2`/`valhalla3`/`valhalla4`/`valhalla5` mocks, and
+  Navigation's Offline maps only, Preferred maps and Offline Maps rows (`stage5-drivingnav`, `stage5-drivingnav-end`).
+  Where to?'s Offline maps button opens the page. Remove maps is Storage & Data's Delete.
+- Phase B, still to do: the routing status chips on the driving screen (`valhalla2-chip-*`), and the offline-maps chip
+  and "Choose regions" in Where to?'s preview.
 - Speed & Steering › Navigation (`settings/navigation.py`, `design/stage5-drivingnav.html`) writes StarPilot's own
   navigation settings: on or off, directions (Google only with its key), avoidances and position. Saved Places opens
   Where to?. Keys are pasted in Galaxy; `map_keys.py` (`stage5-mapboxkey.html`) explains how. Release's End Route When

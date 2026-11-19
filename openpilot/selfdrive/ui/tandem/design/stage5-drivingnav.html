@@ -33,6 +33,21 @@ a{color:#7DBBF9}a:hover{color:#A9D3FB}
         <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 18px; font-weight: 600;">Saved Places</span><span style="font-size: 14px; color: #AEB6C2;">Home · Work · 3 favorites</span></div>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#AEB6C2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg>
       </a>
+      <div style="display: flex; align-items: center; gap: 14px; padding: 0 22px; height: 58px; flex-shrink: 0; border-bottom: 1px solid #23272E;">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 18px; font-weight: 600;">Offline maps only</span><span style="font-size: 14px; color: #AEB6C2;">Use the preferred maps, with a fallback if needed.</span></div>
+        <button type="button" role="switch" aria-checked="false" aria-label="Offline maps only" style="width: 72px; height: 42px; flex-shrink: 0; border-radius: 21px; border: 0; background: #343A44; padding: 4px; display: flex; justify-content: flex-start;"><span style="width: 34px; height: 34px; border-radius: 17px; background: #B7BEC8; display: block;"></span></button>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px; padding: 0 16px 0 22px; height: 58px; flex-shrink: 0; border-bottom: 1px solid #23272E;">
+        <div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 18px; font-weight: 600;">Preferred maps (when available)</span><span style="font-size: 14px; color: #AEB6C2;">Try online first; fall back to downloaded maps.</span></div>
+        <div role="radiogroup" aria-label="Preferred maps" style="display: flex; background: #23272E; border-radius: 13px; padding: 4px;">
+          <button type="button" role="radio" aria-checked="true" style="font-family: inherit; border: 0; background: #5AAAF8; color: #0B1A2B; width: 112px; height: 42px; border-radius: 10px; font-size: 16px; font-weight: 700;">Online</button>
+          <button type="button" role="radio" aria-checked="false" style="font-family: inherit; border: 0; background: transparent; color: #C9D0DA; width: 112px; height: 42px; border-radius: 10px; font-size: 16px; font-weight: 600;">Offline</button>
+        </div>
+      </div>
+      <a href="valhalla2-maps-home.html" style="text-decoration: none; display: flex; align-items: center; gap: 14px; padding: 0 14px 0 22px; height: 58px; flex-shrink: 0; border-bottom: 1px solid #23272E; color: #F2F5F9;">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 18px; font-weight: 600;">Offline Maps</span><span style="font-size: 14px; color: #AEB6C2;">Iowa · routes, speed limits and street names ready</span></div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#AEB6C2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg>
+      </a>
       <div style="display: flex; align-items: center; gap: 14px; padding: 0 16px 0 22px; height: 58px; flex-shrink: 0; border-bottom: 1px solid #23272E;">
         <div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 18px; font-weight: 600;">Directions</span><span style="font-size: 14px; color: #AEB6C2;">Turn-by-turn with lane arrows</span></div>
         <div role="radiogroup" aria-label="Directions" style="display: flex; background: #23272E; border-radius: 13px; padding: 4px;">
