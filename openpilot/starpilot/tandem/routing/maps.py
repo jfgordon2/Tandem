@@ -1,9 +1,9 @@
 """Persistent map jobs shared by manual downloads and StarPilot's update schedule."""
 from __future__ import annotations
 
-import json
 import threading
 import time
+import uuid
 from contextlib import contextmanager, ExitStack
 import fcntl
 from typing import Any, TYPE_CHECKING
@@ -12,34 +12,29 @@ from collections.abc import Iterator
 
 from openpilot.starpilot.tandem.routing import bundles, catalog, config as C, downloads, images, verified
 from openpilot.starpilot.tandem.routing.demand import ACTIVE_MAP_PHASES as ACTIVE, download_pending as running, read_map as read
-from openpilot.starpilot.tandem.routing.handoff import enqueue, in_progress
 
 if TYPE_CHECKING:
   from openpilot.starpilot.tandem.routing.bundles import Bundle
-  from openpilot.common.params import Params
 
 
-def request(selection: str, wait_for_road: bool = False) -> str:
-  """Queues a map job for a selection and returns its id. wait_for_road holds routes until the road data is in."""
+def request(selection: str) -> str:
+  """Queues a map job for a selection (comma-separated "us_state.IA" tokens) and returns its id.
+
+  The job gets each state's road data from StarPilot's map owner, then its routing data. An empty selection removes the
+  routing data no state needs."""
   original = selection
   selection = ",".join(sorted(catalog.tokens(selection)))
   if not selection and (original or catalog.load()["schema"] != 2):
     raise C.RoutingError("invalid_request")
-  # mapd's published receipt uses epoch seconds, so this comparison must use
-  # the same clock. All internal deadlines and rate estimates are monotonic.
-  # Enqueue independently of graph installation. Its lock can be held while
-  # copying/checksumming a large graph; road-map downloads must not wait for it.
-  job = enqueue(selection, wait_for_road=wait_for_road)
+  # Enqueue independently of graph installation: its lock can be held while checking a large graph.
+  job = {"id": uuid.uuid4().hex, "selection": selection, "created": time.time()}  # noqa: TID251
+  C.atomic_json(C.root() / "map-request.json", job)
   return str(job["id"])
 
 
-def on_map_download_started(selection: str) -> None:
-  """Minimal upstream hook after its schedule/gates have accepted an update."""
-  try:
-    if C.enabled() and not in_progress():
-      request(selection, wait_for_road=True)
-  except Exception:
-    pass  # Routing must never break StarPilot's own road-data download.
+def selection() -> str:
+  """The last requested selection, the driver's chosen states."""
+  return str(read("map-request.json").get("selection") or "")
 
 
 def cancel() -> None:
@@ -84,9 +79,9 @@ def remove_all() -> None:
 class Manager:
   """Runs map jobs one at a time in the background, from the request file, and audits installed data while idle."""
 
-  def __init__(self, memory: Params, allowed: Callable[[], bool] = lambda: True, stop: threading.Event | None = None,
+  def __init__(self, allowed: Callable[[], bool] = lambda: True, stop: threading.Event | None = None,
                installer: Callable[..., Bundle | None] = downloads.install, prepare: Callable[..., Any] | None = None) -> None:
-    self.memory, self.allowed = memory, allowed
+    self.allowed = allowed
     self.stop = stop or threading.Event()
     self.installer = installer
     if prepare is None:
@@ -171,42 +166,20 @@ class Manager:
     except C.RoutingError:
       raise C.RoutingError("interrupted") from None
 
-  def prune_road(self, pending: dict) -> None:
-    from openpilot.starpilot.tandem.routing import road
-    road.apply(pending["selection"], self.assembly_gate, self.memory, paired=pending.get("paired", False))
-
   def run(self, pending: dict) -> None:
-    """Runs a job: plans the packages for its selection, installs them, prunes road data, and records the outcome."""
-    previous = read()
-    road_ready = previous.get("id") == pending["id"] and previous.get("road_ready", False)
-    self.state = {**pending, "phase": "road" if pending.get("wait_for_road") else "prepare", "done": 0, "total": 0,
-                  "regions_ready": [], "current_regions": [], "error": "", "paused": False}
-    self.publish(phase=self.state["phase"], force=True)
+    """Runs a job: road data from StarPilot's map owner, then the routing packages for its selection, and the outcome."""
+    self.state = {**pending, "phase": "road", "done": 0, "total": 0, "regions_ready": [], "current_regions": [], "error": "",
+                  "paused": False}
+    self.publish(phase="road", force=True)
     try:
-      if pending.get("wait_for_road") and not road_ready:
-        end = time.monotonic() + 180  # fail explicitly if mapd never starts
-        observed = False
-        while True:
-          self.gate()
-          try:
-            road = json.loads(self.memory.get("MapsDownloadProgress") or "{}")
-          except (ValueError, TypeError):
-            road = {}
-          if (road.get("selectedKey") == pending["selection"] and road.get("updatedAt", 0) >= pending["created"]):
-            observed |= bool(road.get("active"))
-            if road.get("cancelled"):
-              raise C.RoutingError("cancelled")
-            if road.get("completed"):
-              break
-          if not observed and time.monotonic() > end:
-            raise C.RoutingError("road_download_failed")
-          self.stop.wait(.25)
-      self.publish(phase="prepare", road_ready=not pending.get("paired", False))
+      from openpilot.starpilot.tandem.routing import road
+      from openpilot.starpilot.tandem.routing.regions import STATE_TOKENS
+      road.ensure(sorted(catalog.tokens(pending["selection"]) & STATE_TOKENS), self.gate, self.publish)
+      self.publish(phase="prepare", current_regions=[], done=0, total=0)
       self.gate()
       packages, unsupported = catalog.plan(pending["selection"], catalog.load(refresh=True, gate=self.gate))
       self.publish(unsupported=sorted(unsupported))
       if unsupported and any(package.get("kind") == "dataset" for package in packages):
-        self.prune_road(pending)  # completed legacy downloads still follow the requested selection
         raise C.RoutingError("coverage_unavailable")
       if any(package.get("kind") != "dataset" or package["parts"] for package in packages):
         self.prepare(cancelled=lambda: self._setup_cancelled())
@@ -217,11 +190,6 @@ class Manager:
           continue
         self.publish(phase="download", done=0, total=package["bytes"], current_regions=package["regions"])
         kwargs: dict[str, Any] = {"pack_gate": self.assembly_gate, "activity": self.publish} if package.get("kind") == "dataset" else {}
-        if pending.get("paired"):
-          if package.get("kind") != "dataset" or sorted(package["regions"]) != pending["road_regions"]:
-            raise C.RoutingError("coverage_unavailable")
-          from openpilot.starpilot.tandem.routing.paired import Transfers
-          kwargs["transfer"] = Transfers(self).fetch
         installed = self.installer(package, gate=self.gate, progress=lambda done, total: self.publish(done=done, total=total),
                                    installing=lambda: self.publish(phase="install", stage="", done=0, total=0), **kwargs)
         if installed is not None:
@@ -237,7 +205,6 @@ class Manager:
             except C.RoutingError:
               pass  # an active reader's lease wins over background cleanup
         self.publish(regions_ready=sorted(set(self.state["regions_ready"]) | set(package["regions"])))
-      self.prune_road(pending)
       if unsupported:
         raise C.RoutingError("coverage_unavailable")
       self.publish(phase="ready", done=self.state["total"], error="", current_regions=[])
@@ -271,10 +238,10 @@ def run(stop: threading.Event) -> None:
   from openpilot.cereal import log
   from openpilot.cereal import messaging
   from openpilot.common.params import Params
-  params = Params()   # StarPilot 7 has no memory params; road data comes from its own map owner (PORTING.md, phase B)
+  params = Params()
   sm = messaging.SubMaster(["deviceState"])
   permitted = threading.Event()
-  manager = Manager(params, permitted.is_set, stop)
+  manager = Manager(permitted.is_set, stop)
   try:
     while not stop.wait(.5):
       sm.update(0)

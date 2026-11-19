@@ -6,7 +6,8 @@ region catalog instead, so Tandem keeps the list it publishes routing data for.
 from __future__ import annotations
 
 STATE_PREFIX = "us_state."
-NATION_US = "nation.US"
+NATION_PREFIX = "nation."
+NATION_US = NATION_PREFIX + "US"
 
 STATE_GROUPS = (
   ("Midwest", {"IL": "Illinois", "IN": "Indiana", "IA": "Iowa", "KS": "Kansas", "MI": "Michigan", "MN": "Minnesota", "MO": "Missouri",
@@ -26,12 +27,14 @@ STATE_TOKENS = frozenset(STATE_PREFIX + code for code in STATES)
 
 
 def tokens(selection: str) -> set[str]:
-  """The state tokens in a comma-separated selection; "nation.US" stands for every state. Anything else is dropped."""
+  """The regions in a comma-separated selection: states, with "nation.US" for every state, and other countries
+  ("nation.CA"), kept so a plan can say Tandem has no routing data for them. Anything else is dropped."""
   result: set[str] = set()
   for token in (t.strip() for t in selection.split(",")):
     if token == NATION_US:
       result |= STATE_TOKENS
-    elif token in STATE_TOKENS:
+    elif token in STATE_TOKENS or (token.startswith(NATION_PREFIX) and token[len(NATION_PREFIX):].isalpha()
+                                   and len(token) == len(NATION_PREFIX) + 2):
       result.add(token)
   return result
 

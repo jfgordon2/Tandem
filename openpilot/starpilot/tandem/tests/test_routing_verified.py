@@ -20,6 +20,9 @@ def isolated(monkeypatch, tmp_path):
   monkeypatch.setenv("TANDEM_PREFS_DIR", str(tmp_path / "prefs"))
   monkeypatch.setenv("TANDEM_ROUTING", "1")
   monkeypatch.setattr(C, "runtime_ready", lambda: True)
+  # StarPilot 7's map owner isn't on this machine; test_routing_road.py covers the road step
+  from openpilot.starpilot.tandem.routing import road
+  monkeypatch.setattr(road, "ensure", lambda *args, **kwargs: None)
 
 
 def test_worker_start_and_repeated_requests_never_scan_graph(monkeypatch, tmp_path, capsys):
@@ -66,7 +69,7 @@ def test_same_size_change_even_with_restored_mtime_invalidates_receipt(tmp_path)
 def test_missing_receipt_is_rebuilt_only_by_parked_audit(monkeypatch, tmp_path):
   bundle = bundles.install(make_bundle(tmp_path / "source").folder)
   verified.invalidate(bundle)
-  manager = maps.Manager(SimpleNamespace(), prepare=lambda **_: None, allowed=lambda: False)
+  manager = maps.Manager(prepare=lambda **_: None, allowed=lambda: False)
   manager.audit()
   assert not verified.read(bundle)
   manager.allowed = lambda: True
@@ -85,7 +88,7 @@ def test_audit_detects_corruption_without_file_metadata_change(monkeypatch, tmp_
   original = bundles.digest
   monkeypatch.setattr(bundles, "digest", lambda path, *args: "0" * 64 if path.name == "tiles.tar" else original(path, *args))
   assert verified.read(bundle)
-  maps.Manager(SimpleNamespace(), prepare=lambda **_: None).audit()
+  maps.Manager(prepare=lambda **_: None).audit()
   assert not verified.read(bundle) and bundles.capability()["status"] == "data_incompatible"
 
 
