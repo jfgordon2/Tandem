@@ -78,6 +78,8 @@ StarPilot 7’s raylib binding retains glyph images for TTF fonts. Tandem defers
 
 ## Where the code differs from the mocks
 
+- **Display › Map (StarPilot 7):** `displaymap` isn't built. Its switch and sign style were StarPilot 6 settings that
+  StarPilot 7 dropped; its Offline Maps link is in Speed & Steering › Navigation.
 - **Offline Maps (StarPilot 7):** `valhalla2-maps-home` has no Keep up to date card: StarPilot 7 has no scheduled map
   refresh to share, so Storage takes the right column. One map job gets road data from StarPilot's map owner, a state at
   a time, then the shared routing download (`valhalla5-paired-*` showed both per state together).

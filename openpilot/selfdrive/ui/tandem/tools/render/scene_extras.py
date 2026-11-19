@@ -1,4 +1,4 @@
-"""Render the pedal tiles and border highlights over the stand-in road (design/onroadextras.html)."""
+"""Render the pedal tiles, border highlights and model chip over the stand-in road (design/onroadextras.html)."""
 from __future__ import annotations
 
 from collections.abc import Callable
@@ -15,7 +15,8 @@ from openpilot.starpilot.ui.raylib import rl
 def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any) -> None:
   """Braking with the left signal on and a car in the right blind spot."""
   sample = DriveDisplay(BarState(engaged=True, set_speed=63, street="County Road F31"), 58, posted="60", left=True, monitor=1.0,
-                        arc=ArcState(0.2, 0.0, True), pedals=(0.9, extras.IDLE), border=(extras.SIGNAL_BORDER, extras.BLIND_SPOT_BORDER))
+                        arc=ArcState(0.2, 0.0, True), pedals=(0.9, extras.IDLE), border=(extras.SIGNAL_BORDER, extras.BLIND_SPOT_BORDER),
+                        model=("active", 1.0))
   rect = rl.Rectangle(0, 0, 2160, 1080)
   overlay = OnroadOverlay(lambda: sample, lambda: None, lambda _: None, lambda: None, lambda *_: None)
 

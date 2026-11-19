@@ -88,8 +88,8 @@
     {
       "mock": "displaymap",
       "title": "Display › Map",
-      "note": "Matches, with the note at the bottom. No Auto sign option: StarPilot's setting is US or Vienna. Page ground uses true black (#000000).",
-      "match": true
+      "note": "StarPilot 7: not built. Turn-by-Turn on Screen and the sign style were StarPilot 6 settings StarPilot 7 dropped; Offline Maps is in Speed & Steering › Navigation.",
+      "match": false
     },
     {
       "mock": "pathstylepicker",
@@ -570,7 +570,7 @@
     {
       "mock": "onroadextras",
       "title": "Onroad › StarPilot extras",
-      "note": "Matches: pedal tiles and the model chip under the driver monitor, the compass tag at the start of the bar (where it sits while navigating), the weather now at its end without a route, the stopping line, lane and blind-spot washes, radar dots and the border halves, over a stand-in road. Page ground uses true black (#000000).",
+      "note": "Matches: pedal tiles and the model chip under the driver monitor, the compass tag at the start of the bar (where it sits while navigating), the weather now at its end without a route, the stopping line, lane and blind-spot washes, radar dots and the border halves, over a stand-in road. Page ground uses true black (#000000). The model chip shows Jetlink's state (StarPilot 7's external GPU) while StarPilot's layout places its Jetlink widget.",
       "match": true,
       "built": "onroad_extras"
     },

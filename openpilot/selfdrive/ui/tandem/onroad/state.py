@@ -65,6 +65,7 @@ class DriveDisplay:
   proposal: Proposal | None = None
   pedals: tuple[float, float] | None = None   # (brake, gas) tiles under the monitor tile (extras.Pedals), None when off
   border: tuple[Any, Any] = (None, None)      # each side's highlight color (extras.border_halves), None for none
+  model: tuple[str, float] | None = None      # the model chip's state and opacity (extras.ModelChip), None when hidden
   turn: tuple[str, str, str, str] | None = None   # the next turn while guiding: (distance, instruction, maneuver, modifier)
 
 

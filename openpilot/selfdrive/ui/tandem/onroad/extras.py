@@ -6,17 +6,22 @@ Each keeps StarPilot 7's own setting and rule for when it shows; only the drawin
 - Border: the signalling side blinks blue and a blind-spot side holds red, while StarPilot's signal and blind-spot
   border settings are on (Display › Blind Spot Highlights).
 
+- Model chip: under them, Jetlink's state (StarPilot 7's external-GPU link for the bigger model), while StarPilot's own
+  onroad layout places its Jetlink widget, as release's model-source chip.
+
 Release's stopping point, adjacent lanes, radar points and signal animations were StarPilot 6 settings, gone in 7.
 The functions take what they need as arguments, so they render and test without a car.
 """
 from __future__ import annotations
 
+import math
 from typing import Any
 
 from openpilot.starpilot.ui.raylib import rl
 
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
-from openpilot.selfdrive.ui.tandem.layout import place
+from openpilot.selfdrive.ui.tandem.i18n import N_
+from openpilot.selfdrive.ui.tandem.layout import FILL, inset, place, row
 
 BRAKE_FILL, BRAKE_INK = T._hex("3A1F24"), T._hex("FF8A8A")
 GAS_FILL, GAS_INK = T._hex("173A2A"), T.SUCCESS_TEXT
@@ -92,3 +97,60 @@ def draw_border_halves(rect: rl.Rectangle, border: rl.Rectangle, radius: float, 
     rl.begin_scissor_mode(int(rect.x + i * (rect.width // 2)), int(rect.y), int(rect.width // 2), int(rect.height))
     draw.stroke(border, color, radius, width)
     rl.end_scissor_mode()
+
+
+# ── The model chip ──
+
+MODEL_LABELS = {   # the chip's state: label and tone
+  "loading": (N_("Loading model"), "accent"),
+  "active": (N_("Big model"), "success"),
+  "failed": (N_("Big model failed"), "warning"),
+  "fallback_engaged": (N_("Small model in use"), "warning"),
+}
+# StarPilot 7's Jetlink states (starpilot/models/jetlink_status.py) as release's model-source states
+JETLINK = {"connecting": "loading", "connected": "loading", "ready": "loading", "active": "active", "unavailable": "failed",
+           "disconnected": "fallback_engaged"}
+SHOW_S = 2.5   # a change shows this long, then fades, as StarPilot's; loading shows throughout
+
+
+def _tones() -> dict[str, tuple[Any, Any, Any]]:
+  return {"accent": (T.ACCENT_SURFACE, T.ACCENT_CHIP_TEXT, T.ACCENT_TEXT), "success": (T.SUCCESS_SURFACE, T.SUCCESS_CHIP_TEXT, T.SUCCESS_TEXT),
+          "warning": (T.WARNING_SURFACE, T.WARNING_CHIP_TEXT, T.WARNING)}
+
+
+class ModelChip:
+  """Which model drives, from Jetlink's state: Loading model while it connects, then each change for SHOW_S."""
+
+  def __init__(self) -> None:
+    self._shown: str | None = None
+    self._since = -1e9
+
+  def update(self, jetlink: str, now: float) -> tuple[str, float] | None:
+    """(state, opacity) to draw, or None.
+
+    Args:
+      jetlink: Jetlink's state (off, disconnected, connecting, connected, ready, active, unavailable).
+      now: Seconds.
+    """
+    state = JETLINK.get(jetlink)
+    if state != self._shown:
+      self._shown, self._since = state, now
+    if state is None:
+      return None
+    if state == "loading":
+      return state, 0.35 + 0.65 * (0.5 - 0.5 * math.cos(now * 6.0))
+    age = now - self._since
+    return (state, 1.0 if age < SHOW_S else max(0.0, 1.0 - (age - SHOW_S) / 0.5)) if age < SHOW_S + 0.5 else None
+
+
+def draw_model_chip(right: float, y: float, state: str, alpha: float) -> None:
+  """The model chip, right-aligned at right (under the driver monitor tile and the pedals)."""
+  label, tone = MODEL_LABELS[state]
+  fill, ink, icon = _tones()[tone]
+  size, h = T.font_px(17), T.px(52)
+  w = T.px(14) + T.px(24) + T.px(10) + draw.text_width(label, size, T.FONT_SEMIBOLD) + T.px(16)
+  chip = rl.Rectangle(right - w, y, w, h)
+  draw.fill(chip, draw.alpha(fill, alpha), T.px(14))
+  glyph, words = row(inset(chip, left=T.px(14), right=T.px(16)), [T.px(24), FILL], T.px(10))
+  draw.icon(glyph, "cpu", draw.alpha(icon, alpha), T.px(24))
+  draw.text(words, label, size, draw.alpha(ink, alpha), T.FONT_SEMIBOLD)

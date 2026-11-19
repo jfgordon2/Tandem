@@ -104,8 +104,12 @@ class OnroadOverlay(Component):
       layers.draw_speed(inner, state.speed, state.unit, left=state.left, right=state.right, now=self._clock())
       if state.monitor is not None:
         layers.draw_driver_monitor(layers.dm_tile(inner), 1.0, 0.0 if state.attention_warning else state.monitor, True)
+      tile = layers.dm_tile(inner)
+      below = tile.y + tile.height + T.px(10)
       if state.pedals is not None:
-        extras.draw_pedals(layers.dm_tile(inner), state.pedals)
+        below = extras.draw_pedals(tile, state.pedals)
+      if state.model is not None:
+        extras.draw_model_chip(tile.x + tile.width, below, *state.model)
       if self._limit is not None:
         self._limit.render(inner)
       elif state.posted:

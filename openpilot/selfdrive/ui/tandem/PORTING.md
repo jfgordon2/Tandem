@@ -579,7 +579,8 @@ WarningImmediateVolume WarningSoftVolume
   `starpilot/tandem/signals.py`).
 - Not needed on StarPilot 7: the speed-sign model's memory hook (`vision_slc` runs only while driving) and Galaxy's
   dashboard worker (drive statistics run in Galaxy's own process now).
-- Still to do: the external GPU model chip (`ModelChip`), which StarPilot 7 shows through its stock HUD.
+- The model chip (`extras.ModelChip`, `onroadextras.html`) shows Jetlink's state (StarPilot 7's external-GPU link) under
+  the driver monitor tile and pedals, while StarPilot's onroad layout places its Jetlink widget.
 
 ## Tests still on `release` only
 
@@ -640,4 +641,6 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
   navigation settings: on or off, directions (Google only with its key), avoidances and position. Saved Places opens
   Where to?. Keys are pasted in Galaxy; `map_keys.py` (`stage5-mapboxkey.html`) explains how. Release's End Route When
   Parked has no StarPilot 7 setting.
-- Still to port: Display › Map.
+- Display › Map is left out: StarPilot 7 dropped Turn-by-Turn on Screen (`NavigationUI`; Tandem's turn card shows
+  with every route) and has no writer for the sign style (`UseVienna`), so only the Offline Maps link was left, and
+  Speed & Steering › Navigation has it.

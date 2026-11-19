@@ -87,6 +87,8 @@ class EssentialsOnroad(AugmentedRoadView):
     self._routing_key: tuple[int, str] | None = None
     self._guided = False   # this drive had a route to this destination: a new request is a recalculation
     self._nav_status = ""   # StarPilot's published navigation status
+    self._jetlink: Any = None   # StarPilot's Jetlink status feed, made when its widget is first placed
+    self._model_chip = extras.ModelChip()
     self._overlay = self._child(OnroadOverlay(lambda: self._display, self._menu, self._step, self._disengage, self._resolve,
                                               end_route=self._end_route, where_to=self._where_to))
 
@@ -173,6 +175,24 @@ class EssentialsOnroad(AugmentedRoadView):
     if key != self._routing_key:   # a new drive or destination starts with no route yet
       self._routing_key, self._guided = key, False
     self._guided |= self._nav_status == "guiding"
+
+  def _model(self, state: OnroadState) -> tuple[str, float] | None:
+    """The model chip from Jetlink's state, while StarPilot's onroad layout places its Jetlink widget (as StarPilot's own
+    screen shows it). StarPilot's feed polls Jetlink off the drawing thread, only while it's wanted."""
+    try:
+      from openpilot.starpilot.ui.onroad_customization import JETLINK_WIDGET
+      placed = state.customization["layouts"]["large"].get(JETLINK_WIDGET)
+      wanted = bool(placed and placed["enabled"] and ui_state.started and ui_state.replay_clock is None)
+      if self._jetlink is None and wanted:
+        from openpilot.starpilot.models.jetlink_status import JetlinkStatusFeed
+        self._jetlink = JetlinkStatusFeed()
+      if self._jetlink is not None:
+        self._jetlink.set_enabled(wanted)
+      jetlink = self._jetlink.snapshot().state if self._jetlink is not None and wanted else "off"
+    except Exception:
+      cloudlog.exception("Tandem: model chip")
+      jetlink = "off"
+    return self._model_chip.update(jetlink, time.monotonic())
 
   def _routing_chip(self, snap: Snapshot, now_ns: int) -> None:
     """Tandem's routing chip (design/valhalla2-chip-*.html) from StarPilot's navigation status, with offline routing on:
@@ -270,6 +290,7 @@ class EssentialsOnroad(AugmentedRoadView):
       arc=arc, help_steer=help_steer, chips=tuple(chips), alert=visible_alert,
       proposal=limit_offer(state, allowed and not self._safe, now_ns),
       turn=turn(state.navigation, bool(state.metric)),
+      model=self._model(state),
     )
     self._safely("pedals and border", lambda: self._extras(state, car, now_ns))
     self._safely("max follows limits", lambda: self._follow_limit(state, allowed and not self._safe))
