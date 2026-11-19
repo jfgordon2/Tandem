@@ -135,3 +135,22 @@ def test_the_preview_route_comes_from_starpilots_engine(owner: NavigationOwner, 
   plan = source._fetch_route(PARK)
   assert asked == [("pk.test", (-122.6, 45.5), 90.0)]
   assert plan == RoutePlan(((45.5, -122.6), (45.52, -122.62)), 3000.0, 420.0)
+
+
+def test_offline_maps_only_starts_and_previews_without_a_key(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+  from openpilot.starpilot.tandem.routing import config as C, navigation as N
+  monkeypatch.setenv("TANDEM_ROUTING", "1")
+  monkeypatch.setenv("TANDEM_PREFS_DIR", str(tmp_path / "prefs"))
+  monkeypatch.setenv("TANDEM_ROUTING_DIR", str(tmp_path / "routing"))
+  monkeypatch.setenv("TANDEM_STATE_DIR", str(tmp_path / "state"))
+  C.set_policy(offline_only=True)
+  monkeypatch.setattr(N, "capability", lambda: {"status": "ready", "generation": "g"})
+  monkeypatch.setattr(N, "language", lambda: "en")
+  route = SimpleNamespace(points=((-122.6, 45.5), (-122.62, 45.52)), total_distance=3000.0, total_duration=420.0)
+  monkeypatch.setattr(N.LocalRouteEngine, "fetch", lambda self, *args: route)
+  owner = make_owner(tmp_path)
+  monkeypatch.setattr(owner.position_store, "read", lambda: {"latitude": 45.5, "longitude": -122.6})
+  source = places(owner)
+  source.pick(PARK)
+  assert source.can_start() and source._fetch_route(PARK) == RoutePlan(((45.5, -122.6), (45.52, -122.62)), 3000.0, 420.0)
+  assert source.start() and owner.snapshot()["destination"]["name"] == "Laurelhurst Park"

@@ -194,8 +194,17 @@ class StarPilotPlaces:
   def can_search(self) -> bool:
     return bool(self._snapshot().get("hasKey"))
 
+  def can_route(self) -> bool:
+    """A route can be asked for: StarPilot's Mapbox key, or Tandem's offline routing with its data ready."""
+    snap = self._snapshot()
+    try:
+      from openpilot.starpilot.tandem.routing.navigation import can_route
+      return can_route({"token": "x" if snap.get("hasKey") else ""})
+    except Exception:
+      return bool(snap.get("hasKey"))
+
   def can_start(self) -> bool:
-    return bool(self._snapshot().get("hasKey")) and self._draft is not None
+    return self._draft is not None and self.can_route()
 
   def start(self) -> bool:
     """Sets the draft as StarPilot's destination, turning its navigation on first if it's off."""
@@ -216,7 +225,7 @@ class StarPilotPlaces:
     return True   # StarPilot 7 routes online; its offline road maps are for the map's background
 
   def route(self) -> tuple[RoutePlan | None, str]:
-    if not self._snapshot().get("hasKey"):
+    if not self.can_route():
       return None, NOT_SET_UP
     return self._routes.route(self._draft)
 
@@ -235,16 +244,25 @@ class StarPilotPlaces:
     from openpilot.starpilot.navigation.owner import ROUTE_AVOIDANCES
     exclusions = tuple(value for key, value in ROUTE_AVOIDANCES.items() if settings.get(key))
     origin, bearing = (position["longitude"], position["latitude"]), position.get("bearing")
-    try:
-      if settings.get("routeProvider") == "google" and settings.get("googleKey"):
+    google = settings.get("routeProvider") == "google" and bool(settings.get("googleKey"))
+
+    def online() -> tuple[Any, Any]:
+      """StarPilot's own route request: Google with its key, else Mapbox."""
+      if google:
         from openpilot.starpilot.navigation.google_routes import GoogleRouteEngine, essentials_budget, route_budget
-        engine: Any = GoogleRouteEngine(owner.session, route_budget(owner.google_root), essentials_budget(owner.google_root))
-        route = engine.fetch(settings["googleKey"], origin, place, bearing, exclusions)
+        return GoogleRouteEngine(owner.session, route_budget(owner.google_root), essentials_budget(owner.google_root)).fetch, settings["googleKey"]
+      from openpilot.starpilot.navigation.mapbox_budget import MonthlyBudget
+      from openpilot.starpilot.navigation.route_engine import MapboxRouteEngine
+      return MapboxRouteEngine(owner.session, MonthlyBudget("directions", owner.root / "mapbox-usage")).fetch, settings["token"]
+    try:
+      from openpilot.starpilot.tandem.routing import config as C
+      if C.enabled():   # the driver's order of providers, as navigation routes (Valhalla on this device's data)
+        from openpilot.starpilot.tandem.routing.navigation import LocalRouteEngine, fetch_by_policy
+        route = fetch_by_policy(online, LocalRouteEngine("preview"), (settings["token"], settings.get("googleKey") or ""),
+                                origin, place, bearing, exclusions, record=False)
       else:
-        from openpilot.starpilot.navigation.mapbox_budget import MonthlyBudget
-        from openpilot.starpilot.navigation.route_engine import MapboxRouteEngine
-        route = MapboxRouteEngine(owner.session, MonthlyBudget("directions", owner.root / "mapbox-usage")).fetch(
-          settings["token"], origin, place, bearing, exclusions)
+        fetch, first = online()
+        route = fetch(first, origin, place, bearing, exclusions)
     except Exception:
       return NO_ROUTE
     return RoutePlan(tuple((lat, lon) for lon, lat in route.points), float(route.total_distance), float(route.total_duration))
