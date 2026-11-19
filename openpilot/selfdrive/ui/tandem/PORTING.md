@@ -633,7 +633,9 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
 - Phase B, routing chips done: `onroad/status.routing_state` maps StarPilot 7's published navigation status
   (`starpilotNavigation`) and Tandem's `routing-status.json` onto release's `routing_chip` (`valhalla2-chip-*`). The bar
   shows a route (End route, dashes for estimates) for any StarPilot destination, not only while guiding.
-- Phase B, still to do: the offline-maps chip and "Choose regions" in Where to?'s preview.
+- Phase B, Where to? done: Offline maps ready shows while Tandem's routing data is ready (`valhalla2-places`), and with
+  Offline maps only a preview without an offline route says why, holds Start and offers Choose regions
+  (`valhalla2-preview-strict-missing`). Phase B is complete.
 - Speed & Steering › Navigation (`settings/navigation.py`, `design/stage5-drivingnav.html`) writes StarPilot's own
   navigation settings: on or off, directions (Google only with its key), avoidances and position. Saved Places opens
   Where to?. Keys are pasted in Galaxy; `map_keys.py` (`stage5-mapboxkey.html`) explains how. Release's End Route When

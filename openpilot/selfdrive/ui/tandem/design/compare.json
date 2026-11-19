@@ -789,14 +789,14 @@
     {
       "mock": "valhalla2-places",
       "title": "Same maps entry from saved places",
-      "note": "Native device capture with sample data. The footer opens the same Offline Maps and region selection flow as Navigation. No separate package manager or URL-entry flow.",
-      "match": false
+      "note": "StarPilot 7: matches. Offline maps ready shows while Tandem's routing data is ready; the footer opens Offline Maps.",
+      "match": true
     },
     {
       "mock": "valhalla2-preview-strict-missing",
       "title": "Offline-only preview needs maps",
-      "note": "Native device capture with sample data. Start stays disabled. Choose regions opens the existing region panes, rather than offering an online route or asking for a package URL.",
-      "match": false
+      "note": "StarPilot 7: matches. With Offline maps only and no offline route, the map says why, Start stays disabled and Choose regions opens Offline Maps; no online route is asked for.",
+      "match": true
     },
     {
       "mock": "stage4-ram",

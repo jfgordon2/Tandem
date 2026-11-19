@@ -4,7 +4,7 @@ from openpilot.selfdrive.ui.tandem.tests.fakes import FakePlaces
 
 
 def main(frame, save, out, tap, gui_app):
-  places = FakePlaces()
+  places = FakePlaces(maps=False)   # destinations.html predates offline routing's chip
   screen = D.DestinationsScreen(places, lambda: None, open_maps=lambda: None)
   rect = rl.Rectangle(0, 0, 2160, 1080)
   draw = lambda: screen.render(rect)  # noqa: E731
@@ -43,3 +43,14 @@ def main(frame, save, out, tap, gui_app):
   screen._pick_result(0)
   screen._update_state()
   shot("routepreview")
+  # Offline routing (design/valhalla2-places.html, valhalla2-preview-strict-missing.html)
+  ready = D.DestinationsScreen(FakePlaces(), lambda: None, open_maps=lambda: None)
+  for _ in range(4):
+    frame(lambda: ready.render(rect))
+  save(f"{out}/valhalla2-places.png")
+  missing = FakePlaces(missing=True)
+  strict = D.DestinationsScreen(missing, lambda: None, open_maps=lambda: None)
+  strict._pick(missing.recents()[0])
+  for _ in range(4):
+    frame(lambda: strict.render(rect))
+  save(f"{out}/valhalla2-preview-strict-missing.png")

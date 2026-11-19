@@ -134,3 +134,14 @@ def test_preview_star_saves_and_start_follows_routing():
   screen, places, _ = _screen(routing=False)
   screen._pick(places.recents()[0])
   assert not screen._start_button.enabled and places.route() == (None, NOT_SET_UP)
+
+
+def test_offline_only_without_a_route_offers_choose_regions():
+  opened = []
+  places = FakePlaces(missing=True)
+  screen = D.DestinationsScreen(places, lambda: None, open_maps=lambda: opened.append(True))
+  screen._pick(places.recents()[0])
+  assert places.route_missing() and not screen._start_button.enabled
+  screen._choose_maps._click_callback()
+  assert opened == [True]
+  assert D.DestinationsScreen(FakePlaces(), lambda: None)._choose_maps is None   # no maps page to open

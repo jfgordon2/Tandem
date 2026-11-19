@@ -154,3 +154,28 @@ def test_offline_maps_only_starts_and_previews_without_a_key(tmp_path: Path, mon
   source.pick(PARK)
   assert source.can_start() and source._fetch_route(PARK) == RoutePlan(((45.5, -122.6), (45.52, -122.62)), 3000.0, 420.0)
   assert source.start() and owner.snapshot()["destination"]["name"] == "Laurelhurst Park"
+
+
+def test_offline_maps_only_without_coverage_holds_start_and_says_why(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+  from openpilot.starpilot.tandem.routing import config as C, navigation as N
+  from openpilot.starpilot.navigation.owner import ValidationError
+  monkeypatch.setenv("TANDEM_ROUTING", "1")
+  monkeypatch.setenv("TANDEM_PREFS_DIR", str(tmp_path / "prefs"))
+  monkeypatch.setenv("TANDEM_ROUTING_DIR", str(tmp_path / "routing"))
+  monkeypatch.setenv("TANDEM_STATE_DIR", str(tmp_path / "state"))
+  C.set_policy(offline_only=True)
+  monkeypatch.setattr(N, "capability", lambda: {"status": "ready", "generation": "g"})
+  monkeypatch.setattr(N, "language", lambda: "en")
+
+  def outside(*_: object) -> None:
+    raise ValidationError("data_missing")
+  monkeypatch.setattr(N.LocalRouteEngine, "fetch", outside)
+  owner = make_owner(tmp_path)
+  monkeypatch.setattr(owner.position_store, "read", lambda: {"latitude": 45.5, "longitude": -122.6})
+  source = places(owner)
+  assert source.maps_ready() and source._fetch_route(PARK) == "Download maps for this region"
+  source.pick(PARK)
+  source._routes.route = lambda place: (None, "Download maps for this region")   # type: ignore[method-assign]
+  assert source.route_missing() and not source.can_start()
+  C.set_policy(offline_only=False)
+  assert not source.route_missing()

@@ -15,7 +15,7 @@ from concurrent.futures import Future, ThreadPoolExecutor
 from typing import Any
 
 from openpilot.selfdrive.ui.tandem.i18n import N_
-from openpilot.selfdrive.ui.tandem.routemap import NO_FIX, NO_ROUTE, NOT_SET_UP, RouteFetcher, RoutePlan
+from openpilot.selfdrive.ui.tandem.routemap import FINDING, NO_FIX, NO_ROUTE, NOT_SET_UP, RouteFetcher, RoutePlan
 
 REFRESH_S = 1.0
 
@@ -204,7 +204,7 @@ class StarPilotPlaces:
       return bool(snap.get("hasKey"))
 
   def can_start(self) -> bool:
-    return self._draft is not None and self.can_route()
+    return self._draft is not None and self.can_route() and not self.route_missing()
 
   def start(self) -> bool:
     """Sets the draft as StarPilot's destination, turning its navigation on first if it's off."""
@@ -222,7 +222,26 @@ class StarPilotPlaces:
     self._change(lambda o, r: o.clear(r, self._allowed))
 
   def maps_ready(self) -> bool:
-    return True   # StarPilot 7 routes online; its offline road maps are for the map's background
+    """Whether Tandem's offline routing has data ready (Where to?'s Offline maps ready chip)."""
+    try:
+      from openpilot.starpilot.tandem.routing.navigation import offline_ready
+      return offline_ready()
+    except Exception:
+      return False
+
+  def offline_only(self) -> bool:
+    try:
+      from openpilot.starpilot.tandem.routing import config as C
+      return C.enabled() and C.policy()[0]
+    except Exception:
+      return False
+
+  def route_missing(self) -> bool:
+    """With Offline maps only, the preview found no offline route: Start waits, and the preview offers Choose regions."""
+    if self._draft is None or not self.offline_only():
+      return False
+    plan, status = self._routes.route(self._draft)
+    return plan is None and status not in ("", FINDING, NO_FIX)
 
   def route(self) -> tuple[RoutePlan | None, str]:
     if not self.can_route():
@@ -263,6 +282,9 @@ class StarPilotPlaces:
       else:
         fetch, first = online()
         route = fetch(first, origin, place, bearing, exclusions)
-    except Exception:
-      return NO_ROUTE
+    except Exception as error:
+      # The routing reason, in the driver's words (routing_status.py), when Tandem's providers gave one.
+      from openpilot.selfdrive.ui.tandem.routing_status import MESSAGES
+      code = str(error)
+      return MESSAGES[code] if code in MESSAGES and code not in ("ready", "routing", "idle") else NO_ROUTE
     return RoutePlan(tuple((lat, lon) for lon, lat in route.points), float(route.total_distance), float(route.total_duration))

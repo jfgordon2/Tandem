@@ -20,7 +20,7 @@ from openpilot.selfdrive.ui.tandem.base import Component, size_of
 from openpilot.selfdrive.ui.tandem.blocks import Icon
 from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, back_glyph
 from openpilot.selfdrive.ui.tandem.keyboard import KeyPad
-from openpilot.selfdrive.ui.tandem.layout import FILL, Size, column, grid, inset, place, row
+from openpilot.selfdrive.ui.tandem.layout import FILL, Align, Size, column, grid, inset, place, row
 from openpilot.selfdrive.ui.tandem.routemap import RoutePlan, arrive_text, distance_text, draw_route_map, \
   time_text
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, SectionHeader, SettingRow, Text
@@ -75,7 +75,8 @@ class Places(Protocol):
   def can_search(self) -> bool: ...                  # a key for place search
   def start(self) -> bool: ...
   def end_route(self) -> None: ...
-  def maps_ready(self) -> bool: ...
+  def maps_ready(self) -> bool: ...                   # offline routing's data is ready
+  def route_missing(self) -> bool: ...                # Offline maps only found no route for the draft
   def route(self) -> tuple[RoutePlan | None, str]: ...   # the draft's route, or why there isn't one yet
   def metric(self) -> bool: ...
 
@@ -252,6 +253,8 @@ class DestinationsScreen(Component):
     self._start_button = self._child(Button(N_("Start"), self._start, ButtonStyle.PRIMARY, height=T.px(64), font_size=T.font_px(20),
                                             radius=T.px(16), weight=T.FONT_EXTRABOLD))
     self._start_button.set_enabled(places.can_start)
+    # With Offline maps only and no offline route, the preview offers the regions to download.
+    self._choose_maps = self._child(Button(N_("Choose regions"), open_maps)) if open_maps is not None else None
 
   # Navigation between views
 
@@ -350,7 +353,7 @@ class DestinationsScreen(Component):
     self._list_footer.render(footer)
     body = inset(body, left=T.px(20), right=T.px(20), top=T.px(20), bottom=T.px(14))
     header, tiles, panel = column(body, [T.px(60), T.px(86), FILL], T.px(14))
-    chip_w = 0   # release's "Offline maps ready" chip waits for offline routing (PORTING.md)
+    chip_w = T.px(240) if self._places.maps_ready() else 0
     title, pill, chip = row(header, [T.px(170), FILL, chip_w], T.px(14))
     draw.text(inset(title, left=T.px(6)), N_("Where to?"), T.font_px(28), T.TEXT, T.FONT_EXTRABOLD)
     self._search_pill.render(pill)
@@ -487,7 +490,8 @@ class DestinationsScreen(Component):
       draw.text(top, label, T.font_px(13), DATA_LABEL)
       draw.text(bottom, draw.fit(value, T.font_px(22), T.FONT_BOLD, bottom.width), T.font_px(22), T.TEXT, T.FONT_BOLD)
     second = N_("Road data still supplies speed limits")
-    _ = suggestion   # release's "Choose maps" button waits for offline routing (PORTING.md)
+    if self._choose_maps is not None and self._places.route_missing():   # design/valhalla2-preview-strict-missing.html
+      self._choose_maps.render(place(suggestion, T.px(180), T.px(48), Align.START, Align.CENTER))
     for cell, sentence in zip(column(checks, [check_h, check_h], T.px(10)), (N_("Slows ahead of turns on the route"), second), strict=True):
       icon, sentence_box = row(cell, [T.px(18), FILL], T.px(10))
       draw.icon(icon, "check", T.SUCCESS_TEXT, T.px(18))

@@ -307,7 +307,7 @@ def connections_window() -> object:
 class FakePlaces:
   """Places for the destination screens: Home and Work saved, two recents, and canned search results."""
 
-  def __init__(self, routing=True, maps=True):
+  def __init__(self, routing=True, maps=True, missing=False):
     self.favs = [{"name": "Home", "place_name": "1428 SE Elm St, Portland", "is_home": True, "latitude": 1, "longitude": 1},
                  {"name": "Work", "place_name": "200 Market St, Portland", "is_work": True, "latitude": 2, "longitude": 2},
                  {"name": "Powell's Books", "place_name": "1005 W Burnside St, Portland", "latitude": 3, "longitude": 3}]
@@ -319,6 +319,7 @@ class FakePlaces:
     self.chosen: dict | None = None
     self.navigating: dict | None = None
     self.routing, self.maps = routing, maps
+    self.missing = missing   # Offline maps only, and no offline route for the picked place
 
   def tick(self):
     pass
@@ -391,7 +392,7 @@ class FakePlaces:
     fav[key] = not fav.get(key)
 
   def can_start(self):
-    return self.routing
+    return self.routing and not self.route_missing()
 
   def can_search(self):
     return self.routing
@@ -408,12 +409,17 @@ class FakePlaces:
   def maps_ready(self):
     return self.maps
 
+  def route_missing(self):
+    return self.missing and self.chosen is not None
+
   def route(self):
     from openpilot.selfdrive.ui.tandem.routemap import NOT_SET_UP, RoutePlan
     if not self.routing:
       return None, NOT_SET_UP
     if self.chosen is None:
       return None, ""
+    if self.missing:
+      return None, "Download maps for this region"
     path = ((45.512, -122.658), (45.512, -122.650), (45.518, -122.650), (45.521, -122.642), (45.523, -122.636), (45.527, -122.636),
             (45.527, -122.628))
     return RoutePlan(path, 5310.0, 1080.0), ""
