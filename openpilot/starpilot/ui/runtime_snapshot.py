@@ -32,6 +32,7 @@ from openpilot.starpilot.ui.traffic_status import TrafficDisplayProjector
 from openpilot.starpilot.ui.drive_mode_notice import DriveModeNotice
 from openpilot.starpilot.controllers.mode_actions import SwitchbackStatusOwner
 from openpilot.starpilot.ui.wheel_feedback import observe_wheel_acceleration
+from openpilot.starpilot.ui.wheel_rotation import observe_wheel_rotation, read_rotation
 from openpilot.starpilot.ui.torque_feedback import observe_torque_feedback
 from openpilot.starpilot.ui.live_developer_sidebar import DeveloperMetrics
 
@@ -426,6 +427,10 @@ class RuntimeSnapshotAdapter:
     if (self._appearance_read_ns is None or now_ns < self._appearance_read_ns or
         now_ns - self._appearance_read_ns >= 1_000_000_000):
       self._customization_value = read_customization(self.ui_state.params)
+      rotation_raw, rotation_readable = read_rotation(self.ui_state.params)
+      self._customization_value['layouts']['large']['steering_wheel'].pop('rotate', None)
+      if rotation_readable and rotation_raw == b'1':
+        self._customization_value['layouts']['large']['steering_wheel']['rotate'] = True
       self._appearance_value = onroad_appearance(self.ui_state.params)
       self._navigation_enabled = _flag(self.ui_state.params, "NavigationEnabled")
       self._show_curve_status = _flag(self.ui_state.params, "ShowCSCStatus")
@@ -706,11 +711,14 @@ class RuntimeSnapshotAdapter:
     weather_location = None
     if (started and getattr(ui, 'replay_clock', None) is None and
         any(layout.get('weather', {}).get('enabled', False) for layout in self._customization_value['layouts'].values())):
-      from openpilot.starpilot.ui.weather import valid_location
-      for service in ('gpsLocationExternal', 'gpsLocation'):
-        gps = current_message(sm, service, now_ns, after_frame=after)
-        if gps is not None and gps.hasFix and valid_location((gps.latitude, gps.longitude)):
-          weather_location = (gps.latitude, gps.longitude)
+      from openpilot.starpilot.gps.source import GPS_SOURCES, SOURCE_SERVICES, observation as gps_observation
+      # Weather needs a recent location, not the high-frequency driving-message age gate.
+      # Include car/phone fixes when this device has no native GNSS receiver.
+      for service in GPS_SOURCES:
+        carrier = SOURCE_SERVICES.get(service, service)
+        fix = gps_observation(sm, service, now_ns)
+        if fix is not None and int(sm.recv_frame.get(carrier, 0)) > after:
+          weather_location = (fix[1].latitude, fix[1].longitude)
           break
     aol_latched = (display_aol_latch(sm, now_ns, after_frame=after)
                    if started and getattr(ui, "aol_runtime", False) else None)
@@ -725,6 +733,7 @@ class RuntimeSnapshotAdapter:
     onroad = OnroadState(weather_location=weather_location, developer_metrics=developer_metrics, stop_sign_observed_ns=stop_observed_ns,
                          engaged=display_lat_active or display_long_active or longitudinal_overridden, camera_available=started,
                          speed_mps=raw_speed, cruise_kph=cruise, speed_limit=observation,
+                         speed_display_offset_percent=self._customization_value.get("speedDisplayOffset", 0.),
                          appearance=self._appearance_value, customization=self._customization_value,
                          alert=alert, metric=bool(ui.is_metric), slc_offset_schedule=self._slc_offset_schedule,
                          experimental_available=bool(ui.has_longitudinal_control),
@@ -745,6 +754,7 @@ class RuntimeSnapshotAdapter:
                          torque_is_demand=torque.source == "lateral_acceleration_demand",
                          torque_drive_frame=after if started else None, drive_frame=after if started else None, observed_ns=now_ns,
                          wheel_acceleration=observe_wheel_acceleration(display_car),
+                         wheel_rotation=observe_wheel_rotation(display_car),
                          aol_latched=aol_latched, aol_armed_at_stop=armed_at_stop,
                          lateral_active=display_lat_active, longitudinal_active=display_long_active,
                          longitudinal_overridden=longitudinal_overridden,
@@ -864,9 +874,12 @@ class RuntimeSnapshotAdapter:
     available = _flag(params, "UpdaterFetchAvailable")
     status = "updater status unavailable" if not updater_state else updater_state if updater_state != "idle" else (
       "update available" if available else "up to date, last checked " + ("previously" if _text(params, "LastUpdateTime") else "never"))
+    if updater_state == "idle" and _text(params, "UpdateFailedCount", "0") not in ("", "0"):
+      error = _text(params, "LastUpdateException", "Updater reported a failure")[:4096]
+      status = "Update failed: " + " ".join(error.split())
     software_actions: set[SoftwareRequest] = set()
     if confirmed_offroad:
-      software_actions.add(SoftwareRequest.OPEN_UNINSTALL_CONFIRMATION)
+      software_actions.update((SoftwareRequest.OPEN_UNINSTALL_CONFIRMATION, SoftwareRequest.OPEN_ERROR_LOG))
       if updater_state == "idle":
         software_actions.update((SoftwareRequest.FAST_UPDATE, SoftwareRequest.ROLLBACK))
         software_actions.add(SoftwareRequest.DOWNLOAD_UPDATE if available else SoftwareRequest.CHECK_FOR_UPDATES)

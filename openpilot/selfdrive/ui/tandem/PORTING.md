@@ -60,7 +60,8 @@ development branch with migration still in progress.
 
 ## How `development` follows upstream
 
-- `development` merges `upstream/Dom` the usual way; its history is Dom's from the start, so those merges are ordinary.
+- `development` merges `upstream/testing` the usual way. Upstream finished `Dom` on 2026-11-17 and moved it to
+  `testing`, which continues Dom's history, so those merges are ordinary. `development` merged Dom's last commit first.
 - `release` keeps following `upstream/StarPilot` until 7.0 replaces it. Tandem fixes made on `release` meanwhile are
   ported to `development` by hand where the code differs.
 - The rules in `AGENTS.md` apply, with owned paths under `openpilot/`.
@@ -657,4 +658,15 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
   screens in English while Tandem's read Arabic.
 - The weather heads-up is back: `forecast.py`'s announcer shows the chip before rain, snow or storms and chimes once
   through the headroom soundd subclass (`weather-chime.json`), with the position from StarPilot 7's location.
+
+## Following `testing`
+
+- Owner, 2026-11-20: `development` follows upstream's `testing`, Dom's successor. Dom's hand-off commit adds
+  `scripts/branch_migration.py`, which moves a device on `Dom` to `testing` at boot; it leaves `development` alone (it
+  runs only on that exact commit, on a branch named `Dom`).
+- `testing` moves AGNOS to 20.5.3 and rebuilt every native file on it. `development` takes upstream's
+  `_raylib_extra.so`, which lacks Tandem's `release_font_glyph_images`, so Tandem skips the glyph release (screens are
+  the same; the font memory saving is off) until the extension is rebuilt from Tandem's `raylib_extra.cc` on a comma
+  running 20.5.3 and `prebuilt.json` is refreshed (README › Keeping merges easy).
+- StarPilot's small default model is now `cheddar`; the Driving Model test reads `DEFAULT_SMALL`.
 

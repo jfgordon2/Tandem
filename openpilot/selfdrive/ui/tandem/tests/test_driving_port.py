@@ -11,6 +11,7 @@ from openpilot.selfdrive.ui.tandem.settings.model import Models, StarPilotModels
 from openpilot.selfdrive.ui.tandem.settings.tuner import GAPS, Tuner, Tunable, OVERRIDE, DEFAULT, FROM_STYLE
 from openpilot.selfdrive.ui.tandem.settings.vehicle import CarOption, Vehicle, WheelButton
 from openpilot.selfdrive.ui.tandem.tests.test_speed_steering_port import Owner, page
+from openpilot.starpilot.models.catalog import DEFAULT_SMALL
 
 
 class FakeManager:
@@ -18,7 +19,7 @@ class FakeManager:
     self.actions: list[tuple[str, dict]] = []
     self.parked = True
     self.models = [
-      {"value": "rdf43", "label": "Default", "installed": True, "communityFavorite": False, "requiresGpu": False, "builtin": True},
+      {"value": DEFAULT_SMALL, "label": "Default", "installed": True, "communityFavorite": False, "requiresGpu": False, "builtin": True},
       {"value": "fav", "label": "Favorite", "installed": True, "communityFavorite": True, "requiresGpu": False, "builtin": False},
       {"value": "big", "label": "Big", "installed": False, "communityFavorite": False, "requiresGpu": True, "builtin": False},
     ]
@@ -47,7 +48,7 @@ def test_models_come_from_starpilots_manager_and_refusals_are_shown() -> None:
   assert [m.key for m in models.tab(1)] == ["fav"] and models.current_name() == "Favorite"
   assert not models.use_recommended and [m.key for m in models.unused()] == []
   models.set_use_recommended(True)
-  assert manager.actions[-1] == ("active", {"profile": "small", "model": "rdf43"}) and models.use_recommended
+  assert manager.actions[-1] == ("active", {"profile": "small", "model": DEFAULT_SMALL}) and models.use_recommended
   assert [m.key for m in models.unused()] == ["fav"]
   manager.parked = False
   source.download("big")
