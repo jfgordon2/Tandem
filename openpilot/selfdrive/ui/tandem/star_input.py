@@ -50,6 +50,7 @@ class TandemStarSession(StarShellSession):
     self.bluetooth_source = None
     self.adapter = RuntimeSnapshotAdapter(ui_state, self.galaxy_access, None, home_stats=None)
     self.feature_owner = FeatureSettingsOwner(ui_state.params, self._feature_authority,
+                                               learning_messages=lambda: ui_state.sm,
                                                vehicle_fingerprint=lambda: getattr(ui_state.CP, "carFingerprint", None),
                                                vehicle_params=lambda: ui_state.CP,
                                                vision_development=lambda: diagnostic_choice_enabled(os.environ, ui_state.CP))
