@@ -10,7 +10,7 @@ stage 2 is done, `development` boots as stock StarPilot 7.0.
 | 3. State | Mapped and covered by contract tests |
 | 4. Screens | Done: every release screen, the driving screen and its chips |
 | 5. Services | Done: navigation, Valhalla routing and Offline Maps, Bluetooth, the CAN recorder, radios, network test |
-| 6. Fork-wide policies | Diagnostics, uploads and translations done; statistics, athenad, `RELEASE_BRANCHES` and workflows remain |
+| 6. Fork-wide policies | Diagnostics, uploads, statistics, athenad and translations done; `RELEASE_BRANCHES` (owner's call) and workflows remain |
 
 ## Decisions for the rest of the port (owner, 2026-11-16)
 
@@ -684,3 +684,12 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
   - Matching limit: release's `LimitWatch` on the limit StarPilot accepted, its adjusted target and whether its speed
     limit control holds the set speed (`SpeedLimitObservation`).
 - `tests/test_planner_chips.py` checks the choices and that the StarPilot fields they read still exist.
+
+## Stage 8: statistics and athenad
+
+- Release kept unattended diagnostics on the device. On StarPilot 7 that's three hooks: crash reports (`sentry.py`, done
+  earlier), athenad's `log_handler` (its `stat_handler` is gone), and the `usage_stats` process that replaced StarPilot
+  6's stats upload, which no longer starts. All read `starpilot/tandem/diagnostics.AUTOMATIC_DIAGNOSTICS_ENABLED`.
+- `RELEASE_BRANCHES` is left as StarPilot 7 has it. Release added `release` beside StarPilot 6's own release branch; StarPilot
+  7 counts none of its own branches as release channels, and one would clear development-only settings, hide developer
+  options and turn off alpha longitudinal. Waiting on the owner.

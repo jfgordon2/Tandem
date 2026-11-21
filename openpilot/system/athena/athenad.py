@@ -886,7 +886,8 @@ def get_logs_to_send_sorted() -> list[str]:
 
 
 def log_handler(end_event: threading.Event) -> None:
-  if PC:
+  from openpilot.starpilot.tandem.diagnostics import AUTOMATIC_DIAGNOSTICS_ENABLED  # Tandem: unattended logs stay on the device
+  if PC or not AUTOMATIC_DIAGNOSTICS_ENABLED:
     return
 
   log_files = []
