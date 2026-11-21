@@ -101,6 +101,8 @@ StarPilot 7’s raylib binding retains glyph images for TTF fonts. Tandem defers
 - **Device › Backups:** the approved release capture is authoritative. The running release shows the saved snapshots and Back up now. The older HTML has a schedule row. The preview reuses the running release panel and confirmations.
 - **Device › Storage & Data:** the preview reuses the release layout and rows. Offline Maps Delete uses the approved confirmation for all downloaded map formats.
   The native release dialog keeps its text spacing. The description wraps earlier than in the HTML mock.
+- **Display › Theme** (`displaytheme.html`): the section is "Theme", with Path Style and Turn Signal. StarPilot 7
+  dropped boot logos and the startup message, so their rows and "& Startup" are gone.
 
 - **Stage 4 driving screen:** the stand-in road in the mock represents StarPilot’s live camera and model. Speed-limit confirmation waits for a wide enough road view when the sidebar is open.
 

@@ -116,6 +116,7 @@ def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any)
       hub.pages[page]()
       shot(mock)
       window.back()
+    theme_shots(window, hub, shot)
     os.environ["TANDEM_ROUTING"] = "1"
     os.environ["TANDEM_PREFS_DIR"] = str(Path(root) / "prefs")   # the routing policy, not this machine's
     from openpilot.starpilot.tandem.routing import config as C
@@ -139,6 +140,25 @@ def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any)
     for index, mock in ((1, "tunergas"), (2, "tunerfollowing")):
       window.top.select(index)
       shot(mock)
+
+
+def theme_shots(window: SettingsWindow, hub: Any, shot: Callable[[str], None]) -> None:
+  """Display › Theme (design/displaytheme.html) and its Turn Signal picker (signalpicker.html)."""
+  from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle
+  from openpilot.selfdrive.ui.tandem.overlays import Sheet
+  from openpilot.selfdrive.ui.tandem.settings.display import SignalPicker
+  hub.pages["display"]()
+  window.top.select(1)   # Theme
+  shot("displaytheme")
+  chosen = [0]
+  sheet = Sheet("Turn Signal", SignalPicker(lambda: chosen[0], lambda i: chosen.__setitem__(0, i)),
+                subtitle="Plays beside the speed while a blinker is on",
+                actions=[Button("Done", window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss)
+  window.present(sheet)
+  sheet._shown_at = None   # fully open, without waiting for its slide
+  shot("signalpicker")
+  window.dismiss()
+  window.back()
 
 
 def maps_shots(window: SettingsWindow, shot: Callable[[str], None]) -> None:

@@ -26,7 +26,7 @@ TABS = [N_("Driving"), N_("Device"), N_("Connections"), N_("Software")]
 PAGES = {"speed_steering": N_("Speed & Steering"), "display": N_("Display"), "tuner": N_("Tuner Mode"), "alerts": N_("Alerts"), "model": N_("Driving Model"),
          "vehicle": N_("Vehicle"), "assistance": N_("Assistance")}
 SECTIONS = {"speed_steering": [N_("Everyday"), N_("Weather"), N_("Navigation")],
-            "display": [N_("Driving Screen"), N_("Path")],
+            "display": [N_("Driving Screen"), N_("Theme")],
             "tuner": [N_("Steering"), N_("Gas & Brake"), N_("Following & Stops")],
             1: [N_("This Device"), N_("General"), N_("Backups"), N_("Storage & Data"), N_("RAM"), N_("Report a Problem"), N_("Developer")],
             2: [N_("Wi-Fi"), N_("Cellular"), N_("Bluetooth Remote"), N_("Bluetooth Devices"), N_("Network Test")]}
@@ -103,7 +103,7 @@ ENTRIES: list[Entry] = [
   Entry(N_("Position"), N_("Where the car's position comes from: the comma, the car or your phone"), 0, S, 2, "gps location phone"),
   Entry(N_("Map Keys"), N_("The Mapbox and Google keys for search and routes"), 0, S, 2, "mapbox google token key api"),
   # Driving › Display
-  _place(N_("Display"), N_("The driving screen and the path"), 0, D),
+  _place(N_("Display"), N_("The driving screen, the path and the turn signal"), 0, D),
   Entry(N_("Text Size"), N_("Larger text and icons on the driving screen"), 0, D, 0, "font bigger large big read readable zoom"),
   Entry(N_("Reduce Motion"), N_("Long street names end in … instead of scrolling"), 0, D, 0, "scroll animation accessibility marquee"),
   Entry(N_("Camera View"), N_("Wide shows more of the road at low speed"), 0, D, 0),
@@ -115,6 +115,8 @@ ENTRIES: list[Entry] = [
   Entry(N_("Developer View"), N_("Side panel with system and controls data."), 0, D, 0, "developer ui metrics sidebar"),
   Entry(N_("Lead Insights"), N_("Distance to the car ahead, and the pedals on screen."), 0, D, 0, "lead metrics pedals"),
   Entry(N_("Path Style"), N_("How the path ahead is drawn"), 0, D, 1, "rainbow path acceleration color"),
+  Entry(N_("Turn Signal"), N_("Chevrons by the speed, or a whimsical animation"), 0, D, 1,
+        "blinker indicator animation whimsy frog cat ball unicorn"),
   # Driving › Alerts, Driving Model, Vehicle, Assistance
   _place(N_("Alerts"), N_("Volume and the optional chimes"), 0, "alerts", words="sound"),
   _place(N_("Volume"), N_("One volume for everything, or each group on its own"), 0, "alerts", words="loud quiet sound"),

@@ -65,6 +65,34 @@ def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any)
       save(f"{out}/onroad_nav.png")   # design/onroadnav.html
   Z.set_text(False)
   routing_shots(frame, save, out)
+  signal_shots(frame, save, out, base)
+
+
+def signal_shots(frame: Callable, save: Callable, out: str, base: DriveDisplay) -> None:
+  """Each Whimsy Turn Signal partway across the road above the bar, signalling left (design/signalpicker.html,
+  signalunicorn.html), saved as signal_<pack>.png."""
+  import time
+  from types import SimpleNamespace
+  from openpilot.selfdrive.ui.tandem.onroad.layers import bar_height, bar_margin
+  from openpilot.selfdrive.ui.tandem.onroad.turn_signals import GAP, TurnSignalRenderer
+  noop = lambda *args: None  # noqa: E731
+  car = SimpleNamespace(leftBlinker=True, rightBlinker=False, leftBlindspot=False, rightBlindspot=False)
+  sample = replace(base, bar=replace(base.bar, set_speed=48, street="Market Street"), speed=44, chips=())
+  rect = rl.Rectangle(0, 0, 2160, 1080)
+  for slug, t in (("frog", 0.3), ("pouncing_cat", 0.5), ("bouncing_ball", 1.4), ("unicorn_rider", 0.42)):
+    renderer = TurnSignalRenderer()
+    overlay = OnroadOverlay(lambda: sample, noop, noop, noop, noop, clock=lambda: .5)
+
+    def render(renderer: TurnSignalRenderer = renderer, overlay: OnroadOverlay = overlay, slug: str = slug) -> None:
+      mock_road(rect)
+      inner = road_rect(rect)
+      renderer.render(inner, slug, car, 1, bottom_margin=bar_height() + bar_margin() + GAP)
+      overlay.render(rect)
+
+    frame(render)
+    renderer._started_at = time.monotonic() - t   # a frame partway across
+    frame(render)
+    save(f"{out}/signal_{slug}.png")
 
 
 def routing_shots(frame: Callable, save: Callable, out: str) -> None:

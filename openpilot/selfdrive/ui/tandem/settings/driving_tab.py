@@ -17,7 +17,7 @@ from openpilot.selfdrive.ui.tandem.prefs import TUNER_MODE
 from openpilot.selfdrive.ui.tandem.settings.alerts import Alerts, alerts_page
 from openpilot.selfdrive.ui.tandem.settings.bundles import BUNDLES, Bundle
 from openpilot.selfdrive.ui.tandem.settings.device import driver_monitoring_rows
-from openpilot.selfdrive.ui.tandem.settings.display import Display, driving_screen_panel, path_panel
+from openpilot.selfdrive.ui.tandem.settings.display import Display, driving_screen_panel, theme_panel
 from openpilot.selfdrive.ui.tandem.settings.maps import Maps, MapsPage, MapsSource, RegionsPage
 from openpilot.selfdrive.ui.tandem.settings.model import CatalogPage, Models, ModelSource, model_page
 from openpilot.selfdrive.ui.tandem.settings.navigation import NavigationSettings, navigation_panel
@@ -171,7 +171,7 @@ def driving_hub(window: SettingsWindow, services: DrivingServices) -> HubPage:
   def display() -> Widget:
     return SectionPage(N_("DISPLAY"), [
       Section(N_("Driving Screen"), lambda: driving_screen_panel(screen, window)),
-      Section(N_("Path"), lambda: path_panel(screen, window)),
+      Section(N_("Theme"), lambda: theme_panel(screen, window)),
     ])
 
   def model() -> Widget:

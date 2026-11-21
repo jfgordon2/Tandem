@@ -76,7 +76,7 @@
     {
       "mock": "displaytheme",
       "title": "Display › Theme & Startup",
-      "note": "Boot Logo is a StarPilot / comma choice; downloaded logos stay on StarPilot's screen. Page ground uses true black (#000000).",
+      "note": "Path Style and Turn Signal under Theme. StarPilot 7 dropped boot logos and the startup message, so those rows and \"& Startup\" are gone. Page ground uses true black (#000000).",
       "match": false
     },
     {
@@ -100,7 +100,7 @@
     {
       "mock": "signalpicker",
       "title": "Turn Signal picker",
-      "note": "Matches: Standard, then the Whimsy animations, each shown by a frame of StarPilot's own animation. On the road they cross above the bar while signalling; the chevrons by the speed stay.",
+      "note": "Matches: Standard, then the Whimsy animations, each shown by a frame from the middle of its pack. On the road they cross above the bar while signalling (signal_<pack>.png); the chevrons by the speed stay. StarPilot 7 has no signal animations, so the choice and the four packs are Tandem's own.",
       "match": true
     },
     {
@@ -570,8 +570,8 @@
     {
       "mock": "onroadextras",
       "title": "Onroad › StarPilot extras",
-      "note": "Matches: pedal tiles and the model chip under the driver monitor, the compass tag at the start of the bar (where it sits while navigating), the weather now at its end without a route, the stopping line, lane and blind-spot washes, radar dots and the border halves, over a stand-in road. Page ground uses true black (#000000). The model chip shows Jetlink's state (StarPilot 7's external GPU) while StarPilot's layout places its Jetlink widget.",
-      "match": true,
+      "note": "Partly built: pedal tiles and the model chip under the driver monitor, the compass tag, the weather now without a route, and the border halves. Not on StarPilot 7: the stopping line (no planned stop distance is published), the lane and blind-spot washes and radar dots (StarPilot 7 dropped their switches). Page ground uses true black (#000000).",
+      "match": false,
       "built": "onroad_extras"
     },
     {

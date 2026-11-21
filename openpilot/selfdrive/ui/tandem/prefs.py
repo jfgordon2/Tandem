@@ -175,6 +175,8 @@ WEATHER_CHIME = Flag("weather_chime", True)           # Alerts › Chimes › We
 LARGER_TEXT = Flag("larger_text", False)              # Display › Driving Screen › Text Size: Larger (onroad/size.py)
 REDUCE_MOTION = Flag("reduce_motion", False)          # Display › Driving Screen › Reduce Motion (onroad/size.py)
 COMPASS = Flag("compass", True)                       # Display › Driving Screen › Compass (onroad/compass.py)
+# Display › Theme › Turn Signal (onroad/turn_signals.py); None is Standard
+TURN_SIGNAL = Choice("turn_signal", ("standard", "frog", "pouncing_cat", "bouncing_ball", "unicorn_rider"))
 DEVELOPER_STRIP = Text("developer_strip_metrics", legacy="DeveloperStripMetrics")
 TUNER_MODE = Flag("tuner_mode", False)            # Driving › Power User
 TEMPERATURE = Choice("temperature", ("F", "C"))       # General › Temperature; until picked, it follows Units (km/h: °C)

@@ -31,7 +31,7 @@ msgid "Road data still supplies speed limits"
 msgstr "制限速度は引き続き道路データから取得します"
 
 #: destinations.py:218
-#: settings/search.py:271
+#: settings/search.py:273
 msgid "Search"
 msgstr "検索"
 
@@ -310,7 +310,7 @@ msgstr "アップデートの準備完了"
 
 #: home.py:152
 #: settings/search.py:25
-#: settings/search.py:202
+#: settings/search.py:204
 msgid "Software"
 msgstr "ソフトウェア"
 
@@ -441,8 +441,8 @@ msgid "Sport"
 msgstr "スポーツ"
 
 #: home_layout.py:22
-#: settings/display.py:41
-#: settings/display.py:34
+#: settings/display.py:45
+#: settings/display.py:36
 msgid "Standard"
 msgstr "標準"
 
@@ -577,23 +577,23 @@ msgstr "Mapbox と Google を追加済み"
 msgid "Mapbox added · Google optional"
 msgstr "Mapbox 追加済み · Google は任意"
 
-#: onroad/binding.py:21
+#: onroad/binding.py:23
 msgid "map"
 msgstr "地図"
 
-#: onroad/binding.py:22
+#: onroad/binding.py:24
 msgid "dashboard"
 msgstr "ダッシュボード"
 
-#: onroad/binding.py:23
+#: onroad/binding.py:25
 msgid "camera"
 msgstr "カメラ"
 
-#: onroad/binding.py:24
+#: onroad/binding.py:26
 msgid "online maps"
 msgstr "オンライン地図"
 
-#: onroad/binding.py:74
+#: onroad/binding.py:76
 msgid "speed limit source"
 msgstr "制限速度の情報源"
 
@@ -1169,6 +1169,22 @@ msgstr "Cswy"
 msgid "Byp"
 msgstr "Byp"
 
+#: onroad/turn_signals.py:22
+msgid "Jumping frog"
+msgstr "跳ねるカエル"
+
+#: onroad/turn_signals.py:22
+msgid "Pouncing cat"
+msgstr "飛びかかるネコ"
+
+#: onroad/turn_signals.py:22
+msgid "Bouncing ball"
+msgstr "弾むボール"
+
+#: onroad/turn_signals.py:23
+msgid "Unicorn rider"
+msgstr "ユニコーンライダー"
+
 #: places.py:153
 msgid "Searching…"
 msgstr "検索中…"
@@ -1242,7 +1258,7 @@ msgid "Drive logging"
 msgstr "走行ログ"
 
 #: ram.py:57
-#: settings/search.py:174
+#: settings/search.py:176
 #: settings/storage.py:157
 msgid "Uploads"
 msgstr "アップロード"
@@ -1517,43 +1533,43 @@ msgid "When you need to steer or brake now"
 msgstr "今すぐハンドルかブレーキの操作が必要なとき"
 
 #: settings/alerts.py:57
-#: settings/search.py:121
+#: settings/search.py:123
 msgid "Green Light"
 msgstr "青信号"
 
 #: settings/alerts.py:57
-#: settings/search.py:121
+#: settings/search.py:123
 msgid "When the light turns green and you are stopped"
 msgstr "停止中に信号が青になったとき"
 
 #: settings/alerts.py:58
-#: settings/search.py:122
+#: settings/search.py:124
 msgid "Lead Departure"
 msgstr "先行車の発進"
 
 #: settings/alerts.py:58
-#: settings/search.py:122
+#: settings/search.py:124
 msgid "When the car ahead pulls away"
 msgstr "前の車が発進したとき"
 
 #: settings/alerts.py:59
-#: settings/search.py:123
+#: settings/search.py:125
 msgid "Loud Blind Spot"
 msgstr "死角の警告音（大）"
 
 #: settings/alerts.py:59
-#: settings/search.py:123
+#: settings/search.py:125
 msgid "Signalling into an occupied lane, even when paused"
 msgstr "車がいる車線にウインカーを出したとき（一時停止中も）"
 
 #: settings/alerts.py:60
 #: settings/search.py:92
-#: settings/search.py:124
+#: settings/search.py:126
 msgid "Weather heads-up"
 msgstr "天気の予告"
 
 #: settings/alerts.py:60
-#: settings/search.py:124
+#: settings/search.py:126
 msgid "Once, when rain, snow or storms are coming"
 msgstr "雨・雪・嵐が近づくと一度だけ"
 
@@ -1617,7 +1633,7 @@ msgid "Reset to Normal"
 msgstr "標準に戻す"
 
 #: settings/alerts.py:205
-#: settings/search.py:120
+#: settings/search.py:122
 msgid "Volume"
 msgstr "音量"
 
@@ -1781,17 +1797,17 @@ msgstr "Bluetooth デバイス"
 
 #: settings/bluetooth_tab.py:449
 #: settings/bluetooth_tab.py:449
-#: settings/search.py:197
+#: settings/search.py:199
 msgid "Disconnect"
 msgstr "切断"
 
 #: settings/bluetooth_tab.py:449
-#: settings/search.py:197
+#: settings/search.py:199
 msgid "It reconnects the next time you choose it"
 msgstr "次に選んだときに再接続します"
 
 #: settings/bluetooth_tab.py:450
-#: settings/search.py:198
+#: settings/search.py:200
 msgid "Removes the pairing. Change it with the car off."
 msgstr "ペアリングを削除します。車の電源を切って変更してください。"
 
@@ -2206,7 +2222,7 @@ msgstr "モバイル通信"
 
 #: settings/connections.py:100
 #: settings/search.py:32
-#: settings/search.py:196
+#: settings/search.py:198
 msgid "Bluetooth Devices"
 msgstr "Bluetooth デバイス"
 
@@ -2217,7 +2233,7 @@ msgid "Network Test"
 msgstr "ネットワークテスト"
 
 #: settings/developer.py:67
-#: settings/search.py:182
+#: settings/search.py:184
 msgid "openpilot Longitudinal (Alpha)"
 msgstr "openpilot の縦制御（アルファ）"
 
@@ -2226,8 +2242,8 @@ msgid "Turns off the car's emergency braking. Off while engaged."
 msgstr "車の緊急ブレーキをオフにします。作動中はオフ。"
 
 #: settings/developer.py:73
-#: settings/search.py:181
-#: selfdrive/ui/layouts/settings/developer.py:67
+#: settings/search.py:183
+#: selfdrive/ui/layouts/settings/developer.py:68
 msgid "Joystick Debug Mode"
 msgstr "ジョイスティックデバッグモード"
 
@@ -2264,7 +2280,7 @@ msgstr "GitHub ユーザー名"
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: settings/developer.py:77
-#: settings/search.py:178
+#: settings/search.py:180
 msgid "ADB"
 msgstr "ADB"
 
@@ -2274,7 +2290,7 @@ msgstr "USB またはネットワークで接続します（docs.comma.ai）。�
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: settings/developer.py:79
-#: settings/search.py:179
+#: settings/search.py:181
 msgid "SSH"
 msgstr "SSH"
 
@@ -2283,19 +2299,19 @@ msgid "Remote shell access with the keys below"
 msgstr "下のキーでリモートシェルにアクセス"
 
 #: settings/developer.py:80
-#: settings/search.py:180
-#: selfdrive/ui/layouts/settings/developer.py:64
+#: settings/search.py:182
+#: selfdrive/ui/layouts/settings/developer.py:65
 msgid "SSH Keys"
 msgstr "SSH キー"
 
 #: settings/developer.py:83
-#: settings/search.py:183
-#: selfdrive/ui/layouts/settings/developer.py:97
+#: settings/search.py:185
+#: selfdrive/ui/layouts/settings/developer.py:103
 msgid "UI Debug Mode"
 msgstr "UI デバッグモード"
 
 #: settings/developer.py:83
-#: settings/search.py:183
+#: settings/search.py:185
 msgid "Shows touches and the frame rate"
 msgstr "タッチとフレームレートを表示します"
 
@@ -2411,7 +2427,7 @@ msgstr "ペアリング解除"
 
 #: settings/device.py:295
 #: settings/device.py:124
-#: settings/search.py:153
+#: settings/search.py:155
 msgid "Remote Access"
 msgstr "リモートアクセス"
 
@@ -2424,7 +2440,7 @@ msgid "DEVICE"
 msgstr "デバイス"
 
 #: settings/device.py:40
-#: settings/search.py:138
+#: settings/search.py:140
 msgid "Driver Camera"
 msgstr "ドライバーカメラ"
 
@@ -2433,25 +2449,25 @@ msgid "Check that it can see your face. The car must be off."
 msgstr "顔が見えているか確認します。車の電源は切ってください。"
 
 #: settings/device.py:41
-#: settings/search.py:139
+#: settings/search.py:141
 #: settings/speed_steering.py:346
 msgid "Driver Monitoring"
 msgstr "ドライバーモニタリング"
 
 #: settings/device.py:41
-#: settings/search.py:139
+#: settings/search.py:141
 msgid "Forget which side of the car the driver sits on"
 msgstr "運転席がどちら側かを忘れます"
 
 #: settings/device.py:109
 #: settings/device.py:109
-#: settings/search.py:160
+#: settings/search.py:162
 msgid "Power Off"
 msgstr "電源オフ"
 
 #: settings/device.py:112
 #: settings/device.py:113
-#: settings/search.py:159
+#: settings/search.py:161
 msgid "Restart"
 msgstr "再起動"
 
@@ -2470,7 +2486,7 @@ msgstr "comma connect · スマホでドライブの確認や設定変更"
 
 #: settings/device.py:258
 #: settings/device.py:131
-#: settings/search.py:156
+#: settings/search.py:158
 msgid "Regulatory"
 msgstr "規制情報"
 
@@ -2559,22 +2575,22 @@ msgid "Your code appears here once you choose a password"
 msgstr "パスワードを決めるとここにコードが表示されます"
 
 #: settings/device.py:121
-#: settings/search.py:152
+#: settings/search.py:154
 msgid "Phone App"
 msgstr "スマホアプリ"
 
 #: settings/device.py:127
-#: settings/search.py:154
+#: settings/search.py:156
 msgid "Camera Calibration"
 msgstr "カメラのキャリブレーション"
 
 #: settings/device.py:129
-#: settings/search.py:155
+#: settings/search.py:157
 msgid "How It Works"
 msgstr "しくみ"
 
 #: settings/device.py:129
-#: settings/search.py:155
+#: settings/search.py:157
 msgid "Rules, features and limits"
 msgstr "ルール、機能、制限"
 
@@ -2583,13 +2599,13 @@ msgid "MORE"
 msgstr "その他"
 
 #: settings/device.py:132
-#: settings/search.py:157
+#: settings/search.py:159
 msgid "Device ID and Serial"
 msgstr "デバイス ID とシリアル番号"
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: settings/device.py:133
-#: settings/search.py:158
+#: settings/search.py:160
 msgid "IMEI"
 msgstr "IMEI"
 
@@ -2617,192 +2633,223 @@ msgstr "管理"
 msgid "Set Up"
 msgstr "設定"
 
-#: settings/display.py:41
+#: settings/display.py:45
 msgid "Larger"
 msgstr "大きく"
 
-#: settings/display.py:149
+#: settings/display.py:165
 #: settings/search.py:115
 msgid "Side panel with system and controls data."
 msgstr "システムと制御のデータを表示するサイドパネル。"
 
-#: settings/display.py:150
+#: settings/display.py:166
 #: settings/search.py:116
 msgid "Distance to the car ahead, and the pedals on screen."
 msgstr "先行車との距離と、画面上のペダル。"
 
-#: settings/display.py:34
+#: settings/display.py:36
 msgid "A calm blue path"
 msgstr "落ち着いた青の走行ライン"
 
-#: settings/display.py:35
+#: settings/display.py:37
 msgid "Rainbow"
 msgstr "レインボー"
 
-#: settings/display.py:35
+#: settings/display.py:37
 msgid "A rainbow path"
 msgstr "虹色のパス"
 
-#: settings/display.py:36
+#: settings/display.py:38
 msgid "Acceleration"
 msgstr "加速度"
 
-#: settings/display.py:36
+#: settings/display.py:38
 msgid "openpilot's path, colored by gas and braking"
 msgstr "加速と減速で色分けされた openpilot の走行ライン"
 
-#: settings/display.py:40
+#: settings/display.py:42
 msgid "Wide"
 msgstr "広角"
 
-#: settings/display.py:146
+#: settings/display.py:162
 #, python-brace-format
 msgid "{} path"
 msgstr "{}パス"
 
-#: settings/display.py:243
-#: settings/display.py:239
+#: settings/display.py:264
+#: settings/display.py:255
 #: settings/search.py:117
 msgid "Path Style"
 msgstr "パスのスタイル"
 
-#: settings/display.py:243
-#: settings/display.py:240
+#: settings/display.py:264
+#: settings/display.py:256
 #: settings/search.py:117
 msgid "How the path ahead is drawn"
 msgstr "前方の走行ラインの描き方"
 
-#: settings/display.py:143
+#: settings/display.py:266
+#: settings/display.py:260
+#: settings/search.py:118
+msgid "Turn Signal"
+msgstr "ウインカー"
+
+#: settings/display.py:266
+#: settings/search.py:118
+msgid "Chevrons by the speed, or a whimsical animation"
+msgstr "速度横の矢印、または遊び心のあるアニメーション"
+
+#: settings/display.py:159
 msgid "Style banner shown"
 msgstr "スタイルバナーを表示"
 
-#: settings/display.py:143
+#: settings/display.py:159
 msgid "Style banner hidden"
 msgstr "スタイルバナーを非表示"
 
-#: settings/display.py:186
+#: settings/display.py:202
 msgid "Switching off turns these back off."
 msgstr "オフにすると、これらもオフに戻ります。"
 
-#: settings/display.py:195
+#: settings/display.py:211
 #, python-brace-format
 msgid "{} sets"
 msgstr "{} の設定内容"
 
-#: settings/display.py:196
+#: settings/display.py:212
 msgid "One switch for the details most drivers never need"
 msgstr "ほとんどのドライバーに不要な詳細をまとめて切り替え"
 
-#: settings/display.py:233
+#: settings/display.py:249
 #: settings/driving_tab.py:173
 #: settings/search.py:29
 msgid "Driving Screen"
 msgstr "運転画面"
 
-#: settings/display.py:233
+#: settings/display.py:249
 msgid "StarPilot changes the camera, banner and highlights only while parked."
 msgstr "StarPilot はカメラ、バナー、強調表示を駐車中にのみ変更します。"
 
-#: settings/display.py:245
+#: settings/display.py:267
 #: settings/driving_tab.py:174
 #: settings/search.py:29
-msgid "Path"
-msgstr "走行ライン"
+msgid "Theme"
+msgstr "テーマ"
 
-#: settings/display.py:342
+#: settings/display.py:364
 msgid "Acceleration is openpilot's own path, colored by gas and braking."
 msgstr "加速表示は、加速と減速で色分けされた openpilot の走行ラインです。"
 
-#: settings/display.py:210
-#: settings/display.py:213
+#: settings/display.py:479
+msgid "Whimsy animations cross the road above the bar while you signal; the chevrons by the speed stay."
+msgstr "ウインカー中は遊び心のあるアニメーションがバーの上の道路を横切ります。速度横の矢印はそのままです。"
+
+#: settings/display.py:226
+#: settings/display.py:229
 #, python-brace-format
 msgid "Sets {} options"
 msgstr "{} 項目を設定"
 
-#: settings/display.py:216
+#: settings/display.py:232
 #: settings/search.py:107
 msgid "Text Size"
 msgstr "文字サイズ"
 
-#: settings/display.py:216
+#: settings/display.py:232
 #: settings/search.py:107
 msgid "Larger text and icons on the driving screen"
 msgstr "運転画面の文字とアイコンを大きくします"
 
-#: settings/display.py:218
+#: settings/display.py:234
 #: settings/search.py:108
 msgid "Reduce Motion"
 msgstr "動きを減らす"
 
-#: settings/display.py:218
+#: settings/display.py:234
 #: settings/search.py:108
 msgid "Long street names end in … instead of scrolling"
 msgstr "長い通り名はスクロールせず … で省略します"
 
-#: settings/display.py:226
+#: settings/display.py:242
 #: settings/search.py:112
 msgid "Compass"
 msgstr "方位"
 
-#: settings/display.py:226
+#: settings/display.py:242
 #: settings/search.py:112
 msgid "Heading beside the street name, like NE"
 msgstr "通りの名前の横に NE などの方角を表示"
 
-#: settings/display.py:229
+#: settings/display.py:245
 #: settings/search.py:114
 msgid "Lead Car Tag"
 msgstr "先行車のタグ"
 
-#: settings/display.py:229
+#: settings/display.py:245
 #: settings/search.py:114
 msgid "Numbers above the car ahead. Off keeps only the bar under it"
 msgstr "前の車の上の数値。オフにすると下のバーだけになります"
 
-#: settings/display.py:230
+#: settings/display.py:246
 #: settings/driving_tab.py:188
 msgid "POWER USER"
 msgstr "上級者向け"
 
-#: settings/display.py:220
+#: settings/display.py:397
+msgid "No preview"
+msgstr "プレビューなし"
+
+#: settings/display.py:459
+msgid "ESSENTIALS"
+msgstr "ESSENTIALS"
+
+#: settings/display.py:459
+msgid "WHIMSY"
+msgstr "遊び心"
+
+#: settings/display.py:236
 #: settings/search.py:109
 msgid "Camera View"
 msgstr "カメラビュー"
 
-#: settings/display.py:220
+#: settings/display.py:236
 #: settings/search.py:109
 msgid "Wide shows more of the road at low speed"
 msgstr "広角では低速時に道路を広く表示します"
 
-#: settings/display.py:222
+#: settings/display.py:238
 #: settings/search.py:110
 msgid "Driver Camera in Reverse"
 msgstr "後退時にドライバーカメラ"
 
-#: settings/display.py:222
+#: settings/display.py:238
 #: settings/search.py:110
 msgid "Shows the inside camera while backing up"
 msgstr "バック中に車内カメラを表示します"
 
-#: settings/display.py:224
+#: settings/display.py:240
 #: settings/search.py:111
 msgid "Driving Style Banner"
 msgstr "運転スタイルのバナー"
 
-#: settings/display.py:224
+#: settings/display.py:240
 #: settings/search.py:111
 msgid "Shows the current style when it changes"
 msgstr "スタイルが変わると現在のスタイルを表示します"
 
-#: settings/display.py:227
+#: settings/display.py:243
 #: settings/search.py:113
 msgid "Blind Spot Highlights"
 msgstr "死角の強調表示"
 
-#: settings/display.py:227
+#: settings/display.py:243
 #: settings/search.py:113
 msgid "Colors the screen edge when a car is beside you"
 msgstr "横に車がいると画面の縁に色を付けます"
+
+#: settings/display.py:261
+msgid "Plays beside the speed while a blinker is on"
+msgstr "ウインカー点灯中に速度の横で再生されます"
 
 #: settings/driving_tab.py:188
 msgid "Extra detail and fine tuning, each behind one switch"
@@ -2852,13 +2899,13 @@ msgstr "運転モデル"
 
 #: settings/driving_tab.py:205
 #: settings/search.py:27
-#: settings/search.py:127
+#: settings/search.py:129
 msgid "Vehicle"
 msgstr "車両"
 
 #: settings/driving_tab.py:206
 #: settings/search.py:27
-#: settings/search.py:132
+#: settings/search.py:134
 msgid "Assistance"
 msgstr "アシスト"
 
@@ -2913,7 +2960,7 @@ msgstr "一般"
 
 #: settings/essentials.py:156
 #: settings/search.py:31
-#: settings/search.py:168
+#: settings/search.py:170
 msgid "Storage & Data"
 msgstr "ストレージとデータ"
 
@@ -2929,48 +2976,48 @@ msgstr "設定"
 
 #: settings/general.py:26
 #: settings/general.py:41
-#: settings/search.py:164
+#: settings/search.py:166
 msgid "Language"
 msgstr "言語"
 
 #: settings/general.py:37
-#: settings/search.py:162
+#: settings/search.py:164
 msgid "Units"
 msgstr "単位"
 
 #: settings/general.py:37
-#: settings/search.py:162
+#: settings/search.py:164
 msgid "Speed and distance everywhere"
 msgstr "速度と距離の表示すべて"
 
 #: settings/general.py:39
-#: settings/search.py:163
+#: settings/search.py:165
 #: sidebar.py:227
 msgid "Temperature"
 msgstr "気温"
 
 #: settings/general.py:39
-#: settings/search.py:163
+#: settings/search.py:165
 msgid "For the weather forecast"
 msgstr "天気予報に使います"
 
 #: settings/general.py:42
-#: settings/search.py:165
+#: settings/search.py:167
 msgid "Screen Brightness"
 msgstr "画面の明るさ"
 
 #: settings/general.py:42
-#: settings/search.py:165
+#: settings/search.py:167
 msgid "Auto follows ambient light, day and night"
 msgstr "自動は昼夜の周囲の明るさに合わせます"
 
 #: settings/general.py:44
-#: settings/search.py:166
+#: settings/search.py:168
 msgid "Standby"
 msgstr "スタンバイ"
 
 #: settings/general.py:44
-#: settings/search.py:166
+#: settings/search.py:168
 msgid "Screen sleeps while driving, wakes for alerts"
 msgstr "運転中は画面がスリープし、アラートで点灯します"
 
@@ -3530,7 +3577,7 @@ msgid "installing"
 msgstr "インストール中"
 
 #: settings/model.py:297
-#: settings/search.py:126
+#: settings/search.py:128
 msgid "Use recommended"
 msgstr "おすすめを使う"
 
@@ -3905,7 +3952,7 @@ msgstr "編集"
 
 #: settings/network_tab.py:396
 #: settings/network_tab.py:387
-#: settings/search.py:193
+#: settings/search.py:195
 msgid "Roaming, APN and IP address"
 msgstr "ローミング、APN、IP アドレス"
 
@@ -3925,7 +3972,7 @@ msgstr "パスワードを入力"
 
 #: settings/network_tab.py:173
 #: settings/network_tab.py:383
-#: settings/search.py:190
+#: settings/search.py:192
 msgid "Hotspot name"
 msgstr "ホットスポット名"
 
@@ -3934,37 +3981,37 @@ msgid "A saved network already uses this name"
 msgstr "保存済みのネットワークがこの名前を使用しています"
 
 #: settings/network_tab.py:362
-#: settings/search.py:187
+#: settings/search.py:189
 msgid "Join a hidden network"
 msgstr "非公開ネットワークに接続"
 
 #: settings/network_tab.py:382
-#: settings/search.py:189
+#: settings/search.py:191
 msgid "Hotspot"
 msgstr "ホットスポット"
 
 #: settings/network_tab.py:382
-#: settings/search.py:189
+#: settings/search.py:191
 msgid "Share this device's connection"
 msgstr "このデバイスの接続を共有"
 
 #: settings/network_tab.py:385
-#: settings/search.py:191
+#: settings/search.py:193
 msgid "Hotspot Password"
 msgstr "ホットスポットのパスワード"
 
 #: settings/network_tab.py:385
-#: settings/search.py:191
+#: settings/search.py:193
 msgid "For phones joining this device's hotspot"
 msgstr "このデバイスのホットスポットにつなぐスマホ用"
 
 #: settings/network_tab.py:386
-#: settings/search.py:192
+#: settings/search.py:194
 msgid "Save Data"
 msgstr "データ節約"
 
 #: settings/network_tab.py:386
-#: settings/search.py:192
+#: settings/search.py:194
 msgid "No large uploads on cellular or phone hotspots"
 msgstr "モバイル通信やスマホのホットスポットでは大きなアップロードをしません"
 
@@ -3978,7 +4025,7 @@ msgstr "契約キャリアの圏外でもモバイル通信を使う"
 
 #. English fallback pending cellular-status translation.
 #: settings/network_tab.py:395
-#: settings/search.py:194
+#: settings/search.py:196
 msgid "Cellular IP address"
 msgstr "モバイル通信の IP アドレス"
 
@@ -4235,19 +4282,19 @@ msgid "Connections"
 msgstr "接続"
 
 #: settings/search.py:30
-#: settings/search.py:144
+#: settings/search.py:146
 #: settings/tuner.py:218
 msgid "Steering"
 msgstr "ステアリング"
 
 #: settings/search.py:30
-#: settings/search.py:146
+#: settings/search.py:148
 #: settings/tuner.py:224
 msgid "Gas & Brake"
 msgstr "アクセルとブレーキ"
 
 #: settings/search.py:30
-#: settings/search.py:148
+#: settings/search.py:150
 #: settings/tuner.py:288
 msgid "Following & Stops"
 msgstr "追従と停止"
@@ -4380,397 +4427,397 @@ msgid "The Mapbox and Google keys for search and routes"
 msgstr "検索とルート用の Mapbox と Google のキー"
 
 #: settings/search.py:106
-msgid "The driving screen and the path"
-msgstr "運転画面と走行ライン"
+msgid "The driving screen, the path and the turn signal"
+msgstr "運転画面、進路、ウインカー"
 
-#: settings/search.py:119
+#: settings/search.py:121
 msgid "Volume and the optional chimes"
 msgstr "音量と任意のチャイム"
 
-#: settings/search.py:120
+#: settings/search.py:122
 msgid "One volume for everything, or each group on its own"
 msgstr "すべて同じ音量、またはグループごとに設定"
 
-#: settings/search.py:125
+#: settings/search.py:127
 msgid "The model that drives, and downloading others"
 msgstr "運転するモデルと、他のモデルのダウンロード"
 
-#: settings/search.py:126
+#: settings/search.py:128
 msgid "StarPilot's default driving model"
 msgstr "StarPilot の既定の運転モデル"
 
-#: settings/search.py:127
+#: settings/search.py:129
 msgid "Your car, its steering wheel buttons and car-specific options"
 msgstr "車、ハンドルのボタン、車種別のオプション"
 
-#: settings/search.py:128
+#: settings/search.py:130
 #: settings/vehicle.py:265
 msgid "Steering Wheel Buttons"
 msgstr "ハンドルのボタン"
 
-#: settings/search.py:128
+#: settings/search.py:130
 msgid "What the car's own buttons do while driving"
 msgstr "運転中に車のボタンが何をするか"
 
-#: settings/search.py:129
+#: settings/search.py:131
 #: settings/vehicle.py:247
 msgid "Auto-Lock Doors"
 msgstr "自動ドアロック"
 
-#: settings/search.py:129
+#: settings/search.py:131
 #: settings/vehicle.py:247
 msgid "Locks when you shift out of park"
 msgstr "P レンジから出すとロックします"
 
-#: settings/search.py:130
+#: settings/search.py:132
 #: settings/vehicle.py:249
 msgid "Auto-Unlock Doors"
 msgstr "ドアの自動解錠"
 
-#: settings/search.py:130
+#: settings/search.py:132
 #: settings/vehicle.py:249
 msgid "Unlocks when you shift into park"
 msgstr "P レンジに入れるとロックを解除します"
 
-#: settings/search.py:131
+#: settings/search.py:133
 #: settings/vehicle.py:264
 #: settings/vehicle.py:315
 msgid "More for your car"
 msgstr "あなたの車向けの機能"
 
-#: settings/search.py:131
+#: settings/search.py:133
 #: settings/vehicle.py:264
 msgid "Features specific to your make and model"
 msgstr "メーカーと車種に固有の機能"
 
-#: settings/search.py:132
+#: settings/search.py:134
 msgid "openpilot's core switches and driver monitoring"
 msgstr "openpilot の基本スイッチとドライバーモニタリング"
 
-#: settings/search.py:133
+#: settings/search.py:135
 msgid "Adaptive cruise and lane keeping"
 msgstr "アダプティブクルーズと車線維持"
 
-#: settings/search.py:134
+#: settings/search.py:136
 #: settings/speed_steering.py:327
 msgid "Disengage on Gas Pedal"
 msgstr "アクセルで解除"
 
-#: settings/search.py:134
+#: settings/search.py:136
 #: settings/speed_steering.py:327
 msgid "Pressing the accelerator turns openpilot off"
 msgstr "アクセルを踏むと openpilot がオフになります"
 
-#: settings/search.py:135
+#: settings/search.py:137
 #: settings/speed_steering.py:328
 msgid "Lane Departure Warnings"
 msgstr "車線逸脱警報"
 
-#: settings/search.py:135
+#: settings/search.py:137
 msgid "Alerts when you drift over a lane line without signaling"
 msgstr "ウインカーなしで車線を越えると警告します"
 
-#: settings/search.py:136
+#: settings/search.py:138
 #: settings/speed_steering.py:329
 msgid "Safe Mode"
 msgstr "セーフモード"
 
-#: settings/search.py:136
+#: settings/search.py:138
 msgid "Stock tuning, the default model and Relaxed"
 msgstr "純正のチューニング、デフォルトのモデル、ゆったり"
 
-#: settings/search.py:137
+#: settings/search.py:139
 #: settings/speed_steering.py:337
 msgid "Always-On Driver Monitoring"
 msgstr "常時ドライバーモニタリング"
 
-#: settings/search.py:137
+#: settings/search.py:139
 #: settings/speed_steering.py:337
 msgid "Watches for distraction even when openpilot is off"
 msgstr "openpilot がオフでもわき見を監視します"
 
-#: settings/search.py:138
+#: settings/search.py:140
 msgid "Check that it can see your face"
 msgstr "顔が見えているか確認します"
 
-#: settings/search.py:140
+#: settings/search.py:142
 #: settings/speed_steering.py:341
 msgid "Sentry Mode"
 msgstr "センチネルモード"
 
-#: settings/search.py:140
+#: settings/search.py:142
 #: settings/speed_steering.py:341
 msgid "Pictures in Galaxy if the parked car is bumped"
 msgstr "駐車中の車に衝撃があると Galaxy に写真"
 
-#: settings/search.py:141
+#: settings/search.py:143
 #: settings/speed_steering.py:343
 msgid "Sensitivity"
 msgstr "感度"
 
-#: settings/search.py:141
+#: settings/search.py:143
 #: settings/speed_steering.py:343
 msgid "High notices smaller bumps"
 msgstr "高にすると小さな衝撃も検知します"
 
-#: settings/search.py:142
+#: settings/search.py:144
 msgid "Fine-tuning screens for steering, gas, brake and following"
 msgstr "ステアリング、アクセル、ブレーキ、追従の微調整画面"
 
-#: settings/search.py:144
+#: settings/search.py:146
 msgid "Lane centering and your car's steering tune"
 msgstr "車線中央維持と車のステアリング調整"
 
-#: settings/search.py:146
+#: settings/search.py:148
 msgid "Acceleration and braking profiles, stops and takeoffs"
 msgstr "加速と減速のプロファイル、停止と発進"
 
-#: settings/search.py:148
+#: settings/search.py:150
 msgid "Following gaps and how the car stops"
 msgstr "車間距離と停止のしかた"
 
-#: settings/search.py:149
+#: settings/search.py:151
 msgid "Following Gaps"
 msgstr "車間距離"
 
-#: settings/search.py:149
+#: settings/search.py:151
 msgid "Relaxed, Standard, Sport and Traffic"
 msgstr "リラックス、標準、スポーツ、渋滞"
 
-#: settings/search.py:151
+#: settings/search.py:153
 msgid "Pairing, remote access, calibration, restart and power"
 msgstr "ペアリング、リモートアクセス、キャリブレーション、再起動、電源"
 
-#: settings/search.py:152
+#: settings/search.py:154
 msgid "comma connect: see drives and change settings on your phone"
 msgstr "comma connect：スマホでドライブの確認や設定変更"
 
-#: settings/search.py:153
+#: settings/search.py:155
 msgid "Galaxy: reach this device from a web browser"
 msgstr "Galaxy：ブラウザからこのデバイスにアクセス"
 
-#: settings/search.py:154
+#: settings/search.py:156
 msgid "How the device is mounted"
 msgstr "デバイスの取り付け状態"
 
-#: settings/search.py:156
+#: settings/search.py:158
 msgid "Regulatory information"
 msgstr "規制情報"
 
-#: settings/search.py:157
+#: settings/search.py:159
 msgid "This device's IDs"
 msgstr "このデバイスの ID"
 
-#: settings/search.py:158
+#: settings/search.py:160
 msgid "The cellular modem's ID"
 msgstr "モバイルモデムの ID"
 
-#: settings/search.py:159
+#: settings/search.py:161
 msgid "Restart the device"
 msgstr "デバイスを再起動"
 
-#: settings/search.py:160
+#: settings/search.py:162
 msgid "Turn the device off until the car starts"
 msgstr "車が始動するまでデバイスをオフにします"
 
-#: settings/search.py:161
+#: settings/search.py:163
 msgid "Units, language, brightness and standby"
 msgstr "単位、言語、明るさ、スタンバイ"
 
-#: settings/search.py:164
+#: settings/search.py:166
 msgid "Menus and alerts"
 msgstr "メニューとアラート"
 
-#: settings/search.py:167
+#: settings/search.py:169
 msgid "Snapshots of your settings"
 msgstr "設定のスナップショット"
 
-#: settings/search.py:168
+#: settings/search.py:170
 msgid "What's using space, and recording and uploads"
 msgstr "容量の使用状況、録画とアップロード"
 
-#: settings/search.py:169
+#: settings/search.py:171
 #: settings/storage.py:151
 msgid "Recorded Drives"
 msgstr "記録したドライブ"
 
-#: settings/search.py:169
+#: settings/search.py:171
 #: settings/storage.py:151
 msgid "Oldest drives are removed when space runs low"
 msgstr "空き容量が少なくなると古いドライブから削除されます"
 
-#: settings/search.py:170
+#: settings/search.py:172
 msgid "Delete downloaded map data"
 msgstr "ダウンロードした地図データを削除"
 
-#: settings/search.py:171
+#: settings/search.py:173
 #: settings/storage.py:153
 msgid "Unused Models"
 msgstr "未使用のモデル"
 
-#: settings/search.py:171
+#: settings/search.py:173
 msgid "Downloaded models that aren't in use"
 msgstr "使っていないダウンロード済みモデル"
 
-#: settings/search.py:172
+#: settings/search.py:174
 #: settings/storage.py:155
 msgid "Record Driver Camera"
 msgstr "ドライバーカメラを録画"
 
-#: settings/search.py:172
+#: settings/search.py:174
 msgid "Saved and uploaded with your drives"
 msgstr "ドライブと一緒に保存・アップロード"
 
-#: settings/search.py:173
+#: settings/search.py:175
 #: settings/storage.py:156
 msgid "Record Microphone"
 msgstr "マイクを録音"
 
-#: settings/search.py:173
+#: settings/search.py:175
 msgid "Cabin audio in your drive recordings"
 msgstr "ドライブの録画に車内の音声"
 
-#: settings/search.py:174
+#: settings/search.py:176
 #: settings/storage.py:157
 msgid "Drive logs and video for debugging"
 msgstr "デバッグ用のドライブログと動画"
 
-#: settings/search.py:175
+#: settings/search.py:177
 msgid "What was using RAM on drives that ran low"
 msgstr "RAMが不足した走行でRAMを使っていたもの"
 
-#: settings/search.py:176
+#: settings/search.py:178
 msgid "Send what happened to the developers"
 msgstr "起きたことを開発者に送ります"
 
-#: settings/search.py:177
+#: settings/search.py:179
 msgid "ADB, SSH and debug modes"
 msgstr "ADB、SSH、デバッグモード"
 
-#: settings/search.py:178
+#: settings/search.py:180
 msgid "Connect over USB or the network"
 msgstr "USB またはネットワークで接続"
 
-#: settings/search.py:179
+#: settings/search.py:181
 msgid "Remote shell access"
 msgstr "リモートシェルアクセス"
 
-#: settings/search.py:180
+#: settings/search.py:182
 msgid "Adds every public key in a GitHub account"
 msgstr "GitHub アカウントの公開キーをすべて追加"
 
-#: settings/search.py:181
+#: settings/search.py:183
 msgid "Drive openpilot's controls from a joystick"
 msgstr "ジョイスティックで openpilot を操作"
 
-#: settings/search.py:182
+#: settings/search.py:184
 msgid "Turns off the car's emergency braking"
 msgstr "車の緊急ブレーキをオフにします"
 
-#: settings/search.py:185
+#: settings/search.py:187
 msgid "Networks nearby, and joining one"
 msgstr "近くのネットワークと接続"
 
-#: settings/search.py:186
+#: settings/search.py:188
 msgid "IP Address"
 msgstr "IP アドレス"
 
-#: settings/search.py:186
+#: settings/search.py:188
 msgid "This device's local address, beside the connected network"
 msgstr "接続中のネットワークの横に、このデバイスのローカルアドレス"
 
-#: settings/search.py:187
+#: settings/search.py:189
 msgid "Enter its name and password"
 msgstr "名前とパスワードを入力"
 
 #. English fallback pending cellular-status translation.
-#: settings/search.py:188
+#: settings/search.py:190
 msgid "Connection status, hotspot, data use, roaming and APN"
 msgstr "接続状態、テザリング、データ使用量、ローミング、APN"
 
-#: settings/search.py:190
+#: settings/search.py:192
 msgid "The name phones see when joining this device"
 msgstr "スマートフォンをこのデバイスに接続するときに表示される名前"
 
 #. English fallback pending cellular-status translation.
-#: settings/search.py:193
+#: settings/search.py:195
 msgid "Roaming, APN and the cellular IP address"
 msgstr "ローミング、APN、モバイル通信の IP アドレス"
 
 #. English fallback pending cellular-status translation.
-#: settings/search.py:194
+#: settings/search.py:196
 msgid "The modem's mobile data address"
 msgstr "モデムのモバイルデータのアドレス"
 
-#: settings/search.py:195
+#: settings/search.py:197
 msgid "A wheel remote's buttons and what they do"
 msgstr "ハンドル用リモコンのボタンとその動作"
 
-#: settings/search.py:196
+#: settings/search.py:198
 msgid "Pair and connect phones, speakers and remotes"
 msgstr "スマホ、スピーカー、リモコンのペアリングと接続"
 
-#: settings/search.py:199
+#: settings/search.py:201
 msgid "Download speed, upload speed and ping of this device's connection"
 msgstr "このデバイスの接続のダウンロード速度、アップロード速度、Ping"
 
-#: settings/search.py:202
+#: settings/search.py:204
 msgid "Updates and the release notes"
 msgstr "アップデートとリリースノート"
 
-#: settings/search.py:203
+#: settings/search.py:205
 #: settings/software.py:202
 msgid "Automatic Updates"
 msgstr "自動アップデート"
 
-#: settings/search.py:203
+#: settings/search.py:205
 msgid "Download while parked, install when you turn off the car"
 msgstr "駐車中にダウンロードし、車の電源を切るとインストール"
 
-#: settings/search.py:204
+#: settings/search.py:206
 #: settings/software.py:199
 msgid "Release Channel"
 msgstr "リリースチャンネル"
 
-#: settings/search.py:204
+#: settings/search.py:206
 msgid "The branch to download updates from"
 msgstr "アップデートをダウンロードするブランチ"
 
-#: settings/search.py:205
+#: settings/search.py:207
 #: settings/software.py:208
 msgid "Reset Settings"
 msgstr "設定をリセット"
 
-#: settings/search.py:205
+#: settings/search.py:207
 msgid "Back to the Essentials defaults"
 msgstr "Essentials のデフォルトに戻す"
 
-#: settings/search.py:206
+#: settings/search.py:208
 #: settings/software.py:180
 #: settings/software.py:212
 msgid "Uninstall"
 msgstr "アンインストール"
 
-#: settings/search.py:206
+#: settings/search.py:208
 msgid "Remove this software from the device"
 msgstr "このソフトウェアをデバイスから削除"
 
-#: settings/search.py:383
-#: settings/search.py:374
+#: settings/search.py:385
+#: settings/search.py:376
 msgid "Search settings"
 msgstr "設定を検索"
 
-#: settings/search.py:272
+#: settings/search.py:274
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "「制限速度」などの設定名を話してください。終わったらマイクをタップします。"
 
-#: settings/search.py:354
-#: settings/search.py:313
+#: settings/search.py:356
+#: settings/search.py:315
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "「{}」に一致する設定はありません"
 
-#: settings/search.py:355
+#: settings/search.py:357
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "設定の名前か機能を入力してください（例：明るさ、車線変更）"
 
@@ -5526,7 +5573,7 @@ msgstr "確認"
 msgid "Are you sure you want to uninstall?"
 msgstr "本当にアンインストールしますか？"
 
-#: selfdrive/ui/layouts/settings/software.py:280
+#: selfdrive/ui/layouts/settings/software.py:286
 msgid "Select a branch"
 msgstr "ブランチを選択"
 
@@ -5611,17 +5658,17 @@ msgstr "完全な更新には「ダウンロード」を使ってください"
 msgid "Checking for new versions"
 msgstr "新しいバージョンを確認中"
 
-#: selfdrive/ui/layouts/settings/software.py:238
-msgid "No error log found."
-msgstr "エラーログが見つかりません。"
-
-#: selfdrive/ui/layouts/settings/software.py:239
+#: selfdrive/ui/layouts/settings/software.py:245
 msgid "OK"
 msgstr "OK"
 
 #: selfdrive/ui/layouts/settings/software.py:164
 msgid "failed to check for update"
 msgstr "アップデートの確認に失敗しました"
+
+#: selfdrive/ui/layouts/settings/software.py:244
+msgid "No error log found."
+msgstr "エラーログが見つかりません。"
 
 #: selfdrive/ui/layouts/settings/software.py:167
 msgid "update available"
@@ -5811,53 +5858,53 @@ msgstr "右"
 msgid " Steering torque response calibration is {}% complete."
 msgstr " ステアリングトルク応答のキャリブレーションは{}%完了しました。"
 
-#: selfdrive/ui/layouts/settings/developer.py:20
+#: selfdrive/ui/layouts/settings/developer.py:21
 msgid "ADB (Android Debug Bridge) allows connecting to your device over USB or over the network. See https://docs.comma.ai/how-to/connect-to-comma for more info."
 msgstr "ADB（Android Debug Bridge）を使うと、USB またはネットワーク経由でデバイスに接続できます。詳しくは https://docs.comma.ai/how-to/connect-to-comma をご覧ください。"
 
-#: selfdrive/ui/layouts/settings/developer.py:24
+#: selfdrive/ui/layouts/settings/developer.py:25
 msgid "Warning: This grants SSH access to all public keys in your GitHub settings. Never enter a GitHub username other than your own. A comma employee will NEVER ask you to add their GitHub username."
 msgstr "警告：GitHub の設定にあるすべての公開キーに SSH アクセスが付与されます。自分以外の GitHub ユーザー名は絶対に入力しないでください。comma の従業員が自分の GitHub ユーザー名を追加するよう依頼することは絶対にありません。"
 
-#: selfdrive/ui/layouts/settings/developer.py:28
+#: selfdrive/ui/layouts/settings/developer.py:29
 msgid "<b>WARNING: openpilot longitudinal control is in alpha for this car and may disable Automatic Emergency Braking (AEB).</b><br><br>On this car, openpilot defaults to the car's built-in ACC instead of openpilot's longitudinal control. This saves a request for openpilot longitudinal control; an exact vehicle check and verified takeover are required at startup. Enabling Experimental mode is recommended when enabling openpilot longitudinal control alpha. Changing this setting will restart openpilot if the car is powered on."
 msgstr "<b>警告：この車の openpilot の縦方向制御はアルファ版で、自動緊急ブレーキ（AEB）が無効になることがあります。</b><br><br>この車では、openpilot は既定で openpilot の縦方向制御ではなく車の ACC を使います。この設定は openpilot の縦方向制御の要求を保存します。起動時には正確な車両確認と確認済みの引き継ぎが必要です。openpilot の縦方向制御アルファを有効にするときは、実験モードの有効化をおすすめします。車の電源が入っていると、この設定の変更で openpilot が再起動します。"
 
-#: selfdrive/ui/layouts/settings/developer.py:35
+#: selfdrive/ui/layouts/settings/developer.py:36
 msgid "Hang up cellular data and don't redial. The modem stays registered and the SIM is untouched. Remote access over cellular data is unavailable while this is enabled."
 msgstr "モバイルデータを切断し、再接続しません。モデムは登録されたままで、SIM はそのままです。有効な間はモバイルデータでのリモートアクセスは使えません。"
 
-#: selfdrive/ui/layouts/settings/developer.py:50
+#: selfdrive/ui/layouts/settings/developer.py:51
 msgid "Enable ADB"
 msgstr "ADBを有効化"
 
-#: selfdrive/ui/layouts/settings/developer.py:59
+#: selfdrive/ui/layouts/settings/developer.py:60
 msgid "Enable SSH"
 msgstr "SSHを有効化"
 
-#: selfdrive/ui/layouts/settings/developer.py:75
+#: selfdrive/ui/layouts/settings/developer.py:76
 #: selfdrive/selfdrived/events.py:404
 msgid "Longitudinal Maneuver Mode"
 msgstr "前後方向の試験モード"
 
-#: selfdrive/ui/layouts/settings/developer.py:82
+#: selfdrive/ui/layouts/settings/developer.py:83
 #: selfdrive/selfdrived/events.py:419
 msgid "Lateral Maneuver Mode"
 msgstr "横方向の試験モード"
 
-#: selfdrive/ui/layouts/settings/developer.py:89
+#: selfdrive/ui/layouts/settings/developer.py:90
 msgid "openpilot Longitudinal Control (Alpha)"
 msgstr "openpilot 縦制御（アルファ）"
 
-#: selfdrive/ui/layouts/settings/developer.py:105
+#: selfdrive/ui/layouts/settings/developer.py:111
 msgid "Disable Cellular"
 msgstr "モバイル通信を無効化"
 
-#: selfdrive/ui/layouts/settings/developer.py:233
+#: selfdrive/ui/layouts/settings/developer.py:246
 msgid "Enable"
 msgstr "有効化"
 
-#: selfdrive/ui/layouts/settings/developer.py:112
+#: selfdrive/ui/layouts/settings/developer.py:118
 msgid "OPEN"
 msgstr "開く"
 

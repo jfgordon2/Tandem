@@ -23,7 +23,7 @@ from openpilot.selfdrive.ui.tandem.onroad.lead import GapTagState, GapTracker, d
 from openpilot.selfdrive.ui.tandem.onroad.layers import bar_height, bar_margin
 from openpilot.selfdrive.ui.tandem.onroad.limits import LimitFollower
 from openpilot.selfdrive.ui.tandem.forecast import Announcer, ForecastService, heads_up, now_conditions, shared_service, wall_clock
-from openpilot.selfdrive.ui.tandem.prefs import LEAD_TAG, MAX_FOLLOWS_LIMIT, WEATHER_CHIME, WEATHER_HEADS_UP
+from openpilot.selfdrive.ui.tandem.prefs import LEAD_TAG, MAX_FOLLOWS_LIMIT, TURN_SIGNAL, WEATHER_CHIME, WEATHER_HEADS_UP
 from openpilot.selfdrive.ui.tandem.onroad.binding import (driving_alert, lane_change, matching_limit, proposal, steering_held,
                                                           stop_chips, stop_sign_seen)
 from openpilot.selfdrive.ui.tandem.onroad.layers import AT_LIMIT, ArcState, BarState, Headroom
@@ -31,6 +31,7 @@ from openpilot.selfdrive.ui.tandem.onroad.overlay import OnroadOverlay, road_rec
 from openpilot.selfdrive.ui.tandem.onroad.state import awareness, route_progress, turn, DriveDisplay, DrivingAlert, LimitDecision, Proposal, displayed_speed
 from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, LimitWatch, RamWatch, Snapshot, routing_chip, routing_state
 from openpilot.selfdrive.ui.tandem.onroad.streets import short_street
+from openpilot.selfdrive.ui.tandem.onroad.turn_signals import GAP as SIGNAL_GAP, STANDARD, TurnSignalRenderer
 from openpilot.selfdrive.ui.tandem.places import StarPilotPlaces
 from openpilot.selfdrive.ui.tandem.ram import RamLog, shared_log
 from openpilot.selfdrive.ui.ui_state import device, ui_state
@@ -93,6 +94,8 @@ class EssentialsOnroad(AugmentedRoadView):
     self._jetlink: Any = None   # StarPilot's Jetlink status feed, made when its widget is first placed
     self._model_chip = extras.ModelChip()
     self._announcer = Announcer()
+    self._turn_signals = TurnSignalRenderer()
+    self._signal_pack, self._signal_read_at = STANDARD, -1e9
     self._overlay = self._child(OnroadOverlay(lambda: self._display, self._menu, self._step, self._disengage, self._resolve,
                                               end_route=self._end_route, where_to=self._where_to))
 
@@ -466,12 +469,24 @@ class EssentialsOnroad(AugmentedRoadView):
       try:
         self.render_camera_model_layer(inner, camera_view=int(state.appearance.camera_view),
                                        reverse_driver=state.reverse_driver_camera, poll_camera=poll_camera)
+        self._safely("turn signal", lambda: self._render_turn_signal(inner, state))
       finally:
         rl.end_scissor_mode()
     self._overlay.render(rect)
     strip = self._strip_rect(self._road)
     if strip is not None and self._dev is not None and self._display.alert is None and not self._display.help_steer:
       developer.draw_strip(strip, self._dev)
+
+  def _render_turn_signal(self, inner: rl.Rectangle, state: OnroadState) -> None:
+    """A Whimsy Turn Signal (Display › Theme) crosses the road above the bar while a blinker is on, hidden under an
+    alert as on release; Standard is the chevrons in the speed pill alone."""
+    now = time.monotonic()
+    if now - self._signal_read_at >= 1.0:   # the choice changes only in settings
+      self._signal_pack, self._signal_read_at = TURN_SIGNAL.get() or STANDARD, now
+    shown = self._display.alert is None and not self._display.help_steer and not state.reversing
+    car = display_message(ui_state.sm, "carState", state.observed_ns, after_frame=ui_state.started_frame) if shown else None
+    self._turn_signals.render(inner, self._signal_pack, car, ui_state.started_frame,
+                              bottom_margin=bar_height() + bar_margin() + SIGNAL_GAP)
 
   def _can_act(self) -> bool:
     state = self._native
@@ -518,6 +533,7 @@ class EssentialsOnroad(AugmentedRoadView):
 
   def hide_event(self) -> None:
     super().hide_event()
+    self._turn_signals.close()
     self._gap_tracker.reset()
     self._gap_state = None
     self._display, self._native = DriveDisplay(), None

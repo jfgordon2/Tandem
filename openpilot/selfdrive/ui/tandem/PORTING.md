@@ -463,7 +463,7 @@ WarningImmediateVolume WarningSoftVolume
   colors (Display), the model manager (Driving Model), vehicle selection and the `wheel` and `vehicle` pages (Vehicle),
   and the lane, torque, profiles and personality pages (Tuner Mode). Their permissions are StarPilot's: changes only
   while settings are open, and Sounds, Appearance, the path, models, the car and door locks only while parked.
-- Dropped with StarPilot 7: Turn Signal animations, Boot Logo, Startup Message, Thin path, the Speed Limit
+- Dropped with StarPilot 7: Boot Logo, Startup Message, Thin path, the Speed Limit
   Change chime, the volume for steering below its minimum speed, Use recommended's automatic downloads (it now means
   StarPilot's default model), the door lock timer, and Tuner Mode's raw gas and brake values, steering controller
   choice, cruise step and bundle overrides.
@@ -577,8 +577,8 @@ WarningImmediateVolume WarningSoftVolume
   feedback (measured acceleration, with its fade) while its wheel brake and acceleration colors setting is on, and the
   border's sides follow its signal and blind-spot border settings. StarPilot draws those borders only on the comma four;
   Tandem shows them on the 3X, as release did.
-- Gone with StarPilot 7: the stopping point, adjacent-lane paths, radar points and signal animations (`turn_signals.py`,
-  `starpilot/tandem/signals.py`).
+- Gone with StarPilot 7: the stopping point (no planned stop distance is published), adjacent-lane paths and radar
+  points (their switches are gone). Signal animations came back as Tandem's own (Stage 8: Turn Signal).
 - Not needed on StarPilot 7: the speed-sign model's memory hook (`vision_slc` runs only while driving) and Galaxy's
   dashboard worker (drive statistics run in Galaxy's own process now).
 - The model chip (`extras.ModelChip`, `onroadextras.html`) shows Jetlink's state (StarPilot 7's external-GPU link) under
@@ -712,4 +712,16 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
 - Release's `dashboard_worker.py` (a launch lock, and a driving check between log segments) isn't needed: StarPilot 7's
   analyzer (`starpilot/galaxy/drive_stats.DriveStatsOwner`) is one worker thread in Galaxy's server, and it rechecks
   every 0.1 s that the device is offroad (`IsOffroad`, with Force Offroad) before each step.
+
+## Stage 8: Turn Signal
+
+- Release drew StarPilot 6's signal animations, picked with its `SignalAnimation` param; StarPilot 7 has none, which had
+  dropped the row. The animations were always drawn by Tandem, so they're back as Tandem's own, like the compass:
+  `prefs.TURN_SIGNAL`, the four Whimsy packs the Essentials picker offers in `assets/signal_packs` (the frog's frames
+  are StarPilot 6's World Frog Day theme, which StarPilot 7 no longer ships), and `onroad/turn_signals.py`, drawn over the
+  road above the bar while a blinker is on, hidden under an alert. Standard is the chevrons by the speed alone.
+- Display's Path section is Theme again (`displaytheme.html`), with Turn Signal and its picker (`signalpicker.html`,
+  `signalunicorn.html`). StarPilot 7's raylib has no `image_alpha_crop`, so the picker finds each figure with Pillow
+  (one of StarPilot 7's dependencies).
+- The other five packs release bundled were only in StarPilot 6's own picker and aren't ported.
 
