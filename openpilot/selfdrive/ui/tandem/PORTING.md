@@ -687,9 +687,10 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
 
 ## Stage 8: statistics and athenad
 
-- Release kept unattended diagnostics on the device. On StarPilot 7 that's three hooks: crash reports (`sentry.py`, done
-  earlier), athenad's `log_handler` (its `stat_handler` is gone), and the `usage_stats` process that replaced StarPilot
-  6's stats upload, which no longer starts. All read `starpilot/tandem/diagnostics.AUTOMATIC_DIAGNOSTICS_ENABLED`.
+- Release kept unattended diagnostics on the device. On StarPilot 7 that's four hooks: crash reports (`sentry.py`, done
+  earlier), athenad's `log_handler` (its `stat_handler` is gone), the uploader skipping `crash/` (release's hook, found
+  missing while checking release's `test_telemetry.py`), and the `usage_stats` process that replaced StarPilot 6's stats
+  upload, which no longer starts. All read `starpilot/tandem/diagnostics.AUTOMATIC_DIAGNOSTICS_ENABLED`.
 - `RELEASE_BRANCHES` is left as StarPilot 7 has it. Release added `release` beside StarPilot 6's own release branch; StarPilot
   7 counts none of its own branches as release channels, and one would clear development-only settings, hide developer
   options and turn off alpha longitudinal. Waiting on the owner.

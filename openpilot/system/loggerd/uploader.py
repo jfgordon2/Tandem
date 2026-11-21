@@ -20,6 +20,7 @@ from openpilot.common.realtime import set_core_affinity
 from openpilot.common.hardware.hw import Paths
 from openpilot.system.loggerd.xattr_cache import getxattr, setxattr
 from openpilot.common.swaglog import cloudlog
+from openpilot.starpilot.tandem.diagnostics import AUTOMATIC_DIAGNOSTICS_ENABLED
 
 NetworkType = log.DeviceState.NetworkType
 from openpilot.starpilot.connect.provider import active_provider, owns_recording
@@ -107,6 +108,8 @@ class Uploader:
     logdirs = listdir_by_creation(self.root)
     recent = set(logdirs[-3:])  # the routes still being written are always rescanned
     for logdir in logdirs:
+      if logdir == "crash" and not AUTOMATIC_DIAGNOSTICS_ENABLED:
+        continue  # Tandem: keep native crash artifacts locally, outside unattended uploads
       path = os.path.join(self.root, logdir)
       settled_mtime = self.settled.get(logdir)
       if settled_mtime is not None and logdir not in recent:

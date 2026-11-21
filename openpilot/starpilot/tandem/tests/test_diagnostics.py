@@ -3,6 +3,9 @@ from __future__ import annotations
 
 import ast
 from pathlib import Path
+from types import SimpleNamespace
+
+import pytest
 
 from openpilot.starpilot.tandem import diagnostics
 
@@ -51,3 +54,35 @@ def test_usage_statistics_dont_start_unattended() -> None:
   assert "AUTOMATIC_DIAGNOSTICS_ENABLED" in ast.unparse(enabled), \
     "system/manager/process_config.py starts usage_stats without Tandem's diagnostics policy; reapply the hook"
   assert diagnostics.AUTOMATIC_DIAGNOSTICS_ENABLED is False
+
+
+def test_the_uploader_skips_crash_artifacts_unattended() -> None:
+  """StarPilot's uploader sends crash/ first ("immediate"); Tandem's hook skips that folder while the policy is off."""
+  scan = _function("system/loggerd/uploader.py", "list_upload_files")
+  loop = next(n for n in ast.walk(scan) if isinstance(n, ast.For) and ast.unparse(n.target) == "logdir")
+  check = loop.body[0]
+  assert isinstance(check, ast.If) and "'crash'" in ast.unparse(check.test) and "AUTOMATIC_DIAGNOSTICS_ENABLED" in \
+    ast.unparse(check.test) and isinstance(check.body[0], ast.Continue), \
+    "system/loggerd/uploader.py no longer skips crash/ under Tandem's diagnostics policy; reapply the hook"
+
+
+def test_crash_artifacts_stay_local_while_drive_uploads_remain_available(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+  """Release's behavior check; needs the uploader's messaging stack, so it runs on the device or a full build."""
+  uploader = pytest.importorskip("openpilot.system.loggerd.uploader", exc_type=ImportError)
+  crash = tmp_path / "crash" / "native.crash"
+  crash.parent.mkdir()
+  crash.write_text("synthetic crash")
+  route = tmp_path / "2026-10-31--12-00-00--0"
+  route.mkdir()
+  for name in ("qlog", "rlog", "fcamera.hevc"):
+    (route / name).write_bytes(b"synthetic drive data")
+  monkeypatch.setattr(uploader, "AUTOMATIC_DIAGNOSTICS_ENABLED", False)
+  monkeypatch.setattr(uploader, "getxattr", lambda *args: None)
+  monkeypatch.setattr(uploader, "owns_recording", lambda *args: True)
+  worker = uploader.Uploader.__new__(uploader.Uploader)
+  worker.root, worker.params = str(tmp_path), SimpleNamespace(get=lambda *args: None)
+  worker.immediate_folders, worker.immediate_priority = ["crash/", "boot/"], {"qlog": 0}
+  worker.settled, worker.scan_pause = {}, 0.0
+  available = list(worker.list_upload_files(metered=False))
+  assert {name for name, _, _ in available} == {"qlog", "rlog", "fcamera.hevc"}
+  assert crash.is_file()
