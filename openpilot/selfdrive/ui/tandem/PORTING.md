@@ -704,3 +704,10 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
   gated upstream, read-only, manual, or trigger only on upstream's branch names.
 - Release's `tandem_routing_maps.yaml` (the monthly routing-data build) isn't ported: its bootstrap script and hosted
   build tests stay on `release`, which keeps building the data until this branch replaces it.
+
+## Stage 8: Galaxy's drive analyzer
+
+- Release's `dashboard_worker.py` (a launch lock, and a driving check between log segments) isn't needed: StarPilot 7's
+  analyzer (`starpilot/galaxy/drive_stats.DriveStatsOwner`) is one worker thread in Galaxy's server, and it rechecks
+  every 0.1 s that the device is offroad (`IsOffroad`, with Force Offroad) before each step.
+
