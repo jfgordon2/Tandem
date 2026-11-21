@@ -57,6 +57,9 @@ class Software:
   def version_parts(self) -> tuple[str, str]:
     """"7.0.0 / development / 1abbbc6 / Nov 16" as ("7.0.0", "development · Nov 16"): the commit stays out of sight."""
     description = self._read("UpdaterCurrentDescription")
+    if isinstance(description, str) and description:   # StarPilot's version, not openpilot's base version (brand.py)
+      from openpilot.starpilot.ui.brand import home_description
+      description = home_description(description)
     parts = [p.strip() for p in description.split(" / ")] if isinstance(description, str) and description else []
     number = parts[0] if parts else self.watch.state.home.installed or N_("Unknown version")
     rest = [p for p in parts[1:] if not (len(p) == 7 and all(c in "0123456789abcdef" for c in p))]

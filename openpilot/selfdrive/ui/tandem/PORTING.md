@@ -667,7 +667,9 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
 - `testing` moves AGNOS to 20.5.3 and rebuilt every native file on it. `development` first took upstream's
   `_raylib_extra.so`, then (2026-11-21) rebuilt it from Tandem's `raylib_extra.cc` on the parked comma running 20.5.3
   with `tools/build_raylib_extra.sh`, which reproduces the same file byte for byte. It exports everything upstream's
-  does plus `release_font_glyph_images`, so the glyph release is back.
+  does plus `release_font_glyph_images`, so the glyph release is back. On the parked comma the UI's resident memory went from 262 MB with
+  upstream's build to 226 MB with this one (anonymous memory 167 to 130 MB); the baseline UI had run longer, so it's an
+  approximate figure. Home renders the same.
 - StarPilot's small default model is now `cheddar`; the Driving Model test reads `DEFAULT_SMALL`.
 
 ## Stage 8: the planner chips
@@ -736,4 +738,7 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
   subscribes to it only while those views are on, and projects each car with the renderer's own helpers.
   `tests/test_lead_bars.py` fails if StarPilot renames the renderer internals this uses.
 - `tools/render/scene_lead.py` (release's) renders the tag and bar states again.
+- Home and Software show StarPilot's version (7.0), as StarPilot's own screens do (`starpilot/ui/brand.py`), not
+  openpilot's base version (0.11.3) that StarPilot 7's status and updater description also carry. The tests used a
+  made-up "7.0.0" there, which hid it; they now use the device's real values.
 

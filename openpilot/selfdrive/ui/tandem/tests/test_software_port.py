@@ -20,7 +20,7 @@ OLD, NEW = "a" * 40, "b" * 40
 def fixtures() -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
   """Native software status, permissions and release notes for a parked device."""
   status = {
-    "installed": {"version": "7.0.0", "branch": "development", "commit": OLD},
+    "installed": {"version": "0.11.3", "displayVersion": "7.0", "branch": "development", "commit": OLD},   # as on the device
     "updater": {"state": "idle", "targetBranch": "development", "lastCheckedAt": "2026-11-16T18:00:00Z",
                 "finalizedUpdateReady": False, "targetChangeFound": False, "failedCount": 0},
   }
@@ -163,9 +163,10 @@ def test_release_tab_states_follow_starpilots_stages(stage: Stage, state: str, a
   watch = SoftwareWatch(Mock, Mock(), lambda: True, Mock())
   try:
     watch.state = SoftwareState(stage=stage)
-    model = Software(watch, lambda key: "7.0.0 / development / 1abbbc6 / Nov 16", Mock())
+    model = Software(watch, lambda key: "0.11.3 / development / 1abbbc6 / Nov 16", Mock())
     assert model.state() == state and model.action_label() == action
-    assert model.version_parts() == ("7.0.0", "development · Nov 16")   # the commit stays out of sight
+    # StarPilot's version, not openpilot's base version, and the commit stays out of sight
+    assert model.version_parts() == ("7.0", "development · Nov 16")
     if state == "waiting":
       assert model.status_line() == "Software actions are available while parked" and not model.can_act()
   finally:
@@ -209,3 +210,13 @@ def test_recovery_uses_openpilots_settings(monkeypatch: pytest.MonkeyPatch, key:
   opened = Mock()
   layout = screens.settings(opened, lambda: True)
   assert type(layout) is SettingsLayout and layout.kwargs["on_open_arabesque"] is opened
+
+
+def test_home_shows_starpilots_version_not_openpilots() -> None:
+  """StarPilot's status carries openpilot's base version too; its own screens show StarPilot's (starpilot/ui/brand.py)."""
+  from openpilot.selfdrive.ui.tandem.software import project_software
+  status, operations, _ = fixtures()
+  assert project_software(status, operations).installed == "7.0"
+  del status["installed"]["displayVersion"]
+  assert project_software(status, operations).installed == "0.11.3"   # an older status without it
+

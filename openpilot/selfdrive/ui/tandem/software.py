@@ -69,7 +69,8 @@ def project_software(status: Mapping[str, Any], operations: Mapping[str, Any],
                      description: str = "", notes: bytes = b"") -> HomeSoftware:
   """Show an install action only when StarPilot has qualified a specific update."""
   installed, updater = status["installed"], status["updater"]
-  version = short_version(installed.get("version")) or short_version(installed.get("displayVersion"))
+  # StarPilot's version (7.0), as its own screens show it, not openpilot's base version underneath (starpilot/ui/brand.py)
+  version = short_version(installed.get("displayVersion")) or short_version(installed.get("version"))
   branch, old_commit, new_commit = operations.get("selectedTarget"), installed.get("commit"), operations.get("preparedCommit")
   if (operations.get("canInstall") is True and isinstance(branch, str) and branch and isinstance(old_commit, str) and old_commit
       and isinstance(new_commit, str) and new_commit):
