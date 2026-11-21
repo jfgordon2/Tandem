@@ -596,7 +596,7 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
 |---|---|
 | `test_developer_view.py` | Its strip translation tests are ported; the strip's keys and order are in `test_lead_tag.py` |
 | `test_workflow_policy.py` | Ported with the workflow policy |
-| `test_telemetry.py`, `test_sentry.py` | The uploader and athenad hooks are checked in `starpilot/tandem/tests/test_diagnostics.py`; release's SDK test needs the Params library, so it waits to be run on the device |
+| `test_telemetry.py`, `test_sentry.py` | The uploader and athenad hooks are checked in `starpilot/tandem/tests/test_diagnostics.py`; release's SDK test is `starpilot/tandem/tests/test_sentry.py`, on StarPilot 7's lazily loaded SDK. Both need the Params library, so they skip off the device; on the comma (AGNOS 20.5.3, 2026-11-21) all pass |
 | `test_onroad.py`, `test_chip_events.py`, `test_headroom_warning.py`, `test_limit_offers.py`, `test_onroad_extras.py` | Rewritten for StarPilot 7's onroad state: `test_onroad_port.py`, `test_planner_chips.py`, `test_routing_chips.py`, `test_model_chip.py` and the chip tests in `test_tandem.py`. The stopping point, path end and pedal levels went with StarPilot 7 |
 | `test_turn_signals.py`, `test_galaxy_signals.py` | Gone with StarPilot 7's signal animations |
 | `test_bluetooth_discovery.py`, `test_bluetooth_policy.py`, `test_remote_actions.py`, `test_software_dialogs.py` | StarPilot 6's Bluetooth daemon, wheel service and controller screens; StarPilot 7's runtime replaced them (stage 6 tests) |
