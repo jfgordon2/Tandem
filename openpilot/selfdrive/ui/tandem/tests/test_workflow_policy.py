@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -14,6 +15,17 @@ def test_repository_workflows_match_the_reviewed_policy() -> None:
   assert workflow_policy.check() >= 14
   notes = json.loads(workflow_policy.LOCK.read_text())["files"]
   assert all(entry["review"] for entry in notes.values())
+
+
+def test_the_routing_maps_workflow_pins_official_actions_and_names_real_files() -> None:
+  """Tandem's own data build: each action pinned to a reviewed commit, and every repository path it runs or watches exists."""
+  text = (workflow_policy.ROOT / ".github/workflows/tandem_routing_maps.yaml").read_text()
+  uses = re.findall(r"^\s*- uses:\s+(\S+)", text, flags=re.MULTILINE)
+  assert uses and all(re.fullmatch(r"actions/[a-z0-9-]+@[a-f0-9]{40}", item) for item in uses)
+  paths = {p for p in re.findall(r"(openpilot/[\w./-]+\.(?:py|sh|json))", text) if "/tools/out/" not in p}   # out/: its output
+  assert paths and all((workflow_policy.ROOT / path).is_file() for path in paths), sorted(paths)
+  modules = set(re.findall(r"-m (openpilot\.starpilot\.tandem\.routing\.tools\.\w+)", text))
+  assert modules and all((workflow_policy.ROOT / (m.replace(".", "/") + ".py")).is_file() for m in modules)
 
 
 @pytest.mark.parametrize("name", ["stale.yaml", "jenkins-pr-trigger.yaml"])

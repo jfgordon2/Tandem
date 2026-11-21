@@ -702,8 +702,10 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
 - Gated to `StarPilotHQ/StarPilot`, as release gated its inherited publishers: `stale.yaml` (closes PRs daily once this
   is the default branch) and `jenkins-pr-trigger.yaml` (force-pushes and deletes Jenkins branches). The rest are already
   gated upstream, read-only, manual, or trigger only on upstream's branch names.
-- Release's `tandem_routing_maps.yaml` (the monthly routing-data build) isn't ported: its bootstrap script and hosted
-  build tests stay on `release`, which keeps building the data until this branch replaces it.
+- Release's `tandem_routing_maps.yaml` (the monthly routing-data build) is ported with `development`'s paths, and its
+  `monthly_bootstrap.sh` unchanged; the routing tools were already identical. Its release-gate tests pass in a bare
+  Python with only the bootstrap's packages, as on the hosted runner. GitHub schedules only the default branch's copy,
+  so `release` keeps building the data until this branch replaces it.
 
 ## Stage 8: Galaxy's drive analyzer
 

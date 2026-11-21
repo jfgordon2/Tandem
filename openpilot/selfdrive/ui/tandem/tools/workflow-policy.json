@@ -49,6 +49,10 @@
       "sha256": "235a9208feb0d6084637984cfbf4990ca13732dc800a8ec152f05b17d101ac03",
       "review": "Daily stale-PR closer. Tandem: gated to StarPilotHQ/StarPilot, inert here."
     },
+    ".github/workflows/tandem_routing_maps.yaml": {
+      "sha256": "c94e7d4bfab8755e6894b984c20111a9fb761d935fc4b561cd3f5eeacc4dd66a",
+      "review": "Tandem's own monthly/manual routing-data build and publication (release's, with development's paths), pinned to the trigger commit. Read-only review job; contents:write only for the build and publish jobs, gated to jfgordon2/Tandem. valhalla pushes only review unless marked [routing-build-check]. Schedules run from the default branch, so this copy builds once this branch is release."
+    },
     ".github/workflows/tests.yaml": {
       "sha256": "b764c187256a2e20008a89870258ea44e3c365f60bb11ecb3078b34168130460",
       "review": "CI on PRs and upstream branch pushes; its artifact pushes are gated to commaai/openpilot master."
