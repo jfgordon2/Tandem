@@ -1,0 +1,61 @@
+{
+  "reviewed": "2026-11-20",
+  "files": {
+    ".github/workflows/auto_pr_review.yaml": {
+      "sha256": "ebce4560f9c8646dbbfcdd3c21d92aaa1df32dc765cc35a36d054c6f4827816b",
+      "review": "PR target-branch check; its job is gated to commaai/openpilot, so inert in Tandem."
+    },
+    ".github/workflows/diff_report.yaml": {
+      "sha256": "7e137a5c911b56bd51c624d6d53c61238dba55034a0b749a7733c2a6b37c0c46",
+      "review": "pull_request_target: posts tests.yaml's result summary on Tandem's PRs (pull-requests:write). No branch, release or package writes."
+    },
+    ".github/workflows/docs.yaml": {
+      "sha256": "a58064d5450a9954200f7d58eb41c0ec643d9ad178272a29bad7b421626d30eb",
+      "review": "Docs build on PRs and upstream branch pushes; publishing (gh-pages force push) is gated to commaai/openpilot master."
+    },
+    ".github/workflows/flm-offroad.yaml": {
+      "sha256": "c255b7f13628af91c8ac9bbc2648c1f9d4ceda745877d7d68b6a0c6e0cdf3ff3",
+      "review": "Read-only FLM tests on pushes to upstream's branch names only (Dom, StarPilot, stable, testing, dev), so not development or release."
+    },
+    ".github/workflows/galaxy-phone-bridge.yaml": {
+      "sha256": "9a5533d264cace66766ec0e838059eeb7834bf9248b4f2bcaaef2ddb4f74d7e3",
+      "review": "Read-only phone-bridge build check on pushes to upstream's branch names only."
+    },
+    ".github/workflows/jenkins-pr-trigger.yaml": {
+      "sha256": "9de71cbc9cf27abb1db90bf21bd4a832e9f79171ded18fd6b9d2280d31563845",
+      "review": "Jenkins branch push and cleanup (contents:write). Tandem: both jobs gated to StarPilotHQ/StarPilot, inert here."
+    },
+    ".github/workflows/pr_discord_reminder.yaml": {
+      "sha256": "128a47d602e7bed31dcf4868c48ff5cf2726f370c95da122cea194032582c6d7",
+      "review": "Discord PR reminder; gated to StarPilotHQ/StarPilot, inert in Tandem."
+    },
+    ".github/workflows/release.yaml": {
+      "sha256": "08d109ae6342a71d963f0ec722c05bffbffcc7685e9c8af3064c953b85a87cb5",
+      "review": "Nightly release build; gated to commaai/openpilot, inert in Tandem."
+    },
+    ".github/workflows/repo-maintenance.yaml": {
+      "sha256": "7a9a786348a0a8607423cb3ab57e7b00401dacd82f204dc27c26ed58ede1e538",
+      "review": "Dependency bump PRs and PR cleanup; gated to commaai/openpilot, inert in Tandem."
+    },
+    ".github/workflows/safety.yaml": {
+      "sha256": "d258b93a9d606469a215bae533998f640784d5ce6c68b377b74a12b89af9a11d",
+      "review": "Read-only safety tests on PRs and upstream branch pushes (contents:read)."
+    },
+    ".github/workflows/simulator-driving.yaml": {
+      "sha256": "08a7c2bc12714d41fd74b8ef6d25a8884410f071ba95e832e427afe1a1bfa53d",
+      "review": "Manual simulator run only (workflow_dispatch, contents:read)."
+    },
+    ".github/workflows/stale.yaml": {
+      "sha256": "235a9208feb0d6084637984cfbf4990ca13732dc800a8ec152f05b17d101ac03",
+      "review": "Daily stale-PR closer. Tandem: gated to StarPilotHQ/StarPilot, inert here."
+    },
+    ".github/workflows/tests.yaml": {
+      "sha256": "b764c187256a2e20008a89870258ea44e3c365f60bb11ecb3078b34168130460",
+      "review": "CI on PRs and upstream branch pushes; its artifact pushes are gated to commaai/openpilot master."
+    },
+    ".github/workflows/ui_preview.yaml": {
+      "sha256": "d4fdd3848d422bb55e45523f2fb16f8c37b29ed09acd490c998d2d0d89a6069a",
+      "review": "UI screenshots for PRs against master only; Tandem has no master, so inert."
+    }
+  }
+}

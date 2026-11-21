@@ -11,6 +11,8 @@ env:
 
 jobs:
   stale:
+    # Tandem: StarPilot's PR housekeeping, kept inert in Tandem's repository.
+    if: github.repository == 'StarPilotHQ/StarPilot'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/stale@v10
@@ -32,6 +34,8 @@ jobs:
 
   # same as above, but give draft PRs more time
   stale_drafts:
+    # Tandem: StarPilot's PR housekeeping, kept inert in Tandem's repository.
+    if: github.repository == 'StarPilotHQ/StarPilot'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/stale@v10

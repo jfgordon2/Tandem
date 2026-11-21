@@ -6,6 +6,8 @@ on:
 
 jobs:
   cleanup-branches:
+    # Tandem: StarPilot's Jenkins branches, kept inert in Tandem's repository.
+    if: github.repository == 'StarPilotHQ/StarPilot'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -45,7 +47,7 @@ jobs:
 
   scan-comments:
     runs-on: ubuntu-latest
-    if: ${{ github.event.issue.pull_request }}
+    if: ${{ github.event.issue.pull_request && github.repository == 'StarPilotHQ/StarPilot' }}  # Tandem: inert here
     permissions:
       contents: write
       issues: write

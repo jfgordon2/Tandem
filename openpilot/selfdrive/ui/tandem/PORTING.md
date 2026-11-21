@@ -10,7 +10,7 @@ stage 2 is done, `development` boots as stock StarPilot 7.0.
 | 3. State | Mapped and covered by contract tests |
 | 4. Screens | Done: every release screen, the driving screen and its chips |
 | 5. Services | Done: navigation, Valhalla routing and Offline Maps, Bluetooth, the CAN recorder, radios, network test |
-| 6. Fork-wide policies | Diagnostics, uploads, statistics, athenad and translations done; `RELEASE_BRANCHES` (owner's call) and workflows remain |
+| 6. Fork-wide policies | Diagnostics, uploads, statistics, athenad, workflows and translations done; `RELEASE_BRANCHES` is the owner's call |
 
 ## Decisions for the rest of the port (owner, 2026-11-16)
 
@@ -693,3 +693,14 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
 - `RELEASE_BRANCHES` is left as StarPilot 7 has it. Release added `release` beside StarPilot 6's own release branch; StarPilot
   7 counts none of its own branches as release channels, and one would clear development-only settings, hide developer
   options and turn off alpha longitudinal. Waiting on the owner.
+
+## Stage 8: workflows
+
+- StarPilot 7 brings 14 workflows, none of release's. `tools/workflow_policy.py` and `workflow-policy.json` (release's
+  tool) pin each by hash with what it does in Tandem's repository; `tests/test_workflow_policy.py` fails until a new or
+  changed one is reviewed.
+- Gated to `StarPilotHQ/StarPilot`, as release gated its inherited publishers: `stale.yaml` (closes PRs daily once this
+  is the default branch) and `jenkins-pr-trigger.yaml` (force-pushes and deletes Jenkins branches). The rest are already
+  gated upstream, read-only, manual, or trigger only on upstream's branch names.
+- Release's `tandem_routing_maps.yaml` (the monthly routing-data build) isn't ported: its bootstrap script and hosted
+  build tests stay on `release`, which keeps building the data until this branch replaces it.
