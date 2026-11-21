@@ -1,7 +1,10 @@
-"""The lead car's tag (design/gaptag.html): the gap, or distance, gap and relative speed in the power-user views.
+"""The lead car's tag (design/gaptag.html) and ground bars (leadmarker.html): the gap, or distance, gap and relative
+speed in the power-user views, and faint bars under the other cars.
 
-On StarPilot 7 the tag takes the place of the text StarPilot's model renderer draws above its lead marker (its Lead Info);
-the marker is StarPilot's own. The tracker keeps the reading calm and restarts a short entrance for a new lead or a cut-in.
+On StarPilot 7 the tag takes the place of the text StarPilot's model renderer draws above its lead marker (its Lead Info),
+and Tandem draws in place of the marker itself, as release did: the car you follow stays unobstructed under its tag, or
+gets the ground bar with the tag off. The tracker keeps the reading calm and restarts a short entrance for a new lead or
+a cut-in.
 """
 from __future__ import annotations
 
@@ -12,7 +15,7 @@ from typing import Any
 from openpilot.starpilot.ui.raylib import rl
 
 from openpilot.common.constants import CV
-from openpilot.selfdrive.ui.tandem import tokens as T
+from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.onroad.developer import Lead
 from openpilot.selfdrive.ui.tandem.i18n import t_
 
@@ -162,3 +165,63 @@ class GapTracker:
     self._last_time = now
     lead = Lead(distance, gap, relative_text, sample.confident and relative < -0.5, "radar" if sample.radar else "vision")
     return GapTagState(label, lead, 1.0 if sample.confident else LEAD_UNSURE, progress)
+
+
+# ── Ground bars (design/leadmarker.html) ──
+
+LEAD_INK = T.TEXT
+LEAD_BRAKING_INK = T.WARNING
+LEAD_OUTLINE = rl.Color(0x0B, 0x0D, 0x10, 0xB3)
+LEAD_FAINT = 0.35           # a second car ahead, and cars in the next lanes
+
+
+def lead_bar_rect(chevron: list[tuple[float, float]]) -> rl.Rectangle | None:
+  """The bar under a car, from StarPilot's marker for it: the marker's tip is the car's ground point and its height
+  scales with distance, so the bar keeps the marker's place and size."""
+  if not chevron or len(chevron) < 3:
+    return None
+  (_, base_y), (x, y), _ = chevron
+  sz = base_y - y
+  if not all(math.isfinite(v) for v in (x, y, sz)) or sz <= 0:
+    return None
+  w, h = sz * 2.5, max(T.px(7), sz * 0.16)   # the marker's width, about the car's at that distance
+  return rl.Rectangle(x - w / 2, y + sz * 0.08, w, h)
+
+
+def draw_lead_bar(rect: rl.Rectangle, color: rl.Color, opacity: float = 1.0, scale: float = 1.0, outline: bool = True) -> None:
+  """The bar under a car.
+
+  Args:
+    rect: Where the bar goes.
+    color: Its fill.
+    opacity: How opaque it is, 0 to 1.
+    scale: How far it has grown from its center (the settle-in), 0 to 1.
+    outline: A thin dark outline that keeps white readable on a bright road.
+  """
+  if opacity <= 0.01 or scale <= 0.01:
+    return
+  w = rect.width * scale
+  bar = rl.Rectangle(rect.x + (rect.width - w) / 2, rect.y, w, rect.height)
+  if outline:
+    edge = T.px(2)
+    out = rl.Rectangle(bar.x - edge, bar.y - edge, bar.width + edge * 2, bar.height + edge * 2)
+    draw.fill(out, draw.alpha(LEAD_OUTLINE, opacity), out.height / 2)
+  draw.fill(bar, draw.alpha(color, opacity), bar.height / 2)
+
+
+def adjacent_chevron(renderer: Any, lead: Any) -> list[tuple[float, float]] | None:
+  """Where StarPilot's renderer would put its marker for a car in the next lane (starpilotRadarState.leadLeft/Right),
+  projected as it projects its own leads; None without a usable path or point."""
+  points = renderer._path.raw_points
+  if not getattr(lead, "status", False) or len(points) == 0:
+    return None
+  d_rel, y_rel = float(lead.dRel), float(lead.yRel)
+  if not (math.isfinite(d_rel) and math.isfinite(y_rel)) or d_rel <= 0:
+    return None
+  idx = renderer._get_path_length_idx(points[:, 0], d_rel)
+  z = points[idx, 2] if idx < len(points) else 0.0
+  point = renderer._map_to_screen(d_rel, -y_rel, z + renderer._path_offset_z)
+  if not point:
+    return None
+  return list(renderer._update_lead_vehicle(d_rel, float(lead.vRel), point, renderer._rect).chevron)
+

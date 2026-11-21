@@ -464,6 +464,18 @@
       ]
     },
     {
+      "mock": "leadmarker",
+      "title": "Lead marker with Lead Car Tag off",
+      "note": "With the tag off, the car you follow gets the white ground bar with its thin dark outline, amber with Slowing for traffic, faded when unsure and settling in with the tag's own entrance. A second car ahead, and cars in the next lanes with Lead Insights or Developer View, keep faint bars. With the tag on (gaptag) the car stays unobstructed. Tandem draws these in place of StarPilot's red marker. Page ground uses true black (#000000).",
+      "match": true,
+      "built": [
+        "leadmarker_following",
+        "leadmarker_braking",
+        "leadmarker_unsure",
+        "leadmarker_new"
+      ]
+    },
+    {
       "mock": "steeringheadroom",
       "title": "Steering headroom",
       "note": "This shows the at-limit stage: Help steer is the bottom Warning card in the bar's place, like StarPilot's alerts, with the arc moved above it. On the car the border also turns amber and the lane lines tint; this stand-in render keeps the green border. Page ground uses true black (#000000).",

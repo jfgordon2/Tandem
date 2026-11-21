@@ -19,7 +19,8 @@ from openpilot.selfdrive.ui.onroad.augmented_road_view import AugmentedRoadView
 from openpilot.selfdrive.ui.tandem.onroad import alerts, size as Z
 from openpilot.selfdrive.ui.tandem.onroad.compass import DriveCompass
 from openpilot.selfdrive.ui.tandem.onroad import developer, extras
-from openpilot.selfdrive.ui.tandem.onroad.lead import GapTagState, GapTracker, detailed_tag_on, lead_anchor, read_lead_sample
+from openpilot.selfdrive.ui.tandem.onroad.lead import (LEAD_BRAKING_INK, LEAD_FAINT, LEAD_INK, GapTagState, GapTracker, adjacent_chevron,
+                                                       detailed_tag_on, draw_lead_bar, lead_anchor, lead_bar_rect, read_lead_sample)
 from openpilot.selfdrive.ui.tandem.onroad.layers import bar_height, bar_margin
 from openpilot.selfdrive.ui.tandem.onroad.limits import LimitFollower
 from openpilot.selfdrive.ui.tandem.forecast import Announcer, ForecastService, heads_up, now_conditions, shared_service, wall_clock
@@ -29,7 +30,7 @@ from openpilot.selfdrive.ui.tandem.onroad.binding import (driving_alert, lane_ch
 from openpilot.selfdrive.ui.tandem.onroad.layers import AT_LIMIT, ArcState, BarState, Headroom
 from openpilot.selfdrive.ui.tandem.onroad.overlay import OnroadOverlay, road_rect
 from openpilot.selfdrive.ui.tandem.onroad.state import awareness, route_progress, turn, DriveDisplay, DrivingAlert, LimitDecision, Proposal, displayed_speed
-from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, LimitWatch, RamWatch, Snapshot, routing_chip, routing_state
+from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, LimitWatch, RamWatch, Snapshot, chips_for, routing_chip, routing_state
 from openpilot.selfdrive.ui.tandem.onroad.streets import short_street
 from openpilot.selfdrive.ui.tandem.onroad.turn_signals import GAP as SIGNAL_GAP, STANDARD, TurnSignalRenderer
 from openpilot.selfdrive.ui.tandem.places import StarPilotPlaces
@@ -79,6 +80,10 @@ class EssentialsOnroad(AugmentedRoadView):
     # The lead tag takes the place of the text StarPilot's renderer draws above its lead marker (its Lead Info).
     self._stock_lead_info = self.model_renderer._draw_lead_info
     self.model_renderer._draw_lead_info = self._draw_lead_info  # type: ignore[method-assign]
+    # And Tandem draws in place of its red lead marker (design/gaptag.html, leadmarker.html), as release did.
+    self.model_renderer._draw_lead_indicator = self._draw_leads  # type: ignore[method-assign]
+    self._braking_for_lead = False   # the Slowing for traffic chip's rule, so the tag or bar turns amber with it
+    self._radar_sm: messaging.SubMaster | None = None   # the cars in the next lanes, while Lead Insights is on
     self._native: OnroadState | None = None
     self._road_sm: messaging.SubMaster | None = None
     self._ram = RamWatch()
@@ -172,6 +177,7 @@ class EssentialsOnroad(AugmentedRoadView):
     if memory is not None:
       snap.memory_percent = int(memory.memoryUsagePercent)
     snap.low_ram = self._ram.update("lowMemory" in snap.events, snap.memory_percent)
+    self._braking_for_lead = any(chip.key == "traffic" for chip in chips_for(snap))
     return snap
 
   @cached_property
@@ -378,7 +384,7 @@ class EssentialsOnroad(AugmentedRoadView):
     appearance = state.appearance
     mode = 1 if self._lead_tag_on else int(appearance.lead_info_mode)   # any mode but Off asks the renderer for the text
     self.model_renderer.lead_display = (True, mode, appearance.lead_info_metric)
-    self._gap_state = self._gap_tracker.update(read_lead_sample(ui_state, self.LEAD_THRESHOLD), now) if self._lead_tag_on else None
+    self._gap_state = self._gap_tracker.update(read_lead_sample(ui_state, self.LEAD_THRESHOLD), now)   # the tag, or the bar with it off
 
   def _extras(self, state: OnroadState, car: Any, now_ns: int) -> None:
     """StarPilot's pedal and border highlights, with its settings deciding when they show (onroad/extras.py)."""
@@ -420,7 +426,37 @@ class EssentialsOnroad(AugmentedRoadView):
     if state is None or anchor is None or native is None:
       return
     developer.draw_lead_tag(anchor.x, anchor.y, state.lead, compact=not detailed_tag_on(native.appearance), value=state.label,
-                            anchored=True, opacity=state.opacity, progress=state.progress, bounds=self._road, floor=self._tag_floor())
+                            anchored=True, braking=self._braking_for_lead, opacity=state.opacity, progress=state.progress,
+                            bounds=self._road, floor=self._tag_floor())
+
+  def _draw_leads(self) -> None:
+    self._safely("lead bars", self._draw_lead_bars)
+
+  def _draw_lead_bars(self) -> None:
+    """In place of StarPilot's red marker: the car you follow stays unobstructed under its tag, or gets the ground bar with
+    the tag off (amber with Slowing for traffic, faded and settling in as the tag does). A second car ahead, and cars in
+    the next lanes with Lead Insights or Developer View, keep faint bars without the outline."""
+    renderer, native = self.model_renderer, self._native
+    for i, lead in enumerate(renderer._lead_vehicles):
+      rect = lead_bar_rect(lead.chevron)
+      if rect is None:
+        continue
+      if i > 0:
+        draw_lead_bar(rect, LEAD_INK, LEAD_FAINT, outline=False)
+      elif not self._lead_tag_on:
+        gap = self._gap_state
+        draw_lead_bar(rect, LEAD_BRAKING_INK if self._braking_for_lead else LEAD_INK,
+                      gap.opacity if gap is not None else 1.0, gap.progress if gap is not None else 1.0)
+    if native is None or not detailed_tag_on(native.appearance) or ui_state.replay_clock is not None:
+      return
+    if self._radar_sm is None:
+      self._radar_sm = messaging.SubMaster(["starpilotRadarState"])
+    self._radar_sm.update(0)
+    adjacent = current_message(self._radar_sm, "starpilotRadarState", native.observed_ns)
+    for side in (adjacent.leadLeft, adjacent.leadRight) if adjacent is not None else ():
+      rect = lead_bar_rect(adjacent_chevron(renderer, side) or [])
+      if rect is not None:
+        draw_lead_bar(rect, LEAD_INK, LEAD_FAINT, outline=False)
 
   def _strip_rect(self, inner: rl.Rectangle) -> rl.Rectangle | None:
     """Developer View's strip, just above the bar, when it has metrics to show."""

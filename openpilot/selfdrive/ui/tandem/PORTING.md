@@ -506,8 +506,8 @@ WarningImmediateVolume WarningSoftVolume
 
 - The lead tag (`onroad/lead.py`) takes the place of the text StarPilot 7's model renderer draws above its lead marker:
   the view sets `model_renderer.lead_display` as StarPilot's own screen does and draws Tandem's tag from
-  `_draw_lead_info` (the stock text when Lead Car Tag is off). StarPilot's marker stays its own; release's lead bars
-  and adjacent-lead markers relied on StarPilot 6's renderer hooks and aren't ported.
+  `_draw_lead_info` (the stock text when Lead Car Tag is off). Release's lead bars and adjacent-lead bars came back in stage 8
+  ("Stage 8: lead marker").
 - Developer View (`onroad/developer.py`) shows when StarPilot's Developer Sidebar setting is on: the panel takes the right
   of the screen, its Controls section lists StarPilot 7's developer metrics, and the strip sits above the bar. StarPilot
   7 publishes no planned jerk or danger factor, so the strip offers the other seven metrics.
@@ -724,4 +724,16 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
   `signalunicorn.html`). StarPilot 7's raylib has no `image_alpha_crop`, so the picker finds each figure with Pillow
   (one of StarPilot 7's dependencies).
 - The other five packs release bundled were only in StarPilot 6's own picker and aren't ported.
+
+## Stage 8: lead marker
+
+- As on release, Tandem draws in place of StarPilot's red lead marker, through the same instance-level swap the lead tag
+  uses (`model_renderer._draw_lead_indicator = view._draw_leads`), so no upstream file changes. With Lead Car Tag on the car
+  you follow stays unobstructed under its tag (`gaptag.html`), which now turns amber with Slowing for traffic; with it off
+  the car gets release's ground bar (`leadmarker.html`), as the row's own description says. A second car ahead, and cars in
+  the next lanes with Lead Insights or Developer View, keep faint bars.
+- The next lanes' cars are StarPilot 7's `starpilotRadarState.leadLeft`/`leadRight` (published by radard); the view
+  subscribes to it only while those views are on, and projects each car with the renderer's own helpers.
+  `tests/test_lead_bars.py` fails if StarPilot renames the renderer internals this uses.
+- `tools/render/scene_lead.py` (release's) renders the tag and bar states again.
 
