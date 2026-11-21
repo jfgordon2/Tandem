@@ -8,8 +8,9 @@ stage 2 is done, `development` boots as stock StarPilot 7.0.
 | 1. Foundation | Done; see below |
 | 2. Entry point | Done; see below |
 | 3. State | Mapped and covered by contract tests |
-| 4. Screens | Parked Home, driving overlays, Software, This Device and RAM ported |
-| 5 to 6 | Not started |
+| 4. Screens | Done: every release screen, the driving screen and its chips |
+| 5. Services | Done: navigation, Valhalla routing and Offline Maps, Bluetooth, the CAN recorder, radios, network test |
+| 6. Fork-wide policies | Diagnostics, uploads and translations done; statistics, athenad, `RELEASE_BRANCHES` and workflows remain |
 
 ## Decisions for the rest of the port (owner, 2026-11-16)
 
@@ -215,7 +216,7 @@ any new consumer at its screen or service entry point.
 | `forcingStop`, `redLight` | `starpilotLongitudinalPlan.forceStopHolding` / `forceStopBraking` describe qualified stop behavior via [the force-stop consumer](../../../starpilot/longitudinal/force_stop_alert.py). Consume the native alert for its meaning. Holding or braking alone does not identify a red light. |
 | `forcingStopLength`, `stopSignConfirmed` | No equivalent qualified stop distance. Use the native stop-sign advisory path in the runtime snapshot. |
 | `experimentalMode`, `trackingLead` | `selfdriveState.experimentalMode` and `radarState.leadOne.present` for the individual values. A tracked lead alone gives no planner reason to assert that it is slowing the car. |
-| `lateralCheck` | Use qualified AOL status and `carControl.latActive` for steering output. Omit the old inferred steering-held reason. |
+| `lateralCheck` | Use qualified AOL status and `carControl.latActive` for steering output. Steering held runs StarPilot's own Pause steering rule (`starpilot/lateral/pause.py`) and shows only while `latActive` is off. |
 | `pulseGlideCoasting` | No equivalent planner bit. `starpilotCarState.pulseAndGlide` and `forceCoast` remain separate indications. |
 | `slcIsLimitingMaxSet`, `slcSpeedLimitOffset`, `slcSpeedLimit`, `slcSpeedLimitSource`, `slcPresentedSpeedLimitSource` | Read `slcState` via the runtime snapshot. Use `isLimitingMaxSet`, `offset`, and qualified accepted / pending / observed speed and source. Use the matching `*AdjustedLimit` when its presence flag is true. Speed and offsets are m/s. |
 | `speedLimitChanged`, `unconfirmedSlcSpeedLimit`, `slcOverriddenSpeed` | Read the pending decision, `pendingSinceMonoTime`, `decisionId`, `presentationId` and `driverOverrideActive`. Reuse the upstream speed-limit observation for display and `SlcActionDispatcher` for Accept, Reject and Adopt. The planner owns the actual SET response. |
@@ -327,9 +328,9 @@ WarningImmediateVolume WarningSoftVolume
 - MAX adjustments, disengage and speed-limit answers go through StarPilot's qualified publishers; the screen can't
   engage. A card answers only the proposal it showed. A critical alert closes the sidebar and takes the screen.
 - Chips from StarPilot 7 so far: steering and speed pauses, coasting, pulse and glide, lane changes and blocked lane
-  changes, curves, green light, car ahead moved, ready to resume, steering only, turns, and Low on RAM. Stop lights and
-  signs, slowing for traffic, steering held, matching a new limit and weather wait for their StarPilot 7 sources
-  (stage 3 map). Help steer shows and replaces the steering-limit alert; its chime waits for the headroom service
+  changes, curves, green light, car ahead moved, ready to resume, steering only, turns, Low on RAM, and (stage 8) the
+  rest: stopping and stopping for a stop sign, slowing for traffic, steering held and Matching limit, from the sources
+  under "Stage 8: the planner chips". Help steer shows and replaces the steering-limit alert; its chime waits for the headroom service
   (stage 5).
 - Navigation (stage 5): the turn card, ARRIVE and LEFT, End route and the bar's Where to? read StarPilot's guidance
   (`OnroadState.navigation`); Slowing for turn asks StarPilot's own turn speed rule (`navigation/intent.py`) with the set
@@ -670,3 +671,16 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
   running 20.5.3 and `prebuilt.json` is refreshed (README › Keeping merges easy).
 - StarPilot's small default model is now `cheddar`; the Driving Model test reads `DEFAULT_SMALL`.
 
+## Stage 8: the planner chips
+
+- Each reads what StarPilot's own onroad UI reads (`onroad/view.py`, with the choices in `onroad/binding.py`):
+  - Stopping ahead and Stopped: `onroad_conditional.stop_active`, conditional mode's accepted stop while it controls the
+    speed (StarPilot's gauge shows STOP for it). A stop it only perceives isn't one.
+  - Stopping for stop sign: that stop, with StarPilot's camera stop-sign sighting still on screen
+    (`OnroadState.stop_sign_observed_ns`) or the car's dashboard stop sign (`starpilotCarState.dashboardStopSign`).
+  - Slowing for traffic: conditional mode's `cem_lead` reason while openpilot controls the speed.
+  - Steering paused (under a speed, for a signal, after a turn): StarPilot's `LateralPause` run on the same car state
+    as controlsd, while steering is really off (`latActive`).
+  - Matching limit: release's `LimitWatch` on the limit StarPilot accepted, its adjusted target and whether its speed
+    limit control holds the set speed (`SpeedLimitObservation`).
+- `tests/test_planner_chips.py` checks the choices and that the StarPilot fields they read still exist.

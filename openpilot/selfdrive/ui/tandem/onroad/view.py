@@ -24,11 +24,12 @@ from openpilot.selfdrive.ui.tandem.onroad.layers import bar_height, bar_margin
 from openpilot.selfdrive.ui.tandem.onroad.limits import LimitFollower
 from openpilot.selfdrive.ui.tandem.forecast import Announcer, ForecastService, heads_up, now_conditions, shared_service, wall_clock
 from openpilot.selfdrive.ui.tandem.prefs import LEAD_TAG, MAX_FOLLOWS_LIMIT, WEATHER_CHIME, WEATHER_HEADS_UP
-from openpilot.selfdrive.ui.tandem.onroad.binding import driving_alert, lane_change, proposal
+from openpilot.selfdrive.ui.tandem.onroad.binding import (driving_alert, lane_change, matching_limit, proposal, steering_held,
+                                                          stop_chips, stop_sign_seen)
 from openpilot.selfdrive.ui.tandem.onroad.layers import AT_LIMIT, ArcState, BarState, Headroom
 from openpilot.selfdrive.ui.tandem.onroad.overlay import OnroadOverlay, road_rect
 from openpilot.selfdrive.ui.tandem.onroad.state import awareness, route_progress, turn, DriveDisplay, DrivingAlert, LimitDecision, Proposal, displayed_speed
-from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, RamWatch, Snapshot, routing_chip, routing_state
+from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, LimitWatch, RamWatch, Snapshot, routing_chip, routing_state
 from openpilot.selfdrive.ui.tandem.onroad.streets import short_street
 from openpilot.selfdrive.ui.tandem.places import StarPilotPlaces
 from openpilot.selfdrive.ui.tandem.ram import RamLog, shared_log
@@ -80,6 +81,7 @@ class EssentialsOnroad(AugmentedRoadView):
     self._native: OnroadState | None = None
     self._road_sm: messaging.SubMaster | None = None
     self._ram = RamWatch()
+    self._limits = LimitWatch()
     self._chip_stack = ChipStack()
     self._headroom = Headroom()
     self._safe = True
@@ -131,9 +133,9 @@ class EssentialsOnroad(AugmentedRoadView):
     return short_street(str(road.roadName or road.wayName)) if road is not None else ""
 
   def _chips_from(self, now_ns: int, state: OnroadState) -> Snapshot:
-    """Release's chip inputs from StarPilot 7. Planner reasons StarPilot 7 doesn't publish the same way yet (stop lights and
-    signs, slowing for traffic, steering held, matching a new limit, weather) stay off until their sources are mapped
-    (PORTING.md). Slowing for a route turn asks StarPilot's own rule (navigation/intent.py) with the set speed."""
+    """Release's chip inputs from StarPilot 7. Stops and slowing for traffic come from StarPilot's conditional mode as
+    its own gauge reads it, held steering from its Pause steering rule, and Matching limit from the limit it accepted.
+    Slowing for a route turn asks StarPilot's own rule (navigation/intent.py) with the set speed."""
     sm, after = ui_state.sm, ui_state.started_frame
     snap = Snapshot(engaged=state.engaged, metric=state.metric, speed=state.speed_mps or 0.0,
                     curve_control=bool(state.curve is not None and state.curve.controlling))
@@ -144,6 +146,7 @@ class EssentialsOnroad(AugmentedRoadView):
       snap.signal_on = bool(car.leftBlinker or car.rightBlinker)
       snap.signal_direction = "both" if car.leftBlinker and car.rightBlinker else "left" if car.leftBlinker else "right" if car.rightBlinker else "none"
       snap.blindspot = bool(car.leftBlindspot if car.leftBlinker else car.rightBlindspot)
+      self._safely("steering held chip", lambda: self._steering_held(snap, state, car, after, now_ns))
     model = display_message(sm, "modelV2", now_ns, after_frame=after)
     if model is not None:
       snap.lane_change, snap.lane_change_direction = lane_change(model.meta)
@@ -151,6 +154,7 @@ class EssentialsOnroad(AugmentedRoadView):
     if sp_car is not None:
       snap.lateral_paused, snap.speed_paused = bool(sp_car.pauseLateral), bool(sp_car.pauseLongitudinal)
       snap.coasting, snap.pulse_glide = bool(sp_car.forceCoast), bool(sp_car.pulseAndGlide)
+    self._safely("planner chips", lambda: self._planner_chips(snap, state, sp_car, now_ns))
     events = current_message(sm, "onroadEvents", now_ns, after_frame=after)
     snap.events = {str(event.name) for event in events} if events is not None else set()
     if state.alert.size != AlertSize.NONE and state.alert.alert_type:   # held alerts outlast their one-frame events
@@ -166,6 +170,36 @@ class EssentialsOnroad(AugmentedRoadView):
       snap.memory_percent = int(memory.memoryUsagePercent)
     snap.low_ram = self._ram.update("lowMemory" in snap.events, snap.memory_percent)
     return snap
+
+  @cached_property
+  def _lateral_pause(self) -> Any:
+    from openpilot.starpilot.lateral.pause import LateralPause, read_settings
+    return LateralPause(read_settings(ui_state.params), ui_state.params)
+
+  def _steering_held(self, snap: Snapshot, state: OnroadState, car: Any, drive: int, now_ns: int) -> None:
+    """Steering paused, under a speed or for a signal: StarPilot's own Pause steering rule (starpilot/lateral/pause.py)
+    run on the same car state controlsd uses, shown only while steering is really off."""
+    if drive <= 0:
+      return
+    pause = self._lateral_pause
+    allowed = pause.allowed(car, now_ns=now_ns, source_ns=int(ui_state.sm.logMonoTime["carState"]), drive_id=drive)
+    settings = pause.settings
+    snap.pause_lateral_ms, snap.pause_on_signal = float(settings.speed_mps), bool(settings.signal_only)
+    snap.pause_lateral_speed = settings.speed_mps * (CV.MS_TO_KPH if state.metric else CV.MS_TO_MPH)
+    snap.steering_held = steering_held(allowed, bool(state.engaged or state.aol_latched), bool(state.lateral_active),
+                                       snap.standstill)
+
+  def _planner_chips(self, snap: Snapshot, state: OnroadState, sp_car: Any, now_ns: int) -> None:
+    """Stopping (and for a stop sign), slowing for traffic, and Matching limit, from StarPilot's own readings."""
+    from openpilot.starpilot.ui.onroad_conditional import reason, stop_active
+    dashboard = bool(sp_car is not None and sp_car.dashboardStopSign > 0)
+    sign = stop_sign_seen(state.stop_sign_observed_ns, now_ns, dashboard)
+    snap.red_light, snap.stop_sign, snap.slowing_for_lead = stop_chips(stop_active(state), sign, reason(state),
+                                                                       bool(state.longitudinal_active))
+    obs = state.speed_limit
+    snap.limit_changed = matching_limit(self._limits, obs, snap.speed, bool(state.longitudinal_active), time.monotonic())
+    limit = obs.accepted_speed_limit_mps
+    snap.speed_limit = limit * (CV.MS_TO_KPH if state.metric else CV.MS_TO_MPH) if limit else 0.0
 
   def _read_navigation(self, now_ns: int) -> None:
     """StarPilot's published navigation status, and whether this drive already had a route to its destination."""
