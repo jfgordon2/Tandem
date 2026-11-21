@@ -33,8 +33,9 @@ Everything outside Tandem's own files belongs to StarPilot or openpilot and chan
 
 Tandem's screens are written in English, with the text a driver reads marked for translation (`openpilot/selfdrive/ui/tandem/i18n.py`): `N_("…")` for labels and constants (translated where drawn), `t_("… {} …", value)` for text built at runtime, `tn_(singular, plural, n)` for counts, and `context=` for English with two meanings. Mark new text the same way; never put an English plural "s" in a hole.
 
-- **Don't run `tools/translations.py update` yet.** The catalog still holds the strings of screens that aren't ported, and an update would drop them with their translations. `PORTING.md` says when it can run again.
-- If translations add characters, rebuild the fallback font: `tools/fallback_font.py subset <dir of Noto TTFs>`, then `build`. The build tools need StarPilot 6's raylib (pyray 5.5), so run them with a `release` checkout's Python, not this branch's.
+- After changing wording, run `python3 openpilot/selfdrive/ui/tandem/tools/translations.py update`; `tests/test_translations.py` checks the template is current. New strings show in English until translated.
+- To find unmarked text and layouts that won't fit longer languages, render `tools/render/scene_pseudo.py` (as in Screenshots step 2) and read its `missed.txt`. Sample data, the US sign's SPEED and LIMIT, and labels from StarPilot's own owners (translated by StarPilot) show up there too.
+- If translations add characters, rebuild the fallback font: `tools/fallback_font.py subset <dir of Noto TTFs>`, then `build`.
 
 ## Tests
 
@@ -61,9 +62,9 @@ Check every visual change by looking at it, not just by tests. All paths below a
    ```
    mkdir -p openpilot/selfdrive/ui/tandem/tools/out/renders
    PYTHONPATH=$PWD BIG=1 .venv/bin/python openpilot/selfdrive/ui/tandem/tools/render/snap.py \
-     openpilot/selfdrive/ui/tandem/tools/render/scene_components.py openpilot/selfdrive/ui/tandem/tools/out/renders
+     openpilot/selfdrive/ui/tandem/tools/render/scene_all.py openpilot/selfdrive/ui/tandem/tools/out/renders
    ```
-   Each ported screen gets a `scene_*.py` saved under its mock's name.
+   `scene_all.py` runs every `scene_*.py`; pass one scene instead to render just its screens. A new screen gets a step in a scene (or a scene of its own), saved under its mock's name.
 3. **The comparison page.** Put each mock beside its render, with a note:
 
    ```
