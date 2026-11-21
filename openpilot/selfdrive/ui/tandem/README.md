@@ -72,7 +72,8 @@ Tandem merges StarPilot 7 (`testing`, which replaced `Dom`). New behavior, prese
 | `openpilot/common/vendor_manifest.py`, `tools/vendor/tests/test_manifest.py` | The source check no longer refuses a tracked file named `AGENTS.md` (it still refuses `.gitmodules`), so a device can install a branch that keeps Tandem's `AGENTS.md`. A dependency's own `AGENTS.md` stays out through its `exclude` list in `upstream-sync.json`. The tests check that `AGENTS.md` is allowed and `.gitmodules` refused. A device running a build with upstream's check refuses this branch until it's installed once by hand. |
 
 **After a merge:** run `python3 selfdrive/ui/tandem/tools/workflow_policy.py`. For each workflow it names, review its triggers, permissions and commands in Tandem's repository, gate it if it would write here, add or update its note in `workflow-policy.json`, then record it with `--update`. If StarPilot changed `raylib_extra.cc` or its `_raylib_extra.so`, keep upstream's versions, add Tandem's
-`release_font_glyph_images` method to the source again, rebuild the extension on a comma (AGNOS, ARM64), and refresh
+`release_font_glyph_images` method to the source again, rebuild the extension on a parked comma with
+`tools/build_raylib_extra.sh` (AGNOS, ARM64; its header says how), and refresh
 `prebuilt.json` with StarPilot's receipt tool; until then Tandem skips the glyph release (`application.py` checks for
 the method). Map removal uses names StarPilot's map owner and tile writer don't publish; `tests/test_map_removal_contract.py`
 fails when a merge renames one.

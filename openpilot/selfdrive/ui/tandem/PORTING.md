@@ -664,10 +664,10 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
 - Owner, 2026-11-20: `development` follows upstream's `testing`, Dom's successor. Dom's hand-off commit adds
   `scripts/branch_migration.py`, which moves a device on `Dom` to `testing` at boot; it leaves `development` alone (it
   runs only on that exact commit, on a branch named `Dom`).
-- `testing` moves AGNOS to 20.5.3 and rebuilt every native file on it. `development` takes upstream's
-  `_raylib_extra.so`, which lacks Tandem's `release_font_glyph_images`, so Tandem skips the glyph release (screens are
-  the same; the font memory saving is off) until the extension is rebuilt from Tandem's `raylib_extra.cc` on a comma
-  running 20.5.3 and `prebuilt.json` is refreshed (README › Keeping merges easy).
+- `testing` moves AGNOS to 20.5.3 and rebuilt every native file on it. `development` first took upstream's
+  `_raylib_extra.so`, then (2026-11-21) rebuilt it from Tandem's `raylib_extra.cc` on the parked comma running 20.5.3
+  with `tools/build_raylib_extra.sh`, which reproduces the same file byte for byte. It exports everything upstream's
+  does plus `release_font_glyph_images`, so the glyph release is back.
 - StarPilot's small default model is now `cheddar`; the Driving Model test reads `DEFAULT_SMALL`.
 
 ## Stage 8: the planner chips
