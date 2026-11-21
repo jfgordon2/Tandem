@@ -584,7 +584,7 @@ WarningImmediateVolume WarningSoftVolume
 - The model chip (`extras.ModelChip`, `onroadextras.html`) shows Jetlink's state (StarPilot 7's external-GPU link) under
   the driver monitor tile and pedals, while StarPilot's onroad layout places its Jetlink widget.
 
-## Tests still on `release` only
+## Release's tests
 
 Ported so far: `test_destinations.py` (but StarPilot 6's search client and Mapbox key help), `test_routemap.py` (but the
 StarPilot 6 position readers), `test_fallback_font.py`, `test_compass.py`, `test_network_test.py` (but its settings search test), `test_cellular_status.py`, `test_hotspot_name.py`, `test_network_touches.py` (StarPilot 7 has no PC-only touch path), `test_alert_levels.py`, `test_bar.py`, `test_streets.py`, `test_keyboard.py`,
@@ -592,19 +592,18 @@ StarPilot 6 position readers), `test_fallback_font.py`, `test_compass.py`, `test
 Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_translations.py`, the atlas crop tests of
 `test_font_loading.py`, and the text hook test of `test_upstream_integration.py`. Each of the rest comes back with the code it tests. When one comes back, take it from `release` whole.
 
-| `release` test | Waits for |
+| `release` test | Where it went |
 |---|---|
-| `test_tandem.py` from `test_release_notes_lead_with_a_tandem_entry` on | Home and settings screens (stage 4) |
-| `test_translations.py`: the template, metadata, coverage and completed-language checks, Developer View labels, picker languages | Every screen ported, then `tools/translations.py update` (end of stage 4) |
-| `test_font_loading.py`: lazy fonts, glyph release and alert faces | Glyph release when restored, then lazy loading and alert faces with the screen port (stage 4) |
-| `test_upstream_integration.py`: all but the text hooks and the sidebar factory | Their hooks and modules (stages 3 to 6) |
-| `test_turn_signals.py`, `test_onroad*.py`, `test_chip_events.py` (StarPilot 6's message reader; its rules are covered by the chip tests), `test_headroom_warning.py`, `test_limit_offers.py`, `test_developer_view.py` | Onroad (stage 4) |
-| `test_ram.py` | Home and sidebar (stage 4) |
-| `test_developer.py`, `test_software_dialogs.py`, `test_storage_sizes.py`, `test_prebuilt_params.py` | Settings screens and owner integration (stage 4) |
-| `test_routing_ui.py`, `test_map_progress.py` | Offline routing (stage 5, phase B) |
-| `test_remote_actions.py`, `test_galaxy_signals.py` | Controllers and Galaxy (stage 6) |
-| `test_workflow_policy.py` | Workflows (stage 6) |
-| `starpilot/tandem/tests/` | The services they test (stage 5) |
+| `test_developer_view.py` | Its strip translation tests are ported; the strip's keys and order are in `test_lead_tag.py` |
+| `test_workflow_policy.py` | Ported with the workflow policy |
+| `test_telemetry.py`, `test_sentry.py` | The uploader and athenad hooks are checked in `starpilot/tandem/tests/test_diagnostics.py`; release's SDK test needs the Params library, so it waits to be run on the device |
+| `test_onroad.py`, `test_chip_events.py`, `test_headroom_warning.py`, `test_limit_offers.py`, `test_onroad_extras.py` | Rewritten for StarPilot 7's onroad state: `test_onroad_port.py`, `test_planner_chips.py`, `test_routing_chips.py`, `test_model_chip.py` and the chip tests in `test_tandem.py`. The stopping point, path end and pedal levels went with StarPilot 7 |
+| `test_turn_signals.py`, `test_galaxy_signals.py` | Gone with StarPilot 7's signal animations |
+| `test_bluetooth_discovery.py`, `test_bluetooth_policy.py`, `test_remote_actions.py`, `test_software_dialogs.py` | StarPilot 6's Bluetooth daemon, wheel service and controller screens; StarPilot 7's runtime replaced them (stage 6 tests) |
+| `test_routing_ui.py`, `test_map_progress.py` | Release's `CombinedMaps`; `test_map_source.py` tests `TandemMaps` |
+| `test_ram.py`, `test_storage_sizes.py`, `test_developer.py` | Release's `device_sections` and developer panel; the ported screens have their own tests |
+| `test_prebuilt_params.py` | StarPilot 6's Params build; StarPilot 7's receipt is checked by its own tests |
+| `starpilot/tandem/tests`: `test_navigation`, `test_turn_status`, `test_routing_cereal`, `test_routing_navigation`, `test_routing_paired`, `test_speed_limit_vision`, `test_dashboard_worker` | Their code was replaced by StarPilot 7's navigation, map owner, speed-limit vision and Galaxy analyzer; `test_routing_runtime.py` and `test_routing_road.py` cover Tandem's parts |
 
 ## Stage 5: navigation (phase A)
 
