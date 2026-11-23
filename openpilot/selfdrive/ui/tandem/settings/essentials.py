@@ -216,7 +216,7 @@ def essentials_settings(on_open_arabesque: Callable[[], None] | None, arabesque_
       lambda: StarPilotModels(ModelManager(parked=allowed), lambda message: window.notice(N_("Driving Model"), message)),
       car, owner, lambda: ui_state.CP is not None and not ui_state.CP.pcmCruise, sound_player(allowed),
       lambda: storage_owner().sample.usage, recount, lambda: bool(ram.snapshots()),
-      maps=offline_maps if offline_routing() else None)
+      maps=offline_maps if offline_routing() else None, measure=lambda refresh: storage_owner().poll(refresh=refresh))
     return driving_hub(window, services)
 
   window = SettingsWindow({

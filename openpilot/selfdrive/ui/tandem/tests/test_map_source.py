@@ -86,3 +86,16 @@ def test_remove_needs_downloaded_maps_parked_and_no_download() -> None:
   maps._parked = lambda: False
   maps.remove()
   assert maps.removed == 1 and not maps.can_remove()
+
+
+def test_the_maps_page_measures_storage_itself() -> None:
+  """Its storage card reads Storage & Data's sizes; opening the page measures them, so it never shows 0 MB of 0 MB
+  because Storage & Data wasn't opened first."""
+  from unittest.mock import Mock
+  from openpilot.selfdrive.ui.tandem.settings.maps import MapsPage
+  calls: list[bool] = []
+  page = MapsPage(Maps(sample_maps()), lambda: None, dict, Mock(), measure=calls.append)
+  page.show_event()
+  page._update_state()
+  page._update_state()
+  assert calls == [True, False, False]   # measure now, then take the result (and every 30 s)

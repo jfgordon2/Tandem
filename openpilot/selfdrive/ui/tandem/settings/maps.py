@@ -509,19 +509,32 @@ class MapsPage(Component):
   """The Offline Maps panel; tracks the download while open, showing the download view in its place while one runs."""
   grow_touch_target = False
 
-  def __init__(self, maps: Maps, open_regions: Callable[[], None], sizes: Callable[[], dict[str, float]], window: SettingsWindow) -> None:
+  def __init__(self, maps: Maps, open_regions: Callable[[], None], sizes: Callable[[], dict[str, float]], window: SettingsWindow,
+               measure: Callable[[bool], object] = lambda refresh: None) -> None:
+    """Makes the page.
+
+    Args:
+      maps: The maps model.
+      open_regions: Opens the region picker.
+      sizes: Storage & Data's sizes, for the storage card.
+      window: The settings window.
+      measure: Storage & Data's poll (True: measure now), so the storage card has sizes without visiting that page.
+    """
     super().__init__()
     self._maps = maps
+    self._measure = measure
     self._page = self._child(maps_page(maps, open_regions, sizes, window))
     self._download = self._child(DownloadView(maps))
 
   def show_event(self) -> None:
+    self._measure(True)
     self._maps.source.refresh()
     if self._maps.source.progress().phase == "ready":
       self._download._dismissed = True
     super().show_event()
 
   def _update_state(self) -> None:
+    self._measure(False)   # takes the count once it's done
     self._maps.source.tick()
 
   def _render(self, rect: rl.Rectangle) -> None:

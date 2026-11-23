@@ -68,6 +68,8 @@ class DrivingServices:
     play: Plays an alert sample.
     storage: Storage & Data's sizes, for the model catalog.
     recount: Has Storage & Data measure again.
+    measure: Storage & Data's poll for a page that shows its sizes: True measures again now; False takes a finished count
+      and measures again every 30 s.
     ram: Whether Device › RAM is showing (a drive has run low), so search finds it.
     navigation: StarPilot's navigation (places.py), made on first use; the real one by default.
     maps: Offline Maps' source (settings/map_source.py), made on first use; None without offline routing.
@@ -77,12 +79,13 @@ class DrivingServices:
                vehicle: Callable[[], Vehicle], device: Any, owns_set: Callable[[], bool], play: Callable[[str], None] | None = None,
                storage: Callable[[], dict[str, float]] = dict, recount: Callable[[], None] = lambda: None,
                ram: Callable[[], bool] = lambda: False, navigation: Callable[[], StarPilotPlaces] | None = None,
-               maps: Callable[[], MapsSource] | None = None):
+               maps: Callable[[], MapsSource] | None = None, measure: Callable[[bool], object] = lambda refresh: None):
     self.store, self.live, self.rows, self.road = store, live, rows, road
     self.models, self.vehicle, self.device, self.owns_set = models, vehicle, device, owns_set
     self.play, self.storage, self.recount, self.ram = play, storage, recount, ram
     self.navigation = navigation or _device_navigation
     self.maps = maps
+    self.measure = measure
 
 
 def _device_navigation() -> StarPilotPlaces:
@@ -120,7 +123,7 @@ def driving_hub(window: SettingsWindow, services: DrivingServices) -> HubPage:
         maps.get().source.download()
         window.back()
       window.push(RegionsPage(maps.get(), download))
-    window.push(MapsPage(maps.get(), open_regions, services.storage, window))
+    window.push(MapsPage(maps.get(), open_regions, services.storage, window, measure=services.measure))
   vehicle = Lazy(services.vehicle)
 
   def set_bundle(bundle: Bundle, on: bool) -> None:
