@@ -27,7 +27,7 @@ def test_a_real_capnp_network_enum_reads_without_crashing(tmp_path) -> None:
   """deviceState.networkType is a capnp enum on the device, which int() rejects; opening Firehose crashed on it."""
   import capnp
   schema = tmp_path / "device.capnp"
-  schema.write_text("@0xd4a4f0a1c0ffee01;\nstruct DeviceState { networkType @0 :Net; networkMetered @1 :Bool;\n"
+  schema.write_text("@0xd4a4f0a1c0ffee01;\nstruct DeviceState { networkType @0 :Net; networkMetered @1 :Bool;\n" +
                     "  enum Net { none @0; wifi @1; cell4G @2; } }\n")
   message = capnp.load(str(schema)).DeviceState.new_message()
   message.networkType = "wifi"
