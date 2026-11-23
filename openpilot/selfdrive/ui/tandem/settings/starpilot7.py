@@ -119,13 +119,18 @@ class StarPilotOwners:
   def rows(self, page: str) -> FeatureRows:
     """One FeatureRows per page, shared by every model that reads it.
 
-    "sentry", "sounds", "appearance" and "display" are StarPilot's owners of those names, all parked-only. Display is read
+    "sentry", "sounds", "appearance" and "display" are StarPilot's owners of those names, all parked-only; "parked_power" is
+    its power owner (settings/power.py), which changes whenever settings are open, as on StarPilot's own screen. Display is read
     for the comma's screen (StarPilot's large profile); appearance is read with every row it has (compact, with the large
     rows), since the large profile leaves out the camera and lead rows. Every other page is the feature-settings owner's.
     """
     if page not in self._pages:
       params, parked = self._ui.params, self.configuration_allowed
-      if page == "sentry":
+      if page == "parked_power":
+        from openpilot.starpilot.ui.power_owner import PowerOwner
+        power = PowerOwner(params, self.preference_authority)   # as StarPilot's settings screen: whenever it's open
+        self._pages[page] = FeatureRows(power.snapshot, power.apply)
+      elif page == "sentry":
         from openpilot.starpilot.ui.sentry_owner import SentryOwner
         sentry = SentryOwner(params, parked)
         self._pages[page] = FeatureRows(sentry.snapshot, sentry.apply)

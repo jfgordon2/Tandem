@@ -8,9 +8,10 @@ from unittest.mock import Mock
 from openpilot.selfdrive.ui.tandem import tokens as T
 from openpilot.selfdrive.ui.tandem.settings.device import device_page
 from openpilot.selfdrive.ui.tandem.settings.pages import Section
-from openpilot.selfdrive.ui.tandem.settings.storage import StoragePanel
+from openpilot.selfdrive.ui.tandem.settings.storage import CELLULAR, StoragePanel
 from openpilot.selfdrive.ui.tandem.settings.storage_owner import StorageOwner, StorageSample
 from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow, Tab
+from openpilot.selfdrive.ui.tandem.tests.test_speed_steering_port import Owner
 from openpilot.selfdrive.ui.tandem.tools.render.scene_device import ExampleDevice
 from openpilot.starpilot.ui.raylib import rl
 
@@ -51,3 +52,14 @@ def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any)
   for _ in range(3):
     frame(draw)
   save(f"{out}/stage4-storage-scrolled.png")
+
+  # Uploads on Cellular (design/systemstorage-cellular.html), off, under Uploads
+  data = Owner({"data": {CELLULAR: "Off"}}).rows("data")
+  sections[2] = Section("Storage & Data", lambda: StoragePanel(owner, window, data))
+  window = SettingsWindow({Tab.DEVICE: lambda: device_page(window, ExampleDevice(), sections)}, initial=Tab.DEVICE)
+  window.show_event()
+  window.top.select(3)
+  window.top.current._scroll.set_offset(-T.px(340))
+  for _ in range(3):
+    frame(draw)
+  save(f"{out}/systemstorage-cellular.png")

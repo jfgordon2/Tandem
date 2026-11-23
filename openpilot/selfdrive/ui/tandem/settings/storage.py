@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable
+from typing import TYPE_CHECKING
 
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Component
@@ -12,6 +13,9 @@ from openpilot.selfdrive.ui.tandem.rows import ListPanel, SectionHeader, Setting
 from openpilot.selfdrive.ui.tandem.settings.storage_owner import StorageOwner
 from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow, confirm
 from openpilot.starpilot.ui.raylib import rl
+
+if TYPE_CHECKING:
+  from openpilot.selfdrive.ui.tandem.settings.starpilot7 import FeatureRows
 
 
 class StorageBar(Component):
@@ -101,10 +105,31 @@ def _gb(size: float) -> str:
   return t_("{} GB", f"{size / 1e9:.1f}") if size >= 1e8 else t_("{} MB", f"{size / 1e6:.0f}")
 
 
+CELLULAR = "AlwaysAllowUploads"   # StarPilot's Data Uploads page (starpilot/ui/feature_settings_owner.py)
+
+
+def cellular_row(data: FeatureRows) -> SettingRow:
+  """Uploads on Cellular (design/systemstorage-cellular.html): StarPilot's Always Allow Uploads, which lets queued full logs
+  and video go over metered networks. athenad honors it too, so requested uploads (Firehose) can use cellular with it on."""
+  def turn(on: bool) -> None:
+    data.set_on(CELLULAR, on)
+  row = SettingRow(N_("Uploads on Cellular"), N_("Full logs and video on cellular or a metered hotspot. Uses mobile data."),
+                   Switch(lambda: data.on(CELLULAR), turn))
+  row.set_enabled(lambda: data.available(CELLULAR))
+  return row
+
+
 class StoragePanel(ListPanel):
   """Storage usage and release controls backed by verified native operations."""
 
-  def __init__(self, owner: StorageOwner, window: SettingsWindow) -> None:
+  def __init__(self, owner: StorageOwner, window: SettingsWindow, data: FeatureRows | None = None) -> None:
+    """Makes the panel.
+
+    Args:
+      owner: Storage & Data's owner.
+      window: The settings window.
+      data: StarPilot's "data" page, for Uploads on Cellular (its AlwaysAllowUploads); None leaves the row out.
+    """
     self._owner, self._window = owner, window
 
     def delete_drives() -> None:
@@ -155,6 +180,7 @@ class StoragePanel(ListPanel):
       record("RecordFront", N_("Record Driver Camera"), N_("Saved and uploaded with your drives. Restarts openpilot if the car is on.")),
       record("RecordAudio", N_("Record Microphone"), N_("Cabin audio in your drive recordings. Restarts openpilot if the car is on.")),
       SettingRow(N_("Uploads"), N_("Drive logs and video for debugging"), uploads),
+      *([cellular_row(data)] if data is not None and data.row(CELLULAR) is not None else []),
     ], title=N_("Storage & Data"), header_divider=False, end_divider=True,
        footnote=N_("High-quality recording, logging and error logs are in Tuner Mode."))
 

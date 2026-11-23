@@ -6,7 +6,7 @@ from openpilot.selfdrive.ui.tandem.forecast import HourTile, Outlook
 from openpilot.selfdrive.ui.tandem.home import HomeContent, HomeState, home_content_rect
 from openpilot.selfdrive.ui.tandem.home_alerts import AlertsView, HomeAlert, UpdateView
 from openpilot.selfdrive.ui.tandem.software import HomeSoftware, InstallTarget
-from openpilot.selfdrive.ui.tandem.sidebar import WIDTH, Health, SidebarState, SidebarView, Status, connect_status, network_status
+from openpilot.selfdrive.ui.tandem.sidebar import WIDTH, Health, SidebarState, SidebarView, Status, connect_status, jetlink_status, network_status
 from openpilot.starpilot.ui.raylib import rl
 from openpilot.system.ui.widgets import Widget
 
@@ -43,9 +43,14 @@ def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any)
     ("stage4-home-weather", HomeContent(lambda: HomeState(ignition=True, setup=setup, software=update), noop, noop, noop,
                                         lambda: forecast, noop)),
   )
-  for name, widget in samples:
-    def render(view: Widget = widget) -> None:
-      sidebar.render(rl.Rectangle(0, 0, WIDTH, 1080))
+  jetlink = SidebarView(lambda: SidebarState([
+    network_status("Wi-Fi", 4), connect_status(Health.GOOD), Status("Temperature", "Good", Health.GOOD),
+    Status("Vehicle", "Connected", Health.GOOD), jetlink_status("connected"), Status("Maps", "Ready", Health.GOOD),
+  ]), lambda: None, lambda: None, lambda: None)
+  home = samples[0][1]
+  for name, widget, side in [*((name, widget, sidebar) for name, widget in samples), ("stage4-home-jetlink", home, jetlink)]:
+    def render(view: Widget = widget, side: SidebarView = side) -> None:
+      side.render(rl.Rectangle(0, 0, WIDTH, 1080))
       view.render(home_content_rect(rl.Rectangle(WIDTH, 0, 2160 - WIDTH, 1080)))
 
     for _ in range(3):

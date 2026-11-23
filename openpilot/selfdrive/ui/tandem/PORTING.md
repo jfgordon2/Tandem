@@ -382,6 +382,11 @@ WarningImmediateVolume WarningSoftVolume
 - General, Backups, Storage & Data, RAM, Report a Problem and conditional Developer are mounted on the release
   Device rail. Native onboarding opens Firehose via a separate Settings page. RAM appears after the first snapshot.
   Developer and Release Channel use the same saved Tuner Mode presentation flag.
+- Power (after General) draws StarPilot's power owner (Parked Power, Maximum Parked Time, Low-Voltage Cutoff, saved
+  only when confirmed), Aggressive Cooling where StarPilot offers it, and its drive-state owner (Auto, Offroad, Onroad;
+  Force Offroad asks first while driving services run). Storage & Data adds Uploads on Cellular (AlwaysAllowUploads),
+  which athenad also honors for Firehose. The parked sidebar shows Jetlink from StarPilot's status feed, polled only
+  while parked.
 - Report a Problem sends the release category, details, optional Discord name and RAM summaries through StarPilot's
   manual issue project using the existing acknowledged Bugsink transport. The release keyboard is used for text entry. Developer uses the native toggle and SSH owners. CAN recording is stage 5.
 - The approved Delete offline maps dialog covers managed road snapshots, native navigation tiles, and downloaded

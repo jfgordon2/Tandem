@@ -84,6 +84,9 @@ StarPilot 7’s raylib binding retains glyph images for TTF fonts. Tandem defers
 
 ## Where the code differs from the mocks
 
+- **Device › Power:** `devicepower`'s footnote says changes happen only while parked, but StarPilot 7 lets parked power,
+  cooling and drive state change whenever settings are open (its System page does), so the code follows StarPilot and
+  keeps only "New parked limits are confirmed before they save."
 - **Display › Map (StarPilot 7):** `displaymap` isn't built. Its switch and sign style were StarPilot 6 settings that
   StarPilot 7 dropped; its Offline Maps link is in Speed & Steering › Navigation.
 - **Offline Maps (StarPilot 7):** `valhalla2-maps-home` has no Keep up to date card: StarPilot 7 has no scheduled map

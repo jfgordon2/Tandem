@@ -121,7 +121,7 @@ def essentials_settings(on_open_arabesque: Callable[[], None] | None, arabesque_
         contexts.owner = LiveContextSource(ui_state.params)
       return bool(contexts.owner.offroad())
 
-    return StoragePanel(storage_owner(offroad), window)
+    return StoragePanel(storage_owner(offroad), window, starpilot_owners().rows("data"))
 
   def uninstall() -> None:
     if ui_state.is_offroad() and not ui_state.projection_read_only and ui_state.replay_clock is None:
@@ -150,8 +150,20 @@ def essentials_settings(on_open_arabesque: Callable[[], None] | None, arabesque_
                     local, multilang.refresh_language)
     return GeneralPanel(model, window)
 
+  def power() -> Widget:
+    """Device › Power over StarPilot's power, cooling and drive-state owners (settings/power.py)."""
+    from openpilot.selfdrive.ui.tandem.settings.power import Power, power_panel
+    from openpilot.starpilot.drive_state.control import DriveStateControl
+    from openpilot.starpilot.drive_state.evidence import PhysicalSource
+    from openpilot.starpilot.drive_state.owner import DriveStateOwner
+    from openpilot.starpilot.storage import starpilot_storage_root
+    owners = starpilot_owners()
+    drive = DriveStateControl(DriveStateOwner(ui_state.params, starpilot_storage_root() / "drive-state"), PhysicalSource(ui_state.sm))
+    return power_panel(Power(owners.rows, drive, owners.preference_authority, lambda: bool(ui_state.started)), window)
+
   device_sections = [
     Section(N_("General"), general),
+    Section(N_("Power"), power),
     Section(N_("Backups"), lambda: backups_panel(BackupStore(ui_state.params, lambda: local() and ui_state.is_offroad()), window)),
     Section(N_("Storage & Data"), storage),
     Section(N_("Firehose"), firehose_panel),
@@ -226,5 +238,5 @@ def essentials_settings(on_open_arabesque: Callable[[], None] | None, arabesque_
     Tab.CONNECTIONS: network,
     Tab.SOFTWARE: lambda: SoftwarePage(Software(shared_software(), ui_state.params.get, uninstall, reset_settings,
                                                 lambda: local() and starpilot_owners().configuration_allowed()), window),
-  }, sections={"FIREHOSE": 4, "DEVELOPER": 7})   # StarPilot's setup prompt opens Device › Firehose
+  }, sections={"FIREHOSE": 5, "DEVELOPER": 8})   # StarPilot's setup prompt opens Device › Firehose
   return window

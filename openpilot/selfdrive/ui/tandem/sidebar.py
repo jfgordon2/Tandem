@@ -7,6 +7,7 @@ flag button does, and the microphone indicator shows while cabin audio is being 
 from __future__ import annotations
 
 from collections.abc import Callable
+from typing import Any
 from concurrent.futures import Future, ThreadPoolExecutor
 from dataclasses import dataclass, field
 from enum import Enum
@@ -197,6 +198,47 @@ class MapsWatch:
     self._worker.shutdown(wait=False, cancel_futures=True)
 
 
+def jetlink_status(port: str | None) -> Status | None:
+  """The Jetlink row (design/stage4-home-jetlink.html), as StarPilot's Home icon shows it: green once the link is up, gray
+  while it's only plugged in, and no row without one.
+
+  Args:
+    port: Jetlink's port state from StarPilot's feed: "connected", "device" (plugged in), or None.
+  """
+  if port == "connected":
+    return Status(N_("Jetlink"), N_("Connected"), Health.GOOD)
+  if port == "device":
+    return Status(N_("Jetlink"), N_("Plugged in"), Health.OFF)
+  return None
+
+
+class JetlinkWatch:
+  """StarPilot's Jetlink feed, made the first time it's wanted; it polls once a second on its own thread, only while
+  enabled, so drawing never waits on it. Enabled while parked, as StarPilot enables it for its Home."""
+
+  def __init__(self, feed: Callable[[], Any] | None = None):
+    self._make = feed or _jetlink_feed
+    self._feed: Any = None
+
+  def poll(self, enabled: bool) -> Status | None:
+    """The row to draw now, or None.
+
+    Args:
+      enabled: Whether to watch Jetlink now (parked); False stops the feed's polling.
+    """
+    if self._feed is None and enabled:
+      self._feed = self._make()
+    if self._feed is None:
+      return None
+    self._feed.set_enabled(enabled)
+    return jetlink_status(self._feed.snapshot().port) if enabled else None
+
+
+def _jetlink_feed() -> Any:
+  from openpilot.starpilot.models.jetlink_status import JetlinkStatusFeed
+  return JetlinkStatusFeed()
+
+
 def essentials_sidebar() -> Widget:
   """Upstream's Sidebar with the Essentials look. Imported only on the device."""
   from openpilot.selfdrive.ui.layouts.sidebar import Colors, Sidebar
@@ -208,6 +250,7 @@ def essentials_sidebar() -> Widget:
       self._view = SidebarView(self._state, lambda: self._call(self._on_settings_click), lambda: self._call(self._on_flag_click),
                                lambda: self._call(self._open_settings_callback))
       self._maps = MapsWatch()
+      self._jetlink = JetlinkWatch()
 
     @staticmethod
     def _call(callback: Callable[[], None] | None) -> None:
@@ -221,11 +264,13 @@ def essentials_sidebar() -> Widget:
       temp = self._temp_status
       temperature = {Health.GOOD: N_("Good"), Health.WARN: N_("Warm"), Health.BAD: N_("Hot")}[self._health(temp.color)]
       vehicle_ok = self._health(self._panda_status.color) == Health.GOOD
+      jetlink = self._jetlink.poll(not ui_state.started)
       return SidebarState(rows=[
         network_status(self._net_type, self._net_strength),
         connect_status(self._health(self._connect_status.color)),
         Status(N_("Temperature"), temperature, self._health(temp.color)),
         Status(N_("Vehicle"), N_("Connected") if vehicle_ok else N_("Not connected"), Health.GOOD if vehicle_ok else Health.BAD),
+        *([jetlink] if jetlink is not None else []),
         self._maps.poll(),
       ], onroad=bool(ui_state.started), recording_audio=bool(self._recording_audio))
 

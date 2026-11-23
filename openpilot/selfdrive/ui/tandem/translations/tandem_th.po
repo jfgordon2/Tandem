@@ -31,7 +31,7 @@ msgid "Road data still supplies speed limits"
 msgstr "ข้อมูลถนนยังคงให้ขีดจำกัดความเร็ว"
 
 #: destinations.py:218
-#: settings/search.py:276
+#: settings/search.py:287
 msgid "Search"
 msgstr "ค้นหา"
 
@@ -310,7 +310,7 @@ msgstr "อัปเดตพร้อมแล้ว"
 
 #: home.py:152
 #: settings/search.py:25
-#: settings/search.py:207
+#: settings/search.py:218
 msgid "Software"
 msgstr "ซอฟต์แวร์"
 
@@ -733,7 +733,7 @@ msgstr "{} s"
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: onroad/developer.py:286
 #: settings/ram.py:31
-#: settings/storage.py:101
+#: settings/storage.py:105
 #, python-brace-format
 msgid "{} GB"
 msgstr "{} GB"
@@ -1258,8 +1258,8 @@ msgid "Drive logging"
 msgstr "บันทึกการขับขี่"
 
 #: ram.py:57
-#: settings/search.py:177
-#: settings/storage.py:157
+#: settings/search.py:186
+#: settings/storage.py:182
 msgid "Uploads"
 msgstr "การอัปโหลด"
 
@@ -1654,7 +1654,7 @@ msgstr "การคืนค่า"
 
 #: settings/backups.py:97
 #: settings/backups.py:97
-#: settings/storage.py:145
+#: settings/storage.py:170
 msgid "Delete"
 msgstr "ลบ"
 
@@ -1664,7 +1664,7 @@ msgstr "สำรองข้อมูลทันที"
 
 #: settings/backups.py:108
 #: settings/backups.py:90
-#: settings/essentials.py:155
+#: settings/essentials.py:167
 msgid "Backups"
 msgstr "การสำรองข้อมูล"
 
@@ -1797,17 +1797,17 @@ msgstr "อุปกรณ์บลูทูธ"
 
 #: settings/bluetooth_tab.py:449
 #: settings/bluetooth_tab.py:449
-#: settings/search.py:202
+#: settings/search.py:213
 msgid "Disconnect"
 msgstr "ตัดการเชื่อมต่อ"
 
 #: settings/bluetooth_tab.py:449
-#: settings/search.py:202
+#: settings/search.py:213
 msgid "It reconnects the next time you choose it"
 msgstr "จะเชื่อมต่ออีกครั้งในครั้งถัดไปที่คุณเลือก"
 
 #: settings/bluetooth_tab.py:450
-#: settings/search.py:203
+#: settings/search.py:214
 msgid "Removes the pairing. Change it with the car off."
 msgstr "ลบการจับคู่ เปลี่ยนตอนรถดับครับ."
 
@@ -2026,7 +2026,7 @@ msgid "Saved"
 msgstr "บันทึกแล้ว"
 
 #: settings/can_recorder.py:20
-#: sidebar.py:124
+#: sidebar.py:125
 msgid "Error"
 msgstr "ข้อผิดพลาด"
 
@@ -2223,7 +2223,7 @@ msgstr "เซลลูล่าร์"
 
 #: settings/connections.py:100
 #: settings/search.py:33
-#: settings/search.py:201
+#: settings/search.py:212
 msgid "Bluetooth Devices"
 msgstr "อุปกรณ์บลูทูธ"
 
@@ -2234,7 +2234,7 @@ msgid "Network Test"
 msgstr "ทดสอบเครือข่าย"
 
 #: settings/developer.py:67
-#: settings/search.py:187
+#: settings/search.py:198
 msgid "openpilot Longitudinal (Alpha)"
 msgstr "การควบคุมคันเร่งและเบรกของ openpilot (อัลฟา)"
 
@@ -2243,7 +2243,7 @@ msgid "Turns off the car's emergency braking. Off while engaged."
 msgstr "ปิดการเบรกฉุกเฉินของรถ ปิดขณะหมั้นหมาย"
 
 #: settings/developer.py:73
-#: settings/search.py:186
+#: settings/search.py:197
 #: selfdrive/ui/layouts/settings/developer.py:68
 msgid "Joystick Debug Mode"
 msgstr "โหมดดีบักจอยสติ๊ก"
@@ -2266,7 +2266,7 @@ msgid "Adds every public key in a GitHub account. Never use someone else's."
 msgstr "เพิ่มกุญแจสาธารณะทุกอันในบัญชี GitHub อย่าใช้ของคนอื่น"
 
 #: settings/developer.py:84
-#: settings/essentials.py:160
+#: settings/essentials.py:172
 #: settings/search.py:32
 msgid "Developer"
 msgstr "นักพัฒนา"
@@ -2281,7 +2281,7 @@ msgstr "ชื่อผู้ใช้ GitHub"
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: settings/developer.py:77
-#: settings/search.py:183
+#: settings/search.py:194
 msgid "ADB"
 msgstr "ADB"
 
@@ -2291,7 +2291,7 @@ msgstr "เชื่อมต่อผ่าน USB หรือเครือ�
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: settings/developer.py:79
-#: settings/search.py:184
+#: settings/search.py:195
 msgid "SSH"
 msgstr "SSH"
 
@@ -2300,19 +2300,19 @@ msgid "Remote shell access with the keys below"
 msgstr "การเข้าถึงเชลล์ระยะไกลด้วยปุ่มด้านล่าง"
 
 #: settings/developer.py:80
-#: settings/search.py:185
+#: settings/search.py:196
 #: selfdrive/ui/layouts/settings/developer.py:65
 msgid "SSH Keys"
 msgstr "คีย์ SSH"
 
 #: settings/developer.py:83
-#: settings/search.py:188
+#: settings/search.py:199
 #: selfdrive/ui/layouts/settings/developer.py:103
 msgid "UI Debug Mode"
 msgstr "โหมดดีบัก UI"
 
 #: settings/developer.py:83
-#: settings/search.py:188
+#: settings/search.py:199
 msgid "Shows touches and the frame rate"
 msgstr "แสดงการสัมผัสและอัตราเฟรม"
 
@@ -2893,7 +2893,7 @@ msgid "Display"
 msgstr "จอแสดงผล"
 
 #: settings/driving_tab.py:207
-#: settings/essentials.py:217
+#: settings/essentials.py:229
 #: settings/model.py:309
 msgid "Driving Model"
 msgstr "โมเดลขับขี่"
@@ -2953,25 +2953,31 @@ msgstr "ใช้รหัสผ่าน Galaxy เดิม หรือตั
 msgid "Optional"
 msgstr "อุปกรณ์เสริม"
 
-#: settings/essentials.py:154
+#: settings/essentials.py:165
 #: settings/general.py:51
 #: settings/search.py:31
 msgid "General"
 msgstr "ทั่วไป"
 
-#: settings/essentials.py:156
+#: settings/essentials.py:166
+#: settings/power.py:188
 #: settings/search.py:31
-#: settings/search.py:171
+msgid "Power"
+msgstr "พลังงาน"
+
+#: settings/essentials.py:168
+#: settings/search.py:31
+#: settings/search.py:180
 msgid "Storage & Data"
 msgstr "พื้นที่เก็บข้อมูลและข้อมูล"
 
-#: settings/essentials.py:157
-#: settings/firehose.py:127
+#: settings/essentials.py:169
+#: settings/firehose.py:139
 #: settings/search.py:31
 msgid "Firehose"
 msgstr "Firehose"
 
-#: settings/essentials.py:159
+#: settings/essentials.py:171
 #: settings/report.py:121
 #: settings/search.py:31
 msgid "Report a Problem"
@@ -2981,83 +2987,83 @@ msgstr "รายงานปัญหา"
 msgid "Set up"
 msgstr "ตั้งค่า"
 
-#: settings/firehose.py:29
+#: settings/firehose.py:32
 msgid "On Wi-Fi without a data limit, so comma can pull your drives"
 msgstr "เชื่อมต่อ Wi-Fi ที่ไม่จำกัดข้อมูล comma จึงดึงการขับขี่ของคุณได้"
 
-#: settings/firehose.py:30
+#: settings/firehose.py:33
 msgid "Connect to Wi-Fi or another network without a data limit"
 msgstr "เชื่อมต่อ Wi-Fi หรือเครือข่ายอื่นที่ไม่จำกัดข้อมูล"
 
-#: settings/firehose.py:114
+#: settings/firehose.py:126
 msgid "openpilot learns to drive by watching people drive. Firehose uploads more of your drives so comma can train bigger, better driving models."
 msgstr "openpilot เรียนรู้การขับขี่จากการดูคนขับ Firehose อัปโหลดการขับขี่ของคุณมากขึ้น เพื่อให้ comma ฝึกโมเดลการขับขี่ที่ใหญ่และดีขึ้น"
 
-#: settings/firehose.py:22
+#: settings/firehose.py:24
 msgid "Can I turn it off?"
 msgstr "ปิดได้ไหม"
 
-#: settings/firehose.py:22
-msgid "There's no switch. comma asks for drives over Wi-Fi on its own, separately from Storage & Data › Uploads. On a metered connection, like cellular, nothing is sent."
-msgstr "ไม่มีสวิตช์ comma ขอการขับขี่ผ่าน Wi-Fi เอง แยกจาก พื้นที่เก็บข้อมูลและข้อมูล › การอัปโหลด บนการเชื่อมต่อแบบคิดตามปริมาณ เช่น เครือข่ายมือถือ จะไม่มีการส่งข้อมูล"
-
 #: settings/firehose.py:24
+msgid "Not with a switch: comma asks for drives over Wi-Fi on its own, separately from Storage & Data › Uploads. Save Data pauses it on a network, and cellular sends nothing unless Uploads on Cellular is on."
+msgstr "ไม่มีสวิตช์: comma ขอการขับขี่ผ่าน Wi-Fi เอง แยกจาก พื้นที่เก็บข้อมูลและข้อมูล › การอัปโหลด บันทึกข้อมูลจะหยุดไว้ชั่วคราวบนเครือข่ายนั้น และเครือข่ายมือถือจะไม่ส่งอะไรเลยเว้นแต่เปิดการอัปโหลดผ่านเครือข่ายมือถือ"
+
+#: settings/firehose.py:27
 msgid "Does it matter how or where I drive?"
 msgstr "วิธีหรือสถานที่ที่ฉันขับมีผลไหม"
 
-#: settings/firehose.py:24
+#: settings/firehose.py:27
 msgid "No, just drive as you normally would."
 msgstr "ไม่มี ขับตามปกติได้เลย"
 
-#: settings/firehose.py:25
+#: settings/firehose.py:28
 msgid "Are all of my drives uploaded?"
 msgstr "การขับขี่ทั้งหมดของฉันถูกอัปโหลดไหม"
 
-#: settings/firehose.py:25
+#: settings/firehose.py:28
 msgid "No, comma pulls a selection of them."
 msgstr "ไม่ comma ดึงเพียงบางส่วน"
 
-#: settings/firehose.py:26
+#: settings/firehose.py:29
 msgid "What's a good USB-C charger?"
 msgstr "ที่ชาร์จ USB-C ที่ดีคืออะไร"
 
-#: settings/firehose.py:26
+#: settings/firehose.py:29
 msgid "Any fast phone or laptop charger is fine."
 msgstr "ที่ชาร์จเร็วของโทรศัพท์หรือแล็ปท็อปใช้ได้ทั้งหมด"
 
-#: settings/firehose.py:27
+#: settings/firehose.py:30
 msgid "Does it matter which software I run?"
 msgstr "ซอฟต์แวร์ที่ฉันใช้มีผลไหม"
 
-#: settings/firehose.py:27
+#: settings/firehose.py:30
 msgid "Yes. Only openpilot and some forks can be used for training."
 msgstr "มี ใช้ฝึกได้เฉพาะ openpilot และบาง fork เท่านั้น"
 
-#: settings/firehose.py:119
+#: settings/firehose.py:131
 msgid "GET THE MOST FROM IT"
 msgstr "ใช้ให้ได้ประโยชน์สูงสุด"
 
-#: settings/firehose.py:120
+#: settings/firehose.py:132
 msgid "• Once a week, bring the device inside on a fast USB-C charger and Wi-Fi."
 msgstr "• สัปดาห์ละครั้ง นำอุปกรณ์เข้าบ้าน ต่อที่ชาร์จ USB-C แบบเร็วและ Wi-Fi"
 
-#: settings/firehose.py:122
+#: settings/firehose.py:134
 msgid "• It also works while driving on a hotspot or an unlimited SIM."
 msgstr "• ใช้ได้ระหว่างขับผ่านฮอตสปอตหรือซิมไม่จำกัดด้วย"
 
-#: settings/firehose.py:124
+#: settings/firehose.py:136
 msgid "QUESTIONS"
 msgstr "คำถาม"
 
-#: settings/firehose.py:127
+#: settings/firehose.py:139
 msgid "Training data for openpilot's driving models"
 msgstr "ข้อมูลฝึกสำหรับโมเดลการขับขี่ของ openpilot"
 
-#: settings/firehose.py:76
+#: settings/firehose.py:88
 msgid "Active"
 msgstr "ทำงาน"
 
-#: settings/firehose.py:76
+#: settings/firehose.py:88
 msgid "Inactive"
 msgstr "ไม่ทำงาน"
 
@@ -3079,7 +3085,7 @@ msgstr "ความเร็วและระยะทางทุกที่
 
 #: settings/general.py:39
 #: settings/search.py:166
-#: sidebar.py:227
+#: sidebar.py:271
 msgid "Temperature"
 msgstr "อุณหภูมิ"
 
@@ -3205,7 +3211,7 @@ msgid "Road data ready"
 msgstr "ข้อมูลถนนพร้อมแล้ว"
 
 #: settings/map_source.py:157
-#: sidebar.py:158
+#: sidebar.py:159
 msgid "Not downloaded"
 msgstr "ไม่ได้ดาวน์โหลด"
 
@@ -3246,7 +3252,7 @@ msgid "Road data and offline routes are ready."
 msgstr "ข้อมูลถนนและเส้นทางออฟไลน์พร้อมแล้ว"
 
 #: settings/map_source.py:235
-#: settings/storage.py:147
+#: settings/storage.py:172
 msgid "Parked"
 msgstr "จอดอยู่"
 
@@ -3297,7 +3303,7 @@ msgid "{} states"
 msgstr "{} รัฐ"
 
 #: settings/maps.py:33
-#: settings/storage.py:142
+#: settings/storage.py:167
 msgid "Remove all downloaded maps from this device. Your regions stay chosen."
 msgstr "ลบแผนที่ที่ดาวน์โหลดทั้งหมดออกจากอุปกรณ์นี้ ภูมิภาคที่เลือกไว้ยังคงอยู่"
 
@@ -3575,7 +3581,7 @@ msgid "Recommended"
 msgstr "แนะนำ"
 
 #: settings/model.py:125
-#: sidebar.py:155
+#: sidebar.py:156
 msgid "Downloading"
 msgstr "กำลังดาวน์โหลด"
 
@@ -3809,13 +3815,13 @@ msgid "Try downloaded maps first; fall back to online."
 msgstr "ลองแผนที่ที่ดาวน์โหลดก่อน ถ้าไม่ได้ใช้ออนไลน์"
 
 #: settings/navigation.py:120
-#: sidebar.py:124
+#: sidebar.py:125
 msgid "Online"
 msgstr "ออนไลน์"
 
 #: settings/navigation.py:120
-#: sidebar.py:124
-#: sidebar.py:129
+#: sidebar.py:125
+#: sidebar.py:130
 msgid "Offline"
 msgstr "ออฟไลน์"
 
@@ -4040,7 +4046,7 @@ msgstr "แก้ไข"
 
 #: settings/network_tab.py:396
 #: settings/network_tab.py:387
-#: settings/search.py:198
+#: settings/search.py:209
 msgid "Roaming, APN and IP address"
 msgstr "ที่อยู่ โรมมิ่ง, APN และ IP"
 
@@ -4060,7 +4066,7 @@ msgstr "ใส่รหัสผ่าน"
 
 #: settings/network_tab.py:173
 #: settings/network_tab.py:383
-#: settings/search.py:195
+#: settings/search.py:206
 msgid "Hotspot name"
 msgstr "ชื่อฮอตสปอต"
 
@@ -4069,37 +4075,37 @@ msgid "A saved network already uses this name"
 msgstr "เครือข่ายที่บันทึกไว้ใช้ชื่อนี้แล้ว"
 
 #: settings/network_tab.py:362
-#: settings/search.py:192
+#: settings/search.py:203
 msgid "Join a hidden network"
 msgstr "เข้าร่วมเครือข่ายที่ซ่อนอยู่"
 
 #: settings/network_tab.py:382
-#: settings/search.py:194
+#: settings/search.py:205
 msgid "Hotspot"
 msgstr "ฮอตสปอต"
 
 #: settings/network_tab.py:382
-#: settings/search.py:194
+#: settings/search.py:205
 msgid "Share this device's connection"
 msgstr "แชร์การเชื่อมต่อของอุปกรณ์นี้"
 
 #: settings/network_tab.py:385
-#: settings/search.py:196
+#: settings/search.py:207
 msgid "Hotspot Password"
 msgstr "รหัสผ่านฮอตสปอต"
 
 #: settings/network_tab.py:385
-#: settings/search.py:196
+#: settings/search.py:207
 msgid "For phones joining this device's hotspot"
 msgstr "สำหรับโทรศัพท์ที่เข้าร่วมฮอตสปอตของอุปกรณ์นี้"
 
 #: settings/network_tab.py:386
-#: settings/search.py:197
+#: settings/search.py:208
 msgid "Save Data"
 msgstr "บันทึกข้อมูล"
 
 #: settings/network_tab.py:386
-#: settings/search.py:197
+#: settings/search.py:208
 msgid "No large uploads on cellular or phone hotspots"
 msgstr "ไม่มีการอัปโหลดขนาดใหญ่บนฮอตสปอตมือถือหรือโทรศัพท์"
 
@@ -4113,7 +4119,7 @@ msgstr "ใช้ข้อมูลเซลลูลาร์นอกเคร
 
 #. English fallback pending cellular-status translation.
 #: settings/network_tab.py:395
-#: settings/search.py:199
+#: settings/search.py:210
 msgid "Cellular IP address"
 msgstr "ที่อยู่ IP มือถือ"
 
@@ -4254,6 +4260,111 @@ msgstr "ใช้ข้อมูลเซลลูล่าร์สูงสุ
 msgid "Measuring…"
 msgstr "กำลังวัด…"
 
+#: settings/power.py:26
+msgid "Stock"
+msgstr "ค่าเริ่มต้น"
+
+#: settings/power.py:26
+msgid "Custom"
+msgstr "กำหนดเอง"
+
+#: settings/power.py:28
+msgid "Offroad"
+msgstr "จอด"
+
+#: settings/power.py:28
+msgid "Onroad"
+msgstr "ขับขี่"
+
+#: settings/power.py:74
+#, python-brace-format
+msgid "Turn the comma off below {} while parked?"
+msgstr "ปิด comma เมื่อต่ำกว่า {} ขณะจอดไหม"
+
+#: settings/power.py:169
+#: settings/power.py:138
+#: settings/search.py:172
+msgid "Parked Power"
+msgstr "พลังงานขณะจอด"
+
+#: settings/power.py:169
+#: settings/search.py:172
+msgid "Turn the comma off after a long park or a low battery"
+msgstr "ปิด comma หลังจอดนานหรือแบตเตอรี่ต่ำ"
+
+#: settings/power.py:172
+#: settings/power.py:173
+#: settings/search.py:173
+msgid "Maximum Parked Time"
+msgstr "เวลาจอดสูงสุด"
+
+#: settings/power.py:172
+#: settings/search.py:173
+msgid "Then it turns off, sparing the car's battery"
+msgstr "จากนั้นจะปิดเพื่อถนอมแบตเตอรี่รถ"
+
+#: settings/power.py:175
+#: settings/power.py:176
+#: settings/search.py:174
+msgid "Low-Voltage Cutoff"
+msgstr "ตัดไฟแรงดันต่ำ"
+
+#: settings/power.py:175
+#: settings/search.py:174
+msgid "Turns off sooner if the battery drops this low"
+msgstr "ปิดเร็วขึ้นถ้าแบตเตอรี่ลดลงถึงระดับนี้"
+
+#: settings/power.py:184
+#: settings/search.py:177
+msgid "Drive State"
+msgstr "สถานะการขับขี่"
+
+#: settings/power.py:184
+#: settings/search.py:177
+msgid "Auto follows the car; force offroad or onroad for testing"
+msgstr "อัตโนมัติจะตามรถ บังคับจอดหรือขับขี่เพื่อทดสอบ"
+
+#: settings/power.py:71
+msgid "Go back to the stock parked limits?"
+msgstr "กลับไปใช้ขีดจำกัดขณะจอดค่าเริ่มต้นไหม"
+
+#: settings/power.py:73
+#, python-brace-format
+msgid "Turn the comma off after {} parked? Other protections can turn it off sooner."
+msgstr "ปิด comma หลังจอด {} ไหม การป้องกันอื่นอาจปิดได้เร็วกว่านั้น"
+
+#: settings/power.py:180
+#: settings/search.py:175
+msgid "Aggressive Cooling"
+msgstr "ระบายความร้อนเต็มที่"
+
+#: settings/power.py:180
+#: settings/search.py:175
+msgid "Fan runs sooner and harder: 10 to 16 °C cooler, more noise"
+msgstr "พัดลมทำงานเร็วและแรงขึ้น: เย็นลง 10 ถึง 16 °C เสียงดังขึ้น"
+
+#: settings/power.py:188
+msgid "The car's battery while parked, cooling, and drive state"
+msgstr "แบตเตอรี่รถขณะจอด การระบายความร้อน และสถานะการขับขี่"
+
+#: settings/power.py:189
+msgid "New parked limits are confirmed before they save."
+msgstr "ขีดจำกัดขณะจอดใหม่จะได้รับการยืนยันก่อนบันทึก"
+
+#: settings/power.py:70
+#, python-brace-format
+msgid "Turn the comma off after {} parked, or below {}? Other protections can turn it off sooner."
+msgstr "ปิด comma หลังจอด {} หรือเมื่อต่ำกว่า {} ไหม การป้องกันอื่นอาจปิดได้เร็วกว่านั้น"
+
+#: settings/power.py:167
+#: settings/power.py:167
+msgid "Force Offroad"
+msgstr "บังคับจอด"
+
+#: settings/power.py:167
+msgid "Switch to Offroad and stop driving services?"
+msgstr "เปลี่ยนเป็นจอดและหยุดบริการขับขี่ไหม"
+
 #: settings/ram.py:51
 #, python-brace-format
 msgid "{} · {}%"
@@ -4261,7 +4372,7 @@ msgstr "{} · {}%"
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: settings/ram.py:31
-#: settings/storage.py:101
+#: settings/storage.py:105
 #, python-brace-format
 msgid "{} MB"
 msgstr "{} MB"
@@ -4718,199 +4829,213 @@ msgid "Menus and alerts"
 msgstr "เมนูและการเตือน"
 
 #: settings/search.py:170
+msgid "Parked limits for the car's battery, cooling and drive state"
+msgstr "ขีดจำกัดขณะจอดสำหรับแบตเตอรี่รถ การระบายความร้อน และสถานะการขับขี่"
+
+#: settings/search.py:179
 msgid "Snapshots of your settings"
 msgstr "สแนปช็อตของการตั้งค่าของคุณ"
 
-#: settings/search.py:171
+#: settings/search.py:180
 msgid "What's using space, and recording and uploads"
 msgstr "อะไรใช้พื้นที่ รวมถึงการบันทึกและอัปโหลด"
 
-#: settings/search.py:172
-#: settings/storage.py:151
+#: settings/search.py:181
+#: settings/storage.py:176
 msgid "Recorded Drives"
 msgstr "ไดรฟ์ที่บันทึกไว้"
 
-#: settings/search.py:172
-#: settings/storage.py:151
+#: settings/search.py:181
+#: settings/storage.py:176
 msgid "Oldest drives are removed when space runs low"
 msgstr "ไดรฟ์ที่เก่าที่สุดจะถูกลบออกเมื่อพื้นที่เหลือน้อย"
 
-#: settings/search.py:173
+#: settings/search.py:182
 msgid "Delete downloaded map data"
 msgstr "ลบข้อมูลแผนที่ที่ดาวน์โหลด"
 
-#: settings/search.py:174
-#: settings/storage.py:153
+#: settings/search.py:183
+#: settings/storage.py:178
 msgid "Unused Models"
 msgstr "โมเดล AI ที่ไม่ได้ใช้"
 
-#: settings/search.py:174
+#: settings/search.py:183
 msgid "Downloaded models that aren't in use"
 msgstr "ดาวน์โหลดโมเดล AI ที่ไม่ได้ใช้งาน"
 
-#: settings/search.py:175
-#: settings/storage.py:155
+#: settings/search.py:184
+#: settings/storage.py:180
 msgid "Record Driver Camera"
 msgstr "บันทึกกล้องผู้ขับขี่"
 
-#: settings/search.py:175
+#: settings/search.py:184
 msgid "Saved and uploaded with your drives"
 msgstr "บันทึกและอัปโหลดพร้อมกับไดรฟ์ของคุณ"
 
-#: settings/search.py:176
-#: settings/storage.py:156
+#: settings/search.py:185
+#: settings/storage.py:181
 msgid "Record Microphone"
 msgstr "บันทึกไมโครโฟน"
 
-#: settings/search.py:176
+#: settings/search.py:185
 msgid "Cabin audio in your drive recordings"
 msgstr "เสียงห้องโดยสารในการบันทึกการขับขี่ของคุณ"
 
-#: settings/search.py:177
-#: settings/storage.py:157
+#: settings/search.py:186
+#: settings/storage.py:182
 msgid "Drive logs and video for debugging"
 msgstr "บันทึกและวิดีโอของไดรฟ์ สำหรับการดีบัก"
 
-#: settings/search.py:178
+#: settings/search.py:187
+#: settings/storage.py:116
+msgid "Uploads on Cellular"
+msgstr "การอัปโหลดผ่านเครือข่ายมือถือ"
+
+#: settings/search.py:187
+#: settings/storage.py:116
+msgid "Full logs and video on cellular or a metered hotspot. Uses mobile data."
+msgstr "บันทึกและวิดีโอเต็มรูปแบบผ่านเครือข่ายมือถือหรือฮอตสปอตที่จำกัดปริมาณ ใช้ข้อมูลมือถือ"
+
+#: settings/search.py:189
 msgid "Upload more drives to train openpilot's driving models"
 msgstr "อัปโหลดการขับขี่เพิ่มเพื่อฝึกโมเดลการขับขี่ของ openpilot"
 
-#: settings/search.py:180
+#: settings/search.py:191
 msgid "What was using RAM on drives that ran low"
 msgstr "สิ่งที่ใช้ RAM ในการขับที่ RAM เหลือน้อย"
 
-#: settings/search.py:181
+#: settings/search.py:192
 msgid "Send what happened to the developers"
 msgstr "ส่งสิ่งที่เกิดขึ้นกับนักพัฒนา"
 
-#: settings/search.py:182
+#: settings/search.py:193
 msgid "ADB, SSH and debug modes"
 msgstr "ADB, SSH และโหมดดีบัก"
 
-#: settings/search.py:183
+#: settings/search.py:194
 msgid "Connect over USB or the network"
 msgstr "เชื่อมต่อผ่าน USB หรือเครือข่าย"
 
-#: settings/search.py:184
+#: settings/search.py:195
 msgid "Remote shell access"
 msgstr "การเข้าถึงเชลล์ระยะไกล"
 
-#: settings/search.py:185
+#: settings/search.py:196
 msgid "Adds every public key in a GitHub account"
 msgstr "เพิ่มคีย์สาธารณะทุกรายการในบัญชี GitHub"
 
-#: settings/search.py:186
+#: settings/search.py:197
 msgid "Drive openpilot's controls from a joystick"
 msgstr "ขับเคลื่อนส่วนควบคุมของ openpilot จากจอยสติ๊ก"
 
-#: settings/search.py:187
+#: settings/search.py:198
 msgid "Turns off the car's emergency braking"
 msgstr "ปิดการเบรกฉุกเฉินของรถ"
 
-#: settings/search.py:190
+#: settings/search.py:201
 msgid "Networks nearby, and joining one"
 msgstr "เครือข่ายใกล้เคียงและเข้าร่วมเครือข่ายหนึ่ง"
 
-#: settings/search.py:191
+#: settings/search.py:202
 msgid "IP Address"
 msgstr "หมายเลขไอพี"
 
-#: settings/search.py:191
+#: settings/search.py:202
 msgid "This device's local address, beside the connected network"
 msgstr "ที่อยู่ภายในของอุปกรณ์นี้ ข้างเครือข่ายที่เชื่อมต่อ"
 
-#: settings/search.py:192
+#: settings/search.py:203
 msgid "Enter its name and password"
 msgstr "ป้อนชื่อและรหัสผ่าน"
 
 #. English fallback pending cellular-status translation.
-#: settings/search.py:193
+#: settings/search.py:204
 msgid "Connection status, hotspot, data use, roaming and APN"
 msgstr "สถานะการเชื่อมต่อ ฮอตสปอต การใช้ข้อมูล โรมมิ่ง และ APN"
 
-#: settings/search.py:195
+#: settings/search.py:206
 msgid "The name phones see when joining this device"
 msgstr "โทรศัพท์ชื่อจะเห็นเมื่อเข้าร่วมอุปกรณ์นี้"
 
 #. English fallback pending cellular-status translation.
-#: settings/search.py:198
+#: settings/search.py:209
 msgid "Roaming, APN and the cellular IP address"
 msgstr "โรมมิ่ง APN และที่อยู่ IP มือถือ"
 
 #. English fallback pending cellular-status translation.
-#: settings/search.py:199
+#: settings/search.py:210
 msgid "The modem's mobile data address"
 msgstr "ที่อยู่ข้อมูลมือถือของโมเด็ม"
 
-#: settings/search.py:200
+#: settings/search.py:211
 msgid "A wheel remote's buttons and what they do"
 msgstr "ปุ่มบนรีโมตล้อและการทำงานของปุ่มต่างๆ"
 
-#: settings/search.py:201
+#: settings/search.py:212
 msgid "Pair and connect phones, speakers and remotes"
 msgstr "จับคู่และเชื่อมต่อโทรศัพท์ ลำโพง และรีโมท"
 
-#: settings/search.py:204
+#: settings/search.py:215
 msgid "Download speed, upload speed and ping of this device's connection"
 msgstr "ความเร็วดาวน์โหลด ความเร็วอัปโหลด และ Ping ของการเชื่อมต่อของอุปกรณ์นี้"
 
-#: settings/search.py:207
+#: settings/search.py:218
 msgid "Updates and the release notes"
 msgstr "การอัปเดต และบันทึกประจำรุ่น"
 
-#: settings/search.py:208
+#: settings/search.py:219
 #: settings/software.py:205
 msgid "Automatic Updates"
 msgstr "อัพเดตอัตโนมัติ"
 
-#: settings/search.py:208
+#: settings/search.py:219
 msgid "Download while parked, install when you turn off the car"
 msgstr "ดาวน์โหลดขณะจอด ติดตั้งเมื่อดับเครื่อง"
 
-#: settings/search.py:209
+#: settings/search.py:220
 #: settings/software.py:202
 msgid "Release Channel"
 msgstr "ช่องทางการวางจำหน่าย"
 
-#: settings/search.py:209
+#: settings/search.py:220
 msgid "The branch to download updates from"
 msgstr "สาขาสำหรับดาวน์โหลดอัพเดต"
 
-#: settings/search.py:210
+#: settings/search.py:221
 #: settings/software.py:211
 msgid "Reset Settings"
 msgstr "รีเซ็ตการตั้งค่า"
 
-#: settings/search.py:210
+#: settings/search.py:221
 msgid "Back to the Essentials defaults"
 msgstr "กลับสู่ค่าเริ่มต้นของ Essentials"
 
-#: settings/search.py:211
+#: settings/search.py:222
 #: settings/software.py:183
 #: settings/software.py:215
 msgid "Uninstall"
 msgstr "ถอนการติดตั้ง"
 
-#: settings/search.py:211
+#: settings/search.py:222
 msgid "Remove this software from the device"
 msgstr "ลบซอฟต์แวร์นี้ออกจากอุปกรณ์"
 
-#: settings/search.py:388
-#: settings/search.py:379
+#: settings/search.py:399
+#: settings/search.py:390
 msgid "Search settings"
 msgstr "การตั้งค่าการค้นหา"
 
-#: settings/search.py:277
+#: settings/search.py:288
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "พูดการตั้งค่า เช่น การจำกัดความเร็ว แตะไมโครโฟนเมื่อคุณทำเสร็จแล้ว"
 
-#: settings/search.py:359
-#: settings/search.py:318
+#: settings/search.py:370
+#: settings/search.py:329
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "ไม่มีการตั้งค่าที่ตรงกับ “{}”"
 
-#: settings/search.py:360
+#: settings/search.py:371
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "พิมพ์ชื่อการตั้งค่าหรือสิ่งที่ทำ เช่น ความสว่างหรือการเปลี่ยนเลน"
 
@@ -5189,96 +5314,96 @@ msgstr " รีสตาร์ท openpilot หากรถเปิดอยู
 msgid "Turn off the car to change Sentry Mode"
 msgstr "ดับรถเพื่อเปลี่ยนโหมดยาม"
 
-#: settings/storage.py:21
+#: settings/storage.py:25
 msgid "Drives"
 msgstr "ไดรฟ์"
 
-#: settings/storage.py:21
-#: sidebar.py:158
-#: sidebar.py:155
+#: settings/storage.py:25
+#: sidebar.py:159
+#: sidebar.py:156
 msgid "Maps"
 msgstr "แผนที่"
 
-#: settings/storage.py:21
+#: settings/storage.py:25
 msgid "Models"
 msgstr "รุ่น AI"
 
-#: settings/storage.py:134
+#: settings/storage.py:159
 msgid "Delete all"
 msgstr "ลบทั้งหมด"
 
-#: settings/storage.py:65
+#: settings/storage.py:69
 #, python-brace-format
 msgid "{} of {}"
 msgstr "{} ของ {}"
 
-#: settings/storage.py:67
+#: settings/storage.py:71
 #, python-brace-format
 msgid "{} of {} used"
 msgstr "ใช้ {} ของ {}"
 
-#: settings/storage.py:112
+#: settings/storage.py:137
 msgid "Delete all drives?"
 msgstr "ลบไดรฟ์ทั้งหมดหรือไม่"
 
-#: settings/storage.py:112
+#: settings/storage.py:137
 msgid "Every recorded drive and its video is removed. This can't be undone."
 msgstr "ทุกไดรฟ์ที่บันทึกไว้และวิดีโอจะถูกลบออก การดำเนินการนี้ไม่สามารถยกเลิกได้"
 
-#: settings/storage.py:118
+#: settings/storage.py:143
 #, python-brace-format
 msgid "{} downloaded model not in use"
 msgid_plural "{} downloaded models not in use"
 msgstr[0] "โมเดลที่ดาวน์โหลดแต่ไม่ได้ใช้ {} รายการ"
 
-#: settings/storage.py:118
+#: settings/storage.py:143
 msgid "Only the models you use are downloaded"
 msgstr "ดาวน์โหลดเฉพาะโมเดล AI ที่คุณใช้เท่านั้น"
 
-#: settings/storage.py:123
+#: settings/storage.py:148
 msgid "Remove unused models?"
 msgstr "ลบโมเดล AI ที่ไม่ได้ใช้ออกหรือไม่"
 
-#: settings/storage.py:124
+#: settings/storage.py:149
 #, python-brace-format
 msgid "{} model you aren't using is removed. You can download it again from the model catalog."
 msgid_plural "{} models you aren't using are removed. You can download them again from the model catalog."
 msgstr[0] "จะลบโมเดลที่ไม่ได้ใช้ {} รายการ คุณดาวน์โหลดใหม่จากแค็ตตาล็อกโมเดลได้"
 
-#: settings/storage.py:147
+#: settings/storage.py:172
 msgid "Always"
 msgstr "เสมอ"
 
-#: settings/storage.py:159
+#: settings/storage.py:185
 msgid "High-quality recording, logging and error logs are in Tuner Mode."
 msgstr "การบันทึก การบันทึก และบันทึกข้อผิดพลาดคุณภาพสูงอยู่ในโหมดการปรับแต่งอย่างละเอียด"
 
-#: settings/storage.py:170
+#: settings/storage.py:196
 #, python-brace-format
 msgid "Storage operation could not finish. {}"
 msgstr "การจัดการพื้นที่จัดเก็บไม่สำเร็จ {}"
 
-#: settings/storage.py:170
+#: settings/storage.py:196
 msgid "Some files could not be removed."
 msgstr "ลบบางไฟล์ไม่ได้"
 
-#: settings/storage.py:142
+#: settings/storage.py:167
 msgid "Delete offline maps?"
 msgstr "ลบแผนที่ออฟไลน์หรือไม่"
 
-#: settings/storage.py:152
+#: settings/storage.py:177
 msgid "Speed limits and curves work without a connection"
 msgstr "การจำกัดความเร็วและเส้นโค้งทำงานได้โดยไม่ต้องเชื่อมต่อ"
 
-#: settings/storage.py:154
+#: settings/storage.py:179
 msgid "RECORDING & UPLOADS"
 msgstr "การบันทึกและการอัปโหลด"
 
-#: settings/storage.py:155
+#: settings/storage.py:180
 msgid "Saved and uploaded with your drives. Restarts openpilot if the car is on."
 msgstr "บันทึกและอัปโหลดพร้อมกับไดรฟ์ของคุณ รีสตาร์ท openpilot หากรถเปิดอยู่"
 
-#: settings/storage.py:156
+#: settings/storage.py:181
 msgid "Cabin audio in your drive recordings. Restarts openpilot if the car is on."
 msgstr "เสียงห้องโดยสารในการบันทึกการขับขี่ของคุณ รีสตาร์ท openpilot หากรถเปิดอยู่"
 
@@ -5540,40 +5665,49 @@ msgid ", then "
 msgstr "แล้ว "
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
-#: sidebar.py:124
+#: sidebar.py:125
 msgid "comma connect"
 msgstr "comma connect"
 
+#: sidebar.py:131
 #: sidebar.py:130
-#: sidebar.py:129
 msgid "Network"
 msgstr "เครือข่าย"
 
-#: sidebar.py:179
+#: sidebar.py:180
 msgid "Checking"
 msgstr "การตรวจสอบ"
 
-#: sidebar.py:74
+#: sidebar.py:209
+#: sidebar.py:211
+msgid "Jetlink"
+msgstr "Jetlink"
+
+#: sidebar.py:211
+msgid "Plugged in"
+msgstr "เสียบอยู่"
+
+#: sidebar.py:75
 msgid "Settings"
 msgstr "การตั้งค่า"
 
-#: sidebar.py:76
+#: sidebar.py:77
 msgid "Save a clip"
 msgstr "บันทึกคลิป"
 
-#: sidebar.py:78
+#: sidebar.py:79
 msgid "Recording audio"
 msgstr "บันทึกเสียง"
 
-#: sidebar.py:222
+#: sidebar.py:265
 msgid "Good"
 msgstr "ดีครับ"
 
-#: sidebar.py:222
+#: sidebar.py:265
 msgid "Warm"
 msgstr "อุ่น"
 
-#: sidebar.py:222
+#: sidebar.py:265
 msgid "Hot"
 msgstr "ฮอต"
 

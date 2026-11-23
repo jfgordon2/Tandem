@@ -107,7 +107,7 @@ def test_connections_match_the_index() -> None:
     assert rows - networks == indexed(2, section=index), index
 
 
-@pytest.mark.parametrize("tab,files", [(1, ["device.py", "general.py", "storage.py", "developer.py"]), (3, ["software.py"])])
+@pytest.mark.parametrize("tab,files", [(1, ["device.py", "general.py", "power.py", "storage.py", "developer.py"]), (3, ["software.py"])])
 def test_device_and_software_rows_are_on_their_screens(tab: int, files: list[str]) -> None:
   source = "".join((SETTINGS / name).read_text() for name in files)
   missing = [e.name for e in search.ENTRIES if e.tab == tab and e.row and f'N_("{e.name}")' not in source]

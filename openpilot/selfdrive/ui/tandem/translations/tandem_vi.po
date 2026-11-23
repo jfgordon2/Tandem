@@ -30,7 +30,7 @@ msgid "Road data still supplies speed limits"
 msgstr "Dữ liệu đường vẫn cung cấp giới hạn tốc độ"
 
 #: destinations.py:218
-#: settings/search.py:276
+#: settings/search.py:287
 msgid "Search"
 msgstr "Tìm kiếm"
 
@@ -309,7 +309,7 @@ msgstr "Bản cập nhật đã sẵn sàng"
 
 #: home.py:152
 #: settings/search.py:25
-#: settings/search.py:207
+#: settings/search.py:218
 msgid "Software"
 msgstr "Phần mềm"
 
@@ -717,7 +717,7 @@ msgstr "{} s"
 
 #: onroad/developer.py:286
 #: settings/ram.py:31
-#: settings/storage.py:101
+#: settings/storage.py:105
 #, python-brace-format
 msgid "{} GB"
 msgstr "{} GB"
@@ -1197,8 +1197,8 @@ msgid "Drive logging"
 msgstr "Ghi nhật ký chuyến đi"
 
 #: ram.py:57
-#: settings/search.py:177
-#: settings/storage.py:157
+#: settings/search.py:186
+#: settings/storage.py:182
 msgid "Uploads"
 msgstr "Tải lên"
 
@@ -1567,7 +1567,7 @@ msgstr "Khôi phục"
 
 #: settings/backups.py:97
 #: settings/backups.py:97
-#: settings/storage.py:145
+#: settings/storage.py:170
 msgid "Delete"
 msgstr "Xóa"
 
@@ -1577,7 +1577,7 @@ msgstr "Sao lưu ngay"
 
 #: settings/backups.py:108
 #: settings/backups.py:90
-#: settings/essentials.py:155
+#: settings/essentials.py:167
 msgid "Backups"
 msgstr "Bản sao lưu"
 
@@ -1710,17 +1710,17 @@ msgstr "Thiết bị Bluetooth"
 
 #: settings/bluetooth_tab.py:449
 #: settings/bluetooth_tab.py:449
-#: settings/search.py:202
+#: settings/search.py:213
 msgid "Disconnect"
 msgstr "Ngắt kết nối"
 
 #: settings/bluetooth_tab.py:449
-#: settings/search.py:202
+#: settings/search.py:213
 msgid "It reconnects the next time you choose it"
 msgstr "Sẽ kết nối lại vào lần tới bạn chọn"
 
 #: settings/bluetooth_tab.py:450
-#: settings/search.py:203
+#: settings/search.py:214
 msgid "Removes the pairing. Change it with the car off."
 msgstr "Xóa ghép nối. Thay đổi khi xe đã tắt."
 
@@ -1939,7 +1939,7 @@ msgid "Saved"
 msgstr "Đã lưu"
 
 #: settings/can_recorder.py:20
-#: sidebar.py:124
+#: sidebar.py:125
 msgid "Error"
 msgstr "Lỗi"
 
@@ -2135,7 +2135,7 @@ msgstr "Di động"
 
 #: settings/connections.py:100
 #: settings/search.py:33
-#: settings/search.py:201
+#: settings/search.py:212
 msgid "Bluetooth Devices"
 msgstr "Thiết bị Bluetooth"
 
@@ -2146,7 +2146,7 @@ msgid "Network Test"
 msgstr "Kiểm tra mạng"
 
 #: settings/developer.py:67
-#: settings/search.py:187
+#: settings/search.py:198
 msgid "openpilot Longitudinal (Alpha)"
 msgstr "Kiểm soát dọc openpilot (Alpha)"
 
@@ -2155,7 +2155,7 @@ msgid "Turns off the car's emergency braking. Off while engaged."
 msgstr "Tắt phanh khẩn cấp của xe. Tắt khi đang kích hoạt."
 
 #: settings/developer.py:73
-#: settings/search.py:186
+#: settings/search.py:197
 #: selfdrive/ui/layouts/settings/developer.py:68
 msgid "Joystick Debug Mode"
 msgstr "Chế độ gỡ lỗi Joystick"
@@ -2178,7 +2178,7 @@ msgid "Adds every public key in a GitHub account. Never use someone else's."
 msgstr "Thêm mọi khóa công khai trong một tài khoản GitHub. Đừng bao giờ dùng tài khoản của người khác."
 
 #: settings/developer.py:84
-#: settings/essentials.py:160
+#: settings/essentials.py:172
 #: settings/search.py:32
 msgid "Developer"
 msgstr "Nhà phát triển"
@@ -2192,7 +2192,7 @@ msgid "GitHub username"
 msgstr "Tên người dùng GitHub"
 
 #: settings/developer.py:77
-#: settings/search.py:183
+#: settings/search.py:194
 msgid "ADB"
 msgstr "ADB"
 
@@ -2201,7 +2201,7 @@ msgid "Connect over USB or the network (docs.comma.ai). Change it with the car o
 msgstr "Kết nối qua USB hoặc mạng (docs.comma.ai). Thay đổi khi xe đã tắt."
 
 #: settings/developer.py:79
-#: settings/search.py:184
+#: settings/search.py:195
 msgid "SSH"
 msgstr "SSH"
 
@@ -2210,19 +2210,19 @@ msgid "Remote shell access with the keys below"
 msgstr "Truy cập shell từ xa bằng các khóa bên dưới"
 
 #: settings/developer.py:80
-#: settings/search.py:185
+#: settings/search.py:196
 #: selfdrive/ui/layouts/settings/developer.py:65
 msgid "SSH Keys"
 msgstr "Khóa SSH"
 
 #: settings/developer.py:83
-#: settings/search.py:188
+#: settings/search.py:199
 #: selfdrive/ui/layouts/settings/developer.py:103
 msgid "UI Debug Mode"
 msgstr "Chế độ gỡ lỗi giao diện"
 
 #: settings/developer.py:83
-#: settings/search.py:188
+#: settings/search.py:199
 msgid "Shows touches and the frame rate"
 msgstr "Hiển thị các lần chạm và tốc độ khung hình"
 
@@ -2801,7 +2801,7 @@ msgid "Display"
 msgstr "Hiển thị"
 
 #: settings/driving_tab.py:207
-#: settings/essentials.py:217
+#: settings/essentials.py:229
 #: settings/model.py:309
 msgid "Driving Model"
 msgstr "Mô hình lái"
@@ -2861,25 +2861,31 @@ msgstr "Dùng mật khẩu Galaxy hiện có, hoặc đặt mật khẩu mới"
 msgid "Optional"
 msgstr "Tùy chọn"
 
-#: settings/essentials.py:154
+#: settings/essentials.py:165
 #: settings/general.py:51
 #: settings/search.py:31
 msgid "General"
 msgstr "Chung"
 
-#: settings/essentials.py:156
+#: settings/essentials.py:166
+#: settings/power.py:188
 #: settings/search.py:31
-#: settings/search.py:171
+msgid "Power"
+msgstr "Nguồn"
+
+#: settings/essentials.py:168
+#: settings/search.py:31
+#: settings/search.py:180
 msgid "Storage & Data"
 msgstr "Bộ nhớ và dữ liệu"
 
-#: settings/essentials.py:157
-#: settings/firehose.py:127
+#: settings/essentials.py:169
+#: settings/firehose.py:139
 #: settings/search.py:31
 msgid "Firehose"
 msgstr "Firehose"
 
-#: settings/essentials.py:159
+#: settings/essentials.py:171
 #: settings/report.py:121
 #: settings/search.py:31
 msgid "Report a Problem"
@@ -2889,83 +2895,83 @@ msgstr "Báo cáo sự cố"
 msgid "Set up"
 msgstr "Thiết lập"
 
-#: settings/firehose.py:29
+#: settings/firehose.py:32
 msgid "On Wi-Fi without a data limit, so comma can pull your drives"
 msgstr "Đang dùng Wi-Fi không giới hạn dữ liệu, nên comma có thể lấy chuyến đi của bạn"
 
-#: settings/firehose.py:30
+#: settings/firehose.py:33
 msgid "Connect to Wi-Fi or another network without a data limit"
 msgstr "Kết nối Wi-Fi hoặc mạng khác không giới hạn dữ liệu"
 
-#: settings/firehose.py:114
+#: settings/firehose.py:126
 msgid "openpilot learns to drive by watching people drive. Firehose uploads more of your drives so comma can train bigger, better driving models."
 msgstr "openpilot học lái bằng cách quan sát người lái. Firehose tải lên nhiều chuyến đi hơn để comma huấn luyện mô hình lái lớn hơn, tốt hơn."
 
-#: settings/firehose.py:22
+#: settings/firehose.py:24
 msgid "Can I turn it off?"
 msgstr "Tôi có thể tắt nó không?"
 
-#: settings/firehose.py:22
-msgid "There's no switch. comma asks for drives over Wi-Fi on its own, separately from Storage & Data › Uploads. On a metered connection, like cellular, nothing is sent."
-msgstr "Không có công tắc. comma tự yêu cầu chuyến đi qua Wi-Fi, tách biệt với Bộ nhớ và dữ liệu › Tải lên. Trên kết nối tính phí theo lưu lượng, như mạng di động, sẽ không gửi gì."
-
 #: settings/firehose.py:24
+msgid "Not with a switch: comma asks for drives over Wi-Fi on its own, separately from Storage & Data › Uploads. Save Data pauses it on a network, and cellular sends nothing unless Uploads on Cellular is on."
+msgstr "Không có công tắc: comma tự yêu cầu chuyến đi qua Wi-Fi, tách biệt với Bộ nhớ và dữ liệu › Tải lên. Tiết kiệm dữ liệu sẽ tạm dừng nó trên một mạng, và mạng di động không gửi gì trừ khi bật Tải lên qua mạng di động."
+
+#: settings/firehose.py:27
 msgid "Does it matter how or where I drive?"
 msgstr "Cách lái hay nơi lái có quan trọng không?"
 
-#: settings/firehose.py:24
+#: settings/firehose.py:27
 msgid "No, just drive as you normally would."
 msgstr "Không, cứ lái như bình thường."
 
-#: settings/firehose.py:25
+#: settings/firehose.py:28
 msgid "Are all of my drives uploaded?"
 msgstr "Tất cả chuyến đi của tôi có được tải lên không?"
 
-#: settings/firehose.py:25
+#: settings/firehose.py:28
 msgid "No, comma pulls a selection of them."
 msgstr "Không, comma chỉ lấy một phần."
 
-#: settings/firehose.py:26
+#: settings/firehose.py:29
 msgid "What's a good USB-C charger?"
 msgstr "Bộ sạc USB-C tốt là loại nào?"
 
-#: settings/firehose.py:26
+#: settings/firehose.py:29
 msgid "Any fast phone or laptop charger is fine."
 msgstr "Bộ sạc nhanh điện thoại hoặc laptop nào cũng được."
 
-#: settings/firehose.py:27
+#: settings/firehose.py:30
 msgid "Does it matter which software I run?"
 msgstr "Phần mềm tôi dùng có quan trọng không?"
 
-#: settings/firehose.py:27
+#: settings/firehose.py:30
 msgid "Yes. Only openpilot and some forks can be used for training."
 msgstr "Có. Chỉ openpilot và một số bản fork mới dùng được để huấn luyện."
 
-#: settings/firehose.py:119
+#: settings/firehose.py:131
 msgid "GET THE MOST FROM IT"
 msgstr "TẬN DỤNG TỐI ĐA"
 
-#: settings/firehose.py:120
+#: settings/firehose.py:132
 msgid "• Once a week, bring the device inside on a fast USB-C charger and Wi-Fi."
 msgstr "• Mỗi tuần một lần, mang thiết bị vào nhà, cắm bộ sạc USB-C nhanh và kết nối Wi-Fi."
 
-#: settings/firehose.py:122
+#: settings/firehose.py:134
 msgid "• It also works while driving on a hotspot or an unlimited SIM."
 msgstr "• Cũng hoạt động khi lái xe qua điểm phát sóng hoặc SIM không giới hạn."
 
-#: settings/firehose.py:124
+#: settings/firehose.py:136
 msgid "QUESTIONS"
 msgstr "CÂU HỎI"
 
-#: settings/firehose.py:127
+#: settings/firehose.py:139
 msgid "Training data for openpilot's driving models"
 msgstr "Dữ liệu huấn luyện cho các mô hình lái của openpilot"
 
-#: settings/firehose.py:76
+#: settings/firehose.py:88
 msgid "Active"
 msgstr "Đang hoạt động"
 
-#: settings/firehose.py:76
+#: settings/firehose.py:88
 msgid "Inactive"
 msgstr "Không hoạt động"
 
@@ -2987,7 +2993,7 @@ msgstr "Tốc độ và khoảng cách ở mọi nơi"
 
 #: settings/general.py:39
 #: settings/search.py:166
-#: sidebar.py:227
+#: sidebar.py:271
 msgid "Temperature"
 msgstr "Nhiệt độ"
 
@@ -3100,7 +3106,7 @@ msgid "Road data ready"
 msgstr "Dữ liệu đường đã sẵn sàng"
 
 #: settings/map_source.py:157
-#: sidebar.py:158
+#: sidebar.py:159
 msgid "Not downloaded"
 msgstr "Chưa tải"
 
@@ -3134,7 +3140,7 @@ msgid "Road data and offline routes are ready."
 msgstr "Dữ liệu đường và tuyến ngoại tuyến đã sẵn sàng."
 
 #: settings/map_source.py:235
-#: settings/storage.py:147
+#: settings/storage.py:172
 msgid "Parked"
 msgstr "Đã đỗ xe"
 
@@ -3178,7 +3184,7 @@ msgid "{} states"
 msgstr "{} bang"
 
 #: settings/maps.py:33
-#: settings/storage.py:142
+#: settings/storage.py:167
 msgid "Remove all downloaded maps from this device. Your regions stay chosen."
 msgstr "Gỡ mọi bản đồ đã tải khỏi thiết bị này. Các vùng bạn chọn vẫn được giữ."
 
@@ -3432,7 +3438,7 @@ msgid "Recommended"
 msgstr "Đề xuất"
 
 #: settings/model.py:125
-#: sidebar.py:155
+#: sidebar.py:156
 msgid "Downloading"
 msgstr "Đang tải"
 
@@ -3659,13 +3665,13 @@ msgid "Try downloaded maps first; fall back to online."
 msgstr "Thử bản đồ đã tải trước; dự phòng bằng trực tuyến."
 
 #: settings/navigation.py:120
-#: sidebar.py:124
+#: sidebar.py:125
 msgid "Online"
 msgstr "Trực tuyến"
 
 #: settings/navigation.py:120
-#: sidebar.py:124
-#: sidebar.py:129
+#: sidebar.py:125
+#: sidebar.py:130
 msgid "Offline"
 msgstr "Ngoại tuyến"
 
@@ -3867,7 +3873,7 @@ msgstr "Sửa"
 
 #: settings/network_tab.py:396
 #: settings/network_tab.py:387
-#: settings/search.py:198
+#: settings/search.py:209
 msgid "Roaming, APN and IP address"
 msgstr "Chuyển vùng, APN và địa chỉ IP"
 
@@ -3886,7 +3892,7 @@ msgstr "Nhập mật khẩu"
 
 #: settings/network_tab.py:173
 #: settings/network_tab.py:383
-#: settings/search.py:195
+#: settings/search.py:206
 msgid "Hotspot name"
 msgstr "Tên điểm phát sóng"
 
@@ -3895,37 +3901,37 @@ msgid "A saved network already uses this name"
 msgstr "Một mạng đã lưu đang dùng tên này"
 
 #: settings/network_tab.py:362
-#: settings/search.py:192
+#: settings/search.py:203
 msgid "Join a hidden network"
 msgstr "Kết nối mạng ẩn"
 
 #: settings/network_tab.py:382
-#: settings/search.py:194
+#: settings/search.py:205
 msgid "Hotspot"
 msgstr "Điểm phát sóng"
 
 #: settings/network_tab.py:382
-#: settings/search.py:194
+#: settings/search.py:205
 msgid "Share this device's connection"
 msgstr "Chia sẻ kết nối của thiết bị này"
 
 #: settings/network_tab.py:385
-#: settings/search.py:196
+#: settings/search.py:207
 msgid "Hotspot Password"
 msgstr "Mật khẩu điểm phát sóng"
 
 #: settings/network_tab.py:385
-#: settings/search.py:196
+#: settings/search.py:207
 msgid "For phones joining this device's hotspot"
 msgstr "Cho điện thoại kết nối vào điểm phát sóng của thiết bị này"
 
 #: settings/network_tab.py:386
-#: settings/search.py:197
+#: settings/search.py:208
 msgid "Save Data"
 msgstr "Tiết kiệm dữ liệu"
 
 #: settings/network_tab.py:386
-#: settings/search.py:197
+#: settings/search.py:208
 msgid "No large uploads on cellular or phone hotspots"
 msgstr "Không tải lên dung lượng lớn qua mạng di động hoặc điểm phát sóng điện thoại"
 
@@ -3938,7 +3944,7 @@ msgid "Use cellular data outside your carrier's network"
 msgstr "Dùng dữ liệu di động ngoài mạng của nhà mạng"
 
 #: settings/network_tab.py:395
-#: settings/search.py:199
+#: settings/search.py:210
 msgid "Cellular IP address"
 msgstr "Địa chỉ IP di động"
 
@@ -4079,13 +4085,118 @@ msgstr "Dùng tối đa {} dữ liệu di động. Rời trang này sẽ dừng 
 msgid "Measuring…"
 msgstr "Đang đo…"
 
+#: settings/power.py:26
+msgid "Stock"
+msgstr "Mặc định"
+
+#: settings/power.py:26
+msgid "Custom"
+msgstr "Tùy chỉnh"
+
+#: settings/power.py:28
+msgid "Offroad"
+msgstr "Đỗ xe"
+
+#: settings/power.py:28
+msgid "Onroad"
+msgstr "Đang lái"
+
+#: settings/power.py:74
+#, python-brace-format
+msgid "Turn the comma off below {} while parked?"
+msgstr "Tắt comma khi dưới {} lúc đỗ xe?"
+
+#: settings/power.py:169
+#: settings/power.py:138
+#: settings/search.py:172
+msgid "Parked Power"
+msgstr "Nguồn khi đỗ xe"
+
+#: settings/power.py:169
+#: settings/search.py:172
+msgid "Turn the comma off after a long park or a low battery"
+msgstr "Tắt comma sau khi đỗ lâu hoặc khi ắc quy yếu"
+
+#: settings/power.py:172
+#: settings/power.py:173
+#: settings/search.py:173
+msgid "Maximum Parked Time"
+msgstr "Thời gian đỗ tối đa"
+
+#: settings/power.py:172
+#: settings/search.py:173
+msgid "Then it turns off, sparing the car's battery"
+msgstr "Sau đó nó tắt để giữ ắc quy xe"
+
+#: settings/power.py:175
+#: settings/power.py:176
+#: settings/search.py:174
+msgid "Low-Voltage Cutoff"
+msgstr "Ngắt điện áp thấp"
+
+#: settings/power.py:175
+#: settings/search.py:174
+msgid "Turns off sooner if the battery drops this low"
+msgstr "Tắt sớm hơn nếu ắc quy xuống mức này"
+
+#: settings/power.py:184
+#: settings/search.py:177
+msgid "Drive State"
+msgstr "Trạng thái lái"
+
+#: settings/power.py:184
+#: settings/search.py:177
+msgid "Auto follows the car; force offroad or onroad for testing"
+msgstr "Tự động theo xe; buộc Đỗ xe hoặc Đang lái để thử nghiệm"
+
+#: settings/power.py:71
+msgid "Go back to the stock parked limits?"
+msgstr "Quay lại giới hạn đỗ xe mặc định?"
+
+#: settings/power.py:73
+#, python-brace-format
+msgid "Turn the comma off after {} parked? Other protections can turn it off sooner."
+msgstr "Tắt comma sau {} đỗ xe? Các bảo vệ khác có thể tắt sớm hơn."
+
+#: settings/power.py:180
+#: settings/search.py:175
+msgid "Aggressive Cooling"
+msgstr "Làm mát mạnh"
+
+#: settings/power.py:180
+#: settings/search.py:175
+msgid "Fan runs sooner and harder: 10 to 16 °C cooler, more noise"
+msgstr "Quạt chạy sớm và mạnh hơn: mát hơn 10 đến 16 °C, ồn hơn"
+
+#: settings/power.py:188
+msgid "The car's battery while parked, cooling, and drive state"
+msgstr "Ắc quy xe khi đỗ, làm mát và trạng thái lái"
+
+#: settings/power.py:189
+msgid "New parked limits are confirmed before they save."
+msgstr "Giới hạn đỗ xe mới được xác nhận trước khi lưu."
+
+#: settings/power.py:70
+#, python-brace-format
+msgid "Turn the comma off after {} parked, or below {}? Other protections can turn it off sooner."
+msgstr "Tắt comma sau {} đỗ xe hoặc khi dưới {}? Các bảo vệ khác có thể tắt sớm hơn."
+
+#: settings/power.py:167
+#: settings/power.py:167
+msgid "Force Offroad"
+msgstr "Buộc Đỗ xe"
+
+#: settings/power.py:167
+msgid "Switch to Offroad and stop driving services?"
+msgstr "Chuyển sang Đỗ xe và dừng các dịch vụ lái?"
+
 #: settings/ram.py:51
 #, python-brace-format
 msgid "{} · {}%"
 msgstr "{} · {}%"
 
 #: settings/ram.py:31
-#: settings/storage.py:101
+#: settings/storage.py:105
 #, python-brace-format
 msgid "{} MB"
 msgstr "{} MB"
@@ -4542,196 +4653,210 @@ msgid "Menus and alerts"
 msgstr "Menu và cảnh báo"
 
 #: settings/search.py:170
+msgid "Parked limits for the car's battery, cooling and drive state"
+msgstr "Giới hạn khi đỗ cho ắc quy xe, làm mát và trạng thái lái"
+
+#: settings/search.py:179
 msgid "Snapshots of your settings"
 msgstr "Ảnh chụp cài đặt của bạn"
 
-#: settings/search.py:171
+#: settings/search.py:180
 msgid "What's using space, and recording and uploads"
 msgstr "Những gì đang chiếm dung lượng, ghi hình và tải lên"
 
-#: settings/search.py:172
-#: settings/storage.py:151
+#: settings/search.py:181
+#: settings/storage.py:176
 msgid "Recorded Drives"
 msgstr "Chuyến đi đã ghi"
 
-#: settings/search.py:172
-#: settings/storage.py:151
+#: settings/search.py:181
+#: settings/storage.py:176
 msgid "Oldest drives are removed when space runs low"
 msgstr "Chuyến đi cũ nhất sẽ bị xóa khi sắp hết dung lượng"
 
-#: settings/search.py:173
+#: settings/search.py:182
 msgid "Delete downloaded map data"
 msgstr "Xóa dữ liệu bản đồ đã tải"
 
-#: settings/search.py:174
-#: settings/storage.py:153
+#: settings/search.py:183
+#: settings/storage.py:178
 msgid "Unused Models"
 msgstr "Mô hình không dùng"
 
-#: settings/search.py:174
+#: settings/search.py:183
 msgid "Downloaded models that aren't in use"
 msgstr "Mô hình đã tải nhưng không dùng"
 
-#: settings/search.py:175
-#: settings/storage.py:155
+#: settings/search.py:184
+#: settings/storage.py:180
 msgid "Record Driver Camera"
 msgstr "Ghi camera tài xế"
 
-#: settings/search.py:175
+#: settings/search.py:184
 msgid "Saved and uploaded with your drives"
 msgstr "Được lưu và tải lên cùng chuyến đi"
 
-#: settings/search.py:176
-#: settings/storage.py:156
+#: settings/search.py:185
+#: settings/storage.py:181
 msgid "Record Microphone"
 msgstr "Ghi âm micrô"
 
-#: settings/search.py:176
+#: settings/search.py:185
 msgid "Cabin audio in your drive recordings"
 msgstr "Âm thanh trong xe trong bản ghi chuyến đi"
 
-#: settings/search.py:177
-#: settings/storage.py:157
+#: settings/search.py:186
+#: settings/storage.py:182
 msgid "Drive logs and video for debugging"
 msgstr "Nhật ký và video chuyến đi để gỡ lỗi"
 
-#: settings/search.py:178
+#: settings/search.py:187
+#: settings/storage.py:116
+msgid "Uploads on Cellular"
+msgstr "Tải lên qua mạng di động"
+
+#: settings/search.py:187
+#: settings/storage.py:116
+msgid "Full logs and video on cellular or a metered hotspot. Uses mobile data."
+msgstr "Nhật ký đầy đủ và video qua mạng di động hoặc điểm phát có giới hạn. Dùng dữ liệu di động."
+
+#: settings/search.py:189
 msgid "Upload more drives to train openpilot's driving models"
 msgstr "Tải lên thêm chuyến đi để huấn luyện mô hình lái của openpilot"
 
-#: settings/search.py:180
+#: settings/search.py:191
 msgid "What was using RAM on drives that ran low"
 msgstr "Những gì đã dùng RAM trong các chuyến đi bị thiếu"
 
-#: settings/search.py:181
+#: settings/search.py:192
 msgid "Send what happened to the developers"
 msgstr "Gửi sự việc cho nhà phát triển"
 
-#: settings/search.py:182
+#: settings/search.py:193
 msgid "ADB, SSH and debug modes"
 msgstr "ADB, SSH và chế độ gỡ lỗi"
 
-#: settings/search.py:183
+#: settings/search.py:194
 msgid "Connect over USB or the network"
 msgstr "Kết nối qua USB hoặc mạng"
 
-#: settings/search.py:184
+#: settings/search.py:195
 msgid "Remote shell access"
 msgstr "Truy cập shell từ xa"
 
-#: settings/search.py:185
+#: settings/search.py:196
 msgid "Adds every public key in a GitHub account"
 msgstr "Thêm mọi khóa công khai trong một tài khoản GitHub"
 
-#: settings/search.py:186
+#: settings/search.py:197
 msgid "Drive openpilot's controls from a joystick"
 msgstr "Điều khiển openpilot bằng joystick"
 
-#: settings/search.py:187
+#: settings/search.py:198
 msgid "Turns off the car's emergency braking"
 msgstr "Tắt phanh khẩn cấp của xe"
 
-#: settings/search.py:190
+#: settings/search.py:201
 msgid "Networks nearby, and joining one"
 msgstr "Mạng ở gần và kết nối vào mạng"
 
-#: settings/search.py:191
+#: settings/search.py:202
 msgid "IP Address"
 msgstr "Địa chỉ IP"
 
-#: settings/search.py:191
+#: settings/search.py:202
 msgid "This device's local address, beside the connected network"
 msgstr "Địa chỉ cục bộ của thiết bị, bên cạnh mạng đã kết nối"
 
-#: settings/search.py:192
+#: settings/search.py:203
 msgid "Enter its name and password"
 msgstr "Nhập tên và mật khẩu"
 
-#: settings/search.py:193
+#: settings/search.py:204
 msgid "Connection status, hotspot, data use, roaming and APN"
 msgstr "Trạng thái kết nối, điểm phát sóng, dữ liệu, chuyển vùng và APN"
 
-#: settings/search.py:195
+#: settings/search.py:206
 msgid "The name phones see when joining this device"
 msgstr "Tên điện thoại thấy khi kết nối vào thiết bị này"
 
-#: settings/search.py:198
+#: settings/search.py:209
 msgid "Roaming, APN and the cellular IP address"
 msgstr "Chuyển vùng, APN và địa chỉ IP di động"
 
-#: settings/search.py:199
+#: settings/search.py:210
 msgid "The modem's mobile data address"
 msgstr "Địa chỉ dữ liệu di động của modem"
 
-#: settings/search.py:200
+#: settings/search.py:211
 msgid "A wheel remote's buttons and what they do"
 msgstr "Các nút của điều khiển trên vô lăng và chức năng của chúng"
 
-#: settings/search.py:201
+#: settings/search.py:212
 msgid "Pair and connect phones, speakers and remotes"
 msgstr "Ghép nối và kết nối điện thoại, loa và điều khiển"
 
-#: settings/search.py:204
+#: settings/search.py:215
 msgid "Download speed, upload speed and ping of this device's connection"
 msgstr "Tốc độ tải về, tải lên và ping của kết nối thiết bị này"
 
-#: settings/search.py:207
+#: settings/search.py:218
 msgid "Updates and the release notes"
 msgstr "Cập nhật và ghi chú phát hành"
 
-#: settings/search.py:208
+#: settings/search.py:219
 #: settings/software.py:205
 msgid "Automatic Updates"
 msgstr "Cập nhật tự động"
 
-#: settings/search.py:208
+#: settings/search.py:219
 msgid "Download while parked, install when you turn off the car"
 msgstr "Tải khi đỗ xe, cài khi bạn tắt xe"
 
-#: settings/search.py:209
+#: settings/search.py:220
 #: settings/software.py:202
 msgid "Release Channel"
 msgstr "Kênh phát hành"
 
-#: settings/search.py:209
+#: settings/search.py:220
 msgid "The branch to download updates from"
 msgstr "Nhánh để tải bản cập nhật"
 
-#: settings/search.py:210
+#: settings/search.py:221
 #: settings/software.py:211
 msgid "Reset Settings"
 msgstr "Đặt lại cài đặt"
 
-#: settings/search.py:210
+#: settings/search.py:221
 msgid "Back to the Essentials defaults"
 msgstr "Về mặc định của Essentials"
 
-#: settings/search.py:211
+#: settings/search.py:222
 #: settings/software.py:183
 #: settings/software.py:215
 msgid "Uninstall"
 msgstr "Gỡ cài đặt"
 
-#: settings/search.py:211
+#: settings/search.py:222
 msgid "Remove this software from the device"
 msgstr "Gỡ phần mềm này khỏi thiết bị"
 
-#: settings/search.py:388
-#: settings/search.py:379
+#: settings/search.py:399
+#: settings/search.py:390
 msgid "Search settings"
 msgstr "Tìm cài đặt"
 
-#: settings/search.py:277
+#: settings/search.py:288
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "Nói tên một cài đặt, như giới hạn tốc độ. Chạm vào micrô khi nói xong."
 
-#: settings/search.py:359
-#: settings/search.py:318
+#: settings/search.py:370
+#: settings/search.py:329
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "Không có cài đặt nào khớp “{}”"
 
-#: settings/search.py:360
+#: settings/search.py:371
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "Nhập tên cài đặt hoặc chức năng của nó, như độ sáng hoặc chuyển làn"
 
@@ -5010,96 +5135,96 @@ msgstr " Khởi động lại openpilot nếu xe đang bật."
 msgid "Turn off the car to change Sentry Mode"
 msgstr "Tắt xe để thay đổi Chế độ canh gác"
 
-#: settings/storage.py:21
+#: settings/storage.py:25
 msgid "Drives"
 msgstr "Chuyến đi"
 
-#: settings/storage.py:21
-#: sidebar.py:158
-#: sidebar.py:155
+#: settings/storage.py:25
+#: sidebar.py:159
+#: sidebar.py:156
 msgid "Maps"
 msgstr "Bản đồ"
 
-#: settings/storage.py:21
+#: settings/storage.py:25
 msgid "Models"
 msgstr "Mô hình"
 
-#: settings/storage.py:134
+#: settings/storage.py:159
 msgid "Delete all"
 msgstr "Xóa tất cả"
 
-#: settings/storage.py:65
+#: settings/storage.py:69
 #, python-brace-format
 msgid "{} of {}"
 msgstr "{} trên {}"
 
-#: settings/storage.py:67
+#: settings/storage.py:71
 #, python-brace-format
 msgid "{} of {} used"
 msgstr "Đã dùng {} trên {}"
 
-#: settings/storage.py:112
+#: settings/storage.py:137
 msgid "Delete all drives?"
 msgstr "Xóa tất cả chuyến đi?"
 
-#: settings/storage.py:112
+#: settings/storage.py:137
 msgid "Every recorded drive and its video is removed. This can't be undone."
 msgstr "Mọi chuyến đi đã ghi và video của nó sẽ bị xóa. Không thể hoàn tác."
 
-#: settings/storage.py:118
+#: settings/storage.py:143
 #, python-brace-format
 msgid "{} downloaded model not in use"
 msgid_plural "{} downloaded models not in use"
 msgstr[0] "{} mô hình đã tải không được dùng"
 
-#: settings/storage.py:118
+#: settings/storage.py:143
 msgid "Only the models you use are downloaded"
 msgstr "Chỉ các mô hình bạn dùng được tải"
 
-#: settings/storage.py:123
+#: settings/storage.py:148
 msgid "Remove unused models?"
 msgstr "Gỡ mô hình không dùng?"
 
-#: settings/storage.py:124
+#: settings/storage.py:149
 #, python-brace-format
 msgid "{} model you aren't using is removed. You can download it again from the model catalog."
 msgid_plural "{} models you aren't using are removed. You can download them again from the model catalog."
 msgstr[0] "{} mô hình bạn không dùng sẽ bị gỡ. Bạn có thể tải lại từ danh mục mô hình."
 
-#: settings/storage.py:147
+#: settings/storage.py:172
 msgid "Always"
 msgstr "Luôn luôn"
 
-#: settings/storage.py:159
+#: settings/storage.py:185
 msgid "High-quality recording, logging and error logs are in Tuner Mode."
 msgstr "Ghi hình chất lượng cao, ghi nhật ký và nhật ký lỗi có trong Chế độ tinh chỉnh."
 
-#: settings/storage.py:170
+#: settings/storage.py:196
 #, python-brace-format
 msgid "Storage operation could not finish. {}"
 msgstr "Không thể hoàn tất thao tác bộ nhớ. {}"
 
-#: settings/storage.py:170
+#: settings/storage.py:196
 msgid "Some files could not be removed."
 msgstr "Không thể xóa một số tệp."
 
-#: settings/storage.py:142
+#: settings/storage.py:167
 msgid "Delete offline maps?"
 msgstr "Xóa bản đồ ngoại tuyến?"
 
-#: settings/storage.py:152
+#: settings/storage.py:177
 msgid "Speed limits and curves work without a connection"
 msgstr "Giới hạn tốc độ và khúc cua hoạt động khi không có kết nối"
 
-#: settings/storage.py:154
+#: settings/storage.py:179
 msgid "RECORDING & UPLOADS"
 msgstr "GHI HÌNH VÀ TẢI LÊN"
 
-#: settings/storage.py:155
+#: settings/storage.py:180
 msgid "Saved and uploaded with your drives. Restarts openpilot if the car is on."
 msgstr "Được lưu và tải lên cùng chuyến đi. Khởi động lại openpilot nếu xe đang bật."
 
-#: settings/storage.py:156
+#: settings/storage.py:181
 msgid "Cabin audio in your drive recordings. Restarts openpilot if the car is on."
 msgstr "Âm thanh trong xe trong bản ghi chuyến đi. Khởi động lại openpilot nếu xe đang bật."
 
@@ -5360,40 +5485,49 @@ msgstr "Bắt đầu lái"
 msgid ", then "
 msgstr ", rồi "
 
-#: sidebar.py:124
+#: sidebar.py:125
 msgid "comma connect"
 msgstr "comma connect"
 
+#: sidebar.py:131
 #: sidebar.py:130
-#: sidebar.py:129
 msgid "Network"
 msgstr "Mạng"
 
-#: sidebar.py:179
+#: sidebar.py:180
 msgid "Checking"
 msgstr "Đang kiểm tra"
 
-#: sidebar.py:74
+#: sidebar.py:209
+#: sidebar.py:211
+msgid "Jetlink"
+msgstr "Jetlink"
+
+#: sidebar.py:211
+msgid "Plugged in"
+msgstr "Đã cắm"
+
+#: sidebar.py:75
 msgid "Settings"
 msgstr "Cài đặt"
 
-#: sidebar.py:76
+#: sidebar.py:77
 msgid "Save a clip"
 msgstr "Lưu đoạn video"
 
-#: sidebar.py:78
+#: sidebar.py:79
 msgid "Recording audio"
 msgstr "Đang ghi âm"
 
-#: sidebar.py:222
+#: sidebar.py:265
 msgid "Good"
 msgstr "Tốt"
 
-#: sidebar.py:222
+#: sidebar.py:265
 msgid "Warm"
 msgstr "Ấm"
 
-#: sidebar.py:222
+#: sidebar.py:265
 msgid "Hot"
 msgstr "Nóng"
 

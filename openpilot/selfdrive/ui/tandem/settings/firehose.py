@@ -18,10 +18,12 @@ from openpilot.selfdrive.ui.tandem.rows import ListPanel, Padded, SectionHeader,
 from openpilot.starpilot.ui.raylib import rl
 
 QUESTIONS = [
-  # StarPilot has no Firehose switch: comma's servers ask athenad for drives, which it sends on any unmetered network;
-  # Storage & Data › Uploads governs only openpilot's automatic uploader (starpilot/tandem/uploads.py), not these.
-  (N_("Can I turn it off?"), N_("There's no switch. comma asks for drives over Wi-Fi on its own, separately from Storage & Data › " +
-                                "Uploads. On a metered connection, like cellular, nothing is sent.")),
+  # StarPilot has no Firehose switch: comma's servers ask athenad for drives, which it sends on any unmetered network, or on
+  # metered ones with StarPilot's AlwaysAllowUploads (Uploads on Cellular); Save Data marks a network metered. Storage & Data
+  # › Uploads governs only openpilot's automatic uploader (starpilot/tandem/uploads.py), not these.
+  (N_("Can I turn it off?"), N_("Not with a switch: comma asks for drives over Wi-Fi on its own, separately from Storage & " +
+                                "Data › Uploads. Save Data pauses it on a network, and cellular sends nothing unless Uploads on " +
+                                "Cellular is on.")),
   (N_("Does it matter how or where I drive?"), N_("No, just drive as you normally would.")),
   (N_("Are all of my drives uploaded?"), N_("No, comma pulls a selection of them.")),
   (N_("What's a good USB-C charger?"), N_("Any fast phone or laptop charger is fine.")),

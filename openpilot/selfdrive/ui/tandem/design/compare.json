@@ -295,6 +295,18 @@
       ]
     },
     {
+      "mock": "devicepower",
+      "title": "Device › Power",
+      "note": "Matches, except the footnote: StarPilot 7 lets these change whenever settings are open, as its own System page does, so the code drops \"Changes only while parked.\" Rows are 58 px tall so all five fit without scrolling. Aggressive Cooling shows only on the comma 3 and 3X, where StarPilot offers it; Force Offroad asks first while driving services run.",
+      "match": true
+    },
+    {
+      "mock": "systemstorage-cellular",
+      "title": "Device › Storage & Data, Uploads on Cellular",
+      "note": "Matches on the new row: StarPilot's Always Allow Uploads, under Uploads. The Uploads choices keep the built screen's existing Parked label, as on stage4-storage.",
+      "match": true
+    },
+    {
       "mock": "firehose",
       "title": "Device › Firehose",
       "note": "Matches: the Device rail places Firehose after Storage & Data, with StarPilot's status rule (connected, not metered), what it is, how to get the most from it, and StarPilot's questions. StarPilot's onboarding prompt opens this page. Page ground uses true black (#000000).",
@@ -527,6 +539,12 @@
       "title": "StarPilot 7 Home",
       "note": "Parked Home with the installed version. The Software card opens openpilot’s Software page. Where to? is back beside it, as in home.html, now that it runs on StarPilot 7's navigation. The existing Settings button label is centered.",
       "match": false
+    },
+    {
+      "mock": "stage4-home-jetlink",
+      "title": "Home, Jetlink connected",
+      "note": "Matches on the sidebar: a Jetlink row after Vehicle, green once the link is up and gray while it's only plugged in, with no row without one, as StarPilot's Home icon shows it. The rest of Home is as on stage4-home.",
+      "match": true
     },
     {
       "mock": "stage4-home-update-ready",
