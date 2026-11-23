@@ -746,3 +746,13 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
   repository (`workflow-policy.json` notes). The software test reads StarPilot's `DISPLAY_VERSION` instead of a
   hardcoded one. Upstream's own `StarPilot` branch ends in a hand-off to `stable`; `release` is unaffected.
 
+## Stage 8: voice typing on StarPilot 7
+
+- Release's voice typing is ported whole (speech.py, speech_native.py, voice.py; only imports differ), including the
+  driving path: StarPilot 7's micd still publishes rawAudioData at 16 kHz, and the worker keeps to 2 threads on cores 0-3.
+- On the parked comma (AGNOS 20.5.5, 2026-11-22) release's fixture transcribed in 2.0 s with 4 threads and 2.7 s in
+  address mode with the 2 driving threads.
+- AGNOS 20.5.5 has no cmake, which the one-time runner build needs. `speech_native.cmake()` uses the system's if there
+  is one, else a pinned, hash-checked cmake from PyPI kept in the speech cache. A fresh setup on the device (model,
+  source, cmake, build) took 344 s and 186 MB.
+

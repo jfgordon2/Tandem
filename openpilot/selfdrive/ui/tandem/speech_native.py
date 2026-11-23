@@ -1,7 +1,8 @@
 """Voice typing with whisper.cpp's CPU runner (2 threads while driving, speech.driving_limits). No audio leaves the worker's pipes.
 
 The source and tiny.en Q8 model are pinned and checked on first use. Only the resulting
-executable and model are needed after setup; nothing is installed into AGNOS or openpilot.
+executable and model are needed after setup; nothing is installed into AGNOS or openpilot. The build needs cmake, which
+AGNOS 20.5.5 doesn't ship, so without one a pinned cmake from PyPI goes into the same cache (cmake()).
 """
 from __future__ import annotations
 
@@ -28,6 +29,8 @@ MODEL_URL = f"https://huggingface.co/ggerganov/whisper.cpp/resolve/5359861c739e9
 MODEL_SHA256 = "5bc2b3860aa151a4c6e7bb095e1fcce7cf12c7b020ca08dcec0c6d018bb7dd94"
 ADDRESS_PROMPT = "123 First Street, New York, NY 10003. 4500 Main St, Des Moines, IA."
 RATE = 16000
+CMAKE_VERSION = "3.31.6"
+CMAKE_SHA256 = "42d9883b8958da285d53d5f69d40d9650c2d1bcf922d82b3ebdceb2b3a7d4521"   # the manylinux aarch64 wheel the comma takes
 
 
 def executable(folder: Path) -> Path:
@@ -36,6 +39,28 @@ def executable(folder: Path) -> Path:
 
 def ready(folder: Path) -> bool:
   return os.access(executable(folder), os.X_OK) and (folder / MODEL_NAME).is_file()
+
+
+def cmake(folder: Path) -> str:
+  """The system's cmake, or a pinned, hash-checked one from PyPI kept in the speech cache.
+
+  Args:
+    folder: The speech cache.
+
+  Returns:
+    The cmake executable to build with.
+  """
+  found = shutil.which("cmake")
+  if found:
+    return found
+  tools = folder / f"cmake-{CMAKE_VERSION}"
+  binary = tools / "cmake" / "data" / "bin" / "cmake"
+  if not os.access(binary, os.X_OK):
+    requirement = folder / f"cmake-{CMAKE_VERSION}.txt"
+    requirement.write_text(f"cmake=={CMAKE_VERSION} --hash=sha256:{CMAKE_SHA256}\n")
+    subprocess.run([sys.executable, "-m", "pip", "install", "--no-deps", "--require-hashes", "--no-cache-dir", "--target", str(tools),
+                    "-r", str(requirement)], stdout=sys.stderr, stderr=sys.stderr, check=True)
+  return str(binary)
 
 
 def prepare(folder: Path, download: Callable[[str, Path, Callable[[float], None], str | None], None], progress: Callable[[float], None]) -> None:
@@ -53,10 +78,11 @@ def prepare(folder: Path, download: Callable[[str, Path, Callable[[float], None]
   build = binary.parent / "build"
   source_dir = folder / f"whisper.cpp-{REVISION}"
   progress(0.9)
-  subprocess.run(["cmake", "-S", str(source_dir), "-B", str(build), "-DCMAKE_BUILD_TYPE=Release", "-DBUILD_SHARED_LIBS=OFF",
+  builder = cmake(folder)
+  subprocess.run([builder, "-S", str(source_dir), "-B", str(build), "-DCMAKE_BUILD_TYPE=Release", "-DBUILD_SHARED_LIBS=OFF",
                   "-DWHISPER_BUILD_TESTS=OFF", "-DWHISPER_BUILD_SERVER=OFF", "-DGGML_OPENMP=OFF"],
                  stdout=sys.stderr, stderr=sys.stderr, check=True)
-  subprocess.run(["cmake", "--build", str(build), "--target", "whisper-cli", "-j4"],
+  subprocess.run([builder, "--build", str(build), "--target", "whisper-cli", "-j4"],
                  stdout=sys.stderr, stderr=sys.stderr, check=True)
   part = binary.with_suffix(f".{os.getpid()}.part")
   try:

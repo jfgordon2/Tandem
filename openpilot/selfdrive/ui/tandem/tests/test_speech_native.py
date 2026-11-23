@@ -113,3 +113,26 @@ def test_native_runner_ends_if_its_worker_is_killed(tmp_path):
     if process.poll() is None:
       process.kill()
     process.wait(timeout=5)
+
+
+def test_the_build_uses_the_systems_cmake_or_a_pinned_one_in_the_cache(tmp_path, monkeypatch):
+  """AGNOS 20.5.5 ships no cmake: the runner's one-time build installs a pinned, hash-checked cmake into the speech cache."""
+  monkeypatch.setattr(native.shutil, 'which', lambda name: '/usr/bin/cmake')
+  assert native.cmake(tmp_path) == '/usr/bin/cmake'
+  monkeypatch.setattr(native.shutil, 'which', lambda name: None)
+  installs = []
+
+  def pip(command, **kwargs):
+    installs.append(command)
+    binary = Path(command[command.index('--target') + 1]) / 'cmake' / 'data' / 'bin' / 'cmake'
+    binary.parent.mkdir(parents=True)
+    binary.write_bytes(b'cmake')
+    binary.chmod(0o755)
+
+  monkeypatch.setattr(native.subprocess, 'run', pip)
+  built = native.cmake(tmp_path)
+  assert Path(built).parent.parent.parent.parent == tmp_path / f'cmake-{native.CMAKE_VERSION}'
+  assert '--require-hashes' in installs[0] and installs[0][1:4] == ['-m', 'pip', 'install']
+  requirement = Path(installs[0][installs[0].index('-r') + 1]).read_text()
+  assert requirement == f'cmake=={native.CMAKE_VERSION} --hash=sha256:{native.CMAKE_SHA256}\n'
+  assert native.cmake(tmp_path) == built and len(installs) == 1   # installed once
