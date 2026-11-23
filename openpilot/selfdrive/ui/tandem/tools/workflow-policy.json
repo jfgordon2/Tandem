@@ -1,5 +1,5 @@
 {
-  "reviewed": "2026-11-20",
+  "reviewed": "2026-11-22",
   "files": {
     ".github/workflows/auto_pr_review.yaml": {
       "sha256": "ebce4560f9c8646dbbfcdd3c21d92aaa1df32dc765cc35a36d054c6f4827816b",
@@ -10,23 +10,23 @@
       "review": "pull_request_target: posts tests.yaml's result summary on Tandem's PRs (pull-requests:write). No branch, release or package writes."
     },
     ".github/workflows/docs.yaml": {
-      "sha256": "a58064d5450a9954200f7d58eb41c0ec643d9ad178272a29bad7b421626d30eb",
-      "review": "Docs build on PRs and upstream branch pushes; publishing (gh-pages force push) is gated to commaai/openpilot master."
+      "sha256": "d4029d8a7b83bbb6f89c7474f54f2d9c6a5569366fe55de2b66c228cf5c2b77e",
+      "review": "Docs build on PRs and upstream branch pushes (contents:read); publishing and the self-hosted testing build are gated to commaai/openpilot or StarPilotHQ/StarPilot."
     },
     ".github/workflows/flm-offroad.yaml": {
-      "sha256": "c255b7f13628af91c8ac9bbc2648c1f9d4ceda745877d7d68b6a0c6e0cdf3ff3",
-      "review": "Read-only FLM tests on pushes to upstream's branch names only (Dom, StarPilot, stable, testing, dev), so not development or release."
+      "sha256": "65d2eb3ecd64aa48882a773bc2a7e2db9502bed0152fb3c5312a4fb774fe77f2",
+      "review": "Read-only FLM tests on pushes to upstream's branch names (Dom, StarPilot, stable, testing, dev) and PRs into stable; Tandem has neither."
     },
     ".github/workflows/galaxy-phone-bridge.yaml": {
-      "sha256": "9a5533d264cace66766ec0e838059eeb7834bf9248b4f2bcaaef2ddb4f74d7e3",
-      "review": "Read-only phone-bridge build check on pushes to upstream's branch names only."
+      "sha256": "a6a7de27b7aa622f15250194d7aa71a1add70342ec6bbd1bd2c62cc815a48429",
+      "review": "Read-only phone-bridge build check on pushes to upstream's branch names (not stable), and as a called workflow from tests.yaml."
     },
     ".github/workflows/jenkins-pr-trigger.yaml": {
       "sha256": "9de71cbc9cf27abb1db90bf21bd4a832e9f79171ded18fd6b9d2280d31563845",
       "review": "Jenkins branch push and cleanup (contents:write). Tandem: both jobs gated to StarPilotHQ/StarPilot, inert here."
     },
     ".github/workflows/pr_discord_reminder.yaml": {
-      "sha256": "128a47d602e7bed31dcf4868c48ff5cf2726f370c95da122cea194032582c6d7",
+      "sha256": "b1f4d173ca530fcd69f78d13f7f5ab176bc40ddfbc7cef052dd80fcd39730b6a",
       "review": "Discord PR reminder; gated to StarPilotHQ/StarPilot, inert in Tandem."
     },
     ".github/workflows/release.yaml": {
@@ -38,7 +38,7 @@
       "review": "Dependency bump PRs and PR cleanup; gated to commaai/openpilot, inert in Tandem."
     },
     ".github/workflows/safety.yaml": {
-      "sha256": "d258b93a9d606469a215bae533998f640784d5ce6c68b377b74a12b89af9a11d",
+      "sha256": "85ed5f6193f576541992a36d8e42ef1d4cc363c1018e528e830e7ebe6fbce462",
       "review": "Read-only safety tests on PRs and upstream branch pushes (contents:read)."
     },
     ".github/workflows/simulator-driving.yaml": {
@@ -54,8 +54,8 @@
       "review": "Tandem's own monthly/manual routing-data build and publication (release's, with development's paths), pinned to the trigger commit. Read-only review job; contents:write only for the build and publish jobs, gated to jfgordon2/Tandem. valhalla pushes only review unless marked [routing-build-check]. Schedules run from the default branch, so this copy builds once this branch is release."
     },
     ".github/workflows/tests.yaml": {
-      "sha256": "b764c187256a2e20008a89870258ea44e3c365f60bb11ecb3078b34168130460",
-      "review": "CI on PRs and upstream branch pushes; its artifact pushes are gated to commaai/openpilot master."
+      "sha256": "baac6bfd24c72c40e6f737d6ff2c142a45630453eefed0900422c94db3deb1e2",
+      "review": "CI on PRs and upstream branch pushes, plus the phone-bridge check for PRs into stable; its artifact pushes are gated to commaai/openpilot master."
     },
     ".github/workflows/ui_preview.yaml": {
       "sha256": "d4fdd3848d422bb55e45523f2fb16f8c37b29ed09acd490c998d2d0d89a6069a",

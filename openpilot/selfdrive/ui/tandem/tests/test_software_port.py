@@ -11,6 +11,7 @@ import pytest
 from openpilot.selfdrive.ui.tandem import screens
 from openpilot.selfdrive.ui.tandem.settings.software import Software
 from openpilot.selfdrive.ui.tandem.software import HomeSoftware, InstallPreference, InstallTarget, SoftwareState, SoftwareWatch, Stage, project
+from openpilot.starpilot.ui.brand import DISPLAY_VERSION
 from openpilot.starpilot.ui.raylib import rl
 from openpilot.system.ui.widgets import Widget
 
@@ -166,7 +167,7 @@ def test_release_tab_states_follow_starpilots_stages(stage: Stage, state: str, a
     model = Software(watch, lambda key: "0.11.3 / development / 1abbbc6 / Nov 16", Mock())
     assert model.state() == state and model.action_label() == action
     # StarPilot's version, not openpilot's base version, and the commit stays out of sight
-    assert model.version_parts() == ("7.0", "development · Nov 16")
+    assert model.version_parts() == (DISPLAY_VERSION, "development · Nov 16")
     if state == "waiting":
       assert model.status_line() == "Software actions are available while parked" and not model.can_act()
   finally:
@@ -216,7 +217,8 @@ def test_home_shows_starpilots_version_not_openpilots() -> None:
   """StarPilot's status carries openpilot's base version too; its own screens show StarPilot's (starpilot/ui/brand.py)."""
   from openpilot.selfdrive.ui.tandem.software import project_software
   status, operations, _ = fixtures()
-  assert project_software(status, operations).installed == "7.0"
+  status["installed"]["displayVersion"] = DISPLAY_VERSION   # as StarPilot's status sets it
+  assert project_software(status, operations).installed == DISPLAY_VERSION
   del status["installed"]["displayVersion"]
   assert project_software(status, operations).installed == "0.11.3"   # an older status without it
 

@@ -22,6 +22,8 @@ def _explanation(reason):
     'recording_for_offroad_analysis': 'Recording while driving. Route analysis runs after parking; this is not an analysis result.',
     'loading_parked_analysis': 'Starting the parked analysis worker.',
     'analyzing_last_completed_drive': 'Reading recorded drive data.',
+    'verifying_recorded_drive': 'The sections were read. FLM is verifying that the recording is unchanged.',
+    'Parked route input collection cancelled': 'Reading was interrupted before the drive assessment finished. This report has no specific blocker.',
     'checking_recorded_steering_recommendations': 'Checking recommendations against recorded controller and steering-delivery evidence.',
     'previous_analysis_interrupted_before_completion': 'The learner restarted before its previous analysis reported an outcome.',
     'analysis_interrupted_by_shutdown': 'Analysis was interrupted by shutdown or the return to driving.',
@@ -41,6 +43,10 @@ def _explanation(reason):
     'Known vehicle and no manual coordinates required': 'This older build rejected its vehicle/settings identity before route analysis. In the parked ' +
       'analysis path, missing or invalid recorded vehicle identity causes this refusal; it does not establish route corruption.',
     'Valid manual coordinate settings required': 'Saved manual steering settings require review; existing choices were preserved.',
+    'saved_gm_flm_profile_blocks_learning': 'Auto Learn is paused because an older manual GM FLM tune is active.',
+    'saved_gm_force_off_blocks_learning': 'A saved GM steering setting explicitly turns off learning for this vehicle.',
+    'Manual or explicitly disabled tuning selected':
+      'This older report did not distinguish a legacy GM FLM profile from a saved GM setting that turns learning off.',
     'Manual coordinate settings require review: context_changed':
       'The saved steering settings do not match the vehicle configuration or controller for this recording.',
     'partial_drive_provisional_only': 'Intact portions were analyzed. This partial recording can provide suggestions, not automatic changes.',
@@ -118,6 +124,7 @@ def diagnostics(report, params):
   result['current']['reason'] = _reason(current.get('reason', 'learner_report_unavailable'))
   result['current']['explanation'] = _explanation(result['current']['reason'])
   result['current']['analysis'] = {key: details[key] for key in (
+    'Parked analysis progress', 'Earlier analysis shown while updating',
     'Recorded steering observations', 'Retained control windows', 'Retained tracking windows', 'Recorded drive coverage',
     'Drives in steering evidence history', 'Saved route adjustment count', 'Saved route configuration state',
             'Recorded coordinate recommendations', 'Recorded suggestion sources', 'Recorded suggestion assessments',

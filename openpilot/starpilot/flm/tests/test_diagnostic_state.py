@@ -1,3 +1,4 @@
+from dataclasses import replace
 """Support downloads explain coarse learner outcomes without changing tuning."""
 import json
 from pathlib import Path
@@ -79,6 +80,34 @@ class TestDiagnosticState(unittest.TestCase):
                       'completed_route': 'new', 'analysis_counts': {'recorded_tracking': 1234}})
     self.assertEqual(report.current['analysis_counts']['recorded_tracking'], 99)
     self.assertEqual(read_state(self.params)['last_attempt']['analysis_counts']['recorded_tracking'], 1234)
+
+  def test_current_verification_and_its_interruption_are_distinct_from_previous_drive(self):
+    from openpilot.starpilot.flm.offroad_route import RouteInputCancelled
+
+    report = daemon.StatusReport(path=self.root / 'report.json')
+    report.diagnostics = DiagnosticState(self.params)
+    report.previous = {'completed_route': 'earlier-drive', 'vehicle': 'KIA_NIRO_PHEV_2022',
+                       'analysis_counts': {'original_segments_reviewed': 3, 'original_segments_available': 3}}
+    report.analyzing({'status': 'fitting', 'reason': 'verifying_recorded_drive',
+                      'analysis_progress': {'phase': 'verifying', 'completed': 2, 'total': 2}})
+    report.publish()
+    active = self.exported(json.loads(report.path.read_bytes()))
+    self.assertEqual(active['current']['analysis']['Parked analysis progress'], ['verifying', 2, 2])
+    self.assertTrue(active['current']['analysis']['Earlier analysis shown while updating'])
+    self.assertEqual(active['current']['analysis']['Recorded drive coverage'], '3 of 3 original recorded segments reviewed')
+
+    def cancelled():
+      raise RouteInputCancelled('Parked route input collection cancelled')
+
+    worker = SimpleNamespace(run_once=cancelled)
+    reason = 'waiting_for_fresh_deviceState'
+    self.assertFalse(daemon.run_parked_analysis(worker, report, permission_loss=lambda: reason))
+    self.assertEqual(report.current['reason'], reason)
+    outcome = self.exported()['learning_diagnostics']['last_result']
+    self.assertEqual(outcome['reason'], reason)
+    self.assertEqual(outcome['interrupted_stage'], 'verifying_recording')
+    self.assertEqual(report.previous['completed_route'], 'earlier-drive')
+    self.assertFalse(directory_for_params(self.params).exists())
 
   def test_worker_startup_failure_is_captured_before_assessment_cache_exists(self):
     self.params.put_bool('IsOffroad', True, block=True)
@@ -179,6 +208,80 @@ class TestDiagnosticState(unittest.TestCase):
     result = self.exported()
     self.assertEqual(result['learning_diagnostics']['status'], 'not_recorded')
     self.assertEqual(list(path_for_params(self.params).parent.iterdir()), before)
+
+  def test_volt_learning_respects_active_manual_tune_and_the_visible_preference(self):
+    from opendbc.car.gm.interface import CarInterface
+    from opendbc.car.gm.values import CAR
+    from openpilot.starpilot.flm.manual_coordinates import ManualCoordinates, context, selected_manual
+    from openpilot.starpilot.flm.offroad_runtime import configuration_data
+    from openpilot.starpilot.flm.offroad_surface import ROUTE_NAMES
+    from openpilot.starpilot.flm.runtime_adapter_registry import ControllerDescriptor, car_params_digest, read_source
+    from openpilot.starpilot.flm.torque_surface import GmFlmBinding, GmSurface
+    from openpilot.starpilot.lateral.controller_selection import read_selection
+    from openpilot.starpilot.lateral.learning_preferences import KEY, replace_preference
+    from openpilot.starpilot.lateral.torque_settings import DOCUMENT_KEY, FieldChoice, GeometryProfile, PlatformProfile, parse_document, serialize_document
+
+    cp = CarInterface.get_non_essential_params(CAR.CHEVROLET_VOLT_ASCM)
+    cp.carVin = '1G1RA6E42DU000001'
+    tune = cp.lateralTuning.torque
+    basis = (float(tune.latAccelFactor), float(tune.latAccelOffset), float(tune.friction))
+    self.params.put_bool('OpenpilotEnabledToggle', True, block=True)
+    mode = str(read_selection(self.params, cp).mode)
+    fingerprint = str(cp.carFingerprint)
+    descriptor = ControllerDescriptor('torque', mode, 'volt', 'test-revision', 'test-stage', car_params_digest(cp), '', False)
+    surface = GmSurface('torque_universal', {'ff_gain_left': .01}, None)
+    legacy = GmFlmBinding(mode, 'volt', basis, (('saved', 'Saved tune', surface),))
+    geometry = GeometryProfile((float(cp.steerRatio), float(cp.steerActuatorDelay) + .2), learning='force_off')
+    profile = PlatformProfile(basis, FieldChoice(), FieldChoice(), geometry=geometry, flm=legacy)
+    values = dict.fromkeys(ROUTE_NAMES, 0.) | {'ff_gain_left': .01, 'unwind_taper_right': .005}
+    manual = ManualCoordinates(context(cp, mode, recovered=True), tuple(values.items()), automatic=('unwind_taper_right',))
+
+    def store(current):
+      self.params.put(DOCUMENT_KEY, json.loads(serialize_document({fingerprint: current})), block=True)
+      return self.params.get(DOCUMENT_KEY)
+
+    def source():
+      return read_source(cp, self.params, now_ns=1_000_000_000, calibration=(0., 0., 0.), calibration_generation='a' * 32)
+
+    def configure():
+      with patch('openpilot.starpilot.flm.runtime_adapter_registry.selected_descriptor', return_value=descriptor):
+        return configuration_data(cp, None, SimpleNamespace(steer_max=1.), self.params, manual_status='configured')[0]
+
+    self.params.put(KEY, replace_preference(None, cp, True), block=True)
+    for current in (replace(profile, flm=None), replace(profile, geometry=None), profile, replace(profile, manual_coordinates=manual)):
+      with self.subTest(legacy=current.flm is not None, geometry=current.geometry is not None, manual=current.manual_coordinates is not None):
+        before = store(current)
+        assert before is not None
+        self.assertEqual(parse_document(json.dumps(before).encode()), {fingerprint: current})
+        received = source()
+        self.assertTrue(received.enabled)
+        self.assertFalse(received.manual)
+        self.assertEqual(configure().persistent_source_epoch, received.persistent_source_epoch)
+        if current.manual_coordinates is not None:
+          selected = selected_manual(cp, self.params)
+          assert selected is not None
+          self.assertEqual(selected.locked, ('ff_gain_left',))
+        self.assertEqual(self.params.get(DOCUMENT_KEY), before)
+
+    before = store(profile)
+    self.params.put(KEY, replace_preference(None, cp, False), block=True)
+    self.assertFalse(source().enabled)
+    with self.assertRaisesRegex(ValueError, 'Automatic learning is off'):
+      configure()
+    self.assertEqual(self.params.get(DOCUMENT_KEY), before)
+
+    self.params.put(KEY, replace_preference(None, cp, True), block=True)
+    active = replace(profile, flm=replace(legacy, active='saved', applied=True))
+    before = store(active)
+    self.assertTrue(source().manual)
+    self.assertFalse(source().enabled)
+    reason = 'saved_gm_flm_profile_blocks_learning'
+    with self.assertRaisesRegex(ValueError, '^' + reason + '$'):
+      configure()
+    with self.assertRaisesRegex(ValueError, 'Only one manual surface'):
+      serialize_document({fingerprint: replace(active, manual_coordinates=manual)})
+    self.assertIn('manual GM FLM tune is active', self.exported({'current': {'reason': reason}})['current']['explanation'])
+    self.assertEqual(self.params.get(DOCUMENT_KEY), before)
 
   def test_malformed_nested_diagnostic_data_does_not_enter_the_download(self):
     journal = DiagnosticState(self.params)

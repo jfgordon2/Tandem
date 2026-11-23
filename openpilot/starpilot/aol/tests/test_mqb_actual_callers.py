@@ -40,7 +40,7 @@ def test_mqb_full_engagement_brake_reverse_drive_actual_callers(gearbox, alpha, 
                                                                startup_delivery_delay=0, startup_delivery_services=(), receipt_sink=None,
                                                                route2c_start=False, startup_block_until=0, startup_expect_expiry=False,
                                                                startup_probe_denials=False, startup_stall=None, startup_stall_mode='frozen',
-                                                               startup_floor_dip=False, cancel_delivery_delay=0, brake_delivery_delay=0):
+                                                               startup_floor_dip=False, cancel_delivery_delay=0, brake_delivery_delay=0, rushed_start=False):
   pq = candidate == CAR.VOLKSWAGEN_SHARAN_MK2
   with ExitStack() as cleanup:
     cleanup.enter_context(OpenpilotPrefix())
@@ -344,10 +344,14 @@ def test_mqb_full_engagement_brake_reverse_drive_actual_callers(gearbox, alpha, 
         allowed=bool(permission & 1), long_allowed=bool(permission & 2),
         native_request_lat=bool(request & 1), native_request_long=bool(request & 2),
         panda_controls_allowed=native.get_controls_allowed(),
+        car_output_valid=not rushed_start or not 28 <= tick < 42,
         **({'car_state_message': card.pm.messages['carState'].as_builder(),
             'authority_message': card.pm.messages['starpilotCarState'].as_builder() if 'starpilotCarState' in card.pm.messages else None,
             'companion': 'starpilotCarState' in card.pm.messages,
             'timeout': stalled and startup_stall_mode == 'frozen-timeout'} if startup_stall is not None else {}))
+      if rushed_start and 30 <= tick < 42:
+        assert not card.aol_card_intent.allowed_latch, 'VW_STARTUP_ARMED_BEFORE_HOST_READY'
+        assert not command.latActive and not command.longActive
       if startup_floor_dip and state.vEgo <= cp.minSteerSpeed:
         assert not command.latActive and not command.longActive
       if startup_floor_dip and command.latActive and not card.aol_card_intent.startup_granted:
@@ -472,6 +476,10 @@ def test_mqb_full_engagement_brake_reverse_drive_actual_callers(gearbox, alpha, 
           card.controls_update(state, card.sm['carControl'])
       for addr, data, bus in sent:
         assert offset <= bus < offset + 4
+        if addr == 0x397 and not pq:
+          # The HUD runs after the steering frame on this tick.
+          hca = next(data for address, data, _ in sent if address == 0x126)
+          assert command.latActive and (int.from_bytes(hca, 'little') >> 16) & 511
         accepted = native.safety_tx_hook(make_msg(bus - offset, addr, dat=data))
         if cancel_override and alpha and state.gasPressed and addr in (0x122, 0x12E):
           raw_accel = ((data[4] & 7) << 8 | data[3]) if addr == 0x122 else ((data[7] << 3) | (data[6] >> 5))
@@ -544,7 +552,14 @@ def test_mqb_full_engagement_brake_reverse_drive_actual_callers(gearbox, alpha, 
       assert not any(lat_commands[35:]) and not any(long_commands)
       assert card.aol_card_intent.startup_aborted and not card.aol_card_intent.allowed_latch
       return
-    assert any(lat_commands[60:74] if startup_floor_dip else lat_commands[45:60] if reverse_boot else lat_commands[35:60])
+    if rushed_start:
+      assert any(lat_commands[43:75])
+    elif reverse_boot and not startup_floor_dip and card.aol_card_intent.startup_drive_identity is not None:
+      arm_tick = (card.aol_card_intent.startup_arm_ns - 10_000_000_000) // 10_000_000
+      first_active = next((tick for tick, active in enumerate(lat_commands) if active), None)
+      assert first_active is not None and max(45, arm_tick) <= first_active <= arm_tick + 20
+    else:
+      assert any(lat_commands[60:74] if startup_floor_dip else lat_commands[45:60] if reverse_boot else lat_commands[35:60])
     assert any(lat_commands[76:84])  # braking released long, not qualified lateral intent
     assert not any(lat_commands[86:95])
     assert any(lat_commands[100:])
@@ -742,8 +757,13 @@ def test_mqb_cancel_with_accelerator_and_driver_steering(gearbox, alpha, phase):
 @pytest.mark.parametrize('gearbox', ('automatic', 'manual', 'direct'))
 @pytest.mark.parametrize('alpha', (False, True))
 def test_mqb_reverse_braked_start_waits_before_consuming_default_main(gearbox, alpha):
+  receipt = []
   test_mqb_full_engagement_brake_reverse_drive_actual_callers(
-    gearbox, alpha, 0, False, False, parked_boot=True, reverse_boot=True, delayed_heartbeat=True)
+    gearbox, alpha, 0, False, False, parked_boot=True, reverse_boot=True, delayed_heartbeat=True, receipt_sink=receipt)
+  first_active = next(row for row in receipt if row['control'].get('latActive'))
+  assert first_active['tick'] < 65
+  for row in receipt[first_active['tick']:85]:
+    assert row['card_intent']['allowed'] and row['control'].get('latActive') and row['permission_mask'] & 1
 
 
 @pytest.mark.parametrize('gearbox', ('automatic', 'manual', 'direct'))
@@ -1112,3 +1132,10 @@ def test_mqb_cancel_receipt_binds_exact_current_raw_press(veto):
 def test_mqb_brake_withdraws_long_and_preserves_lateral(phase, delay):
   test_mqb_full_engagement_brake_reverse_drive_actual_callers(
     'manual', True, 0, False, True, native_phase=phase, brake_delivery_delay=delay)
+
+
+@pytest.mark.parametrize('phase', range(10))
+def test_mqb_cold_drive_waits_for_healthy_startup(phase):
+  test_mqb_full_engagement_brake_reverse_drive_actual_callers(
+    'manual', True, 0, False, False, parked_boot=True, delayed_heartbeat=True,
+    native_phase=phase, rushed_start=True)

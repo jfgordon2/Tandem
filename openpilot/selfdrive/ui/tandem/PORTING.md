@@ -741,4 +741,8 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
 - Home and Software show StarPilot's version (7.0), as StarPilot's own screens do (`starpilot/ui/brand.py`), not
   openpilot's base version (0.11.3) that StarPilot 7's status and updater description also carry. The tests used a
   made-up "7.0.0" there, which hid it; they now use the device's real values.
+- 2026-11-22 merge of `testing` (116 commits): AGNOS 20.5.5 and StarPilot 7.0.1. Upstream didn't rebuild the raylib
+  extension for 20.5.5, so Tandem's 20.5.3 build stays. Six workflows changed, all read-only or gated to StarPilot's
+  repository (`workflow-policy.json` notes). The software test reads StarPilot's `DISPLAY_VERSION` instead of a
+  hardcoded one. Upstream's own `StarPilot` branch ends in a hand-off to `stable`; `release` is unaffected.
 
