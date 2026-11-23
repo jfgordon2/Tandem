@@ -8,6 +8,7 @@ set stays out, as StarPilot leaves it out until it's reliable.
 from __future__ import annotations
 
 from collections.abc import Callable
+from typing import Any
 
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.base import Component
@@ -43,14 +44,23 @@ def active(network_type: int, metered: bool) -> bool:
   return network_type != 0 and not metered
 
 
+def state_active(state: Any) -> bool:
+  """Whether a deviceState message says Firehose is active.
+
+  Args:
+    state: openpilot's deviceState. Its networkType is a capnp enum, which int() can't take: its number is .raw.
+  """
+  network = state.networkType
+  return active(int(getattr(network, "raw", network)), bool(state.networkMetered))
+
+
 def device_active() -> bool:
   """Whether Firehose is active now, from openpilot's deviceState; inactive while it's unknown."""
   from openpilot.selfdrive.ui.ui_state import ui_state
   sm = ui_state.sm
   if not sm.valid.get("deviceState", False):
     return False
-  state = sm["deviceState"]
-  return active(int(state.networkType), bool(state.networkMetered))
+  return state_active(sm["deviceState"])
 
 
 class FirehoseStatus(Component):
