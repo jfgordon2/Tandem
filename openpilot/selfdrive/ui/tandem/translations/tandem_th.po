@@ -31,7 +31,7 @@ msgid "Road data still supplies speed limits"
 msgstr "ข้อมูลถนนยังคงให้ขีดจำกัดความเร็ว"
 
 #: destinations.py:218
-#: settings/search.py:273
+#: settings/search.py:276
 msgid "Search"
 msgstr "ค้นหา"
 
@@ -310,12 +310,12 @@ msgstr "อัปเดตพร้อมแล้ว"
 
 #: home.py:152
 #: settings/search.py:25
-#: settings/search.py:204
+#: settings/search.py:207
 msgid "Software"
 msgstr "ซอฟต์แวร์"
 
 #: home.py:158
-#: settings/software.py:105
+#: settings/software.py:108
 msgid "Restart to install"
 msgstr "รีสตาร์ทเพื่อติดตั้ง"
 
@@ -352,7 +352,7 @@ msgid "Up to date · {}"
 msgstr "อัปเดต · {}"
 
 #: home.py:160
-#: settings/software.py:83
+#: settings/software.py:86
 msgid "Up to date"
 msgstr "เป็นเวอร์ชันล่าสุด"
 
@@ -441,8 +441,8 @@ msgid "Sport"
 msgstr "สปอร์ต"
 
 #: home_layout.py:22
-#: settings/display.py:45
-#: settings/display.py:36
+#: settings/display.py:46
+#: settings/display.py:37
 msgid "Standard"
 msgstr "มาตรฐาน"
 
@@ -708,16 +708,16 @@ msgstr "แหล่งขีดจำกัด"
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: onroad/developer.py:259
-#: onroad/lead.py:146
-#: onroad/lead.py:156
+#: onroad/lead.py:149
+#: onroad/lead.py:159
 #, python-brace-format
 msgid "{} m"
 msgstr "{} m"
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: onroad/developer.py:259
-#: onroad/lead.py:146
-#: onroad/lead.py:156
+#: onroad/lead.py:149
+#: onroad/lead.py:159
 #, python-brace-format
 msgid "{} ft"
 msgstr "{} ft"
@@ -725,7 +725,7 @@ msgstr "{} ft"
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: onroad/developer.py:261
 #: onroad/developer.py:304
-#: onroad/lead.py:157
+#: onroad/lead.py:160
 #, python-brace-format
 msgid "{} s"
 msgstr "{} s"
@@ -1258,7 +1258,7 @@ msgid "Drive logging"
 msgstr "บันทึกการขับขี่"
 
 #: ram.py:57
-#: settings/search.py:176
+#: settings/search.py:177
 #: settings/storage.py:157
 msgid "Uploads"
 msgstr "การอัปโหลด"
@@ -1533,48 +1533,48 @@ msgid "When you need to steer or brake now"
 msgstr "เมื่อคุณต้องการบังคับเลี้ยวหรือเบรกตอนนี้"
 
 #: settings/alerts.py:57
-#: settings/search.py:123
+#: settings/search.py:124
 msgid "Green Light"
 msgstr "ไฟเขียว"
 
 #: settings/alerts.py:57
-#: settings/search.py:123
+#: settings/search.py:124
 msgid "When the light turns green and you are stopped"
 msgstr "เมื่อไฟเปลี่ยนเป็นสีเขียวและคุณถูกหยุด"
 
 #: settings/alerts.py:58
-#: settings/search.py:124
+#: settings/search.py:125
 msgid "Lead Departure"
 msgstr "รถคันหน้าออกตัว"
 
 #: settings/alerts.py:58
-#: settings/search.py:124
+#: settings/search.py:125
 msgid "When the car ahead pulls away"
 msgstr "เมื่อรถคันหน้าออกตัว"
 
 #: settings/alerts.py:59
-#: settings/search.py:125
+#: settings/search.py:126
 msgid "Loud Blind Spot"
 msgstr "เสียงเตือนจุดบอดดัง"
 
 #: settings/alerts.py:59
-#: settings/search.py:125
+#: settings/search.py:126
 msgid "Signalling into an occupied lane, even when paused"
 msgstr "ส่งสัญญาณเข้าสู่เลนที่ถูกครอบครองแม้ว่าจะหยุดชั่วคราวก็ตาม"
 
 #: settings/alerts.py:60
-#: settings/search.py:92
-#: settings/search.py:126
+#: settings/search.py:93
+#: settings/search.py:127
 msgid "Weather heads-up"
 msgstr "แจ้งเตือนสภาพอากาศล่วงหน้า"
 
 #: settings/alerts.py:60
-#: settings/search.py:126
+#: settings/search.py:127
 msgid "Once, when rain, snow or storms are coming"
 msgstr "ครั้งหนึ่ง เมื่อฝน หิมะ หรือพายุกำลังมา"
 
 #: settings/alerts.py:218
-#: settings/driving_tab.py:203
+#: settings/driving_tab.py:206
 #: settings/search.py:26
 msgid "Alerts"
 msgstr "การแจ้งเตือน"
@@ -1633,7 +1633,7 @@ msgid "Reset to Normal"
 msgstr "รีเซ็ตเป็นปกติ"
 
 #: settings/alerts.py:205
-#: settings/search.py:122
+#: settings/search.py:123
 msgid "Volume"
 msgstr "ระดับเสียง"
 
@@ -1770,7 +1770,7 @@ msgstr "StarPilot แสดงว่าปุ่มทำอะไรได้�
 
 #: settings/bluetooth_tab.py:319
 #: settings/connections.py:98
-#: settings/search.py:32
+#: settings/search.py:33
 msgid "Bluetooth Remote"
 msgstr "รีโมทบลูทูธ"
 
@@ -1797,17 +1797,17 @@ msgstr "อุปกรณ์บลูทูธ"
 
 #: settings/bluetooth_tab.py:449
 #: settings/bluetooth_tab.py:449
-#: settings/search.py:199
+#: settings/search.py:202
 msgid "Disconnect"
 msgstr "ตัดการเชื่อมต่อ"
 
 #: settings/bluetooth_tab.py:449
-#: settings/search.py:199
+#: settings/search.py:202
 msgid "It reconnects the next time you choose it"
 msgstr "จะเชื่อมต่ออีกครั้งในครั้งถัดไปที่คุณเลือก"
 
 #: settings/bluetooth_tab.py:450
-#: settings/search.py:200
+#: settings/search.py:203
 msgid "Removes the pairing. Change it with the car off."
 msgstr "ลบการจับคู่ เปลี่ยนตอนรถดับครับ."
 
@@ -1968,7 +1968,7 @@ msgid "Remove"
 msgstr "ลบ"
 
 #: settings/bundles.py:50
-#: settings/search.py:115
+#: settings/search.py:116
 msgid "Developer View"
 msgstr "มุมมองนักพัฒนา"
 
@@ -1977,7 +1977,7 @@ msgid "Side panel with live system and controls data"
 msgstr "แผงด้านข้างแสดงข้อมูลระบบและการควบคุมแบบสด"
 
 #: settings/bundles.py:54
-#: settings/search.py:116
+#: settings/search.py:117
 msgid "Lead Insights"
 msgstr "ข้อมูลรถคันหน้า"
 
@@ -2222,19 +2222,19 @@ msgid "Cellular"
 msgstr "เซลลูล่าร์"
 
 #: settings/connections.py:100
-#: settings/search.py:32
-#: settings/search.py:198
+#: settings/search.py:33
+#: settings/search.py:201
 msgid "Bluetooth Devices"
 msgstr "อุปกรณ์บลูทูธ"
 
 #: settings/connections.py:101
 #: settings/network_test.py:172
-#: settings/search.py:32
+#: settings/search.py:33
 msgid "Network Test"
 msgstr "ทดสอบเครือข่าย"
 
 #: settings/developer.py:67
-#: settings/search.py:184
+#: settings/search.py:187
 msgid "openpilot Longitudinal (Alpha)"
 msgstr "การควบคุมคันเร่งและเบรกของ openpilot (อัลฟา)"
 
@@ -2243,7 +2243,7 @@ msgid "Turns off the car's emergency braking. Off while engaged."
 msgstr "ปิดการเบรกฉุกเฉินของรถ ปิดขณะหมั้นหมาย"
 
 #: settings/developer.py:73
-#: settings/search.py:183
+#: settings/search.py:186
 #: selfdrive/ui/layouts/settings/developer.py:68
 msgid "Joystick Debug Mode"
 msgstr "โหมดดีบักจอยสติ๊ก"
@@ -2266,8 +2266,8 @@ msgid "Adds every public key in a GitHub account. Never use someone else's."
 msgstr "เพิ่มกุญแจสาธารณะทุกอันในบัญชี GitHub อย่าใช้ของคนอื่น"
 
 #: settings/developer.py:84
-#: settings/essentials.py:159
-#: settings/search.py:31
+#: settings/essentials.py:160
+#: settings/search.py:32
 msgid "Developer"
 msgstr "นักพัฒนา"
 
@@ -2281,7 +2281,7 @@ msgstr "ชื่อผู้ใช้ GitHub"
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: settings/developer.py:77
-#: settings/search.py:180
+#: settings/search.py:183
 msgid "ADB"
 msgstr "ADB"
 
@@ -2291,7 +2291,7 @@ msgstr "เชื่อมต่อผ่าน USB หรือเครือ�
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: settings/developer.py:79
-#: settings/search.py:181
+#: settings/search.py:184
 msgid "SSH"
 msgstr "SSH"
 
@@ -2300,19 +2300,19 @@ msgid "Remote shell access with the keys below"
 msgstr "การเข้าถึงเชลล์ระยะไกลด้วยปุ่มด้านล่าง"
 
 #: settings/developer.py:80
-#: settings/search.py:182
+#: settings/search.py:185
 #: selfdrive/ui/layouts/settings/developer.py:65
 msgid "SSH Keys"
 msgstr "คีย์ SSH"
 
 #: settings/developer.py:83
-#: settings/search.py:185
+#: settings/search.py:188
 #: selfdrive/ui/layouts/settings/developer.py:103
 msgid "UI Debug Mode"
 msgstr "โหมดดีบัก UI"
 
 #: settings/developer.py:83
-#: settings/search.py:185
+#: settings/search.py:188
 msgid "Shows touches and the frame rate"
 msgstr "แสดงการสัมผัสและอัตราเฟรม"
 
@@ -2343,7 +2343,7 @@ msgstr "ดูตัวอย่าง"
 
 #: settings/device.py:35
 #: settings/device.py:36
-#: settings/software.py:206
+#: settings/software.py:209
 msgid "Reset"
 msgstr "รีเซ็ต"
 
@@ -2428,7 +2428,7 @@ msgstr "เลิกจับคู่"
 
 #: settings/device.py:295
 #: settings/device.py:124
-#: settings/search.py:155
+#: settings/search.py:156
 msgid "Remote Access"
 msgstr "การเข้าถึงระยะไกล"
 
@@ -2441,7 +2441,7 @@ msgid "DEVICE"
 msgstr "อุปกรณ์"
 
 #: settings/device.py:40
-#: settings/search.py:140
+#: settings/search.py:141
 msgid "Driver Camera"
 msgstr "กล้องผู้ขับขี่"
 
@@ -2450,25 +2450,25 @@ msgid "Check that it can see your face. The car must be off."
 msgstr "ตรวจสอบว่าสามารถมองเห็นใบหน้าของคุณได้ รถจะต้องออก"
 
 #: settings/device.py:41
-#: settings/search.py:141
+#: settings/search.py:142
 #: settings/speed_steering.py:346
 msgid "Driver Monitoring"
 msgstr "ตรวจสอบผู้ขับขี่"
 
 #: settings/device.py:41
-#: settings/search.py:141
+#: settings/search.py:142
 msgid "Forget which side of the car the driver sits on"
 msgstr "ลืมไปเลยว่าคนขับนั่งฝั่งไหนของรถ"
 
 #: settings/device.py:109
 #: settings/device.py:109
-#: settings/search.py:162
+#: settings/search.py:163
 msgid "Power Off"
 msgstr "ปิดเครื่อง"
 
 #: settings/device.py:112
 #: settings/device.py:113
-#: settings/search.py:161
+#: settings/search.py:162
 msgid "Restart"
 msgstr "รีสตาร์ท"
 
@@ -2487,7 +2487,7 @@ msgstr "comma connect · ดูไดรฟ์และเปลี่ยนก�
 
 #: settings/device.py:258
 #: settings/device.py:131
-#: settings/search.py:158
+#: settings/search.py:159
 msgid "Regulatory"
 msgstr "ระเบียบข้อบังคับ"
 
@@ -2576,22 +2576,22 @@ msgid "Your code appears here once you choose a password"
 msgstr "รหัสของคุณจะปรากฏที่นี่เมื่อคุณเลือกรหัสผ่าน"
 
 #: settings/device.py:121
-#: settings/search.py:154
+#: settings/search.py:155
 msgid "Phone App"
 msgstr "แอพโทรศัพท์"
 
 #: settings/device.py:127
-#: settings/search.py:156
+#: settings/search.py:157
 msgid "Camera Calibration"
 msgstr "การปรับเทียบกล้อง"
 
 #: settings/device.py:129
-#: settings/search.py:157
+#: settings/search.py:158
 msgid "How It Works"
 msgstr "มันทำงานอย่างไร"
 
 #: settings/device.py:129
-#: settings/search.py:157
+#: settings/search.py:158
 msgid "Rules, features and limits"
 msgstr "กฎ คุณสมบัติ และข้อจำกัด"
 
@@ -2600,13 +2600,13 @@ msgid "MORE"
 msgstr "เพิ่มเติม"
 
 #: settings/device.py:132
-#: settings/search.py:159
+#: settings/search.py:160
 msgid "Device ID and Serial"
 msgstr "รหัสอุปกรณ์และซีเรียล"
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: settings/device.py:133
-#: settings/search.py:160
+#: settings/search.py:161
 msgid "IMEI"
 msgstr "IMEI"
 
@@ -2634,295 +2634,295 @@ msgstr "จัดการ"
 msgid "Set Up"
 msgstr "การตั้งค่า"
 
-#: settings/display.py:45
+#: settings/display.py:46
 msgid "Larger"
 msgstr "ใหญ่ขึ้น"
 
-#: settings/display.py:165
-#: settings/search.py:115
+#: settings/display.py:166
+#: settings/search.py:116
 msgid "Side panel with system and controls data."
 msgstr "แผงด้านข้างพร้อมระบบและข้อมูลการควบคุม"
 
-#: settings/display.py:166
-#: settings/search.py:116
+#: settings/display.py:167
+#: settings/search.py:117
 msgid "Distance to the car ahead, and the pedals on screen."
 msgstr "ระยะห่างจากรถคันหน้า และแป้นเหยียบบนหน้าจอ"
 
-#: settings/display.py:36
+#: settings/display.py:37
 msgid "A calm blue path"
 msgstr "เส้นทางสีฟ้าแบบสงบ"
 
-#: settings/display.py:37
+#: settings/display.py:38
 msgid "Rainbow"
 msgstr "เรนโบว์"
 
-#: settings/display.py:37
+#: settings/display.py:38
 msgid "A rainbow path"
 msgstr "เส้นทางสายรุ้ง"
 
-#: settings/display.py:38
+#: settings/display.py:39
 msgid "Acceleration"
 msgstr "การเร่งความเร็ว"
 
-#: settings/display.py:38
+#: settings/display.py:39
 msgid "openpilot's path, colored by gas and braking"
 msgstr "เส้นทางของ openpilot ระบายสีตามการเร่งและการเบรก"
 
-#: settings/display.py:42
+#: settings/display.py:43
 msgid "Wide"
 msgstr "กว้าง"
 
-#: settings/display.py:162
+#: settings/display.py:163
 #, python-brace-format
 msgid "{} path"
 msgstr "พาธ {}"
 
-#: settings/display.py:264
-#: settings/display.py:255
-#: settings/search.py:117
+#: settings/display.py:265
+#: settings/display.py:256
+#: settings/search.py:118
 msgid "Path Style"
 msgstr "สไตล์พาธ"
 
-#: settings/display.py:264
-#: settings/display.py:256
-#: settings/search.py:117
+#: settings/display.py:265
+#: settings/display.py:257
+#: settings/search.py:118
 msgid "How the path ahead is drawn"
 msgstr "วิธีวาดเส้นทางข้างหน้า"
 
-#: settings/display.py:266
-#: settings/display.py:260
-#: settings/search.py:118
+#: settings/display.py:267
+#: settings/display.py:261
+#: settings/search.py:119
 msgid "Turn Signal"
 msgstr "ไฟเลี้ยว"
 
-#: settings/display.py:266
-#: settings/search.py:118
+#: settings/display.py:267
+#: settings/search.py:119
 msgid "Chevrons by the speed, or a whimsical animation"
 msgstr "บั้งตามความเร็วหรือภาพเคลื่อนไหวที่แปลกประหลาด"
 
-#: settings/display.py:159
+#: settings/display.py:160
 msgid "Style banner shown"
 msgstr "แสดงแบนเนอร์สไตล์"
 
-#: settings/display.py:159
+#: settings/display.py:160
 msgid "Style banner hidden"
 msgstr "สไตล์แบนเนอร์ซ่อนอยู่"
 
-#: settings/display.py:202
+#: settings/display.py:203
 msgid "Switching off turns these back off."
 msgstr "ปิดแล้วรายการเหล่านี้จะปิดตามไปด้วย"
 
-#: settings/display.py:211
+#: settings/display.py:212
 #, python-brace-format
 msgid "{} sets"
 msgstr "ชุด {}"
 
-#: settings/display.py:212
+#: settings/display.py:213
 msgid "One switch for the details most drivers never need"
 msgstr "สวิตช์เดียวสำหรับรายละเอียดที่ผู้ขับขี่ส่วนใหญ่ไม่จำเป็นต้องใช้"
 
-#: settings/display.py:249
-#: settings/driving_tab.py:173
+#: settings/display.py:250
+#: settings/driving_tab.py:176
 #: settings/search.py:29
 msgid "Driving Screen"
 msgstr "หน้าจอขับขี่"
 
-#: settings/display.py:249
+#: settings/display.py:250
 msgid "StarPilot changes the camera, banner and highlights only while parked."
 msgstr "StarPilot เปลี่ยนกล้อง แบนเนอร์ และไฮไลต์ได้เฉพาะขณะจอดอยู่"
 
-#: settings/display.py:267
-#: settings/driving_tab.py:174
+#: settings/display.py:268
+#: settings/driving_tab.py:177
 #: settings/search.py:29
 msgid "Theme"
 msgstr "ธีม"
 
-#: settings/display.py:364
+#: settings/display.py:365
 msgid "Acceleration is openpilot's own path, colored by gas and braking."
 msgstr "การเร่งคือเส้นทางของ openpilot ที่ระบายสีตามการเร่งและการเบรก"
 
-#: settings/display.py:479
+#: settings/display.py:495
 msgid "Whimsy animations cross the road above the bar while you signal; the chevrons by the speed stay."
 msgstr "แอนิเมชั่นแปลก ๆ ข้ามถนนเหนือคานในขณะที่คุณส่งสัญญาณ บั้งตามความเร็วคงอยู่"
 
-#: settings/display.py:226
-#: settings/display.py:229
+#: settings/display.py:227
+#: settings/display.py:230
 #, python-brace-format
 msgid "Sets {} options"
 msgstr "ตั้งค่าตัวเลือก {}"
 
-#: settings/display.py:232
-#: settings/search.py:107
+#: settings/display.py:233
+#: settings/search.py:108
 msgid "Text Size"
 msgstr "ขนาดข้อความ"
 
-#: settings/display.py:232
-#: settings/search.py:107
+#: settings/display.py:233
+#: settings/search.py:108
 msgid "Larger text and icons on the driving screen"
 msgstr "ข้อความและไอคอนบนหน้าจอขับขี่ใหญ่ขึ้น"
 
-#: settings/display.py:234
-#: settings/search.py:108
+#: settings/display.py:235
+#: settings/search.py:109
 msgid "Reduce Motion"
 msgstr "ลดการเคลื่อนไหว"
 
-#: settings/display.py:234
-#: settings/search.py:108
+#: settings/display.py:235
+#: settings/search.py:109
 msgid "Long street names end in … instead of scrolling"
 msgstr "ชื่อถนนที่ยาวจะลงท้ายด้วย … แทนการเลื่อน"
 
-#: settings/display.py:242
-#: settings/search.py:112
+#: settings/display.py:243
+#: settings/search.py:113
 msgid "Compass"
 msgstr "เข็มทิศ"
 
-#: settings/display.py:242
-#: settings/search.py:112
+#: settings/display.py:243
+#: settings/search.py:113
 msgid "Heading beside the street name, like NE"
 msgstr "มุ่งหน้าข้างชื่อถนน เช่น NE"
 
-#: settings/display.py:245
-#: settings/search.py:114
+#: settings/display.py:246
+#: settings/search.py:115
 msgid "Lead Car Tag"
 msgstr "ป้ายรถคันหน้า"
 
-#: settings/display.py:245
-#: settings/search.py:114
+#: settings/display.py:246
+#: settings/search.py:115
 msgid "Numbers above the car ahead. Off keeps only the bar under it"
 msgstr "เบอร์เหนือรถข้างหน้า ปิดจะเก็บเฉพาะแถบที่อยู่ด้านล่างเท่านั้น"
 
-#: settings/display.py:246
-#: settings/driving_tab.py:188
+#: settings/display.py:247
+#: settings/driving_tab.py:191
 msgid "POWER USER"
 msgstr "ผู้ใช้ขั้นสูง"
 
-#: settings/display.py:397
+#: settings/display.py:413
 msgid "No preview"
 msgstr "ไม่มีการแสดงตัวอย่าง"
 
-#: settings/display.py:459
+#: settings/display.py:475
 msgid "ESSENTIALS"
 msgstr "ESSENTIALS"
 
-#: settings/display.py:459
+#: settings/display.py:475
 msgid "WHIMSY"
 msgstr "ลูกเล่น"
 
-#: settings/display.py:236
-#: settings/search.py:109
+#: settings/display.py:237
+#: settings/search.py:110
 msgid "Camera View"
 msgstr "มุมมองกล้อง"
 
-#: settings/display.py:236
-#: settings/search.py:109
+#: settings/display.py:237
+#: settings/search.py:110
 msgid "Wide shows more of the road at low speed"
 msgstr "Wide เผยให้เห็นถนนได้มากขึ้นที่ความเร็วต่ำ"
 
-#: settings/display.py:238
-#: settings/search.py:110
+#: settings/display.py:239
+#: settings/search.py:111
 msgid "Driver Camera in Reverse"
 msgstr "กล้องผู้ขับขี่ขณะถอยหลัง"
 
-#: settings/display.py:238
-#: settings/search.py:110
+#: settings/display.py:239
+#: settings/search.py:111
 msgid "Shows the inside camera while backing up"
 msgstr "แสดงกล้องภายในขณะสำรองข้อมูล"
 
-#: settings/display.py:240
-#: settings/search.py:111
+#: settings/display.py:241
+#: settings/search.py:112
 msgid "Driving Style Banner"
 msgstr "แบนเนอร์สไตล์การขับขี่"
 
-#: settings/display.py:240
-#: settings/search.py:111
+#: settings/display.py:241
+#: settings/search.py:112
 msgid "Shows the current style when it changes"
 msgstr "แสดงสไตล์ปัจจุบันเมื่อมีการเปลี่ยนแปลง"
 
-#: settings/display.py:243
-#: settings/search.py:113
+#: settings/display.py:244
+#: settings/search.py:114
 msgid "Blind Spot Highlights"
 msgstr "ไฮไลต์จุดบอด"
 
-#: settings/display.py:243
-#: settings/search.py:113
+#: settings/display.py:244
+#: settings/search.py:114
 msgid "Colors the screen edge when a car is beside you"
 msgstr "ระบายสีขอบจอเมื่อมีรถอยู่ข้างๆ"
 
-#: settings/display.py:261
+#: settings/display.py:262
 msgid "Plays beside the speed while a blinker is on"
 msgstr "เล่นข้างความเร็วขณะเปิดไฟเลี้ยว"
 
-#: settings/driving_tab.py:188
+#: settings/driving_tab.py:191
 msgid "Extra detail and fine tuning, each behind one switch"
 msgstr "รายละเอียดพิเศษและการปรับแต่งอย่างละเอียด โดยแต่ละสวิตช์อยู่ด้านหลังสวิตช์ตัวเดียว"
 
-#: settings/driving_tab.py:200
+#: settings/driving_tab.py:203
 #: settings/search.py:25
 #: settings/window.py:31
 msgid "Driving"
 msgstr "การขับขี่"
 
-#: settings/driving_tab.py:200
+#: settings/driving_tab.py:203
 msgid "Good defaults are on. Change only what matters to you."
 msgstr "ค่าเริ่มต้นที่ดีเปิดอยู่ เปลี่ยนเฉพาะสิ่งที่สำคัญสำหรับคุณ"
 
-#: settings/driving_tab.py:154
-#: settings/driving_tab.py:189
+#: settings/driving_tab.py:157
+#: settings/driving_tab.py:192
 #: settings/search.py:26
 msgid "Tuner Mode"
 msgstr "โหมดปรับละเอียด"
 
-#: settings/driving_tab.py:156
+#: settings/driving_tab.py:159
 msgid "SPEED & STEERING"
 msgstr "ความเร็วและการบังคับเลี้ยว"
 
-#: settings/driving_tab.py:172
+#: settings/driving_tab.py:175
 msgid "DISPLAY"
 msgstr "จอแสดงผล"
 
-#: settings/driving_tab.py:201
+#: settings/driving_tab.py:204
 #: settings/search.py:26
-#: settings/search.py:80
+#: settings/search.py:81
 msgid "Speed & Steering"
 msgstr "ความเร็วและการบังคับเลี้ยว"
 
-#: settings/driving_tab.py:202
+#: settings/driving_tab.py:205
 #: settings/search.py:26
-#: settings/search.py:106
+#: settings/search.py:107
 msgid "Display"
 msgstr "จอแสดงผล"
 
-#: settings/driving_tab.py:204
-#: settings/essentials.py:216
+#: settings/driving_tab.py:207
+#: settings/essentials.py:217
 #: settings/model.py:309
 msgid "Driving Model"
 msgstr "โมเดลขับขี่"
 
-#: settings/driving_tab.py:205
+#: settings/driving_tab.py:208
 #: settings/search.py:27
-#: settings/search.py:129
+#: settings/search.py:130
 msgid "Vehicle"
 msgstr "รถยนต์"
 
-#: settings/driving_tab.py:206
+#: settings/driving_tab.py:209
 #: settings/search.py:27
-#: settings/search.py:134
+#: settings/search.py:135
 msgid "Assistance"
 msgstr "การช่วยขับ"
 
-#: settings/driving_tab.py:157
+#: settings/driving_tab.py:160
 #: settings/search.py:28
 #: settings/speed_steering.py:217
 msgid "Everyday"
 msgstr "ประจำวัน"
 
-#: settings/driving_tab.py:158
+#: settings/driving_tab.py:161
 #: settings/search.py:28
-#: settings/search.py:91
+#: settings/search.py:92
 msgid "Weather"
 msgstr "สภาพอากาศ"
 
-#: settings/driving_tab.py:159
+#: settings/driving_tab.py:162
 #: settings/navigation.py:150
 #: settings/navigation.py:141
 msgid "Navigation"
@@ -2961,11 +2961,17 @@ msgstr "ทั่วไป"
 
 #: settings/essentials.py:156
 #: settings/search.py:31
-#: settings/search.py:170
+#: settings/search.py:171
 msgid "Storage & Data"
 msgstr "พื้นที่เก็บข้อมูลและข้อมูล"
 
-#: settings/essentials.py:158
+#: settings/essentials.py:157
+#: settings/firehose.py:127
+#: settings/search.py:31
+msgid "Firehose"
+msgstr "Firehose"
+
+#: settings/essentials.py:159
 #: settings/report.py:121
 #: settings/search.py:31
 msgid "Report a Problem"
@@ -2975,50 +2981,130 @@ msgstr "รายงานปัญหา"
 msgid "Set up"
 msgstr "ตั้งค่า"
 
+#: settings/firehose.py:29
+msgid "On Wi-Fi without a data limit, so comma can pull your drives"
+msgstr "เชื่อมต่อ Wi-Fi ที่ไม่จำกัดข้อมูล comma จึงดึงการขับขี่ของคุณได้"
+
+#: settings/firehose.py:30
+msgid "Connect to Wi-Fi or another network without a data limit"
+msgstr "เชื่อมต่อ Wi-Fi หรือเครือข่ายอื่นที่ไม่จำกัดข้อมูล"
+
+#: settings/firehose.py:114
+msgid "openpilot learns to drive by watching people drive. Firehose uploads more of your drives so comma can train bigger, better driving models."
+msgstr "openpilot เรียนรู้การขับขี่จากการดูคนขับ Firehose อัปโหลดการขับขี่ของคุณมากขึ้น เพื่อให้ comma ฝึกโมเดลการขับขี่ที่ใหญ่และดีขึ้น"
+
+#: settings/firehose.py:22
+msgid "Can I turn it off?"
+msgstr "ปิดได้ไหม"
+
+#: settings/firehose.py:22
+msgid "There's no switch. comma asks for drives over Wi-Fi on its own, separately from Storage & Data › Uploads. On a metered connection, like cellular, nothing is sent."
+msgstr "ไม่มีสวิตช์ comma ขอการขับขี่ผ่าน Wi-Fi เอง แยกจาก พื้นที่เก็บข้อมูลและข้อมูล › การอัปโหลด บนการเชื่อมต่อแบบคิดตามปริมาณ เช่น เครือข่ายมือถือ จะไม่มีการส่งข้อมูล"
+
+#: settings/firehose.py:24
+msgid "Does it matter how or where I drive?"
+msgstr "วิธีหรือสถานที่ที่ฉันขับมีผลไหม"
+
+#: settings/firehose.py:24
+msgid "No, just drive as you normally would."
+msgstr "ไม่มี ขับตามปกติได้เลย"
+
+#: settings/firehose.py:25
+msgid "Are all of my drives uploaded?"
+msgstr "การขับขี่ทั้งหมดของฉันถูกอัปโหลดไหม"
+
+#: settings/firehose.py:25
+msgid "No, comma pulls a selection of them."
+msgstr "ไม่ comma ดึงเพียงบางส่วน"
+
+#: settings/firehose.py:26
+msgid "What's a good USB-C charger?"
+msgstr "ที่ชาร์จ USB-C ที่ดีคืออะไร"
+
+#: settings/firehose.py:26
+msgid "Any fast phone or laptop charger is fine."
+msgstr "ที่ชาร์จเร็วของโทรศัพท์หรือแล็ปท็อปใช้ได้ทั้งหมด"
+
+#: settings/firehose.py:27
+msgid "Does it matter which software I run?"
+msgstr "ซอฟต์แวร์ที่ฉันใช้มีผลไหม"
+
+#: settings/firehose.py:27
+msgid "Yes. Only openpilot and some forks can be used for training."
+msgstr "มี ใช้ฝึกได้เฉพาะ openpilot และบาง fork เท่านั้น"
+
+#: settings/firehose.py:119
+msgid "GET THE MOST FROM IT"
+msgstr "ใช้ให้ได้ประโยชน์สูงสุด"
+
+#: settings/firehose.py:120
+msgid "• Once a week, bring the device inside on a fast USB-C charger and Wi-Fi."
+msgstr "• สัปดาห์ละครั้ง นำอุปกรณ์เข้าบ้าน ต่อที่ชาร์จ USB-C แบบเร็วและ Wi-Fi"
+
+#: settings/firehose.py:122
+msgid "• It also works while driving on a hotspot or an unlimited SIM."
+msgstr "• ใช้ได้ระหว่างขับผ่านฮอตสปอตหรือซิมไม่จำกัดด้วย"
+
+#: settings/firehose.py:124
+msgid "QUESTIONS"
+msgstr "คำถาม"
+
+#: settings/firehose.py:127
+msgid "Training data for openpilot's driving models"
+msgstr "ข้อมูลฝึกสำหรับโมเดลการขับขี่ของ openpilot"
+
+#: settings/firehose.py:76
+msgid "Active"
+msgstr "ทำงาน"
+
+#: settings/firehose.py:76
+msgid "Inactive"
+msgstr "ไม่ทำงาน"
+
 #: settings/general.py:26
 #: settings/general.py:41
-#: settings/search.py:166
+#: settings/search.py:167
 msgid "Language"
 msgstr "ภาษา"
 
 #: settings/general.py:37
-#: settings/search.py:164
+#: settings/search.py:165
 msgid "Units"
 msgstr "หน่วย"
 
 #: settings/general.py:37
-#: settings/search.py:164
+#: settings/search.py:165
 msgid "Speed and distance everywhere"
 msgstr "ความเร็วและระยะทางทุกที่"
 
 #: settings/general.py:39
-#: settings/search.py:165
+#: settings/search.py:166
 #: sidebar.py:227
 msgid "Temperature"
 msgstr "อุณหภูมิ"
 
 #: settings/general.py:39
-#: settings/search.py:165
+#: settings/search.py:166
 msgid "For the weather forecast"
 msgstr "สำหรับการพยากรณ์อากาศ"
 
 #: settings/general.py:42
-#: settings/search.py:167
+#: settings/search.py:168
 msgid "Screen Brightness"
 msgstr "ความสว่างหน้าจอ"
 
 #: settings/general.py:42
-#: settings/search.py:167
+#: settings/search.py:168
 msgid "Auto follows ambient light, day and night"
 msgstr "อัตโนมัติปรับตามแสงรอบข้างทั้งกลางวันและกลางคืน"
 
 #: settings/general.py:44
-#: settings/search.py:168
+#: settings/search.py:169
 msgid "Standby"
 msgstr "สแตนด์บาย"
 
 #: settings/general.py:44
-#: settings/search.py:168
+#: settings/search.py:169
 msgid "Screen sleeps while driving, wakes for alerts"
 msgstr "หน้าจอพักขณะขับรถ ปลุกเมื่อมีการแจ้งเตือน"
 
@@ -3239,13 +3325,13 @@ msgstr "ลบแผนที่"
 
 #: settings/maps.py:229
 #: settings/navigation.py:128
-#: settings/search.py:99
+#: settings/search.py:100
 msgid "Offline Maps"
 msgstr "แผนที่ออฟไลน์"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/maps.py:229
-#: settings/search.py:99
+#: settings/search.py:100
 msgid "Routes, speed limits and street names without a connection"
 msgstr "เส้นทาง ขีดจำกัดความเร็ว และชื่อถนนโดยไม่ต้องเชื่อมต่อ"
 
@@ -3578,7 +3664,7 @@ msgid "installing"
 msgstr "กำลังติดตั้ง"
 
 #: settings/model.py:297
-#: settings/search.py:128
+#: settings/search.py:129
 msgid "Use recommended"
 msgstr "ใช้โมเดลที่แนะนำ"
 
@@ -3673,12 +3759,12 @@ msgstr "{} · {}"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/navigation.py:119
-#: settings/search.py:97
+#: settings/search.py:98
 msgid "Preferred maps (when available)"
 msgstr "แผนที่ที่ต้องการ (ถ้ามี)"
 
 #: settings/navigation.py:62
-#: settings/search.py:95
+#: settings/search.py:96
 msgid "Home, Work and favorites from Where to?"
 msgstr "บ้าน ที่ทำงาน และรายการโปรดจาก ไปที่ไหน?"
 
@@ -3698,7 +3784,7 @@ msgstr "{} · เส้นทาง ขีดจำกัดความเร�
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/navigation.py:124
-#: settings/search.py:96
+#: settings/search.py:97
 msgid "Offline maps only"
 msgstr "แผนที่ออฟไลน์เท่านั้น"
 
@@ -3734,22 +3820,22 @@ msgid "Offline"
 msgstr "ออฟไลน์"
 
 #: settings/navigation.py:141
-#: settings/search.py:94
+#: settings/search.py:95
 msgid "Turn guidance on the driving screen"
 msgstr "คำแนะนำการเลี้ยวบนหน้าจอขับขี่"
 
 #: settings/navigation.py:142
-#: settings/search.py:95
+#: settings/search.py:96
 msgid "Saved Places"
 msgstr "สถานที่ที่บันทึกไว้"
 
 #: settings/navigation.py:144
-#: settings/search.py:101
+#: settings/search.py:102
 msgid "Directions"
 msgstr "เส้นทาง"
 
 #: settings/navigation.py:145
-#: settings/search.py:102
+#: settings/search.py:103
 msgid "Avoid"
 msgstr "หลีกเลี่ยง"
 
@@ -3758,12 +3844,12 @@ msgid "When planning routes"
 msgstr "เมื่อวางเส้นทาง"
 
 #: settings/navigation.py:146
-#: settings/search.py:103
+#: settings/search.py:104
 msgid "Position"
 msgstr "ตำแหน่ง"
 
 #: settings/navigation.py:147
-#: settings/search.py:104
+#: settings/search.py:105
 msgid "Map Keys"
 msgstr "คีย์แผนที่"
 
@@ -3954,7 +4040,7 @@ msgstr "แก้ไข"
 
 #: settings/network_tab.py:396
 #: settings/network_tab.py:387
-#: settings/search.py:195
+#: settings/search.py:198
 msgid "Roaming, APN and IP address"
 msgstr "ที่อยู่ โรมมิ่ง, APN และ IP"
 
@@ -3974,7 +4060,7 @@ msgstr "ใส่รหัสผ่าน"
 
 #: settings/network_tab.py:173
 #: settings/network_tab.py:383
-#: settings/search.py:192
+#: settings/search.py:195
 msgid "Hotspot name"
 msgstr "ชื่อฮอตสปอต"
 
@@ -3983,37 +4069,37 @@ msgid "A saved network already uses this name"
 msgstr "เครือข่ายที่บันทึกไว้ใช้ชื่อนี้แล้ว"
 
 #: settings/network_tab.py:362
-#: settings/search.py:189
+#: settings/search.py:192
 msgid "Join a hidden network"
 msgstr "เข้าร่วมเครือข่ายที่ซ่อนอยู่"
 
 #: settings/network_tab.py:382
-#: settings/search.py:191
+#: settings/search.py:194
 msgid "Hotspot"
 msgstr "ฮอตสปอต"
 
 #: settings/network_tab.py:382
-#: settings/search.py:191
+#: settings/search.py:194
 msgid "Share this device's connection"
 msgstr "แชร์การเชื่อมต่อของอุปกรณ์นี้"
 
 #: settings/network_tab.py:385
-#: settings/search.py:193
+#: settings/search.py:196
 msgid "Hotspot Password"
 msgstr "รหัสผ่านฮอตสปอต"
 
 #: settings/network_tab.py:385
-#: settings/search.py:193
+#: settings/search.py:196
 msgid "For phones joining this device's hotspot"
 msgstr "สำหรับโทรศัพท์ที่เข้าร่วมฮอตสปอตของอุปกรณ์นี้"
 
 #: settings/network_tab.py:386
-#: settings/search.py:194
+#: settings/search.py:197
 msgid "Save Data"
 msgstr "บันทึกข้อมูล"
 
 #: settings/network_tab.py:386
-#: settings/search.py:194
+#: settings/search.py:197
 msgid "No large uploads on cellular or phone hotspots"
 msgstr "ไม่มีการอัปโหลดขนาดใหญ่บนฮอตสปอตมือถือหรือโทรศัพท์"
 
@@ -4027,7 +4113,7 @@ msgstr "ใช้ข้อมูลเซลลูลาร์นอกเคร
 
 #. English fallback pending cellular-status translation.
 #: settings/network_tab.py:395
-#: settings/search.py:196
+#: settings/search.py:199
 msgid "Cellular IP address"
 msgstr "ที่อยู่ IP มือถือ"
 
@@ -4285,542 +4371,546 @@ msgid "Connections"
 msgstr "การเชื่อมต่อ"
 
 #: settings/search.py:30
-#: settings/search.py:146
+#: settings/search.py:147
 #: settings/tuner.py:218
 msgid "Steering"
 msgstr "การบังคับเลี้ยว"
 
 #: settings/search.py:30
-#: settings/search.py:148
+#: settings/search.py:149
 #: settings/tuner.py:224
 msgid "Gas & Brake"
 msgstr "คันเร่งและเบรก"
 
 #: settings/search.py:30
-#: settings/search.py:150
+#: settings/search.py:151
 #: settings/tuner.py:288
 msgid "Following & Stops"
 msgstr "ระยะตามรถและหยุด"
 
-#: settings/search.py:80
+#: settings/search.py:81
 #: settings/speed_steering.py:217
 msgid "Driving style, speed limits, lane changes and steering"
 msgstr "สไตล์การขับขี่ การจำกัดความเร็ว การเปลี่ยนเลน และการบังคับเลี้ยว"
 
-#: settings/search.py:81
+#: settings/search.py:82
 #: settings/speed_steering.py:182
 msgid "Driving Style"
 msgstr "สไตล์การขับขี่"
 
-#: settings/search.py:81
+#: settings/search.py:82
 #: settings/speed_steering.py:183
 msgid "Sets following gap, acceleration and braking together"
 msgstr "ตั้งระยะตามรถ อัตราเร่งและการเบรกด้วยกัน"
 
-#: settings/search.py:82
+#: settings/search.py:83
 #: settings/speed_steering.py:203
 msgid "Speed Limits"
 msgstr "ขีดจำกัดความเร็ว"
 
-#: settings/search.py:82
+#: settings/search.py:83
 #: settings/speed_steering.py:203
 msgid "Match sets cruise to the posted limit"
 msgstr "ตามขีดจำกัดตั้งครูซคอนโทรลให้ตรงกับป้ายจำกัดความเร็ว"
 
-#: settings/search.py:83
+#: settings/search.py:84
 #: settings/speed_steering.py:185
 msgid "Offset"
 msgstr "ค่าชดเชย"
 
-#: settings/search.py:83
+#: settings/search.py:84
 #: settings/speed_steering.py:185
 msgid "Added to every matched limit"
 msgstr "ถูกเพิ่มในทุกขีดจำกัดที่ตรงกัน"
 
-#: settings/search.py:84
+#: settings/search.py:85
 #: settings/speed_steering.py:188
 msgid "Higher limits"
 msgstr "ขีดจำกัดที่สูงกว่า"
 
-#: settings/search.py:84
+#: settings/search.py:85
 #: settings/speed_steering.py:188
 msgid "When a posted limit goes up"
 msgstr "เมื่อขีดจำกัดที่โพสต์เพิ่มขึ้น"
 
-#: settings/search.py:85
+#: settings/search.py:86
 #: settings/speed_steering.py:191
 msgid "Lower limits"
 msgstr "ขีดจำกัดล่าง"
 
-#: settings/search.py:85
+#: settings/search.py:86
 #: settings/speed_steering.py:191
 msgid "When a posted limit goes down"
 msgstr "เมื่อขีดจำกัดที่โพสต์ลดลง"
 
-#: settings/search.py:86
+#: settings/search.py:87
 #: settings/speed_steering.py:194
 msgid "MAX follows limits"
 msgstr "MAX เป็นไปตามขีดจำกัด"
 
-#: settings/search.py:86
+#: settings/search.py:87
 #: settings/speed_steering.py:194
 msgid "Each new limit sets MAX, so it slows promptly for lower ones"
 msgstr "แต่ละขีดจำกัดใหม่จะกำหนด MAX ดังนั้นจึงช้าลงทันทีสำหรับค่าที่ต่ำกว่า"
 
-#: settings/search.py:88
+#: settings/search.py:89
 #: settings/speed_steering.py:209
 msgid "Lane Changes"
 msgstr "การเปลี่ยนเลน"
 
-#: settings/search.py:88
+#: settings/search.py:89
 msgid "Nudge or Auto"
 msgstr "ขยับพวงมาลัยหรืออัตโนมัติ"
 
-#: settings/search.py:89
+#: settings/search.py:90
 #: settings/speed_steering.py:211
 msgid "Smart Slowdowns"
 msgstr "การชะลอตัวอย่างชาญฉลาด"
 
-#: settings/search.py:89
+#: settings/search.py:90
 #: settings/speed_steering.py:211
 msgid "Slows for curves, stop lights and stopped traffic on its own"
 msgstr "ชะลออัตโนมัติเมื่อเข้าโค้ง เจอสัญญาณไฟหรือการจราจรที่หยุดนิ่ง"
 
-#: settings/search.py:90
+#: settings/search.py:91
 #: settings/speed_steering.py:213
 msgid "Always-On Steering"
 msgstr "ช่วยบังคับเลี้ยวตลอด"
 
-#: settings/search.py:90
+#: settings/search.py:91
 msgid "Keeps steering with cruise off"
 msgstr "ช่วยบังคับเลี้ยวต่อเมื่อปิดครูซคอนโทรล"
 
-#: settings/search.py:91
+#: settings/search.py:92
 #: settings/speed_steering.py:240
 msgid "Rain, snow and storms ahead, from local weather"
 msgstr "ฝน หิมะ และพายุข้างหน้า จากสภาพอากาศท้องถิ่น"
 
-#: settings/search.py:92
+#: settings/search.py:93
 #: settings/speed_steering.py:238
 msgid "Warns before rain, snow or storms start, and says when they should stop"
 msgstr "เตือนก่อนฝน หิมะหรือพายุเริ่ม และคาดการณ์เวลาสิ้นสุด"
 
-#: settings/search.py:96
+#: settings/search.py:97
 msgid "Routes only from downloaded maps, never online"
 msgstr "เส้นทางจากแผนที่ที่ดาวน์โหลดเท่านั้น ไม่ใช้ออนไลน์"
 
-#: settings/search.py:97
+#: settings/search.py:98
 msgid "Online or downloaded maps first, with a fallback"
 msgstr "ใช้แผนที่ออนไลน์หรือที่ดาวน์โหลดก่อน พร้อมทางสำรอง"
 
-#: settings/search.py:101
+#: settings/search.py:102
 msgid "Mapbox, or Google for live traffic"
 msgstr "Mapbox หรือ Google สำหรับจราจรสด"
 
-#: settings/search.py:102
+#: settings/search.py:103
 msgid "Tolls, highways or ferries when planning routes"
 msgstr "ทางด่วนเสียค่าผ่านทาง ทางหลวง หรือเรือข้ามฟาก เมื่อวางเส้นทาง"
 
-#: settings/search.py:103
+#: settings/search.py:104
 msgid "Where the car's position comes from: the comma, the car or your phone"
 msgstr "แหล่งตำแหน่งของรถ: comma รถ หรือโทรศัพท์"
 
-#: settings/search.py:104
+#: settings/search.py:105
 msgid "The Mapbox and Google keys for search and routes"
 msgstr "คีย์ Mapbox และ Google สำหรับค้นหาและเส้นทาง"
 
-#: settings/search.py:106
+#: settings/search.py:107
 msgid "The driving screen, the path and the turn signal"
 msgstr "หน้าจอขับขี่ เส้นทาง และไฟเลี้ยว"
 
-#: settings/search.py:121
+#: settings/search.py:122
 msgid "Volume and the optional chimes"
 msgstr "ระดับเสียงและเสียงเตือนเสริม"
 
-#: settings/search.py:122
+#: settings/search.py:123
 msgid "One volume for everything, or each group on its own"
 msgstr "ใช้ระดับเสียงเดียวหรือแยกแต่ละกลุ่ม"
 
-#: settings/search.py:127
+#: settings/search.py:128
 msgid "The model that drives, and downloading others"
 msgstr "โมเดลที่ใช้ขับและการดาวน์โหลดโมเดลอื่น"
 
-#: settings/search.py:128
+#: settings/search.py:129
 msgid "StarPilot's default driving model"
 msgstr "โมเดลขับขี่เริ่มต้นของ StarPilot"
 
-#: settings/search.py:129
+#: settings/search.py:130
 msgid "Your car, its steering wheel buttons and car-specific options"
 msgstr "รถของคุณ ปุ่มบนพวงมาลัย และตัวเลือกเฉพาะของรถ"
 
-#: settings/search.py:130
+#: settings/search.py:131
 #: settings/vehicle.py:265
 msgid "Steering Wheel Buttons"
 msgstr "ปุ่มบนพวงมาลัย"
 
-#: settings/search.py:130
+#: settings/search.py:131
 msgid "What the car's own buttons do while driving"
 msgstr "ปุ่มของรถเองทำหน้าที่อะไรขณะขับขี่"
 
-#: settings/search.py:131
+#: settings/search.py:132
 #: settings/vehicle.py:247
 msgid "Auto-Lock Doors"
 msgstr "ประตูล็อคอัตโนมัติ"
 
-#: settings/search.py:131
+#: settings/search.py:132
 #: settings/vehicle.py:247
 msgid "Locks when you shift out of park"
 msgstr "ล็อกเมื่อเปลี่ยนเกียร์ออกจาก P"
 
-#: settings/search.py:132
+#: settings/search.py:133
 #: settings/vehicle.py:249
 msgid "Auto-Unlock Doors"
 msgstr "ปลดล็อกประตูอัตโนมัติ"
 
-#: settings/search.py:132
+#: settings/search.py:133
 #: settings/vehicle.py:249
 msgid "Unlocks when you shift into park"
 msgstr "ปลดล็อกเมื่อเข้าเกียร์ P"
 
-#: settings/search.py:133
+#: settings/search.py:134
 #: settings/vehicle.py:264
 #: settings/vehicle.py:315
 msgid "More for your car"
 msgstr "มากขึ้นเพื่อรถคุณ"
 
-#: settings/search.py:133
+#: settings/search.py:134
 #: settings/vehicle.py:264
 msgid "Features specific to your make and model"
 msgstr "คุณสมบัติเฉพาะยี่ห้อและรุ่นรถของคุณ"
 
-#: settings/search.py:134
+#: settings/search.py:135
 msgid "openpilot's core switches and driver monitoring"
 msgstr "สวิตช์หลักของ openpilot และการตรวจสอบความเอาใจใส่ของผู้ขับขี่รถยนต์"
 
-#: settings/search.py:135
+#: settings/search.py:136
 msgid "Adaptive cruise and lane keeping"
 msgstr "ครูซคอนโทรลแบบแปรผันและรักษาช่องทาง"
 
-#: settings/search.py:136
+#: settings/search.py:137
 #: settings/speed_steering.py:327
 msgid "Disengage on Gas Pedal"
 msgstr "ปิดระบบเมื่อเหยียบคันเร่ง"
 
-#: settings/search.py:136
+#: settings/search.py:137
 #: settings/speed_steering.py:327
 msgid "Pressing the accelerator turns openpilot off"
 msgstr "การกดคันเร่งจะปิด openpilot"
 
-#: settings/search.py:137
+#: settings/search.py:138
 #: settings/speed_steering.py:328
 msgid "Lane Departure Warnings"
 msgstr "คำเตือนการออกนอกเลน"
 
-#: settings/search.py:137
+#: settings/search.py:138
 msgid "Alerts when you drift over a lane line without signaling"
 msgstr "แจ้งเตือนเมื่อคุณเคลื่อนตัวข้ามเส้นเลนโดยไม่มีสัญญาณ"
 
-#: settings/search.py:138
+#: settings/search.py:139
 #: settings/speed_steering.py:329
 msgid "Safe Mode"
 msgstr "เซฟโหมด"
 
-#: settings/search.py:138
+#: settings/search.py:139
 msgid "Stock tuning, the default model and Relaxed"
 msgstr "ค่าปรับโรงงาน โมเดลเริ่มต้นและสไตล์ผ่อนคลาย"
 
-#: settings/search.py:139
+#: settings/search.py:140
 #: settings/speed_steering.py:337
 msgid "Always-On Driver Monitoring"
 msgstr "การตรวจสอบความเอาใจใส่ของผู้ขับขี่รถยนต์แบบเปิดตลอดเวลา"
 
-#: settings/search.py:139
+#: settings/search.py:140
 #: settings/speed_steering.py:337
 msgid "Watches for distraction even when openpilot is off"
 msgstr "นาฬิกาเพื่อสิ่งรบกวนสมาธิแม้ในขณะที่ openpilot ปิดอยู่"
 
-#: settings/search.py:140
+#: settings/search.py:141
 msgid "Check that it can see your face"
 msgstr "ตรวจสอบว่าสามารถมองเห็นใบหน้าของคุณได้"
 
-#: settings/search.py:142
+#: settings/search.py:143
 #: settings/speed_steering.py:341
 msgid "Sentry Mode"
 msgstr "โหมดยาม"
 
-#: settings/search.py:142
+#: settings/search.py:143
 #: settings/speed_steering.py:341
 msgid "Pictures in Galaxy if the parked car is bumped"
 msgstr "รูปภาพใน Galaxy หากรถที่จอดถูกชน"
 
-#: settings/search.py:143
+#: settings/search.py:144
 #: settings/speed_steering.py:343
 msgid "Sensitivity"
 msgstr "ความไว"
 
-#: settings/search.py:143
+#: settings/search.py:144
 #: settings/speed_steering.py:343
 msgid "High notices smaller bumps"
 msgstr "ค่าสูงตรวจพบเนินเล็กลงได้"
 
-#: settings/search.py:144
+#: settings/search.py:145
 msgid "Fine-tuning screens for steering, gas, brake and following"
 msgstr "หน้าปรับละเอียดสำหรับพวงมาลัย คันเร่ง เบรก และการขับตาม"
 
-#: settings/search.py:146
+#: settings/search.py:147
 msgid "Lane centering and your car's steering tune"
 msgstr "การรักษาตำแหน่งกลางช่องจราจรและการจูนพวงมาลัยของรถ"
 
-#: settings/search.py:148
+#: settings/search.py:149
 msgid "Acceleration and braking profiles, stops and takeoffs"
 msgstr "โปรไฟล์การเร่งและการเบรก การหยุดและการออกตัว"
 
-#: settings/search.py:150
+#: settings/search.py:151
 msgid "Following gaps and how the car stops"
 msgstr "ระยะตามรถและวิธีหยุดรถ"
 
-#: settings/search.py:151
+#: settings/search.py:152
 msgid "Following Gaps"
 msgstr "ระยะตามรถ"
 
-#: settings/search.py:151
+#: settings/search.py:152
 msgid "Relaxed, Standard, Sport and Traffic"
 msgstr "ผ่อนคลาย มาตรฐาน สปอร์ต และรถติด"
 
-#: settings/search.py:153
+#: settings/search.py:154
 msgid "Pairing, remote access, calibration, restart and power"
 msgstr "การจับคู่ การเข้าถึงระยะไกล การสอบเทียบ การรีสตาร์ท และการเปิดเครื่อง"
 
-#: settings/search.py:154
+#: settings/search.py:155
 msgid "comma connect: see drives and change settings on your phone"
 msgstr "comma connect: ดูไดรฟ์และเปลี่ยนการตั้งค่าในโทรศัพท์ของคุณ"
 
-#: settings/search.py:155
+#: settings/search.py:156
 msgid "Galaxy: reach this device from a web browser"
 msgstr "Galaxy: เข้าถึงอุปกรณ์นี้จากเว็บเบราว์เซอร์"
 
-#: settings/search.py:156
+#: settings/search.py:157
 msgid "How the device is mounted"
 msgstr "วิธีการติดตั้งอุปกรณ์"
 
-#: settings/search.py:158
+#: settings/search.py:159
 msgid "Regulatory information"
 msgstr "ข้อมูลกฎข้อบังคับ"
 
-#: settings/search.py:159
+#: settings/search.py:160
 msgid "This device's IDs"
 msgstr "ID ของอุปกรณ์นี้"
 
-#: settings/search.py:160
+#: settings/search.py:161
 msgid "The cellular modem's ID"
 msgstr "ID ของโมเด็มเซลลูลาร์"
 
-#: settings/search.py:161
+#: settings/search.py:162
 msgid "Restart the device"
 msgstr "รีสตาร์ทอุปกรณ์"
 
-#: settings/search.py:162
+#: settings/search.py:163
 msgid "Turn the device off until the car starts"
 msgstr "ปิดเครื่องจนกว่ารถจะสตาร์ท"
 
-#: settings/search.py:163
+#: settings/search.py:164
 msgid "Units, language, brightness and standby"
 msgstr "หน่วย ภาษา ความสว่าง และสแตนด์บาย"
 
-#: settings/search.py:166
+#: settings/search.py:167
 msgid "Menus and alerts"
 msgstr "เมนูและการเตือน"
 
-#: settings/search.py:169
+#: settings/search.py:170
 msgid "Snapshots of your settings"
 msgstr "สแนปช็อตของการตั้งค่าของคุณ"
 
-#: settings/search.py:170
+#: settings/search.py:171
 msgid "What's using space, and recording and uploads"
 msgstr "อะไรใช้พื้นที่ รวมถึงการบันทึกและอัปโหลด"
 
-#: settings/search.py:171
+#: settings/search.py:172
 #: settings/storage.py:151
 msgid "Recorded Drives"
 msgstr "ไดรฟ์ที่บันทึกไว้"
 
-#: settings/search.py:171
+#: settings/search.py:172
 #: settings/storage.py:151
 msgid "Oldest drives are removed when space runs low"
 msgstr "ไดรฟ์ที่เก่าที่สุดจะถูกลบออกเมื่อพื้นที่เหลือน้อย"
 
-#: settings/search.py:172
+#: settings/search.py:173
 msgid "Delete downloaded map data"
 msgstr "ลบข้อมูลแผนที่ที่ดาวน์โหลด"
 
-#: settings/search.py:173
+#: settings/search.py:174
 #: settings/storage.py:153
 msgid "Unused Models"
 msgstr "โมเดล AI ที่ไม่ได้ใช้"
 
-#: settings/search.py:173
+#: settings/search.py:174
 msgid "Downloaded models that aren't in use"
 msgstr "ดาวน์โหลดโมเดล AI ที่ไม่ได้ใช้งาน"
 
-#: settings/search.py:174
+#: settings/search.py:175
 #: settings/storage.py:155
 msgid "Record Driver Camera"
 msgstr "บันทึกกล้องผู้ขับขี่"
 
-#: settings/search.py:174
+#: settings/search.py:175
 msgid "Saved and uploaded with your drives"
 msgstr "บันทึกและอัปโหลดพร้อมกับไดรฟ์ของคุณ"
 
-#: settings/search.py:175
+#: settings/search.py:176
 #: settings/storage.py:156
 msgid "Record Microphone"
 msgstr "บันทึกไมโครโฟน"
 
-#: settings/search.py:175
+#: settings/search.py:176
 msgid "Cabin audio in your drive recordings"
 msgstr "เสียงห้องโดยสารในการบันทึกการขับขี่ของคุณ"
 
-#: settings/search.py:176
+#: settings/search.py:177
 #: settings/storage.py:157
 msgid "Drive logs and video for debugging"
 msgstr "บันทึกและวิดีโอของไดรฟ์ สำหรับการดีบัก"
 
-#: settings/search.py:177
+#: settings/search.py:178
+msgid "Upload more drives to train openpilot's driving models"
+msgstr "อัปโหลดการขับขี่เพิ่มเพื่อฝึกโมเดลการขับขี่ของ openpilot"
+
+#: settings/search.py:180
 msgid "What was using RAM on drives that ran low"
 msgstr "สิ่งที่ใช้ RAM ในการขับที่ RAM เหลือน้อย"
 
-#: settings/search.py:178
+#: settings/search.py:181
 msgid "Send what happened to the developers"
 msgstr "ส่งสิ่งที่เกิดขึ้นกับนักพัฒนา"
 
-#: settings/search.py:179
+#: settings/search.py:182
 msgid "ADB, SSH and debug modes"
 msgstr "ADB, SSH และโหมดดีบัก"
 
-#: settings/search.py:180
+#: settings/search.py:183
 msgid "Connect over USB or the network"
 msgstr "เชื่อมต่อผ่าน USB หรือเครือข่าย"
 
-#: settings/search.py:181
+#: settings/search.py:184
 msgid "Remote shell access"
 msgstr "การเข้าถึงเชลล์ระยะไกล"
 
-#: settings/search.py:182
+#: settings/search.py:185
 msgid "Adds every public key in a GitHub account"
 msgstr "เพิ่มคีย์สาธารณะทุกรายการในบัญชี GitHub"
 
-#: settings/search.py:183
+#: settings/search.py:186
 msgid "Drive openpilot's controls from a joystick"
 msgstr "ขับเคลื่อนส่วนควบคุมของ openpilot จากจอยสติ๊ก"
 
-#: settings/search.py:184
+#: settings/search.py:187
 msgid "Turns off the car's emergency braking"
 msgstr "ปิดการเบรกฉุกเฉินของรถ"
 
-#: settings/search.py:187
+#: settings/search.py:190
 msgid "Networks nearby, and joining one"
 msgstr "เครือข่ายใกล้เคียงและเข้าร่วมเครือข่ายหนึ่ง"
 
-#: settings/search.py:188
+#: settings/search.py:191
 msgid "IP Address"
 msgstr "หมายเลขไอพี"
 
-#: settings/search.py:188
+#: settings/search.py:191
 msgid "This device's local address, beside the connected network"
 msgstr "ที่อยู่ภายในของอุปกรณ์นี้ ข้างเครือข่ายที่เชื่อมต่อ"
 
-#: settings/search.py:189
+#: settings/search.py:192
 msgid "Enter its name and password"
 msgstr "ป้อนชื่อและรหัสผ่าน"
 
 #. English fallback pending cellular-status translation.
-#: settings/search.py:190
+#: settings/search.py:193
 msgid "Connection status, hotspot, data use, roaming and APN"
 msgstr "สถานะการเชื่อมต่อ ฮอตสปอต การใช้ข้อมูล โรมมิ่ง และ APN"
 
-#: settings/search.py:192
+#: settings/search.py:195
 msgid "The name phones see when joining this device"
 msgstr "โทรศัพท์ชื่อจะเห็นเมื่อเข้าร่วมอุปกรณ์นี้"
 
 #. English fallback pending cellular-status translation.
-#: settings/search.py:195
+#: settings/search.py:198
 msgid "Roaming, APN and the cellular IP address"
 msgstr "โรมมิ่ง APN และที่อยู่ IP มือถือ"
 
 #. English fallback pending cellular-status translation.
-#: settings/search.py:196
+#: settings/search.py:199
 msgid "The modem's mobile data address"
 msgstr "ที่อยู่ข้อมูลมือถือของโมเด็ม"
 
-#: settings/search.py:197
+#: settings/search.py:200
 msgid "A wheel remote's buttons and what they do"
 msgstr "ปุ่มบนรีโมตล้อและการทำงานของปุ่มต่างๆ"
 
-#: settings/search.py:198
+#: settings/search.py:201
 msgid "Pair and connect phones, speakers and remotes"
 msgstr "จับคู่และเชื่อมต่อโทรศัพท์ ลำโพง และรีโมท"
 
-#: settings/search.py:201
+#: settings/search.py:204
 msgid "Download speed, upload speed and ping of this device's connection"
 msgstr "ความเร็วดาวน์โหลด ความเร็วอัปโหลด และ Ping ของการเชื่อมต่อของอุปกรณ์นี้"
 
-#: settings/search.py:204
+#: settings/search.py:207
 msgid "Updates and the release notes"
 msgstr "การอัปเดต และบันทึกประจำรุ่น"
 
-#: settings/search.py:205
-#: settings/software.py:202
+#: settings/search.py:208
+#: settings/software.py:205
 msgid "Automatic Updates"
 msgstr "อัพเดตอัตโนมัติ"
 
-#: settings/search.py:205
+#: settings/search.py:208
 msgid "Download while parked, install when you turn off the car"
 msgstr "ดาวน์โหลดขณะจอด ติดตั้งเมื่อดับเครื่อง"
 
-#: settings/search.py:206
-#: settings/software.py:199
+#: settings/search.py:209
+#: settings/software.py:202
 msgid "Release Channel"
 msgstr "ช่องทางการวางจำหน่าย"
 
-#: settings/search.py:206
+#: settings/search.py:209
 msgid "The branch to download updates from"
 msgstr "สาขาสำหรับดาวน์โหลดอัพเดต"
 
-#: settings/search.py:207
-#: settings/software.py:208
+#: settings/search.py:210
+#: settings/software.py:211
 msgid "Reset Settings"
 msgstr "รีเซ็ตการตั้งค่า"
 
-#: settings/search.py:207
+#: settings/search.py:210
 msgid "Back to the Essentials defaults"
 msgstr "กลับสู่ค่าเริ่มต้นของ Essentials"
 
-#: settings/search.py:208
-#: settings/software.py:180
-#: settings/software.py:212
+#: settings/search.py:211
+#: settings/software.py:183
+#: settings/software.py:215
 msgid "Uninstall"
 msgstr "ถอนการติดตั้ง"
 
-#: settings/search.py:208
+#: settings/search.py:211
 msgid "Remove this software from the device"
 msgstr "ลบซอฟต์แวร์นี้ออกจากอุปกรณ์"
 
-#: settings/search.py:385
-#: settings/search.py:376
+#: settings/search.py:388
+#: settings/search.py:379
 msgid "Search settings"
 msgstr "การตั้งค่าการค้นหา"
 
-#: settings/search.py:274
+#: settings/search.py:277
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "พูดการตั้งค่า เช่น การจำกัดความเร็ว แตะไมโครโฟนเมื่อคุณทำเสร็จแล้ว"
 
-#: settings/search.py:356
-#: settings/search.py:315
+#: settings/search.py:359
+#: settings/search.py:318
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "ไม่มีการตั้งค่าที่ตรงกับ “{}”"
 
-#: settings/search.py:357
+#: settings/search.py:360
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "พิมพ์ชื่อการตั้งค่าหรือสิ่งที่ทำ เช่น ความสว่างหรือการเปลี่ยนเลน"
 
@@ -4856,131 +4946,131 @@ msgstr "กำลังเตรียมการอัพเดตให้พ
 msgid "Restart pending"
 msgstr "รอรีสตาร์ต"
 
-#: settings/software.py:102
+#: settings/software.py:105
 msgid "You have the latest version"
 msgstr "คุณมีเวอร์ชันล่าสุด"
 
-#: settings/software.py:202
+#: settings/software.py:205
 msgid "Download and install while parked"
 msgstr "ดาวน์โหลดและติดตั้งขณะจอดอยู่"
 
-#: settings/software.py:89
+#: settings/software.py:92
 msgid "Software change could not be saved"
 msgstr "บันทึกการเปลี่ยนซอฟต์แวร์ไม่ได้"
 
-#: settings/software.py:95
+#: settings/software.py:98
 #, python-brace-format
 msgid "{} is ready to install"
 msgstr "{} พร้อมติดตั้งแล้ว"
 
-#: settings/software.py:97
+#: settings/software.py:100
 msgid "Couldn't check for updates. Check the connection and try again."
 msgstr "ไม่สามารถตรวจสอบการอัปเดตได้ ตรวจสอบการเชื่อมต่อแล้วลองอีกครั้ง"
 
-#: settings/software.py:99
+#: settings/software.py:102
 msgid "A new version is available to download"
 msgstr "มีเวอร์ชันใหม่ให้ดาวน์โหลดแล้ว"
 
-#: settings/software.py:101
+#: settings/software.py:104
 msgid "Software actions are available while parked"
 msgstr "ใช้งานซอฟต์แวร์ได้ขณะจอดอยู่"
 
-#: settings/software.py:105
+#: settings/software.py:108
 msgid "Working…"
 msgstr "ทำงาน..."
 
-#: settings/software.py:105
+#: settings/software.py:108
 msgid "Try again"
 msgstr "ลองอีกครั้ง"
 
-#: settings/software.py:106
+#: settings/software.py:109
 msgid "Check now"
 msgstr "ตรวจสอบทันที"
 
-#: settings/software.py:164
+#: settings/software.py:167
 #, python-brace-format
 msgid "What's new in {}"
 msgstr "มีอะไรใหม่ใน {}"
 
-#: settings/software.py:180
+#: settings/software.py:183
 msgid "Uninstall openpilot?"
 msgstr "ถอนการติดตั้ง openpilot หรือไม่"
 
-#: settings/software.py:180
+#: settings/software.py:183
 msgid "The device removes openpilot and starts its setup again."
 msgstr "อุปกรณ์ลบ openpilot และเริ่มการตั้งค่าอีกครั้ง"
 
-#: settings/software.py:206
+#: settings/software.py:209
 msgid "Reset settings?"
 msgstr "รีเซ็ตการตั้งค่าหรือไม่"
 
-#: settings/software.py:206
+#: settings/software.py:209
 msgid "Every setting goes back to the Essentials default. Your backups are kept."
 msgstr "ทุกการตั้งค่าจะกลับไปเป็นค่าเริ่มต้นของ Essentials ข้อมูลสำรองของคุณจะถูกเก็บไว้"
 
-#: settings/software.py:61
+#: settings/software.py:64
 msgid "Unknown version"
 msgstr "เวอร์ชันที่ไม่รู้จัก"
 
-#: settings/software.py:92
+#: settings/software.py:95
 #, python-brace-format
 msgid "{}% downloaded"
 msgstr "ดาวน์โหลดแล้ว {}%"
 
-#: settings/software.py:93
-#: settings/software.py:82
+#: settings/software.py:96
+#: settings/software.py:85
 msgid "Updating"
 msgstr "กำลังอัปเดต"
 
-#: settings/software.py:136
-#: settings/software.py:136
-#: settings/software.py:136
+#: settings/software.py:139
+#: settings/software.py:139
+#: settings/software.py:139
 msgid "Stable"
 msgstr "เสถียร"
 
-#: settings/software.py:199
+#: settings/software.py:202
 msgid "Choose another branch"
 msgstr "เลือกสาขาอื่น"
 
-#: settings/software.py:199
+#: settings/software.py:202
 msgid "Other branches are in Tuner Mode"
 msgstr "สาขาอื่นๆ อยู่ในโหมดการปรับแต่งอย่างละเอียด"
 
-#: settings/software.py:208
+#: settings/software.py:211
 msgid "Back to the Essentials defaults. Backups are kept."
 msgstr "กลับสู่ค่าเริ่มต้นของ Essentials ข้อมูลสำรองจะถูกเก็บไว้"
 
-#: settings/software.py:209
+#: settings/software.py:212
 msgid "Park to reset settings"
 msgstr "จอดรถเพื่อรีเซ็ตการตั้งค่า"
 
-#: settings/software.py:82
+#: settings/software.py:85
 msgid "Ready to install"
 msgstr "พร้อมติดตั้ง"
 
-#: settings/software.py:82
+#: settings/software.py:85
 msgid "Check failed"
 msgstr "การตรวจสอบ ล้มเหลว"
 
-#: settings/software.py:83
+#: settings/software.py:86
 msgid "Update available"
 msgstr "มีการอัปเดต แล้ว"
 
-#: settings/software.py:95
-#: software.py:77
+#: settings/software.py:98
+#: software.py:78
 msgid "A new version"
 msgstr "เวอร์ชันใหม่"
 
-#: settings/software.py:136
+#: settings/software.py:139
 msgid "Beta"
 msgstr "เบต้า"
 
-#: settings/software.py:191
+#: settings/software.py:194
 #, python-brace-format
 msgid "Version {}"
 msgstr "เวอร์ชัน {}"
 
-#: settings/software.py:195
+#: settings/software.py:198
 msgid "What's new"
 msgstr "มีอะไรใหม่"
 
@@ -5539,167 +5629,167 @@ msgstr "ใช้เวลาไม่กี่วินาที คุณส�
 msgid "Voice typing"
 msgstr "พิมพ์ด้วยเสียง"
 
-#: selfdrive/ui/layouts/settings/software.py:22
+#: selfdrive/ui/layouts/settings/software.py:23
 msgid "checking..."
 msgstr "กำลังตรวจสอบ..."
 
-#: selfdrive/ui/layouts/settings/software.py:23
+#: selfdrive/ui/layouts/settings/software.py:24
 msgid "downloading..."
 msgstr "กำลังดาวน์โหลด ..."
 
-#: selfdrive/ui/layouts/settings/software.py:24
+#: selfdrive/ui/layouts/settings/software.py:25
 msgid "finalizing update..."
 msgstr "กำลังสรุปการอัปเดต..."
 
-#: selfdrive/ui/layouts/settings/software.py:30
+#: selfdrive/ui/layouts/settings/software.py:31
 msgid "never"
 msgstr "ไม่เคย"
 
-#: selfdrive/ui/layouts/settings/software.py:41
+#: selfdrive/ui/layouts/settings/software.py:42
 msgid "now"
 msgstr "ตอนนี้"
 
-#: selfdrive/ui/layouts/settings/software.py:107
+#: selfdrive/ui/layouts/settings/software.py:108
 msgid "Restore the previous installed version and restart? Automatic downloads will be disabled."
 msgstr "คืนค่าเวอร์ชันที่ติดตั้งก่อนหน้าและรีสตาร์ตหรือไม่? การดาวน์โหลดอัตโนมัติจะถูกปิด"
 
-#: selfdrive/ui/layouts/settings/software.py:108
+#: selfdrive/ui/layouts/settings/software.py:109
 msgid "Download and install the selected branch, then restart?"
 msgstr "ดาวน์โหลดและติดตั้งสาขาที่เลือก แล้วรีสตาร์ตหรือไม่?"
 
-#: selfdrive/ui/layouts/settings/software.py:209
-#: selfdrive/ui/layouts/settings/software.py:70
-#: selfdrive/ui/layouts/settings/software.py:165
+#: selfdrive/ui/layouts/settings/software.py:210
+#: selfdrive/ui/layouts/settings/software.py:71
+#: selfdrive/ui/layouts/settings/software.py:166
 msgid "CHECK"
 msgstr "ตรวจสอบ"
 
-#: selfdrive/ui/layouts/settings/software.py:227
+#: selfdrive/ui/layouts/settings/software.py:228
 msgid "Are you sure you want to uninstall?"
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการถอนการติดตั้ง?"
 
-#: selfdrive/ui/layouts/settings/software.py:286
+#: selfdrive/ui/layouts/settings/software.py:287
 msgid "Select a branch"
 msgstr "เลือก Branch"
 
-#: selfdrive/ui/layouts/settings/software.py:44
+#: selfdrive/ui/layouts/settings/software.py:45
 #, python-brace-format, drawn
 msgid "{} minute ago"
 msgid_plural "{} minutes ago"
 msgstr[0] "{} นาทีที่แล้ว"
 
-#: selfdrive/ui/layouts/settings/software.py:47
+#: selfdrive/ui/layouts/settings/software.py:48
 #, python-brace-format, drawn
 msgid "{} hour ago"
 msgid_plural "{} hours ago"
 msgstr[0] "{} ชั่วโมงที่แล้ว"
 
-#: selfdrive/ui/layouts/settings/software.py:50
+#: selfdrive/ui/layouts/settings/software.py:51
 #, python-brace-format, drawn
 msgid "{} day ago"
 msgid_plural "{} days ago"
 msgstr[0] "{} วันที่แล้ว"
 
-#: selfdrive/ui/layouts/settings/software.py:58
+#: selfdrive/ui/layouts/settings/software.py:59
 msgid "Updates are only downloaded while the car is off."
 msgstr "ตัวอัปเดตจะดำเนินการดาวน์โหลดเมื่อรถดับเครื่องยนต์อยู่เท่านั้น"
 
-#: selfdrive/ui/layouts/settings/software.py:59
+#: selfdrive/ui/layouts/settings/software.py:60
 msgid "Current Version"
 msgstr "เวอร์ชั่นปัจจุบัน"
 
-#: selfdrive/ui/layouts/settings/software.py:61
+#: selfdrive/ui/layouts/settings/software.py:62
 msgid "Automatically Download Updates"
 msgstr "ดาวน์โหลดอัปเดตอัตโนมัติ"
 
-#: selfdrive/ui/layouts/settings/software.py:62
+#: selfdrive/ui/layouts/settings/software.py:63
 msgid "Automatically download updates while offroad. Manual checks and downloads remain available."
 msgstr "ดาวน์โหลดอัปเดตอัตโนมัติขณะดับรถ ยังตรวจสอบและดาวน์โหลดเองได้"
 
-#: selfdrive/ui/layouts/settings/software.py:68
+#: selfdrive/ui/layouts/settings/software.py:69
 msgid "Fast Update"
 msgstr "อัปเดตอย่างรวดเร็ว"
 
-#: selfdrive/ui/layouts/settings/software.py:68
-#: selfdrive/ui/layouts/settings/software.py:109
+#: selfdrive/ui/layouts/settings/software.py:69
+#: selfdrive/ui/layouts/settings/software.py:110
 msgid "UPDATE"
 msgstr "อัปเดต"
 
-#: selfdrive/ui/layouts/settings/software.py:69
+#: selfdrive/ui/layouts/settings/software.py:70
 msgid "Previous Version"
 msgstr "เวอร์ชันก่อนหน้า"
 
-#: selfdrive/ui/layouts/settings/software.py:69
-#: selfdrive/ui/layouts/settings/software.py:109
+#: selfdrive/ui/layouts/settings/software.py:70
+#: selfdrive/ui/layouts/settings/software.py:110
 msgid "RESTORE"
 msgstr "คืนค่า"
 
-#: selfdrive/ui/layouts/settings/software.py:73
+#: selfdrive/ui/layouts/settings/software.py:74
 msgid "Install Update"
 msgstr "ติดตั้งตัวอัปเดต"
 
-#: selfdrive/ui/layouts/settings/software.py:73
-#: selfdrive/ui/layouts/settings/software.py:196
+#: selfdrive/ui/layouts/settings/software.py:74
+#: selfdrive/ui/layouts/settings/software.py:197
 msgid "INSTALL"
 msgstr "ติดตั้ง"
 
-#: selfdrive/ui/layouts/settings/software.py:81
+#: selfdrive/ui/layouts/settings/software.py:82
 msgid "Target Branch"
 msgstr "Branch ที่เลือก"
 
-#: selfdrive/ui/layouts/settings/software.py:81
+#: selfdrive/ui/layouts/settings/software.py:82
 msgid "SELECT"
 msgstr "เลือก"
 
-#: selfdrive/ui/layouts/settings/software.py:85
+#: selfdrive/ui/layouts/settings/software.py:86
 msgid "UNINSTALL"
 msgstr "ถอนการติดตั้ง"
 
-#: selfdrive/ui/layouts/settings/software.py:119
+#: selfdrive/ui/layouts/settings/software.py:120
 msgid "Use Download for full update"
 msgstr "ใช้ ดาวน์โหลด สำหรับการอัปเดตเต็มรูปแบบ"
 
-#: selfdrive/ui/layouts/settings/software.py:154
+#: selfdrive/ui/layouts/settings/software.py:155
 msgid "Checking for new versions"
 msgstr "กำลังตรวจหาเวอร์ชันใหม่"
 
-#: selfdrive/ui/layouts/settings/software.py:245
+#: selfdrive/ui/layouts/settings/software.py:246
 msgid "OK"
 msgstr "พอใช้"
 
-#: selfdrive/ui/layouts/settings/software.py:164
+#: selfdrive/ui/layouts/settings/software.py:165
 msgid "failed to check for update"
 msgstr "ไม่สามารถตรวจสอบอัปเดตได้"
 
-#: selfdrive/ui/layouts/settings/software.py:244
+#: selfdrive/ui/layouts/settings/software.py:245
 msgid "No error log found."
 msgstr "ไม่พบบันทึกข้อผิดพลาด"
 
-#: selfdrive/ui/layouts/settings/software.py:167
+#: selfdrive/ui/layouts/settings/software.py:168
 msgid "update available"
 msgstr "มีอัปเดตใหม่"
 
-#: selfdrive/ui/layouts/settings/software.py:168
+#: selfdrive/ui/layouts/settings/software.py:169
 msgid "DOWNLOAD"
 msgstr "ดาวน์โหลด"
 
-#: selfdrive/ui/layouts/settings/software.py:98
+#: selfdrive/ui/layouts/settings/software.py:99
 msgid "Error Log"
 msgstr "บันทึกข้อผิดพลาด"
 
-#: selfdrive/ui/layouts/settings/software.py:98
+#: selfdrive/ui/layouts/settings/software.py:99
 #: selfdrive/ui/layouts/settings/device.py:73
 msgid "VIEW"
 msgstr "ดู"
 
-#: selfdrive/ui/layouts/settings/software.py:175
+#: selfdrive/ui/layouts/settings/software.py:176
 msgid "up to date, last checked never"
 msgstr "เป็นปัจจุบัน ไม่เคยตรวจสอบครั้งล่าสุด"
 
-#: selfdrive/ui/layouts/settings/software.py:158
+#: selfdrive/ui/layouts/settings/software.py:159
 msgid "Background download"
 msgstr "ดาวน์โหลดเบื้องหลัง"
 
-#: selfdrive/ui/layouts/settings/software.py:173
+#: selfdrive/ui/layouts/settings/software.py:174
 #, python-brace-format, drawn
 msgid "up to date, last checked {}"
 msgstr "เป็นปัจจุบัน ตรวจสอบล่าสุด {}"

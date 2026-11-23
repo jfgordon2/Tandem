@@ -21,7 +21,7 @@ def essentials_settings(on_open_arabesque: Callable[[], None] | None, arabesque_
     arabesque_available: Whether Arabesque may open now.
   """
   from openpilot.selfdrive.ui.layouts.settings.developer import DeveloperLayout
-  from openpilot.selfdrive.ui.layouts.settings.firehose import FirehoseLayout
+  from openpilot.selfdrive.ui.tandem.settings.firehose import firehose_panel
   from openpilot.selfdrive.ui.layouts.settings.toggles import TogglesLayout
   from openpilot.selfdrive.ui.tandem.prefs import TUNER_MODE
   from openpilot.selfdrive.ui.tandem.ram import shared_log
@@ -154,6 +154,7 @@ def essentials_settings(on_open_arabesque: Callable[[], None] | None, arabesque_
     Section(N_("General"), general),
     Section(N_("Backups"), lambda: backups_panel(BackupStore(ui_state.params, lambda: local() and ui_state.is_offroad()), window)),
     Section(N_("Storage & Data"), storage),
+    Section(N_("Firehose"), firehose_panel),
     ram_section(ram),
     Section(N_("Report a Problem"), lambda: report_section(Report(ram, local, send_issue, edit), window)),
     Section(N_("Developer"), lambda: DeveloperPanel(DeveloperLayout(on_open_arabesque, arabesque_available),
@@ -225,5 +226,5 @@ def essentials_settings(on_open_arabesque: Callable[[], None] | None, arabesque_
     Tab.CONNECTIONS: network,
     Tab.SOFTWARE: lambda: SoftwarePage(Software(shared_software(), ui_state.params.get, uninstall, reset_settings,
                                                 lambda: local() and starpilot_owners().configuration_allowed()), window),
-  }, sections={"DEVELOPER": 6}, auxiliary={"FIREHOSE": lambda: PanelPage(FirehoseLayout())})
+  }, sections={"FIREHOSE": 4, "DEVELOPER": 7})   # StarPilot's setup prompt opens Device › Firehose
   return window

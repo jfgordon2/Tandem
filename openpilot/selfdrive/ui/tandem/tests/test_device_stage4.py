@@ -10,20 +10,16 @@ from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow, Tab
 from openpilot.selfdrive.ui.tandem.rows import Text
 
 
-def test_firehose_opens_as_a_native_setup_page_outside_the_device_rail() -> None:
-  """Native onboarding still reaches Firehose without adding a Device section."""
-  page = Text("Device")
-  setup = Text("Firehose")
-  window = SettingsWindow({Tab.DEVICE: lambda: page}, initial=Tab.DEVICE, auxiliary={"FIREHOSE": lambda: setup})
+def test_starpilots_setup_prompt_opens_the_firehose_section() -> None:
+  """StarPilot's onboarding asks for its FIREHOSE panel; Tandem opens Device › Firehose in the rail (design/firehose.html)."""
+  from openpilot.selfdrive.ui.tandem.settings.pages import Section, SectionPage
+  firehose = Text("Firehose")
+  page = SectionPage("DEVICE", [Section(name, lambda name=name: Text(name)) for name in ("This Device", "General", "Backups", "Storage & Data")]
+                     + [Section("Firehose", lambda: firehose)])
+  window = SettingsWindow({Tab.DEVICE: lambda: page}, initial=Tab.DEVICE, sections={"FIREHOSE": 4})
+  window.show_event()
   window.set_current_panel("FIREHOSE")
-  assert window.top is setup
-  window.back()
-  assert window.top is page
-  # Reentering setup always presents one auxiliary page.
-  window.set_current_panel("FIREHOSE")
-  window.set_current_panel("FIREHOSE")
-  window.back()
-  assert window.top is page
+  assert window.top is page and page.selected == 4
 
 
 def test_report_waits_for_confirmation_and_retries(monkeypatch: pytest.MonkeyPatch) -> None:

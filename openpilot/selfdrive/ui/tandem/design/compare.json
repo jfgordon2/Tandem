@@ -295,6 +295,22 @@
       ]
     },
     {
+      "mock": "firehose",
+      "title": "Device › Firehose",
+      "note": "Matches: the Device rail places Firehose after Storage & Data, with StarPilot's status rule (connected, not metered), what it is, how to get the most from it, and StarPilot's questions. StarPilot's onboarding prompt opens this page. Page ground uses true black (#000000).",
+      "match": true
+    },
+    {
+      "mock": "firehose-inactive",
+      "title": "Device › Firehose, inactive",
+      "note": "Matches, in two renders: at the device's size the page is taller than the mock, so the inactive card and the questions don't fit on one screen; scrolling to the questions moves the card up.",
+      "match": true,
+      "built": [
+        "firehose-inactive-top",
+        "firehose-inactive"
+      ]
+    },
+    {
       "mock": "stage4-map-delete",
       "title": "Delete all downloaded maps",
       "note": "The native release dialog uses the approved wording and buttons. Native font metrics wrap the description earlier and give it slightly more space.",
