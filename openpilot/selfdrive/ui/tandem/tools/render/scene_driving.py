@@ -61,7 +61,8 @@ def example_owner() -> Owner:
     "wheel": {"wheel:DistanceButtonControl": "Change Personality", "wheel:LongDistanceButtonControl": "Toggle Experimental Mode",
               "wheel:LKASButtonControl": "No Action"},
     "vehicle": {"SNGHack": "Off", "ToyotaAutoHold": "On"},
-    "lane": {"LaneCentering": "On", "LaneCenterOffset": "0.0", "LaneCenteringStrength": "100"},
+    "lane": {"LaneCentering": "On", "LaneCenteringPauseOnSignal": "On", "LaneCenterOffset": "0.0", "LaneCenteringE2EAuthority": "50",
+             "LaneCenteringStrength": "100"},
     "torque": {"SteerFriction": "0.12", "SteerLatAccel": "2.3"}, "tuning": {},
     "relaxed": {"RelaxedFollow": "1.6"}, "standard": {"StandardFollow": "1.45"}, "aggressive": {"AggressiveFollow": "1.25"},
     "traffic": {"TrafficFollow": "0.75"},
@@ -72,7 +73,7 @@ def example_owner() -> Owner:
             "SteerLatAccel": "Lateral acceleration", "ForceStops": "Enhanced Stops", "ForceStopDistanceOffset": "Stop Distance Adjustment",
             "FasterLeadTakeoff": "Faster Takeoffs", "profile:global_acceleration": "Selected Acceleration Profile",
             "profile:global_braking": "Selected Deceleration Profile"}
-  units = {"LaneCenterOffset": "m", "LaneCenteringStrength": "%", "ForceStopDistanceOffset": "ft", "RelaxedFollow": "s",
+  units = {"LaneCenterOffset": "m", "LaneCenteringStrength": "%", "LaneCenteringE2EAuthority": "%", "ForceStopDistanceOffset": "ft", "RelaxedFollow": "s",
            "StandardFollow": "s", "AggressiveFollow": "s", "TrafficFollow": "s"}
   for name, rows in owner.pages.items():
     for key, row in rows.items():
@@ -129,6 +130,8 @@ def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any)
       shot(mock)
       if page == "alerts":
         alerts_shots(window, owner, shot)
+      if page == "tuner":
+        shot("tuner-lanecentering")   # Steering, with the Lane Centering switch first
       window.back()
     theme_shots(window, hub, shot)
     os.environ["TANDEM_ROUTING"] = "1"

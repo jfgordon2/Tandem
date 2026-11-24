@@ -40,10 +40,19 @@ class Tunable:
   key: str
 
 
-# Each section's StarPilot pages: every row they list for this car, in StarPilot's order, without the master switches.
+# Each section's StarPilot pages: every row they list for this car, in StarPilot's order.
 # StarPilot's "tuning" page (its manual steering tune, dozens of per-side values) stays on StarPilot's own screens.
 STEERING_PAGES = ("lane", "torque")
-STEERING_SKIP = {"LaneCentering"}
+LANE_CENTERING = "LaneCentering"   # StarPilot's switch for its lane centering: a feature, not a tune, so resets leave it
+SWITCHES = {LANE_CENTERING}
+# Tandem's names and words for StarPilot's lane centering rows (design/tuner-lanecentering.html); the rest keep StarPilot's.
+LABELS = {
+  LANE_CENTERING: (N_("Lane Centering"), N_("Steers toward the middle of the lane, not just the model's path")),
+  "LaneCenteringPauseOnSignal": (N_("Pause on signal"), N_("Lets the car drift while a blinker is on")),
+  "LaneCenterOffset": (N_("Lane offset"), N_("Holds left or right of center")),
+  "LaneCenteringE2EAuthority": (N_("Model path preference"), N_("How much a confident model path can override the lane center")),
+  "LaneCenteringStrength": (N_("Lane Centering Strength"), N_("100% is normal; lower centers less, higher more")),
+}
 GAS_BRAKE = [Tunable("profiles", key) for key in ("profile:global_acceleration", "profile:global_braking", "ForceStopDistanceOffset",
                                                   "profile:stopped_gap", "FasterLeadTakeoff", "LeadApproachBuffer", "ExperimentalSpeedNudge")]
 STYLE_SET = {"profile:global_acceleration", "profile:global_braking"}   # Driving Style sets these (speed_steering.STYLE_PARAMS)
@@ -74,7 +83,7 @@ class Tuner:
     out = []
     for page in STEERING_PAGES:
       out += [Tunable(page, r.key) for r in self._rows(page).state().rows
-              if r.key and r.key not in STEERING_SKIP and (r.choices or r.step) and not r.key.endswith("reset")]
+              if r.key and (r.choices or r.step) and not r.key.endswith("reset")]
     return out
 
   def present(self, tunables: list[Tunable]) -> list[Tunable]:
@@ -128,7 +137,7 @@ class Tuner:
     return NumberSpec(minimum, maximum, step, default if default is not None else minimum, lambda v: f"{v:.{digits}f}{unit}")
 
   def changes(self, tunables: list[Tunable]) -> int:
-    return sum(self.changed(t) for t in tunables if t.key not in STYLE_SET)
+    return sum(self.changed(t) for t in tunables if t.key not in STYLE_SET | SWITCHES)
 
   def gas_brake_changes(self) -> int:
     return self.changes(self.present(GAS_BRAKE))
@@ -140,9 +149,9 @@ class Tuner:
     return self.steering() + self.present(GAS_BRAKE + [t for _, t in GAPS] + FOLLOWING)
 
   def reset_all(self) -> None:
-    """Every changed value back to StarPilot's default, except what Driving Style sets."""
+    """Every changed value back to StarPilot's default, except what Driving Style sets and the Lane Centering switch."""
     for t in self.all_tunables():
-      if t.key not in STYLE_SET and self.changed(t) and self.editable(t):
+      if t.key not in STYLE_SET | SWITCHES and self.changed(t) and self.editable(t):
         self.reset(t)
 
 
@@ -154,6 +163,7 @@ def tunable_row(tuner: Tuner, t: Tunable, window: SettingsWindow) -> SettingRow:
   """A row for one StarPilot value: a switch, a choice, or a number with its source and Override or Reset."""
   r = tuner.row(t)
   title, subtitle = (r.label, r.reason) if r is not None else (t.key, "")
+  title, subtitle = LABELS.get(t.key, (title, subtitle))
   if r is not None and tuple(r.choices) == ("Off", "On"):
     line = SettingRow(title, subtitle, Switch(lambda: tuner.value(t) == "On", lambda on: tuner.set(t, "On" if on else "Off")))
   elif r is not None and r.choices and not r.step:

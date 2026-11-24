@@ -156,9 +156,23 @@ def test_tuner_marks_overrides_against_starpilots_defaults_and_resets_them(owner
   tuner.set_number(relaxed, 1.8)
   assert tuner.status(relaxed) == OVERRIDE and tuner.following_changes() == 1
   assert tuner.status(Tunable("profiles", "profile:global_acceleration")) == FROM_STYLE
-  assert [t.key for t in tuner.steering()] == ["LaneCenterOffset"]
+  assert [t.key for t in tuner.steering()] == ["LaneCentering", "LaneCenterOffset"]   # the switch first, as StarPilot lists it
   tuner.reset_all()
   assert page(owner, "relaxed")["RelaxedFollow"] == "1.6" and tuner.following_changes() == 0
+
+
+def test_lane_centering_is_a_switch_that_resets_leave_alone(owner: Owner) -> None:
+  """Tuner › Steering's Lane Centering switch writes StarPilot's LaneCentering; it isn't a tune, so it never counts as a change
+  and Reset all tuning leaves it as the driver set it."""
+  rows = owner.pages["lane"]
+  rows["LaneCentering"] = replace(rows["LaneCentering"], choices=("Off", "On"), default_value="Off")
+  tuner = Tuner(owner.rows)
+  switch = Tunable("lane", "LaneCentering")
+  assert tuner.value(switch) == "On" and tuner.changes(tuner.steering()) == 0
+  tuner.reset_all()
+  assert page(owner, "lane")["LaneCentering"] == "On"
+  tuner.set(switch, "Off")
+  assert page(owner, "lane")["LaneCentering"] == "Off"
 
 
 def test_tuner_leaves_starpilots_manual_steering_tune_on_its_own_screens(owner: Owner) -> None:

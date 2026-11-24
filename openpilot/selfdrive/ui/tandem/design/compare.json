@@ -186,6 +186,12 @@
       "match": true
     },
     {
+      "mock": "tuner-lanecentering",
+      "title": "Tuner › Steering, Lane Centering",
+      "note": "Matches: the Lane Centering switch (StarPilot's LaneCentering) leads Steering, then its four rows in Tandem's words. Reset all tuning leaves the switch alone. Rows keep Tuner's standard height, so the list scrolls, and Model path preference's description is cut short at the device's width.",
+      "match": true
+    },
+    {
       "mock": "steeringcontroller",
       "title": "Steering controller",
       "note": "Matches the five controller choices and selected-choice explanation. Vehicle default matches StarPilot and is applied by Essentials setup and tuning resets. Settings keep standard row heights, so the controller row can scroll into view.",

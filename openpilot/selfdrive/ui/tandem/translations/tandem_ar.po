@@ -31,7 +31,7 @@ msgid "Road data still supplies speed limits"
 msgstr "لا تزال بيانات الطرق توفّر حدود السرعة"
 
 #: destinations.py:218
-#: settings/search.py:288
+#: settings/search.py:290
 msgid "Search"
 msgstr "البحث"
 
@@ -310,7 +310,7 @@ msgstr "التحديث جاهز"
 
 #: home.py:152
 #: settings/search.py:25
-#: settings/search.py:219
+#: settings/search.py:221
 msgid "Software"
 msgstr "البرمجيات"
 
@@ -446,7 +446,7 @@ msgstr "openpilot قد لا يبدأ التشغيل حتى يتم فرزها"
 
 #: home_layout.py:22
 #: settings/speed_steering.py:25
-#: settings/tuner.py:52
+#: settings/tuner.py:61
 msgid "Sport"
 msgstr "رياضي"
 
@@ -458,7 +458,7 @@ msgstr "قياسي"
 
 #: home_layout.py:22
 #: settings/speed_steering.py:25
-#: settings/tuner.py:51
+#: settings/tuner.py:60
 msgid "Relaxed"
 msgstr "هادئ"
 
@@ -1268,7 +1268,7 @@ msgid "Drive logging"
 msgstr "سجل القيادة"
 
 #: ram.py:57
-#: settings/search.py:187
+#: settings/search.py:189
 #: settings/storage.py:182
 msgid "Uploads"
 msgstr "تحميلات"
@@ -1828,17 +1828,17 @@ msgstr "جهاز بلوتوث"
 
 #: settings/bluetooth_tab.py:449
 #: settings/bluetooth_tab.py:449
-#: settings/search.py:214
+#: settings/search.py:216
 msgid "Disconnect"
 msgstr "قطع اتصال"
 
 #: settings/bluetooth_tab.py:449
-#: settings/search.py:214
+#: settings/search.py:216
 msgid "It reconnects the next time you choose it"
 msgstr "يتم إعادة الاتصال في المرة التالية التي تختارها"
 
 #: settings/bluetooth_tab.py:450
-#: settings/search.py:215
+#: settings/search.py:217
 msgid "Removes the pairing. Change it with the car off."
 msgstr "يزيل الاقتران. تغييره مع إيقاف السيارة."
 
@@ -2258,7 +2258,7 @@ msgstr "الخلوية"
 
 #: settings/connections.py:100
 #: settings/search.py:33
-#: settings/search.py:213
+#: settings/search.py:215
 msgid "Bluetooth Devices"
 msgstr "أجهزة البلوتوث"
 
@@ -2269,7 +2269,7 @@ msgid "Network Test"
 msgstr "اختبار الشبكة"
 
 #: settings/developer.py:67
-#: settings/search.py:199
+#: settings/search.py:201
 msgid "openpilot Longitudinal (Alpha)"
 msgstr "تحكم openpilot بالتسارع والفرملة (ألفا)"
 
@@ -2278,7 +2278,7 @@ msgid "Turns off the car's emergency braking. Off while engaged."
 msgstr "يقوم بإيقاف تشغيل فرامل السيارة في حالات الطوارئ. إيقاف أثناء المشاركة."
 
 #: settings/developer.py:73
-#: settings/search.py:198
+#: settings/search.py:200
 #: selfdrive/ui/layouts/settings/developer.py:68
 msgid "Joystick Debug Mode"
 msgstr "وضع تصحيح عصا التحكم"
@@ -2316,7 +2316,7 @@ msgstr "اسم مستخدم GitHub"
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: settings/developer.py:77
-#: settings/search.py:195
+#: settings/search.py:197
 msgid "ADB"
 msgstr "ADB"
 
@@ -2326,7 +2326,7 @@ msgstr "اتصل عبر USB أو الشبكة (docs.comma.ai). تغييره مع
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: settings/developer.py:79
-#: settings/search.py:196
+#: settings/search.py:198
 msgid "SSH"
 msgstr "SSH"
 
@@ -2335,19 +2335,19 @@ msgid "Remote shell access with the keys below"
 msgstr "الوصول إلى الصدفة عن بعد باستخدام المفاتيح أدناه"
 
 #: settings/developer.py:80
-#: settings/search.py:197
+#: settings/search.py:199
 #: selfdrive/ui/layouts/settings/developer.py:65
 msgid "SSH Keys"
 msgstr "مفاتيح SSH"
 
 #: settings/developer.py:83
-#: settings/search.py:200
+#: settings/search.py:202
 #: selfdrive/ui/layouts/settings/developer.py:103
 msgid "UI Debug Mode"
 msgstr "UI وضع التصحيح"
 
 #: settings/developer.py:83
-#: settings/search.py:200
+#: settings/search.py:202
 msgid "Shows touches and the frame rate"
 msgstr "يعرض اللمسات ومعدل الإطارات"
 
@@ -2463,7 +2463,7 @@ msgstr "إلغاء الاقتران"
 
 #: settings/device.py:295
 #: settings/device.py:124
-#: settings/search.py:157
+#: settings/search.py:159
 msgid "Remote Access"
 msgstr "الوصول عن بعد"
 
@@ -2497,13 +2497,13 @@ msgstr "انس أي جانب من السيارة يجلس عليه السائق"
 
 #: settings/device.py:109
 #: settings/device.py:109
-#: settings/search.py:164
+#: settings/search.py:166
 msgid "Power Off"
 msgstr "إيقاف التشغيل"
 
 #: settings/device.py:112
 #: settings/device.py:113
-#: settings/search.py:163
+#: settings/search.py:165
 msgid "Restart"
 msgstr "إعادة التشغيل"
 
@@ -2522,7 +2522,7 @@ msgstr "comma connect · راجع محركات الأقراص وقم بتغيي�
 
 #: settings/device.py:258
 #: settings/device.py:131
-#: settings/search.py:160
+#: settings/search.py:162
 msgid "Regulatory"
 msgstr "لوائح"
 
@@ -2611,22 +2611,22 @@ msgid "Your code appears here once you choose a password"
 msgstr "يظهر الرمز الخاص بك هنا بمجرد اختيار كلمة المرور"
 
 #: settings/device.py:121
-#: settings/search.py:156
+#: settings/search.py:158
 msgid "Phone App"
 msgstr "تطبيق الهاتف"
 
 #: settings/device.py:127
-#: settings/search.py:158
+#: settings/search.py:160
 msgid "Camera Calibration"
 msgstr "معايرة الكاميرا"
 
 #: settings/device.py:129
-#: settings/search.py:159
+#: settings/search.py:161
 msgid "How It Works"
 msgstr "كيف يعمل"
 
 #: settings/device.py:129
-#: settings/search.py:159
+#: settings/search.py:161
 msgid "Rules, features and limits"
 msgstr "القواعد والميزات والحدود"
 
@@ -2635,13 +2635,13 @@ msgid "MORE"
 msgstr "المزيد"
 
 #: settings/device.py:132
-#: settings/search.py:161
+#: settings/search.py:163
 msgid "Device ID and Serial"
 msgstr "معرف الجهاز والمسلسل"
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: settings/device.py:133
-#: settings/search.py:162
+#: settings/search.py:164
 msgid "IMEI"
 msgstr "IMEI"
 
@@ -3002,7 +3002,7 @@ msgstr "الطاقة"
 
 #: settings/essentials.py:168
 #: settings/search.py:31
-#: settings/search.py:181
+#: settings/search.py:183
 msgid "Storage & Data"
 msgstr "التخزين والبيانات"
 
@@ -3104,48 +3104,48 @@ msgstr "غير نشط"
 
 #: settings/general.py:26
 #: settings/general.py:41
-#: settings/search.py:168
+#: settings/search.py:170
 msgid "Language"
 msgstr "اللغة"
 
 #: settings/general.py:37
-#: settings/search.py:166
+#: settings/search.py:168
 msgid "Units"
 msgstr "وحدات"
 
 #: settings/general.py:37
-#: settings/search.py:166
+#: settings/search.py:168
 msgid "Speed and distance everywhere"
 msgstr "السرعة والمسافة في كل مكان"
 
 #: settings/general.py:39
-#: settings/search.py:167
+#: settings/search.py:169
 #: sidebar.py:271
 msgid "Temperature"
 msgstr "درجة الحرارة"
 
 #: settings/general.py:39
-#: settings/search.py:167
+#: settings/search.py:169
 msgid "For the weather forecast"
 msgstr "لتوقعات الطقس"
 
 #: settings/general.py:42
-#: settings/search.py:169
+#: settings/search.py:171
 msgid "Screen Brightness"
 msgstr "سطوع الشاشة"
 
 #: settings/general.py:42
-#: settings/search.py:169
+#: settings/search.py:171
 msgid "Auto follows ambient light, day and night"
 msgstr "التلقائي يتبع الإضاءة المحيطة نهارا وليلا"
 
 #: settings/general.py:44
-#: settings/search.py:170
+#: settings/search.py:172
 msgid "Standby"
 msgstr "استعداد"
 
 #: settings/general.py:44
-#: settings/search.py:170
+#: settings/search.py:172
 msgid "Screen sleeps while driving, wakes for alerts"
 msgstr "تنام الشاشة أثناء القيادة، وتستيقظ للتنبيهات"
 
@@ -4091,7 +4091,7 @@ msgstr "تحرير"
 
 #: settings/network_tab.py:396
 #: settings/network_tab.py:387
-#: settings/search.py:210
+#: settings/search.py:212
 msgid "Roaming, APN and IP address"
 msgstr "التجوال وعنوان APN وIP"
 
@@ -4111,7 +4111,7 @@ msgstr "أدخل كلمة المرور"
 
 #: settings/network_tab.py:173
 #: settings/network_tab.py:383
-#: settings/search.py:207
+#: settings/search.py:209
 msgid "Hotspot name"
 msgstr "اسم نقطة الاتصال"
 
@@ -4120,37 +4120,37 @@ msgid "A saved network already uses this name"
 msgstr "هناك شبكة محفوظة تستخدم هذا الاسم بالفعل"
 
 #: settings/network_tab.py:362
-#: settings/search.py:204
+#: settings/search.py:206
 msgid "Join a hidden network"
 msgstr "انضم إلى شبكة مخفية"
 
 #: settings/network_tab.py:382
-#: settings/search.py:206
+#: settings/search.py:208
 msgid "Hotspot"
 msgstr "نقطة اتصال"
 
 #: settings/network_tab.py:382
-#: settings/search.py:206
+#: settings/search.py:208
 msgid "Share this device's connection"
 msgstr "مشاركة اتصال هذا الجهاز"
 
 #: settings/network_tab.py:385
-#: settings/search.py:208
+#: settings/search.py:210
 msgid "Hotspot Password"
 msgstr "كلمة مرور نقطة الاتصال"
 
 #: settings/network_tab.py:385
-#: settings/search.py:208
+#: settings/search.py:210
 msgid "For phones joining this device's hotspot"
 msgstr "للهواتف التي تنضم إلى نقطة اتصال هذا الجهاز"
 
 #: settings/network_tab.py:386
-#: settings/search.py:209
+#: settings/search.py:211
 msgid "Save Data"
 msgstr "حفظ البيانات"
 
 #: settings/network_tab.py:386
-#: settings/search.py:209
+#: settings/search.py:211
 msgid "No large uploads on cellular or phone hotspots"
 msgstr "لا توجد عمليات تحميل كبيرة على نقاط الاتصال الخلوية أو الهاتفية"
 
@@ -4164,7 +4164,7 @@ msgstr "استخدم البيانات الخلوية خارج شبكة النا�
 
 #. English fallback pending cellular-status translation.
 #: settings/network_tab.py:395
-#: settings/search.py:211
+#: settings/search.py:213
 msgid "Cellular IP address"
 msgstr "عنوان IP للجوال"
 
@@ -4328,44 +4328,44 @@ msgstr "إيقاف comma عند الانخفاض عن {} أثناء التوقف
 
 #: settings/power.py:169
 #: settings/power.py:138
-#: settings/search.py:173
+#: settings/search.py:175
 msgid "Parked Power"
 msgstr "الطاقة أثناء التوقف"
 
 #: settings/power.py:169
-#: settings/search.py:173
+#: settings/search.py:175
 msgid "Turn the comma off after a long park or a low battery"
 msgstr "يوقف comma بعد توقف طويل أو عند ضعف البطارية"
 
 #: settings/power.py:172
 #: settings/power.py:173
-#: settings/search.py:174
+#: settings/search.py:176
 msgid "Maximum Parked Time"
 msgstr "أقصى مدة توقف"
 
 #: settings/power.py:172
-#: settings/search.py:174
+#: settings/search.py:176
 msgid "Then it turns off, sparing the car's battery"
 msgstr "ثم يتوقف عن العمل حفاظًا على بطارية السيارة"
 
 #: settings/power.py:175
 #: settings/power.py:176
-#: settings/search.py:175
+#: settings/search.py:177
 msgid "Low-Voltage Cutoff"
 msgstr "قطع الجهد المنخفض"
 
 #: settings/power.py:175
-#: settings/search.py:175
+#: settings/search.py:177
 msgid "Turns off sooner if the battery drops this low"
 msgstr "يتوقف أبكر إذا انخفضت البطارية إلى هذا الحد"
 
 #: settings/power.py:184
-#: settings/search.py:178
+#: settings/search.py:180
 msgid "Drive State"
 msgstr "حالة القيادة"
 
 #: settings/power.py:184
-#: settings/search.py:178
+#: settings/search.py:180
 msgid "Auto follows the car; force offroad or onroad for testing"
 msgstr "التلقائي يتبع السيارة؛ افرض متوقف أو قيادة للاختبار"
 
@@ -4379,12 +4379,12 @@ msgid "Turn the comma off after {} parked? Other protections can turn it off soo
 msgstr "إيقاف comma بعد {} من التوقف؟ قد توقفه حمايات أخرى أبكر."
 
 #: settings/power.py:180
-#: settings/search.py:176
+#: settings/search.py:178
 msgid "Aggressive Cooling"
 msgstr "تبريد قوي"
 
 #: settings/power.py:180
-#: settings/search.py:176
+#: settings/search.py:178
 msgid "Fan runs sooner and harder: 10 to 16 °C cooler, more noise"
 msgstr "تعمل المروحة أبكر وأقوى: أبرد بمقدار 10 إلى 16 °C مع ضجيج أكثر"
 
@@ -4528,19 +4528,19 @@ msgstr "الاتصالات"
 
 #: settings/search.py:30
 #: settings/search.py:148
-#: settings/tuner.py:218
+#: settings/tuner.py:228
 msgid "Steering"
 msgstr "التوجيه"
 
 #: settings/search.py:30
-#: settings/search.py:150
-#: settings/tuner.py:224
+#: settings/search.py:152
+#: settings/tuner.py:234
 msgid "Gas & Brake"
 msgstr "التسارع والفرملة"
 
 #: settings/search.py:30
-#: settings/search.py:152
-#: settings/tuner.py:288
+#: settings/search.py:154
+#: settings/tuner.py:298
 msgid "Following & Stops"
 msgstr "التتبع والتوقف"
 
@@ -4814,273 +4814,283 @@ msgid "Lane centering and your car's steering tune"
 msgstr "التوسيط في المسار وضبط توجيه سيارتك"
 
 #: settings/search.py:150
+#: settings/tuner.py:50
+msgid "Lane Centering"
+msgstr "التوسيط في المسار"
+
+#: settings/search.py:150
+#: settings/tuner.py:50
+msgid "Steers toward the middle of the lane, not just the model's path"
+msgstr "يوجّه نحو منتصف المسار، لا وفق مسار النموذج فحسب"
+
+#: settings/search.py:152
 msgid "Acceleration and braking profiles, stops and takeoffs"
 msgstr "أنماط التسارع والفرملة والتوقف والانطلاق"
 
-#: settings/search.py:152
+#: settings/search.py:154
 msgid "Following gaps and how the car stops"
 msgstr "مسافات التتبع وكيفية توقف السيارة"
 
-#: settings/search.py:153
+#: settings/search.py:155
 msgid "Following Gaps"
 msgstr "مسافات التتبع"
 
-#: settings/search.py:153
+#: settings/search.py:155
 msgid "Relaxed, Standard, Sport and Traffic"
 msgstr "هادئ وقياسي ورياضي وزحام"
 
-#: settings/search.py:155
+#: settings/search.py:157
 msgid "Pairing, remote access, calibration, restart and power"
 msgstr "الاقتران والوصول عن بعد والمعايرة وإعادة التشغيل والطاقة"
 
-#: settings/search.py:156
+#: settings/search.py:158
 msgid "comma connect: see drives and change settings on your phone"
 msgstr "comma connect: شاهد محركات الأقراص وقم بتغيير الإعدادات على هاتفك"
 
-#: settings/search.py:157
+#: settings/search.py:159
 msgid "Galaxy: reach this device from a web browser"
 msgstr "Galaxy: قم بالوصول إلى هذا الجهاز من متصفح الويب"
 
-#: settings/search.py:158
+#: settings/search.py:160
 msgid "How the device is mounted"
 msgstr "كيفية تركيب الجهاز"
 
-#: settings/search.py:160
+#: settings/search.py:162
 msgid "Regulatory information"
 msgstr "المعلومات التنظيمية"
 
-#: settings/search.py:161
+#: settings/search.py:163
 msgid "This device's IDs"
 msgstr "معرفات هذا الجهاز"
 
-#: settings/search.py:162
+#: settings/search.py:164
 msgid "The cellular modem's ID"
 msgstr "معرف المودم الخلوي"
 
-#: settings/search.py:163
+#: settings/search.py:165
 msgid "Restart the device"
 msgstr "أعد تشغيل الجهاز"
 
-#: settings/search.py:164
+#: settings/search.py:166
 msgid "Turn the device off until the car starts"
 msgstr "قم بإيقاف تشغيل الجهاز حتى تبدأ السيارة"
 
-#: settings/search.py:165
+#: settings/search.py:167
 msgid "Units, language, brightness and standby"
 msgstr "وحدات واللغة والسطوع والاستعداد"
 
-#: settings/search.py:168
+#: settings/search.py:170
 msgid "Menus and alerts"
 msgstr "القوائم والتنبيهات"
 
-#: settings/search.py:171
+#: settings/search.py:173
 msgid "Parked limits for the car's battery, cooling and drive state"
 msgstr "حدود التوقف لبطارية السيارة والتبريد وحالة القيادة"
 
-#: settings/search.py:180
+#: settings/search.py:182
 msgid "Snapshots of your settings"
 msgstr "لقطات لإعداداتك"
 
-#: settings/search.py:181
+#: settings/search.py:183
 msgid "What's using space, and recording and uploads"
 msgstr "ما هو استخدام المساحة والتسجيل والتحميل"
 
-#: settings/search.py:182
+#: settings/search.py:184
 #: settings/storage.py:176
 msgid "Recorded Drives"
 msgstr "محركات الأقراص المسجلة"
 
-#: settings/search.py:182
+#: settings/search.py:184
 #: settings/storage.py:176
 msgid "Oldest drives are removed when space runs low"
 msgstr "تتم إزالة محركات الأقراص الأقدم عند انخفاض المساحة"
 
-#: settings/search.py:183
+#: settings/search.py:185
 msgid "Delete downloaded map data"
 msgstr "حذف بيانات الخريطة التي تم تنزيلها"
 
-#: settings/search.py:184
+#: settings/search.py:186
 #: settings/storage.py:178
 msgid "Unused Models"
 msgstr "نماذج الذكاء الاصطناعي غير المستخدمة"
 
-#: settings/search.py:184
+#: settings/search.py:186
 msgid "Downloaded models that aren't in use"
 msgstr "تم تنزيل نماذج الذكاء الاصطناعي غير المستخدمة"
 
-#: settings/search.py:185
+#: settings/search.py:187
 #: settings/storage.py:180
 msgid "Record Driver Camera"
 msgstr "تسجيل كاميرا السائق"
 
-#: settings/search.py:185
+#: settings/search.py:187
 msgid "Saved and uploaded with your drives"
 msgstr "تم الحفظ والتحميل مع محركات الأقراص الخاصة بك"
 
-#: settings/search.py:186
+#: settings/search.py:188
 #: settings/storage.py:181
 msgid "Record Microphone"
 msgstr "تسجيل الميكروفون"
 
-#: settings/search.py:186
+#: settings/search.py:188
 msgid "Cabin audio in your drive recordings"
 msgstr "صوت المقصورة في تسجيلات محرك الأقراص الخاصة بك"
 
-#: settings/search.py:187
+#: settings/search.py:189
 #: settings/storage.py:182
 msgid "Drive logs and video for debugging"
 msgstr "سجلات محرك الأقراص والفيديو لتصحيح الأخطاء"
 
-#: settings/search.py:188
+#: settings/search.py:190
 #: settings/storage.py:116
 msgid "Uploads on Cellular"
 msgstr "تحميلات عبر الشبكة الخلوية"
 
-#: settings/search.py:188
+#: settings/search.py:190
 #: settings/storage.py:116
 msgid "Full logs and video on cellular or a metered hotspot. Uses mobile data."
 msgstr "سجلات كاملة وفيديو عبر الشبكة الخلوية أو نقطة اتصال محدودة. يستهلك بيانات الجوال."
 
-#: settings/search.py:190
+#: settings/search.py:192
 msgid "Upload more drives to train openpilot's driving models"
 msgstr "ارفع المزيد من الرحلات لتدريب نماذج القيادة في openpilot"
 
-#: settings/search.py:192
+#: settings/search.py:194
 msgid "What was using RAM on drives that ran low"
 msgstr "ما كان يستخدم ذاكرة RAM في الرحلات التي انخفضت فيها"
 
-#: settings/search.py:193
+#: settings/search.py:195
 msgid "Send what happened to the developers"
 msgstr "أرسل ما حدث للمطورين"
 
-#: settings/search.py:194
+#: settings/search.py:196
 msgid "ADB, SSH and debug modes"
 msgstr "ADB وSSH وأوضاع التصحيح"
 
-#: settings/search.py:195
+#: settings/search.py:197
 msgid "Connect over USB or the network"
 msgstr "قم بالاتصال عبر USB أو الشبكة"
 
-#: settings/search.py:196
+#: settings/search.py:198
 msgid "Remote shell access"
 msgstr "الوصول إلى الصدفة عن بعد"
 
-#: settings/search.py:197
+#: settings/search.py:199
 msgid "Adds every public key in a GitHub account"
 msgstr "يضيف كل مفتاح عام في حساب GitHub"
 
-#: settings/search.py:198
+#: settings/search.py:200
 msgid "Drive openpilot's controls from a joystick"
 msgstr "قم بقيادة عناصر التحكم openpilot من عصا التحكم"
 
-#: settings/search.py:199
+#: settings/search.py:201
 msgid "Turns off the car's emergency braking"
 msgstr "يقوم بإيقاف تشغيل فرامل السيارة في حالات الطوارئ"
 
-#: settings/search.py:202
+#: settings/search.py:204
 msgid "Networks nearby, and joining one"
 msgstr "شبكات القريبة، والانضمام إلى واحدة"
 
-#: settings/search.py:203
+#: settings/search.py:205
 msgid "IP Address"
 msgstr "عنوان IP"
 
-#: settings/search.py:203
+#: settings/search.py:205
 msgid "This device's local address, beside the connected network"
 msgstr "العنوان المحلي لهذا الجهاز، بجانب الشبكة المتصلة"
 
-#: settings/search.py:204
+#: settings/search.py:206
 msgid "Enter its name and password"
 msgstr "أدخل الاسم وكلمة المرور الخاصة به"
 
 #. English fallback pending cellular-status translation.
-#: settings/search.py:205
+#: settings/search.py:207
 msgid "Connection status, hotspot, data use, roaming and APN"
 msgstr "حالة الاتصال ونقطة الاتصال واستخدام البيانات والتجوال وAPN"
 
-#: settings/search.py:207
+#: settings/search.py:209
 msgid "The name phones see when joining this device"
 msgstr "الاسم الذي تراه الهواتف عند الانضمام إلى هذا الجهاز"
 
 #. English fallback pending cellular-status translation.
-#: settings/search.py:210
+#: settings/search.py:212
 msgid "Roaming, APN and the cellular IP address"
 msgstr "التجوال وAPN وعنوان IP للجوال"
 
 #. English fallback pending cellular-status translation.
-#: settings/search.py:211
+#: settings/search.py:213
 msgid "The modem's mobile data address"
 msgstr "عنوان بيانات الجوال للمودم"
 
-#: settings/search.py:212
+#: settings/search.py:214
 msgid "A wheel remote's buttons and what they do"
 msgstr "أزرار جهاز التحكم عن بعد في العجلة وماذا تفعل"
 
-#: settings/search.py:213
+#: settings/search.py:215
 msgid "Pair and connect phones, speakers and remotes"
 msgstr "إقران الهواتف ومكبرات الصوت وأجهزة التحكم وتوصيلها"
 
-#: settings/search.py:216
+#: settings/search.py:218
 msgid "Download speed, upload speed and ping of this device's connection"
 msgstr "سرعة التنزيل وسرعة الرفع و Ping لاتصال هذا الجهاز"
 
-#: settings/search.py:219
+#: settings/search.py:221
 msgid "Updates and the release notes"
 msgstr "تحديثات وملاحظات الإصدار"
 
-#: settings/search.py:220
+#: settings/search.py:222
 #: settings/software.py:205
 msgid "Automatic Updates"
 msgstr "التحديثات التلقائية"
 
-#: settings/search.py:220
+#: settings/search.py:222
 msgid "Download while parked, install when you turn off the car"
 msgstr "يتم التنزيل أثناء ركن السيارة، ويتم تثبيته عند إيقاف تشغيل السيارة"
 
-#: settings/search.py:221
+#: settings/search.py:223
 #: settings/software.py:202
 msgid "Release Channel"
 msgstr "قناة الإصدار"
 
-#: settings/search.py:221
+#: settings/search.py:223
 msgid "The branch to download updates from"
 msgstr "الفرع الذي سيتم تنزيل التحديثات منه"
 
-#: settings/search.py:222
+#: settings/search.py:224
 #: settings/software.py:211
 msgid "Reset Settings"
 msgstr "إعادة ضبط الإعدادات"
 
-#: settings/search.py:222
+#: settings/search.py:224
 msgid "Back to the Essentials defaults"
 msgstr "العودة إلى الإعدادات الافتراضية للأساسيات"
 
-#: settings/search.py:223
+#: settings/search.py:225
 #: settings/software.py:183
 #: settings/software.py:215
 msgid "Uninstall"
 msgstr "إلغاء التثبيت"
 
-#: settings/search.py:223
+#: settings/search.py:225
 msgid "Remove this software from the device"
 msgstr "قم بإزالة هذا البرنامج من الجهاز"
 
-#: settings/search.py:400
-#: settings/search.py:391
+#: settings/search.py:402
+#: settings/search.py:393
 msgid "Search settings"
 msgstr "إعدادات البحث"
 
-#: settings/search.py:289
+#: settings/search.py:291
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "انطق الإعداد، مثل الحد الأقصى للسرعة. اضغط على الميكروفون عند الانتهاء."
 
-#: settings/search.py:371
-#: settings/search.py:330
+#: settings/search.py:373
+#: settings/search.py:332
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "لا توجد إعدادات تطابق \"{}\""
 
-#: settings/search.py:372
+#: settings/search.py:374
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "اكتب اسم الإعداد أو ما يفعله، مثل السطوع أو تغيير المسار"
 
@@ -5462,12 +5472,12 @@ msgstr "تم الحفظ والتحميل مع محركات الأقراص الخ
 msgid "Cabin audio in your drive recordings. Restarts openpilot if the car is on."
 msgstr "صوت المقصورة في تسجيلات محرك الأقراص الخاص بك. إعادة تشغيل openpilot إذا كانت السيارة قيد التشغيل."
 
-#: settings/tuner.py:291
+#: settings/tuner.py:301
 msgid "Every Tuner Mode change goes back to StarPilot's default. Your other settings stay as they are."
 msgstr "كل تغيير في وضع الضبط الدقيق يعود إلى الافتراضي في StarPilot. تبقى إعداداتك الأخرى كما هي."
 
 #: settings/tuner.py:32
-#: settings/tuner.py:181
+#: settings/tuner.py:191
 msgid "Override"
 msgstr "تخصيص"
 
@@ -5475,57 +5485,89 @@ msgstr "تخصيص"
 msgid "From style"
 msgstr "من الاسلوب"
 
+#: settings/tuner.py:51
+msgid "Pause on signal"
+msgstr "إيقاف مؤقت عند الإشارة"
+
+#: settings/tuner.py:51
+msgid "Lets the car drift while a blinker is on"
+msgstr "يترك السيارة تنجرف ما دامت إشارة الانعطاف مضاءة"
+
 #: settings/tuner.py:52
+msgid "Lane offset"
+msgstr "الإزاحة في المسار"
+
+#: settings/tuner.py:52
+msgid "Holds left or right of center"
+msgstr "يبقى يسار المنتصف أو يمينه"
+
+#: settings/tuner.py:53
+msgid "Model path preference"
+msgstr "أفضلية مسار النموذج"
+
+#: settings/tuner.py:53
+msgid "How much a confident model path can override the lane center"
+msgstr "إلى أي حد يمكن لمسار نموذج واثق أن يتقدم على منتصف المسار"
+
+#: settings/tuner.py:54
+msgid "Lane Centering Strength"
+msgstr "قوة التوسيط"
+
+#: settings/tuner.py:54
+msgid "100% is normal; lower centers less, higher more"
+msgstr "100% هو المعتاد؛ الأقل يوسّط أقل والأعلى يوسّط أكثر"
+
+#: settings/tuner.py:61
 msgid "Traffic"
 msgstr "ازدحام"
 
-#: settings/tuner.py:150
+#: settings/tuner.py:159
 #, python-brace-format
 msgid "{} changed"
 msgstr "تم تغيير {}"
 
-#: settings/tuner.py:302
+#: settings/tuner.py:312
 msgid "TUNER MODE"
 msgstr "وضع الضبط الدقيق"
 
-#: settings/tuner.py:219
+#: settings/tuner.py:229
 msgid "StarPilot's defaults suit most cars. An override stays until you reset it."
 msgstr "تناسب إعدادات StarPilot الافتراضية معظم السيارات. يبقى التعديل حتى تعيد ضبطه."
 
-#: settings/tuner.py:225
+#: settings/tuner.py:235
 msgid "Driving Style sets the acceleration and braking profiles."
 msgstr "يحدد أسلوب القيادة أنماط التسارع والفرملة."
 
-#: settings/tuner.py:270
+#: settings/tuner.py:280
 msgid "Following gap by style"
 msgstr "مسافة التتبع حسب الأسلوب"
 
-#: settings/tuner.py:300
+#: settings/tuner.py:310
 msgid "Reset all tuning?"
 msgstr "إعادة ضبط كل الضبط؟"
 
-#: settings/tuner.py:265
+#: settings/tuner.py:275
 #, python-brace-format
 msgid "{} gap"
 msgstr "فجوة {}"
 
-#: settings/tuner.py:265
+#: settings/tuner.py:275
 msgid "Seconds behind the car ahead in this Driving Style"
 msgstr "ثانية خلف السيارة التي أمامك في أسلوب القيادة هذا"
 
-#: settings/tuner.py:218
+#: settings/tuner.py:228
 msgid "StarPilot lists your car's steering values once it's detected."
 msgstr "يعرض StarPilot قيم توجيه سيارتك بعد التعرف عليها."
 
-#: settings/tuner.py:224
+#: settings/tuner.py:234
 msgid "Gas and brake tuning needs openpilot's speed control."
 msgstr "ضبط التسارع والفرملة يتطلب تحكم openpilot في السرعة."
 
-#: settings/tuner.py:309
+#: settings/tuner.py:319
 msgid "Reset all tuning"
 msgstr "إعادة ضبط كل الضبط"
 
-#: settings/tuner.py:169
+#: settings/tuner.py:179
 #: settings/vehicle.py:284
 msgid "Change"
 msgstr "تغيير"
