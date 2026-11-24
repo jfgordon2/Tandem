@@ -13,6 +13,7 @@ from dataclasses import dataclass, field
 from openpilot.selfdrive.ui.tandem.onroad.layers import ArcState, BarState, LimitOffer
 from openpilot.selfdrive.ui.tandem.i18n import t_
 from openpilot.selfdrive.ui.tandem.onroad.status import Chip
+from openpilot.selfdrive.ui.tandem.dates import clock
 
 if TYPE_CHECKING:
   from openpilot.starpilot.ui.navigation_state import NavigationDisplay
@@ -108,6 +109,6 @@ def route_progress(navigation: NavigationDisplay | None, metric: bool, now: date
   if navigation is None:
     return "", ""
   seconds, meters = navigation.remaining_seconds, navigation.remaining_distance_m
-  arrive = (now + datetime.timedelta(seconds=seconds)).strftime("%-I:%M %p")
+  arrive = clock(now + datetime.timedelta(seconds=seconds))
   distance = t_("{} km", f"{meters / 1000:.1f}") if metric else t_("{} mi", f"{meters / 1609.344:.1f}")
   return arrive, t_("{} min · {}", max(1, round(seconds / 60)), distance)

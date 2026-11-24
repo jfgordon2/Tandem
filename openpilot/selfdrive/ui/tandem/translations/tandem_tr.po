@@ -25,6 +25,93 @@ msgstr "ÖNERİLEN"
 msgid "Default"
 msgstr "Varsayılan"
 
+#: dates.py:17
+msgctxt "clock: 24-hour for a 24-hour clock"
+msgid "12-hour"
+msgstr "24-hour"
+
+#: dates.py:13
+msgctxt "month"
+msgid "Jan"
+msgstr "Oca"
+
+#: dates.py:13
+msgctxt "month"
+msgid "Feb"
+msgstr "Şub"
+
+#: dates.py:13
+msgctxt "month"
+msgid "Mar"
+msgstr "Mar"
+
+#: dates.py:13
+msgctxt "month"
+msgid "Apr"
+msgstr "Nis"
+
+#: dates.py:14
+msgctxt "month"
+msgid "May"
+msgstr "May"
+
+#: dates.py:14
+msgctxt "month"
+msgid "Jun"
+msgstr "Haz"
+
+#: dates.py:14
+msgctxt "month"
+msgid "Jul"
+msgstr "Tem"
+
+#: dates.py:14
+msgctxt "month"
+msgid "Aug"
+msgstr "Ağu"
+
+#: dates.py:15
+msgctxt "month"
+msgid "Sep"
+msgstr "Eyl"
+
+#: dates.py:15
+msgctxt "month"
+msgid "Oct"
+msgstr "Eki"
+
+#: dates.py:15
+msgctxt "month"
+msgid "Nov"
+msgstr "Kas"
+
+#: dates.py:15
+msgctxt "month"
+msgid "Dec"
+msgstr "Ara"
+
+#: dates.py:18
+msgctxt "clock"
+msgid "AM"
+msgstr "ÖÖ"
+
+#: dates.py:18
+msgctxt "clock"
+msgid "PM"
+msgstr "ÖS"
+
+#: dates.py:27
+#, python-brace-format
+msgctxt "date: month, day"
+msgid "{} {}"
+msgstr "{1} {0}"
+
+#: dates.py:36
+#, python-brace-format
+msgctxt "date: month, day, year"
+msgid "{} {}, {}"
+msgstr "{1} {0} {2}"
+
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: destinations.py:492
 msgid "Road data still supplies speed limits"
@@ -736,7 +823,7 @@ msgstr "{} s"
 
 #. Unit notation; keep as written.
 #: onroad/developer.py:286
-#: settings/ram.py:31
+#: settings/ram.py:32
 #: settings/storage.py:105
 #, python-brace-format
 msgid "{} GB"
@@ -867,18 +954,18 @@ msgid "Ignore"
 msgstr "Yok say"
 
 #. Unit notation; keep as written.
-#: onroad/state.py:112
+#: onroad/state.py:113
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
 #. Unit notation; keep as written.
-#: onroad/state.py:112
+#: onroad/state.py:113
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/state.py:113
+#: onroad/state.py:114
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{} dk · {}"
@@ -1315,30 +1402,30 @@ msgstr "Bluetooth kumanda"
 msgid "Car connection"
 msgstr "Araç bağlantısı"
 
-#: routemap.py:128
+#: routemap.py:129
 #: routing_status.py:7
 #: routing_status.py:8
 msgid "Finding a route…"
 msgstr "Güzergâh bulunuyor…"
 
-#: routemap.py:129
+#: routemap.py:130
 msgid "Needs a GPS fix to plan the route"
 msgstr "Güzergâh planlamak için GPS konumu gerekli"
 
-#: routemap.py:130
+#: routemap.py:131
 msgid "Couldn't find a route. Check the connection."
 msgstr "Güzergâh bulunamadı. Bağlantıyı kontrol edin."
 
-#: routemap.py:131
+#: routemap.py:132
 msgid "Routes need a Mapbox or Google key: see Settings › Driving › Speed & Steering › Navigation"
 msgstr "Rotalar için Mapbox veya Google anahtarı gerekir: Ayarlar › Sürüş › Hız ve direksiyon › Navigasyon"
 
-#: routemap.py:50
+#: routemap.py:51
 #, python-brace-format
 msgid "{} min"
 msgstr "{} dk"
 
-#: routemap.py:50
+#: routemap.py:51
 #, python-brace-format
 msgid "{} h {} min"
 msgstr "{} sa {} dk"
@@ -1662,48 +1749,48 @@ msgstr "Ses düzeyi"
 msgid "Minimum {}% for safety alerts"
 msgstr "Güvenlik uyarıları için en az %{}"
 
-#: settings/auto_learn.py:48
-#: settings/auto_learn.py:35
-#: settings/auto_learn.py:100
+#: settings/auto_learn.py:49
+#: settings/auto_learn.py:36
+#: settings/auto_learn.py:101
 msgid "Not running right now"
 msgstr "Şu anda çalışmıyor"
 
-#: settings/auto_learn.py:61
+#: settings/auto_learn.py:62
 #, python-brace-format
 msgid "Last change {}"
 msgstr "Son değişiklik {}"
 
-#: settings/auto_learn.py:32
+#: settings/auto_learn.py:33
 msgid "Off: your steering tune stays as it is"
 msgstr "Kapalı: direksiyon ayarı olduğu gibi kalır"
 
-#: settings/auto_learn.py:38
+#: settings/auto_learn.py:39
 msgid "Waiting for the car to turn off"
 msgstr "Aracın kapanması bekleniyor"
 
-#: settings/auto_learn.py:40
+#: settings/auto_learn.py:41
 msgid "Needs more driving before it suggests a change"
 msgstr "Değişiklik önermeden önce daha fazla sürüş gerekiyor"
 
-#: settings/auto_learn.py:42
+#: settings/auto_learn.py:43
 msgid "Learning from this drive"
 msgstr "Bu sürüşten öğreniyor"
 
-#: settings/auto_learn.py:45
+#: settings/auto_learn.py:46
 #, python-brace-format
 msgid "Checking your last drive ({} of {})"
 msgstr "Son sürüşün kontrol ediliyor ({}/{})"
 
-#: settings/auto_learn.py:47
+#: settings/auto_learn.py:48
 msgid "Checking your last drive"
 msgstr "Son sürüşün kontrol ediliyor"
 
-#: settings/auto_learn.py:60
+#: settings/auto_learn.py:61
 msgid "No changes yet"
 msgstr "Henüz değişiklik yok"
 
 #. English fallback pending cellular-status translation.
-#: settings/auto_learn.py:92
+#: settings/auto_learn.py:93
 #: settings/network_tab.py:280
 #: settings/network_tab.py:273
 msgid "Checking…"
@@ -4450,7 +4537,7 @@ msgstr "Park'a geçilip sürüş servisleri durdurulsun mu?"
 msgid "{} · {}%"
 msgstr "{} · %{}"
 
-#: settings/ram.py:31
+#: settings/ram.py:32
 #: settings/storage.py:105
 #, python-brace-format
 msgid "{} MB"

@@ -25,6 +25,93 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
+#: dates.py:17
+msgctxt "clock: 24-hour for a 24-hour clock"
+msgid "12-hour"
+msgstr ""
+
+#: dates.py:13
+msgctxt "month"
+msgid "Jan"
+msgstr ""
+
+#: dates.py:13
+msgctxt "month"
+msgid "Feb"
+msgstr ""
+
+#: dates.py:13
+msgctxt "month"
+msgid "Mar"
+msgstr ""
+
+#: dates.py:13
+msgctxt "month"
+msgid "Apr"
+msgstr ""
+
+#: dates.py:14
+msgctxt "month"
+msgid "May"
+msgstr ""
+
+#: dates.py:14
+msgctxt "month"
+msgid "Jun"
+msgstr ""
+
+#: dates.py:14
+msgctxt "month"
+msgid "Jul"
+msgstr ""
+
+#: dates.py:14
+msgctxt "month"
+msgid "Aug"
+msgstr ""
+
+#: dates.py:15
+msgctxt "month"
+msgid "Sep"
+msgstr ""
+
+#: dates.py:15
+msgctxt "month"
+msgid "Oct"
+msgstr ""
+
+#: dates.py:15
+msgctxt "month"
+msgid "Nov"
+msgstr ""
+
+#: dates.py:15
+msgctxt "month"
+msgid "Dec"
+msgstr ""
+
+#: dates.py:18
+msgctxt "clock"
+msgid "AM"
+msgstr ""
+
+#: dates.py:18
+msgctxt "clock"
+msgid "PM"
+msgstr ""
+
+#: dates.py:27
+#, python-brace-format
+msgctxt "date: month, day"
+msgid "{} {}"
+msgstr ""
+
+#: dates.py:36
+#, python-brace-format
+msgctxt "date: month, day, year"
+msgid "{} {}, {}"
+msgstr ""
+
 #: destinations.py:492
 msgid "Road data still supplies speed limits"
 msgstr ""
@@ -718,7 +805,7 @@ msgid "{} s"
 msgstr ""
 
 #: onroad/developer.py:286
-#: settings/ram.py:31
+#: settings/ram.py:32
 #: settings/storage.py:105
 #, python-brace-format
 msgid "{} GB"
@@ -840,17 +927,17 @@ msgstr ""
 msgid "Ignore"
 msgstr ""
 
-#: onroad/state.py:112
+#: onroad/state.py:113
 #, python-brace-format
 msgid "{} km"
 msgstr ""
 
-#: onroad/state.py:112
+#: onroad/state.py:113
 #, python-brace-format
 msgid "{} mi"
 msgstr ""
 
-#: onroad/state.py:113
+#: onroad/state.py:114
 #, python-brace-format
 msgid "{} min · {}"
 msgstr ""
@@ -1252,30 +1339,30 @@ msgstr ""
 msgid "Car connection"
 msgstr ""
 
-#: routemap.py:128
+#: routemap.py:129
 #: routing_status.py:7
 #: routing_status.py:8
 msgid "Finding a route…"
 msgstr ""
 
-#: routemap.py:129
+#: routemap.py:130
 msgid "Needs a GPS fix to plan the route"
 msgstr ""
 
-#: routemap.py:130
+#: routemap.py:131
 msgid "Couldn't find a route. Check the connection."
 msgstr ""
 
-#: routemap.py:131
+#: routemap.py:132
 msgid "Routes need a Mapbox or Google key: see Settings › Driving › Speed & Steering › Navigation"
 msgstr ""
 
-#: routemap.py:50
+#: routemap.py:51
 #, python-brace-format
 msgid "{} min"
 msgstr ""
 
-#: routemap.py:50
+#: routemap.py:51
 #, python-brace-format
 msgid "{} h {} min"
 msgstr ""
@@ -1573,47 +1660,47 @@ msgstr ""
 msgid "Minimum {}% for safety alerts"
 msgstr ""
 
-#: settings/auto_learn.py:48
-#: settings/auto_learn.py:35
-#: settings/auto_learn.py:100
+#: settings/auto_learn.py:49
+#: settings/auto_learn.py:36
+#: settings/auto_learn.py:101
 msgid "Not running right now"
 msgstr ""
 
-#: settings/auto_learn.py:61
+#: settings/auto_learn.py:62
 #, python-brace-format
 msgid "Last change {}"
 msgstr ""
 
-#: settings/auto_learn.py:32
+#: settings/auto_learn.py:33
 msgid "Off: your steering tune stays as it is"
 msgstr ""
 
-#: settings/auto_learn.py:38
+#: settings/auto_learn.py:39
 msgid "Waiting for the car to turn off"
 msgstr ""
 
-#: settings/auto_learn.py:40
+#: settings/auto_learn.py:41
 msgid "Needs more driving before it suggests a change"
 msgstr ""
 
-#: settings/auto_learn.py:42
+#: settings/auto_learn.py:43
 msgid "Learning from this drive"
 msgstr ""
 
-#: settings/auto_learn.py:45
+#: settings/auto_learn.py:46
 #, python-brace-format
 msgid "Checking your last drive ({} of {})"
 msgstr ""
 
-#: settings/auto_learn.py:47
+#: settings/auto_learn.py:48
 msgid "Checking your last drive"
 msgstr ""
 
-#: settings/auto_learn.py:60
+#: settings/auto_learn.py:61
 msgid "No changes yet"
 msgstr ""
 
-#: settings/auto_learn.py:92
+#: settings/auto_learn.py:93
 #: settings/network_tab.py:280
 #: settings/network_tab.py:273
 msgid "Checking…"
@@ -4273,7 +4360,7 @@ msgstr ""
 msgid "{} · {}%"
 msgstr ""
 
-#: settings/ram.py:31
+#: settings/ram.py:32
 #: settings/storage.py:105
 #, python-brace-format
 msgid "{} MB"

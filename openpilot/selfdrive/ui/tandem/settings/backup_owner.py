@@ -15,6 +15,7 @@ import tempfile
 from typing import TYPE_CHECKING, Any
 
 from openpilot.selfdrive.ui.tandem.prefs import restore_prefs, save_prefs
+from openpilot.selfdrive.ui.tandem.dates import clock, long_date
 
 if TYPE_CHECKING:
   from openpilot.starpilot.galaxy.toggle_backup import ToggleBackup
@@ -68,7 +69,8 @@ class BackupStore:
       if not stat.S_ISREG(saved.st_mode):
         continue
       name = "Backup " + match[1] + (f" ({match[2]})" if match[2] else "")
-      when = datetime.fromtimestamp(saved.st_mtime).strftime("%b %-d, %Y %-I:%M %p")
+      at = datetime.fromtimestamp(saved.st_mtime)
+      when = f"{long_date(at)} {clock(at)}"
       entries.append((saved.st_mtime_ns, Backup(folder.name, name, when)))
     entries.sort(key=lambda entry: entry[0], reverse=True)
     return tuple(backup for _, backup in entries)

@@ -19,6 +19,7 @@ from openpilot.selfdrive.ui.tandem.layout import FILL, Align, inset, row
 from openpilot.selfdrive.ui.tandem.ram import DESCRIPTIONS, RamLog, Snapshot, now_percent
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, Padded, Text
 from openpilot.selfdrive.ui.tandem.settings.pages import Rebuilding, Section
+from openpilot.selfdrive.ui.tandem.dates import clock, short_date
 from openpilot.system.ui.widgets import Widget
 
 ROW_HEIGHT = T.px(41)
@@ -35,12 +36,11 @@ def when_text(when: float, now: datetime.datetime | None = None) -> str:
   """Today 4:12 PM, Yesterday 8:40 AM, or Oct 30 for older drives."""
   at = datetime.datetime.fromtimestamp(when)
   today = (now or datetime.datetime.now()).date()
-  clock = at.strftime("%-I:%M %p")
   if at.date() == today:
-    return t_("Today {}", clock)
+    return t_("Today {}", clock(at))
   if at.date() == today - datetime.timedelta(days=1):
-    return t_("Yesterday {}", clock)
-  return at.strftime("%b %-d")
+    return t_("Yesterday {}", clock(at))
+  return short_date(at)
 
 
 def growth_text(size: int) -> str:

@@ -19,6 +19,7 @@ from openpilot.starpilot.ui.raylib import rl
 from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.selfdrive.ui.tandem.layout import Align
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_
+from openpilot.selfdrive.ui.tandem.dates import clock
 
 MAP_FILL = T._hex("111821")
 GRID = T._hex("1C2733")
@@ -40,7 +41,7 @@ class RoutePlan:
 def arrive_text(plan: RoutePlan | None, now: datetime.datetime | None = None) -> str:
   if plan is None:
     return EMPTY
-  return ((now or datetime.datetime.now()) + datetime.timedelta(seconds=plan.seconds)).strftime("%-I:%M %p")
+  return clock((now or datetime.datetime.now()) + datetime.timedelta(seconds=plan.seconds))
 
 
 def time_text(plan: RoutePlan | None) -> str:

@@ -25,6 +25,93 @@ msgstr "РЕКОМЕНДОВАНО"
 msgid "Default"
 msgstr "Типово"
 
+#: dates.py:17
+msgctxt "clock: 24-hour for a 24-hour clock"
+msgid "12-hour"
+msgstr "24-hour"
+
+#: dates.py:13
+msgctxt "month"
+msgid "Jan"
+msgstr "січ."
+
+#: dates.py:13
+msgctxt "month"
+msgid "Feb"
+msgstr "лют."
+
+#: dates.py:13
+msgctxt "month"
+msgid "Mar"
+msgstr "бер."
+
+#: dates.py:13
+msgctxt "month"
+msgid "Apr"
+msgstr "квіт."
+
+#: dates.py:14
+msgctxt "month"
+msgid "May"
+msgstr "трав."
+
+#: dates.py:14
+msgctxt "month"
+msgid "Jun"
+msgstr "черв."
+
+#: dates.py:14
+msgctxt "month"
+msgid "Jul"
+msgstr "лип."
+
+#: dates.py:14
+msgctxt "month"
+msgid "Aug"
+msgstr "серп."
+
+#: dates.py:15
+msgctxt "month"
+msgid "Sep"
+msgstr "вер."
+
+#: dates.py:15
+msgctxt "month"
+msgid "Oct"
+msgstr "жовт."
+
+#: dates.py:15
+msgctxt "month"
+msgid "Nov"
+msgstr "лист."
+
+#: dates.py:15
+msgctxt "month"
+msgid "Dec"
+msgstr "груд."
+
+#: dates.py:18
+msgctxt "clock"
+msgid "AM"
+msgstr "AM"
+
+#: dates.py:18
+msgctxt "clock"
+msgid "PM"
+msgstr "PM"
+
+#: dates.py:27
+#, python-brace-format
+msgctxt "date: month, day"
+msgid "{} {}"
+msgstr "{1} {0}"
+
+#: dates.py:36
+#, python-brace-format
+msgctxt "date: month, day, year"
+msgid "{} {}, {}"
+msgstr "{1} {0} {2} р."
+
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: destinations.py:492
 msgid "Road data still supplies speed limits"
@@ -736,7 +823,7 @@ msgstr "{} s"
 
 #. Unit notation; keep as written.
 #: onroad/developer.py:286
-#: settings/ram.py:31
+#: settings/ram.py:32
 #: settings/storage.py:105
 #, python-brace-format
 msgid "{} GB"
@@ -867,18 +954,18 @@ msgid "Ignore"
 msgstr "Ігнорувати"
 
 #. Unit notation; keep as written.
-#: onroad/state.py:112
+#: onroad/state.py:113
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
 #. Unit notation; keep as written.
-#: onroad/state.py:112
+#: onroad/state.py:113
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/state.py:113
+#: onroad/state.py:114
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{} хв · {}"
@@ -1315,30 +1402,30 @@ msgstr "Bluetooth-пульт"
 msgid "Car connection"
 msgstr "Зв'язок з авто"
 
-#: routemap.py:128
+#: routemap.py:129
 #: routing_status.py:7
 #: routing_status.py:8
 msgid "Finding a route…"
 msgstr "Пошук маршруту…"
 
-#: routemap.py:129
+#: routemap.py:130
 msgid "Needs a GPS fix to plan the route"
 msgstr "Для планування маршруту потрібна GPS-позиція"
 
-#: routemap.py:130
+#: routemap.py:131
 msgid "Couldn't find a route. Check the connection."
 msgstr "Не вдалося знайти маршрут. Перевірте з'єднання."
 
-#: routemap.py:131
+#: routemap.py:132
 msgid "Routes need a Mapbox or Google key: see Settings › Driving › Speed & Steering › Navigation"
 msgstr "Для маршрутів потрібен ключ Mapbox або Google: див. Налаштування › Водіння › Швидкість і кермо › Навігація"
 
-#: routemap.py:50
+#: routemap.py:51
 #, python-brace-format
 msgid "{} min"
 msgstr "{} хв"
 
-#: routemap.py:50
+#: routemap.py:51
 #, python-brace-format
 msgid "{} h {} min"
 msgstr "{} год {} хв"
@@ -1662,48 +1749,48 @@ msgstr "Гучність"
 msgid "Minimum {}% for safety alerts"
 msgstr "Щонайменше {}% для попереджень безпеки"
 
-#: settings/auto_learn.py:48
-#: settings/auto_learn.py:35
-#: settings/auto_learn.py:100
+#: settings/auto_learn.py:49
+#: settings/auto_learn.py:36
+#: settings/auto_learn.py:101
 msgid "Not running right now"
 msgstr "Зараз не працює"
 
-#: settings/auto_learn.py:61
+#: settings/auto_learn.py:62
 #, python-brace-format
 msgid "Last change {}"
 msgstr "Остання зміна {}"
 
-#: settings/auto_learn.py:32
+#: settings/auto_learn.py:33
 msgid "Off: your steering tune stays as it is"
 msgstr "Вимкнено: налаштування керма лишається як є"
 
-#: settings/auto_learn.py:38
+#: settings/auto_learn.py:39
 msgid "Waiting for the car to turn off"
 msgstr "Чекає, поки авто вимкнеться"
 
-#: settings/auto_learn.py:40
+#: settings/auto_learn.py:41
 msgid "Needs more driving before it suggests a change"
 msgstr "Потрібно більше поїздок, перш ніж пропонувати зміну"
 
-#: settings/auto_learn.py:42
+#: settings/auto_learn.py:43
 msgid "Learning from this drive"
 msgstr "Вчиться з цієї поїздки"
 
-#: settings/auto_learn.py:45
+#: settings/auto_learn.py:46
 #, python-brace-format
 msgid "Checking your last drive ({} of {})"
 msgstr "Перевіряє останню поїздку ({} з {})"
 
-#: settings/auto_learn.py:47
+#: settings/auto_learn.py:48
 msgid "Checking your last drive"
 msgstr "Перевіряє останню поїздку"
 
-#: settings/auto_learn.py:60
+#: settings/auto_learn.py:61
 msgid "No changes yet"
 msgstr "Змін ще немає"
 
 #. English fallback pending cellular-status translation.
-#: settings/auto_learn.py:92
+#: settings/auto_learn.py:93
 #: settings/network_tab.py:280
 #: settings/network_tab.py:273
 msgid "Checking…"
@@ -4452,7 +4539,7 @@ msgstr "Перейти в Стоянку й зупинити служби кер
 msgid "{} · {}%"
 msgstr "{} · {}%"
 
-#: settings/ram.py:31
+#: settings/ram.py:32
 #: settings/storage.py:105
 #, python-brace-format
 msgid "{} MB"

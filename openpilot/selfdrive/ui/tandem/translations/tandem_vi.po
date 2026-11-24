@@ -25,6 +25,93 @@ msgstr "ĐỀ XUẤT"
 msgid "Default"
 msgstr "Mặc định"
 
+#: dates.py:17
+msgctxt "clock: 24-hour for a 24-hour clock"
+msgid "12-hour"
+msgstr "24-hour"
+
+#: dates.py:13
+msgctxt "month"
+msgid "Jan"
+msgstr "thg 1"
+
+#: dates.py:13
+msgctxt "month"
+msgid "Feb"
+msgstr "thg 2"
+
+#: dates.py:13
+msgctxt "month"
+msgid "Mar"
+msgstr "thg 3"
+
+#: dates.py:13
+msgctxt "month"
+msgid "Apr"
+msgstr "thg 4"
+
+#: dates.py:14
+msgctxt "month"
+msgid "May"
+msgstr "thg 5"
+
+#: dates.py:14
+msgctxt "month"
+msgid "Jun"
+msgstr "thg 6"
+
+#: dates.py:14
+msgctxt "month"
+msgid "Jul"
+msgstr "thg 7"
+
+#: dates.py:14
+msgctxt "month"
+msgid "Aug"
+msgstr "thg 8"
+
+#: dates.py:15
+msgctxt "month"
+msgid "Sep"
+msgstr "thg 9"
+
+#: dates.py:15
+msgctxt "month"
+msgid "Oct"
+msgstr "thg 10"
+
+#: dates.py:15
+msgctxt "month"
+msgid "Nov"
+msgstr "thg 11"
+
+#: dates.py:15
+msgctxt "month"
+msgid "Dec"
+msgstr "thg 12"
+
+#: dates.py:18
+msgctxt "clock"
+msgid "AM"
+msgstr "SA"
+
+#: dates.py:18
+msgctxt "clock"
+msgid "PM"
+msgstr "CH"
+
+#: dates.py:27
+#, python-brace-format
+msgctxt "date: month, day"
+msgid "{} {}"
+msgstr "{1} {0}"
+
+#: dates.py:36
+#, python-brace-format
+msgctxt "date: month, day, year"
+msgid "{} {}, {}"
+msgstr "{1} {0}, {2}"
+
 #: destinations.py:492
 msgid "Road data still supplies speed limits"
 msgstr "Dữ liệu đường vẫn cung cấp giới hạn tốc độ"
@@ -716,7 +803,7 @@ msgid "{} s"
 msgstr "{} s"
 
 #: onroad/developer.py:286
-#: settings/ram.py:31
+#: settings/ram.py:32
 #: settings/storage.py:105
 #, python-brace-format
 msgid "{} GB"
@@ -838,17 +925,17 @@ msgstr "Theo"
 msgid "Ignore"
 msgstr "Bỏ qua"
 
-#: onroad/state.py:112
+#: onroad/state.py:113
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
-#: onroad/state.py:112
+#: onroad/state.py:113
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/state.py:113
+#: onroad/state.py:114
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{} phút · {}"
@@ -1250,30 +1337,30 @@ msgstr "Điều khiển Bluetooth"
 msgid "Car connection"
 msgstr "Kết nối với xe"
 
-#: routemap.py:128
+#: routemap.py:129
 #: routing_status.py:7
 #: routing_status.py:8
 msgid "Finding a route…"
 msgstr "Đang tìm tuyến đường…"
 
-#: routemap.py:129
+#: routemap.py:130
 msgid "Needs a GPS fix to plan the route"
 msgstr "Cần định vị GPS để lập tuyến"
 
-#: routemap.py:130
+#: routemap.py:131
 msgid "Couldn't find a route. Check the connection."
 msgstr "Không tìm được tuyến đường. Hãy kiểm tra kết nối."
 
-#: routemap.py:131
+#: routemap.py:132
 msgid "Routes need a Mapbox or Google key: see Settings › Driving › Speed & Steering › Navigation"
 msgstr "Tuyến đường cần khóa Mapbox hoặc Google: xem Cài đặt › Lái xe › Tốc độ và lái › Dẫn đường"
 
-#: routemap.py:50
+#: routemap.py:51
 #, python-brace-format
 msgid "{} min"
 msgstr "{} phút"
 
-#: routemap.py:50
+#: routemap.py:51
 #, python-brace-format
 msgid "{} h {} min"
 msgstr "{} giờ {} phút"
@@ -1571,47 +1658,47 @@ msgstr "Âm lượng"
 msgid "Minimum {}% for safety alerts"
 msgstr "Tối thiểu {}% cho cảnh báo an toàn"
 
-#: settings/auto_learn.py:48
-#: settings/auto_learn.py:35
-#: settings/auto_learn.py:100
+#: settings/auto_learn.py:49
+#: settings/auto_learn.py:36
+#: settings/auto_learn.py:101
 msgid "Not running right now"
 msgstr "Hiện không chạy"
 
-#: settings/auto_learn.py:61
+#: settings/auto_learn.py:62
 #, python-brace-format
 msgid "Last change {}"
 msgstr "Thay đổi gần nhất {}"
 
-#: settings/auto_learn.py:32
+#: settings/auto_learn.py:33
 msgid "Off: your steering tune stays as it is"
 msgstr "Tắt: thông số lái giữ nguyên"
 
-#: settings/auto_learn.py:38
+#: settings/auto_learn.py:39
 msgid "Waiting for the car to turn off"
 msgstr "Đang chờ xe tắt máy"
 
-#: settings/auto_learn.py:40
+#: settings/auto_learn.py:41
 msgid "Needs more driving before it suggests a change"
 msgstr "Cần lái thêm trước khi đề xuất thay đổi"
 
-#: settings/auto_learn.py:42
+#: settings/auto_learn.py:43
 msgid "Learning from this drive"
 msgstr "Đang học từ chuyến này"
 
-#: settings/auto_learn.py:45
+#: settings/auto_learn.py:46
 #, python-brace-format
 msgid "Checking your last drive ({} of {})"
 msgstr "Đang kiểm tra chuyến gần nhất ({}/{})"
 
-#: settings/auto_learn.py:47
+#: settings/auto_learn.py:48
 msgid "Checking your last drive"
 msgstr "Đang kiểm tra chuyến gần nhất"
 
-#: settings/auto_learn.py:60
+#: settings/auto_learn.py:61
 msgid "No changes yet"
 msgstr "Chưa có thay đổi"
 
-#: settings/auto_learn.py:92
+#: settings/auto_learn.py:93
 #: settings/network_tab.py:280
 #: settings/network_tab.py:273
 msgid "Checking…"
@@ -4267,7 +4354,7 @@ msgstr "Chuyển sang Đỗ xe và dừng các dịch vụ lái?"
 msgid "{} · {}%"
 msgstr "{} · {}%"
 
-#: settings/ram.py:31
+#: settings/ram.py:32
 #: settings/storage.py:105
 #, python-brace-format
 msgid "{} MB"

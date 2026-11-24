@@ -25,6 +25,93 @@ msgstr "おすすめ"
 msgid "Default"
 msgstr "デフォルト"
 
+#: dates.py:17
+msgctxt "clock: 24-hour for a 24-hour clock"
+msgid "12-hour"
+msgstr "24-hour"
+
+#: dates.py:13
+msgctxt "month"
+msgid "Jan"
+msgstr "1月"
+
+#: dates.py:13
+msgctxt "month"
+msgid "Feb"
+msgstr "2月"
+
+#: dates.py:13
+msgctxt "month"
+msgid "Mar"
+msgstr "3月"
+
+#: dates.py:13
+msgctxt "month"
+msgid "Apr"
+msgstr "4月"
+
+#: dates.py:14
+msgctxt "month"
+msgid "May"
+msgstr "5月"
+
+#: dates.py:14
+msgctxt "month"
+msgid "Jun"
+msgstr "6月"
+
+#: dates.py:14
+msgctxt "month"
+msgid "Jul"
+msgstr "7月"
+
+#: dates.py:14
+msgctxt "month"
+msgid "Aug"
+msgstr "8月"
+
+#: dates.py:15
+msgctxt "month"
+msgid "Sep"
+msgstr "9月"
+
+#: dates.py:15
+msgctxt "month"
+msgid "Oct"
+msgstr "10月"
+
+#: dates.py:15
+msgctxt "month"
+msgid "Nov"
+msgstr "11月"
+
+#: dates.py:15
+msgctxt "month"
+msgid "Dec"
+msgstr "12月"
+
+#: dates.py:18
+msgctxt "clock"
+msgid "AM"
+msgstr "午前"
+
+#: dates.py:18
+msgctxt "clock"
+msgid "PM"
+msgstr "午後"
+
+#: dates.py:27
+#, python-brace-format
+msgctxt "date: month, day"
+msgid "{} {}"
+msgstr "{0}{1}日"
+
+#: dates.py:36
+#, python-brace-format
+msgctxt "date: month, day, year"
+msgid "{} {}, {}"
+msgstr "{2}年{0}{1}日"
+
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: destinations.py:492
 msgid "Road data still supplies speed limits"
@@ -732,7 +819,7 @@ msgstr "{} s"
 
 #. Unit notation; keep as written.
 #: onroad/developer.py:286
-#: settings/ram.py:31
+#: settings/ram.py:32
 #: settings/storage.py:105
 #, python-brace-format
 msgid "{} GB"
@@ -863,18 +950,18 @@ msgid "Ignore"
 msgstr "無視"
 
 #. Unit notation; keep as written.
-#: onroad/state.py:112
+#: onroad/state.py:113
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
 #. Unit notation; keep as written.
-#: onroad/state.py:112
+#: onroad/state.py:113
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/state.py:113
+#: onroad/state.py:114
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{}分 · {}"
@@ -1311,30 +1398,30 @@ msgstr "Bluetoothリモコン"
 msgid "Car connection"
 msgstr "車との接続"
 
-#: routemap.py:128
+#: routemap.py:129
 #: routing_status.py:7
 #: routing_status.py:8
 msgid "Finding a route…"
 msgstr "ルートを検索中…"
 
-#: routemap.py:129
+#: routemap.py:130
 msgid "Needs a GPS fix to plan the route"
 msgstr "ルートを計画するには GPS の測位が必要です"
 
-#: routemap.py:130
+#: routemap.py:131
 msgid "Couldn't find a route. Check the connection."
 msgstr "ルートが見つかりませんでした。接続を確認してください。"
 
-#: routemap.py:131
+#: routemap.py:132
 msgid "Routes need a Mapbox or Google key: see Settings › Driving › Speed & Steering › Navigation"
 msgstr "ルートには Mapbox か Google のキーが必要です：設定 › 運転 › 速度とステアリング › ナビゲーション"
 
-#: routemap.py:50
+#: routemap.py:51
 #, python-brace-format
 msgid "{} min"
 msgstr "{}分"
 
-#: routemap.py:50
+#: routemap.py:51
 #, python-brace-format
 msgid "{} h {} min"
 msgstr "{}時間{}分"
@@ -1658,48 +1745,48 @@ msgstr "音量"
 msgid "Minimum {}% for safety alerts"
 msgstr "安全警告は最低 {}%"
 
-#: settings/auto_learn.py:48
-#: settings/auto_learn.py:35
-#: settings/auto_learn.py:100
+#: settings/auto_learn.py:49
+#: settings/auto_learn.py:36
+#: settings/auto_learn.py:101
 msgid "Not running right now"
 msgstr "現在は動作していません"
 
-#: settings/auto_learn.py:61
+#: settings/auto_learn.py:62
 #, python-brace-format
 msgid "Last change {}"
 msgstr "最終変更 {}"
 
-#: settings/auto_learn.py:32
+#: settings/auto_learn.py:33
 msgid "Off: your steering tune stays as it is"
 msgstr "オフ：ステアリング調整はそのままです"
 
-#: settings/auto_learn.py:38
+#: settings/auto_learn.py:39
 msgid "Waiting for the car to turn off"
 msgstr "車の電源が切れるのを待っています"
 
-#: settings/auto_learn.py:40
+#: settings/auto_learn.py:41
 msgid "Needs more driving before it suggests a change"
 msgstr "変更を提案するには、もっと走行が必要です"
 
-#: settings/auto_learn.py:42
+#: settings/auto_learn.py:43
 msgid "Learning from this drive"
 msgstr "この走行から学習中"
 
-#: settings/auto_learn.py:45
+#: settings/auto_learn.py:46
 #, python-brace-format
 msgid "Checking your last drive ({} of {})"
 msgstr "前回の走行を確認中（{}/{}）"
 
-#: settings/auto_learn.py:47
+#: settings/auto_learn.py:48
 msgid "Checking your last drive"
 msgstr "前回の走行を確認中"
 
-#: settings/auto_learn.py:60
+#: settings/auto_learn.py:61
 msgid "No changes yet"
 msgstr "まだ変更はありません"
 
 #. English fallback pending cellular-status translation.
-#: settings/auto_learn.py:92
+#: settings/auto_learn.py:93
 #: settings/network_tab.py:280
 #: settings/network_tab.py:273
 msgid "Checking…"
@@ -4440,7 +4527,7 @@ msgstr "オフロードに切り替えて運転サービスを停止しますか
 msgid "{} · {}%"
 msgstr "{} · {}%"
 
-#: settings/ram.py:31
+#: settings/ram.py:32
 #: settings/storage.py:105
 #, python-brace-format
 msgid "{} MB"

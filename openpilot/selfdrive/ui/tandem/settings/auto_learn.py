@@ -13,6 +13,7 @@ from collections.abc import Callable
 from concurrent.futures import Future, ThreadPoolExecutor
 
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_, translate
+from openpilot.selfdrive.ui.tandem.dates import short_date
 
 REFRESH_S = 5.0
 KEY = "ForceAutoTuneOff"   # StarPilot's Auto Learn row (starpilot/lateral/controller_selection.LEARNING_OFF_KEY)
@@ -58,7 +59,7 @@ def last_change(snapshot: dict) -> str:
   times = [p["completedAt"] for p in profiles if isinstance(p, dict) and isinstance(p.get("completedAt"), int)]
   if not times:
     return N_("No changes yet")
-  return t_("Last change {}", datetime.datetime.fromtimestamp(max(times) / 1000).strftime("%b %-d"))
+  return t_("Last change {}", short_date(datetime.datetime.fromtimestamp(max(times) / 1000)))
 
 
 def describe(snapshot: dict) -> str:

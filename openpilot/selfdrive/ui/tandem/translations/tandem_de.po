@@ -25,6 +25,93 @@ msgstr "EMPFOHLEN"
 msgid "Default"
 msgstr "Standard"
 
+#: dates.py:17
+msgctxt "clock: 24-hour for a 24-hour clock"
+msgid "12-hour"
+msgstr "24-hour"
+
+#: dates.py:13
+msgctxt "month"
+msgid "Jan"
+msgstr "Jan."
+
+#: dates.py:13
+msgctxt "month"
+msgid "Feb"
+msgstr "Feb."
+
+#: dates.py:13
+msgctxt "month"
+msgid "Mar"
+msgstr "März"
+
+#: dates.py:13
+msgctxt "month"
+msgid "Apr"
+msgstr "Apr."
+
+#: dates.py:14
+msgctxt "month"
+msgid "May"
+msgstr "Mai"
+
+#: dates.py:14
+msgctxt "month"
+msgid "Jun"
+msgstr "Juni"
+
+#: dates.py:14
+msgctxt "month"
+msgid "Jul"
+msgstr "Juli"
+
+#: dates.py:14
+msgctxt "month"
+msgid "Aug"
+msgstr "Aug."
+
+#: dates.py:15
+msgctxt "month"
+msgid "Sep"
+msgstr "Sept."
+
+#: dates.py:15
+msgctxt "month"
+msgid "Oct"
+msgstr "Okt."
+
+#: dates.py:15
+msgctxt "month"
+msgid "Nov"
+msgstr "Nov."
+
+#: dates.py:15
+msgctxt "month"
+msgid "Dec"
+msgstr "Dez."
+
+#: dates.py:18
+msgctxt "clock"
+msgid "AM"
+msgstr "AM"
+
+#: dates.py:18
+msgctxt "clock"
+msgid "PM"
+msgstr "PM"
+
+#: dates.py:27
+#, python-brace-format
+msgctxt "date: month, day"
+msgid "{} {}"
+msgstr "{1}. {0}"
+
+#: dates.py:36
+#, python-brace-format
+msgctxt "date: month, day, year"
+msgid "{} {}, {}"
+msgstr "{1}. {0} {2}"
+
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: destinations.py:492
 msgid "Road data still supplies speed limits"
@@ -734,7 +821,7 @@ msgstr "{} s"
 
 #. Unit notation; keep as written.
 #: onroad/developer.py:286
-#: settings/ram.py:31
+#: settings/ram.py:32
 #: settings/storage.py:105
 #, python-brace-format
 msgid "{} GB"
@@ -865,18 +952,18 @@ msgid "Ignore"
 msgstr "Ignorieren"
 
 #. Unit notation; keep as written.
-#: onroad/state.py:112
+#: onroad/state.py:113
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
 #. Unit notation; keep as written.
-#: onroad/state.py:112
+#: onroad/state.py:113
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/state.py:113
+#: onroad/state.py:114
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{} Min. · {}"
@@ -1313,30 +1400,30 @@ msgstr "Bluetooth-Fernbedienung"
 msgid "Car connection"
 msgstr "Fahrzeugverbindung"
 
-#: routemap.py:128
+#: routemap.py:129
 #: routing_status.py:7
 #: routing_status.py:8
 msgid "Finding a route…"
 msgstr "Route wird gesucht…"
 
-#: routemap.py:129
+#: routemap.py:130
 msgid "Needs a GPS fix to plan the route"
 msgstr "Braucht GPS-Empfang, um die Route zu planen"
 
-#: routemap.py:130
+#: routemap.py:131
 msgid "Couldn't find a route. Check the connection."
 msgstr "Keine Route gefunden. Prüfe die Verbindung."
 
-#: routemap.py:131
+#: routemap.py:132
 msgid "Routes need a Mapbox or Google key: see Settings › Driving › Speed & Steering › Navigation"
 msgstr "Routen brauchen einen Mapbox- oder Google-Schlüssel: siehe Einstellungen › Fahren › Tempo & Lenkung › Navigation"
 
-#: routemap.py:50
+#: routemap.py:51
 #, python-brace-format
 msgid "{} min"
 msgstr "{} Min."
 
-#: routemap.py:50
+#: routemap.py:51
 #, python-brace-format
 msgid "{} h {} min"
 msgstr "{} Std. {} Min."
@@ -1660,48 +1747,48 @@ msgstr "Lautstärke"
 msgid "Minimum {}% for safety alerts"
 msgstr "Mindestens {}% für Sicherheitswarnungen"
 
-#: settings/auto_learn.py:48
-#: settings/auto_learn.py:35
-#: settings/auto_learn.py:100
+#: settings/auto_learn.py:49
+#: settings/auto_learn.py:36
+#: settings/auto_learn.py:101
 msgid "Not running right now"
 msgstr "Läuft gerade nicht"
 
-#: settings/auto_learn.py:61
+#: settings/auto_learn.py:62
 #, python-brace-format
 msgid "Last change {}"
 msgstr "Letzte Änderung {}"
 
-#: settings/auto_learn.py:32
+#: settings/auto_learn.py:33
 msgid "Off: your steering tune stays as it is"
 msgstr "Aus: Die Lenkabstimmung bleibt, wie sie ist"
 
-#: settings/auto_learn.py:38
+#: settings/auto_learn.py:39
 msgid "Waiting for the car to turn off"
 msgstr "Wartet, bis das Auto aus ist"
 
-#: settings/auto_learn.py:40
+#: settings/auto_learn.py:41
 msgid "Needs more driving before it suggests a change"
 msgstr "Braucht mehr Fahrten, bevor es eine Änderung vorschlägt"
 
-#: settings/auto_learn.py:42
+#: settings/auto_learn.py:43
 msgid "Learning from this drive"
 msgstr "Lernt von dieser Fahrt"
 
-#: settings/auto_learn.py:45
+#: settings/auto_learn.py:46
 #, python-brace-format
 msgid "Checking your last drive ({} of {})"
 msgstr "Prüft deine letzte Fahrt ({} von {})"
 
-#: settings/auto_learn.py:47
+#: settings/auto_learn.py:48
 msgid "Checking your last drive"
 msgstr "Prüft deine letzte Fahrt"
 
-#: settings/auto_learn.py:60
+#: settings/auto_learn.py:61
 msgid "No changes yet"
 msgstr "Noch keine Änderungen"
 
 #. English fallback pending cellular-status translation.
-#: settings/auto_learn.py:92
+#: settings/auto_learn.py:93
 #: settings/network_tab.py:280
 #: settings/network_tab.py:273
 msgid "Checking…"
@@ -4446,7 +4533,7 @@ msgstr "Zu Offroad wechseln und Fahrdienste stoppen?"
 msgid "{} · {}%"
 msgstr "{} · {} %"
 
-#: settings/ram.py:31
+#: settings/ram.py:32
 #: settings/storage.py:105
 #, python-brace-format
 msgid "{} MB"

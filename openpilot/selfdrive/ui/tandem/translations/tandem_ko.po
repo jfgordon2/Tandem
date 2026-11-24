@@ -25,6 +25,93 @@ msgstr "권장"
 msgid "Default"
 msgstr "기본값"
 
+#: dates.py:17
+msgctxt "clock: 24-hour for a 24-hour clock"
+msgid "12-hour"
+msgstr "24-hour"
+
+#: dates.py:13
+msgctxt "month"
+msgid "Jan"
+msgstr "1월"
+
+#: dates.py:13
+msgctxt "month"
+msgid "Feb"
+msgstr "2월"
+
+#: dates.py:13
+msgctxt "month"
+msgid "Mar"
+msgstr "3월"
+
+#: dates.py:13
+msgctxt "month"
+msgid "Apr"
+msgstr "4월"
+
+#: dates.py:14
+msgctxt "month"
+msgid "May"
+msgstr "5월"
+
+#: dates.py:14
+msgctxt "month"
+msgid "Jun"
+msgstr "6월"
+
+#: dates.py:14
+msgctxt "month"
+msgid "Jul"
+msgstr "7월"
+
+#: dates.py:14
+msgctxt "month"
+msgid "Aug"
+msgstr "8월"
+
+#: dates.py:15
+msgctxt "month"
+msgid "Sep"
+msgstr "9월"
+
+#: dates.py:15
+msgctxt "month"
+msgid "Oct"
+msgstr "10월"
+
+#: dates.py:15
+msgctxt "month"
+msgid "Nov"
+msgstr "11월"
+
+#: dates.py:15
+msgctxt "month"
+msgid "Dec"
+msgstr "12월"
+
+#: dates.py:18
+msgctxt "clock"
+msgid "AM"
+msgstr "오전"
+
+#: dates.py:18
+msgctxt "clock"
+msgid "PM"
+msgstr "오후"
+
+#: dates.py:27
+#, python-brace-format
+msgctxt "date: month, day"
+msgid "{} {}"
+msgstr "{0} {1}일"
+
+#: dates.py:36
+#, python-brace-format
+msgctxt "date: month, day, year"
+msgid "{} {}, {}"
+msgstr "{2}년 {0} {1}일"
+
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: destinations.py:492
 msgid "Road data still supplies speed limits"
@@ -732,7 +819,7 @@ msgstr "{} s"
 
 #. Unit notation; keep as written.
 #: onroad/developer.py:286
-#: settings/ram.py:31
+#: settings/ram.py:32
 #: settings/storage.py:105
 #, python-brace-format
 msgid "{} GB"
@@ -863,18 +950,18 @@ msgid "Ignore"
 msgstr "무시"
 
 #. Unit notation; keep as written.
-#: onroad/state.py:112
+#: onroad/state.py:113
 #, python-brace-format
 msgid "{} km"
 msgstr "{} km"
 
 #. Unit notation; keep as written.
-#: onroad/state.py:112
+#: onroad/state.py:113
 #, python-brace-format
 msgid "{} mi"
 msgstr "{} mi"
 
-#: onroad/state.py:113
+#: onroad/state.py:114
 #, python-brace-format
 msgid "{} min · {}"
 msgstr "{}분 · {}"
@@ -1311,30 +1398,30 @@ msgstr "블루투스 리모컨"
 msgid "Car connection"
 msgstr "차량 연결"
 
-#: routemap.py:128
+#: routemap.py:129
 #: routing_status.py:7
 #: routing_status.py:8
 msgid "Finding a route…"
 msgstr "경로 찾는 중…"
 
-#: routemap.py:129
+#: routemap.py:130
 msgid "Needs a GPS fix to plan the route"
 msgstr "경로를 계획하려면 GPS 위치가 필요합니다"
 
-#: routemap.py:130
+#: routemap.py:131
 msgid "Couldn't find a route. Check the connection."
 msgstr "경로를 찾을 수 없습니다. 연결을 확인하세요."
 
-#: routemap.py:131
+#: routemap.py:132
 msgid "Routes need a Mapbox or Google key: see Settings › Driving › Speed & Steering › Navigation"
 msgstr "경로에는 Mapbox 또는 Google 키가 필요합니다: 설정 › 주행 › 속도 및 조향 › 내비게이션"
 
-#: routemap.py:50
+#: routemap.py:51
 #, python-brace-format
 msgid "{} min"
 msgstr "{}분"
 
-#: routemap.py:50
+#: routemap.py:51
 #, python-brace-format
 msgid "{} h {} min"
 msgstr "{}시간 {}분"
@@ -1658,48 +1745,48 @@ msgstr "음량"
 msgid "Minimum {}% for safety alerts"
 msgstr "안전 알림의 최저 음량 {}%"
 
-#: settings/auto_learn.py:48
-#: settings/auto_learn.py:35
-#: settings/auto_learn.py:100
+#: settings/auto_learn.py:49
+#: settings/auto_learn.py:36
+#: settings/auto_learn.py:101
 msgid "Not running right now"
 msgstr "지금은 실행되지 않음"
 
-#: settings/auto_learn.py:61
+#: settings/auto_learn.py:62
 #, python-brace-format
 msgid "Last change {}"
 msgstr "최근 변경 {}"
 
-#: settings/auto_learn.py:32
+#: settings/auto_learn.py:33
 msgid "Off: your steering tune stays as it is"
 msgstr "꺼짐: 조향 튜닝이 그대로 유지됩니다"
 
-#: settings/auto_learn.py:38
+#: settings/auto_learn.py:39
 msgid "Waiting for the car to turn off"
 msgstr "차량 시동이 꺼지기를 기다리는 중"
 
-#: settings/auto_learn.py:40
+#: settings/auto_learn.py:41
 msgid "Needs more driving before it suggests a change"
 msgstr "변경을 제안하려면 더 주행해야 합니다"
 
-#: settings/auto_learn.py:42
+#: settings/auto_learn.py:43
 msgid "Learning from this drive"
 msgstr "이번 주행에서 학습 중"
 
-#: settings/auto_learn.py:45
+#: settings/auto_learn.py:46
 #, python-brace-format
 msgid "Checking your last drive ({} of {})"
 msgstr "지난 주행 확인 중 ({}/{})"
 
-#: settings/auto_learn.py:47
+#: settings/auto_learn.py:48
 msgid "Checking your last drive"
 msgstr "지난 주행 확인 중"
 
-#: settings/auto_learn.py:60
+#: settings/auto_learn.py:61
 msgid "No changes yet"
 msgstr "아직 변경 없음"
 
 #. English fallback pending cellular-status translation.
-#: settings/auto_learn.py:92
+#: settings/auto_learn.py:93
 #: settings/network_tab.py:280
 #: settings/network_tab.py:273
 msgid "Checking…"
@@ -4440,7 +4527,7 @@ msgstr "오프로드로 전환하고 주행 서비스를 중지할까요?"
 msgid "{} · {}%"
 msgstr "{} · {}%"
 
-#: settings/ram.py:31
+#: settings/ram.py:32
 #: settings/storage.py:105
 #, python-brace-format
 msgid "{} MB"
