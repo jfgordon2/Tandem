@@ -50,6 +50,7 @@ MARGIN_PX = 16
 INFO_PAD_PX, INFO_FONT_PX, INFO_ICON_PX = (22, 18), 24, 30
 WARNING_PAD_PX, WARNING_TITLE_PX, WARNING_LINE_PX = (24, 20), 32, 22
 CRITICAL_ICON_PX, CRITICAL_TITLE_PX, CRITICAL_LINE_PX = 84, 44, 24
+REVERSE_TITLE_PX, REVERSE_LINE_PX = 92, 34   # upstream's full-size alert text (177 and 66 device px), as release kept it
 
 
 def prepare_fonts() -> None:
@@ -121,8 +122,8 @@ def draw_reverse(alert: Alert, title_label: Any, line_label: Any, render: Callab
 
 
 def box(rect: rl.Rectangle, alert_level: str, text1: str, text2: str) -> rl.Rectangle:
-  """Where an alert draws: the whole road view for a takeover, else a banner along the bottom."""
-  if alert_level == CRITICAL:
+  """Where an alert draws: the whole road view for a takeover or reverse gear, else a banner along the bottom."""
+  if alert_level in (CRITICAL, REVERSE):
     return rect
   if alert_level == WARNING:
     lines = draw.line_height(Z.font_px(WARNING_TITLE_PX)) + (Z.px(6) + draw.line_height(Z.font_px(WARNING_LINE_PX)) if _clean(text2) else 0)
@@ -132,8 +133,31 @@ def box(rect: rl.Rectangle, alert_level: str, text1: str, text2: str) -> rl.Rect
   return rl.Rectangle(rect.x + Z.px(MARGIN_PX), rect.y + rect.height - Z.px(MARGIN_PX) - height, rect.width - Z.px(MARGIN_PX) * 2, height)
 
 
+def _draw_reverse_text(where: rl.Rectangle, text1: str, text2: str, opacity: float) -> None:
+  """Reverse gear as release drew it: StarPilot's words in large white text centered over the rear view, no box. The
+  title keeps StarPilot's line breaks ("Reverse" over "Gear")."""
+  title_size, line_size = Z.font_px(REVERSE_TITLE_PX), Z.font_px(REVERSE_LINE_PX)
+  width = where.width - Z.px(48) * 2
+  lines = [line for part in translate(text1 or "").splitlines() if part.strip()
+           for line in draw.paragraph_lines(" ".join(part.split()), title_size, T.FONT_BOLD, width)]
+  detail = _clean(text2)
+  title_h, line_h = draw.line_height(title_size), draw.line_height(line_size)
+  total = title_h * len(lines) + (Z.px(24) + line_h if detail else 0)
+  y = where.y + (where.height - total) / 2
+  ink = draw.alpha(T.TEXT, opacity)
+  for line in lines:
+    draw.text(rl.Rectangle(where.x + Z.px(48), y, width, title_h), line, title_size, ink, T.FONT_BOLD, Align.CENTER)
+    y += title_h
+  if detail:
+    draw.text(rl.Rectangle(where.x + Z.px(48), y + Z.px(24), width, line_h), draw.fit(detail, line_size, T.FONT, width), line_size,
+              ink, T.FONT, Align.CENTER)
+
+
 def draw_alert(where: rl.Rectangle, alert_level: str, text1: str, text2: str, opacity: float) -> None:
   """One alert in its box (see box()), faded by opacity as StarPilot's renderer fades alerts in and out."""
+  if alert_level == REVERSE:
+    _draw_reverse_text(where, text1, text2, opacity)
+    return
   text1, text2 = _clean(text1), _clean(text2)
   fade = lambda color: draw.alpha(color, opacity)  # noqa: E731
   if alert_level == CRITICAL:

@@ -43,6 +43,7 @@ def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any)
     ("new-limit", True, replace(base, bar=replace(base.bar, set_speed=48), speed=45, left=False, proposal=proposal, chips=())),
     ("warning", True, replace(base, attention_warning=True, alert=DrivingAlert(alerts.WARNING, "Pay attention", "Look at the road ahead"))),
     ("critical", False, DriveDisplay(alert=DrivingAlert(alerts.CRITICAL, "TAKE CONTROL IMMEDIATELY", "System Unresponsive"))),
+    ("reverse", False, replace(base, alert=DrivingAlert(alerts.REVERSE, "Reverse\nGear"), chips=())),   # release's centered words
     ("low-ram", True, replace(base, chips=(ram, curve))),
     ("nav", False, replace(base, bar=replace(base.bar, navigating=True, arrive="4:52 PM", left="12 min · 8.4 mi", street="SE Hawthorne Blvd"),
                            chips=(), turn=("0.4 mi", "Turn right onto SE 39th Ave", "turn", "right"))),

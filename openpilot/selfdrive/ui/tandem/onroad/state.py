@@ -38,7 +38,7 @@ class Proposal:
 
 @dataclass(frozen=True)
 class DrivingAlert:
-  """StarPilot's selected alert in the mock's levels (alerts.INFO, WARNING or CRITICAL)."""
+  """StarPilot's selected alert in the mock's levels (alerts.INFO, WARNING or CRITICAL), or REVERSE for reverse gear."""
 
   level: str
   title: str

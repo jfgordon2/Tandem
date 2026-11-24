@@ -47,8 +47,8 @@ def driving_alert(selected: Any, fallback: Any | None, help_steer: bool = False)
   if not (selected.critical or selected.size == FULL):
     if alerts.shown_as_chip(selected.alert_type) or (help_steer and alerts.replaced_by_headroom(selected.alert_type)):
       return None
-  if selected.alert_type.split("/", 1)[0] == "reverseGear" and not selected.critical:
-    return DrivingAlert(alerts.INFO, selected.text1, selected.text2)
+  if selected.alert_type.split("/", 1)[0] == "reverseGear" and not selected.critical:   # release's centered words
+    return DrivingAlert(alerts.REVERSE, selected.text1, selected.text2)
   level = alerts.CRITICAL if selected.critical or selected.size == FULL else alerts.WARNING if selected.user_prompt else alerts.INFO
   return DrivingAlert(level, selected.text1, selected.text2)
 

@@ -189,6 +189,8 @@ def test_alerts_keep_starpilots_choice_in_the_mocks_levels() -> None:
   assert driving_alert(_alert("x", user_prompt=True), None).level == alerts.WARNING
   assert driving_alert(_alert("x", size="full"), None).level == alerts.CRITICAL
   assert driving_alert(_alert("x", critical=True), None).level == alerts.CRITICAL
+  # Reverse gear is StarPilot's full-size alert; release drew its words centered over the rear view, not as a takeover.
+  assert driving_alert(_alert("reverseGear/permanent", size="full"), None).level == alerts.REVERSE
   timeout = SimpleNamespace(status=2, size=3, text1="TAKE CONTROL IMMEDIATELY", text2="")
   assert driving_alert(_alert("", size="none"), timeout).level == alerts.CRITICAL   # before the first coherent snapshot
 
@@ -284,3 +286,21 @@ def test_a_tap_on_the_road_closes_the_open_sidebar() -> None:
   toggled.reset_mock()
   view._handle_mouse_release(SimpleNamespace(x=1200, y=1000))
   assert not toggled.called
+
+
+def test_reverse_gear_is_large_centered_words_with_no_box(monkeypatch: pytest.MonkeyPatch) -> None:
+  from openpilot.selfdrive.ui.tandem import draw
+  fill, text = Mock(), Mock(return_value=0)
+  monkeypatch.setattr(draw, "fill", fill)
+  monkeypatch.setattr(draw, "text", text)
+  monkeypatch.setattr(draw, "paragraph_lines", lambda words, *args: [words])   # no window in tests: measure nothing
+  monkeypatch.setattr(draw, "line_height", lambda size: float(size))
+  road = rl.Rectangle(0, 0, 2160, 1080)
+  where = alerts.box(road, alerts.REVERSE, "Reverse\nGear", "")
+  assert (where.x, where.y, where.width, where.height) == (0, 0, 2160, 1080)
+  alerts.draw_alert(where, alerts.REVERSE, "Reverse\nGear", "", 1.0)
+  assert not fill.called
+  drawn = [call.args for call in text.call_args_list]
+  assert [args[1] for args in drawn] == ["Reverse", "Gear"]   # StarPilot's line break kept
+  first, second = drawn[0][0], drawn[1][0]
+  assert second.y > first.y and abs((first.y + second.y + second.height) / 2 - 540) < 2   # centered on the road
