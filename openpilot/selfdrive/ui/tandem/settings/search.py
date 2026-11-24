@@ -146,7 +146,7 @@ ENTRIES: list[Entry] = [
   _place(N_("Tuner Mode"), N_("Fine-tuning screens for steering, gas, brake and following"), 0, words="tuning"),
   # Driving › Tuner Mode: StarPilot lists these rows by its own labels, for the car it detects.
   _place(N_("Steering"), N_("Lane centering and your car's steering tune"), 0, TN, 0,
-         "lane centering offset strength friction lateral acceleration torque steer"),
+         "lane centering offset strength friction lateral acceleration torque steer auto learn autotune flm"),
   Entry(N_("Lane Centering"), N_("Steers toward the middle of the lane, not just the model's path"), 0, TN, 0,
         words="lane centering center keep middle"),
   _place(N_("Gas & Brake"), N_("Acceleration and braking profiles, stops and takeoffs"), 0, TN, 1,

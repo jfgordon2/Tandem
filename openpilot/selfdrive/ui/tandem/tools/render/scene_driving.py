@@ -63,7 +63,7 @@ def example_owner() -> Owner:
     "vehicle": {"SNGHack": "Off", "ToyotaAutoHold": "On"},
     "lane": {"LaneCentering": "On", "LaneCenteringPauseOnSignal": "On", "LaneCenterOffset": "0.0", "LaneCenteringE2EAuthority": "50",
              "LaneCenteringStrength": "100"},
-    "torque": {"SteerFriction": "0.12", "SteerLatAccel": "2.3"}, "tuning": {},
+    "torque": {"SteerFriction": "0.12", "SteerLatAccel": "2.3", "ForceAutoTuneOff": "On"}, "tuning": {},
     "relaxed": {"RelaxedFollow": "1.6"}, "standard": {"StandardFollow": "1.45"}, "aggressive": {"AggressiveFollow": "1.25"},
     "traffic": {"TrafficFollow": "0.75"},
   })
@@ -102,11 +102,22 @@ def alerts_shots(window: SettingsWindow, owner: Any, shot: Callable[[str], None]
   window.dismiss()
 
 
+def sample_auto_learn() -> None:
+  """Auto Learn's line from a report shaped like the comma's (tests/test_auto_learn.py), instead of the device's."""
+  from openpilot.selfdrive.ui.tandem.settings import auto_learn
+  from openpilot.selfdrive.ui.tandem.tests.test_auto_learn import report
+  watch = auto_learn.AutoLearnWatch(report)
+  watch.text()
+  watch._pending.result(timeout=5)   # type: ignore[union-attr]
+  auto_learn._shared[:] = [watch]
+
+
 def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any) -> None:
   """Each Driving page, parked, with sample rows."""
   with tempfile.TemporaryDirectory() as root:
     prefs.prefs_dir = lambda: Path(root)   # type: ignore[assignment]
     owner = example_owner()
+    sample_auto_learn()
     vehicle = Vehicle(FakeSelection(), owner.rows, FakeDoors(), lambda: "TOYOTA_RAV4H")
     services = DrivingServices(Store(LongitudinalPersonality=1, IsLdwEnabled=True, AlwaysOnDM=True), ExampleLive(), owner.rows,  # type: ignore[arg-type]
                                FakeRoad(), lambda: StarPilotModels(FakeManager(), clock=lambda: 0.0), lambda: vehicle, ExampleDevice(),
@@ -132,6 +143,9 @@ def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any)
         alerts_shots(window, owner, shot)
       if page == "tuner":
         shot("tuner-lanecentering")   # Steering, with the Lane Centering switch first
+        steering = window.top.current
+        steering._scroll.set_offset(-T.px(270))   # to the end, where Auto Learn is (design/tuner-autolearn.html)
+        shot("tuner-autolearn")
       window.back()
     theme_shots(window, hub, shot)
     os.environ["TANDEM_ROUTING"] = "1"

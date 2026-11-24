@@ -44,7 +44,8 @@ class Tunable:
 # StarPilot's "tuning" page (its manual steering tune, dozens of per-side values) stays on StarPilot's own screens.
 STEERING_PAGES = ("lane", "torque")
 LANE_CENTERING = "LaneCentering"   # StarPilot's switch for its lane centering: a feature, not a tune, so resets leave it
-SWITCHES = {LANE_CENTERING}
+AUTO_LEARN = "ForceAutoTuneOff"    # StarPilot's Auto Learn switch (settings/auto_learn.py): also a feature, not a tune
+SWITCHES = {LANE_CENTERING, AUTO_LEARN}
 # Tandem's names and words for StarPilot's lane centering rows (design/tuner-lanecentering.html); the rest keep StarPilot's.
 LABELS = {
   LANE_CENTERING: (N_("Lane Centering"), N_("Steers toward the middle of the lane, not just the model's path")),
@@ -52,6 +53,7 @@ LABELS = {
   "LaneCenterOffset": (N_("Lane offset"), N_("Holds left or right of center")),
   "LaneCenteringE2EAuthority": (N_("Model path preference"), N_("How much a confident model path can override the lane center")),
   "LaneCenteringStrength": (N_("Lane Centering Strength"), N_("100% is normal; lower centers less, higher more")),
+  AUTO_LEARN: (N_("Auto Learn"), N_("Adjusts your car's steering tune as you drive")),   # its live line replaces this on the device
 }
 GAS_BRAKE = [Tunable("profiles", key) for key in ("profile:global_acceleration", "profile:global_braking", "ForceStopDistanceOffset",
                                                   "profile:stopped_gap", "FasterLeadTakeoff", "LeadApproachBuffer", "ExperimentalSpeedNudge")]
@@ -72,8 +74,15 @@ def _number(text: str) -> float | None:
 class Tuner:
   """Tuner Mode: StarPilot's tuning rows, their defaults, and resetting them."""
 
-  def __init__(self, rows: Rows):
+  def __init__(self, rows: Rows, auto_learn: Callable[[], str] | None = None):
+    """Makes the model.
+
+    Args:
+      rows: StarPilot's settings pages.
+      auto_learn: The Auto Learn row's live line (settings/auto_learn.py), or None to keep its description.
+    """
     self._rows = rows
+    self.auto_learn = auto_learn
 
   def row(self, t: Tunable) -> Any | None:
     return self._rows(t.page).row(t.key)
@@ -149,7 +158,8 @@ class Tuner:
     return self.steering() + self.present(GAS_BRAKE + [t for _, t in GAPS] + FOLLOWING)
 
   def reset_all(self) -> None:
-    """Every changed value back to StarPilot's default, except what Driving Style sets and the Lane Centering switch."""
+    """Every changed value back to StarPilot's default, except what Driving Style sets and the Lane Centering and Auto Learn
+    switches."""
     for t in self.all_tunables():
       if t.key not in STYLE_SET | SWITCHES and self.changed(t) and self.editable(t):
         self.reset(t)
@@ -164,8 +174,9 @@ def tunable_row(tuner: Tuner, t: Tunable, window: SettingsWindow) -> SettingRow:
   r = tuner.row(t)
   title, subtitle = (r.label, r.reason) if r is not None else (t.key, "")
   title, subtitle = LABELS.get(t.key, (title, subtitle))
+  live: Callable[[], str] | None = tuner.auto_learn if t.key == AUTO_LEARN else None
   if r is not None and tuple(r.choices) == ("Off", "On"):
-    line = SettingRow(title, subtitle, Switch(lambda: tuner.value(t) == "On", lambda on: tuner.set(t, "On" if on else "Off")))
+    line = SettingRow(title, live or subtitle, Switch(lambda: tuner.value(t) == "On", lambda on: tuner.set(t, "On" if on else "Off")))
   elif r is not None and r.choices and not r.step:
     def pick() -> None:
       current = tuner.row(t)

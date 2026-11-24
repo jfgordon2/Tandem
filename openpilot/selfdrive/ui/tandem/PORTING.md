@@ -390,6 +390,10 @@ WarningImmediateVolume WarningSoftVolume
 - Offline Maps › Keep up to date is back as Tandem's own schedule (`starpilot/tandem/routing/schedule.py`, saved in
   `map-schedule.json`): Weekly, or Monthly after each month's routing build, it queues the Update maps job while parked
   on Wi-Fi. `map_schedule.py` checks once a minute from `TandemInput.poll`, which ui.py runs with the screen off too.
+- Tuner › Steering lists StarPilot's Lane Centering and Auto Learn switches; Reset all tuning leaves both alone. Auto
+  Learn's line (`settings/auto_learn.py`) reads StarPilot's learner report and saved history through Galaxy's
+  `FlmTrainingResults`, every five seconds on a worker thread while it's drawn. StarPilot's manual overrides of learned
+  values (its "tuning" page) stay on StarPilot's own screens.
 - Alerts › Chimes ends with Sound Pack: StarPilot's SoundPack (its installed packs, by its names), parked only, with a
   sample through StarPilot's alert preview.
 - Report a Problem sends the release category, details, optional Discord name and RAM summaries through StarPilot's

@@ -437,7 +437,7 @@ msgstr ""
 
 #: home_layout.py:22
 #: settings/speed_steering.py:25
-#: settings/tuner.py:61
+#: settings/tuner.py:63
 msgid "Sport"
 msgstr ""
 
@@ -449,7 +449,7 @@ msgstr ""
 
 #: home_layout.py:22
 #: settings/speed_steering.py:25
-#: settings/tuner.py:60
+#: settings/tuner.py:62
 msgid "Relaxed"
 msgstr ""
 
@@ -1500,7 +1500,7 @@ msgid "The sounds every alert plays"
 msgstr ""
 
 #: settings/alerts.py:248
-#: settings/driving_tab.py:206
+#: settings/driving_tab.py:207
 #: settings/search.py:26
 msgid "Alerts"
 msgstr ""
@@ -1571,6 +1571,52 @@ msgstr ""
 #: settings/alerts.py:184
 #, python-brace-format
 msgid "Minimum {}% for safety alerts"
+msgstr ""
+
+#: settings/auto_learn.py:48
+#: settings/auto_learn.py:35
+#: settings/auto_learn.py:100
+msgid "Not running right now"
+msgstr ""
+
+#: settings/auto_learn.py:61
+#, python-brace-format
+msgid "Last change {}"
+msgstr ""
+
+#: settings/auto_learn.py:32
+msgid "Off: your steering tune stays as it is"
+msgstr ""
+
+#: settings/auto_learn.py:38
+msgid "Waiting for the car to turn off"
+msgstr ""
+
+#: settings/auto_learn.py:40
+msgid "Needs more driving before it suggests a change"
+msgstr ""
+
+#: settings/auto_learn.py:42
+msgid "Learning from this drive"
+msgstr ""
+
+#: settings/auto_learn.py:45
+#, python-brace-format
+msgid "Checking your last drive ({} of {})"
+msgstr ""
+
+#: settings/auto_learn.py:47
+msgid "Checking your last drive"
+msgstr ""
+
+#: settings/auto_learn.py:60
+msgid "No changes yet"
+msgstr ""
+
+#: settings/auto_learn.py:92
+#: settings/network_tab.py:280
+#: settings/network_tab.py:273
+msgid "Checking…"
 msgstr ""
 
 #: settings/backups.py:94
@@ -2650,7 +2696,7 @@ msgid "One switch for the details most drivers never need"
 msgstr ""
 
 #: settings/display.py:250
-#: settings/driving_tab.py:176
+#: settings/driving_tab.py:177
 #: settings/search.py:29
 msgid "Driving Screen"
 msgstr ""
@@ -2660,7 +2706,7 @@ msgid "StarPilot changes the camera, banner and highlights only while parked."
 msgstr ""
 
 #: settings/display.py:268
-#: settings/driving_tab.py:177
+#: settings/driving_tab.py:178
 #: settings/search.py:29
 msgid "Theme"
 msgstr ""
@@ -2720,7 +2766,7 @@ msgid "Numbers above the car ahead. Off keeps only the bar under it"
 msgstr ""
 
 #: settings/display.py:247
-#: settings/driving_tab.py:191
+#: settings/driving_tab.py:192
 msgid "POWER USER"
 msgstr ""
 
@@ -2780,77 +2826,77 @@ msgstr ""
 msgid "Plays beside the speed while a blinker is on"
 msgstr ""
 
-#: settings/driving_tab.py:191
+#: settings/driving_tab.py:192
 msgid "Extra detail and fine tuning, each behind one switch"
 msgstr ""
 
-#: settings/driving_tab.py:203
+#: settings/driving_tab.py:204
 #: settings/search.py:25
 #: settings/window.py:31
 msgid "Driving"
 msgstr ""
 
-#: settings/driving_tab.py:203
+#: settings/driving_tab.py:204
 msgid "Good defaults are on. Change only what matters to you."
 msgstr ""
 
-#: settings/driving_tab.py:157
-#: settings/driving_tab.py:192
+#: settings/driving_tab.py:158
+#: settings/driving_tab.py:193
 #: settings/search.py:26
 msgid "Tuner Mode"
 msgstr ""
 
-#: settings/driving_tab.py:159
+#: settings/driving_tab.py:160
 msgid "SPEED & STEERING"
 msgstr ""
 
-#: settings/driving_tab.py:175
+#: settings/driving_tab.py:176
 msgid "DISPLAY"
 msgstr ""
 
-#: settings/driving_tab.py:204
+#: settings/driving_tab.py:205
 #: settings/search.py:26
 #: settings/search.py:81
 msgid "Speed & Steering"
 msgstr ""
 
-#: settings/driving_tab.py:205
+#: settings/driving_tab.py:206
 #: settings/search.py:26
 #: settings/search.py:107
 msgid "Display"
 msgstr ""
 
-#: settings/driving_tab.py:207
+#: settings/driving_tab.py:208
 #: settings/essentials.py:229
 #: settings/model.py:309
 msgid "Driving Model"
 msgstr ""
 
-#: settings/driving_tab.py:208
+#: settings/driving_tab.py:209
 #: settings/search.py:27
 #: settings/search.py:131
 msgid "Vehicle"
 msgstr ""
 
-#: settings/driving_tab.py:209
+#: settings/driving_tab.py:210
 #: settings/search.py:27
 #: settings/search.py:136
 msgid "Assistance"
 msgstr ""
 
-#: settings/driving_tab.py:160
+#: settings/driving_tab.py:161
 #: settings/search.py:28
 #: settings/speed_steering.py:217
 msgid "Everyday"
 msgstr ""
 
-#: settings/driving_tab.py:161
+#: settings/driving_tab.py:162
 #: settings/search.py:28
 #: settings/search.py:92
 msgid "Weather"
 msgstr ""
 
-#: settings/driving_tab.py:162
+#: settings/driving_tab.py:163
 #: settings/navigation.py:150
 #: settings/navigation.py:141
 msgid "Navigation"
@@ -3786,12 +3832,6 @@ msgstr ""
 msgid "Wi-Fi in use"
 msgstr ""
 
-#: settings/network_tab.py:280
-#: settings/network_tab.py:273
-#: settings/network_tab.py:364
-msgid "Checking…"
-msgstr ""
-
 #: settings/network_tab.py:281
 #: settings/network_tab.py:292
 msgid "Couldn’t change cellular"
@@ -4345,19 +4385,19 @@ msgstr ""
 
 #: settings/search.py:30
 #: settings/search.py:148
-#: settings/tuner.py:228
+#: settings/tuner.py:239
 msgid "Steering"
 msgstr ""
 
 #: settings/search.py:30
 #: settings/search.py:152
-#: settings/tuner.py:234
+#: settings/tuner.py:245
 msgid "Gas & Brake"
 msgstr ""
 
 #: settings/search.py:30
 #: settings/search.py:154
-#: settings/tuner.py:298
+#: settings/tuner.py:309
 msgid "Following & Stops"
 msgstr ""
 
@@ -4631,12 +4671,12 @@ msgid "Lane centering and your car's steering tune"
 msgstr ""
 
 #: settings/search.py:150
-#: settings/tuner.py:50
+#: settings/tuner.py:51
 msgid "Lane Centering"
 msgstr ""
 
 #: settings/search.py:150
-#: settings/tuner.py:50
+#: settings/tuner.py:51
 msgid "Steers toward the middle of the lane, not just the model's path"
 msgstr ""
 
@@ -5278,12 +5318,12 @@ msgstr ""
 msgid "Cabin audio in your drive recordings. Restarts openpilot if the car is on."
 msgstr ""
 
-#: settings/tuner.py:301
+#: settings/tuner.py:312
 msgid "Every Tuner Mode change goes back to StarPilot's default. Your other settings stay as they are."
 msgstr ""
 
 #: settings/tuner.py:32
-#: settings/tuner.py:191
+#: settings/tuner.py:202
 msgid "Override"
 msgstr ""
 
@@ -5291,89 +5331,97 @@ msgstr ""
 msgid "From style"
 msgstr ""
 
-#: settings/tuner.py:51
+#: settings/tuner.py:52
 msgid "Pause on signal"
 msgstr ""
 
-#: settings/tuner.py:51
+#: settings/tuner.py:52
 msgid "Lets the car drift while a blinker is on"
 msgstr ""
 
-#: settings/tuner.py:52
+#: settings/tuner.py:53
 msgid "Lane offset"
 msgstr ""
 
-#: settings/tuner.py:52
+#: settings/tuner.py:53
 msgid "Holds left or right of center"
 msgstr ""
 
-#: settings/tuner.py:53
+#: settings/tuner.py:54
 msgid "Model path preference"
 msgstr ""
 
-#: settings/tuner.py:53
+#: settings/tuner.py:54
 msgid "How much a confident model path can override the lane center"
 msgstr ""
 
-#: settings/tuner.py:54
+#: settings/tuner.py:55
 msgid "Lane Centering Strength"
 msgstr ""
 
-#: settings/tuner.py:54
+#: settings/tuner.py:55
 msgid "100% is normal; lower centers less, higher more"
 msgstr ""
 
-#: settings/tuner.py:61
+#: settings/tuner.py:56
+msgid "Auto Learn"
+msgstr ""
+
+#: settings/tuner.py:56
+msgid "Adjusts your car's steering tune as you drive"
+msgstr ""
+
+#: settings/tuner.py:63
 msgid "Traffic"
 msgstr ""
 
-#: settings/tuner.py:159
+#: settings/tuner.py:169
 #, python-brace-format
 msgid "{} changed"
 msgstr ""
 
-#: settings/tuner.py:312
+#: settings/tuner.py:323
 msgid "TUNER MODE"
 msgstr ""
 
-#: settings/tuner.py:229
+#: settings/tuner.py:240
 msgid "StarPilot's defaults suit most cars. An override stays until you reset it."
 msgstr ""
 
-#: settings/tuner.py:235
+#: settings/tuner.py:246
 msgid "Driving Style sets the acceleration and braking profiles."
 msgstr ""
 
-#: settings/tuner.py:280
+#: settings/tuner.py:291
 msgid "Following gap by style"
 msgstr ""
 
-#: settings/tuner.py:310
+#: settings/tuner.py:321
 msgid "Reset all tuning?"
 msgstr ""
 
-#: settings/tuner.py:275
+#: settings/tuner.py:286
 #, python-brace-format
 msgid "{} gap"
 msgstr ""
 
-#: settings/tuner.py:275
+#: settings/tuner.py:286
 msgid "Seconds behind the car ahead in this Driving Style"
 msgstr ""
 
-#: settings/tuner.py:228
+#: settings/tuner.py:239
 msgid "StarPilot lists your car's steering values once it's detected."
 msgstr ""
 
-#: settings/tuner.py:234
+#: settings/tuner.py:245
 msgid "Gas and brake tuning needs openpilot's speed control."
 msgstr ""
 
-#: settings/tuner.py:319
+#: settings/tuner.py:330
 msgid "Reset all tuning"
 msgstr ""
 
-#: settings/tuner.py:179
+#: settings/tuner.py:190
 #: settings/vehicle.py:284
 msgid "Change"
 msgstr ""

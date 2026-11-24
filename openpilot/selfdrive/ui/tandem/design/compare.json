@@ -192,6 +192,12 @@
       "match": true
     },
     {
+      "mock": "tuner-autolearn",
+      "title": "Tuner › Steering, Auto Learn",
+      "note": "Matches: StarPilot's Auto Learn switch, its line read from StarPilot's learner report and saved history (as Galaxy's Tuner reads them) in plain words, every few seconds off the drawing thread. Reset all tuning leaves the switch alone. Friction and Lateral acceleration show StarPilot's own descriptions on the device; the sample data has none.",
+      "match": true
+    },
+    {
       "mock": "steeringcontroller",
       "title": "Steering controller",
       "note": "Matches the five controller choices and selected-choice explanation. Vehicle default matches StarPilot and is applied by Essentials setup and tuning resets. Settings keep standard row heights, so the controller row can scroll into view.",

@@ -436,7 +436,7 @@ msgstr "解決這些問題後 openpilot 才可能啟動"
 
 #: home_layout.py:22
 #: settings/speed_steering.py:25
-#: settings/tuner.py:61
+#: settings/tuner.py:63
 msgid "Sport"
 msgstr "運動"
 
@@ -448,7 +448,7 @@ msgstr "標準"
 
 #: home_layout.py:22
 #: settings/speed_steering.py:25
-#: settings/tuner.py:60
+#: settings/tuner.py:62
 msgid "Relaxed"
 msgstr "舒適"
 
@@ -1585,7 +1585,7 @@ msgid "The sounds every alert plays"
 msgstr "所有提醒播放的音效"
 
 #: settings/alerts.py:248
-#: settings/driving_tab.py:206
+#: settings/driving_tab.py:207
 #: settings/search.py:26
 msgid "Alerts"
 msgstr "警報"
@@ -1657,6 +1657,53 @@ msgstr "音量"
 #, python-brace-format
 msgid "Minimum {}% for safety alerts"
 msgstr "安全警報最低音量為{}%"
+
+#: settings/auto_learn.py:48
+#: settings/auto_learn.py:35
+#: settings/auto_learn.py:100
+msgid "Not running right now"
+msgstr "目前未執行"
+
+#: settings/auto_learn.py:61
+#, python-brace-format
+msgid "Last change {}"
+msgstr "上次變更 {}"
+
+#: settings/auto_learn.py:32
+msgid "Off: your steering tune stays as it is"
+msgstr "關閉：轉向調校維持不變"
+
+#: settings/auto_learn.py:38
+msgid "Waiting for the car to turn off"
+msgstr "正在等待車輛熄火"
+
+#: settings/auto_learn.py:40
+msgid "Needs more driving before it suggests a change"
+msgstr "需要更多駕駛後才會建議變更"
+
+#: settings/auto_learn.py:42
+msgid "Learning from this drive"
+msgstr "正在從本次駕駛中學習"
+
+#: settings/auto_learn.py:45
+#, python-brace-format
+msgid "Checking your last drive ({} of {})"
+msgstr "正在檢查上次駕駛（{}/{}）"
+
+#: settings/auto_learn.py:47
+msgid "Checking your last drive"
+msgstr "正在檢查上次駕駛"
+
+#: settings/auto_learn.py:60
+msgid "No changes yet"
+msgstr "尚無變更"
+
+#. English fallback pending cellular-status translation.
+#: settings/auto_learn.py:92
+#: settings/network_tab.py:280
+#: settings/network_tab.py:273
+msgid "Checking…"
+msgstr "正在檢查…"
 
 #: settings/backups.py:94
 #, python-brace-format
@@ -2737,7 +2784,7 @@ msgid "One switch for the details most drivers never need"
 msgstr "一個開關控制多數駕駛無須關注的細節"
 
 #: settings/display.py:250
-#: settings/driving_tab.py:176
+#: settings/driving_tab.py:177
 #: settings/search.py:29
 msgid "Driving Screen"
 msgstr "駕駛畫面"
@@ -2747,7 +2794,7 @@ msgid "StarPilot changes the camera, banner and highlights only while parked."
 msgstr "StarPilot 只在停車時變更鏡頭、橫幅與醒目標示。"
 
 #: settings/display.py:268
-#: settings/driving_tab.py:177
+#: settings/driving_tab.py:178
 #: settings/search.py:29
 msgid "Theme"
 msgstr "主題"
@@ -2807,7 +2854,7 @@ msgid "Numbers above the car ahead. Off keeps only the bar under it"
 msgstr "前車上方的數值。關閉後僅保留其下方的條形標記"
 
 #: settings/display.py:247
-#: settings/driving_tab.py:191
+#: settings/driving_tab.py:192
 msgid "POWER USER"
 msgstr "進階使用者"
 
@@ -2867,77 +2914,77 @@ msgstr "旁邊有車時為畫面邊緣著色"
 msgid "Plays beside the speed while a blinker is on"
 msgstr "方向燈開啟時在速度旁播放"
 
-#: settings/driving_tab.py:191
+#: settings/driving_tab.py:192
 msgid "Extra detail and fine tuning, each behind one switch"
 msgstr "額外細節與微調功能，各由一個開關控制"
 
-#: settings/driving_tab.py:203
+#: settings/driving_tab.py:204
 #: settings/search.py:25
 #: settings/window.py:31
 msgid "Driving"
 msgstr "駕駛"
 
-#: settings/driving_tab.py:203
+#: settings/driving_tab.py:204
 msgid "Good defaults are on. Change only what matters to you."
 msgstr "良好的預設已開啟，只需變更您在意的選項。"
 
-#: settings/driving_tab.py:157
-#: settings/driving_tab.py:192
+#: settings/driving_tab.py:158
+#: settings/driving_tab.py:193
 #: settings/search.py:26
 msgid "Tuner Mode"
 msgstr "調校模式"
 
-#: settings/driving_tab.py:159
+#: settings/driving_tab.py:160
 msgid "SPEED & STEERING"
 msgstr "速度與轉向"
 
-#: settings/driving_tab.py:175
+#: settings/driving_tab.py:176
 msgid "DISPLAY"
 msgstr "顯示"
 
-#: settings/driving_tab.py:204
+#: settings/driving_tab.py:205
 #: settings/search.py:26
 #: settings/search.py:81
 msgid "Speed & Steering"
 msgstr "速度與轉向"
 
-#: settings/driving_tab.py:205
+#: settings/driving_tab.py:206
 #: settings/search.py:26
 #: settings/search.py:107
 msgid "Display"
 msgstr "顯示"
 
-#: settings/driving_tab.py:207
+#: settings/driving_tab.py:208
 #: settings/essentials.py:229
 #: settings/model.py:309
 msgid "Driving Model"
 msgstr "駕駛模型"
 
-#: settings/driving_tab.py:208
+#: settings/driving_tab.py:209
 #: settings/search.py:27
 #: settings/search.py:131
 msgid "Vehicle"
 msgstr "車輛"
 
-#: settings/driving_tab.py:209
+#: settings/driving_tab.py:210
 #: settings/search.py:27
 #: settings/search.py:136
 msgid "Assistance"
 msgstr "駕駛輔助"
 
-#: settings/driving_tab.py:160
+#: settings/driving_tab.py:161
 #: settings/search.py:28
 #: settings/speed_steering.py:217
 msgid "Everyday"
 msgstr "日常"
 
-#: settings/driving_tab.py:161
+#: settings/driving_tab.py:162
 #: settings/search.py:28
 #: settings/search.py:92
 msgid "Weather"
 msgstr "天氣"
 
-#: settings/driving_tab.py:162
+#: settings/driving_tab.py:163
 #: settings/navigation.py:150
 #: settings/navigation.py:141
 msgid "Navigation"
@@ -3933,13 +3980,6 @@ msgstr "無訊號"
 msgid "Wi-Fi in use"
 msgstr "正在使用 Wi-Fi"
 
-#. English fallback pending cellular-status translation.
-#: settings/network_tab.py:280
-#: settings/network_tab.py:273
-#: settings/network_tab.py:364
-msgid "Checking…"
-msgstr "正在檢查…"
-
 #: settings/network_tab.py:281
 #: settings/network_tab.py:292
 msgid "Couldn’t change cellular"
@@ -4512,19 +4552,19 @@ msgstr "連線"
 
 #: settings/search.py:30
 #: settings/search.py:148
-#: settings/tuner.py:228
+#: settings/tuner.py:239
 msgid "Steering"
 msgstr "轉向"
 
 #: settings/search.py:30
 #: settings/search.py:152
-#: settings/tuner.py:234
+#: settings/tuner.py:245
 msgid "Gas & Brake"
 msgstr "油門與煞車"
 
 #: settings/search.py:30
 #: settings/search.py:154
-#: settings/tuner.py:298
+#: settings/tuner.py:309
 msgid "Following & Stops"
 msgstr "跟車與停車"
 
@@ -4798,12 +4838,12 @@ msgid "Lane centering and your car's steering tune"
 msgstr "車道置中與車輛的轉向調校"
 
 #: settings/search.py:150
-#: settings/tuner.py:50
+#: settings/tuner.py:51
 msgid "Lane Centering"
 msgstr "車道置中"
 
 #: settings/search.py:150
-#: settings/tuner.py:50
+#: settings/tuner.py:51
 msgid "Steers toward the middle of the lane, not just the model's path"
 msgstr "朝車道中間轉向，而不只是跟隨模型路徑"
 
@@ -5446,12 +5486,12 @@ msgstr "隨行程儲存並上傳。車輛開啟時會重新啟動 openpilot。"
 msgid "Cabin audio in your drive recordings. Restarts openpilot if the car is on."
 msgstr "在行程記錄中錄製車內聲音。車輛開啟時會重新啟動 openpilot。"
 
-#: settings/tuner.py:301
+#: settings/tuner.py:312
 msgid "Every Tuner Mode change goes back to StarPilot's default. Your other settings stay as they are."
 msgstr "調校模式中的所有變更都恢復為 StarPilot 預設值。其他設定保持不變。"
 
 #: settings/tuner.py:32
-#: settings/tuner.py:191
+#: settings/tuner.py:202
 msgid "Override"
 msgstr "覆寫"
 
@@ -5459,89 +5499,97 @@ msgstr "覆寫"
 msgid "From style"
 msgstr "來自風格"
 
-#: settings/tuner.py:51
+#: settings/tuner.py:52
 msgid "Pause on signal"
 msgstr "打方向燈時暫停"
 
-#: settings/tuner.py:51
+#: settings/tuner.py:52
 msgid "Lets the car drift while a blinker is on"
 msgstr "打方向燈時允許車輛偏移"
 
-#: settings/tuner.py:52
+#: settings/tuner.py:53
 msgid "Lane offset"
 msgstr "車道偏移"
 
-#: settings/tuner.py:52
+#: settings/tuner.py:53
 msgid "Holds left or right of center"
 msgstr "保持在中線偏左或偏右"
 
-#: settings/tuner.py:53
+#: settings/tuner.py:54
 msgid "Model path preference"
 msgstr "模型路徑優先度"
 
-#: settings/tuner.py:53
+#: settings/tuner.py:54
 msgid "How much a confident model path can override the lane center"
 msgstr "可靠的模型路徑能在多大程度上取代車道中線"
 
-#: settings/tuner.py:54
+#: settings/tuner.py:55
 msgid "Lane Centering Strength"
 msgstr "車道置中強度"
 
-#: settings/tuner.py:54
+#: settings/tuner.py:55
 msgid "100% is normal; lower centers less, higher more"
 msgstr "100% 為正常；調低則置中減弱，調高則增強"
 
-#: settings/tuner.py:61
+#: settings/tuner.py:56
+msgid "Auto Learn"
+msgstr "自動學習"
+
+#: settings/tuner.py:56
+msgid "Adjusts your car's steering tune as you drive"
+msgstr "在你駕駛時調整車輛的轉向調校"
+
+#: settings/tuner.py:63
 msgid "Traffic"
 msgstr "壅塞"
 
-#: settings/tuner.py:159
+#: settings/tuner.py:169
 #, python-brace-format
 msgid "{} changed"
 msgstr "已變更{}項"
 
-#: settings/tuner.py:312
+#: settings/tuner.py:323
 msgid "TUNER MODE"
 msgstr "調校模式"
 
-#: settings/tuner.py:229
+#: settings/tuner.py:240
 msgid "StarPilot's defaults suit most cars. An override stays until you reset it."
 msgstr "StarPilot 的預設值適合大多數車輛。變更會一直保留，直到你重設。"
 
-#: settings/tuner.py:235
+#: settings/tuner.py:246
 msgid "Driving Style sets the acceleration and braking profiles."
 msgstr "駕駛風格決定加速與煞車設定檔。"
 
-#: settings/tuner.py:280
+#: settings/tuner.py:291
 msgid "Following gap by style"
 msgstr "各風格跟車距離"
 
-#: settings/tuner.py:310
+#: settings/tuner.py:321
 msgid "Reset all tuning?"
 msgstr "重設所有調校？"
 
-#: settings/tuner.py:275
+#: settings/tuner.py:286
 #, python-brace-format
 msgid "{} gap"
 msgstr "{}車距"
 
-#: settings/tuner.py:275
+#: settings/tuner.py:286
 msgid "Seconds behind the car ahead in this Driving Style"
 msgstr "此駕駛風格下與前車的時間間隔（秒）"
 
-#: settings/tuner.py:228
+#: settings/tuner.py:239
 msgid "StarPilot lists your car's steering values once it's detected."
 msgstr "辨識到車輛後，StarPilot 會列出它的轉向數值。"
 
-#: settings/tuner.py:234
+#: settings/tuner.py:245
 msgid "Gas and brake tuning needs openpilot's speed control."
 msgstr "油門與煞車調校需要 openpilot 的速度控制。"
 
-#: settings/tuner.py:319
+#: settings/tuner.py:330
 msgid "Reset all tuning"
 msgstr "重設所有調校"
 
-#: settings/tuner.py:179
+#: settings/tuner.py:190
 #: settings/vehicle.py:284
 msgid "Change"
 msgstr "變更"

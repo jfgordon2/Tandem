@@ -138,7 +138,8 @@ def driving_hub(window: SettingsWindow, services: DrivingServices) -> HubPage:
     return lambda: window.push(make())
 
   def open_tuner() -> None:
-    window.push(tuner_page(Tuner(rows), window))
+    from openpilot.selfdrive.ui.tandem.settings.auto_learn import shared
+    window.push(tuner_page(Tuner(rows, shared().text), window))
 
   def open_destinations() -> None:
     """Where to? over the settings window, on the same navigation as this page."""
