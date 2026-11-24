@@ -42,7 +42,7 @@ Tandem sits on openpilot's original layout (`MainLayout`), not on StarPilot 7's 
 
 ## Keeping merges easy
 
-Tandem merges StarPilot 7 (`testing`, which replaced `Dom`). New behavior, presentation, assets, tools and tests live in owned paths: `openpilot/selfdrive/ui/tandem/`, `openpilot/starpilot/tandem/`, the Figtree, JetBrains Mono and Noto font files and licenses, `AGENTS.md`, and the top entry of `RELEASES.md`.
+Tandem merges StarPilot 7's releases (`stable`, which replaced the `StarPilot` branch). New behavior, presentation, assets, tools and tests live in owned paths: `openpilot/selfdrive/ui/tandem/`, `openpilot/starpilot/tandem/`, the Figtree, JetBrains Mono and Noto font files and licenses, `AGENTS.md`, and the top entry of `RELEASES.md`.
 
 **Upstream integration:** every external edit is listed here. Each defaults to upstream's behavior.
 

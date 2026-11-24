@@ -2,7 +2,7 @@
 
 Tandem is a fork of StarPilot (which sits on openpilot). Its UI design language is **Essentials**. These rules hold for any change in this repo.
 
-This is `development`: Tandem being ported onto StarPilot 7 (upstream's `testing` branch, which replaced `Dom`), where the code lives under `openpilot/`. `openpilot/selfdrive/ui/tandem/PORTING.md` has the stages and what's ported so far. Until the port is done, `release` stays on StarPilot 6.
+This is `development`: Tandem being ported onto StarPilot 7 (upstream's `stable` branch, StarPilot 7's releases), where the code lives under `openpilot/`. `openpilot/selfdrive/ui/tandem/PORTING.md` has the stages and what's ported so far. Until the port is done, `release` stays on StarPilot 6.
 
 ## Keep unowned code untouched
 
@@ -17,7 +17,7 @@ Everything outside Tandem's own files belongs to StarPilot or openpilot and chan
 
 ## Merging upstream
 
-- Upstream for `development` is the `testing` branch of `StarPilotHQ/StarPilot` (it replaced `Dom`). Tandem merges it; it doesn't rebase, so pushes never need force.
+- Upstream for `development` is the `stable` branch of `StarPilotHQ/StarPilot`, StarPilot 7's releases (upstream retired its `StarPilot` branch for it; `testing` is its prerelease). Tandem merges it; it doesn't rebase, so pushes never need force.
 - In a conflict on an unowned file, keep upstream's version and make our edit again.
 - After a merge, check what Tandem reads from StarPilot that can change without a conflict. `PORTING.md` lists it while the port is in progress.
 

@@ -666,7 +666,15 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
 - The weather heads-up is back: `forecast.py`'s announcer shows the chip before rain, snow or storms and chimes once
   through the headroom soundd subclass (`weather-chime.json`), with the position from StarPilot 7's location.
 
-## Following `testing`
+## Following `stable`
+
+- Owner, 2026-11-23: `development` follows upstream's `stable`, StarPilot 7's release branch. Upstream retired its
+  `StarPilot` branch on 2026-11-17; that branch's last commit is a migration that moves a device on `StarPilot` to
+  `stable` at boot, and it runs only on that exact commit, so Tandem leaves it unmerged. `stable` is a prefix of
+  `testing`, and `development` had already merged `testing` up to 2026-11-22, so it carries some prerelease commits until
+  `stable` reaches them; from now on it merges `stable` only.
+
+## Following `testing` (until 2026-11-23)
 
 - Owner, 2026-11-20: `development` follows upstream's `testing`, Dom's successor. Dom's hand-off commit adds
   `scripts/branch_migration.py`, which moves a device on `Dom` to `testing` at boot; it leaves `development` alone (it
