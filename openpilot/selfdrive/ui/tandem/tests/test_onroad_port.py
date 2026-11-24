@@ -236,3 +236,22 @@ def test_chips_come_from_releases_rules() -> None:
   chips = ChipStack().update(Snapshot(engaged=True, standstill=True, waiting_for_resume=True), 0.0, False)
   assert [chip.key for chip, _ in chips] == ["ready"]
   assert Chip("x", "y", ChipTone.INFO, "z").tone == ChipTone.INFO
+
+
+def test_the_path_follows_the_saved_path_style(monkeypatch: pytest.MonkeyPatch) -> None:
+  """Display › Path Style saves StarPilot's large road colors; the driving screen hands them to the path, as StarPilot's
+  own screen does, or openpilot draws its default green."""
+  pytest.importorskip("openpilot.cereal.messaging", reason="needs openpilot's messaging library (a device or full build)")
+  from openpilot.selfdrive.ui.tandem.onroad.view import EssentialsOnroad
+  from openpilot.starpilot.ui.onroad_customization import default_document
+  from openpilot.starpilot.ui.onroad_state import OnroadState
+  customization = default_document()
+  customization["roadColors"]["large"] = {"pathMode": "color", "path": "#5AAAF880"}
+  view = EssentialsOnroad.__new__(EssentialsOnroad)
+  view._prepared, view._native, view._display, view._dev = True, replace(OnroadState(), customization=customization), DriveDisplay(), None
+  view._overlay, view._strip_rect, view._safely = Mock(), Mock(return_value=None), Mock()
+  view.render_camera_model_layer = Mock()   # type: ignore[method-assign]
+  for name in ("begin_scissor_mode", "end_scissor_mode"):
+    monkeypatch.setattr(rl, name, Mock())
+  view._render(rl.Rectangle(0, 0, 2160, 1080))
+  assert view.render_camera_model_layer.call_args.kwargs["road_style"] == {"pathMode": "color", "path": "#5AAAF880"}

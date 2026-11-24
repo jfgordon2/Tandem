@@ -503,8 +503,10 @@ class EssentialsOnroad(AugmentedRoadView):
       inner = road_rect(rect)
       rl.begin_scissor_mode(int(inner.x), int(inner.y), int(inner.width), int(inner.height))
       try:
+        # Display › Path Style is saved in StarPilot's large layout, which its own screen passes here too (runtime_app.py)
         self.render_camera_model_layer(inner, camera_view=int(state.appearance.camera_view),
-                                       reverse_driver=state.reverse_driver_camera, poll_camera=poll_camera)
+                                       reverse_driver=state.reverse_driver_camera, poll_camera=poll_camera,
+                                       road_style=state.customization["roadColors"]["large"])
         self._safely("turn signal", lambda: self._render_turn_signal(inner, state))
       finally:
         rl.end_scissor_mode()
