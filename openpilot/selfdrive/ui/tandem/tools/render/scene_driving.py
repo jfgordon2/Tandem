@@ -9,7 +9,7 @@ from dataclasses import replace
 from typing import Any
 
 from openpilot.selfdrive.ui.tandem import prefs, tokens as T
-from openpilot.selfdrive.ui.tandem.settings.alerts import GROUPS
+from openpilot.selfdrive.ui.tandem.settings.alerts import GROUPS, Alerts, sound_pack_sheet
 from openpilot.selfdrive.ui.tandem.places import StarPilotPlaces
 from openpilot.selfdrive.ui.tandem.tests.fakes import FakeNavigationOwner, sample_maps
 from openpilot.selfdrive.ui.tandem.settings.driving_tab import DrivingServices, driving_hub
@@ -55,7 +55,7 @@ def example_owner() -> Owner:
     "conditional": {"conditional:mode": "Automatic"}, "curve": {"CurveSpeedController": "On"}, "aol": {"AlwaysOnLateral": "On"},
     "sentry": {"sentry:enabled": "Off", "sentry:sensitivity": "0.040"},
     "sounds": {**{key: "Auto" for group in GROUPS for key in group.keys}, "GreenLightAlert": "On", "LeadDepartingAlert": "On",
-               "LoudBlindspotAlert": "Off", "LoudBlindspotAlertWhenDisengaged": "Off"},
+               "LoudBlindspotAlert": "Off", "LoudBlindspotAlertWhenDisengaged": "Off", "SoundPack": "StarPilot Sounds"},
     "appearance": {"CameraView": "Standard", "DriverCamera": "On", "HidePersonalityAlerts": "On", "BlindSpotMetrics": "On",
                    "DeveloperSidebar": "Off", "HideLeadMarker": "Off", "LeadInfo": "Off", "ShowBrakeStatus": "Off"},
     "wheel": {"wheel:DistanceButtonControl": "Change Personality", "wheel:LongDistanceButtonControl": "Toggle Experimental Mode",
@@ -82,11 +82,23 @@ def example_owner() -> Owner:
         choices = ("No Action", "Change Personality", "Toggle Experimental Mode", "Pause Steering")
       if key.startswith("profile:global"):
         choices = ("StarPilot Default", "Normal", "Comfort", "Sport")
+      if key == "SoundPack":
+        choices = ("StarPilot Sounds", "Stock Sounds", "Classic openpilot (pre-C4)", "openpilot 2025")
       rows[key] = replace(row, label=labels.get(key, key), choices=choices, default_value=row.value, unit=units.get(key, ""),
                           step=0.05 if number else row.step, minimum=0.0, maximum=3.0 if units.get(key) == "s" else 100.0)
   rows = owner.pages["relaxed"]
   rows["RelaxedFollow"] = replace(rows["RelaxedFollow"], value="1.8")   # one override, as the mock shows
   return owner
+
+
+def alerts_shots(window: SettingsWindow, owner: Any, shot: Callable[[str], None]) -> None:
+  """Alerts with Sound Pack (design/alerts-soundpack.html), and its picker sheet (soundpack.html), fully open."""
+  shot("alerts-soundpack")
+  sheet = sound_pack_sheet(Alerts(owner.rows), window)
+  window.present(sheet)
+  sheet._shown_at = None
+  shot("soundpack")
+  window.dismiss()
 
 
 def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any) -> None:
@@ -115,6 +127,8 @@ def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any)
                        ("vehicle", "drivingvehicle"), ("assistance", "assistance"), ("tuner", "tuner")):
       hub.pages[page]()
       shot(mock)
+      if page == "alerts":
+        alerts_shots(window, owner, shot)
       window.back()
     theme_shots(window, hub, shot)
     os.environ["TANDEM_ROUTING"] = "1"

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sound Pack picker</title>
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#7DBBF9}a:hover{color:#A9D3FB}
+</style>
+<!-- Every pack installed on the device; StarPilot Sounds and Stock Sounds always are. Picking one saves it (parked only). -->
+<div style="width: 1125px; height: 563px; box-sizing: border-box; background: #050608; color: #F2F5F9; font-family: Figtree, system-ui, sans-serif; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; position: relative;">
+  <div aria-hidden="true" style="position: absolute; left: 20px; right: 20px; top: 18px; height: 110px; border-radius: 22px; background: #0C0E11;"></div>
+  <section aria-label="Sound Pack" style="position: relative; height: 412px; box-sizing: border-box; background: #16191D; border-radius: 26px 26px 0 0; border-top: 1px solid #262B33; padding: 14px 22px 22px; display: flex; flex-direction: column; gap: 16px;">
+    <div style="align-self: center; width: 64px; height: 6px; border-radius: 3px; background: #3A414C;"></div>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 4px;"><h2 style="margin: 0; font-size: 28px; font-weight: 800;">Sound Pack</h2><span style="font-size: 15px; color: #AEB6C2;">The sounds every alert plays. Play sample uses the chosen pack.</span></div>
+      <button type="button" style="font-family: inherit; height: 60px; padding: 0 24px; border-radius: 16px; border: 0; background: #1F2328; color: #F2F5F9; font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 10px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="#5AAAF8" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"></path></svg>Play sample</button>
+      <a href="alerts-soundpack.html" style="text-decoration: none; height: 60px; padding: 0 30px; border-radius: 16px; background: #5AAAF8; color: #0B1A2B; font-size: 18px; font-weight: 800; display: flex; align-items: center;">Done</a>
+    </div>
+    <div role="radiogroup" aria-label="Sound Pack" style="display: flex; flex-direction: column;">
+      <div role="radio" aria-checked="true" style="display: flex; align-items: center; height: 60px; padding: 0 8px; border-bottom: 1px solid #23272E;">
+        <span style="flex-grow: 1; font-size: 19px; font-weight: 600;">StarPilot Sounds</span>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#5AAAF8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+      </div>
+      <div role="radio" aria-checked="false" style="display: flex; align-items: center; height: 60px; padding: 0 8px; border-bottom: 1px solid #23272E;">
+        <span style="flex-grow: 1; font-size: 19px; font-weight: 600;">Stock Sounds</span>
+        
+      </div>
+      <div role="radio" aria-checked="false" style="display: flex; align-items: center; height: 60px; padding: 0 8px; border-bottom: 1px solid #23272E;">
+        <span style="flex-grow: 1; font-size: 19px; font-weight: 600;">Classic openpilot (pre-C4)</span>
+        
+      </div>
+      <div role="radio" aria-checked="false" style="display: flex; align-items: center; height: 60px; padding: 0 8px; ">
+        <span style="flex-grow: 1; font-size: 19px; font-weight: 600;">openpilot 2025</span>
+        
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>

@@ -34,7 +34,8 @@ class FakeRoad:
 def owner() -> Owner:
   return Owner({
     "sounds": {**{key: "Auto" for group in GROUPS for key in group.keys},
-               "GreenLightAlert": "Off", "LoudBlindspotAlert": "Off", "LoudBlindspotAlertWhenDisengaged": "Off"},
+               "GreenLightAlert": "Off", "LoudBlindspotAlert": "Off", "LoudBlindspotAlertWhenDisengaged": "Off",
+               "SoundPack": "StarPilot Sounds"},
     "appearance": {"CameraView": "Auto", "DriverCamera": "Off", "HidePersonalityAlerts": "Off", "BlindSpotMetrics": "On",
                    "DeveloperSidebar": "Off", "HideLeadMarker": "Off", "LeadInfo": "Off", "ShowBrakeStatus": "Off"},
   })
@@ -78,6 +79,26 @@ def test_the_blind_spot_chime_is_both_of_starpilots_settings(owner: Owner) -> No
   assert page(owner, "sounds")["LoudBlindspotAlert"] == page(owner, "sounds")["LoudBlindspotAlertWhenDisengaged"] == "On"
   model.set_chime("WeatherChime", False)
   assert not model.chime("WeatherChime")
+
+
+def test_sound_pack_is_starpilots_installed_packs(owner: Owner) -> None:
+  rows = owner.pages["sounds"]
+  rows["SoundPack"] = replace(rows["SoundPack"], choices=("StarPilot Sounds", "Stock Sounds"))
+  played: list[str] = []
+  model = Alerts(owner.rows, played.append)
+  assert model.packs() == ["StarPilot Sounds", "Stock Sounds"] and model.pack() == "StarPilot Sounds"
+  model.set_pack("Stock Sounds")
+  assert page(owner, "sounds")["SoundPack"] == "Stock Sounds"
+  model.play_pack()
+  assert played == ["EngageVolume"]
+
+
+def test_sound_pack_waits_until_parked(owner: Owner) -> None:
+  rows = owner.pages["sounds"]
+  rows["SoundPack"] = replace(rows["SoundPack"], available=False)
+  model = Alerts(owner.rows)
+  model.set_pack("Stock Sounds")
+  assert not model.pack_editable() and model.pack() == "StarPilot Sounds"
 
 
 def test_path_styles_are_starpilots_path_modes(owner: Owner) -> None:

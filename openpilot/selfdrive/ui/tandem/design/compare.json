@@ -120,6 +120,18 @@
       "match": true
     },
     {
+      "mock": "alerts-soundpack",
+      "title": "Alerts, Sound Pack",
+      "note": "Matches: Sound Pack is the last row of Chimes, StarPilot's SoundPack, changed only while parked. Chime rows are 60 px tall so it fits.",
+      "match": true
+    },
+    {
+      "mock": "soundpack",
+      "title": "Sound Pack picker",
+      "note": "Matches: the packs installed on the device, as StarPilot names them; tapping one saves it and Play sample plays the engage chime in it. The shared option list highlights the chosen row rather than drawing dividers, as on every picker sheet.",
+      "match": true
+    },
+    {
       "mock": "volumeeditor",
       "title": "Volume editor",
       "note": "Matches: the slider marks Quiet at 25% and Normal at this group's 60%, as in the mock. Loud sits at the group's real level, not the mock's placeholder.",

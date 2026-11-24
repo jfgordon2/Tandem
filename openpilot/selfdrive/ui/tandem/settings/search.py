@@ -124,6 +124,7 @@ ENTRIES: list[Entry] = [
   Entry(N_("Green Light"), N_("When the light turns green and you are stopped"), 0, "alerts", words="chime"),
   Entry(N_("Lead Departure"), N_("When the car ahead pulls away"), 0, "alerts", words="chime"),
   Entry(N_("Loud Blind Spot"), N_("Signalling into an occupied lane, even when paused"), 0, "alerts", words="chime"),
+  Entry(N_("Sound Pack"), N_("The sounds every alert plays"), 0, "alerts", words="sound chime stock classic"),
   Entry(N_("Weather heads-up"), N_("Once, when rain, snow or storms are coming"), 0, "alerts", words="chime forecast rain snow"),
   _place(N_("Driving Model"), N_("The model that drives, and downloading others"), 0, "model", words="download"),
   _place(N_("Use recommended"), N_("StarPilot's default driving model"), 0, "model", words="default"),

@@ -1,6 +1,6 @@
-"""Alerts: one volume preset for every sound, levels per group, and the optional chimes.
+"""Alerts: one volume preset for every sound, levels per group, the optional chimes, and the sound pack.
 
-StarPilot 7's Sounds owner keeps the levels and chimes, changed only while parked; each level is a number or Auto.
+StarPilot 7's Sounds owner keeps the levels, chimes and pack, changed only while parked; each level is a number or Auto.
 Samples play through StarPilot's alert preview, which plays them only while parked too.
 """
 from __future__ import annotations
@@ -17,10 +17,10 @@ from openpilot.selfdrive.ui.tandem import draw, tokens as T
 from openpilot.system.ui.widgets import Widget
 from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.blocks import Card, Columns, Label, Stack, ValueLine
-from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, Segmented, Slider, Switch
+from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, Segmented, Slider, Switch, ValueButton
 from openpilot.selfdrive.ui.tandem.layout import FILL, column, row
 from openpilot.selfdrive.ui.tandem.overlays import Sheet
-from openpilot.selfdrive.ui.tandem.rows import ListPanel, SettingRow
+from openpilot.selfdrive.ui.tandem.rows import ListPanel, OptionList, SettingRow
 from openpilot.selfdrive.ui.tandem.settings.pages import TitledPage
 from openpilot.selfdrive.ui.tandem.settings.speed_steering import Rows
 from openpilot.selfdrive.ui.tandem.prefs import WEATHER_CHIME
@@ -64,6 +64,9 @@ OWN_CHIMES = {"WeatherChime": WEATHER_CHIME}
 # StarPilot keeps the blind spot chime in two settings: while steering, and while steering is off or paused. Ours is both.
 LINKED_CHIMES = {"LoudBlindspotAlert": ("LoudBlindspotAlert", "LoudBlindspotAlertWhenDisengaged")}
 SOUNDS = "sounds"
+PACK = "SoundPack"         # StarPilot's installed sound packs, by their labels (starpilot/ui/sounds_owner.PACK_LABELS)
+SAMPLE = "EngageVolume"    # the sample Sound Pack plays: the engage chime, in the chosen pack
+CHIME_ROW_HEIGHT = T.px(60)   # the Chimes card holds four chimes and Sound Pack (design/alerts-soundpack.html)
 
 
 class Alerts:
@@ -141,6 +144,29 @@ class Alerts:
     for linked in LINKED_CHIMES.get(key, (key,)):
       rows.set_on(linked, on)
 
+  # Sound pack
+
+  def pack(self) -> str:
+    """The chosen pack's name, as StarPilot labels it."""
+    return self._rows(SOUNDS).value(PACK)
+
+  def packs(self) -> list[str]:
+    """Every pack installed on the device; StarPilot Sounds and Stock Sounds always are."""
+    row = self._rows(SOUNDS).row(PACK)
+    return list(row.choices) if row is not None else []
+
+  def pack_editable(self) -> bool:
+    return self._rows(SOUNDS).available(PACK)
+
+  def set_pack(self, name: str) -> None:
+    """Saves a pack through StarPilot's Sounds owner (parked only)."""
+    self._rows(SOUNDS).set(PACK, name)
+
+  def play_pack(self) -> None:
+    """Plays the engage chime in the chosen pack: StarPilot's preview starts a fresh player, which loads the saved pack."""
+    if self._play is not None:
+      self._play(SAMPLE)
+
 
 class VolumeEditor(Component):
   """Big value and Play sample, then the slider with the presets marked and the safety floor hatched."""
@@ -208,14 +234,34 @@ def alerts_page(model: Alerts, window: SettingsWindow) -> Widget:
     Stack(volume_rows, gap=T.px(6)),
     Label(note, T.SIZE_SUBTITLE, T.TEXT_MUTED, T.FONT),
   ], gap=T.px(12))
-  chime_rows = [SettingRow(title, subtitle, Switch(partial(model.chime, key), partial(model.set_chime, key))) for title, subtitle, key in CHIMES]
+  chime_rows = [SettingRow(title, subtitle, Switch(partial(model.chime, key), partial(model.set_chime, key)), height=CHIME_ROW_HEIGHT)
+                for title, subtitle, key in CHIMES]
   for chime_row, (_, _, key) in zip(chime_rows, CHIMES, strict=True):
     chime_row.set_enabled(partial(model.chime_editable, key))
   presets.set_enabled(model.editable)
   for line in volume_rows:
     line.set_enabled(model.editable)
-  chimes = ListPanel(chime_rows, title=N_("Chimes"), title_size=T.font_px(20), header_divider=False)
+  pack = SettingRow(N_("Sound Pack"), N_("The sounds every alert plays"), ValueButton(model.pack, lambda: window.present(sound_pack_sheet(model, window))),
+                    height=CHIME_ROW_HEIGHT)
+  pack.set_enabled(model.pack_editable)
+  chimes = ListPanel([*chime_rows, pack], title=N_("Chimes"), title_size=T.font_px(20), header_divider=False)
   return TitledPage(N_("Alerts"), N_("One volume for everything. Safety warnings never go below 25%."), Columns([volume, chimes]))
+
+
+def sound_pack_sheet(model: Alerts, window: SettingsWindow) -> Sheet:
+  """Sound Pack (design/soundpack.html): the installed packs; tapping one saves it, and Play sample plays it."""
+  packs = model.packs()
+
+  def chosen(index: int) -> None:
+    if packs[index] != model.pack():
+      model.set_pack(packs[index])
+
+  play = Button(N_("Play sample"), model.play_pack, ButtonStyle.SECONDARY, weight=T.FONT_BOLD,
+                glyph=lambda r, c, s: draw.icon(r, "play_filled", T.ACCENT, T.px(20)))
+  play.set_enabled(model.pack_editable)
+  return Sheet(N_("Sound Pack"), OptionList(packs, lambda: packs.index(model.pack()) if model.pack() in packs else -1, chosen),
+               subtitle=N_("The sounds every alert plays. Play sample uses the chosen pack."),
+               actions=[play, Button(N_("Done"), window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss)
 
 
 def sound_player(parked: Callable[[], bool]) -> Callable[[str], None]:

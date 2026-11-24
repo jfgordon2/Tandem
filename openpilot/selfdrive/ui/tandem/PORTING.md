@@ -387,6 +387,8 @@ WarningImmediateVolume WarningSoftVolume
   Force Offroad asks first while driving services run). Storage & Data adds Uploads on Cellular (AlwaysAllowUploads),
   which athenad also honors for Firehose. The parked sidebar shows Jetlink from StarPilot's status feed, polled only
   while parked.
+- Alerts › Chimes ends with Sound Pack: StarPilot's SoundPack (its installed packs, by its names), parked only, with a
+  sample through StarPilot's alert preview.
 - Report a Problem sends the release category, details, optional Discord name and RAM summaries through StarPilot's
   manual issue project using the existing acknowledged Bugsink transport. The release keyboard is used for text entry. Developer uses the native toggle and SSH owners. CAN recording is stage 5.
 - The approved Delete offline maps dialog covers managed road snapshots, native navigation tiles, and downloaded
