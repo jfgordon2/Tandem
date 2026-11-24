@@ -569,6 +569,14 @@ class EssentialsOnroad(AugmentedRoadView):
   def _handle_mouse_press(self, mouse_pos: MousePos, /) -> None:
     """Only the menu tile opens the sidebar in the Essentials view."""
 
+  def _handle_mouse_release(self, mouse_pos: MousePos, /) -> None:
+    """A tap on the road closes the open sidebar, as the menu tile does; taps on the bar and cards stay theirs.
+
+    The sidebar is open when MainLayout has moved this view right of it (its rect no longer starts at the screen's edge).
+    """
+    if self._rect.x > 0 and not self._overlay.on_control(mouse_pos.x, mouse_pos.y):
+      self._menu()
+
   def hide_event(self) -> None:
     super().hide_event()
     self._turn_signals.close()

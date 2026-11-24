@@ -68,6 +68,16 @@ class OnroadOverlay(Component):
     self._replace_bar()
     self._bar_context = None
 
+  def on_control(self, x: float, y: float) -> bool:
+    """Whether a point lands on something that takes taps: the bar or a new-limit card.
+
+    Args:
+      x: The point's x, in screen pixels.
+      y: The point's y, in screen pixels.
+    """
+    point = rl.Vector2(x, y)
+    return any(w is not None and w.is_visible and rl.check_collision_point_rec(point, w.rect) for w in (self._bar, self._limit))
+
   def _sync_bar(self, context: tuple[bool, bool, bool]) -> None:
     """A new bar whenever an alert comes or StarPilot's permissions change, so a press started before can't land after."""
     if self._bar_context is not None and self._bar_context != context:

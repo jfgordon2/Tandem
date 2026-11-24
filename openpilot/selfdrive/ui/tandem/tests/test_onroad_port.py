@@ -255,3 +255,32 @@ def test_the_path_follows_the_saved_path_style(monkeypatch: pytest.MonkeyPatch) 
     monkeypatch.setattr(rl, name, Mock())
   view._render(rl.Rectangle(0, 0, 2160, 1080))
   assert view.render_camera_model_layer.call_args.kwargs["road_style"] == {"pathMode": "color", "path": "#5AAAF880"}
+
+
+def test_taps_on_the_bar_or_a_limit_card_are_the_controls(monkeypatch: pytest.MonkeyPatch) -> None:
+  """With the sidebar open, a tap on the road closes it; on_control keeps the bar's and cards' taps theirs."""
+  overlay = OnroadOverlay(lambda: DriveDisplay(), Mock(), Mock(), Mock(), Mock())
+  overlay._bar._rect = rl.Rectangle(0, 900, 2160, 180)
+  assert overlay.on_control(1000, 1000) and not overlay.on_control(1000, 400)
+  overlay._limit = Mock(is_visible=True, rect=rl.Rectangle(1500, 100, 500, 300))
+  assert overlay.on_control(1600, 200)
+  overlay._limit = Mock(is_visible=False, rect=rl.Rectangle(1500, 100, 500, 300))
+  assert not overlay.on_control(1600, 200)
+
+
+def test_a_tap_on_the_road_closes_the_open_sidebar() -> None:
+  pytest.importorskip("openpilot.cereal.messaging", reason="needs openpilot's messaging library (a device or full build)")
+  from openpilot.selfdrive.ui.tandem.onroad.view import EssentialsOnroad
+  view = EssentialsOnroad.__new__(EssentialsOnroad)
+  view._display, view._overlay, toggled = DriveDisplay(), Mock(), Mock()
+  view._click_callback = toggled
+  view._overlay.on_control.return_value = False
+  for x, closes in ((0, False), (560, True)):   # closed: the view starts at the screen's edge; open: right of the sidebar
+    toggled.reset_mock()
+    view._rect = rl.Rectangle(x, 0, 2160 - x, 1080)
+    view._handle_mouse_release(SimpleNamespace(x=1200, y=400))
+    assert toggled.called is closes
+  view._overlay.on_control.return_value = True   # MAX − / + or a limit card
+  toggled.reset_mock()
+  view._handle_mouse_release(SimpleNamespace(x=1200, y=1000))
+  assert not toggled.called
