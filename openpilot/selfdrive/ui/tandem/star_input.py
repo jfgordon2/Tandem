@@ -21,6 +21,7 @@ from typing import Any
 
 from openpilot.cereal import messaging
 from openpilot.selfdrive.ui.ui_state import device, ui_state
+from openpilot.selfdrive.ui.tandem.map_schedule import MapScheduleWatch, on_wifi
 from openpilot.starpilot.ui.runtime_app import (AppearanceOwner, BookmarkReceiver, CruiseActionPublisher, Destination, DisplayOwner,
                                                 DriveStateControl, DriveStateOwner, FavoritesOwner, FeaturePage, FeatureSettingsOwner,
                                                 PhysicalSource, PiPOwner, PowerOwner, RuntimeSnapshotAdapter, ShellMode,
@@ -147,7 +148,7 @@ class TandemStarSession(StarShellSession):
 
 
 class TandemInput:
-  """The session and StarPilot's controller runtime, polled once a frame from ui.py.
+  """The session, StarPilot's controller runtime and Tandem's map schedule, polled once a frame from ui.py.
 
   Args:
     session: StarPilot's input session.
@@ -158,6 +159,7 @@ class TandemInput:
   def __init__(self, session: TandemStarSession, runtime: Any, driving: Callable[[], bool]):
     self.session, self.runtime, self._driving = session, runtime, driving
     self._failed = False
+    self._maps = MapScheduleWatch()
 
   def poll(self) -> None:
     """A failure is logged once and never stops the frame."""
@@ -166,13 +168,19 @@ class TandemInput:
       self.session.poll(time.monotonic_ns())
       if self.runtime is not None:
         self.runtime.poll()
+      self._poll_map_schedule()
     except Exception:
       if not self._failed:
         from openpilot.common.swaglog import cloudlog
         cloudlog.exception("Tandem: StarPilot input poll failed")
         self._failed = True
 
+  def _poll_map_schedule(self) -> None:
+    """Offline Maps › Keep up to date: a check at most once a minute, while parked on Wi-Fi, even with the screen off."""
+    self._maps.poll(not ui_state.started, on_wifi(ui_state.sm))
+
   def close(self) -> None:
+    self._maps.close()
     if self.runtime is not None:
       self.runtime.close()
 

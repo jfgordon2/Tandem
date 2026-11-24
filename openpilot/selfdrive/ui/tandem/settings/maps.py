@@ -2,7 +2,8 @@
 
 One map job downloads both map sets for the chosen states: road data from StarPilot 7's map owner, then Tandem's
 offline routes (starpilot/tandem/routing/maps.py). settings/map_source.py is the real source. StarPilot 7 has no
-scheduled map refresh, so release's Keep up to date card is left out (README, where the code differs from the mocks).
+scheduled map refresh, so Keep up to date is Tandem's own schedule (starpilot/tandem/routing/schedule.py), as release's
+was StarPilot 6's.
 """
 from __future__ import annotations
 
@@ -19,7 +20,7 @@ from openpilot.system.ui.widgets import Widget
 from openpilot.selfdrive.ui.tandem.base import Component
 from openpilot.selfdrive.ui.tandem.blocks import SPACER, Card, Columns, Grid, IconTitle, Label, Stack, Surface
 from openpilot.selfdrive.ui.tandem.chrome import PageHeader, Sidebar, SidebarItem
-from openpilot.selfdrive.ui.tandem.controls import Button, ButtonRow, ButtonStyle, ProgressBar
+from openpilot.selfdrive.ui.tandem.controls import Button, ButtonRow, ButtonStyle, ProgressBar, Segmented
 from openpilot.selfdrive.ui.tandem.layout import FILL, Align, column, inset, place, row
 from openpilot.selfdrive.ui.tandem.rows import ListPanel, SettingRow, Text
 from openpilot.selfdrive.ui.tandem.settings.pages import Rebuilding, TitledPage, body_rect
@@ -30,6 +31,7 @@ from openpilot.selfdrive.ui.tandem.i18n import N_, t_, translate
 if TYPE_CHECKING:
   from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow
 
+SCHEDULES = [(N_("Off"), "off"), (N_("Weekly"), "weekly"), (N_("Monthly"), "monthly")]   # schedule.CHOICES
 DELETE_MAPS_MESSAGE = N_("Remove all downloaded maps from this device. Your regions stay chosen.")   # as Storage & Data
 
 
@@ -150,8 +152,33 @@ class MapsSource(Protocol):
 class Maps:
   """Navigation › Offline Maps: readiness and summary, over a maps source."""
 
-  def __init__(self, source: MapsSource):
+  def __init__(self, source: MapsSource, schedule: tuple[Callable[[], str], Callable[[str], None]] | None = None):
+    """Makes the page's model.
+
+    Args:
+      source: The maps source.
+      schedule: (read, save) for Keep up to date's choice ("off", "weekly" or "monthly"); Tandem's map schedule by default.
+    """
     self.source = source
+    if schedule is None:
+      from openpilot.starpilot.tandem.routing import schedule as tandem_schedule
+      schedule = (tandem_schedule.every, tandem_schedule.set_every)
+    self._read_schedule, self._save_schedule = schedule
+
+  @property
+  def schedule(self) -> int:
+    """Keep up to date's choice, as an index into SCHEDULES (Off when unreadable)."""
+    try:
+      choice = self._read_schedule()
+    except (OSError, ValueError):
+      return 0
+    return next((i for i, (_, key) in enumerate(SCHEDULES) if key == choice), 0)
+
+  def set_schedule(self, index: int) -> None:
+    try:
+      self._save_schedule(SCHEDULES[index][1])
+    except (OSError, ValueError):
+      pass   # the card keeps showing what's saved
 
   def ready(self) -> bool:
     selected = self.source.has_selection() or self.source.can_clear()
@@ -223,11 +250,18 @@ def maps_page(maps: Maps, open_regions: Callable[[], None], sizes: Callable[[], 
                              T.FONT, fit=True), height=T.px(54)), T.SURFACE_2),
     ButtonRow([update, remove], height=T.px(44)), SPACER, choose,
   ], gap=T.px(10), padding=(T.px(20), T.px(18)))
+  schedule = Card([
+    Label(N_("Keep up to date"), T.font_px(18)),
+    Segmented([name for name, _ in SCHEDULES], lambda: maps.schedule, maps.set_schedule, height=T.px(52), font_size=T.font_px(16),
+              equal=True),
+    Text(N_("One schedule for road data and offline routes, while parked on Wi-Fi."), T.SIZE_SUBTITLE, T.TEXT_MUTED, T.FONT,
+         padding=(0, 0)),
+  ], padding=(T.px(20), T.px(18)))
   storage = Card([StorageBar(sizes, heading=N_("Storage"), padding=(0, 0)), SPACER,
                   Label(N_("Updates keep the current maps until the new maps are ready."), T.SIZE_SUBTITLE, T.TEXT_MUTED, T.FONT)],
                  padding=(T.px(20), T.px(18)), grow=1)
   return TitledPage(N_("Offline Maps"), N_("Routes, speed limits and street names without a connection"),
-                    Columns([regions, storage], [1.25, 1]))
+                    Columns([regions, Stack([schedule, storage], gap=T.px(14), grow=1)], [1.25, 1]))
 
 
 class RegionCard(Component):

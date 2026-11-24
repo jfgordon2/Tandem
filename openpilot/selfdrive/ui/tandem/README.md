@@ -89,9 +89,10 @@ StarPilot 7’s raylib binding retains glyph images for TTF fonts. Tandem defers
   keeps only "New parked limits are confirmed before they save."
 - **Display › Map (StarPilot 7):** `displaymap` isn't built. Its switch and sign style were StarPilot 6 settings that
   StarPilot 7 dropped; its Offline Maps link is in Speed & Steering › Navigation.
-- **Offline Maps (StarPilot 7):** `valhalla2-maps-home` has no Keep up to date card: StarPilot 7 has no scheduled map
-  refresh to share, so Storage takes the right column. One map job gets road data from StarPilot's map owner, a state at
-  a time, then the shared routing download (`valhalla5-paired-*` showed both per state together).
+- **Offline Maps (StarPilot 7):** StarPilot 7 has no scheduled map refresh, so `valhalla2-maps-home`'s Keep up to date
+  is Tandem's own schedule (`starpilot/tandem/routing/schedule.py`); Monthly waits for each month's routing build. One map
+  job gets road data from StarPilot's map owner, a state at a time, then the shared routing download
+  (`valhalla5-paired-*` showed both per state together).
 - **Connections (StarPilot 7):** Car Audio & Devices (`connectionsaudio`) is Bluetooth Devices, with Paired and Nearby
   cards and a device sheet of Disconnect and Forget: StarPilot 7 has no openpilot sounds over Bluetooth, so the car
   audio switch and sound test are gone. Bluetooth Remote's actions are StarPilot's list, without Favorite 1-3.

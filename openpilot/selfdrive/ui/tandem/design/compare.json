@@ -753,7 +753,7 @@
     {
       "mock": "valhalla2-maps-home",
       "title": "One Offline Maps page",
-      "note": "StarPilot 7: matches the regions card, with road data from StarPilot's map owner and Tandem's offline routes. The Keep up to date card is left out: StarPilot 7 has no scheduled map refresh. Storage takes the right column.",
+      "note": "StarPilot 7: matches the regions card, with road data from StarPilot's map owner and Tandem's offline routes. Keep up to date is Tandem's own schedule, as StarPilot 7 has none: Off, Weekly or Monthly (after each month's routing build), queued while parked on Wi-Fi.",
       "match": false
     },
     {

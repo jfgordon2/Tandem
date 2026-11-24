@@ -99,6 +99,8 @@ ENTRIES: list[Entry] = [
         "online offline valhalla fallback"),
   Entry(N_("Offline Maps"), N_("Routes, speed limits and street names without a connection"), 0, S, 2,
         "download regions states road data valhalla"),
+  Entry(N_("Keep up to date"), N_("Update offline maps weekly or monthly, while parked on Wi-Fi"), 0, S, 2,
+        words="schedule automatic update maps weekly monthly"),
   Entry(N_("Directions"), N_("Mapbox, or Google for live traffic"), 0, S, 2, "route provider google mapbox traffic"),
   Entry(N_("Avoid"), N_("Tolls, highways or ferries when planning routes"), 0, S, 2, "tolls highways motorway ferries"),
   Entry(N_("Position"), N_("Where the car's position comes from: the comma, the car or your phone"), 0, S, 2, "gps location phone"),

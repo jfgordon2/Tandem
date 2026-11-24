@@ -182,7 +182,7 @@ def maps_shots(window: SettingsWindow, shot: Callable[[str], None]) -> None:
   """Offline Maps, the region picker and a download's steps, each under its approved mock's name."""
   from openpilot.selfdrive.ui.tandem.settings.maps import Maps, MapsPage, RegionsPage
   sizes = lambda: {"Drives": 40e9, "Maps": 12e9, "Models": 6e9, "Free": 42e9, "Total": 100e9}  # noqa: E731
-  window.push(MapsPage(Maps(sample_maps()), lambda: None, sizes, window))
+  window.push(MapsPage(Maps(sample_maps(), schedule=(lambda: "weekly", lambda choice: None)), lambda: None, sizes, window))
   shot("valhalla2-maps-home")
   window.back()
   regions = RegionsPage(Maps(sample_maps(road_ready=frozenset({IA, IL}), route_ready=frozenset({IA, IL}))), lambda: None)

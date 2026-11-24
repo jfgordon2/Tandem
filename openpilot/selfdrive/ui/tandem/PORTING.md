@@ -387,6 +387,9 @@ WarningImmediateVolume WarningSoftVolume
   Force Offroad asks first while driving services run). Storage & Data adds Uploads on Cellular (AlwaysAllowUploads),
   which athenad also honors for Firehose. The parked sidebar shows Jetlink from StarPilot's status feed, polled only
   while parked.
+- Offline Maps › Keep up to date is back as Tandem's own schedule (`starpilot/tandem/routing/schedule.py`, saved in
+  `map-schedule.json`): Weekly, or Monthly after each month's routing build, it queues the Update maps job while parked
+  on Wi-Fi. `map_schedule.py` checks once a minute from `TandemInput.poll`, which ui.py runs with the screen off too.
 - Alerts › Chimes ends with Sound Pack: StarPilot's SoundPack (its installed packs, by its names), parked only, with a
   sample through StarPilot's alert preview.
 - Report a Problem sends the release category, details, optional Discord name and RAM summaries through StarPilot's
