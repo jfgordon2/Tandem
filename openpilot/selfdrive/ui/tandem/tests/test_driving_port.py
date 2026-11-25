@@ -55,6 +55,25 @@ def test_models_come_from_starpilots_manager_and_refusals_are_shown() -> None:
   assert notices == ["Turn the vehicle off before changing driving models"] and source.removal_blocked() == "Park to remove models"
 
 
+def test_turning_use_recommended_off_lets_the_driver_pick_another_model() -> None:
+  """StarPilot keeps no Use recommended setting: it was only "the recommended model is in use", so turning the switch off
+  snapped it back on and kept every Use button hidden."""
+  from openpilot.selfdrive.ui.tandem.settings.model import ModelRow
+  manager = FakeManager()
+  manager.current = DEFAULT_SMALL
+  source = StarPilotModels(manager, clock=lambda: 0.0)
+  models = Models(source)
+  favorite = next(m for m in source.models() if m.key == "fav")
+  row = ModelRow(models, favorite)
+  assert models.use_recommended and not row._use.is_visible
+  models.set_use_recommended(False)
+  assert not models.use_recommended and row._use.is_visible and not manager.actions   # nothing changes until a pick
+  row._use._click_callback()
+  assert manager.current == "fav" and not models.use_recommended
+  models.set_use_recommended(True)
+  assert manager.current == DEFAULT_SMALL and models.use_recommended and not row._use.is_visible
+
+
 def test_download_progress_reads_starpilots_job() -> None:
   manager = FakeManager()
   manager.job = {"model": "big", "detail": {"phase": "downloading", "received": 45, "total": 100}}

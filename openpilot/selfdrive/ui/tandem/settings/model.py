@@ -67,6 +67,7 @@ class Models:
     """
     self.source = source
     self._recount = recount
+    self._choosing = False   # Use recommended turned off, before another model is picked (StarPilot keeps no such setting)
 
   def find(self, key: str) -> ModelInfo | None:
     return next((m for m in self.source.models() if m.key == key), None)
@@ -77,11 +78,17 @@ class Models:
 
   @property
   def use_recommended(self) -> bool:
-    return self.source.current_key() == self.source.recommended_key()
+    """On while StarPilot's recommended model is the one in use, unless the driver turned it off to pick another."""
+    return self.source.current_key() == self.source.recommended_key() and not self._choosing
 
   def set_use_recommended(self, on: bool) -> None:
-    """On picks StarPilot's default model; off keeps it until another is chosen."""
-    if on:
+    """On goes back to StarPilot's recommended model; off keeps it in use and shows Use on the other models.
+
+    StarPilot 7 has no setting for this: it's whether the recommended model is the one in use. So off is remembered here
+    until another model is picked, which then keeps it off.
+    """
+    self._choosing = not on
+    if on and self.source.current_key() != self.source.recommended_key():
       self.source.use(self.source.recommended_key())
 
   def status(self, model: ModelInfo) -> str:
