@@ -75,6 +75,7 @@ class EssentialsOnroad(AugmentedRoadView):
     self._gap_tracker = GapTracker()
     self._gap_state: GapTagState | None = None
     self._lead_tag_on, self._lead_tag_read = True, -1.0   # prefs.LEAD_TAG, read once a second
+    self._lead_display: tuple[bool, int, bool | None] | None = None   # what the lead marker and its text show (_update_lead)
     self._dev: developer.DevData | None = None            # Developer View's values while StarPilot's sidebar setting is on
     self._road = rl.Rectangle(0, 0, 0, 0)                  # the road view's inner rect, for the lead tag's bounds
     # The lead tag takes the place of the text StarPilot's renderer draws above its lead marker (its Lead Info).
@@ -383,7 +384,7 @@ class EssentialsOnroad(AugmentedRoadView):
       self._lead_tag_on, self._lead_tag_read = LEAD_TAG.get(), now
     appearance = state.appearance
     mode = 1 if self._lead_tag_on else int(appearance.lead_info_mode)   # any mode but Off asks the renderer for the text
-    self.model_renderer.lead_display = (True, mode, appearance.lead_info_metric)
+    self._lead_display = (True, mode, appearance.lead_info_metric)
     self._gap_state = self._gap_tracker.update(read_lead_sample(ui_state, self.LEAD_THRESHOLD), now)   # the tag, or the bar with it off
 
   def _extras(self, state: OnroadState, car: Any, now_ns: int) -> None:
@@ -506,7 +507,9 @@ class EssentialsOnroad(AugmentedRoadView):
         # Display › Path Style is saved in StarPilot's large layout, which its own screen passes here too (runtime_app.py)
         self.render_camera_model_layer(inner, camera_view=int(state.appearance.camera_view),
                                        reverse_driver=state.reverse_driver_camera, poll_camera=poll_camera,
-                                       road_style=state.customization["roadColors"]["large"])
+                                       road_style=state.customization["roadColors"]["large"],
+                                       # it sets the renderer's lead display each frame: without it the tag is never asked for
+                                       lead_display=self._lead_display)
         self._safely("turn signal", lambda: self._render_turn_signal(inner, state))
       finally:
         rl.end_scissor_mode()

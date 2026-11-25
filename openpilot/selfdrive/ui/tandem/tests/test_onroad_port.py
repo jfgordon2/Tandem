@@ -240,7 +240,7 @@ def test_chips_come_from_releases_rules() -> None:
   assert Chip("x", "y", ChipTone.INFO, "z").tone == ChipTone.INFO
 
 
-def test_the_path_follows_the_saved_path_style(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_the_path_style_and_lead_tag_reach_the_renderer(monkeypatch: pytest.MonkeyPatch) -> None:
   """Display › Path Style saves StarPilot's large road colors; the driving screen hands them to the path, as StarPilot's
   own screen does, or openpilot draws its default green."""
   pytest.importorskip("openpilot.cereal.messaging", reason="needs openpilot's messaging library (a device or full build)")
@@ -252,11 +252,14 @@ def test_the_path_follows_the_saved_path_style(monkeypatch: pytest.MonkeyPatch) 
   view = EssentialsOnroad.__new__(EssentialsOnroad)
   view._prepared, view._native, view._display, view._dev = True, replace(OnroadState(), customization=customization), DriveDisplay(), None
   view._overlay, view._strip_rect, view._safely = Mock(), Mock(return_value=None), Mock()
+  view._lead_display = (True, 1, None)   # Lead Car Tag on (_update_lead)
   view.render_camera_model_layer = Mock()   # type: ignore[method-assign]
   for name in ("begin_scissor_mode", "end_scissor_mode"):
     monkeypatch.setattr(rl, name, Mock())
   view._render(rl.Rectangle(0, 0, 2160, 1080))
   assert view.render_camera_model_layer.call_args.kwargs["road_style"] == {"pathMode": "color", "path": "#5AAAF880"}
+  # The camera layer sets the renderer's lead display every frame; without this the tag above the lead was never drawn.
+  assert view.render_camera_model_layer.call_args.kwargs["lead_display"] == (True, 1, None)
 
 
 def test_taps_on_the_bar_or_a_limit_card_are_the_controls(monkeypatch: pytest.MonkeyPatch) -> None:
