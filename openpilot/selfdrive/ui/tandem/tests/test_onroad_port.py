@@ -307,3 +307,21 @@ def test_reverse_gear_is_large_centered_words_with_no_box(monkeypatch: pytest.Mo
   assert [args[1] for args in drawn] == ["Reverse", "Gear"]   # StarPilot's line break kept
   first, second = drawn[0][0], drawn[1][0]
   assert second.y > first.y and abs((first.y + second.y + second.height) / 2 - 540) < 2   # centered on the road
+
+
+def test_reverse_gear_shows_its_words_alone_as_on_release(monkeypatch: pytest.MonkeyPatch) -> None:
+  """Release showed only "Reverse Gear" over the rear view: no speed, speed limit sign, driver monitor tile or bar."""
+  state = DriveDisplay(bar=BarState(engaged=False, set_speed=0), alert=DrivingAlert(alerts.REVERSE, "Reverse\nGear"), posted="25",
+                       monitor=1.0)
+  overlay = OnroadOverlay(lambda: state, Mock(), Mock(), Mock(), Mock())
+  draw_alert, render_bar = Mock(), Mock()
+  widgets = {name: Mock() for name in ("draw_speed", "draw_speed_limit", "draw_driver_monitor")}
+  monkeypatch.setattr(alerts, "draw_alert", draw_alert)
+  for name, mock in widgets.items():
+    monkeypatch.setattr(layers, name, mock)
+  monkeypatch.setattr(overlay._bar, "render", render_bar)
+  monkeypatch.setattr("openpilot.selfdrive.ui.tandem.draw.stroke", Mock())
+  monkeypatch.setattr("openpilot.selfdrive.ui.tandem.onroad.extras.draw_border_halves", Mock())
+  overlay._render(rl.Rectangle(0, 0, 2160, 1080))
+  assert draw_alert.call_args.args[1:3] == (alerts.REVERSE, "Reverse\nGear")
+  assert not any(mock.called for mock in widgets.values()) and not render_bar.called

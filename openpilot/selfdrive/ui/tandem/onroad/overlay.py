@@ -108,7 +108,9 @@ class OnroadOverlay(Component):
     # A confirmation beside the open menu can overlap the current speed.
     self._limit_card(state.proposal if attention is None and rect.width >= T.px(1000) else None)
     inner = road_rect(rect)
-    if attention is not None and attention.level == alerts.CRITICAL:
+    if attention is not None and attention.level in (alerts.CRITICAL, alerts.REVERSE):
+      # A takeover fills the road view; reverse gear is its words alone over the rear view, as release drew it: no speed,
+      # sign, driver monitor tile or bar.
       alerts.draw_alert(inner, attention.level, attention.title, attention.detail, 1.0)
     else:
       layers.draw_speed(inner, state.speed, state.unit, left=state.left, right=state.right, now=self._clock())
