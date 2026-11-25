@@ -192,3 +192,62 @@ def test_access_technology_masks(bits, label):
 def test_dbus_variants_are_unwrapped_without_losing_signal_freshness():
   assert C.unwrap({"SignalQuality": ("(ub)", (61, True)), "IP": ("a{sv}", {"address": ("s", "10.1.2.3")})}) == {
     "SignalQuality": (61, True), "IP": {"address": "10.1.2.3"}}
+
+
+# AGNOS 20.5's modem daemon state, as /dev/shm/modem read on a comma 3X (2026-11-24), its identifiers replaced.
+DAEMON = {"seconds_since_boot": 99610.6, "state": "CONNECTED", "connected": True, "mcc_mnc": "310240", "modem_version": "EG25GGBR07A08M2G",
+          "signal_strength": 19, "signal_quality": 61, "network_type": "lte", "operator": "Tello", "band": "LTE BAND 12", "channel": 5035,
+          "registration": "home", "temperatures": [43, 42, 39], "iccid": "8901000000000000000", "imei": "350000000000000",
+          "ip_address": "10.0.0.2", "tx_bytes": 1, "rx_bytes": 1}
+
+
+def daemon_reader(tmp_path, apn="wholesale", route="wlan0", age=1.0, **changes):
+  import json
+  path = tmp_path / "modem"
+  path.write_text(json.dumps({**DAEMON, **changes}))
+  return C.ModemStateReader(path=path, apn=lambda: apn, route=lambda: route, clock=lambda: path.stat().st_mtime + age)
+
+
+def test_agnos_20_5_modem_daemon_reads_as_connected_lte(tmp_path):
+  value = daemon_reader(tmp_path).read()
+  assert (value.sim, value.connected, value.technology, value.quality, value.address) == (True, True, "LTE", 61, "10.0.0.2")
+  assert value.wifi and value.bearer_apn == "wholesale" and value.applies_apn
+  monitor = C.Monitor(reader_factory=None)
+  monitor._observation, monitor._updated, monitor._target = value, monitor.clock(), "wholesale"
+  assert monitor.status().code == "connected"
+
+
+@pytest.mark.parametrize("changes,expected", [
+  ({"state": "INITIALIZING", "iccid": "", "connected": False}, "checking"),
+  ({"state": "SEARCHING", "iccid": "", "connected": False}, "no_sim"),
+  ({"state": "SEARCHING", "registration": "searching", "connected": False, "network_type": ""}, "no_signal"),
+  ({"state": "SEARCHING", "registration": "denied", "connected": False}, "not_connected"),
+  ({"state": "CONNECTING", "connected": False}, "connecting"),
+])
+def test_agnos_20_5_modem_daemon_states(tmp_path, changes, expected):
+  monitor = C.Monitor(reader_factory=None)
+  monitor._observation, monitor._updated = daemon_reader(tmp_path, **changes).read(), monitor.clock()
+  assert monitor.status().code == expected
+
+
+def test_a_stopped_daemons_old_file_fails_closed(tmp_path):
+  with pytest.raises(RuntimeError):
+    daemon_reader(tmp_path, age=C.STATE_STALE + 5).read()
+
+
+def test_a_saved_apn_waits_for_the_daemon_to_reconnect(tmp_path):
+  monitor = C.Monitor(reader_factory=None)
+  monitor._target = "wholesale"
+  monitor.apn_saved("other", "wholesale")
+  monitor._observation, monitor._updated = daemon_reader(tmp_path, apn="other").read(), monitor.clock()
+  assert monitor.status().code == "connecting"   # still the old session: it hasn't dropped yet
+  monitor._saw_down = True
+  assert monitor.status().code == "connected"
+
+
+def test_default_route_interface(tmp_path):
+  routes = tmp_path / "route"
+  routes.write_text("Iface\tDestination\tGateway\nppp0\t0A000000\t00000000\nwlan0\t00000000\t0101A8C0\n")
+  assert C.default_route_interface(routes) == "wlan0"
+  routes.write_text("Iface\tDestination\tGateway\n")
+  assert C.default_route_interface(routes) == ""

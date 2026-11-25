@@ -1,12 +1,17 @@
-"""Page-scoped, read-only ModemManager/NetworkManager observations.
+"""Page-scoped, read-only modem observations.
+
+AGNOS 20.5 runs the modem with its own daemon (/usr/comma/modem.py), which writes its state to /dev/shm/modem, as
+openpilot's hardware layer reads it; ModemManager isn't running there. Older AGNOS used ModemManager and
+NetworkManager over D-Bus. monitor() reads whichever the device has.
 
 No AT commands, HTTP probes, connection changes or independent daemon. The
-worker owns its D-Bus connection; drawing only reads a small immutable snapshot.
+worker owns its D-Bus connection or file reads; drawing only reads a small immutable snapshot.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
 import ipaddress
+import json
 from pathlib import Path
 import threading
 import time
@@ -23,6 +28,8 @@ DEVICE = NM + ".Device"
 INTERVAL = 2.0
 FRESH = 8.0
 APPLY_TIMEOUT = 60.0
+MODEM_STATE = Path("/dev/shm/modem")   # AGNOS 20.5's modem daemon (common/hardware/comma/hardware.py MODEM_STATE_PATH)
+STATE_STALE = 30.0                    # the daemon rewrites it every few seconds; older means it stopped
 
 
 @dataclass(frozen=True)
@@ -42,6 +49,7 @@ class Observation:
   applied_apn: str | None = None
   auto_config: bool | None = None
   identity: tuple = ()
+  applies_apn: bool = False   # the modem daemon applies the saved APN itself, reconnecting when it changes
 
 
 @dataclass(frozen=True)
@@ -78,7 +86,7 @@ class Cancelled(Exception):
   """The page closed while a read was in progress."""
 
 
-def _close(reader: Reader | None) -> None:
+def _close(reader: Reader | ModemStateReader | None) -> None:
   if reader is not None:
     try:
       reader.close()
@@ -183,10 +191,85 @@ class Reader:
                        connected, connecting, failed, wifi, address, bearer_apn, applied_apn, auto_config, identity)
 
 
+# AGNOS 20.5's modem daemon in ModemManager's numbers, which the status reads: its states (modem.py State) and
+# registration (its CREG names).
+DAEMON_STATES = {"INITIALIZING": 1, "DISCONNECTING": 9, "SEARCHING": 7, "CONNECTING": 10, "CONNECTED": 11}
+DAEMON_REGISTRATION = {"not_registered": 0, "home": 1, "searching": 2, "denied": 3, "unknown": 4, "roaming": 5}
+DAEMON_TECHNOLOGY = {"nr": "5G", "lte": "LTE", "utran": "3G", "umts": "3G", "gsm": "2G"}
+
+
+def default_route_interface(routes: Path = Path("/proc/net/route")) -> str:
+  """The interface of the IPv4 default route ("wlan0", "ppp0"), or "" without one."""
+  try:
+    for line in routes.read_text().splitlines()[1:]:
+      fields = line.split()
+      if len(fields) > 1 and fields[1] == "00000000":
+        return fields[0]
+  except OSError:
+    pass
+  return ""
+
+
+class ModemStateReader:
+  """Reads AGNOS 20.5's modem daemon state file. Read-only, like Reader.
+
+  Args:
+    keep: Whether to keep reading (the page is open).
+    path: The daemon's state file.
+    apn: The saved APN (StarPilot's GsmApn), which the daemon applies itself.
+    route: The default route's interface.
+    clock: Wall seconds, to tell a stopped daemon's old file.
+  """
+
+  def __init__(self, keep: Callable[[], bool] = lambda: True, path: Path = MODEM_STATE, apn: Callable[[], str] | None = None,
+               route: Callable[[], str] = default_route_interface, clock: Callable[[], float] = time.time) -> None:  # noqa: TID251
+    self.keep, self.path, self.route, self.clock = keep, path, route, clock
+    self.apn = apn or saved_apn
+
+  def read(self) -> Observation:
+    if not self.keep():
+      raise Cancelled()
+    if not 0 <= self.clock() - self.path.stat().st_mtime <= STATE_STALE:
+      raise RuntimeError("Cellular status unavailable")   # the daemon stopped: fail closed, as Reader does
+    value = json.loads(self.path.read_text())
+    if not isinstance(value, dict):
+      raise RuntimeError("Cellular status unavailable")
+    state = DAEMON_STATES.get(str(value.get("state", "")))
+    iccid = bool(value.get("iccid"))
+    sim = True if iccid else (None if state in (None, 1, 9) else False)
+    registration = DAEMON_REGISTRATION.get(str(value.get("registration", "")))
+    connected = state == 11 and value.get("connected") is True
+    quality = value.get("signal_quality")
+    apn = self.apn()
+    return Observation(sim, state, registration, DAEMON_TECHNOLOGY.get(str(value.get("network_type", "")), ""),
+                       min(100, max(0, int(quality))) if isinstance(quality, (int, float)) and state in (10, 11) else None,
+                       connected, state == 10 or (state == 11 and not connected), registration == 3,
+                       self.route().startswith("wlan"), str(value.get("ip_address") or "") if connected else "",
+                       apn, apn, not apn, applies_apn=True)
+
+  def close(self) -> None:
+    pass
+
+
+def saved_apn() -> str:
+  """StarPilot's saved APN (GsmApn), which the modem daemon dials with; "" for the carrier's own."""
+  from openpilot.common.params import Params
+  value = Params().get("GsmApn")
+  if isinstance(value, bytes):
+    value = value.decode("utf-8", "replace")
+  return str(value or "").strip()
+
+
+def reader(keep: Callable[[], bool] = lambda: True) -> Reader | ModemStateReader:
+  """The modem daemon's state file where AGNOS has one (20.5 and later), else ModemManager over D-Bus."""
+  return ModemStateReader(keep) if MODEM_STATE.exists() else Reader(keep)
+
+
 class Monitor:
   """Reads cellular status in the background while the page is open, and judges what it means for the chosen APN."""
 
-  def __init__(self, reader_factory: Callable[..., Reader] | None = Reader, clock: Callable[[], float] = time.monotonic) -> None:
+  def __init__(self, reader_factory: Callable[..., Reader | ModemStateReader] | None = Reader,
+               clock: Callable[[], float] = time.monotonic) -> None:
     self.factory, self.clock = reader_factory, clock
     self._lock = threading.RLock()
     self._wake = threading.Event()
@@ -247,6 +330,8 @@ class Monitor:
       matches = (value.bearer_apn or "").strip().casefold() == self._target.casefold() if self._target else True
       if self._changed_auto:
         matches = value.auto_config is True or self._saw_down or value.identity != self._baseline
+      if value.applies_apn and pending and not self._saw_down:
+        return Status("connecting", value)   # the daemon reconnects with a saved APN: wait for it to drop and come back
       if value.connected and matches:
         self._pending = None
         return Status("connected", value)
@@ -264,7 +349,7 @@ class Monitor:
     factory = self.factory
     if factory is None:   # set_active starts this thread only with a reader
       return
-    reader: Reader | None = None
+    reader: Reader | ModemStateReader | None = None
     try:
       while True:
         with self._lock:
@@ -299,4 +384,4 @@ class Monitor:
 
 
 def monitor() -> Monitor:
-  return Monitor(reader_factory=Reader if Path("/TICI").exists() else None)
+  return Monitor(reader_factory=reader if Path("/TICI").exists() else None)

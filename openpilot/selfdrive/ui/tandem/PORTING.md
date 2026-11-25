@@ -394,6 +394,9 @@ WarningImmediateVolume WarningSoftVolume
   Learn's line (`settings/auto_learn.py`) reads StarPilot's learner report and saved history through Galaxy's
   `FlmTrainingResults`, every five seconds on a worker thread while it's drawn. StarPilot's manual overrides of learned
   values (its "tuning" page) stay on StarPilot's own screens.
+- Connections › Cellular reads AGNOS 20.5's modem daemon (`/usr/comma/modem.py`), which writes `/dev/shm/modem` and
+  dials with the saved `GsmApn`; ModemManager isn't running there, so the D-Bus reader stayed on Checking.
+  `starpilot/tandem/cellular.py` reads the file where it exists and ModemManager on older AGNOS.
 - Alerts › Chimes ends with Sound Pack: StarPilot's SoundPack (its installed packs, by its names), parked only, with a
   sample through StarPilot's alert preview.
 - Report a Problem sends the release category, details, optional Discord name and RAM summaries through StarPilot's
