@@ -150,6 +150,12 @@
       "match": true
     },
     {
+      "mock": "modelcatalog-released",
+      "title": "Model catalog, newest first",
+      "note": "Built to the mock: every tab lists models newest first by StarPilot's release date, written in the driver's language at the end of each line; a download keeps its progress line. The recommended model reads Recommended. The Driving Model page's rows keep their approved lines.",
+      "match": true
+    },
+    {
       "mock": "vehicle",
       "title": "Vehicle",
       "note": "Matches: your car and Auto-Lock on the left, wheel buttons on the right. Adds a \"More for your car\" row. Page ground uses true black (#000000).",

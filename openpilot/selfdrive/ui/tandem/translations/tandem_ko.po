@@ -2498,7 +2498,7 @@ msgstr "초기화"
 
 #: settings/device.py:151
 #: settings/device_owner.py:187
-#: settings/model.py:147
+#: settings/model.py:167
 msgid "Not available"
 msgstr "사용 불가"
 
@@ -3043,7 +3043,7 @@ msgstr "화면"
 
 #: settings/driving_tab.py:208
 #: settings/essentials.py:229
-#: settings/model.py:309
+#: settings/model.py:336
 msgid "Driving Model"
 msgstr "주행 모델"
 
@@ -3465,7 +3465,7 @@ msgid "Prepare"
 msgstr "준비"
 
 #: settings/maps.py:352
-#: settings/model.py:147
+#: settings/model.py:167
 #: settings/network_test.py:40
 msgid "Download"
 msgstr "다운로드"
@@ -3650,7 +3650,7 @@ msgid "Speed limits and street names"
 msgstr "제한 속도와 도로명"
 
 #: settings/maps.py:260
-#: settings/model.py:334
+#: settings/model.py:361
 msgid "Storage"
 msgstr "저장 공간"
 
@@ -3719,151 +3719,160 @@ msgstr "사용 가능한 지역이 없습니다."
 msgid "Road data · {} of {} files"
 msgstr "도로 데이터 · 파일 {}/{}개"
 
-#: settings/model.py:309
+#: settings/model.py:336
 msgid "The neural network that steers and judges speed"
 msgstr "조향과 속도를 판단하는 신경망"
 
-#: settings/model.py:317
+#: settings/model.py:344
 msgid "All models"
 msgstr "모든 모델"
 
-#: settings/model.py:317
+#: settings/model.py:344
 msgid "Community picks"
 msgstr "커뮤니티 추천"
 
-#: settings/model.py:317
-#: settings/model.py:165
-#: settings/model.py:163
+#: settings/model.py:344
+#: settings/model.py:192
+#: settings/model.py:190
 msgid "On device"
 msgstr "기기에 있음"
 
-#: settings/model.py:76
+#: settings/model.py:78
 msgid "Default model"
 msgstr "기본 모델"
 
-#: settings/model.py:121
+#: settings/model.py:130
+#: settings/model.py:188
 msgid "Recommended"
 msgstr "권장"
 
-#: settings/model.py:125
+#: settings/model.py:134
 #: sidebar.py:156
 msgid "Downloading"
 msgstr "다운로드 중"
 
-#: settings/model.py:126
+#: settings/model.py:135
 msgid "StarPilot's default"
 msgstr "StarPilot 기본값"
 
-#: settings/model.py:126
+#: settings/model.py:135
 msgid "Chosen by you"
 msgstr "직접 선택함"
 
-#: settings/model.py:147
-#: settings/model.py:144
+#: settings/model.py:167
+#: settings/model.py:164
 msgid "Use"
 msgstr "사용"
 
-#: settings/model.py:301
+#. English fallback pending cellular-status translation.
+#: settings/model.py:184
+#: settings/navigation.py:117
+#: settings/network_tab.py:255
+#, python-brace-format
+msgid "{} · {}"
+msgstr "{} · {}"
+
+#: settings/model.py:328
 msgid "Browse all"
 msgstr "모두 보기"
 
-#: settings/model.py:354
+#: settings/model.py:381
 msgid "Driving models"
 msgstr "주행 모델"
 
-#: settings/model.py:450
+#: settings/model.py:477
 msgid "Park to remove models"
 msgstr "모델을 삭제하려면 주차하세요"
 
-#: settings/model.py:452
+#: settings/model.py:479
 msgid "Wait for the download to finish"
 msgstr "다운로드가 끝날 때까지 기다리세요"
 
-#: settings/model.py:143
-#: settings/model.py:292
+#: settings/model.py:163
+#: settings/model.py:319
 msgid "ACTIVE"
 msgstr "사용 중"
 
-#: settings/model.py:164
+#: settings/model.py:191
 #, python-brace-format
 msgid "Downloading · {}"
 msgstr "다운로드 중 · {}"
 
-#: settings/model.py:166
+#: settings/model.py:193
 msgid "Needs an eGPU"
 msgstr "eGPU 필요"
 
-#: settings/model.py:163
+#: settings/model.py:190
 msgid "Recommended · On device"
 msgstr "권장 · 기기에 있음"
 
-#: settings/model.py:167
+#: settings/model.py:194
 msgid "Community pick"
 msgstr "커뮤니티 추천"
 
-#: settings/model.py:167
+#: settings/model.py:194
 msgid "Available to download"
 msgstr "다운로드 가능"
 
-#: settings/model.py:303
+#: settings/model.py:330
 msgid "OTHER MODELS"
 msgstr "기타 모델"
 
-#: settings/model.py:305
+#: settings/model.py:332
 msgid "Available when Use recommended is off. A new model applies on your next drive."
 msgstr "추천 사용이 꺼져 있을 때 선택할 수 있습니다. 새 모델은 다음 주행부터 적용됩니다."
 
-#: settings/model.py:328
+#: settings/model.py:355
 #, python-brace-format
 msgid "Remove unused models ({})"
 msgstr "미사용 모델 삭제({})"
 
-#: settings/model.py:328
+#: settings/model.py:355
 msgid "Remove unused models"
 msgstr "미사용 모델 삭제"
 
-#: settings/model.py:428
+#: settings/model.py:455
 msgid "starting"
 msgstr "시작 중"
 
-#: settings/model.py:428
+#: settings/model.py:455
 msgid "checking"
 msgstr "확인 중"
 
-#: settings/model.py:428
+#: settings/model.py:455
 msgid "installing"
 msgstr "설치 중"
 
-#: settings/model.py:297
+#: settings/model.py:324
 #: settings/search.py:130
 msgid "Use recommended"
 msgstr "권장 모델 사용"
 
-#: settings/model.py:297
+#: settings/model.py:324
 msgid "Turn off to pick your own"
 msgstr "직접 고르려면 끄세요"
 
-#: settings/model.py:294
+#: settings/model.py:321
 msgid "StarPilot's default model, used until you pick another."
 msgstr "다른 모델을 고를 때까지 쓰는 StarPilot 기본 모델."
 
-#: settings/model.py:295
+#: settings/model.py:322
 msgid "Picked by you"
 msgstr "직접 선택함"
 
-#: settings/model.py:338
+#: settings/model.py:365
 msgid "GOOD TO KNOW"
 msgstr "알아두세요"
 
-#: settings/model.py:339
+#: settings/model.py:366
 msgid "One download at a time, paused while driving."
 msgstr "한 번에 하나만 다운로드하며, 주행 중에는 일시 정지합니다."
 
-#: settings/model.py:340
+#: settings/model.py:367
 msgid "A new model applies on your next drive."
 msgstr "새 모델은 다음 주행부터 적용됩니다."
 
-#: settings/model.py:326
+#: settings/model.py:353
 msgid "No models here yet."
 msgstr "아직 모델이 없습니다."
 
@@ -3918,14 +3927,6 @@ msgstr "휴대폰 우선"
 #: settings/navigation.py:27
 msgid "The phone whenever it has a recent fix"
 msgstr "최근 위치가 있으면 항상 휴대폰"
-
-#. English fallback pending cellular-status translation.
-#: settings/navigation.py:117
-#: settings/network_tab.py:255
-#: settings/network_test.py:97
-#, python-brace-format
-msgid "{} · {}"
-msgstr "{} · {}"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/navigation.py:119

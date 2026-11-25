@@ -2506,7 +2506,7 @@ msgstr "Скинути"
 
 #: settings/device.py:151
 #: settings/device_owner.py:187
-#: settings/model.py:147
+#: settings/model.py:167
 msgid "Not available"
 msgstr "Недоступно"
 
@@ -3051,7 +3051,7 @@ msgstr "Екран"
 
 #: settings/driving_tab.py:208
 #: settings/essentials.py:229
-#: settings/model.py:309
+#: settings/model.py:336
 msgid "Driving Model"
 msgstr "Модель водіння"
 
@@ -3475,7 +3475,7 @@ msgid "Prepare"
 msgstr "Підготувати"
 
 #: settings/maps.py:352
-#: settings/model.py:147
+#: settings/model.py:167
 #: settings/network_test.py:40
 msgid "Download"
 msgstr "Завантажити"
@@ -3660,7 +3660,7 @@ msgid "Speed limits and street names"
 msgstr "Обмеження швидкості й назви вулиць"
 
 #: settings/maps.py:260
-#: settings/model.py:334
+#: settings/model.py:361
 msgid "Storage"
 msgstr "Сховище"
 
@@ -3729,151 +3729,160 @@ msgstr "Немає доступних регіонів."
 msgid "Road data · {} of {} files"
 msgstr "Дорожні дані · {} з {} файлів"
 
-#: settings/model.py:309
+#: settings/model.py:336
 msgid "The neural network that steers and judges speed"
 msgstr "Нейромережа, що кермує й оцінює швидкість"
 
-#: settings/model.py:317
+#: settings/model.py:344
 msgid "All models"
 msgstr "Усі моделі"
 
-#: settings/model.py:317
+#: settings/model.py:344
 msgid "Community picks"
 msgstr "Вибір спільноти"
 
-#: settings/model.py:317
-#: settings/model.py:165
-#: settings/model.py:163
+#: settings/model.py:344
+#: settings/model.py:192
+#: settings/model.py:190
 msgid "On device"
 msgstr "На пристрої"
 
-#: settings/model.py:76
+#: settings/model.py:78
 msgid "Default model"
 msgstr "Типова модель"
 
-#: settings/model.py:121
+#: settings/model.py:130
+#: settings/model.py:188
 msgid "Recommended"
 msgstr "Рекомендовано"
 
-#: settings/model.py:125
+#: settings/model.py:134
 #: sidebar.py:156
 msgid "Downloading"
 msgstr "Завантаження"
 
-#: settings/model.py:126
+#: settings/model.py:135
 msgid "StarPilot's default"
 msgstr "Типово для StarPilot"
 
-#: settings/model.py:126
+#: settings/model.py:135
 msgid "Chosen by you"
 msgstr "Вибрано вами"
 
-#: settings/model.py:147
-#: settings/model.py:144
+#: settings/model.py:167
+#: settings/model.py:164
 msgid "Use"
 msgstr "Використати"
 
-#: settings/model.py:301
+#. English fallback pending cellular-status translation.
+#: settings/model.py:184
+#: settings/navigation.py:117
+#: settings/network_tab.py:255
+#, python-brace-format
+msgid "{} · {}"
+msgstr "{} · {}"
+
+#: settings/model.py:328
 msgid "Browse all"
 msgstr "Переглянути всі"
 
-#: settings/model.py:354
+#: settings/model.py:381
 msgid "Driving models"
 msgstr "Моделі водіння"
 
-#: settings/model.py:450
+#: settings/model.py:477
 msgid "Park to remove models"
 msgstr "Припаркуйтеся для видалення моделей"
 
-#: settings/model.py:452
+#: settings/model.py:479
 msgid "Wait for the download to finish"
 msgstr "Дочекайтеся завершення завантаження"
 
-#: settings/model.py:143
-#: settings/model.py:292
+#: settings/model.py:163
+#: settings/model.py:319
 msgid "ACTIVE"
 msgstr "АКТИВНО"
 
-#: settings/model.py:164
+#: settings/model.py:191
 #, python-brace-format
 msgid "Downloading · {}"
 msgstr "Завантаження · {}"
 
-#: settings/model.py:166
+#: settings/model.py:193
 msgid "Needs an eGPU"
 msgstr "Потрібен eGPU"
 
-#: settings/model.py:163
+#: settings/model.py:190
 msgid "Recommended · On device"
 msgstr "Рекомендовано · на пристрої"
 
-#: settings/model.py:167
+#: settings/model.py:194
 msgid "Community pick"
 msgstr "Вибір спільноти"
 
-#: settings/model.py:167
+#: settings/model.py:194
 msgid "Available to download"
 msgstr "Доступно для завантаження"
 
-#: settings/model.py:303
+#: settings/model.py:330
 msgid "OTHER MODELS"
 msgstr "ІНШІ МОДЕЛІ"
 
-#: settings/model.py:305
+#: settings/model.py:332
 msgid "Available when Use recommended is off. A new model applies on your next drive."
 msgstr "Доступно, коли «Використовувати рекомендовану» вимкнено. Нова модель діятиме з наступної поїздки."
 
-#: settings/model.py:328
+#: settings/model.py:355
 #, python-brace-format
 msgid "Remove unused models ({})"
 msgstr "Видалити невикористовувані моделі ({})"
 
-#: settings/model.py:328
+#: settings/model.py:355
 msgid "Remove unused models"
 msgstr "Видалити невикористовувані моделі"
 
-#: settings/model.py:428
+#: settings/model.py:455
 msgid "starting"
 msgstr "запуск"
 
-#: settings/model.py:428
+#: settings/model.py:455
 msgid "checking"
 msgstr "перевірка"
 
-#: settings/model.py:428
+#: settings/model.py:455
 msgid "installing"
 msgstr "встановлення"
 
-#: settings/model.py:297
+#: settings/model.py:324
 #: settings/search.py:130
 msgid "Use recommended"
 msgstr "Використовувати рекомендовану"
 
-#: settings/model.py:297
+#: settings/model.py:324
 msgid "Turn off to pick your own"
 msgstr "Вимкніть для власного вибору"
 
-#: settings/model.py:294
+#: settings/model.py:321
 msgid "StarPilot's default model, used until you pick another."
 msgstr "Типова модель StarPilot, доки ви не виберете іншу."
 
-#: settings/model.py:295
+#: settings/model.py:322
 msgid "Picked by you"
 msgstr "Вибрано вами"
 
-#: settings/model.py:338
+#: settings/model.py:365
 msgid "GOOD TO KNOW"
 msgstr "КОРИСНО ЗНАТИ"
 
-#: settings/model.py:339
+#: settings/model.py:366
 msgid "One download at a time, paused while driving."
 msgstr "Одне завантаження за раз, призупиняється під час водіння."
 
-#: settings/model.py:340
+#: settings/model.py:367
 msgid "A new model applies on your next drive."
 msgstr "Нова модель застосовується в наступній поїздці."
 
-#: settings/model.py:326
+#: settings/model.py:353
 msgid "No models here yet."
 msgstr "Моделей поки немає."
 
@@ -3928,14 +3937,6 @@ msgstr "Спершу телефон"
 #: settings/navigation.py:27
 msgid "The phone whenever it has a recent fix"
 msgstr "Телефон, щойно він має свіжу позицію"
-
-#. English fallback pending cellular-status translation.
-#: settings/navigation.py:117
-#: settings/network_tab.py:255
-#: settings/network_test.py:97
-#, python-brace-format
-msgid "{} · {}"
-msgstr "{} · {}"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/navigation.py:119

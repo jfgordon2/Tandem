@@ -74,6 +74,24 @@ def test_turning_use_recommended_off_lets_the_driver_pick_another_model() -> Non
   assert manager.current == DEFAULT_SMALL and models.use_recommended and not row._use.is_visible
 
 
+def test_the_catalog_lists_models_newest_first_with_their_release_dates() -> None:
+  from openpilot.selfdrive.ui.tandem.settings.model import ModelRow
+  manager = FakeManager()
+  released = {DEFAULT_SMALL: "2026-11-17", "fav": "2026-11-22", "big": "2026-11-21"}
+  for row in manager.models:
+    row["released"] = released[row["value"]]
+  manager.models.append({"value": "old", "label": "Old", "installed": False, "communityFavorite": False, "requiresGpu": False,
+                         "builtin": False})   # no date: last
+  source = StarPilotModels(manager, clock=lambda: 0.0)
+  models = Models(source)
+  assert [m.key for m in models.tab(0)] == ["fav", "big", DEFAULT_SMALL, "old"]
+  models.set_use_recommended(False)
+  lines = {m.key: ModelRow(models, m, dated=True).subtitle() for m in models.tab(0)}
+  assert lines == {"fav": "On device · Nov 22, 2026", "big": "Needs an eGPU · Nov 21, 2026",
+                   DEFAULT_SMALL: "Recommended · Nov 17, 2026", "old": "Available to download"}
+  assert ModelRow(models, models.tab(0)[2]).subtitle() == "On device"   # the Driving Model page keeps its approved lines
+
+
 def test_download_progress_reads_starpilots_job() -> None:
   manager = FakeManager()
   manager.job = {"model": "big", "detail": {"phase": "downloading", "received": 45, "total": 100}}

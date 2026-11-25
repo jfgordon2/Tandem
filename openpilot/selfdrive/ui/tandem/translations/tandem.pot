@@ -2412,7 +2412,7 @@ msgstr ""
 
 #: settings/device.py:151
 #: settings/device_owner.py:187
-#: settings/model.py:147
+#: settings/model.py:167
 msgid "Not available"
 msgstr ""
 
@@ -2955,7 +2955,7 @@ msgstr ""
 
 #: settings/driving_tab.py:208
 #: settings/essentials.py:229
-#: settings/model.py:309
+#: settings/model.py:336
 msgid "Driving Model"
 msgstr ""
 
@@ -3351,7 +3351,7 @@ msgid "Prepare"
 msgstr ""
 
 #: settings/maps.py:352
-#: settings/model.py:147
+#: settings/model.py:167
 #: settings/network_test.py:40
 msgid "Download"
 msgstr ""
@@ -3520,7 +3520,7 @@ msgid "Speed limits and street names"
 msgstr ""
 
 #: settings/maps.py:260
-#: settings/model.py:334
+#: settings/model.py:361
 msgid "Storage"
 msgstr ""
 
@@ -3581,151 +3581,159 @@ msgstr ""
 msgid "Road data · {} of {} files"
 msgstr ""
 
-#: settings/model.py:309
+#: settings/model.py:336
 msgid "The neural network that steers and judges speed"
 msgstr ""
 
-#: settings/model.py:317
+#: settings/model.py:344
 msgid "All models"
 msgstr ""
 
-#: settings/model.py:317
+#: settings/model.py:344
 msgid "Community picks"
 msgstr ""
 
-#: settings/model.py:317
-#: settings/model.py:165
-#: settings/model.py:163
+#: settings/model.py:344
+#: settings/model.py:192
+#: settings/model.py:190
 msgid "On device"
 msgstr ""
 
-#: settings/model.py:76
+#: settings/model.py:78
 msgid "Default model"
 msgstr ""
 
-#: settings/model.py:121
+#: settings/model.py:130
+#: settings/model.py:188
 msgid "Recommended"
 msgstr ""
 
-#: settings/model.py:125
+#: settings/model.py:134
 #: sidebar.py:156
 msgid "Downloading"
 msgstr ""
 
-#: settings/model.py:126
+#: settings/model.py:135
 msgid "StarPilot's default"
 msgstr ""
 
-#: settings/model.py:126
+#: settings/model.py:135
 msgid "Chosen by you"
 msgstr ""
 
-#: settings/model.py:147
-#: settings/model.py:144
+#: settings/model.py:167
+#: settings/model.py:164
 msgid "Use"
 msgstr ""
 
-#: settings/model.py:301
+#: settings/model.py:184
+#: settings/navigation.py:117
+#: settings/network_tab.py:255
+#, python-brace-format
+msgid "{} · {}"
+msgstr ""
+
+#: settings/model.py:328
 msgid "Browse all"
 msgstr ""
 
-#: settings/model.py:354
+#: settings/model.py:381
 msgid "Driving models"
 msgstr ""
 
-#: settings/model.py:450
+#: settings/model.py:477
 msgid "Park to remove models"
 msgstr ""
 
-#: settings/model.py:452
+#: settings/model.py:479
 msgid "Wait for the download to finish"
 msgstr ""
 
-#: settings/model.py:143
-#: settings/model.py:292
+#: settings/model.py:163
+#: settings/model.py:319
 msgid "ACTIVE"
 msgstr ""
 
-#: settings/model.py:164
+#: settings/model.py:191
 #, python-brace-format
 msgid "Downloading · {}"
 msgstr ""
 
-#: settings/model.py:166
+#: settings/model.py:193
 msgid "Needs an eGPU"
 msgstr ""
 
-#: settings/model.py:163
+#: settings/model.py:190
 msgid "Recommended · On device"
 msgstr ""
 
-#: settings/model.py:167
+#: settings/model.py:194
 msgid "Community pick"
 msgstr ""
 
-#: settings/model.py:167
+#: settings/model.py:194
 msgid "Available to download"
 msgstr ""
 
-#: settings/model.py:303
+#: settings/model.py:330
 msgid "OTHER MODELS"
 msgstr ""
 
-#: settings/model.py:305
+#: settings/model.py:332
 msgid "Available when Use recommended is off. A new model applies on your next drive."
 msgstr ""
 
-#: settings/model.py:328
+#: settings/model.py:355
 #, python-brace-format
 msgid "Remove unused models ({})"
 msgstr ""
 
-#: settings/model.py:328
+#: settings/model.py:355
 msgid "Remove unused models"
 msgstr ""
 
-#: settings/model.py:428
+#: settings/model.py:455
 msgid "starting"
 msgstr ""
 
-#: settings/model.py:428
+#: settings/model.py:455
 msgid "checking"
 msgstr ""
 
-#: settings/model.py:428
+#: settings/model.py:455
 msgid "installing"
 msgstr ""
 
-#: settings/model.py:297
+#: settings/model.py:324
 #: settings/search.py:130
 msgid "Use recommended"
 msgstr ""
 
-#: settings/model.py:297
+#: settings/model.py:324
 msgid "Turn off to pick your own"
 msgstr ""
 
-#: settings/model.py:294
+#: settings/model.py:321
 msgid "StarPilot's default model, used until you pick another."
 msgstr ""
 
-#: settings/model.py:295
+#: settings/model.py:322
 msgid "Picked by you"
 msgstr ""
 
-#: settings/model.py:338
+#: settings/model.py:365
 msgid "GOOD TO KNOW"
 msgstr ""
 
-#: settings/model.py:339
+#: settings/model.py:366
 msgid "One download at a time, paused while driving."
 msgstr ""
 
-#: settings/model.py:340
+#: settings/model.py:367
 msgid "A new model applies on your next drive."
 msgstr ""
 
-#: settings/model.py:326
+#: settings/model.py:353
 msgid "No models here yet."
 msgstr ""
 
@@ -3779,13 +3787,6 @@ msgstr ""
 
 #: settings/navigation.py:27
 msgid "The phone whenever it has a recent fix"
-msgstr ""
-
-#: settings/navigation.py:117
-#: settings/network_tab.py:255
-#: settings/network_test.py:97
-#, python-brace-format
-msgid "{} · {}"
 msgstr ""
 
 #: settings/navigation.py:119

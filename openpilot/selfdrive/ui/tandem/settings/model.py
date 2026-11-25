@@ -35,6 +35,7 @@ class ModelInfo:
   community_pick: bool = False
   needs_egpu: bool = False
   removable: bool = True
+  released: str = ""   # StarPilot's release date, "2026-11-22"; "" when the catalog gives none
 
 
 class ModelSource(Protocol):
@@ -104,7 +105,8 @@ class Models:
     return "download"
 
   def tab(self, index: int) -> list[ModelInfo]:
-    models = self.source.models()
+    """A catalog tab's models, newest first by StarPilot's release date (design/modelcatalog-released.html)."""
+    models = sorted(self.source.models(), key=lambda m: m.released, reverse=True)   # ISO dates; undated last
     if index == 1:
       return [m for m in models if m.community_pick]
     if index == 2:
@@ -133,8 +135,19 @@ class Models:
     return N_("StarPilot's default") if self.use_recommended else N_("Chosen by you")
 
 
-def model_row(models: Models, model: ModelInfo) -> Widget:
-  return ModelRow(models, model)
+def model_row(models: Models, model: ModelInfo, dated: bool = False) -> Widget:
+  """A model's row; dated adds its release date to the line, as the catalog shows it."""
+  return ModelRow(models, model, dated)
+
+
+def released_text(released: str) -> str:
+  """StarPilot's "2026-11-22" as the driver's language writes a date ("Nov 22, 2026"); "" when it isn't a date."""
+  import datetime
+  from openpilot.selfdrive.ui.tandem.dates import long_date
+  try:
+    return long_date(datetime.datetime.strptime(released, "%Y-%m-%d"))
+  except ValueError:
+    return ""
 
 
 class ModelRow(Component):
@@ -143,9 +156,9 @@ class ModelRow(Component):
   grow_touch_target = False
   INK = {"downloading": T.ACCENT_TEXT, "on_device": T.SUCCESS_TEXT}
 
-  def __init__(self, models: Models, model: ModelInfo):
+  def __init__(self, models: Models, model: ModelInfo, dated: bool = False):
     super().__init__()
-    self._models, self._model = models, model
+    self._models, self._model, self._dated = models, model, dated
     status = lambda: models.status(model)  # noqa: E731
     self._badge = self._child(Badge(N_("ACTIVE"), solid=True))
     self._use = self._child(Button(N_("Use"), lambda: models.source.use(model.key), ButtonStyle.PRIMARY, height=T.px(42),
@@ -166,6 +179,13 @@ class ModelRow(Component):
   def subtitle(self) -> str:
     """The model card's line: downloading, the recommended model in use, or which model is chosen."""
     status, source = self._models.status(self._model), self._models.source
+    line = self._line(status, source)
+    when = released_text(self._model.released) if self._dated and status != "downloading" else ""
+    return t_("{} · {}", line, when) if when else line
+
+  def _line(self, status: str, source: ModelSource) -> str:
+    if self._dated and status == "on_device" and self._model.key == source.recommended_key():
+      return N_("Recommended")
     return {
       "active": N_("Recommended · On device") if self._model.key == source.recommended_key() else N_("On device"),
       "downloading": t_("Downloading · {}", source.progress() or 'starting'),
@@ -330,7 +350,7 @@ class CatalogPage(Component):
     self._tabs = self._child(Segmented(self.TABS, lambda: self._tab, self._select, height=T.px(52), font_size=T.font_px(16)))
     self._list = self._child(Rebuilding(
       lambda: (self._tab, tuple((m.key, m.installed) for m in models.tab(self._tab))),
-      lambda: ListPanel([model_row(models, m) for m in models.tab(self._tab)] or [Text(N_("No models here yet."))]),
+      lambda: ListPanel([model_row(models, m, dated=True) for m in models.tab(self._tab)] or [Text(N_("No models here yet."))]),
       models.source.tick))
     remove = Button(lambda: t_("Remove unused models ({})", len(models.unused())) if models.unused() else N_("Remove unused models"),
                     models.remove_unused_and_recount, height=T.px(46), font_size=T.font_px(15))
@@ -411,7 +431,7 @@ class StarPilotModels:
 
   def models(self) -> list[ModelInfo]:
     return [ModelInfo(m["value"], model_name(m["label"]), bool(m["installed"]), bool(m["communityFavorite"]), bool(m["requiresGpu"]),
-                      not m["builtin"]) for m in self._snapshot().get("models", [])]
+                      not m["builtin"], str(m.get("released") or "")) for m in self._snapshot().get("models", [])]
 
   def _model(self, key: str) -> dict | None:
     return next((m for m in self._snapshot().get("models", []) if m["value"] == key), None)

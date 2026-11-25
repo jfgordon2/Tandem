@@ -2499,7 +2499,7 @@ msgstr "รีเซ็ต"
 
 #: settings/device.py:151
 #: settings/device_owner.py:187
-#: settings/model.py:147
+#: settings/model.py:167
 msgid "Not available"
 msgstr "ไม่พร้อมใช้งาน"
 
@@ -3044,7 +3044,7 @@ msgstr "จอแสดงผล"
 
 #: settings/driving_tab.py:208
 #: settings/essentials.py:229
-#: settings/model.py:309
+#: settings/model.py:336
 msgid "Driving Model"
 msgstr "โมเดลขับขี่"
 
@@ -3466,7 +3466,7 @@ msgid "Prepare"
 msgstr "เตรียมพร้อม"
 
 #: settings/maps.py:352
-#: settings/model.py:147
+#: settings/model.py:167
 #: settings/network_test.py:40
 msgid "Download"
 msgstr "ดาวน์โหลด"
@@ -3651,7 +3651,7 @@ msgid "Speed limits and street names"
 msgstr "ขีดจำกัดความเร็วและชื่อถนน"
 
 #: settings/maps.py:260
-#: settings/model.py:334
+#: settings/model.py:361
 msgid "Storage"
 msgstr "อุปกรณ์จัดเก็บข้อมูล"
 
@@ -3720,151 +3720,160 @@ msgstr "ไม่มีภูมิภาคที่พร้อมใช้ง
 msgid "Road data · {} of {} files"
 msgstr "ข้อมูลถนน · {} จาก {} ไฟล์"
 
-#: settings/model.py:309
+#: settings/model.py:336
 msgid "The neural network that steers and judges speed"
 msgstr "โครงข่ายประสาทเทียมที่ควบคุมและตัดสินความเร็ว"
 
-#: settings/model.py:317
+#: settings/model.py:344
 msgid "All models"
 msgstr "โมเดลทั้งหมด"
 
-#: settings/model.py:317
+#: settings/model.py:344
 msgid "Community picks"
 msgstr "คัดสรรโดยชุมชน"
 
-#: settings/model.py:317
-#: settings/model.py:165
-#: settings/model.py:163
+#: settings/model.py:344
+#: settings/model.py:192
+#: settings/model.py:190
 msgid "On device"
 msgstr "บนอุปกรณ์"
 
-#: settings/model.py:76
+#: settings/model.py:78
 msgid "Default model"
 msgstr "โมเดลเริ่มต้น"
 
-#: settings/model.py:121
+#: settings/model.py:130
+#: settings/model.py:188
 msgid "Recommended"
 msgstr "แนะนำ"
 
-#: settings/model.py:125
+#: settings/model.py:134
 #: sidebar.py:156
 msgid "Downloading"
 msgstr "กำลังดาวน์โหลด"
 
-#: settings/model.py:126
+#: settings/model.py:135
 msgid "StarPilot's default"
 msgstr "ค่าเริ่มต้นของ StarPilot"
 
-#: settings/model.py:126
+#: settings/model.py:135
 msgid "Chosen by you"
 msgstr "เลือกโดยคุณ"
 
-#: settings/model.py:147
-#: settings/model.py:144
+#: settings/model.py:167
+#: settings/model.py:164
 msgid "Use"
 msgstr "ใช้"
 
-#: settings/model.py:301
+#. English fallback pending cellular-status translation.
+#: settings/model.py:184
+#: settings/navigation.py:117
+#: settings/network_tab.py:255
+#, python-brace-format
+msgid "{} · {}"
+msgstr "{} · {}"
+
+#: settings/model.py:328
 msgid "Browse all"
 msgstr "เปิดดูทั้งหมด"
 
-#: settings/model.py:354
+#: settings/model.py:381
 msgid "Driving models"
 msgstr "โมเดลขับขี่"
 
-#: settings/model.py:450
+#: settings/model.py:477
 msgid "Park to remove models"
 msgstr "จอดรถเพื่อถอดโมเดล AI"
 
-#: settings/model.py:452
+#: settings/model.py:479
 msgid "Wait for the download to finish"
 msgstr "รอให้การดาวน์โหลดเสร็จสิ้น"
 
-#: settings/model.py:143
-#: settings/model.py:292
+#: settings/model.py:163
+#: settings/model.py:319
 msgid "ACTIVE"
 msgstr "เปิดใช้งาน"
 
-#: settings/model.py:164
+#: settings/model.py:191
 #, python-brace-format
 msgid "Downloading · {}"
 msgstr "กำลังดาวน์โหลด · {}"
 
-#: settings/model.py:166
+#: settings/model.py:193
 msgid "Needs an eGPU"
 msgstr "ต้องการ eGPU"
 
-#: settings/model.py:163
+#: settings/model.py:190
 msgid "Recommended · On device"
 msgstr "แนะนำ · บนอุปกรณ์"
 
-#: settings/model.py:167
+#: settings/model.py:194
 msgid "Community pick"
 msgstr "การเลือกโดยชุมชน"
 
-#: settings/model.py:167
+#: settings/model.py:194
 msgid "Available to download"
 msgstr "พร้อมให้ดาวน์โหลดแล้ว"
 
-#: settings/model.py:303
+#: settings/model.py:330
 msgid "OTHER MODELS"
 msgstr "โมเดล AI อื่นๆ"
 
-#: settings/model.py:305
+#: settings/model.py:332
 msgid "Available when Use recommended is off. A new model applies on your next drive."
 msgstr "ใช้ได้เมื่อปิด ใช้แบบแนะนำ โมเดลใหม่จะมีผลในการขับครั้งถัดไป"
 
-#: settings/model.py:328
+#: settings/model.py:355
 #, python-brace-format
 msgid "Remove unused models ({})"
 msgstr "ลบโมเดลที่ไม่ได้ใช้ ({})"
 
-#: settings/model.py:328
+#: settings/model.py:355
 msgid "Remove unused models"
 msgstr "ลบโมเดลที่ไม่ได้ใช้"
 
-#: settings/model.py:428
+#: settings/model.py:455
 msgid "starting"
 msgstr "กำลังเริ่ม"
 
-#: settings/model.py:428
+#: settings/model.py:455
 msgid "checking"
 msgstr "กำลังตรวจสอบ"
 
-#: settings/model.py:428
+#: settings/model.py:455
 msgid "installing"
 msgstr "กำลังติดตั้ง"
 
-#: settings/model.py:297
+#: settings/model.py:324
 #: settings/search.py:130
 msgid "Use recommended"
 msgstr "ใช้โมเดลที่แนะนำ"
 
-#: settings/model.py:297
+#: settings/model.py:324
 msgid "Turn off to pick your own"
 msgstr "ปิดเลือกเองได้"
 
-#: settings/model.py:294
+#: settings/model.py:321
 msgid "StarPilot's default model, used until you pick another."
 msgstr "โมเดลเริ่มต้นของ StarPilot ใช้จนกว่าคุณจะเลือกโมเดลอื่น"
 
-#: settings/model.py:295
+#: settings/model.py:322
 msgid "Picked by you"
 msgstr "คุณเลือกแล้ว"
 
-#: settings/model.py:338
+#: settings/model.py:365
 msgid "GOOD TO KNOW"
 msgstr "น่ารู้"
 
-#: settings/model.py:339
+#: settings/model.py:366
 msgid "One download at a time, paused while driving."
 msgstr "ดาวน์โหลดครั้งละหนึ่งรายการ หยุดชั่วคราวขณะขับรถ"
 
-#: settings/model.py:340
+#: settings/model.py:367
 msgid "A new model applies on your next drive."
 msgstr "โมเดล AI ใหม่ใช้กับไดรฟ์ถัดไปของคุณ"
 
-#: settings/model.py:326
+#: settings/model.py:353
 msgid "No models here yet."
 msgstr "ยังไม่มีโมเดล AI ที่นี่"
 
@@ -3920,14 +3929,6 @@ msgstr "โทรศัพท์ก่อน"
 #: settings/navigation.py:27
 msgid "The phone whenever it has a recent fix"
 msgstr "ใช้โทรศัพท์ทุกครั้งที่มีตำแหน่งล่าสุด"
-
-#. English fallback pending cellular-status translation.
-#: settings/navigation.py:117
-#: settings/network_tab.py:255
-#: settings/network_test.py:97
-#, python-brace-format
-msgid "{} · {}"
-msgstr "{} · {}"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/navigation.py:119

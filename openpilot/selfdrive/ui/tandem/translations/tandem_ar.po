@@ -2518,7 +2518,7 @@ msgstr "إعادة ضبط"
 
 #: settings/device.py:151
 #: settings/device_owner.py:187
-#: settings/model.py:147
+#: settings/model.py:167
 msgid "Not available"
 msgstr "غير متوفر"
 
@@ -3063,7 +3063,7 @@ msgstr "الشاشة"
 
 #: settings/driving_tab.py:208
 #: settings/essentials.py:229
-#: settings/model.py:309
+#: settings/model.py:336
 msgid "Driving Model"
 msgstr "نموذج القيادة"
 
@@ -3490,7 +3490,7 @@ msgid "Prepare"
 msgstr "تحضير"
 
 #: settings/maps.py:352
-#: settings/model.py:147
+#: settings/model.py:167
 #: settings/network_test.py:40
 msgid "Download"
 msgstr "تنزيل"
@@ -3675,7 +3675,7 @@ msgid "Speed limits and street names"
 msgstr "حدود السرعة وأسماء الشوارع"
 
 #: settings/maps.py:260
-#: settings/model.py:334
+#: settings/model.py:361
 msgid "Storage"
 msgstr "تخزين"
 
@@ -3744,151 +3744,160 @@ msgstr "لا توجد مناطق متاحة."
 msgid "Road data · {} of {} files"
 msgstr "بيانات الطرق · {} من {} ملفات"
 
-#: settings/model.py:309
+#: settings/model.py:336
 msgid "The neural network that steers and judges speed"
 msgstr "الشبكة العصبية التي توجه السرعة وتحكم عليها"
 
-#: settings/model.py:317
+#: settings/model.py:344
 msgid "All models"
 msgstr "كل النماذج"
 
-#: settings/model.py:317
+#: settings/model.py:344
 msgid "Community picks"
 msgstr "اختيارات المجتمع"
 
-#: settings/model.py:317
-#: settings/model.py:165
-#: settings/model.py:163
+#: settings/model.py:344
+#: settings/model.py:192
+#: settings/model.py:190
 msgid "On device"
 msgstr "على الجهاز"
 
-#: settings/model.py:76
+#: settings/model.py:78
 msgid "Default model"
 msgstr "النموذج الافتراضي"
 
-#: settings/model.py:121
+#: settings/model.py:130
+#: settings/model.py:188
 msgid "Recommended"
 msgstr "موصى به"
 
-#: settings/model.py:125
+#: settings/model.py:134
 #: sidebar.py:156
 msgid "Downloading"
 msgstr "جاري التحميل"
 
-#: settings/model.py:126
+#: settings/model.py:135
 msgid "StarPilot's default"
 msgstr "الافتراضي في StarPilot"
 
-#: settings/model.py:126
+#: settings/model.py:135
 msgid "Chosen by you"
 msgstr "تم اختياره بواسطتك"
 
-#: settings/model.py:147
-#: settings/model.py:144
+#: settings/model.py:167
+#: settings/model.py:164
 msgid "Use"
 msgstr "استخدم"
 
-#: settings/model.py:301
+#. English fallback pending cellular-status translation.
+#: settings/model.py:184
+#: settings/navigation.py:117
+#: settings/network_tab.py:255
+#, python-brace-format
+msgid "{} · {}"
+msgstr "{} · {}"
+
+#: settings/model.py:328
 msgid "Browse all"
 msgstr "تصفح الكل"
 
-#: settings/model.py:354
+#: settings/model.py:381
 msgid "Driving models"
 msgstr "نماذج القيادة"
 
-#: settings/model.py:450
+#: settings/model.py:477
 msgid "Park to remove models"
 msgstr "أوقف السيارة لإزالة نماذج الذكاء الاصطناعي"
 
-#: settings/model.py:452
+#: settings/model.py:479
 msgid "Wait for the download to finish"
 msgstr "انتظر حتى ينتهي التنزيل"
 
-#: settings/model.py:143
-#: settings/model.py:292
+#: settings/model.py:163
+#: settings/model.py:319
 msgid "ACTIVE"
 msgstr "نشط"
 
-#: settings/model.py:164
+#: settings/model.py:191
 #, python-brace-format
 msgid "Downloading · {}"
 msgstr "جاري التنزيل · {}"
 
-#: settings/model.py:166
+#: settings/model.py:193
 msgid "Needs an eGPU"
 msgstr "يحتاج إلى eGPU"
 
-#: settings/model.py:163
+#: settings/model.py:190
 msgid "Recommended · On device"
 msgstr "يوصى باستخدام · على الجهاز"
 
-#: settings/model.py:167
+#: settings/model.py:194
 msgid "Community pick"
 msgstr "اختيار المجتمع"
 
-#: settings/model.py:167
+#: settings/model.py:194
 msgid "Available to download"
 msgstr "متاح للتنزيل"
 
-#: settings/model.py:303
+#: settings/model.py:330
 msgid "OTHER MODELS"
 msgstr "نماذج الذكاء الاصطناعي الأخرى"
 
-#: settings/model.py:305
+#: settings/model.py:332
 msgid "Available when Use recommended is off. A new model applies on your next drive."
 msgstr "متاح عند إيقاف استخدام الموصى به. يُطبَّق النموذج الجديد في رحلتك القادمة."
 
-#: settings/model.py:328
+#: settings/model.py:355
 #, python-brace-format
 msgid "Remove unused models ({})"
 msgstr "إزالة النماذج غير المستخدمة ({})"
 
-#: settings/model.py:328
+#: settings/model.py:355
 msgid "Remove unused models"
 msgstr "إزالة النماذج غير المستخدمة"
 
-#: settings/model.py:428
+#: settings/model.py:455
 msgid "starting"
 msgstr "جارٍ البدء"
 
-#: settings/model.py:428
+#: settings/model.py:455
 msgid "checking"
 msgstr "جارٍ الفحص"
 
-#: settings/model.py:428
+#: settings/model.py:455
 msgid "installing"
 msgstr "جارٍ التثبيت"
 
-#: settings/model.py:297
+#: settings/model.py:324
 #: settings/search.py:130
 msgid "Use recommended"
 msgstr "استخدم الموصى به"
 
-#: settings/model.py:297
+#: settings/model.py:324
 msgid "Turn off to pick your own"
 msgstr "قم بإيقاف التشغيل لاختيار ما يناسبك"
 
-#: settings/model.py:294
+#: settings/model.py:321
 msgid "StarPilot's default model, used until you pick another."
 msgstr "النموذج الافتراضي في StarPilot، يُستخدم حتى تختار غيره."
 
-#: settings/model.py:295
+#: settings/model.py:322
 msgid "Picked by you"
 msgstr "تم اختياره بواسطتك"
 
-#: settings/model.py:338
+#: settings/model.py:365
 msgid "GOOD TO KNOW"
 msgstr "من الجيد معرفته"
 
-#: settings/model.py:339
+#: settings/model.py:366
 msgid "One download at a time, paused while driving."
 msgstr "تنزيل واحد في كل مرة، متوقف مؤقتا أثناء القيادة."
 
-#: settings/model.py:340
+#: settings/model.py:367
 msgid "A new model applies on your next drive."
 msgstr "ينطبق نموذج الذكاء الاصطناعي الجديد على محرك الأقراص التالي."
 
-#: settings/model.py:326
+#: settings/model.py:353
 msgid "No models here yet."
 msgstr "لا توجد نماذج للذكاء الاصطناعي هنا حتى الآن."
 
@@ -3944,14 +3953,6 @@ msgstr "الهاتف أولًا"
 #: settings/navigation.py:27
 msgid "The phone whenever it has a recent fix"
 msgstr "الهاتف متى توفّر لديه موقع حديث"
-
-#. English fallback pending cellular-status translation.
-#: settings/navigation.py:117
-#: settings/network_tab.py:255
-#: settings/network_test.py:97
-#, python-brace-format
-msgid "{} · {}"
-msgstr "{} · {}"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/navigation.py:119

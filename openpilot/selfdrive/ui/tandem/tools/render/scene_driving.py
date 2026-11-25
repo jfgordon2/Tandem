@@ -92,6 +92,24 @@ def example_owner() -> Owner:
   return owner
 
 
+def catalog_shot(window: SettingsWindow, shot: Callable[[str], None]) -> None:
+  """All models, newest first with release dates (design/modelcatalog-released.html), from the comma's catalog."""
+  from openpilot.selfdrive.ui.tandem.settings.model import CatalogPage, Models, StarPilotModels
+  manager = FakeManager()
+  manager.models = [
+    {"value": v, "label": label, "installed": installed, "communityFavorite": False, "requiresGpu": gpu, "builtin": v == "cheddar",
+     "released": released}
+    for v, label, installed, gpu, released in (
+      ("ch2", "Smoked Cheddar", False, False, "2026-11-24"), ("spz_polaris_vega2", "Polaris Vega 2", True, False, "2026-11-22"),
+      ("fairytale-v1-1", "Fairy Tale V1.1", False, True, "2026-11-21"), ("fairytale", "Fairy Tale", False, True, "2026-11-19"),
+      ("cheddar", "Cheddar", True, False, "2026-11-17"), ("spz_polaris_vega", "Polaris Vega", True, False, "2026-11-07"))]
+  manager.current = "spz_polaris_vega2"
+  sizes = lambda: {"Drives": 40e9, "Maps": 12e9, "Models": 6e9, "Free": 42e9, "Total": 100e9}  # noqa: E731
+  window.push(CatalogPage(Models(StarPilotModels(manager, clock=lambda: 0.0)), sizes))
+  shot("modelcatalog-released")
+  window.back()
+
+
 def alerts_shots(window: SettingsWindow, owner: Any, shot: Callable[[str], None]) -> None:
   """Alerts with Sound Pack (design/alerts-soundpack.html), and its picker sheet (soundpack.html), fully open."""
   shot("alerts-soundpack")
@@ -141,6 +159,8 @@ def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any)
       shot(mock)
       if page == "alerts":
         alerts_shots(window, owner, shot)
+      if page == "model":
+        catalog_shot(window, shot)
       if page == "tuner":
         shot("tuner-lanecentering")   # Steering, with the Lane Centering switch first
         steering = window.top.current

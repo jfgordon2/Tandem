@@ -2502,7 +2502,7 @@ msgstr "Restablecer"
 
 #: settings/device.py:151
 #: settings/device_owner.py:187
-#: settings/model.py:147
+#: settings/model.py:167
 msgid "Not available"
 msgstr "No disponible"
 
@@ -3047,7 +3047,7 @@ msgstr "Pantalla"
 
 #: settings/driving_tab.py:208
 #: settings/essentials.py:229
-#: settings/model.py:309
+#: settings/model.py:336
 msgid "Driving Model"
 msgstr "Modelo de conducción"
 
@@ -3470,7 +3470,7 @@ msgid "Prepare"
 msgstr "Preparar"
 
 #: settings/maps.py:352
-#: settings/model.py:147
+#: settings/model.py:167
 #: settings/network_test.py:40
 msgid "Download"
 msgstr "Descargar"
@@ -3655,7 +3655,7 @@ msgid "Speed limits and street names"
 msgstr "Límites de velocidad y nombres de calles"
 
 #: settings/maps.py:260
-#: settings/model.py:334
+#: settings/model.py:361
 msgid "Storage"
 msgstr "Almacenamiento"
 
@@ -3724,151 +3724,160 @@ msgstr "No hay regiones disponibles."
 msgid "Road data · {} of {} files"
 msgstr "Datos de carreteras · {} de {} archivos"
 
-#: settings/model.py:309
+#: settings/model.py:336
 msgid "The neural network that steers and judges speed"
 msgstr "La red neuronal que dirige y calcula la velocidad"
 
-#: settings/model.py:317
+#: settings/model.py:344
 msgid "All models"
 msgstr "Todos los modelos"
 
-#: settings/model.py:317
+#: settings/model.py:344
 msgid "Community picks"
 msgstr "Elegidos por la comunidad"
 
-#: settings/model.py:317
-#: settings/model.py:165
-#: settings/model.py:163
+#: settings/model.py:344
+#: settings/model.py:192
+#: settings/model.py:190
 msgid "On device"
 msgstr "En el dispositivo"
 
-#: settings/model.py:76
+#: settings/model.py:78
 msgid "Default model"
 msgstr "Modelo predeterminado"
 
-#: settings/model.py:121
+#: settings/model.py:130
+#: settings/model.py:188
 msgid "Recommended"
 msgstr "Recomendado"
 
-#: settings/model.py:125
+#: settings/model.py:134
 #: sidebar.py:156
 msgid "Downloading"
 msgstr "Descargando"
 
-#: settings/model.py:126
+#: settings/model.py:135
 msgid "StarPilot's default"
 msgstr "Predeterminado de StarPilot"
 
-#: settings/model.py:126
+#: settings/model.py:135
 msgid "Chosen by you"
 msgstr "Elegido por ti"
 
-#: settings/model.py:147
-#: settings/model.py:144
+#: settings/model.py:167
+#: settings/model.py:164
 msgid "Use"
 msgstr "Usar"
 
-#: settings/model.py:301
+#. English fallback pending cellular-status translation.
+#: settings/model.py:184
+#: settings/navigation.py:117
+#: settings/network_tab.py:255
+#, python-brace-format
+msgid "{} · {}"
+msgstr "{} · {}"
+
+#: settings/model.py:328
 msgid "Browse all"
 msgstr "Ver todos"
 
-#: settings/model.py:354
+#: settings/model.py:381
 msgid "Driving models"
 msgstr "Modelos de conducción"
 
-#: settings/model.py:450
+#: settings/model.py:477
 msgid "Park to remove models"
 msgstr "Aparca para quitar modelos"
 
-#: settings/model.py:452
+#: settings/model.py:479
 msgid "Wait for the download to finish"
 msgstr "Espera a que termine la descarga"
 
-#: settings/model.py:143
-#: settings/model.py:292
+#: settings/model.py:163
+#: settings/model.py:319
 msgid "ACTIVE"
 msgstr "ACTIVO"
 
-#: settings/model.py:164
+#: settings/model.py:191
 #, python-brace-format
 msgid "Downloading · {}"
 msgstr "Descargando · {}"
 
-#: settings/model.py:166
+#: settings/model.py:193
 msgid "Needs an eGPU"
 msgstr "Necesita una eGPU"
 
-#: settings/model.py:163
+#: settings/model.py:190
 msgid "Recommended · On device"
 msgstr "Recomendado · En el dispositivo"
 
-#: settings/model.py:167
+#: settings/model.py:194
 msgid "Community pick"
 msgstr "Elegido por la comunidad"
 
-#: settings/model.py:167
+#: settings/model.py:194
 msgid "Available to download"
 msgstr "Disponible para descargar"
 
-#: settings/model.py:303
+#: settings/model.py:330
 msgid "OTHER MODELS"
 msgstr "OTROS MODELOS"
 
-#: settings/model.py:305
+#: settings/model.py:332
 msgid "Available when Use recommended is off. A new model applies on your next drive."
 msgstr "Disponible cuando Usar recomendado está desactivado. Un modelo nuevo se aplica en el siguiente viaje."
 
-#: settings/model.py:328
+#: settings/model.py:355
 #, python-brace-format
 msgid "Remove unused models ({})"
 msgstr "Quitar modelos sin usar ({})"
 
-#: settings/model.py:328
+#: settings/model.py:355
 msgid "Remove unused models"
 msgstr "Quitar modelos sin usar"
 
-#: settings/model.py:428
+#: settings/model.py:455
 msgid "starting"
 msgstr "iniciando"
 
-#: settings/model.py:428
+#: settings/model.py:455
 msgid "checking"
 msgstr "comprobando"
 
-#: settings/model.py:428
+#: settings/model.py:455
 msgid "installing"
 msgstr "instalando"
 
-#: settings/model.py:297
+#: settings/model.py:324
 #: settings/search.py:130
 msgid "Use recommended"
 msgstr "Usar recomendado"
 
-#: settings/model.py:297
+#: settings/model.py:324
 msgid "Turn off to pick your own"
 msgstr "Apágalo para elegir el tuyo"
 
-#: settings/model.py:294
+#: settings/model.py:321
 msgid "StarPilot's default model, used until you pick another."
 msgstr "El modelo predeterminado de StarPilot, hasta que elijas otro."
 
-#: settings/model.py:295
+#: settings/model.py:322
 msgid "Picked by you"
 msgstr "Elegido por ti"
 
-#: settings/model.py:338
+#: settings/model.py:365
 msgid "GOOD TO KNOW"
 msgstr "BUENO SABER"
 
-#: settings/model.py:339
+#: settings/model.py:366
 msgid "One download at a time, paused while driving."
 msgstr "Una descarga a la vez, en pausa al conducir."
 
-#: settings/model.py:340
+#: settings/model.py:367
 msgid "A new model applies on your next drive."
 msgstr "Un modelo nuevo se aplica en tu próximo viaje."
 
-#: settings/model.py:326
+#: settings/model.py:353
 msgid "No models here yet."
 msgstr "Aún no hay modelos aquí."
 
@@ -3923,14 +3932,6 @@ msgstr "Teléfono primero"
 #: settings/navigation.py:27
 msgid "The phone whenever it has a recent fix"
 msgstr "El teléfono siempre que tenga una posición reciente"
-
-#. English fallback pending cellular-status translation.
-#: settings/navigation.py:117
-#: settings/network_tab.py:255
-#: settings/network_test.py:97
-#, python-brace-format
-msgid "{} · {}"
-msgstr "{} · {}"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/navigation.py:119
