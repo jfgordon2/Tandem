@@ -5,7 +5,11 @@ Samples play through StarPilot's alert preview, which plays them only while park
 """
 from __future__ import annotations
 
+import subprocess
+import sys
 import threading
+import time
+from pathlib import Path
 from collections.abc import Callable
 from dataclasses import dataclass
 
@@ -162,6 +166,12 @@ class Alerts:
     """Saves a pack through StarPilot's Sounds owner (parked only)."""
     self._rows(SOUNDS).set(PACK, name)
 
+  def warm(self) -> None:
+    """Gets samples ready to play at once, as a page with Play sample opens."""
+    warm = getattr(self._play, "warm", None)
+    if warm is not None:
+      warm()
+
   def play_pack(self) -> None:
     """Plays the engage chime in the chosen pack: StarPilot's preview starts a fresh player, which loads the saved pack."""
     if self._play is not None:
@@ -215,6 +225,7 @@ class VolumeEditor(Component):
 
 def alerts_page(model: Alerts, window: SettingsWindow) -> Widget:
   """Volume on the left (presets, then each group's level), chimes on the right."""
+  model.warm()
   def editor(group: VolumeGroup) -> Callable[[], None]:
     return lambda: window.present(Sheet(group.name, VolumeEditor(model, group), subtitle=group.subtitle,
                                         actions=[Button(N_("Done"), window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss))
@@ -250,6 +261,7 @@ def alerts_page(model: Alerts, window: SettingsWindow) -> Widget:
 
 def sound_pack_sheet(model: Alerts, window: SettingsWindow) -> Sheet:
   """Sound Pack (design/soundpack.html): the installed packs; tapping one saves it, and Play sample plays it."""
+  model.warm()
   packs = model.packs()
 
   def chosen(index: int) -> None:
@@ -264,20 +276,87 @@ def sound_pack_sheet(model: Alerts, window: SettingsWindow) -> Sheet:
                actions=[play, Button(N_("Done"), window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss)
 
 
-def sound_player(parked: Callable[[], bool]) -> Callable[[str], None]:
-  """Plays a sample through StarPilot's alert preview, off the drawing thread; it plays only while parked, one at a time.
+class SamplePlayer:
+  """Play sample's player: one sample worker (starpilot/tandem/sound_preview.py), started at the first tap and stopped
+  after IDLE_S without one, so later samples play at once instead of each loading StarPilot's sound player (5.6 s).
+
+  Args:
+    parked: Whether StarPilot confirms the car is parked; samples play only then.
+    command: The worker's command line (tests pass a fake).
+    clock: Monotonic seconds.
+  """
+  IDLE_S = 60.0
+
+  def __init__(self, parked: Callable[[], bool], command: list[str] | None = None, clock: Callable[[], float] = time.monotonic):
+    self._parked, self._clock = parked, clock
+    self._command = command or [sys.executable, "-m", "openpilot.starpilot.tandem.sound_preview"]
+    self._process: subprocess.Popen | None = None
+    self._last = 0.0
+    self._lock = threading.Lock()
+
+  def __call__(self, key: str) -> None:
+    self.play(key)
+
+  def warm(self) -> None:
+    """Starts the worker before the first tap (it takes about 3 s to load), when a page with samples opens."""
+    self.play("")
+
+  def play(self, key: str) -> None:
+    """Asks the worker for a sample (it plays the latest of quick taps); "" only starts it. Nothing while driving."""
+    if not self._parked():
+      return
+    with self._lock:
+      self._last = self._clock()
+      if self._process is None or self._process.poll() is not None:
+        try:
+          # From the folder holding the openpilot package, as StarPilot's own preview runs (starpilot/audio/preview.py)
+          self._process = subprocess.Popen(self._command, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                                           text=True, bufsize=1, cwd=Path(__file__).resolve().parents[5])
+        except OSError:
+          self._process = None
+          return
+        threading.Thread(target=self._idle, args=(self._process,), name="tandem-sample-idle", daemon=True).start()
+      try:
+        if key and self._process.stdin is not None:
+          self._process.stdin.write(key + "\n")
+          self._process.stdin.flush()
+      except (BrokenPipeError, OSError, ValueError):
+        self._process = None
+
+  def _idle(self, process: subprocess.Popen) -> None:
+    """Ends the worker once nobody has asked for a sample for IDLE_S, or the car starts."""
+    while process.poll() is None:
+      time.sleep(1.0)
+      with self._lock:
+        done = process is self._process and (self._clock() - self._last >= self.IDLE_S or not self._parked())
+        if done:
+          self._process = None
+      if done:
+        self._stop(process)
+        return
+
+  def close(self) -> None:
+    """Stops the worker."""
+    with self._lock:
+      process, self._process = self._process, None
+    if process is not None:
+      self._stop(process)
+
+  @staticmethod
+  def _stop(process: subprocess.Popen) -> None:
+    """Closing its stdin ends the worker; one that doesn't end is killed."""
+    try:
+      if process.stdin is not None:
+        process.stdin.close()
+      process.wait(timeout=3)
+    except (OSError, ValueError, subprocess.TimeoutExpired):
+      process.kill()
+
+
+def sound_player(parked: Callable[[], bool]) -> SamplePlayer:
+  """Plays a sample through Tandem's sample worker and StarPilot's alert preview; only while parked.
 
   Args:
     parked: Whether StarPilot confirms the car is parked.
   """
-  from openpilot.starpilot.audio.preview import AlertPreview, AlertPreviewError
-  preview = AlertPreview(parked=parked)
-
-  def play(key: str) -> None:
-    def run() -> None:
-      try:
-        preview.play({"key": key})
-      except AlertPreviewError:
-        pass   # not parked, or a sample is already playing
-    threading.Thread(target=run, name="tandem-alert-sample", daemon=True).start()
-  return play
+  return SamplePlayer(parked)
