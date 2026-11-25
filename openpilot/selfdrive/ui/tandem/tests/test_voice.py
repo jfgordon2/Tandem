@@ -386,3 +386,20 @@ def test_the_worker_hears_when_the_car_is_on(ready, monkeypatch, tmp_path):
   monkeypatch.setattr(session, "_handle", lambda line: seen.append(_json.loads(line)))
   session.start()
   assert _until(session, lambda: seen) and seen[0]["driving"] == "1"
+
+
+def test_tapping_the_mic_ends_listening_without_raylibs_circle_check() -> None:
+  """Ending voice typing crashed the comma: StarPilot 7's raylib_nb has no check_collision_point_circle."""
+  from types import SimpleNamespace
+  from openpilot.selfdrive.ui.tandem.voice import VoicePanel, VoiceTyping
+  from openpilot.starpilot.ui.raylib import rl
+  stopped: list[bool] = []
+  session = VoiceTyping(lambda text: None, command=["true"])
+  session.state = "listening"
+  session.stop = lambda: stopped.append(True)   # type: ignore[method-assign]
+  panel = VoicePanel(session)
+  panel._mic_rect = rl.Rectangle(100, 100, 80, 80)   # centered on (140, 140)
+  assert panel._on_mic(SimpleNamespace(x=140, y=140)) and panel._on_mic(SimpleNamespace(x=190, y=140))   # on it, and just beside
+  assert not panel._on_mic(SimpleNamespace(x=300, y=140))
+  panel._handle_mouse_release(SimpleNamespace(x=150, y=150))
+  assert stopped == [True]

@@ -266,11 +266,17 @@ class VoicePanel(Component):
       bar = rl.Rectangle(x, meter.y + (meter.height - h) / 2, w, h)
       draw.fill(bar, draw.alpha(T.ACCENT, 0.55 + 0.45 * value), w / 2)
 
+  def _on_mic(self, pos: MousePos) -> bool:
+    """Whether a tap lands on the mic or just around it. Arithmetic, not raylib's circle check: StarPilot 7's raylib_nb
+    binding on the device has no check_collision_point_circle (tests/test_raylib_names.py)."""
+    reach = self._mic_rect.width / 2 + T.px(14)
+    dx = pos.x - (self._mic_rect.x + self._mic_rect.width / 2)
+    dy = pos.y - (self._mic_rect.y + self._mic_rect.height / 2)
+    return dx * dx + dy * dy <= reach * reach
+
   def _handle_mouse_release(self, mouse_pos: MousePos) -> None:
     super()._handle_mouse_release(mouse_pos)
-    if self.session.state == "listening" and rl.check_collision_point_circle(
-        mouse_pos, rl.Vector2(self._mic_rect.x + self._mic_rect.width / 2, self._mic_rect.y + self._mic_rect.height / 2),
-        self._mic_rect.width / 2 + T.px(14)):
+    if self.session.state == "listening" and self._on_mic(mouse_pos):
       self.session.stop()
     elif self.session.state == "message":
       self.session.cancel()                  # tapping the message brings the keys back sooner
