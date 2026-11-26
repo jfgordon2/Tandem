@@ -31,7 +31,7 @@ from openpilot.selfdrive.ui.tandem.onroad.layers import AT_LIMIT, ArcState, BarS
 from openpilot.selfdrive.ui.tandem.onroad.overlay import OnroadOverlay, road_rect
 from openpilot.selfdrive.ui.tandem.onroad.state import awareness, route_progress, turn, DriveDisplay, DrivingAlert, LimitDecision, Proposal, displayed_speed
 from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, LimitWatch, RamWatch, Snapshot, chips_for, routing_chip, routing_state
-from openpilot.selfdrive.ui.tandem.onroad.streets import short_street
+from openpilot.selfdrive.ui.tandem.onroad.streets import StreetName, short_street
 from openpilot.selfdrive.ui.tandem.onroad.turn_signals import GAP as SIGNAL_GAP, STANDARD, TurnSignalRenderer
 from openpilot.selfdrive.ui.tandem.places import StarPilotPlaces
 from openpilot.selfdrive.ui.tandem.ram import RamLog, shared_log
@@ -76,6 +76,7 @@ class EssentialsOnroad(AugmentedRoadView):
     self._gap_state: GapTagState | None = None
     self._lead_tag_on, self._lead_tag_read = True, -1.0   # prefs.LEAD_TAG, read once a second
     self._lead_display: tuple[bool, int, bool | None] | None = None   # what the lead marker and its text show (_update_lead)
+    self._street_name = StreetName()   # the bar's street, held steady between mapd's messages
     self._dev: developer.DevData | None = None            # Developer View's values while StarPilot's sidebar setting is on
     self._road = rl.Rectangle(0, 0, 0, 0)                  # the road view's inner rect, for the lead tag's bounds
     # The lead tag takes the place of the text StarPilot's renderer draws above its lead marker (its Lead Info).
@@ -138,8 +139,12 @@ class EssentialsOnroad(AugmentedRoadView):
     if self._road_sm is None:
       self._road_sm = messaging.SubMaster(["mapdOut"])
     self._road_sm.update(0)
-    road = current_message(self._road_sm, "mapdOut", now_ns)
-    return short_street(str(road.roadName or road.wayName)) if road is not None else ""
+    sm = self._road_sm
+    heard = None
+    if sm.updated["mapdOut"]:   # mapd's newest reading; StreetName keeps it steady between messages and through a junction
+      road = sm["mapdOut"]
+      heard = short_street(str(road.roadName or road.wayName)) if sm.valid["mapdOut"] else ""
+    return self._street_name.update(heard, now_ns / 1e9)
 
   def _chips_from(self, now_ns: int, state: OnroadState) -> Snapshot:
     """Release's chip inputs from StarPilot 7. Stops and slowing for traffic come from StarPilot's conditional mode as

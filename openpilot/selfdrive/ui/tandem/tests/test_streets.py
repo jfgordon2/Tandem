@@ -35,3 +35,24 @@ def test_directions_and_types_are_shortened(name, short):
 ])
 def test_streets_in_route_instructions(text, short):
   assert short_streets_in(text) == short
+
+
+def test_the_street_stays_steady_between_mapds_messages() -> None:
+  """It blinked off whenever mapd's next message was over 100 ms away; now it holds as StarPilot's map holds its name."""
+  from openpilot.selfdrive.ui.tandem.onroad.streets import StreetName
+  street = StreetName()
+  assert street.update("Main St", 0.0) == "Main St"
+  assert all(street.update(None, t / 10) == "Main St" for t in range(1, 29))   # quiet frames: still there
+  assert street.update(None, 3.2) == ""                                       # nothing from mapd for over 3 s
+
+
+def test_a_new_or_missing_street_must_hold_before_it_shows() -> None:
+  from openpilot.selfdrive.ui.tandem.onroad.streets import StreetName
+  street = StreetName()
+  street.update("Main St", 0.0)
+  assert street.update("", 0.5) == "Main St"           # one empty reading doesn't blank it
+  assert street.update("Main St", 0.6) == "Main St"
+  assert street.update("Oak Ave", 1.0) == "Main St"    # a junction's other road, briefly
+  assert street.update("Main St", 1.2) == "Main St"
+  assert street.update("Oak Ave", 2.0) == "Main St"
+  assert street.update("Oak Ave", 3.6) == "Oak Ave"    # turned: it held 1.6 s

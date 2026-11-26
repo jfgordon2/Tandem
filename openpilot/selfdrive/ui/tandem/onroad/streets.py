@@ -46,3 +46,37 @@ def short_streets_in(text: str) -> str:
   """Each street in a route instruction shortened ("Turn right onto North Main Street" reads "... onto N Main St"):
   the text is split at joining words and separators, and each piece is shortened on its own."""
   return "".join(part if i % 2 else short_street(part) for i, part in enumerate(_JOINS.split(text)))
+
+
+class StreetName:
+  """The street the bar shows, steady between mapd's messages, as StarPilot's own map holds its road name
+  (starpilot/ui/onroad_map.py): the last name stays MAX_AGE_S after mapd last said anything, and a different name, or no
+  name, must hold HOLD_S before it replaces the one shown, so a junction or a missed reading doesn't make it blink.
+
+  Args:
+    hold_s: How long a new reading must last before it shows.
+    max_age_s: How long the shown name lasts without a word from mapd.
+  """
+  HOLD_S, MAX_AGE_S = 1.5, 3.0   # StarPilot's NAME_HOLD_S and ROAD_NAME_MAX_AGE_S
+
+  def __init__(self, hold_s: float = HOLD_S, max_age_s: float = MAX_AGE_S) -> None:
+    self._hold, self._max_age = hold_s, max_age_s
+    self._shown = self._candidate = ""
+    self._since = self._heard = -1e9
+
+  def update(self, name: str | None, now: float) -> str:
+    """Takes mapd's latest reading, if a new one arrived, and returns the street to show.
+
+    Args:
+      name: The street mapd just named ("" for none), or None when nothing new arrived this frame.
+      now: Monotonic seconds.
+    """
+    if name is not None:
+      self._heard = now
+      if name != self._candidate:
+        self._candidate, self._since = name, now
+      if name == self._shown or now - self._since >= self._hold or not self._shown:
+        self._shown = name
+    if now - self._heard > self._max_age:
+      self._shown = self._candidate = ""
+    return self._shown
