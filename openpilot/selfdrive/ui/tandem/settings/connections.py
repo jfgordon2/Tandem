@@ -19,12 +19,13 @@ from openpilot.selfdrive.ui.tandem.settings.network_test import NetworkTestModel
 from openpilot.starpilot.tandem.network_test import NetworkTest
 from openpilot.selfdrive.ui.tandem.settings.pages import Section, SectionPage
 from openpilot.selfdrive.ui.tandem.i18n import N_, tn_
+from openpilot.selfdrive.ui.tandem.settings.android_auto import AndroidAuto, android_auto_panel
 from openpilot.selfdrive.ui.tandem.settings.bluetooth_tab import BluetoothDevices, WheelButtons, devices_panel, wheel_panel
 
 if TYPE_CHECKING:
   from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow
 
-WIFI, CELLULAR, REMOTE, DEVICES, TEST = range(5)
+WIFI, CELLULAR, REMOTE, DEVICES, ANDROID_AUTO, TEST = range(6)
 
 
 class WhileShown(Component):
@@ -65,8 +66,11 @@ def buttons_label(count: int) -> str:
 
 
 def connections_page(network: Network, open_advanced: Callable[[], None], window: SettingsWindow, test: NetworkTestModel,
-                     wheel: WheelButtons, bt: BluetoothDevices) -> SectionPage:
-  """The Connections tab: Wi-Fi, cellular, the Bluetooth remote, Bluetooth devices and the network test."""
+                     wheel: WheelButtons, bt: BluetoothDevices, android_auto: AndroidAuto | None = None) -> SectionPage:
+  """The Connections tab: Wi-Fi, cellular, the Bluetooth remote, Bluetooth devices, Android Auto (StarPort) and the network
+  test. Without android_auto, Android Auto reads as not available on this device."""
+  from openpilot.selfdrive.ui.tandem.settings.android_auto import StarPortStatus
+  auto = android_auto or AndroidAuto(StarPortStatus, str)
   testing = False
 
   def bluetooth_tick() -> None:
@@ -98,5 +102,7 @@ def connections_page(network: Network, open_advanced: Callable[[], None], window
     Section(N_("Bluetooth Remote"), lambda: WhileShown(wheel_panel(wheel, window, bt), bluetooth_on, bluetooth_off, bluetooth_tick),
             value=lambda: buttons_label(len(wheel.buttons()))),
     Section(N_("Bluetooth Devices"), lambda: WhileShown(devices_panel(bt, window), bluetooth_on, bluetooth_off, bluetooth_tick)),
+    Section(N_("Android Auto"), lambda: WhileShown(android_auto_panel(auto, window), lambda: bt.set_active(True), lambda: bt.set_active(False),
+                                                   bt.tick), value=auto.summary),
     Section(N_("Network Test"), lambda: WhileShown(network_test_panel(test), lambda: None, test.stop), value=test.summary),
   ])

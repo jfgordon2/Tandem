@@ -6,13 +6,14 @@ msgstr ""
 "X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\n"
 
 #: controls.py:197
+#: settings/android_auto.py:148
 #: settings/navigation.py:52
 msgid "On"
 msgstr "Sí"
 
 #: controls.py:197
 #: controls.py:200
-#: settings/maps.py:34
+#: settings/android_auto.py:147
 msgid "Off"
 msgstr "No"
 
@@ -118,7 +119,7 @@ msgid "Road data still supplies speed limits"
 msgstr "Los datos de carreteras siguen dando los límites de velocidad"
 
 #: destinations.py:218
-#: settings/search.py:290
+#: settings/search.py:293
 msgid "Search"
 msgstr "Buscar"
 
@@ -397,7 +398,7 @@ msgstr "Actualización lista"
 
 #: home.py:152
 #: settings/search.py:25
-#: settings/search.py:221
+#: settings/search.py:224
 msgid "Software"
 msgstr "Software"
 
@@ -1568,184 +1569,329 @@ msgstr "El enrutamiento en línea no está disponible"
 msgid "Routing is unavailable"
 msgstr "El enrutamiento no está disponible"
 
-#: settings/alerts.py:54
-#: settings/alerts.py:120
-#: settings/alerts.py:201
+#: settings/alerts.py:58
+#: settings/alerts.py:124
+#: settings/alerts.py:211
 msgid "Auto"
 msgstr "Auto"
 
-#: settings/alerts.py:54
-#: settings/alerts.py:185
+#: settings/alerts.py:58
+#: settings/alerts.py:195
 msgid "Quiet"
 msgstr "Bajo"
 
-#: settings/alerts.py:54
-#: settings/alerts.py:185
+#: settings/alerts.py:58
+#: settings/alerts.py:195
 msgid "Normal"
 msgstr "Normal"
 
-#: settings/alerts.py:54
-#: settings/alerts.py:185
+#: settings/alerts.py:58
+#: settings/alerts.py:195
 msgid "Loud"
 msgstr "Alto"
 
-#: settings/alerts.py:47
+#: settings/alerts.py:51
 msgid "Engage and disengage chimes"
 msgstr "Sonidos de activar y desactivar"
 
-#: settings/alerts.py:47
+#: settings/alerts.py:51
 msgid "When openpilot turns on or off"
 msgstr "Cuando openpilot se enciende o se apaga"
 
-#: settings/alerts.py:48
+#: settings/alerts.py:52
 msgid "Prompts and reminders"
 msgstr "Avisos y recordatorios"
 
-#: settings/alerts.py:48
+#: settings/alerts.py:52
 msgid "Gentle nudges, like when openpilot can't turn on"
 msgstr "Avisos suaves, como cuando openpilot no puede activarse"
 
-#: settings/alerts.py:50
+#: settings/alerts.py:54
 msgid "Driver attention"
 msgstr "Atención del conductor"
 
-#: settings/alerts.py:50
+#: settings/alerts.py:54
 msgid "The chime that asks you to look at the road"
 msgstr "El sonido que te pide mirar la carretera"
 
-#: settings/alerts.py:52
+#: settings/alerts.py:56
 msgid "Take control warnings"
 msgstr "Avisos para tomar el control"
 
-#: settings/alerts.py:52
+#: settings/alerts.py:56
 msgid "When you need to steer or brake now"
 msgstr "Cuando tienes que girar o frenar ya"
 
-#: settings/alerts.py:57
+#: settings/alerts.py:61
 #: settings/search.py:124
 msgid "Green Light"
 msgstr "Semáforo en verde"
 
-#: settings/alerts.py:57
+#: settings/alerts.py:61
 #: settings/search.py:124
 msgid "When the light turns green and you are stopped"
 msgstr "Cuando el semáforo se pone en verde y estás detenido"
 
-#: settings/alerts.py:58
+#: settings/alerts.py:62
 #: settings/search.py:125
 msgid "Lead Departure"
 msgstr "Salida del coche delantero"
 
-#: settings/alerts.py:58
+#: settings/alerts.py:62
 #: settings/search.py:125
 msgid "When the car ahead pulls away"
 msgstr "Cuando el coche de delante arranca"
 
-#: settings/alerts.py:59
+#: settings/alerts.py:63
 #: settings/search.py:126
 msgid "Loud Blind Spot"
 msgstr "Ángulo muerto alto"
 
-#: settings/alerts.py:59
+#: settings/alerts.py:63
 #: settings/search.py:126
 msgid "Signalling into an occupied lane, even when paused"
 msgstr "Al poner el intermitente hacia un carril ocupado, incluso en pausa"
 
-#: settings/alerts.py:60
+#: settings/alerts.py:64
 #: settings/search.py:93
 #: settings/search.py:128
 msgid "Weather heads-up"
 msgstr "Aviso del tiempo"
 
-#: settings/alerts.py:60
+#: settings/alerts.py:64
 #: settings/search.py:128
 msgid "Once, when rain, snow or storms are coming"
 msgstr "Una vez, cuando se acercan lluvia, nieve o tormentas"
 
-#: settings/alerts.py:244
-#: settings/alerts.py:262
+#: settings/alerts.py:255
+#: settings/alerts.py:274
 #: settings/search.py:127
 msgid "Sound Pack"
 msgstr "Paquete de sonidos"
 
-#: settings/alerts.py:244
+#: settings/alerts.py:255
 #: settings/search.py:127
 msgid "The sounds every alert plays"
 msgstr "Los sonidos de todas las alertas"
 
-#: settings/alerts.py:248
+#: settings/alerts.py:259
 #: settings/driving_tab.py:207
 #: settings/search.py:26
 msgid "Alerts"
 msgstr "Alertas"
 
-#: settings/alerts.py:248
+#: settings/alerts.py:259
 msgid "One volume for everything. Safety warnings never go below 25%."
 msgstr "Un volumen para todo. Los avisos de seguridad nunca bajan del 25%."
 
-#: settings/alerts.py:259
-#: settings/alerts.py:179
+#: settings/alerts.py:271
+#: settings/alerts.py:189
 msgid "Play sample"
 msgstr "Reproducir muestra"
 
-#: settings/alerts.py:127
+#: settings/alerts.py:131
 msgid "Custom volume"
 msgstr "Volumen personalizado"
 
-#: settings/alerts.py:127
+#: settings/alerts.py:131
 #, python-brace-format
 msgid "{} volume"
 msgstr "Volumen {}"
 
-#: settings/alerts.py:131
+#: settings/alerts.py:135
 msgid "No extra chimes"
 msgstr "Sin sonidos extra"
 
-#: settings/alerts.py:208
+#: settings/alerts.py:218
 msgid "Plays through your car speakers if they're connected."
 msgstr "Suena por los altavoces del coche si están conectados."
 
-#: settings/alerts.py:212
+#: settings/alerts.py:222
 msgid "Changing a level sets the Alert Volume preset to Custom."
 msgstr "Cambiar un nivel pone el preajuste de volumen en Personalizado."
 
-#: settings/alerts.py:224
+#: settings/alerts.py:235
 msgid "Park to change alert volumes."
 msgstr "Aparca para cambiar el volumen de las alertas."
 
-#: settings/alerts.py:226
+#: settings/alerts.py:237
 msgid "Auto follows cabin noise. Tap a level to set it yourself."
 msgstr "Auto sigue el ruido del habitáculo. Toca un nivel para fijarlo tú."
 
-#: settings/alerts.py:227
+#: settings/alerts.py:238
 msgid "Custom levels. Pick a preset to reset them."
 msgstr "Niveles personalizados. Elige un preajuste para restablecerlos."
 
-#: settings/alerts.py:227
+#: settings/alerts.py:238
 msgid "Tap a level to fine-tune it."
 msgstr "Toca un nivel para ajustarlo."
 
-#: settings/alerts.py:247
+#: settings/alerts.py:258
 msgid "Chimes"
 msgstr "Sonidos"
 
-#: settings/alerts.py:263
+#: settings/alerts.py:275
 msgid "The sounds every alert plays. Play sample uses the chosen pack."
 msgstr "Los sonidos de todas las alertas. Reproducir muestra usa el paquete elegido."
 
-#: settings/alerts.py:186
+#: settings/alerts.py:196
 msgid "Reset to Normal"
 msgstr "Restablecer a Normal"
 
-#: settings/alerts.py:231
+#: settings/alerts.py:242
 #: settings/search.py:123
 msgid "Volume"
 msgstr "Volumen"
 
-#: settings/alerts.py:184
+#: settings/alerts.py:194
 #, python-brace-format
 msgid "Minimum {}% for safety alerts"
 msgstr "Mínimo {}% para los avisos de seguridad"
+
+#: settings/android_auto.py:35
+msgid "Built-in wireless"
+msgstr "Inalámbrico integrado"
+
+#: settings/android_auto.py:35
+msgid "Wireless adapter"
+msgstr "Adaptador inalámbrico"
+
+#: settings/android_auto.py:35
+msgid "USB cable"
+msgstr "Cable USB"
+
+#: settings/android_auto.py:35
+msgid "Tablet app"
+msgstr "App de tableta"
+
+#: settings/android_auto.py:157
+#: settings/search.py:218
+msgid "StarPilot on your car's screen, through StarPort"
+msgstr "StarPilot en la pantalla de tu coche, con StarPort"
+
+#: settings/android_auto.py:170
+#: settings/search.py:220
+msgid "Shows StarPilot on your car's Android Auto screen"
+msgstr "Muestra StarPilot en la pantalla de Android Auto de tu coche"
+
+#: settings/android_auto.py:199
+msgid "Added"
+msgstr "Añadida"
+
+#: settings/android_auto.py:210
+msgid "Parked, over Bluetooth"
+msgstr "Estacionado, por Bluetooth"
+
+#: settings/android_auto.py:274
+#: settings/android_auto.py:298
+msgid "Set up on your phone"
+msgstr "Configurar en tu teléfono"
+
+#: settings/android_auto.py:295
+#: settings/search.py:220
+msgid "StarPort"
+msgstr "StarPort"
+
+#: settings/android_auto.py:145
+#: settings/device.py:283
+msgid "Not set up"
+msgstr "Sin configurar"
+
+#: settings/android_auto.py:148
+#: settings/bluetooth_tab.py:451
+#: settings/bluetooth_tab.py:464
+msgid "Connected"
+msgstr "Conectado"
+
+#: settings/android_auto.py:154
+msgid "Connected · showing on your car"
+msgstr "Conectado · se ve en tu coche"
+
+#: settings/android_auto.py:167
+msgid "Not available on this device"
+msgstr "No disponible en este dispositivo"
+
+#: settings/android_auto.py:169
+msgid "Add the Android Auto app first"
+msgstr "Primero añade la app Android Auto"
+
+#: settings/android_auto.py:196
+msgid "Google's app file, from your phone · Not added"
+msgstr "El archivo de la app de Google, desde tu teléfono · Sin añadir"
+
+#: settings/android_auto.py:198
+#, python-brace-format
+msgid "Added · good for {} more day"
+msgid_plural "Added · good for {} more days"
+msgstr[0] "Añadida · válida {} día más"
+msgstr[1] "Añadida · válida {} días más"
+
+#: settings/android_auto.py:202
+msgid "Built-in, an adapter, a USB cable or a tablet"
+msgstr "Integrado, un adaptador, un cable USB o una tableta"
+
+#: settings/android_auto.py:207
+#, python-brace-format
+msgid "Paired with {}"
+msgstr "Emparejado con {}"
+
+#: settings/android_auto.py:209
+msgid "No pairing needed for this connection"
+msgstr "Esta conexión no necesita emparejar"
+
+#: settings/android_auto.py:274
+msgid "Galaxy walks you through adding the app and pairing your car"
+msgstr "Galaxy te guía para añadir la app y emparejar tu coche"
+
+#: settings/android_auto.py:305
+#: settings/android_auto.py:286
+#: settings/connections.py:105
+msgid "Android Auto"
+msgstr "Android Auto"
+
+#: settings/android_auto.py:270
+msgid "Scan with your phone's camera. It opens StarPort setup in Galaxy."
+msgstr "Escanéalo con la cámara del teléfono. Abre la configuración de StarPort en Galaxy."
+
+#: settings/android_auto.py:271
+msgid "Set up Remote Access first if Galaxy asks you to sign in."
+msgstr "Configura primero el Acceso remoto si Galaxy te pide iniciar sesión."
+
+#: settings/android_auto.py:273
+msgid "Connect to Wi-Fi or set up Remote Access to get a code"
+msgstr "Conéctate a Wi-Fi o configura el Acceso remoto para obtener un código"
+
+#: settings/android_auto.py:286
+msgid "StarPort needs Bluetooth. Park to turn it on."
+msgstr "StarPort necesita Bluetooth. Estaciona para activarlo."
+
+#: settings/android_auto.py:293
+msgid "Turn on Bluetooth?"
+msgstr "¿Activar Bluetooth?"
+
+#: settings/android_auto.py:293
+msgid "StarPort needs Bluetooth to reach your car."
+msgstr "StarPort necesita Bluetooth para llegar a tu coche."
+
+#: settings/android_auto.py:293
+msgid "Turn On"
+msgstr "Activar"
+
+#: settings/android_auto.py:301
+msgid "SETUP"
+msgstr "CONFIGURACIÓN"
+
+#: settings/android_auto.py:302
+msgid "Add the Android Auto app"
+msgstr "Añadir la app Android Auto"
+
+#: settings/android_auto.py:303
+msgid "Choose how your car connects"
+msgstr "Elegir cómo se conecta tu coche"
+
+#: settings/android_auto.py:304
+msgid "Pair your car"
+msgstr "Emparejar tu coche"
 
 #: settings/auto_learn.py:49
 #: settings/auto_learn.py:36
@@ -1816,7 +1962,7 @@ msgstr "Hacer copia ahora"
 
 #: settings/backups.py:108
 #: settings/backups.py:90
-#: settings/essentials.py:167
+#: settings/essentials.py:170
 msgid "Backups"
 msgstr "Copias de seguridad"
 
@@ -1922,7 +2068,7 @@ msgid "StarPilot lists what a button can do on this car."
 msgstr "StarPilot indica qué puede hacer un botón en este coche."
 
 #: settings/bluetooth_tab.py:319
-#: settings/connections.py:98
+#: settings/connections.py:102
 #: settings/search.py:33
 msgid "Bluetooth Remote"
 msgstr "Mando Bluetooth"
@@ -1963,12 +2109,6 @@ msgstr "Se reconecta la próxima vez que lo elijas"
 #: settings/search.py:217
 msgid "Removes the pairing. Change it with the car off."
 msgstr "Elimina el emparejamiento. Cámbialo con el coche apagado."
-
-#: settings/bluetooth_tab.py:451
-#: settings/bluetooth_tab.py:464
-#: settings/network_tab.py:279
-msgid "Connected"
-msgstr "Conectado"
 
 #: settings/bluetooth_tab.py:475
 msgid "PAIRED"
@@ -2351,36 +2491,36 @@ msgstr "Registro: {}"
 msgid "Start logging to create a new test log."
 msgstr "Inicia el registro para crear una nueva prueba."
 
-#: settings/connections.py:64
+#: settings/connections.py:65
 #, python-brace-format
 msgid "{} button"
 msgid_plural "{} buttons"
 msgstr[0] "{} botón"
 msgstr[1] "{} botones"
 
-#: settings/connections.py:94
+#: settings/connections.py:98
 msgid "CONNECTIONS"
 msgstr "CONEXIONES"
 
-#: settings/connections.py:95
+#: settings/connections.py:99
 #: settings/map_source.py:235
 #: settings/network_tab.py:367
 msgid "Wi-Fi"
 msgstr "Wifi"
 
-#: settings/connections.py:97
+#: settings/connections.py:101
 #: settings/network_tab.py:387
 #: settings/network_test.py:99
 msgid "Cellular"
 msgstr "Datos móviles"
 
-#: settings/connections.py:100
+#: settings/connections.py:104
 #: settings/search.py:33
 #: settings/search.py:215
 msgid "Bluetooth Devices"
 msgstr "Dispositivos Bluetooth"
 
-#: settings/connections.py:101
+#: settings/connections.py:107
 #: settings/network_test.py:172
 #: settings/search.py:33
 msgid "Network Test"
@@ -2419,7 +2559,7 @@ msgid "Adds every public key in a GitHub account. Never use someone else's."
 msgstr "Añade todas las claves públicas de una cuenta de GitHub. Nunca uses la de otra persona."
 
 #: settings/developer.py:84
-#: settings/essentials.py:172
+#: settings/essentials.py:175
 #: settings/search.py:32
 msgid "Developer"
 msgstr "Desarrollador"
@@ -2682,7 +2822,7 @@ msgstr "La calibración empieza de nuevo. openpilot vuelve a aprender cómo est�
 
 #: settings/device.py:134
 #: settings/device.py:308
-#: settings/essentials.py:144
+#: settings/essentials.py:147
 msgid "This Device"
 msgstr "Este dispositivo"
 
@@ -2714,10 +2854,6 @@ msgstr "El enlace deja de funcionar. Al configurarlo de nuevo se crea otro."
 #: settings/device.py:283
 msgid "Set up · protected by your password"
 msgstr "Configurado · protegido con tu contraseña"
-
-#: settings/device.py:283
-msgid "Not set up"
-msgstr "Sin configurar"
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: settings/device.py:285
@@ -3046,7 +3182,7 @@ msgid "Display"
 msgstr "Pantalla"
 
 #: settings/driving_tab.py:208
-#: settings/essentials.py:229
+#: settings/essentials.py:232
 #: settings/model.py:336
 msgid "Driving Model"
 msgstr "Modelo de conducción"
@@ -3106,31 +3242,31 @@ msgstr "Usa tu contraseña de Galaxy actual o crea una nueva"
 msgid "Optional"
 msgstr "Opcional"
 
-#: settings/essentials.py:165
+#: settings/essentials.py:168
 #: settings/general.py:51
 #: settings/search.py:31
 msgid "General"
 msgstr "General"
 
-#: settings/essentials.py:166
+#: settings/essentials.py:169
 #: settings/power.py:188
 #: settings/search.py:31
 msgid "Power"
 msgstr "Energía"
 
-#: settings/essentials.py:168
+#: settings/essentials.py:171
 #: settings/search.py:31
 #: settings/search.py:183
 msgid "Storage & Data"
 msgstr "Almacenamiento y datos"
 
-#: settings/essentials.py:169
+#: settings/essentials.py:172
 #: settings/firehose.py:139
 #: settings/search.py:31
 msgid "Firehose"
 msgstr "Firehose"
 
-#: settings/essentials.py:171
+#: settings/essentials.py:174
 #: settings/report.py:121
 #: settings/search.py:31
 msgid "Report a Problem"
@@ -5148,67 +5284,67 @@ msgstr "Los botones de un mando de volante y lo que hacen"
 msgid "Pair and connect phones, speakers and remotes"
 msgstr "Vincula y conecta teléfonos, altavoces y mandos"
 
-#: settings/search.py:218
+#: settings/search.py:221
 msgid "Download speed, upload speed and ping of this device's connection"
 msgstr "Velocidad de descarga, velocidad de subida y ping de la conexión de este dispositivo"
 
-#: settings/search.py:221
+#: settings/search.py:224
 msgid "Updates and the release notes"
 msgstr "Actualizaciones y notas de la versión"
 
-#: settings/search.py:222
+#: settings/search.py:225
 #: settings/software.py:205
 msgid "Automatic Updates"
 msgstr "Actualizaciones automáticas"
 
-#: settings/search.py:222
+#: settings/search.py:225
 msgid "Download while parked, install when you turn off the car"
 msgstr "Descarga aparcado, instala al apagar el coche"
 
-#: settings/search.py:223
+#: settings/search.py:226
 #: settings/software.py:202
 msgid "Release Channel"
 msgstr "Canal de versiones"
 
-#: settings/search.py:223
+#: settings/search.py:226
 msgid "The branch to download updates from"
 msgstr "La rama de la que se descargan las actualizaciones"
 
-#: settings/search.py:224
+#: settings/search.py:227
 #: settings/software.py:211
 msgid "Reset Settings"
 msgstr "Restablecer ajustes"
 
-#: settings/search.py:224
+#: settings/search.py:227
 msgid "Back to the Essentials defaults"
 msgstr "Vuelve a los valores de Essentials"
 
-#: settings/search.py:225
+#: settings/search.py:228
 #: settings/software.py:183
 #: settings/software.py:215
 msgid "Uninstall"
 msgstr "Desinstalar"
 
-#: settings/search.py:225
+#: settings/search.py:228
 msgid "Remove this software from the device"
 msgstr "Quita este software del dispositivo"
 
-#: settings/search.py:402
-#: settings/search.py:393
+#: settings/search.py:405
+#: settings/search.py:396
 msgid "Search settings"
 msgstr "Buscar ajustes"
 
-#: settings/search.py:291
+#: settings/search.py:294
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "Di un ajuste, como límite de velocidad. Toca el micrófono cuando termines."
 
-#: settings/search.py:373
-#: settings/search.py:332
+#: settings/search.py:376
+#: settings/search.py:335
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "Ningún ajuste coincide con “{}”"
 
-#: settings/search.py:374
+#: settings/search.py:377
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "Escribe el nombre de un ajuste o lo que hace, como brillo o cambios de carril"
 

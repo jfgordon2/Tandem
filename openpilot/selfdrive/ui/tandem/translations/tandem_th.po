@@ -6,13 +6,14 @@ msgstr ""
 "X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\n"
 
 #: controls.py:197
+#: settings/android_auto.py:148
 #: settings/navigation.py:52
 msgid "On"
 msgstr "เปิด"
 
 #: controls.py:197
 #: controls.py:200
-#: settings/maps.py:34
+#: settings/android_auto.py:147
 msgid "Off"
 msgstr "ปิด"
 
@@ -118,7 +119,7 @@ msgid "Road data still supplies speed limits"
 msgstr "ข้อมูลถนนยังคงให้ขีดจำกัดความเร็ว"
 
 #: destinations.py:218
-#: settings/search.py:290
+#: settings/search.py:293
 msgid "Search"
 msgstr "ค้นหา"
 
@@ -397,7 +398,7 @@ msgstr "อัปเดตพร้อมแล้ว"
 
 #: home.py:152
 #: settings/search.py:25
-#: settings/search.py:221
+#: settings/search.py:224
 msgid "Software"
 msgstr "ซอฟต์แวร์"
 
@@ -1566,184 +1567,328 @@ msgstr "การหาเส้นทางออนไลน์ใช้ไม
 msgid "Routing is unavailable"
 msgstr "การหาเส้นทางใช้ไม่ได้"
 
-#: settings/alerts.py:54
-#: settings/alerts.py:120
-#: settings/alerts.py:201
+#: settings/alerts.py:58
+#: settings/alerts.py:124
+#: settings/alerts.py:211
 msgid "Auto"
 msgstr "อัตโนมัติ"
 
-#: settings/alerts.py:54
-#: settings/alerts.py:185
+#: settings/alerts.py:58
+#: settings/alerts.py:195
 msgid "Quiet"
 msgstr "เสียงเงียบ"
 
-#: settings/alerts.py:54
-#: settings/alerts.py:185
+#: settings/alerts.py:58
+#: settings/alerts.py:195
 msgid "Normal"
 msgstr "ปกติ"
 
-#: settings/alerts.py:54
-#: settings/alerts.py:185
+#: settings/alerts.py:58
+#: settings/alerts.py:195
 msgid "Loud"
 msgstr "เสียงดัง"
 
-#: settings/alerts.py:47
+#: settings/alerts.py:51
 msgid "Engage and disengage chimes"
 msgstr "เสียงเปิดและปิดใช้งาน"
 
-#: settings/alerts.py:47
+#: settings/alerts.py:51
 msgid "When openpilot turns on or off"
 msgstr "เมื่อ openpilot เปิดหรือปิด"
 
-#: settings/alerts.py:48
+#: settings/alerts.py:52
 msgid "Prompts and reminders"
 msgstr "พรอมต์และการเตือนความจำ"
 
-#: settings/alerts.py:48
+#: settings/alerts.py:52
 msgid "Gentle nudges, like when openpilot can't turn on"
 msgstr "การเตือนเบาๆ เช่นเมื่อ openpilot เปิดไม่ได้"
 
-#: settings/alerts.py:50
+#: settings/alerts.py:54
 msgid "Driver attention"
 msgstr "ความใส่ใจของผู้ขับขี่"
 
-#: settings/alerts.py:50
+#: settings/alerts.py:54
 msgid "The chime that asks you to look at the road"
 msgstr "เสียงกริ่งที่ขอให้คุณมองถนน"
 
-#: settings/alerts.py:52
+#: settings/alerts.py:56
 msgid "Take control warnings"
 msgstr "คำเตือนให้เข้าควบคุมรถ"
 
-#: settings/alerts.py:52
+#: settings/alerts.py:56
 msgid "When you need to steer or brake now"
 msgstr "เมื่อคุณต้องการบังคับเลี้ยวหรือเบรกตอนนี้"
 
-#: settings/alerts.py:57
+#: settings/alerts.py:61
 #: settings/search.py:124
 msgid "Green Light"
 msgstr "ไฟเขียว"
 
-#: settings/alerts.py:57
+#: settings/alerts.py:61
 #: settings/search.py:124
 msgid "When the light turns green and you are stopped"
 msgstr "เมื่อไฟเปลี่ยนเป็นสีเขียวและคุณถูกหยุด"
 
-#: settings/alerts.py:58
+#: settings/alerts.py:62
 #: settings/search.py:125
 msgid "Lead Departure"
 msgstr "รถคันหน้าออกตัว"
 
-#: settings/alerts.py:58
+#: settings/alerts.py:62
 #: settings/search.py:125
 msgid "When the car ahead pulls away"
 msgstr "เมื่อรถคันหน้าออกตัว"
 
-#: settings/alerts.py:59
+#: settings/alerts.py:63
 #: settings/search.py:126
 msgid "Loud Blind Spot"
 msgstr "เสียงเตือนจุดบอดดัง"
 
-#: settings/alerts.py:59
+#: settings/alerts.py:63
 #: settings/search.py:126
 msgid "Signalling into an occupied lane, even when paused"
 msgstr "ส่งสัญญาณเข้าสู่เลนที่ถูกครอบครองแม้ว่าจะหยุดชั่วคราวก็ตาม"
 
-#: settings/alerts.py:60
+#: settings/alerts.py:64
 #: settings/search.py:93
 #: settings/search.py:128
 msgid "Weather heads-up"
 msgstr "แจ้งเตือนสภาพอากาศล่วงหน้า"
 
-#: settings/alerts.py:60
+#: settings/alerts.py:64
 #: settings/search.py:128
 msgid "Once, when rain, snow or storms are coming"
 msgstr "ครั้งหนึ่ง เมื่อฝน หิมะ หรือพายุกำลังมา"
 
-#: settings/alerts.py:244
-#: settings/alerts.py:262
+#: settings/alerts.py:255
+#: settings/alerts.py:274
 #: settings/search.py:127
 msgid "Sound Pack"
 msgstr "ชุดเสียง"
 
-#: settings/alerts.py:244
+#: settings/alerts.py:255
 #: settings/search.py:127
 msgid "The sounds every alert plays"
 msgstr "เสียงที่การแจ้งเตือนทุกอย่างใช้"
 
-#: settings/alerts.py:248
+#: settings/alerts.py:259
 #: settings/driving_tab.py:207
 #: settings/search.py:26
 msgid "Alerts"
 msgstr "การแจ้งเตือน"
 
-#: settings/alerts.py:248
+#: settings/alerts.py:259
 msgid "One volume for everything. Safety warnings never go below 25%."
 msgstr "ระดับเสียงเดียวสำหรับทุกสิ่ง คำเตือนด้านความปลอดภัยไม่เคยต่ำกว่า 25%"
 
-#: settings/alerts.py:259
-#: settings/alerts.py:179
+#: settings/alerts.py:271
+#: settings/alerts.py:189
 msgid "Play sample"
 msgstr "ฟังเสียงตัวอย่าง"
 
-#: settings/alerts.py:127
+#: settings/alerts.py:131
 msgid "Custom volume"
 msgstr "ระดับเสียงกำหนดเอง"
 
-#: settings/alerts.py:127
+#: settings/alerts.py:131
 #, python-brace-format
 msgid "{} volume"
 msgstr "ระดับเสียง{}"
 
-#: settings/alerts.py:131
+#: settings/alerts.py:135
 msgid "No extra chimes"
 msgstr "ไม่มีเสียงระฆังเพิ่มเติม"
 
-#: settings/alerts.py:208
+#: settings/alerts.py:218
 msgid "Plays through your car speakers if they're connected."
 msgstr "เล่นผ่านลำโพงในรถยนต์ของคุณหากเชื่อมต่ออยู่"
 
-#: settings/alerts.py:212
+#: settings/alerts.py:222
 msgid "Changing a level sets the Alert Volume preset to Custom."
 msgstr "การเปลี่ยนระดับจะตั้งค่าระดับเสียงเตือนที่ตั้งไว้ล่วงหน้าเป็นกำหนดเอง"
 
-#: settings/alerts.py:224
+#: settings/alerts.py:235
 msgid "Park to change alert volumes."
 msgstr "จอดรถเพื่อเปลี่ยนระดับเสียงการแจ้งเตือน"
 
-#: settings/alerts.py:226
+#: settings/alerts.py:237
 msgid "Auto follows cabin noise. Tap a level to set it yourself."
 msgstr "อัตโนมัติปรับตามเสียงในห้องโดยสาร แตะระดับเพื่อตั้งเอง"
 
-#: settings/alerts.py:227
+#: settings/alerts.py:238
 msgid "Custom levels. Pick a preset to reset them."
 msgstr "ระดับที่กำหนดเอง เลือกค่าที่ตั้งล่วงหน้าเพื่อรีเซ็ต"
 
-#: settings/alerts.py:227
+#: settings/alerts.py:238
 msgid "Tap a level to fine-tune it."
 msgstr "แตะระดับเพื่อปรับแต่งอย่างละเอียด"
 
-#: settings/alerts.py:247
+#: settings/alerts.py:258
 msgid "Chimes"
 msgstr "เสียงแจ้งเตือน"
 
-#: settings/alerts.py:263
+#: settings/alerts.py:275
 msgid "The sounds every alert plays. Play sample uses the chosen pack."
 msgstr "เสียงที่การแจ้งเตือนทุกอย่างใช้ ฟังเสียงตัวอย่างจะใช้ชุดที่เลือก"
 
-#: settings/alerts.py:186
+#: settings/alerts.py:196
 msgid "Reset to Normal"
 msgstr "รีเซ็ตเป็นปกติ"
 
-#: settings/alerts.py:231
+#: settings/alerts.py:242
 #: settings/search.py:123
 msgid "Volume"
 msgstr "ระดับเสียง"
 
-#: settings/alerts.py:184
+#: settings/alerts.py:194
 #, python-brace-format
 msgid "Minimum {}% for safety alerts"
 msgstr "ขั้นต่ำ {}% สำหรับการแจ้งเตือนด้านความปลอดภัย"
+
+#: settings/android_auto.py:35
+msgid "Built-in wireless"
+msgstr "ไร้สายในตัว"
+
+#: settings/android_auto.py:35
+msgid "Wireless adapter"
+msgstr "อะแดปเตอร์ไร้สาย"
+
+#: settings/android_auto.py:35
+msgid "USB cable"
+msgstr "สาย USB"
+
+#: settings/android_auto.py:35
+msgid "Tablet app"
+msgstr "แอปบนแท็บเล็ต"
+
+#: settings/android_auto.py:157
+#: settings/search.py:218
+msgid "StarPilot on your car's screen, through StarPort"
+msgstr "StarPilot บนหน้าจอรถของคุณ ผ่าน StarPort"
+
+#: settings/android_auto.py:170
+#: settings/search.py:220
+msgid "Shows StarPilot on your car's Android Auto screen"
+msgstr "แสดง StarPilot บนหน้าจอ Android Auto ของรถ"
+
+#: settings/android_auto.py:199
+msgid "Added"
+msgstr "เพิ่มแล้ว"
+
+#: settings/android_auto.py:210
+msgid "Parked, over Bluetooth"
+msgstr "ขณะจอด ผ่าน Bluetooth"
+
+#: settings/android_auto.py:274
+#: settings/android_auto.py:298
+msgid "Set up on your phone"
+msgstr "ตั้งค่าบนโทรศัพท์"
+
+#: settings/android_auto.py:295
+#: settings/search.py:220
+msgid "StarPort"
+msgstr "StarPort"
+
+#: settings/android_auto.py:145
+#: settings/device.py:283
+msgid "Not set up"
+msgstr "ไม่ได้ตั้งค่า"
+
+#: settings/android_auto.py:148
+#: settings/bluetooth_tab.py:451
+#: settings/bluetooth_tab.py:464
+msgid "Connected"
+msgstr "เชื่อมต่อ แล้ว"
+
+#: settings/android_auto.py:154
+msgid "Connected · showing on your car"
+msgstr "เชื่อมต่อแล้ว · แสดงบนรถ"
+
+#: settings/android_auto.py:167
+msgid "Not available on this device"
+msgstr "ใช้ไม่ได้บนอุปกรณ์นี้"
+
+#: settings/android_auto.py:169
+msgid "Add the Android Auto app first"
+msgstr "เพิ่มแอป Android Auto ก่อน"
+
+#: settings/android_auto.py:196
+msgid "Google's app file, from your phone · Not added"
+msgstr "ไฟล์แอปของ Google จากโทรศัพท์ · ยังไม่ได้เพิ่ม"
+
+#: settings/android_auto.py:198
+#, python-brace-format
+msgid "Added · good for {} more day"
+msgid_plural "Added · good for {} more days"
+msgstr[0] "เพิ่มแล้ว · ใช้ได้อีก {} วัน"
+
+#: settings/android_auto.py:202
+msgid "Built-in, an adapter, a USB cable or a tablet"
+msgstr "ในตัว อะแดปเตอร์ สาย USB หรือแท็บเล็ต"
+
+#: settings/android_auto.py:207
+#, python-brace-format
+msgid "Paired with {}"
+msgstr "จับคู่กับ {} แล้ว"
+
+#: settings/android_auto.py:209
+msgid "No pairing needed for this connection"
+msgstr "การเชื่อมต่อนี้ไม่ต้องจับคู่"
+
+#: settings/android_auto.py:274
+msgid "Galaxy walks you through adding the app and pairing your car"
+msgstr "Galaxy จะแนะนำการเพิ่มแอปและการจับคู่รถ"
+
+#: settings/android_auto.py:305
+#: settings/android_auto.py:286
+#: settings/connections.py:105
+msgid "Android Auto"
+msgstr "Android Auto"
+
+#: settings/android_auto.py:270
+msgid "Scan with your phone's camera. It opens StarPort setup in Galaxy."
+msgstr "สแกนด้วยกล้องโทรศัพท์ จะเปิดการตั้งค่า StarPort ใน Galaxy"
+
+#: settings/android_auto.py:271
+msgid "Set up Remote Access first if Galaxy asks you to sign in."
+msgstr "ตั้งค่าการเข้าถึงระยะไกลก่อนหาก Galaxy ขอให้ลงชื่อเข้าใช้"
+
+#: settings/android_auto.py:273
+msgid "Connect to Wi-Fi or set up Remote Access to get a code"
+msgstr "เชื่อมต่อ Wi-Fi หรือตั้งค่าการเข้าถึงระยะไกลเพื่อรับรหัส"
+
+#: settings/android_auto.py:286
+msgid "StarPort needs Bluetooth. Park to turn it on."
+msgstr "StarPort ต้องใช้ Bluetooth จอดรถก่อนเปิด"
+
+#: settings/android_auto.py:293
+msgid "Turn on Bluetooth?"
+msgstr "เปิด Bluetooth ไหม"
+
+#: settings/android_auto.py:293
+msgid "StarPort needs Bluetooth to reach your car."
+msgstr "StarPort ต้องใช้ Bluetooth เพื่อเชื่อมต่อกับรถ"
+
+#: settings/android_auto.py:293
+msgid "Turn On"
+msgstr "เปิด"
+
+#: settings/android_auto.py:301
+msgid "SETUP"
+msgstr "การตั้งค่า"
+
+#: settings/android_auto.py:302
+msgid "Add the Android Auto app"
+msgstr "เพิ่มแอป Android Auto"
+
+#: settings/android_auto.py:303
+msgid "Choose how your car connects"
+msgstr "เลือกวิธีที่รถเชื่อมต่อ"
+
+#: settings/android_auto.py:304
+msgid "Pair your car"
+msgstr "จับคู่รถ"
 
 #: settings/auto_learn.py:49
 #: settings/auto_learn.py:36
@@ -1814,7 +1959,7 @@ msgstr "สำรองข้อมูลทันที"
 
 #: settings/backups.py:108
 #: settings/backups.py:90
-#: settings/essentials.py:167
+#: settings/essentials.py:170
 msgid "Backups"
 msgstr "การสำรองข้อมูล"
 
@@ -1919,7 +2064,7 @@ msgid "StarPilot lists what a button can do on this car."
 msgstr "StarPilot แสดงว่าปุ่มทำอะไรได้บ้างในรถคันนี้"
 
 #: settings/bluetooth_tab.py:319
-#: settings/connections.py:98
+#: settings/connections.py:102
 #: settings/search.py:33
 msgid "Bluetooth Remote"
 msgstr "รีโมทบลูทูธ"
@@ -1960,12 +2105,6 @@ msgstr "จะเชื่อมต่ออีกครั้งในครั
 #: settings/search.py:217
 msgid "Removes the pairing. Change it with the car off."
 msgstr "ลบการจับคู่ เปลี่ยนตอนรถดับครับ."
-
-#: settings/bluetooth_tab.py:451
-#: settings/bluetooth_tab.py:464
-#: settings/network_tab.py:279
-msgid "Connected"
-msgstr "เชื่อมต่อ แล้ว"
 
 #: settings/bluetooth_tab.py:475
 msgid "PAIRED"
@@ -2348,36 +2487,36 @@ msgstr "บันทึก : {}"
 msgid "Start logging to create a new test log."
 msgstr "เริ่มการบันทึกเพื่อสร้างบันทึกการทดสอบใหม่"
 
-#: settings/connections.py:64
+#: settings/connections.py:65
 #, python-brace-format
 msgid "{} button"
 msgid_plural "{} buttons"
 msgstr[0] "{} ปุ่ม"
 
-#: settings/connections.py:94
+#: settings/connections.py:98
 msgid "CONNECTIONS"
 msgstr "การเชื่อมต่อ"
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
-#: settings/connections.py:95
+#: settings/connections.py:99
 #: settings/map_source.py:235
 #: settings/network_tab.py:367
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
-#: settings/connections.py:97
+#: settings/connections.py:101
 #: settings/network_tab.py:387
 #: settings/network_test.py:99
 msgid "Cellular"
 msgstr "เซลลูล่าร์"
 
-#: settings/connections.py:100
+#: settings/connections.py:104
 #: settings/search.py:33
 #: settings/search.py:215
 msgid "Bluetooth Devices"
 msgstr "อุปกรณ์บลูทูธ"
 
-#: settings/connections.py:101
+#: settings/connections.py:107
 #: settings/network_test.py:172
 #: settings/search.py:33
 msgid "Network Test"
@@ -2416,7 +2555,7 @@ msgid "Adds every public key in a GitHub account. Never use someone else's."
 msgstr "เพิ่มกุญแจสาธารณะทุกอันในบัญชี GitHub อย่าใช้ของคนอื่น"
 
 #: settings/developer.py:84
-#: settings/essentials.py:172
+#: settings/essentials.py:175
 #: settings/search.py:32
 msgid "Developer"
 msgstr "นักพัฒนา"
@@ -2679,7 +2818,7 @@ msgstr "การสอบเทียบ เริ่มต้นใหม่ o
 
 #: settings/device.py:134
 #: settings/device.py:308
-#: settings/essentials.py:144
+#: settings/essentials.py:147
 msgid "This Device"
 msgstr "อุปกรณ์นี้"
 
@@ -2711,10 +2850,6 @@ msgstr "ลิงก์หยุดทำงาน การตั้งค่�
 #: settings/device.py:283
 msgid "Set up · protected by your password"
 msgstr "ตั้งค่า · ป้องกันด้วยรหัสผ่านของคุณ"
-
-#: settings/device.py:283
-msgid "Not set up"
-msgstr "ไม่ได้ตั้งค่า"
 
 #. Unit notation, technical identifier, brand or US abbreviation; keep as written.
 #: settings/device.py:285
@@ -3043,7 +3178,7 @@ msgid "Display"
 msgstr "จอแสดงผล"
 
 #: settings/driving_tab.py:208
-#: settings/essentials.py:229
+#: settings/essentials.py:232
 #: settings/model.py:336
 msgid "Driving Model"
 msgstr "โมเดลขับขี่"
@@ -3103,31 +3238,31 @@ msgstr "ใช้รหัสผ่าน Galaxy เดิม หรือตั
 msgid "Optional"
 msgstr "อุปกรณ์เสริม"
 
-#: settings/essentials.py:165
+#: settings/essentials.py:168
 #: settings/general.py:51
 #: settings/search.py:31
 msgid "General"
 msgstr "ทั่วไป"
 
-#: settings/essentials.py:166
+#: settings/essentials.py:169
 #: settings/power.py:188
 #: settings/search.py:31
 msgid "Power"
 msgstr "พลังงาน"
 
-#: settings/essentials.py:168
+#: settings/essentials.py:171
 #: settings/search.py:31
 #: settings/search.py:183
 msgid "Storage & Data"
 msgstr "พื้นที่เก็บข้อมูลและข้อมูล"
 
-#: settings/essentials.py:169
+#: settings/essentials.py:172
 #: settings/firehose.py:139
 #: settings/search.py:31
 msgid "Firehose"
 msgstr "Firehose"
 
-#: settings/essentials.py:171
+#: settings/essentials.py:174
 #: settings/report.py:121
 #: settings/search.py:31
 msgid "Report a Problem"
@@ -5145,67 +5280,67 @@ msgstr "ปุ่มบนรีโมตล้อและการทำงา
 msgid "Pair and connect phones, speakers and remotes"
 msgstr "จับคู่และเชื่อมต่อโทรศัพท์ ลำโพง และรีโมท"
 
-#: settings/search.py:218
+#: settings/search.py:221
 msgid "Download speed, upload speed and ping of this device's connection"
 msgstr "ความเร็วดาวน์โหลด ความเร็วอัปโหลด และ Ping ของการเชื่อมต่อของอุปกรณ์นี้"
 
-#: settings/search.py:221
+#: settings/search.py:224
 msgid "Updates and the release notes"
 msgstr "การอัปเดต และบันทึกประจำรุ่น"
 
-#: settings/search.py:222
+#: settings/search.py:225
 #: settings/software.py:205
 msgid "Automatic Updates"
 msgstr "อัพเดตอัตโนมัติ"
 
-#: settings/search.py:222
+#: settings/search.py:225
 msgid "Download while parked, install when you turn off the car"
 msgstr "ดาวน์โหลดขณะจอด ติดตั้งเมื่อดับเครื่อง"
 
-#: settings/search.py:223
+#: settings/search.py:226
 #: settings/software.py:202
 msgid "Release Channel"
 msgstr "ช่องทางการวางจำหน่าย"
 
-#: settings/search.py:223
+#: settings/search.py:226
 msgid "The branch to download updates from"
 msgstr "สาขาสำหรับดาวน์โหลดอัพเดต"
 
-#: settings/search.py:224
+#: settings/search.py:227
 #: settings/software.py:211
 msgid "Reset Settings"
 msgstr "รีเซ็ตการตั้งค่า"
 
-#: settings/search.py:224
+#: settings/search.py:227
 msgid "Back to the Essentials defaults"
 msgstr "กลับสู่ค่าเริ่มต้นของ Essentials"
 
-#: settings/search.py:225
+#: settings/search.py:228
 #: settings/software.py:183
 #: settings/software.py:215
 msgid "Uninstall"
 msgstr "ถอนการติดตั้ง"
 
-#: settings/search.py:225
+#: settings/search.py:228
 msgid "Remove this software from the device"
 msgstr "ลบซอฟต์แวร์นี้ออกจากอุปกรณ์"
 
-#: settings/search.py:402
-#: settings/search.py:393
+#: settings/search.py:405
+#: settings/search.py:396
 msgid "Search settings"
 msgstr "การตั้งค่าการค้นหา"
 
-#: settings/search.py:291
+#: settings/search.py:294
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "พูดการตั้งค่า เช่น การจำกัดความเร็ว แตะไมโครโฟนเมื่อคุณทำเสร็จแล้ว"
 
-#: settings/search.py:373
-#: settings/search.py:332
+#: settings/search.py:376
+#: settings/search.py:335
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "ไม่มีการตั้งค่าที่ตรงกับ “{}”"
 
-#: settings/search.py:374
+#: settings/search.py:377
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "พิมพ์ชื่อการตั้งค่าหรือสิ่งที่ทำ เช่น ความสว่างหรือการเปลี่ยนเลน"
 

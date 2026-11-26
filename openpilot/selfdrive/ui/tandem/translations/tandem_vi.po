@@ -6,13 +6,14 @@ msgstr ""
 "X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\n"
 
 #: controls.py:197
+#: settings/android_auto.py:148
 #: settings/navigation.py:52
 msgid "On"
 msgstr "Bật"
 
 #: controls.py:197
 #: controls.py:200
-#: settings/maps.py:34
+#: settings/android_auto.py:147
 msgid "Off"
 msgstr "Tắt"
 
@@ -117,7 +118,7 @@ msgid "Road data still supplies speed limits"
 msgstr "Dữ liệu đường vẫn cung cấp giới hạn tốc độ"
 
 #: destinations.py:218
-#: settings/search.py:290
+#: settings/search.py:293
 msgid "Search"
 msgstr "Tìm kiếm"
 
@@ -396,7 +397,7 @@ msgstr "Bản cập nhật đã sẵn sàng"
 
 #: home.py:152
 #: settings/search.py:25
-#: settings/search.py:221
+#: settings/search.py:224
 msgid "Software"
 msgstr "Phần mềm"
 
@@ -1479,184 +1480,328 @@ msgstr "Định tuyến trực tuyến không khả dụng"
 msgid "Routing is unavailable"
 msgstr "Định tuyến không khả dụng"
 
-#: settings/alerts.py:54
-#: settings/alerts.py:120
-#: settings/alerts.py:201
+#: settings/alerts.py:58
+#: settings/alerts.py:124
+#: settings/alerts.py:211
 msgid "Auto"
 msgstr "Tự động"
 
-#: settings/alerts.py:54
-#: settings/alerts.py:185
+#: settings/alerts.py:58
+#: settings/alerts.py:195
 msgid "Quiet"
 msgstr "Nhỏ"
 
-#: settings/alerts.py:54
-#: settings/alerts.py:185
+#: settings/alerts.py:58
+#: settings/alerts.py:195
 msgid "Normal"
 msgstr "Bình thường"
 
-#: settings/alerts.py:54
-#: settings/alerts.py:185
+#: settings/alerts.py:58
+#: settings/alerts.py:195
 msgid "Loud"
 msgstr "Lớn"
 
-#: settings/alerts.py:47
+#: settings/alerts.py:51
 msgid "Engage and disengage chimes"
 msgstr "Tiếng báo bật và tắt"
 
-#: settings/alerts.py:47
+#: settings/alerts.py:51
 msgid "When openpilot turns on or off"
 msgstr "Khi openpilot bật hoặc tắt"
 
-#: settings/alerts.py:48
+#: settings/alerts.py:52
 msgid "Prompts and reminders"
 msgstr "Lời nhắc"
 
-#: settings/alerts.py:48
+#: settings/alerts.py:52
 msgid "Gentle nudges, like when openpilot can't turn on"
 msgstr "Nhắc nhẹ, như khi openpilot không thể bật"
 
-#: settings/alerts.py:50
+#: settings/alerts.py:54
 msgid "Driver attention"
 msgstr "Chú ý của tài xế"
 
-#: settings/alerts.py:50
+#: settings/alerts.py:54
 msgid "The chime that asks you to look at the road"
 msgstr "Tiếng báo yêu cầu bạn nhìn đường"
 
-#: settings/alerts.py:52
+#: settings/alerts.py:56
 msgid "Take control warnings"
 msgstr "Cảnh báo cần điều khiển"
 
-#: settings/alerts.py:52
+#: settings/alerts.py:56
 msgid "When you need to steer or brake now"
 msgstr "Khi bạn cần lái hoặc phanh ngay"
 
-#: settings/alerts.py:57
+#: settings/alerts.py:61
 #: settings/search.py:124
 msgid "Green Light"
 msgstr "Đèn xanh"
 
-#: settings/alerts.py:57
+#: settings/alerts.py:61
 #: settings/search.py:124
 msgid "When the light turns green and you are stopped"
 msgstr "Khi đèn chuyển xanh và bạn đang dừng"
 
-#: settings/alerts.py:58
+#: settings/alerts.py:62
 #: settings/search.py:125
 msgid "Lead Departure"
 msgstr "Xe trước khởi hành"
 
-#: settings/alerts.py:58
+#: settings/alerts.py:62
 #: settings/search.py:125
 msgid "When the car ahead pulls away"
 msgstr "Khi xe phía trước chạy đi"
 
-#: settings/alerts.py:59
+#: settings/alerts.py:63
 #: settings/search.py:126
 msgid "Loud Blind Spot"
 msgstr "Điểm mù báo lớn"
 
-#: settings/alerts.py:59
+#: settings/alerts.py:63
 #: settings/search.py:126
 msgid "Signalling into an occupied lane, even when paused"
 msgstr "Bật xi nhan sang làn có xe, kể cả khi đang tạm dừng"
 
-#: settings/alerts.py:60
+#: settings/alerts.py:64
 #: settings/search.py:93
 #: settings/search.py:128
 msgid "Weather heads-up"
 msgstr "Báo trước thời tiết"
 
-#: settings/alerts.py:60
+#: settings/alerts.py:64
 #: settings/search.py:128
 msgid "Once, when rain, snow or storms are coming"
 msgstr "Một lần, khi sắp có mưa, tuyết hoặc bão"
 
-#: settings/alerts.py:244
-#: settings/alerts.py:262
+#: settings/alerts.py:255
+#: settings/alerts.py:274
 #: settings/search.py:127
 msgid "Sound Pack"
 msgstr "Gói âm thanh"
 
-#: settings/alerts.py:244
+#: settings/alerts.py:255
 #: settings/search.py:127
 msgid "The sounds every alert plays"
 msgstr "Âm thanh của mọi cảnh báo"
 
-#: settings/alerts.py:248
+#: settings/alerts.py:259
 #: settings/driving_tab.py:207
 #: settings/search.py:26
 msgid "Alerts"
 msgstr "Cảnh báo"
 
-#: settings/alerts.py:248
+#: settings/alerts.py:259
 msgid "One volume for everything. Safety warnings never go below 25%."
 msgstr "Một mức âm lượng cho tất cả. Cảnh báo an toàn không bao giờ dưới 25%."
 
-#: settings/alerts.py:259
-#: settings/alerts.py:179
+#: settings/alerts.py:271
+#: settings/alerts.py:189
 msgid "Play sample"
 msgstr "Phát thử"
 
-#: settings/alerts.py:127
+#: settings/alerts.py:131
 msgid "Custom volume"
 msgstr "Âm lượng tùy chỉnh"
 
-#: settings/alerts.py:127
+#: settings/alerts.py:131
 #, python-brace-format
 msgid "{} volume"
 msgstr "Âm lượng {}"
 
-#: settings/alerts.py:131
+#: settings/alerts.py:135
 msgid "No extra chimes"
 msgstr "Không có tiếng báo thêm"
 
-#: settings/alerts.py:208
+#: settings/alerts.py:218
 msgid "Plays through your car speakers if they're connected."
 msgstr "Phát qua loa xe nếu đã kết nối."
 
-#: settings/alerts.py:212
+#: settings/alerts.py:222
 msgid "Changing a level sets the Alert Volume preset to Custom."
 msgstr "Thay đổi một mức sẽ chuyển cài sẵn Âm lượng cảnh báo sang Tùy chỉnh."
 
-#: settings/alerts.py:224
+#: settings/alerts.py:235
 msgid "Park to change alert volumes."
 msgstr "Đỗ xe để thay đổi âm lượng cảnh báo."
 
-#: settings/alerts.py:226
+#: settings/alerts.py:237
 msgid "Auto follows cabin noise. Tap a level to set it yourself."
 msgstr "Tự động theo tiếng ồn trong xe. Chạm vào một mức để tự đặt."
 
-#: settings/alerts.py:227
+#: settings/alerts.py:238
 msgid "Custom levels. Pick a preset to reset them."
 msgstr "Mức tùy chỉnh. Chọn một cài sẵn để đặt lại."
 
-#: settings/alerts.py:227
+#: settings/alerts.py:238
 msgid "Tap a level to fine-tune it."
 msgstr "Chạm vào một mức để tinh chỉnh."
 
-#: settings/alerts.py:247
+#: settings/alerts.py:258
 msgid "Chimes"
 msgstr "Tiếng báo"
 
-#: settings/alerts.py:263
+#: settings/alerts.py:275
 msgid "The sounds every alert plays. Play sample uses the chosen pack."
 msgstr "Âm thanh của mọi cảnh báo. Phát thử dùng gói đã chọn."
 
-#: settings/alerts.py:186
+#: settings/alerts.py:196
 msgid "Reset to Normal"
 msgstr "Đặt lại Bình thường"
 
-#: settings/alerts.py:231
+#: settings/alerts.py:242
 #: settings/search.py:123
 msgid "Volume"
 msgstr "Âm lượng"
 
-#: settings/alerts.py:184
+#: settings/alerts.py:194
 #, python-brace-format
 msgid "Minimum {}% for safety alerts"
 msgstr "Tối thiểu {}% cho cảnh báo an toàn"
+
+#: settings/android_auto.py:35
+msgid "Built-in wireless"
+msgstr "Không dây tích hợp"
+
+#: settings/android_auto.py:35
+msgid "Wireless adapter"
+msgstr "Bộ chuyển đổi không dây"
+
+#: settings/android_auto.py:35
+msgid "USB cable"
+msgstr "Cáp USB"
+
+#: settings/android_auto.py:35
+msgid "Tablet app"
+msgstr "Ứng dụng máy tính bảng"
+
+#: settings/android_auto.py:157
+#: settings/search.py:218
+msgid "StarPilot on your car's screen, through StarPort"
+msgstr "StarPilot trên màn hình xe của bạn, qua StarPort"
+
+#: settings/android_auto.py:170
+#: settings/search.py:220
+msgid "Shows StarPilot on your car's Android Auto screen"
+msgstr "Hiển thị StarPilot trên màn hình Android Auto của xe"
+
+#: settings/android_auto.py:199
+msgid "Added"
+msgstr "Đã thêm"
+
+#: settings/android_auto.py:210
+msgid "Parked, over Bluetooth"
+msgstr "Khi đỗ xe, qua Bluetooth"
+
+#: settings/android_auto.py:274
+#: settings/android_auto.py:298
+msgid "Set up on your phone"
+msgstr "Thiết lập trên điện thoại"
+
+#: settings/android_auto.py:295
+#: settings/search.py:220
+msgid "StarPort"
+msgstr "StarPort"
+
+#: settings/android_auto.py:145
+#: settings/device.py:283
+msgid "Not set up"
+msgstr "Chưa thiết lập"
+
+#: settings/android_auto.py:148
+#: settings/bluetooth_tab.py:451
+#: settings/bluetooth_tab.py:464
+msgid "Connected"
+msgstr "Đã kết nối"
+
+#: settings/android_auto.py:154
+msgid "Connected · showing on your car"
+msgstr "Đã kết nối · đang hiện trên xe"
+
+#: settings/android_auto.py:167
+msgid "Not available on this device"
+msgstr "Không có trên thiết bị này"
+
+#: settings/android_auto.py:169
+msgid "Add the Android Auto app first"
+msgstr "Hãy thêm ứng dụng Android Auto trước"
+
+#: settings/android_auto.py:196
+msgid "Google's app file, from your phone · Not added"
+msgstr "Tệp ứng dụng của Google, từ điện thoại · Chưa thêm"
+
+#: settings/android_auto.py:198
+#, python-brace-format
+msgid "Added · good for {} more day"
+msgid_plural "Added · good for {} more days"
+msgstr[0] "Đã thêm · còn hiệu lực {} ngày"
+
+#: settings/android_auto.py:202
+msgid "Built-in, an adapter, a USB cable or a tablet"
+msgstr "Tích hợp, bộ chuyển đổi, cáp USB hoặc máy tính bảng"
+
+#: settings/android_auto.py:207
+#, python-brace-format
+msgid "Paired with {}"
+msgstr "Đã ghép với {}"
+
+#: settings/android_auto.py:209
+msgid "No pairing needed for this connection"
+msgstr "Kết nối này không cần ghép đôi"
+
+#: settings/android_auto.py:274
+msgid "Galaxy walks you through adding the app and pairing your car"
+msgstr "Galaxy hướng dẫn bạn thêm ứng dụng và ghép đôi xe"
+
+#: settings/android_auto.py:305
+#: settings/android_auto.py:286
+#: settings/connections.py:105
+msgid "Android Auto"
+msgstr "Android Auto"
+
+#: settings/android_auto.py:270
+msgid "Scan with your phone's camera. It opens StarPort setup in Galaxy."
+msgstr "Quét bằng camera điện thoại. Mã sẽ mở phần thiết lập StarPort trong Galaxy."
+
+#: settings/android_auto.py:271
+msgid "Set up Remote Access first if Galaxy asks you to sign in."
+msgstr "Hãy thiết lập Truy cập từ xa trước nếu Galaxy yêu cầu đăng nhập."
+
+#: settings/android_auto.py:273
+msgid "Connect to Wi-Fi or set up Remote Access to get a code"
+msgstr "Kết nối Wi-Fi hoặc thiết lập Truy cập từ xa để nhận mã"
+
+#: settings/android_auto.py:286
+msgid "StarPort needs Bluetooth. Park to turn it on."
+msgstr "StarPort cần Bluetooth. Hãy đỗ xe để bật."
+
+#: settings/android_auto.py:293
+msgid "Turn on Bluetooth?"
+msgstr "Bật Bluetooth?"
+
+#: settings/android_auto.py:293
+msgid "StarPort needs Bluetooth to reach your car."
+msgstr "StarPort cần Bluetooth để kết nối với xe."
+
+#: settings/android_auto.py:293
+msgid "Turn On"
+msgstr "Bật"
+
+#: settings/android_auto.py:301
+msgid "SETUP"
+msgstr "THIẾT LẬP"
+
+#: settings/android_auto.py:302
+msgid "Add the Android Auto app"
+msgstr "Thêm ứng dụng Android Auto"
+
+#: settings/android_auto.py:303
+msgid "Choose how your car connects"
+msgstr "Chọn cách xe kết nối"
+
+#: settings/android_auto.py:304
+msgid "Pair your car"
+msgstr "Ghép đôi xe"
 
 #: settings/auto_learn.py:49
 #: settings/auto_learn.py:36
@@ -1726,7 +1871,7 @@ msgstr "Sao lưu ngay"
 
 #: settings/backups.py:108
 #: settings/backups.py:90
-#: settings/essentials.py:167
+#: settings/essentials.py:170
 msgid "Backups"
 msgstr "Bản sao lưu"
 
@@ -1831,7 +1976,7 @@ msgid "StarPilot lists what a button can do on this car."
 msgstr "StarPilot liệt kê những gì một nút có thể làm trên xe này."
 
 #: settings/bluetooth_tab.py:319
-#: settings/connections.py:98
+#: settings/connections.py:102
 #: settings/search.py:33
 msgid "Bluetooth Remote"
 msgstr "Điều khiển Bluetooth"
@@ -1872,12 +2017,6 @@ msgstr "Sẽ kết nối lại vào lần tới bạn chọn"
 #: settings/search.py:217
 msgid "Removes the pairing. Change it with the car off."
 msgstr "Xóa ghép nối. Thay đổi khi xe đã tắt."
-
-#: settings/bluetooth_tab.py:451
-#: settings/bluetooth_tab.py:464
-#: settings/network_tab.py:279
-msgid "Connected"
-msgstr "Đã kết nối"
 
 #: settings/bluetooth_tab.py:475
 msgid "PAIRED"
@@ -2260,35 +2399,35 @@ msgstr "Nhật ký: {}"
 msgid "Start logging to create a new test log."
 msgstr "Bắt đầu ghi để tạo nhật ký kiểm tra mới."
 
-#: settings/connections.py:64
+#: settings/connections.py:65
 #, python-brace-format
 msgid "{} button"
 msgid_plural "{} buttons"
 msgstr[0] "{} nút"
 
-#: settings/connections.py:94
+#: settings/connections.py:98
 msgid "CONNECTIONS"
 msgstr "KẾT NỐI"
 
-#: settings/connections.py:95
+#: settings/connections.py:99
 #: settings/map_source.py:235
 #: settings/network_tab.py:367
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
-#: settings/connections.py:97
+#: settings/connections.py:101
 #: settings/network_tab.py:387
 #: settings/network_test.py:99
 msgid "Cellular"
 msgstr "Di động"
 
-#: settings/connections.py:100
+#: settings/connections.py:104
 #: settings/search.py:33
 #: settings/search.py:215
 msgid "Bluetooth Devices"
 msgstr "Thiết bị Bluetooth"
 
-#: settings/connections.py:101
+#: settings/connections.py:107
 #: settings/network_test.py:172
 #: settings/search.py:33
 msgid "Network Test"
@@ -2327,7 +2466,7 @@ msgid "Adds every public key in a GitHub account. Never use someone else's."
 msgstr "Thêm mọi khóa công khai trong một tài khoản GitHub. Đừng bao giờ dùng tài khoản của người khác."
 
 #: settings/developer.py:84
-#: settings/essentials.py:172
+#: settings/essentials.py:175
 #: settings/search.py:32
 msgid "Developer"
 msgstr "Nhà phát triển"
@@ -2588,7 +2727,7 @@ msgstr "Hiệu chỉnh bắt đầu lại. openpilot học lại cách lắp thi
 
 #: settings/device.py:134
 #: settings/device.py:308
-#: settings/essentials.py:144
+#: settings/essentials.py:147
 msgid "This Device"
 msgstr "Thiết bị này"
 
@@ -2620,10 +2759,6 @@ msgstr "Liên kết sẽ ngừng hoạt động. Thiết lập lại sẽ tạo 
 #: settings/device.py:283
 msgid "Set up · protected by your password"
 msgstr "Đã thiết lập · bảo vệ bằng mật khẩu"
-
-#: settings/device.py:283
-msgid "Not set up"
-msgstr "Chưa thiết lập"
 
 #: settings/device.py:285
 msgid "GALAXY"
@@ -2950,7 +3085,7 @@ msgid "Display"
 msgstr "Hiển thị"
 
 #: settings/driving_tab.py:208
-#: settings/essentials.py:229
+#: settings/essentials.py:232
 #: settings/model.py:336
 msgid "Driving Model"
 msgstr "Mô hình lái"
@@ -3010,31 +3145,31 @@ msgstr "Dùng mật khẩu Galaxy hiện có, hoặc đặt mật khẩu mới"
 msgid "Optional"
 msgstr "Tùy chọn"
 
-#: settings/essentials.py:165
+#: settings/essentials.py:168
 #: settings/general.py:51
 #: settings/search.py:31
 msgid "General"
 msgstr "Chung"
 
-#: settings/essentials.py:166
+#: settings/essentials.py:169
 #: settings/power.py:188
 #: settings/search.py:31
 msgid "Power"
 msgstr "Nguồn"
 
-#: settings/essentials.py:168
+#: settings/essentials.py:171
 #: settings/search.py:31
 #: settings/search.py:183
 msgid "Storage & Data"
 msgstr "Bộ nhớ và dữ liệu"
 
-#: settings/essentials.py:169
+#: settings/essentials.py:172
 #: settings/firehose.py:139
 #: settings/search.py:31
 msgid "Firehose"
 msgstr "Firehose"
 
-#: settings/essentials.py:171
+#: settings/essentials.py:174
 #: settings/report.py:121
 #: settings/search.py:31
 msgid "Report a Problem"
@@ -4966,67 +5101,67 @@ msgstr "Các nút của điều khiển trên vô lăng và chức năng của c
 msgid "Pair and connect phones, speakers and remotes"
 msgstr "Ghép nối và kết nối điện thoại, loa và điều khiển"
 
-#: settings/search.py:218
+#: settings/search.py:221
 msgid "Download speed, upload speed and ping of this device's connection"
 msgstr "Tốc độ tải về, tải lên và ping của kết nối thiết bị này"
 
-#: settings/search.py:221
+#: settings/search.py:224
 msgid "Updates and the release notes"
 msgstr "Cập nhật và ghi chú phát hành"
 
-#: settings/search.py:222
+#: settings/search.py:225
 #: settings/software.py:205
 msgid "Automatic Updates"
 msgstr "Cập nhật tự động"
 
-#: settings/search.py:222
+#: settings/search.py:225
 msgid "Download while parked, install when you turn off the car"
 msgstr "Tải khi đỗ xe, cài khi bạn tắt xe"
 
-#: settings/search.py:223
+#: settings/search.py:226
 #: settings/software.py:202
 msgid "Release Channel"
 msgstr "Kênh phát hành"
 
-#: settings/search.py:223
+#: settings/search.py:226
 msgid "The branch to download updates from"
 msgstr "Nhánh để tải bản cập nhật"
 
-#: settings/search.py:224
+#: settings/search.py:227
 #: settings/software.py:211
 msgid "Reset Settings"
 msgstr "Đặt lại cài đặt"
 
-#: settings/search.py:224
+#: settings/search.py:227
 msgid "Back to the Essentials defaults"
 msgstr "Về mặc định của Essentials"
 
-#: settings/search.py:225
+#: settings/search.py:228
 #: settings/software.py:183
 #: settings/software.py:215
 msgid "Uninstall"
 msgstr "Gỡ cài đặt"
 
-#: settings/search.py:225
+#: settings/search.py:228
 msgid "Remove this software from the device"
 msgstr "Gỡ phần mềm này khỏi thiết bị"
 
-#: settings/search.py:402
-#: settings/search.py:393
+#: settings/search.py:405
+#: settings/search.py:396
 msgid "Search settings"
 msgstr "Tìm cài đặt"
 
-#: settings/search.py:291
+#: settings/search.py:294
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "Nói tên một cài đặt, như giới hạn tốc độ. Chạm vào micrô khi nói xong."
 
-#: settings/search.py:373
-#: settings/search.py:332
+#: settings/search.py:376
+#: settings/search.py:335
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "Không có cài đặt nào khớp “{}”"
 
-#: settings/search.py:374
+#: settings/search.py:377
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "Nhập tên cài đặt hoặc chức năng của nó, như độ sáng hoặc chuyển làn"
 

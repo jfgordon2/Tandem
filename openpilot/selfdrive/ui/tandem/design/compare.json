@@ -398,6 +398,18 @@
       "match": true
     },
     {
+      "mock": "connections-androidauto",
+      "title": "Connections › Android Auto",
+      "note": "Matches: StarPilot's StarPort switch (StarPortEnabled), greyed until the Android Auto app is added, then the three setup steps from StarPort's app status and saved car, and Set up on your phone. Galaxy lets StarPort turn on before the app is added; it can't connect without it, so the switch waits, as the mock shows.",
+      "match": true
+    },
+    {
+      "mock": "androidauto-qr",
+      "title": "Android Auto setup code",
+      "note": "Matches: a code for Galaxy's StarPort setup (#/starport) through Remote Access, or on this network when Remote Access isn't set up, with its address under it.",
+      "match": true
+    },
+    {
       "mock": "connectionstest",
       "title": "Connections › Network Test",
       "note": "Matches: download, upload and ping from the last test, with the time and the data it used. Before the first test the rows are empty and the button reads Start. The Wi-Fi name comes from the sample network.",

@@ -6,13 +6,14 @@ msgstr ""
 "X-Source: Tandem (selfdrive/ui/tandem/tools/translations.py)\n"
 
 #: controls.py:197
+#: settings/android_auto.py:148
 #: settings/navigation.py:52
 msgid "On"
 msgstr "开启"
 
 #: controls.py:197
 #: controls.py:200
-#: settings/maps.py:34
+#: settings/android_auto.py:147
 msgid "Off"
 msgstr "关闭"
 
@@ -118,7 +119,7 @@ msgid "Road data still supplies speed limits"
 msgstr "限速仍来自道路数据"
 
 #: destinations.py:218
-#: settings/search.py:290
+#: settings/search.py:293
 msgid "Search"
 msgstr "搜索"
 
@@ -397,7 +398,7 @@ msgstr "更新已就绪"
 
 #: home.py:152
 #: settings/search.py:25
-#: settings/search.py:221
+#: settings/search.py:224
 msgid "Software"
 msgstr "软件"
 
@@ -1566,184 +1567,328 @@ msgstr "在线路线规划不可用"
 msgid "Routing is unavailable"
 msgstr "路线规划不可用"
 
-#: settings/alerts.py:54
-#: settings/alerts.py:120
-#: settings/alerts.py:201
+#: settings/alerts.py:58
+#: settings/alerts.py:124
+#: settings/alerts.py:211
 msgid "Auto"
 msgstr "自动"
 
-#: settings/alerts.py:54
-#: settings/alerts.py:185
+#: settings/alerts.py:58
+#: settings/alerts.py:195
 msgid "Quiet"
 msgstr "低音量"
 
-#: settings/alerts.py:54
-#: settings/alerts.py:185
+#: settings/alerts.py:58
+#: settings/alerts.py:195
 msgid "Normal"
 msgstr "正常"
 
-#: settings/alerts.py:54
-#: settings/alerts.py:185
+#: settings/alerts.py:58
+#: settings/alerts.py:195
 msgid "Loud"
 msgstr "高音量"
 
-#: settings/alerts.py:47
+#: settings/alerts.py:51
 msgid "Engage and disengage chimes"
 msgstr "启用和退出提示音"
 
-#: settings/alerts.py:47
+#: settings/alerts.py:51
 msgid "When openpilot turns on or off"
 msgstr "openpilot 开启或关闭时"
 
-#: settings/alerts.py:48
+#: settings/alerts.py:52
 msgid "Prompts and reminders"
 msgstr "提示与提醒"
 
-#: settings/alerts.py:48
+#: settings/alerts.py:52
 msgid "Gentle nudges, like when openpilot can't turn on"
 msgstr "轻柔提醒，例如 openpilot 无法开启时"
 
-#: settings/alerts.py:50
+#: settings/alerts.py:54
 msgid "Driver attention"
 msgstr "驾驶员注意力"
 
-#: settings/alerts.py:50
+#: settings/alerts.py:54
 msgid "The chime that asks you to look at the road"
 msgstr "提醒您看路的提示音"
 
-#: settings/alerts.py:52
+#: settings/alerts.py:56
 msgid "Take control warnings"
 msgstr "接管警告"
 
-#: settings/alerts.py:52
+#: settings/alerts.py:56
 msgid "When you need to steer or brake now"
 msgstr "需要立即转向或制动时"
 
-#: settings/alerts.py:57
+#: settings/alerts.py:61
 #: settings/search.py:124
 msgid "Green Light"
 msgstr "绿灯"
 
-#: settings/alerts.py:57
+#: settings/alerts.py:61
 #: settings/search.py:124
 msgid "When the light turns green and you are stopped"
 msgstr "停车时信号灯变绿"
 
-#: settings/alerts.py:58
+#: settings/alerts.py:62
 #: settings/search.py:125
 msgid "Lead Departure"
 msgstr "前车起步"
 
-#: settings/alerts.py:58
+#: settings/alerts.py:62
 #: settings/search.py:125
 msgid "When the car ahead pulls away"
 msgstr "前车驶离时"
 
-#: settings/alerts.py:59
+#: settings/alerts.py:63
 #: settings/search.py:126
 msgid "Loud Blind Spot"
 msgstr "响亮盲区警报"
 
-#: settings/alerts.py:59
+#: settings/alerts.py:63
 #: settings/search.py:126
 msgid "Signalling into an occupied lane, even when paused"
 msgstr "向有车的车道打转向灯时，即使已暂停"
 
-#: settings/alerts.py:60
+#: settings/alerts.py:64
 #: settings/search.py:93
 #: settings/search.py:128
 msgid "Weather heads-up"
 msgstr "天气预警"
 
-#: settings/alerts.py:60
+#: settings/alerts.py:64
 #: settings/search.py:128
 msgid "Once, when rain, snow or storms are coming"
 msgstr "雨雪或风暴来临前提醒一次"
 
-#: settings/alerts.py:244
-#: settings/alerts.py:262
+#: settings/alerts.py:255
+#: settings/alerts.py:274
 #: settings/search.py:127
 msgid "Sound Pack"
 msgstr "声音包"
 
-#: settings/alerts.py:244
+#: settings/alerts.py:255
 #: settings/search.py:127
 msgid "The sounds every alert plays"
 msgstr "所有提醒播放的声音"
 
-#: settings/alerts.py:248
+#: settings/alerts.py:259
 #: settings/driving_tab.py:207
 #: settings/search.py:26
 msgid "Alerts"
 msgstr "警报"
 
-#: settings/alerts.py:248
+#: settings/alerts.py:259
 msgid "One volume for everything. Safety warnings never go below 25%."
 msgstr "所有声音使用同一音量。安全警告音量不会低于 25%。"
 
-#: settings/alerts.py:259
-#: settings/alerts.py:179
+#: settings/alerts.py:271
+#: settings/alerts.py:189
 msgid "Play sample"
 msgstr "播放示例"
 
-#: settings/alerts.py:127
+#: settings/alerts.py:131
 msgid "Custom volume"
 msgstr "自定义音量"
 
-#: settings/alerts.py:127
+#: settings/alerts.py:131
 #, python-brace-format
 msgid "{} volume"
 msgstr "{}音量"
 
-#: settings/alerts.py:131
+#: settings/alerts.py:135
 msgid "No extra chimes"
 msgstr "无额外提示音"
 
-#: settings/alerts.py:208
+#: settings/alerts.py:218
 msgid "Plays through your car speakers if they're connected."
 msgstr "若已连接车辆扬声器，将通过它播放。"
 
-#: settings/alerts.py:212
+#: settings/alerts.py:222
 msgid "Changing a level sets the Alert Volume preset to Custom."
 msgstr "调整任一音量会将警报音量预设改为自定义。"
 
-#: settings/alerts.py:224
+#: settings/alerts.py:235
 msgid "Park to change alert volumes."
 msgstr "停车后才能调整提醒音量。"
 
-#: settings/alerts.py:226
+#: settings/alerts.py:237
 msgid "Auto follows cabin noise. Tap a level to set it yourself."
 msgstr "自动模式跟随车内噪声。点击音量可手动设置。"
 
-#: settings/alerts.py:227
+#: settings/alerts.py:238
 msgid "Custom levels. Pick a preset to reset them."
 msgstr "已自定义音量。选择预设可重置。"
 
-#: settings/alerts.py:227
+#: settings/alerts.py:238
 msgid "Tap a level to fine-tune it."
 msgstr "点击音量可微调。"
 
-#: settings/alerts.py:247
+#: settings/alerts.py:258
 msgid "Chimes"
 msgstr "提示音"
 
-#: settings/alerts.py:263
+#: settings/alerts.py:275
 msgid "The sounds every alert plays. Play sample uses the chosen pack."
 msgstr "所有提醒播放的声音。播放示例会使用所选的声音包。"
 
-#: settings/alerts.py:186
+#: settings/alerts.py:196
 msgid "Reset to Normal"
 msgstr "重置为正常"
 
-#: settings/alerts.py:231
+#: settings/alerts.py:242
 #: settings/search.py:123
 msgid "Volume"
 msgstr "音量"
 
-#: settings/alerts.py:184
+#: settings/alerts.py:194
 #, python-brace-format
 msgid "Minimum {}% for safety alerts"
 msgstr "安全警报最低音量为{}%"
+
+#: settings/android_auto.py:35
+msgid "Built-in wireless"
+msgstr "内置无线"
+
+#: settings/android_auto.py:35
+msgid "Wireless adapter"
+msgstr "无线适配器"
+
+#: settings/android_auto.py:35
+msgid "USB cable"
+msgstr "USB 数据线"
+
+#: settings/android_auto.py:35
+msgid "Tablet app"
+msgstr "平板应用"
+
+#: settings/android_auto.py:157
+#: settings/search.py:218
+msgid "StarPilot on your car's screen, through StarPort"
+msgstr "通过 StarPort 在车机屏幕上显示 StarPilot"
+
+#: settings/android_auto.py:170
+#: settings/search.py:220
+msgid "Shows StarPilot on your car's Android Auto screen"
+msgstr "在车上的 Android Auto 屏幕显示 StarPilot"
+
+#: settings/android_auto.py:199
+msgid "Added"
+msgstr "已添加"
+
+#: settings/android_auto.py:210
+msgid "Parked, over Bluetooth"
+msgstr "停车时通过蓝牙"
+
+#: settings/android_auto.py:274
+#: settings/android_auto.py:298
+msgid "Set up on your phone"
+msgstr "在手机上设置"
+
+#: settings/android_auto.py:295
+#: settings/search.py:220
+msgid "StarPort"
+msgstr "StarPort"
+
+#: settings/android_auto.py:145
+#: settings/device.py:283
+msgid "Not set up"
+msgstr "未设置"
+
+#: settings/android_auto.py:148
+#: settings/bluetooth_tab.py:451
+#: settings/bluetooth_tab.py:464
+msgid "Connected"
+msgstr "已连接"
+
+#: settings/android_auto.py:154
+msgid "Connected · showing on your car"
+msgstr "已连接 · 正在车上显示"
+
+#: settings/android_auto.py:167
+msgid "Not available on this device"
+msgstr "此设备不支持"
+
+#: settings/android_auto.py:169
+msgid "Add the Android Auto app first"
+msgstr "请先添加 Android Auto 应用"
+
+#: settings/android_auto.py:196
+msgid "Google's app file, from your phone · Not added"
+msgstr "Google 的应用文件，来自你的手机 · 未添加"
+
+#: settings/android_auto.py:198
+#, python-brace-format
+msgid "Added · good for {} more day"
+msgid_plural "Added · good for {} more days"
+msgstr[0] "已添加 · 还可使用 {} 天"
+
+#: settings/android_auto.py:202
+msgid "Built-in, an adapter, a USB cable or a tablet"
+msgstr "内置、适配器、USB 数据线或平板"
+
+#: settings/android_auto.py:207
+#, python-brace-format
+msgid "Paired with {}"
+msgstr "已与{}配对"
+
+#: settings/android_auto.py:209
+msgid "No pairing needed for this connection"
+msgstr "此连接方式无需配对"
+
+#: settings/android_auto.py:274
+msgid "Galaxy walks you through adding the app and pairing your car"
+msgstr "Galaxy 会引导你添加应用并配对车辆"
+
+#: settings/android_auto.py:305
+#: settings/android_auto.py:286
+#: settings/connections.py:105
+msgid "Android Auto"
+msgstr "Android Auto"
+
+#: settings/android_auto.py:270
+msgid "Scan with your phone's camera. It opens StarPort setup in Galaxy."
+msgstr "用手机相机扫描，会在 Galaxy 中打开 StarPort 设置。"
+
+#: settings/android_auto.py:271
+msgid "Set up Remote Access first if Galaxy asks you to sign in."
+msgstr "如果 Galaxy 要求登录，请先设置远程访问。"
+
+#: settings/android_auto.py:273
+msgid "Connect to Wi-Fi or set up Remote Access to get a code"
+msgstr "连接 Wi-Fi 或设置远程访问以获取二维码"
+
+#: settings/android_auto.py:286
+msgid "StarPort needs Bluetooth. Park to turn it on."
+msgstr "StarPort 需要蓝牙。请停车后再打开。"
+
+#: settings/android_auto.py:293
+msgid "Turn on Bluetooth?"
+msgstr "打开蓝牙？"
+
+#: settings/android_auto.py:293
+msgid "StarPort needs Bluetooth to reach your car."
+msgstr "StarPort 需要蓝牙才能连接你的车。"
+
+#: settings/android_auto.py:293
+msgid "Turn On"
+msgstr "打开"
+
+#: settings/android_auto.py:301
+msgid "SETUP"
+msgstr "设置"
+
+#: settings/android_auto.py:302
+msgid "Add the Android Auto app"
+msgstr "添加 Android Auto 应用"
+
+#: settings/android_auto.py:303
+msgid "Choose how your car connects"
+msgstr "选择车辆的连接方式"
+
+#: settings/android_auto.py:304
+msgid "Pair your car"
+msgstr "配对你的车"
 
 #: settings/auto_learn.py:49
 #: settings/auto_learn.py:36
@@ -1814,7 +1959,7 @@ msgstr "立即备份"
 
 #: settings/backups.py:108
 #: settings/backups.py:90
-#: settings/essentials.py:167
+#: settings/essentials.py:170
 msgid "Backups"
 msgstr "备份"
 
@@ -1919,7 +2064,7 @@ msgid "StarPilot lists what a button can do on this car."
 msgstr "StarPilot 会列出按键在这辆车上能做什么。"
 
 #: settings/bluetooth_tab.py:319
-#: settings/connections.py:98
+#: settings/connections.py:102
 #: settings/search.py:33
 msgid "Bluetooth Remote"
 msgstr "蓝牙遥控器"
@@ -1960,12 +2105,6 @@ msgstr "下次选择时会重新连接"
 #: settings/search.py:217
 msgid "Removes the pairing. Change it with the car off."
 msgstr "移除配对。请在车辆关闭时更改。"
-
-#: settings/bluetooth_tab.py:451
-#: settings/bluetooth_tab.py:464
-#: settings/network_tab.py:279
-msgid "Connected"
-msgstr "已连接"
 
 #: settings/bluetooth_tab.py:475
 msgid "PAIRED"
@@ -2348,35 +2487,35 @@ msgstr "日志：{}"
 msgid "Start logging to create a new test log."
 msgstr "开始记录以创建新测试日志。"
 
-#: settings/connections.py:64
+#: settings/connections.py:65
 #, python-brace-format
 msgid "{} button"
 msgid_plural "{} buttons"
 msgstr[0] "{}个按钮"
 
-#: settings/connections.py:94
+#: settings/connections.py:98
 msgid "CONNECTIONS"
 msgstr "连接"
 
-#: settings/connections.py:95
+#: settings/connections.py:99
 #: settings/map_source.py:235
 #: settings/network_tab.py:367
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
-#: settings/connections.py:97
+#: settings/connections.py:101
 #: settings/network_tab.py:387
 #: settings/network_test.py:99
 msgid "Cellular"
 msgstr "移动网络"
 
-#: settings/connections.py:100
+#: settings/connections.py:104
 #: settings/search.py:33
 #: settings/search.py:215
 msgid "Bluetooth Devices"
 msgstr "蓝牙设备"
 
-#: settings/connections.py:101
+#: settings/connections.py:107
 #: settings/network_test.py:172
 #: settings/search.py:33
 msgid "Network Test"
@@ -2415,7 +2554,7 @@ msgid "Adds every public key in a GitHub account. Never use someone else's."
 msgstr "添加 GitHub 账号中的所有公共密钥。切勿使用他人的账号。"
 
 #: settings/developer.py:84
-#: settings/essentials.py:172
+#: settings/essentials.py:175
 #: settings/search.py:32
 msgid "Developer"
 msgstr "开发者"
@@ -2678,7 +2817,7 @@ msgstr "校准会重新开始，openpilot 将在随后几分钟的驾驶中重�
 
 #: settings/device.py:134
 #: settings/device.py:308
-#: settings/essentials.py:144
+#: settings/essentials.py:147
 msgid "This Device"
 msgstr "本设备"
 
@@ -2710,10 +2849,6 @@ msgstr "链接将失效，重新设置会生成新链接。"
 #: settings/device.py:283
 msgid "Set up · protected by your password"
 msgstr "已设置 · 受密码保护"
-
-#: settings/device.py:283
-msgid "Not set up"
-msgstr "未设置"
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: settings/device.py:285
@@ -3042,7 +3177,7 @@ msgid "Display"
 msgstr "显示"
 
 #: settings/driving_tab.py:208
-#: settings/essentials.py:229
+#: settings/essentials.py:232
 #: settings/model.py:336
 msgid "Driving Model"
 msgstr "驾驶模型"
@@ -3102,31 +3237,31 @@ msgstr "使用现有的 Galaxy 密码，或设置新密码"
 msgid "Optional"
 msgstr "可选"
 
-#: settings/essentials.py:165
+#: settings/essentials.py:168
 #: settings/general.py:51
 #: settings/search.py:31
 msgid "General"
 msgstr "通用"
 
-#: settings/essentials.py:166
+#: settings/essentials.py:169
 #: settings/power.py:188
 #: settings/search.py:31
 msgid "Power"
 msgstr "电源"
 
-#: settings/essentials.py:168
+#: settings/essentials.py:171
 #: settings/search.py:31
 #: settings/search.py:183
 msgid "Storage & Data"
 msgstr "存储与数据"
 
-#: settings/essentials.py:169
+#: settings/essentials.py:172
 #: settings/firehose.py:139
 #: settings/search.py:31
 msgid "Firehose"
 msgstr "Firehose"
 
-#: settings/essentials.py:171
+#: settings/essentials.py:174
 #: settings/report.py:121
 #: settings/search.py:31
 msgid "Report a Problem"
@@ -5142,67 +5277,67 @@ msgstr "方向盘遥控器的按钮及其操作"
 msgid "Pair and connect phones, speakers and remotes"
 msgstr "配对并连接手机、音箱和遥控器"
 
-#: settings/search.py:218
+#: settings/search.py:221
 msgid "Download speed, upload speed and ping of this device's connection"
 msgstr "此设备连接的下载速度、上传速度和 Ping"
 
-#: settings/search.py:221
+#: settings/search.py:224
 msgid "Updates and the release notes"
 msgstr "更新和发行说明"
 
-#: settings/search.py:222
+#: settings/search.py:225
 #: settings/software.py:205
 msgid "Automatic Updates"
 msgstr "自动更新"
 
-#: settings/search.py:222
+#: settings/search.py:225
 msgid "Download while parked, install when you turn off the car"
 msgstr "停车时下载，关闭车辆时安装"
 
-#: settings/search.py:223
+#: settings/search.py:226
 #: settings/software.py:202
 msgid "Release Channel"
 msgstr "更新通道"
 
-#: settings/search.py:223
+#: settings/search.py:226
 msgid "The branch to download updates from"
 msgstr "下载更新所用的分支"
 
-#: settings/search.py:224
+#: settings/search.py:227
 #: settings/software.py:211
 msgid "Reset Settings"
 msgstr "重置设置"
 
-#: settings/search.py:224
+#: settings/search.py:227
 msgid "Back to the Essentials defaults"
 msgstr "恢复 Essentials 默认值"
 
-#: settings/search.py:225
+#: settings/search.py:228
 #: settings/software.py:183
 #: settings/software.py:215
 msgid "Uninstall"
 msgstr "卸载"
 
-#: settings/search.py:225
+#: settings/search.py:228
 msgid "Remove this software from the device"
 msgstr "从设备中移除此软件"
 
-#: settings/search.py:402
-#: settings/search.py:393
+#: settings/search.py:405
+#: settings/search.py:396
 msgid "Search settings"
 msgstr "搜索设置"
 
-#: settings/search.py:291
+#: settings/search.py:294
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "说出设置名称，例如限速。结束后点击麦克风。"
 
-#: settings/search.py:373
-#: settings/search.py:332
+#: settings/search.py:376
+#: settings/search.py:335
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "没有匹配“{}”的设置"
 
-#: settings/search.py:374
+#: settings/search.py:377
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "输入设置名称或功能，例如亮度或变道"
 

@@ -298,8 +298,10 @@ def connections_window() -> object:
   def page() -> object:
     test = NetworkTestModel(FakeNetworkTest(), lambda: net.wifi.connected_ssid, lambda: Connection(Via.WIFI, "Home Wi-Fi", False))
     from openpilot.selfdrive.ui.tandem.settings.bluetooth_tab import WheelButtons
+    from openpilot.selfdrive.ui.tandem.settings.android_auto import AndroidAuto, StarPortStatus
+    android_auto = AndroidAuto(lambda: StarPortStatus(supported=True), lambda: "https://galaxy.firestar.link/example/#/starport")
     return connections.connections_page(net, lambda: window.push(PanelPage(advanced_panel(net))), window, test, WheelButtons(FakeWheel()),
-                                        FakeBluetooth())
+                                        FakeBluetooth(), android_auto)
   window = SettingsWindow({Tab.CONNECTIONS: page}, initial=Tab.CONNECTIONS)
   return window
 

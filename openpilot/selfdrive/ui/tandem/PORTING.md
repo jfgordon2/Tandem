@@ -394,6 +394,10 @@ WarningImmediateVolume WarningSoftVolume
   Learn's line (`settings/auto_learn.py`) reads StarPilot's learner report and saved history through Galaxy's
   `FlmTrainingResults`, every five seconds on a worker thread while it's drawn. StarPilot's manual overrides of learned
   values (its "tuning" page) stay on StarPilot's own screens.
+- Connections › Android Auto (`settings/android_auto.py`) is StarPilot's StarPort: its switch (StarPortEnabled), the
+  app's certificate status, the saved car and connection (`starport/identity.load_config`) and the running service's
+  state, read on a worker thread. Setup (adding the app file, choosing the car, pairing) stays in Galaxy, as on
+  StarPilot's screens; the page's code opens Galaxy's `#/starport` through Remote Access or on the local network.
 - Connections › Cellular reads AGNOS 20.5's modem daemon (`/usr/comma/modem.py`), which writes `/dev/shm/modem` and
   dials with the saved `GsmApn`; ModemManager isn't running there, so the D-Bus reader stayed on Checking.
   `starpilot/tandem/cellular.py` reads the file where it exists and ModemManager on older AGNOS.
