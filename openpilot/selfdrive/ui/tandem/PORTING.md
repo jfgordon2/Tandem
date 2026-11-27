@@ -688,6 +688,12 @@ Help steer tests of `test_tandem.py`, the catalog-mechanics tests of `test_trans
   `testing`, and `development` had already merged `testing` up to 2026-11-22, so it carries some prerelease commits until
   `stable` reaches them; from now on it merges `stable` only.
 
+- 2026-11-27 merge of `stable` (149 commits): no new AGNOS. `ui.py` now polls StarPilot's Uniden radar-detector feed
+  each frame (`_poll_detector`); Tandem's input session leaves `detector_feed` unset, so the feed stays off under Tandem's
+  screens, which have nowhere to show detector alerts yet. Tandem's controller runtime now passes the vehicle, messages and
+  Tesla speed and keyed-favorite actions as StarPilot's `ui.py` does. The fallback font gained StarPilot's new Simplified
+  Chinese text.
+
 ## Following `testing` (until 2026-11-23)
 
 - Owner, 2026-11-20: `development` follows upstream's `testing`, Dom's successor. Dom's hand-off commit adds

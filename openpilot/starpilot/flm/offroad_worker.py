@@ -492,6 +492,57 @@ def input_coverage(cohort):
   return cohort['whole_windows'] * min(references) ** 2
 
 
+def _candidate_order(choice):
+  group, cohort, proposal = choice
+  # Prefer a direct correction when independent sections both show notchy
+  # curves. Use original coverage to order the remaining choices.
+  return (proposal.get('notchy_curve_quieting') is not True, -input_coverage(cohort), -cohort['whole_windows'],
+          cohort['cohort'], group['original_context_sha256'])
+
+
+def _save_route_trial(params, cp, trial, *, expected, authorized):
+  storage = RouteStorage(params)
+  from openpilot.starpilot.flm.offroad_store import MAX_SCOPES, validate_row
+
+  scope = validate_row(trial)
+  document = decode(expected)
+  rows = document.get(NAMESPACE, {})
+  if scope.key() in rows or not any(trial['previous'].values()):
+    return storage.save(trial, expected=expected, authorized=authorized)
+  # Derive the first rollback map from the actual saved settings, not the trial.
+  if trial['state'] != 'ready_for_next_drive' or trial['sequence'] != 1:
+    return False
+
+  from openpilot.starpilot.flm.learned_lifecycle import encode
+  from openpilot.starpilot.flm.manual_coordinates import selected_manual
+  from openpilot.starpilot.flm.runtime_adapter_registry import car_params_digest
+  from openpilot.starpilot.saved_document import commit_exact
+
+  if car_params_digest(cp) != scope.cp_sha256:
+    return False
+  manual = selected_manual(cp, params)
+  if (manual is None or trial['previous'] != (ZERO | manual.starting_values)
+      or any(trial['values'][name] != trial['previous'][name] for name in manual.locked)):
+    return False
+
+  def permitted():
+    return (storage.directory == Path(params.get_param_path(KEY)).parent.resolve()
+            and storage.directory.stat().st_uid == os.geteuid() and authorized() and selected_manual(cp, params) == manual)
+
+  if not permitted() or read_saved(params, KEY, MAX_BYTES) != (expected, True):
+    return False
+  if len(rows) >= MAX_SCOPES:
+    from openpilot.starpilot.flm.offroad_saved_history import SavedHistory
+
+    SavedHistory(params).preserve(expected)
+    del rows[min(rows, key=lambda key: (rows[key]['completed_wall_ns'], key))]
+  rows[scope.key()] = trial
+  desired = encode(dict(document, version=3, fullSurfaces=document.get('fullSurfaces', {}), routeSurfaces=rows))
+  result = commit_exact(params, key=KEY, max_bytes=MAX_BYTES, raw=desired, expected=expected,
+                        authorized=permitted, temp_prefix='.route-steering-')
+  return result.committed and result.verified
+
+
 def _input_spans(group, cohort, ids):
   name = 'qualification_original_windows' if 'qualification_roles' in cohort else 'selected_original_windows'
   return {
@@ -840,18 +891,26 @@ class OffroadWorker:
       raise ValueError('Logger identity changed during route selection')
     self.pending_latest = latest
     checkpoints = {row['input_fingerprint']: row['result'] for row in self.cache.checkpoints()}
+    queue = pending_routes(self.root, latest, on_skip=self._skip_route)
     fingerprints = []
-    for route in pending_routes(self.root, latest, on_skip=self._skip_route):
+    for route in queue:
       fingerprint = self._snapshot(route)
       fingerprints.append(fingerprint)
-      if (fingerprint not in checkpoints or self.evidence_bank is not None and route == latest
-          and not checkpoints[fingerprint].get('route_skipped') and not checkpoints[fingerprint].get('partial_drive')
-          and checkpoints[fingerprint].get('evidence_revision') != self.evidence_bank.revision()):
+      if fingerprint not in checkpoints:
+        position = len(fingerprints)
         break
     else:
-      result = reported_checkpoint(self.cache, [checkpoints[key] for key in fingerprints])
-      source_is_latest = result['completed_route'] == latest['routeId'] if 'completed_route' in result else result.get('source_is_latest', True)
-      return dict(result, source_is_latest=source_is_latest, skipped_routes=[*result.get('skipped_routes', ()), *self.skipped_routes][:16])
+      # Finish discovering the backlog before refreshing the newest review with the pooled evidence.
+      fingerprint = fingerprints[0]
+      completed = checkpoints[fingerprint]
+      if (self.evidence_bank is not None and not completed.get('route_skipped') and not completed.get('partial_drive')
+          and completed.get('analysis_counts', {}).get('active_lateral_request_rows') != 0
+          and completed.get('evidence_revision') != self.evidence_bank.revision()):
+        route, position = latest, 0
+      else:
+        result = reported_checkpoint(self.cache, [checkpoints[key] for key in fingerprints])
+        source_is_latest = result['completed_route'] == latest['routeId'] if 'completed_route' in result else result.get('source_is_latest', True)
+        return dict(result, source_is_latest=source_is_latest, skipped_routes=[*result.get('skipped_routes', ()), *self.skipped_routes][:16])
     self.pending_input = (route, fingerprint)
     revisions = source_revisions(self.root, route)
     state = {}
@@ -880,9 +939,16 @@ class OffroadWorker:
     if self.on_analysis is not None:
       self.on_analysis()
     options: dict[str, Any] = {} if self.evidence_bank is None else {'evidence_bank': self.evidence_bank, 'history_identity': self._history_identity}
-    if self.on_progress is not None and self.assessor is RECORDED_ASSESSOR:
-      options['on_progress'] = self.on_progress
-    if route != latest:
+    def progress(value):
+      if self.on_progress is not None:
+        self.on_progress({**value, 'recording_position': position, 'recording_total': len(queue)})
+
+    if self.assessor is RECORDED_ASSESSOR:
+      # The scheduler owns the backlog. The reader must not substitute an older route inside this attempt.
+      options['selected_route'] = route
+      if self.on_progress is not None:
+        options['on_progress'] = progress
+    elif route != latest:
       options['selected_route'] = route
     try:
       assessment = self.assessor(self.params, self.root, prior, permitted=self.permitted, **options)
@@ -892,7 +958,7 @@ class OffroadWorker:
       from openpilot.starpilot.flm.offroad_partial import analyze_partial
 
       try:
-        assessment = analyze_partial(self.root, route['routeId'], prior, permitted=self.permitted, on_progress=self.on_progress)
+        assessment = analyze_partial(self.root, route['routeId'], prior, permitted=self.permitted, on_progress=options.get('on_progress'))
       except RouteInputError:
         raise error from None
       self._skip_route(route['routeId'], error)
@@ -1259,7 +1325,7 @@ class OffroadWorker:
         reason = outcome['reason']
     else:
       # Freeze input-only ranking; training may select a candidate, validation may not.
-      choices.sort(key=lambda v: (-input_coverage(v[1]), -v[1]['whole_windows'], v[1]['cohort'], v[0]['original_context_sha256']))
+      choices.sort(key=_candidate_order)
       recommendations_ready()
       training_seen = set()
       training_spans = set()
@@ -1397,7 +1463,7 @@ class OffroadWorker:
                 inventory = route_inventory(self.root)
                 return not inventory['scanIncomplete'] and all(sum(r == source for r in inventory['routes']) == 1 for source in required)
 
-              saved = RouteStorage(self.params).save(new, expected=expected, authorized=original_sources_current)
+              saved = _save_route_trial(self.params, assessment.cp, new, expected=expected, authorized=original_sources_current)
               if not saved:
                 raise ValueError('Next-drive tune compare-and-swap refused')
               status = 'ready_for_next_drive'
@@ -1474,6 +1540,8 @@ class OffroadWorker:
       result['configuration_state'] = configured['state']
       result['recommendations'] = [r for r in result['recommendations'] if r['target'] is None or r['target'] != configured['values'][r['parameter']]]
     result['recommendation_count'] = len(result['recommendations'])
+    if not result['recommendation_count'] and result['reason'] == 'recorded_tracking_suggestion_not_yet_qualified_for_automatic_application':
+      result['reason'] = 'no_consistent_adjustment_in_completed_drive'
     # A new started/changed source cannot be marked processed under its new ID.
     if not authorized():
       raise ValueError('Offroad source changed before checkpoint')

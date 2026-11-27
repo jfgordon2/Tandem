@@ -27,6 +27,7 @@ from openpilot.starpilot.longitudinal.profile_runtime import TRAFFIC_CRUISE_BRAK
 from openpilot.starpilot.longitudinal.lead_approach_runtime import KEY as LEAD_APPROACH_KEY
 from openpilot.starpilot.longitudinal.lead_takeoff_preferences import KEY as LEAD_TAKEOFF_KEY
 from openpilot.starpilot.longitudinal.encouragement import KEY as NUDGE_KEY
+from openpilot.starpilot.longitudinal.downhill_coast import KEY as DOWNHILL_KEY, SURPLUS_KEY
 from openpilot.selfdrive.car.cruise import LOW_SPEED_CRUISE_ON_SET
 from openpilot.starpilot.longitudinal.planner_selection import KEY as PLANNER_SELECTION_KEY, save_selection
 
@@ -36,6 +37,9 @@ from openpilot.starpilot.longitudinal.profile_document import (
   personality_reference_curves, serialize_personality_profiles,
   synchronise_profile_document_enabled,
 )
+from openpilot.starpilot.ui.feature_defaults import (AGGRESSIVE_COOLING_DESCRIPTION as AGGRESSIVE_COOLING_DESCRIPTION,
+                                                  AGGRESSIVE_COOLING_KEY as AGGRESSIVE_COOLING_KEY,
+                                                  BOOL_DEFAULTS as BOOL_DEFAULTS, FLOAT_SPECS as FLOAT_SPECS)
 from openpilot.starpilot.ui.feature_settings_state import (
   FeaturePage, FeatureRow, FeatureSettingsRequest, FeatureSettingsState, SLC_CONFIRM_ACTIONS, SLC_OFFSET_KEYS, TORQUE_CONFIRM_ACTIONS,
 )
@@ -60,10 +64,10 @@ from openpilot.starpilot.ui.traffic_feature import TrafficFeature, EDIT_KEYS as 
 from openpilot.starpilot.ui.lane_change_feature import LaneChangeFeature, KEYS as LANE_CHANGE_KEYS
 from openpilot.starpilot.ui.conditional_feature import BUTTON_PREFIX, ConditionalFeature
 from openpilot.starpilot.saved_source import read_saved
-from openpilot.starpilot.ui.wheel_feature import WheelFeature, PREFIX as WHEEL_PREFIX
+from openpilot.starpilot.ui.wheel_feature import PREFIX as WHEEL_PREFIX
 from openpilot.starpilot.longitudinal.output_max import KEY as OUTPUT_MAX_KEY
 from openpilot.starpilot.ui.tesla_coop_feature import TeslaCoopFeature
-from openpilot.starpilot.ui.tesla_screen_feature import TeslaScreenFeature, KEYS as TESLA_SCREEN_KEYS
+from openpilot.starpilot.ui.tesla_rows import TeslaVehicleRows, TeslaWheelRows, KEYS as TESLA_SCREEN_KEYS
 from openpilot.starpilot.ui.ford_bluepilot_feature import FordBluePilotFeature, KEYS as FORD_BLUEPILOT_KEYS
 from openpilot.starpilot.ui.ford_cluster_feature import FordClusterFeature
 from openpilot.starpilot.ui.ford_rear_fog_feature import FordRearFogFeature
@@ -86,9 +90,6 @@ from openpilot.starpilot.curve_speed.actions import ACTION_KEYS as CURVE_ACTION_
 from openpilot.starpilot.controllers.toyota_cruise import capability as toyota_cruise_capability
 
 
-AGGRESSIVE_COOLING_KEY = "AggressiveCoolingEnabled"
-AGGRESSIVE_COOLING_DESCRIPTION = ("Runs the fan sooner and harder to keep the comma 10-16 °C (18-29 °F) cooler on hot days, " +
-                                  "at the cost of more fan noise. Applies next drive.")
 GLOBAL_BOOL_PREFERENCES = frozenset((LEAD_APPROACH_KEY, LEAD_TAKEOFF_KEY, NUDGE_KEY, LOW_SPEED_CRUISE_ON_SET,
                                      "DisengageOnAccelerator", AGGRESSIVE_COOLING_KEY))
 
@@ -98,43 +99,6 @@ def cooling_available() -> bool:
 
 DRIVE_MODE_KEYS = ("DriveModeProfiles", "DriveModeAcceleration", "DriveModeDeceleration")
 
-BOOL_DEFAULTS = {
-  "GMPedalLongitudinal": False, "ForceStops": True, "AlwaysAllowUploads": False, "TurnAssist": True,
-  "DriveModeProfiles": False, "DriveModeAcceleration": True, "DriveModeDeceleration": True,
-  "SubaruAvhStartup": False,
-  "SubaruStopStartOff": False,
-  "SubaruSNG": False,
-  "SubaruRedneckCruise": False,
-  "RedneckCruise": False,
-  "ReverseCruise": False, "ToyotaAutoHold": False, "SNGHack": False, "JeepBrakeHold": False, "VoltSNG": False, "GMAutoHold": False, "VoltOnePedalMode": False,
-  "RemapCancelToDistance": False, "LongPitch": True, "DisableOpenpilotLongitudinal": False,
-  "SpeedLimitController": False, "ShowSpeedLimits": True,
-  "SLCOnEngage": False,
-  WHEEL_OVERRIDE_KEY: False,
-  "PauseLateralOnSignal": False,
-  "LaneCentering": True, "LaneCenteringPauseOnSignal": True,
-  "CustomPersonalities": False, PLANNER_SELECTION_KEY: True,
-  LEAD_APPROACH_KEY: False,
-  LEAD_TAKEOFF_KEY: False,
-  NUDGE_KEY: True,
-  LOW_SPEED_CRUISE_ON_SET: False,
-  "DisengageOnAccelerator": False,
-  AGGRESSIVE_COOLING_KEY: False,
-  CURVE_MASTER_KEY: False, CURVE_NO_LEAD_KEY: False,
-  "ShowCSCStatus": False,
-  "ForceAutoTuneOff": False, "AlwaysOnLateral": True, "NostalgiaMode": False,
-}
-FLOAT_SPECS = {
-  "ForceStopDistanceOffset": (-20, 20, 1, "ft"),
-  "LaneCenterOffset": (-0.3, 0.3, 0.01, "m"),
-  "LaneCenteringE2EAuthority": (0.0, 1.0, 0.05, "fraction"),
-  "LaneCenteringStrength": (0.5, STRENGTH_MAX, 0.015, "fraction"),
-  **{f"{name}{suffix}": (0.5, 3.0, 0.05, "s")
-     for name in ("Aggressive", "Standard", "Relaxed") for suffix in ("Follow", "FollowHigh")},
-  **{f"{name}{suffix}": (25.0, 200.0, 5.0, "%")
-     for name in ("Aggressive", "Standard", "Relaxed")
-     for suffix in ("JerkAcceleration", "JerkDeceleration", "JerkDanger", "JerkSpeedDecrease", "JerkSpeed")},
-}
 SLC_PRIORITY, SLC_SECONDARY, SLC_TERTIARY = SOURCE_PRIORITY_KEYS
 LONG_PREFIX = "profile:"
 AOL_BUTTONS = ("LKASButtonControl", "MainCruiseButtonControl", "DistanceButtonControl",
@@ -185,7 +149,7 @@ class FeatureSettingsOwner:
                                       repair_parked=lambda: self.authority("parked_preferences"),
                                       configuration_longitudinal=self.configuration_longitudinal)
     self.long_profiles = LongProfileFeature(self)
-    self.tesla_screen = TeslaScreenFeature(self)
+    self.tesla_screen = TeslaVehicleRows(self)
     self.tesla_coop = TeslaCoopFeature(self)
     from openpilot.starpilot.ui.gm_cancel_remap_feature import GmCancelRemapFeature
     self.gm_cancel_remap = GmCancelRemapFeature(self)
@@ -202,7 +166,7 @@ class FeatureSettingsOwner:
     self.lane_changes = LaneChangeFeature(params, authority, vehicle_fingerprint, self.vehicle_params,
                                           configuration_longitudinal=self.configuration_longitudinal)
     self.conditional = ConditionalFeature(self)
-    self.wheel = WheelFeature(self)
+    self.wheel = TeslaWheelRows(self)
 
   def _source_capability(self) -> tuple[bool, bool]:
     return bool(self.vision_development()), bool(self.maps_available())
@@ -333,12 +297,13 @@ class FeatureSettingsOwner:
     return False
 
   def _bolt_disable_capability(self) -> tuple | None:
-    from openpilot.starpilot.vehicle_preferences import bolt_disable_supported
+    from openpilot.starpilot.vehicle_preferences import bolt_disable_supported, toyota_disable_long_supported
     from opendbc.car.gm.startup_preferences import disable_long_supported
     cp = self.vehicle_params()
     try:
       from opendbc.car.volkswagen.meb_modes import supported as meb_stock_supported
-      if cp is None or not (bolt_disable_supported(cp) or disable_long_supported(cp) or meb_stock_supported(cp)):
+      if cp is None or not (bolt_disable_supported(cp) or disable_long_supported(cp) or meb_stock_supported(cp) or
+                            toyota_disable_long_supported(cp)):
         return None
       return (str(cp.carFingerprint), str(cp.brand), bool(cp.openpilotLongitudinalControl),
               bool(cp.pcmCruise), int(cp.flags),
@@ -983,8 +948,10 @@ class FeatureSettingsOwner:
                                capability=pedal_capability))
       bolt_capability = self._bolt_disable_capability()
       if bolt_capability is not None:
-        row = self._bool_row("DisableOpenpilotLongitudinal", "Disable StarPilot Speed Control",
+        toyota_factory_acc = bolt_capability[1] == "toyota"
+        row = self._bool_row("DisableOpenpilotLongitudinal", "Use Factory ACC" if toyota_factory_acc else "Disable StarPilot Speed Control",
                              parked and self.authority("parked_preferences"),
+                             "Turn this on to use your car's factory adaptive cruise instead of StarPilot's" if toyota_factory_acc else
                              "StarPilot does not control speed in this mode. Steering remains available after the next startup")
         if self._vw_alpha_off():
           row = replace(row, value="On", available=False,
@@ -1183,7 +1150,7 @@ class FeatureSettingsOwner:
       title = "Wheel Controls"
       if self.show_cruise_intervals or toyota_cruise_capability(self.vehicle_params()) is not None:
         rows.extend(self._cruise_rows(configurable))
-      rows.extend(self.wheel.rows())
+      rows = self.wheel.page(rows)
     elif page == FeaturePage.SLC:
       cp = self.vehicle_params()
       button_cruise = hyundai_software_cruise.slc_configurable(cp, self.params)
@@ -1285,6 +1252,12 @@ class FeatureSettingsOwner:
       rows.append(self._bool_row(NUDGE_KEY, "Experimental Speed Nudge", self.authority("preferences"),
                                 reason="Gently recovers toward set speed when Experimental mode hesitates on a clear road. " +
                                        "Leads, stops, curve limits and driver overrides retain priority."))
+      downhill_allowed = allowed and self.authority("long") and self._value(PLANNER_SELECTION_KEY)[0] == "1"
+      downhill = self._bool_row(DOWNHILL_KEY, "Coast Downhills", downhill_allowed,
+                                "Lets gravity carry the car above set speed without targeting a higher speed. Changes apply while driving.")
+      rows.append(downhill)
+      if downhill.value == "On":
+        rows.append(self._number_row(SURPLUS_KEY, "Maximum Speed Above Set Speed", downhill_allowed))
       rows.append(self._bool_row(LOW_SPEED_CRUISE_ON_SET, "Low-Speed Cruise Start", self.authority("preferences"),
                                 reason="Lets StarPilot SET at your current speed down to the vehicle’s minimum engagement speed. " +
                                        "Factory cruise still uses the car’s minimum speed."))
@@ -1598,8 +1571,8 @@ class FeatureSettingsOwner:
       group = "long"
     elif key in BOOL_DEFAULTS or key in FLOAT_SPECS or key in (*SOURCE_PRIORITY_KEYS, *ADVANCE_KEYS, 'SLCConfirmation', PEDAL_OVERRIDE_KEY):
       source_key = key
-      long_key = (key in ("CustomPersonalities", "ForceStops", "ForceStopDistanceOffset", *DRIVE_MODE_KEYS) or "Personality" in key or
-                  key.endswith(("Follow", "FollowHigh")) or "Jerk" in key)
+      long_key = (key in ("CustomPersonalities", "ForceStops", "ForceStopDistanceOffset", DOWNHILL_KEY, SURPLUS_KEY, *DRIVE_MODE_KEYS) or
+                  "Personality" in key or key.endswith(("Follow", "FollowHigh")) or "Jerk" in key)
       if key in ("ShowSpeedLimits", "AlwaysAllowUploads", *SOURCE_PRIORITY_KEYS) or (key == "ForceStops" and request.value == "Off"):
         group = "preferences"
       elif key in LANE_LIVE_KEYS and not self.authority("lane"):
@@ -1646,6 +1619,9 @@ class FeatureSettingsOwner:
           not (reset_default and request.value == ("On" if self._default(key) == "1" else "Off"))):
         return False
       if key == "ForceStopDistanceOffset" and self._value("ForceStops")[0] != "1" and not (reset_default and float(request.value) == float(self._default(key))):
+        return False
+      if key in (DOWNHILL_KEY, SURPLUS_KEY) and (self._value(PLANNER_SELECTION_KEY)[0] != "1" or
+          key == SURPLUS_KEY and self._value(DOWNHILL_KEY)[0] != "1"):
         return False
       if key == "reset_profiles":
         if not request.confirmation or self._document()[2]:

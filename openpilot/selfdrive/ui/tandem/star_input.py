@@ -224,7 +224,11 @@ def star_input(layout: Any) -> tuple[TandemStarSession, TandemInput]:
     # As StarPilot's own app: the runtime reads the UI collector, without advancing or closing its sockets.
     authority = LiveContextSource(ui_state.params, messages=ui_state.sm, borrowed_messages=True, evidence_wait_ms=0)
     runtime = ControllerRuntime(ui_state.params, actions=session._favorite_actions, favorites=session.favorites_owner.snapshot,
-                                invoke_favorite=session.favorites_owner.invoke, authority=authority)
+                                invoke_favorite=session.favorites_owner.invoke, authority=authority,
+                                # the car and messages for vehicle-aware remote actions, as StarPilot's ui.py passes them
+                                vehicle=lambda: ui_state.CP, messages=lambda: ui_state.sm,
+                                speed_actions=getattr(session, "_comma_speed_actions", None),
+                                keyed_actions=getattr(session, "_favorite_render_actions", None))
   inputs = TandemInput(session, runtime, lambda: layout._current_mode == MainState.ONROAD)
   _running[:] = [inputs]
   return session, inputs

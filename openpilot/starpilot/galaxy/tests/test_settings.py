@@ -920,7 +920,7 @@ class SettingsGatewayTest(unittest.TestCase):
     cp.openpilotLongitudinalControl = True
     cp.pcmCruise = False
     self.context.value = replace(self.context.value, cp=cp)
-    from openpilot.starpilot.lateral.lane_change_preferences import read_saved as read_lane_change
+    from openpilot.starpilot.lateral.lane_change_preferences import DOCUMENT_VERSION, read_saved as read_lane_change
 
     page = self.page("lane_change")
     close = next(i for i, row in enumerate(page["rows"]) if row["label"] == "Close lane-change gap")
@@ -940,7 +940,7 @@ class SettingsGatewayTest(unittest.TestCase):
     self.assertTrue(self.gateway.confirm(intent["intent"], self.session, self.generation))
     self.assertEqual(read_lane_change(self.params).policy.close_gap_seconds, 0.8)
     self.assertEqual(self.page("lane_change")["rows"][gap]["value"], "0.8")
-    self.assertEqual(self.params.get("LaneChangePreferences")["version"], 6)
+    self.assertEqual(self.params.get("LaneChangePreferences")["version"], DOCUMENT_VERSION)
 
     saved = self.page("lane_change")
     revoke = self.gateway.preview(saved["view"], close, -1, self.session, self.generation)
@@ -1851,6 +1851,8 @@ class SettingsHttpTest(SettingsHttpFixture):
     self.assertFalse(self.params.get_bool("LaneCentering"))
 
   def test_confirm_finishes_before_acknowledged_logout(self):
+    from openpilot.starpilot.galaxy.auth import LocalSessions
+
     self.params.put_bool("LaneCentering", False, block=True)
     cookie = self.login()
     _, page, _ = self.request("/api/settings/pages/lane", cookie=cookie)
@@ -1866,16 +1868,26 @@ class SettingsHttpTest(SettingsHttpFixture):
     patcher = mock.patch.object(self.gateway, "confirm", side_effect=paused)
     patcher.start()
     self.addCleanup(patcher.stop)
-    with ThreadPoolExecutor(max_workers=2) as pool:
+    saved_at_revocation = []
+    revoke = LocalSessions.revoke
+
+    def observe_revocation(sessions, token):
+      saved_at_revocation.append(self.params.get_bool("LaneCentering"))
+      revoke(sessions, token)
+
+    with mock.patch.object(LocalSessions, "revoke", observe_revocation), ThreadPoolExecutor(max_workers=2) as pool:
       confirm = pool.submit(self.request, "/api/settings/confirm", cookie=cookie,
                             payload={"intent": preview["intent"], "confirmed": True})
       self.assertTrue(entered.wait(2))
       logout = pool.submit(self.request, "/api/auth/logout", cookie=cookie, payload={})
       self.assertFalse(logout.done())
       release.set()
-      self.assertEqual(confirm.result()[0], 200)
+      # The save is serialized with logout. The response still requires a live session.
+      self.assertIn(confirm.result()[:2], ((200, {"saved": True}), (401, {"error": "Sign in to Galaxy"})))
       self.assertEqual(logout.result()[0], 200)
+    self.assertEqual(saved_at_revocation, [True])
     self.assertTrue(self.params.get_bool("LaneCentering"))
+    self.assertEqual(self.request("/api/settings/pages/lane", cookie=cookie)[0], 401)
 
   def test_page_read_revoked_before_response_contains_no_settings(self):
     cookie = self.login()

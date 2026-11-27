@@ -32,7 +32,6 @@ def _configured_transport_native(sm, cp, session, now_ns, native=None, *, requir
           (require_longitudinal and native.requestedLongitudinal and str(config.safetyModel) not in ('silent', 'noOutput') and not p.controlsAllowed)
           for p, config in zip(native.pandaInventory, cp.safetyConfigs, strict=True))):
       return None
-    # v2: producer-read 200ms lease; separate BOOTTIME veto.
     stamp = int(sm.logMonoTime['pandaStates'])
     if not (sm.seen['pandaStates'] and sm.valid['pandaStates'] and sm.alive['pandaStates'] and
             stamp > 0 and (coherent or stamp <= now_ns and now_ns - stamp <= SAFETY_MAX_AGE_NS)):
@@ -101,6 +100,7 @@ class TransportPauseFeedback:
     self.cp = cp_identity(cp)
     self.session = ''
     self.sequence = 0
+    self.subaru_paddle_denial = None
     self.signature = None
     self.paused = False
     self.qualified = False
@@ -121,6 +121,8 @@ class TransportPauseFeedback:
     self.subaru_lateral_grant_ns = 0
     self.subaru_main_retained_native_ns = 0
     self.volkswagen_reverse_retained_native_ns = 0
+    self.honda_eps_retained_native_ns = 0
+    self.fit_eps_intent = self.fit_eps_grant = None
     self.subaru_eps_brake_event_ns = 0
     self.hkg_eps_join_until_ns = 0
     self.lateral_source_ns = 0
@@ -214,7 +216,6 @@ class TransportPauseFeedback:
        not axis.desiredLongitudinal and not axis.longitudinalActive) and not cs.regenBraking and
       cs.cruiseState.available and not cs.doorOpen and not cs.seatbeltUnlatched and
       not cs.vehicleSensorsInvalid and cs.gearShifter == structs.CarState.GearShifter.drive)
-    # Require fresh LAT and all health/fault checks.
     ford_long = bool(ford_qualified(cp, marked_only=True) and cp.openpilotLongitudinalControl)
     from opendbc.car.volkswagen.long_aol import qualified as volkswagen_long_qualified
     cancel_event_ns = int(sm.logMonoTime['onroadEvents'])
@@ -269,11 +270,10 @@ class TransportPauseFeedback:
               log.OnroadEvent.EventName.buttonCancel)) for event in sm['onroadEvents'])):
       return None
     native = independent_lateral_health(sm, cp, cs, self.session, now_ns)
-    # Brake health may precede axis status.
-    # Cancel needs acknowledged LAT, original deadlines and a fresh withdrawal event.
     ford_cancel_health = bool(ford_withdrawal and not cs.cruiseState.enabled and
       not axis.desiredLongitudinal and not axis.longitudinalActive and
-      0 < event_ns <= now_ns and now_ns - event_ns <= AXIS_MAX_AGE_NS and
+      0 < event_ns <= now_ns and (now_ns - event_ns <= AXIS_MAX_AGE_NS or
+        native is not None and native.observedMonoTime < event_ns == axis.faultEventMonoTime <= axis.observedMonoTime) and
       any(event.userDisable and event.name in (log.OnroadEvent.EventName.buttonCancel,
         log.OnroadEvent.EventName.pcmDisable) for event in sm['onroadEvents']) and
       0 < int(sm.logMonoTime['pandaStates']) <= now_ns and
@@ -803,7 +803,6 @@ class TransportPauseFeedback:
         native.observedMonoTime < self.lateral_native_ns or
         (native.pandaSerial, tuple(p.hardwareSerial for p in native.pandaInventory)) != self.lateral_inventory):
       return False
-    # Stock USER: LONG-off; source-zero requires LAT-only/native proof.
     previous = self.signature
     from openpilot.starpilot.car.toyota.aol import qualified as toyota_qualified
     toyota_pedal = bool(toyota_qualified(cp, marked_only=True) and cs.brakePressed != cs.gasPressed and
@@ -826,7 +825,6 @@ class TransportPauseFeedback:
        (previous[9] and previous[5] == 'none' or (self.retention_verified or self.retention_started_ns) and
         previous[5] == 'availabilityPause' and previous[8] == 0 and not previous[9] and
         previous[6] == axis.faultEventMonoTime) or
-       # Critical: matched lag only; otherwise keep pending_event.
        self.lateral_only_baseline and not self.failed and not self.pending_event and
        (previous[5] == 'critical' or previous[5] == 'availabilityPause' and self.ordinary_warning_retained) and
        previous[1] == self.sequence and not any(previous[9:14]) and
@@ -1128,6 +1126,7 @@ class TransportPauseFeedback:
 
   def _inactive_gear_source_gap(self, sm, cp, cs, axis, stamp, now_ns, *, latched, producer):
     from opendbc.car import structs
+    from openpilot.starpilot.car.subaru.aol import known_paddle_pause
     previous = self.signature
     if (not latched or self.failed or self.paused or self.pending_event or self.retention_started_ns or
       self.source_retention_started_ns or not self.ever_lateral_active or previous is None or
@@ -1136,7 +1135,8 @@ class TransportPauseFeedback:
       not producer or previous[14] != producer or
       not 0 < previous[8] <= previous[2] <= self.healthy_feedback_ns <= now_ns or
       now_ns - previous[8] > SAFETY_MAX_AGE_NS or
-      cs.gearShifter not in (structs.CarState.GearShifter.reverse, structs.CarState.GearShifter.neutral) or
+      (cs.gearShifter not in (structs.CarState.GearShifter.reverse, structs.CarState.GearShifter.neutral) and
+       not known_paddle_pause(cp, cs)) or
       not cs.canValid or cs.canTimeout or cs.steerFaultTemporary or cs.steerFaultPermanent or
       cs.accFaulted or cs.vehicleSensorsInvalid or cs.doorOpen or cs.seatbeltUnlatched or
       cs.steeringDisengage or not cs.cruiseState.available or cs.buttonEvents or
@@ -1221,6 +1221,7 @@ class TransportPauseFeedback:
     self.temporary_host_qualified = False
     self.subaru_main_retained_native_ns = 0
     self.volkswagen_reverse_retained_native_ns = 0
+    self.honda_eps_retained_native_ns = 0
     self.qualified = False
     self.awaiting = False
     self.retention_qualified = False
@@ -1228,6 +1229,7 @@ class TransportPauseFeedback:
     try:
       axis = sm['aolAxisState']
       if not latched or cp_identity(cp) != self.cp or self.session and str(axis.sessionId) != self.session:
+        self.fit_eps_intent = self.fit_eps_grant = None
         self.ordinary_warning_retained = False
         self.ordinary_brake_proof = None
         self.volkswagen_brake_event = None
@@ -1238,6 +1240,7 @@ class TransportPauseFeedback:
         self.cold_park_waiting = False
         self.cold_main_sparse_waiting = False
         self.subaru_braked_main = None
+        self.subaru_paddle_denial = None
         self.subaru_eps_brake_event_ns = 0
       stamp = int(sm.logMonoTime['aolAxisState'])
       reason = str(axis.faultReason)
@@ -1420,10 +1423,15 @@ class TransportPauseFeedback:
         if retain_physical_pause_intent(self, sm, cp, cs, axis, now_ns, latched=latched, producer=intent_producer_session):
           return False
       if cp.brand == 'subaru' and current and continuity:
-        from openpilot.starpilot.car.subaru.paused_intent import retain_paused_restriction
-        if retain_paused_restriction(self, sm, cp, cs, axis, stamp, now_ns, latched=latched, producer=intent_producer_session):
+        from openpilot.starpilot.car.subaru.paused_intent import retain_paddle_denial, retain_paused_restriction
+        if (retain_paddle_denial(self, sm, cp, cs, axis, stamp, now_ns, latched=latched, producer=intent_producer_session) or
+            retain_paused_restriction(self, sm, cp, cs, axis, stamp, now_ns, latched=latched, producer=intent_producer_session)):
           self.sequence, self.signature = int(axis.sequence), signature
           return False
+      fit_eps_retained = False
+      if cp.carFingerprint == 'HONDA_FIT' and current and continuity:
+        from openpilot.starpilot.aol.temporary_steering import retain_fit_eps_intent
+        fit_eps_retained = retain_fit_eps_intent(self, sm, cp, cs, axis, now_ns, latched=latched, producer=intent_producer_session)
       if current and continuity and self._temporary_steering_intent_current(sm, cp, cs, axis, stamp, now_ns,
           latched=latched, producer=intent_producer_session, signature=signature):
         self.sequence, self.signature = int(axis.sequence), signature
@@ -1433,6 +1441,9 @@ class TransportPauseFeedback:
         if honda_eps_recovery_intent_current(self, sm, cp, cs, axis, stamp, now_ns, latched=latched, producer=intent_producer_session):
           self.sequence, self.signature = int(axis.sequence), signature
           return False
+      if fit_eps_retained:
+        self.sequence, self.signature = int(axis.sequence), signature
+        return False
       if cp.brand == 'volkswagen' and current and continuity:
         from openpilot.starpilot.car.volkswagen.aol import retain_reverse_withdrawal
         if retain_reverse_withdrawal(self, sm, cp, cs, axis, now_ns, latched=latched, producer=intent_producer_session):

@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from openpilot.starpilot.car.subaru.smoothing import Snapshot, read_snapshot, prepare as prepare_smoothing
 
 from opendbc.car.gm.startup_preferences import prepare_disable_longitudinal
-from opendbc.car.toyota.interface import apply_toyota_auto_hold
+from opendbc.car.toyota.interface import apply_toyota_auto_hold, prepare_camera_stock_acc
 from opendbc.car.toyota.values import ToyotaFlags
 from openpilot.starpilot.saved_source import read_saved
 from openpilot.starpilot.car.tesla.radar_settings import RadarSettings
@@ -15,6 +15,17 @@ def bolt_disable_supported(cp) -> bool:
                 "CHEVROLET_BOLT_ACC_2022_2023_PEDAL")
   return cp.carFingerprint in identities and (is_bolt_cc_profile(cp) or is_bolt_pedal_profile(cp) or
                                                is_bolt_pedal_profile(cp, stock_only=True) or is_bolt_pedal_stock_denied(cp))
+
+
+def toyota_disable_long_supported(cp) -> bool:
+  if cp is None or cp.brand != "toyota" or cp.alphaLongitudinalAvailable:
+    return False
+  from opendbc.car.toyota import advert_filter, angle_control, dsu_bypass, pedal, prius_longitudinal, rav4h_filter
+  from opendbc.car.toyota.interface import camera_stock_acc_supported
+
+  return camera_stock_acc_supported(cp) or any(module.configured(cp) for module in (
+    prius_longitudinal, rav4h_filter, pedal, advert_filter, angle_control, dsu_bypass,
+  ))
 
 
 @dataclass(frozen=True)
@@ -40,6 +51,7 @@ class VehicleStartupPreferences:
   gm_auto_hold: bool = False
   volt_one_pedal: bool = False
   tesla_cooperative: bool = field(default=False, kw_only=True)
+  tesla_speed_sync: bool = field(default=False, kw_only=True)
   tesla_aol: bool = field(default=False, kw_only=True)
   tesla_screen: bool = False
   tesla_screen_brake: bool = False
@@ -112,6 +124,10 @@ class VehicleStartupPreferences:
     cooperative = bool(enabled and readable and safe in (None, b"0") and
                        read_saved(params, "TeslaCoopSteering", 8) == (b"1", True))
     screen_brake = read_saved(params, 'TeslaAOLDisengageOnBrake', 8) == (b'1', True)
+    # Comma can set speed on Tesla dashboard: admit its scroll frame, so the switch works without a restart
+    # (experimental, so not on release branches).
+    speed_sync = bool(enabled and readable and safe in (None, b"0") and
+                      read_saved(params, "IsReleaseBranch", 8) in ((None, True), (b"0", True)))
     return cls(controller_selection=controller_selection, vw_stock_long=vw_stock_long,
                subaru_smoothing=smoothing, subaru_avh_startup=bool(enabled and readable and safe in (None, b"0") and
                     read_saved(params, "IsReleaseBranch", 8) in ((None, True), (b"0", True)) and
@@ -124,7 +140,7 @@ class VehicleStartupPreferences:
                subaru_software_cruise=bool(enabled and readable and safe in (None, b"0") and
                    read_saved(params, "SubaruRedneckCruise", 8) == (b"1", True)),
                ford_bluepilot=tuple(ford_bluepilot(params, enabled=enabled).items()), tesla_aol=tesla_aol, tesla_screen=screen,
-               tesla_screen_brake=screen_brake, tesla_cooperative=cooperative, toyota_auto_hold=toyota,
+               tesla_screen_brake=screen_brake, tesla_cooperative=cooperative, tesla_speed_sync=speed_sync, toyota_auto_hold=toyota,
                toyota_sng=bool(enabled and readable and safe in (None, b"0") and
                                read_saved(params, "SNGHack", 8) == (b"1", True)), jeep_brake_hold=jeep_hold,
                gm_longitudinal_tune=selected_tune(params, enabled=enabled),
@@ -207,6 +223,8 @@ class VehicleStartupPreferences:
     apply_modern_aol(cp, self.tesla_aol, self.tesla_screen, self.tesla_screen_brake)
     from openpilot.starpilot.car.tesla.coop_preferences import prepare
     prepare(cp, self.tesla_cooperative)
+    from opendbc.car.tesla.speed_sync import prepare as prepare_speed_sync
+    prepare_speed_sync(cp, self.tesla_speed_sync)
     self._prepare_honda_radar(cp)
     from opendbc.car.chrysler.brake_hold import apply_brake_hold
     apply_brake_hold(cp, self.jeep_brake_hold)
@@ -227,6 +245,7 @@ class VehicleStartupPreferences:
       prepare_bypass_stock(cp)
     self._prepare_bolt(cp, fingerprints)
     prepare_disable_longitudinal(cp, self.disable_bolt_long)
+    prepare_camera_stock_acc(cp, self.disable_bolt_long)
     self._prepare_camera_pedal(cp)
     apply_gm_auto_hold(cp, self.gm_auto_hold)
     apply_volt_one_pedal(cp, self.volt_one_pedal and not self.disable_bolt_long, self.gm_auto_hold)
@@ -253,6 +272,8 @@ class VehicleStartupPreferences:
     apply_modern_aol(cp, self.tesla_aol, self.tesla_screen, self.tesla_screen_brake)
     from openpilot.starpilot.car.tesla.coop_preferences import prepare
     prepare(cp, self.tesla_cooperative)
+    from opendbc.car.tesla.speed_sync import prepare as prepare_speed_sync
+    prepare_speed_sync(cp, self.tesla_speed_sync)
     self._prepare_honda_radar(cp)
     from opendbc.car.chrysler.brake_hold import apply_brake_hold
     apply_brake_hold(cp, self.jeep_brake_hold)
@@ -273,6 +294,7 @@ class VehicleStartupPreferences:
       prepare_bypass_stock(cp)
     self._prepare_bolt(cp)
     prepare_disable_longitudinal(cp, self.disable_bolt_long)
+    prepare_camera_stock_acc(cp, self.disable_bolt_long)
     self._prepare_camera_pedal(cp)
     apply_gm_auto_hold(cp, self.gm_auto_hold and admitted_hold)
     apply_volt_one_pedal(cp, self.volt_one_pedal and admitted_one_pedal and not self.disable_bolt_long, self.gm_auto_hold and admitted_hold)

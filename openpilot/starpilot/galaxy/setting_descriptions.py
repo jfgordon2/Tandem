@@ -114,10 +114,11 @@ DESCRIPTIONS = {
   'GMAutoHold': 'Holds the brakes at a stop with cruise main on. Press the accelerator or the supported regen paddle to release.',
   'VoltOnePedalMode': 'Slows and holds a Volt when you lift off the accelerator in Low or single-pedal mode, with cruise main on and cruise disengaged.',
   'LongPitch': 'Compensates acceleration and braking for road grade.',
+  'CoastDownhills': 'Lets the car coast above set speed on descents within the configured allowance.',
+  'DownhillSpeedSurplus': 'Sets how far above set speed downhill coasting can go.',
   'GMLongitudinalTune': 'Selects the supported vehicle speed-control response tune.',
   'TruckTuning': 'Softens small acceleration requests, reduces grade correction and smooths light braking on supported GM trucks.',
   'EVTuning': 'Selects EV acceleration curves for inherited acceleration presets.',
-  'TeslaAOLScreenTap': 'Lets a three-finger tap on a supported Tesla screen toggle Always On Lateral.',
   'TeslaAOLDisengageOnBrake': 'Disarms Tesla Always On Lateral when you press the brake, with either harness.',
   'RemoteStartBootsComma': 'Wakes comma during GM remote start.',
   'HKGRemoteStartBootsComma': 'Wakes comma during Hyundai, Kia or Genesis remote climate operation.',
@@ -127,6 +128,7 @@ DESCRIPTIONS = {
   'StarPortTallHevc': 'Uses the car\'s 1080x1920 H.265 screen mode instead of 720x1280, to diagnose H.265-only cars. Needs Allow H.265 video on.',
   'StarPortUnackedVideo': 'Sends video without waiting for the car\'s acknowledgments, on H.264 or H.265, for cars that show video but never acknowledge it.',
   'StarPortPatientConnect': 'Keeps trying for up to a minute when a wireless adapter hands over its Wi-Fi but refuses the connection.',
+  'StarPortWiredHandsFree': 'Over USB, connects hands-free to the car and sends the Bluetooth pairing request before asking for the screen, as a phone does.',
   'StarPortHeadUnitExperiments': 'Shows experimental fixes for specific cars and dongles, each with its own switch. Off is the standard connection.',
   'StarPortDedicatedWifi': "Joins the car's Wi-Fi on a second interface so the comma stays on its home Wi-Fi or phone hotspot.",
   'TeslaWakeOnCAN': 'Wakes comma when the Tesla wakes up, before you press the brake.',
@@ -160,10 +162,10 @@ DESCRIPTIONS = {
   'EngageVolume': 'Sets the engagement-chime volume.',
   'DisengageVolume': 'Sets the disengagement-alert volume.',
   'PromptVolume': 'Sets the volume of general prompts.',
-  'PIPPreviewEnabled': 'Shows the configured blind-spot camera preview when fresh camera frames are available.',
-  'PIPPreviewShowOnBlinker': 'Shows the blind-spot camera preview while a turn signal is on.',
-  'PIPPreviewShowOnBSM': 'Shows the blind-spot camera preview during a blind-spot warning.',
-  'PIPPreviewInvert': 'Mirrors the blind-spot camera crop horizontally.',
+  'PIPPreviewEnabled': 'Shows the configured Adj Spot Camera preview when fresh camera frames are available.',
+  'PIPPreviewShowOnBlinker': 'Shows the Adj Spot Camera preview while a turn signal is on.',
+  'PIPPreviewShowOnBSM': 'Shows the Adj Spot Camera preview during a blind-spot warning.',
+  'PIPPreviewInvert': 'Mirrors the Adj Spot Camera crop horizontally.',
   'pip:mask:size': 'Sets the size of each camera-image crop shown in the preview.',
   'pip:mask:editor': 'Edits the source-image crop for the vehicle left and right camera views.',
   'pip:reset': 'Restores the default source-image camera crops.',
@@ -203,6 +205,7 @@ INITIALIZATION = {
   'StarPortTallHevc': 'Applies from the next StarPort connection.',
   'StarPortUnackedVideo': 'Applies from the next StarPort connection.',
   'StarPortPatientConnect': 'Applies from the next StarPort connection.',
+  'StarPortWiredHandsFree': 'Applies from the next StarPort connection.',
   'StarPortHeadUnitExperiments': 'Applies from the next StarPort connection.',
   'StarPortDedicatedWifi': 'Applies from the next StarPort connection.',
   'LateralControllerSelection': ('Applies when driving processes next start: the controller class, vehicle policy and ' +
@@ -216,7 +219,6 @@ INITIALIZATION = {
   'VoltOnePedalMode': ('First enable requires the next vehicle startup to configure the braking safety ' +
     'permission. An already admitted mode can be disabled live.'),
   'VoltSNG': 'Applies when the vehicle controller next starts: its fresh resume-plan input is created for the selected stop-and-go mode.',
-  'TeslaAOLScreenTap': 'Requires the next vehicle startup to configure the screen-button CAN source and matching safety permission.',
   'TeslaAOLDisengageOnBrake': 'Requires the next vehicle startup to configure the Tesla brake/disarm safety permission.',
   'RemoteStartBootsComma': 'Requires a device restart to load the matching Panda ignition firmware.',
   'HKGRemoteStartBootsComma': 'Requires a device restart to load the matching Panda ignition firmware.',
@@ -438,6 +440,8 @@ def purpose(row):
 
 def description(row):
   """Keep actual error/prerequisite information after the setting's purpose."""
+  if row.key == 'DisableOpenpilotLongitudinal' and (row.capability or ())[1:2] == ('toyota',):
+    return row.reason
   base = purpose(row)
   if base is None:
     return row.reason

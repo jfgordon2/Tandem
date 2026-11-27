@@ -12,6 +12,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[5]
 UPSTREAM = ROOT / "openpilot/starpilot/ui/runtime_app.py"
 TANDEM = ROOT / "openpilot/selfdrive/ui/tandem/star_input.py"
+# StarShellSession's mixin (class StarShellSession(TeslaSpeedActions)): its methods are inherited, and followed the same way.
+MIXINS = ((ROOT / "openpilot/starpilot/ui/tesla_speed_actions.py", "TeslaSpeedActions"),)
 # The methods Tandem calls: ui.py's frame loop and TandemInput.poll, and the controller runtime's callbacks.
 ROOTS = ("_poll_wheel", "_poll_projection_bookmark", "_poll_projection_slc", "_favorite_actions", "native_favorite_actions",
          "_favorite_authority", "_bookmark_authority", "feature_request")
@@ -40,7 +42,8 @@ def _init_assignments(cls: ast.ClassDef) -> dict[str, list[str]]:
 
 def _closure(cls: ast.ClassDef) -> tuple[set[str], set[str], set[str]]:
   """(methods reached from ROOTS, attributes they read, attributes they set or only probe with getattr/hasattr)."""
-  methods = {f.name: f for f in cls.body if isinstance(f, ast.FunctionDef)}
+  methods = {f.name: f for path, name in MIXINS for f in _class(path, name).body if isinstance(f, ast.FunctionDef)}
+  methods |= {f.name: f for f in cls.body if isinstance(f, ast.FunctionDef)}
   seen: set[str] = set()
   read: set[str] = set()
   lazy: set[str] = set()

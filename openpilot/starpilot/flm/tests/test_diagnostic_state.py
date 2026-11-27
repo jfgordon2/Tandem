@@ -101,13 +101,62 @@ class TestDiagnosticState(unittest.TestCase):
 
     worker = SimpleNamespace(run_once=cancelled)
     reason = 'waiting_for_fresh_deviceState'
-    self.assertFalse(daemon.run_parked_analysis(worker, report, permission_loss=lambda: reason))
+    services = ('deviceState', 'pandaStates', 'peripheralState', 'managerState')
+
+    class Status:
+      seen = alive = valid = dict.fromkeys(services, True)
+      recv_time = dict(zip(services, (96.0, 99.9, 99.5, 99.25), strict=True))
+      logMonoTime = {'deviceState': 94_750_000_000, 'managerState': 99_100_000_000}
+
+      def __getitem__(self, key):
+        assert key == 'managerState'
+        return SimpleNamespace(processes=[SimpleNamespace(name='hardwared', running=True, pid=6789)])
+
+    sm = Status()
+    counts = daemon._device_status_snapshot(sm, 1234, report.current['analysis_progress'], now=100.0)
+    self.assertEqual(counts, {
+      'device_state_receive_age_ms': 4000, 'device_state_message_age_ms': 5250, 'device_state_age_at_receipt_ms': 1250,
+      'panda_states_receive_age_ms': 100, 'peripheral_state_receive_age_ms': 500, 'manager_state_receive_age_ms': 750,
+      'device_state_valid': 1, 'device_state_alive': 1, 'hardwared_running': 1, 'hardwared_pid_changed': 1,
+      'original_segments_reviewed': 2, 'original_segments_available': 2,
+    })
+    self.assertNotIn('hardwared_pid_changed', daemon._device_status_snapshot(sm, None, None, now=100.0))
+    self.assertNotIn('hardwared_running', daemon._device_status_snapshot(sm, 1234, None, now=105.0))
+    with patch.object(sm, 'logMonoTime', {'deviceState': 94_750_000_000, 'managerState': 95_000_000_000}):
+      self.assertNotIn('hardwared_pid_changed', daemon._device_status_snapshot(sm, 1234, None, now=100.0))
+    self.assertFalse(daemon.run_parked_analysis(worker, report, permission_loss=lambda: (reason, counts)))
     self.assertEqual(report.current['reason'], reason)
+    self.assertEqual(report.current['analysis_counts']['original_segments_reviewed'], 3)
     outcome = self.exported()['learning_diagnostics']['last_result']
     self.assertEqual(outcome['reason'], reason)
     self.assertEqual(outcome['interrupted_stage'], 'verifying_recording')
+    self.assertEqual(outcome['analysis_counts'], counts)
+    self.assertNotIn('6789', json.dumps(outcome))
     self.assertEqual(report.previous['completed_route'], 'earlier-drive')
     self.assertFalse(directory_for_params(self.params).exists())
+
+  def test_download_correlates_an_existing_hardwared_phase_without_exporting_raw_log(self):
+    timestamp = 1_789_000_000
+    counts = {'parked_interrupted_wall_ns': timestamp * 10**9, 'device_state_receive_age_ms': 3000,
+              'parked_wait_ms': 2000, 'parked_wait_timed_out': 1}
+    DiagnosticState(self.params).observe({'status': 'unavailable', 'reason': 'waiting_for_fresh_deviceState', 'analysis_counts': counts})
+    entry = {'filename': 'hardware_timing.py', 'created': timestamp + 1, 'ctx': {'location': 'private sample'},
+             'msg': {'event$s': 'hardwared.slow_phase', 'phase$s': 'thermal_read', 'elapsedMs$f': 4500., 'threadCpuMs$f': 12.}}
+    # Ignore an unrelated later pause and an otherwise similar entry from a different source.
+    ignored = [dict(entry, created=timestamp + 90), dict(entry, filename='other.py')]
+    path = self.root / 'swaglog.0000000001'
+    path.write_text('\n'.join(json.dumps(row) for row in [*ignored, entry]) + '\n')
+    with patch('openpilot.starpilot.galaxy.flm_diagnostics.cloudlog_root', return_value=self.root):
+      result = self.exported()['learning_diagnostics']
+      self.assertNotIn('parked_interrupted_wall_ns', json.dumps(result))
+      self.assertNotIn('private sample', json.dumps(result))
+      for event in (result['last_result'], result['events'][-1]):
+        self.assertEqual(event['analysis_counts']['parked_wait_ms'], 2000)
+        self.assertEqual(event['hardwared_pause'], {'status': 'overlapping_logged_phase', 'phase': 'thermal_read',
+                                                   'elapsed_ms': 4500, 'thread_cpu_ms': 12})
+      path.write_text('\n'.join(json.dumps(row) for row in ignored))
+      self.assertEqual(self.exported()['learning_diagnostics']['last_result']['hardwared_pause'],
+                       {'status': 'no_matching_phase_in_recent_logs'})
 
   def test_worker_startup_failure_is_captured_before_assessment_cache_exists(self):
     self.params.put_bool('IsOffroad', True, block=True)

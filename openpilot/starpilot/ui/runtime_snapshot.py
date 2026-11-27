@@ -128,6 +128,19 @@ def current_message(sm: Any, service: str, now_ns: int, *, after_frame: int = 0,
   return _message_at_age(sm, service, now_ns, after_frame, max_age_ns)
 
 
+# Car buttons (wheel, stalk) are handled part-way through a screen frame, after the frame's other work. The same age the
+# scroll wheel's comma-speed actions allow (conditional_mode.ui_action.SOURCE_MAX_AGE_NS).
+INPUT_MAX_AGE_NS = 250_000_000
+
+
+def input_message(sm: Any, service: str, now_ns: int, *, after_frame: int = 0) -> Any | None:
+  """current_message for a car button: the same checks, with the age stretched to INPUT_MAX_AGE_NS for fast services
+  (two periods of a 100 Hz message is 20 ms, less than the work done in the frame before the button is handled)."""
+  frequency = SERVICE_LIST[service].frequency
+  max_age_ns = max(int(2e9 / frequency) if frequency else 1_000_000_000, INPUT_MAX_AGE_NS)
+  return _message_at_age(sm, service, now_ns, after_frame, max_age_ns)
+
+
 def display_message(sm: Any, service: str, now_ns: int, *, after_frame: int = 0) -> Any | None:
   """Allow a bounded UI frame gap without extending control-action freshness."""
   max_age_ns = 200_000_000
@@ -599,14 +612,6 @@ class RuntimeSnapshotAdapter:
       system_long=bool(cp is not None and getattr(cp, 'openpilotLongitudinalControl', False) and
                        not getattr(cp, 'passive', False)),
     )
-    perception = self._conditional_perception.project(
-      curve_envelope, now_ns=now_ns, event_ns=int(sm.logMonoTime['slcState']) if curve_envelope is not None else 0,
-      drive_id=drive_id, choice=self._conditional_choice,
-      lateral_active=bool(display_control is not None and display_control.latActive),
-      selfdrive_enabled=bool(display_selfdrive is not None and getattr(display_selfdrive, 'enabled', False)),
-      car_valid=display_car_valid,
-      system_long=bool(cp is not None and getattr(cp, "openpilotLongitudinalControl", False) and not getattr(cp, "passive", False)),
-    )
     if not display_car_valid:
       curve = None
     cluster_cruise = _finite(display_car.vCruiseCluster) if display_car_valid else None
@@ -749,6 +754,17 @@ class RuntimeSnapshotAdapter:
           break
     aol_latched = (display_aol_latch(sm, now_ns, after_frame=after)
                    if started and getattr(ui, "aol_runtime", False) and not legacy_2025_lateral_off else None)
+    perception = self._conditional_perception.project(
+      curve_envelope, now_ns=now_ns, event_ns=int(sm.logMonoTime['slcState']) if curve_envelope is not None else 0,
+      drive_id=drive_id, choice=self._conditional_choice,
+      lateral_active=bool(display_control is not None and display_control.latActive),
+      aol_armed_at_standstill=bool(aol_latched and display_car_valid and display_car.standstill and
+        str(display_car.gearShifter) in ('drive', 'sport', 'low', 'brake', 'eco', 'manumatic') and
+        not display_car.steerFaultTemporary and not display_car.steerFaultPermanent),
+      selfdrive_enabled=bool(display_selfdrive is not None and getattr(display_selfdrive, 'enabled', False)),
+      car_valid=display_car_valid,
+      system_long=bool(cp is not None and getattr(cp, "openpilotLongitudinalControl", False) and not getattr(cp, "passive", False)),
+    )
     if cp is not None and getattr(cp, 'carFingerprint', '') == 'SUBARU_LEGACY_2025':
       armed_at_stop = False
       if (aol_latched and display_car_valid and
@@ -861,7 +877,8 @@ class RuntimeSnapshotAdapter:
                      experimental_enabled=experimental, experimental_available=bool(ui.has_longitudinal_control),
                      stats=self.home_stats(bool(ui.is_metric)) if mode == ShellMode.HOME and self.home_stats is not None else None,
                      paired=bool(ui.prime_state.is_paired()), network=network, network_strength=strength,
-                     temperature_c=device.maxTempC if device is not None else None, metric=bool(ui.is_metric),
+                     temperature_c=device.maxTempC if device is not None else None,
+                     temperature_metric=bool(getattr(ui, "temperature_metric", ui.is_metric)),
                      temperature_high=device is not None and device.thermalStatus != log.DeviceState.ThermalStatus.ok,
                      vehicle_online=panda_connected, connection=connection,
                      recording_audio=bool(ui.recording_audio), bluetooth=bluetooth,
@@ -932,7 +949,7 @@ class RuntimeSnapshotAdapter:
         software_actions.discard(SoftwareRequest.DOWNLOAD_UPDATE)
       if not _flag(params, "IsTestedBranch") and _text(params, "UpdaterAvailableBranches"):
         software_actions.add(SoftwareRequest.OPEN_BRANCH_CHOOSER)
-    software = SoftwareState(current_version=_text(params, "UpdaterCurrentDescription"),
+    software = SoftwareState(current_version=home_description(_text(params, "UpdaterCurrentDescription")),
                              automatic_updates=(None if _text(params, "DisableUpdates") == "" else
                                                 not _flag(params, "DisableUpdates")),
                              download_status=status,

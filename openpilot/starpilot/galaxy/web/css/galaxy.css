@@ -1474,9 +1474,9 @@ background: var(--surface-container-high); color: var(--on-surface-variant); bor
 .gx-starport-wiki[open] > summary::before { transform: rotate(90deg); }
 .gx-starport-wiki > summary:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: var(--radius-sm); }
 .gx-starport-wiki p, .gx-starport-wiki ol, .gx-starport-wiki ul { margin: var(--sp-3) 0 0; }
-.gx-starport-wiki ol, .gx-starport-wiki ul, .gx-starport-mirror-steps { padding-left: 1.3em; display: grid; gap: var(--sp-1); }
+.gx-starport-wiki ol, .gx-starport-wiki ul, .gx-starport-mirror-steps, .gx-log-help__claim-steps { padding-left: 1.3em; display: grid; gap: var(--sp-1); }
 .gx-starport-wiki ul { list-style: disc; }
-.gx-starport-mirror-steps { margin: 0; }
+.gx-starport-mirror-steps, .gx-log-help__claim-steps { margin: 0; }
 .gx-card.gx-starport-sheet__dialog {
 position: fixed;
 inset: max(20px, env(safe-area-inset-top, 0px)) 0 max(20px, env(safe-area-inset-bottom, 0px));
@@ -1590,6 +1590,14 @@ border-top: 1px solid var(--outline-variant);
 @media (prefers-reduced-motion: reduce) { .gx-update-progress__fill--indeterminate { width: 100%; animation: none; opacity: .6; } }
 .gx-panel { padding: var(--panel-padding); min-width: 0; }
 .gx-card.gx-panel > .gx-section__header { margin: calc(-1 * var(--panel-padding)) calc(-1 * var(--panel-padding)) var(--sp-4); }
+.gx-connection-logs.gx-panel > .gx-section__header { margin-bottom: 0; }
+.gx-connection-logs .gx-log-form { display: grid; gap: var(--sp-3); margin-top: var(--sp-3); }
+.gx-log-form .gx-field { width: 100%; box-sizing: border-box; }
+.gx-log-form p { margin: 0; }
+.gx-log-form .gx-btn { justify-self: start; }
+@media (max-width: 600px) {
+  .gx-connection-logs .gx-log-form .gx-btn, .gx-connection-logs details > summary.gx-btn { width: 100%; box-sizing: border-box; }
+}
 .gx-panel > :first-child { margin-top: 0; }
 .gx-panel > :last-child { margin-bottom: 0; }
 .gx-panel-footer { padding: 0 var(--panel-padding) var(--panel-padding); }
@@ -1632,6 +1640,8 @@ progress { max-width: 100%; accent-color: var(--primary); }
 .gx-driving .gx-row { flex-wrap: wrap; }
 .gx-driving .gx-row > strong { flex: 1; min-width: 0; overflow-wrap: anywhere; }
 .gx-bt-card > h3 { margin: 0 0 var(--sp-2); }
+.gx-bluetooth__radio { padding-block: var(--sp-3); }
+.gx-bluetooth__radio > .gx-row { min-height: var(--touch-target); padding-block: 0; }
 .gx-bt-adapter__actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-2); }
 .gx-bt-adapter__actions > .gx-btn { padding-inline: var(--sp-2); white-space: nowrap; }
 .gx-row__desc.gx-bt-device__state { display: flex; align-items: center; gap: 6px; margin-top: 2px; }
