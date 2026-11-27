@@ -58,3 +58,18 @@ def test_a_new_street_must_hold_before_it_shows() -> None:
   assert street.update("Oak Ave", 2.0) == "Main St"
   assert street.update("", 2.5) == "Main St"
   assert street.update("Oak Ave", 3.6) == "Oak Ave"    # turned: named for 1.6 s
+
+
+@pytest.mark.parametrize("raw,shown", [
+  ("I 74;US 6", "I-74 / US 6"),
+  ("I-80", "I-80"),
+  ("I 35W", "I-35W"),
+  ("US 67", "US 67"),
+  ("North Main Street;US 6", "N Main St / US 6"),
+  ("US 6;US 6", "US 6"),
+  (" ; Grant Street ;", "Grant St"),
+  ("", ""),
+])
+def test_mapds_road_names_read_as_signs_do(raw: str, shown: str) -> None:
+  from openpilot.selfdrive.ui.tandem.onroad.streets import road_name
+  assert road_name(raw) == shown

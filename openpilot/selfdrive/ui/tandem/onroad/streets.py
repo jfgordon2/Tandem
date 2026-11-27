@@ -39,6 +39,24 @@ def short_street(name: str) -> str:
   return " ".join(words)
 
 
+_INTERSTATE = re.compile(r"^I[\s-]*(\d+[A-Z]?)$", re.IGNORECASE)
+
+
+def road_name(raw: str) -> str:
+  """The road mapd names, as the bar shows it. mapd joins a road's several names or route numbers with ";" ("I 74;US 6"):
+  each is shortened (Interstates read "I-74"), repeats are dropped, and they're joined with " / " ("I-74 / US 6")."""
+  parts: list[str] = []
+  for piece in str(raw).split(";"):
+    piece = " ".join(piece.split())
+    if not piece:
+      continue
+    interstate = _INTERSTATE.match(piece)
+    piece = f"I-{interstate.group(1).upper()}" if interstate else short_street(piece)
+    if piece not in parts:
+      parts.append(piece)
+  return " / ".join(parts)
+
+
 _JOINS = re.compile(r"(\s+(?:onto|on|toward|towards|to|via|at|and)\s+|\s*[/,;]\s*)", re.IGNORECASE)
 
 

@@ -31,7 +31,7 @@ from openpilot.selfdrive.ui.tandem.onroad.layers import AT_LIMIT, ArcState, BarS
 from openpilot.selfdrive.ui.tandem.onroad.overlay import OnroadOverlay, road_rect
 from openpilot.selfdrive.ui.tandem.onroad.state import awareness, route_progress, turn, DriveDisplay, DrivingAlert, LimitDecision, Proposal, displayed_speed
 from openpilot.selfdrive.ui.tandem.onroad.status import ChipStack, LimitWatch, RamWatch, Snapshot, chips_for, routing_chip, routing_state
-from openpilot.selfdrive.ui.tandem.onroad.streets import StreetName, short_street
+from openpilot.selfdrive.ui.tandem.onroad.streets import StreetName, road_name
 from openpilot.selfdrive.ui.tandem.onroad.turn_signals import GAP as SIGNAL_GAP, STANDARD, TurnSignalRenderer
 from openpilot.selfdrive.ui.tandem.places import StarPilotPlaces
 from openpilot.selfdrive.ui.tandem.ram import RamLog, shared_log
@@ -143,7 +143,7 @@ class EssentialsOnroad(AugmentedRoadView):
     heard = None
     if sm.updated["mapdOut"]:   # mapd's newest reading; StreetName keeps it steady between messages and through a junction
       road = sm["mapdOut"]
-      heard = short_street(str(road.roadName or road.wayName)) if sm.valid["mapdOut"] else ""
+      heard = road_name(str(road.roadName or road.wayName)) if sm.valid["mapdOut"] else ""
     return self._street_name.update(heard, now_ns / 1e9)
 
   def _chips_from(self, now_ns: int, state: OnroadState) -> Snapshot:
