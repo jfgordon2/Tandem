@@ -49,34 +49,37 @@ def short_streets_in(text: str) -> str:
 
 
 class StreetName:
-  """The street the bar shows, steady between mapd's messages, as StarPilot's own map holds its road name
-  (starpilot/ui/onroad_map.py): the last name stays MAX_AGE_S after mapd last said anything, and a different name, or no
-  name, must hold HOLD_S before it replaces the one shown, so a junction or a missed reading doesn't make it blink.
+  """The street the bar shows, steady through mapd's gaps.
+
+  StarPilot 7 runs mapd as a development shadow (starpilot/maps/SHADOW_LIFECYCLE.md) whose messages are often invalid
+  and nameless for seconds at a time between short valid ones (a 2026-11-26 drive: 593 and 1172 of 1199 a minute), so
+  showing only what it names now blinks. The last street stays until mapd names a different one for HOLD_S, as
+  StarPilot's own map waits before a new name, or names nothing for LOST_S.
 
   Args:
-    hold_s: How long a new reading must last before it shows.
-    max_age_s: How long the shown name lasts without a word from mapd.
+    hold_s: How long a different street must be named before it shows.
+    lost_s: How long without any street named before the bar shows none.
   """
-  HOLD_S, MAX_AGE_S = 1.5, 3.0   # StarPilot's NAME_HOLD_S and ROAD_NAME_MAX_AGE_S
+  HOLD_S, LOST_S = 1.5, 15.0   # StarPilot's NAME_HOLD_S (starpilot/ui/onroad_map.py); about a block at city speed
 
-  def __init__(self, hold_s: float = HOLD_S, max_age_s: float = MAX_AGE_S) -> None:
-    self._hold, self._max_age = hold_s, max_age_s
+  def __init__(self, hold_s: float = HOLD_S, lost_s: float = LOST_S) -> None:
+    self._hold, self._lost = hold_s, lost_s
     self._shown = self._candidate = ""
-    self._since = self._heard = -1e9
+    self._since = self._named = -1e9
 
   def update(self, name: str | None, now: float) -> str:
     """Takes mapd's latest reading, if a new one arrived, and returns the street to show.
 
     Args:
-      name: The street mapd just named ("" for none), or None when nothing new arrived this frame.
+      name: The street mapd just named ("" for none or an invalid message), or None when nothing new arrived this frame.
       now: Monotonic seconds.
     """
-    if name is not None:
-      self._heard = now
+    if name:
+      self._named = now
       if name != self._candidate:
         self._candidate, self._since = name, now
-      if name == self._shown or now - self._since >= self._hold or not self._shown:
+      if name == self._shown or not self._shown or now - self._since >= self._hold:
         self._shown = name
-    if now - self._heard > self._max_age:
+    if now - self._named > self._lost:
       self._shown = self._candidate = ""
     return self._shown
