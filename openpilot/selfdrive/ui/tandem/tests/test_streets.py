@@ -37,27 +37,34 @@ def test_streets_in_route_instructions(text, short):
   assert short_streets_in(text) == short
 
 
-def test_the_street_stays_through_mapds_invalid_stretches() -> None:
-  """mapd's shadow output is invalid and nameless for seconds between valid moments; the street stayed only while it was
-  named, so it was on for a few seconds and off for a few."""
+def test_the_street_stays_until_the_car_drives_on_without_a_name() -> None:
+  """mapd's shadow output is invalid and nameless for seconds between valid moments; the street stays until the car has
+  driven 500 m with no street named, however long that takes."""
   from openpilot.selfdrive.ui.tandem.onroad.streets import StreetName
   street = StreetName()
-  assert street.update("Grant St", 0.0) == "Grant St"
-  assert all(street.update("", t / 20) == "Grant St" for t in range(1, 200))   # 10 s of invalid, nameless messages
-  assert street.update("Grant St", 10.0) == "Grant St"
-  assert street.update(None, 24.9) == "Grant St"
-  assert street.update("", 25.1) == ""                                          # 15 s without a name: none shown
+  assert street.update("Grant St", 0.0, 0.0) == "Grant St"
+  assert all(street.update("", t / 20, 0.0) == "Grant St" for t in range(1, 1200))   # a minute stopped at a light
+  assert street.update("", 70.0, 450.0) == "Grant St"                               # 450 m on, still unnamed
+  assert street.update("", 75.0, 501.0) == ""                                       # past 500 m: none shown
 
 
 def test_a_new_street_must_hold_before_it_shows() -> None:
   from openpilot.selfdrive.ui.tandem.onroad.streets import StreetName
   street = StreetName()
-  street.update("Main St", 0.0)
-  assert street.update("Oak Ave", 1.0) == "Main St"    # a junction's other road, briefly
-  assert street.update("Main St", 1.2) == "Main St"
-  assert street.update("Oak Ave", 2.0) == "Main St"
-  assert street.update("", 2.5) == "Main St"
-  assert street.update("Oak Ave", 3.6) == "Oak Ave"    # turned: named for 1.6 s
+  street.update("Main St", 0.0, 0.0)
+  assert street.update("Oak Ave", 1.0, 10.0) == "Main St"    # a junction's other road, briefly
+  assert street.update("Main St", 1.2, 12.0) == "Main St"
+  assert street.update("Oak Ave", 2.0, 20.0) == "Main St"
+  assert street.update("", 2.5, 25.0) == "Main St"
+  assert street.update("Oak Ave", 3.6, 36.0) == "Oak Ave"    # turned: named for 1.6 s
+
+
+def test_the_street_goes_when_mapd_goes_quiet() -> None:
+  from openpilot.selfdrive.ui.tandem.onroad.streets import StreetName
+  street = StreetName()
+  street.update("Main St", 0.0, 0.0)
+  assert street.update(None, 9.0, 0.0) == "Main St"
+  assert street.update(None, 10.5, 0.0) == ""                # no message at all for over 10 s
 
 
 @pytest.mark.parametrize("raw,shown", [

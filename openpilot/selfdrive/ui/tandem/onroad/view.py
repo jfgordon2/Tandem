@@ -77,6 +77,8 @@ class EssentialsOnroad(AugmentedRoadView):
     self._lead_tag_on, self._lead_tag_read = True, -1.0   # prefs.LEAD_TAG, read once a second
     self._lead_display: tuple[bool, int, bool | None] | None = None   # what the lead marker and its text show (_update_lead)
     self._street_name = StreetName()   # the bar's street, held steady between mapd's messages
+    self._odometer_m = 0.0                       # meters driven since the view started, from carState's speed
+    self._odometer_at: float | None = None
     self._dev: developer.DevData | None = None            # Developer View's values while StarPilot's sidebar setting is on
     self._road = rl.Rectangle(0, 0, 0, 0)                  # the road view's inner rect, for the lead tag's bounds
     # The lead tag takes the place of the text StarPilot's renderer draws above its lead marker (its Lead Info).
@@ -144,7 +146,12 @@ class EssentialsOnroad(AugmentedRoadView):
     if sm.updated["mapdOut"]:   # mapd's newest reading; StreetName keeps it steady between messages and through a junction
       road = sm["mapdOut"]
       heard = road_name(str(road.roadName or road.wayName)) if sm.valid["mapdOut"] else ""
-    return self._street_name.update(heard, now_ns / 1e9)
+    now = now_ns / 1e9
+    car = display_message(ui_state.sm, "carState", now_ns, after_frame=ui_state.started_frame)
+    if car is not None and self._odometer_at is not None:   # distance driven, for how long the street may stay unnamed
+      self._odometer_m += max(0.0, float(car.vEgo)) * min(max(0.0, now - self._odometer_at), 0.5)
+    self._odometer_at = now
+    return self._street_name.update(heard, now, self._odometer_m)
 
   def _chips_from(self, now_ns: int, state: OnroadState) -> Snapshot:
     """Release's chip inputs from StarPilot 7. Stops and slowing for traffic come from StarPilot's conditional mode as
