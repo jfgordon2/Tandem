@@ -8,9 +8,11 @@ from __future__ import annotations
 from collections.abc import Callable
 from typing import TYPE_CHECKING
 from openpilot.selfdrive.ui.tandem import tokens as T
-from openpilot.selfdrive.ui.tandem.blocks import Label
-from openpilot.selfdrive.ui.tandem.controls import Segmented, Stepper, Switch
-from openpilot.selfdrive.ui.tandem.rows import ListPanel, SectionHeader, SettingRow
+from openpilot.selfdrive.ui.tandem.blocks import Label, Stack
+from openpilot.selfdrive.ui.tandem.controls import Button, ButtonStyle, Segmented, Stepper, Switch, ValueButton
+from openpilot.selfdrive.ui.tandem.overlays import Sheet
+from openpilot.system.ui.widgets import Widget
+from openpilot.selfdrive.ui.tandem.rows import ListPanel, SectionHeader, SettingRow, Text
 from openpilot.selfdrive.ui.tandem.settings.store import SettingsStore
 from openpilot.selfdrive.ui.tandem.prefs import MAX_FOLLOWS_LIMIT, WEATHER_HEADS_UP
 from openpilot.selfdrive.ui.tandem.i18n import N_, t_, translate
@@ -18,6 +20,7 @@ from openpilot.selfdrive.ui.tandem.i18n import N_, t_, translate
 if TYPE_CHECKING:
   from openpilot.selfdrive.ui.tandem.settings.live import Live
   from openpilot.selfdrive.ui.tandem.settings.starpilot7 import FeatureRows
+  from openpilot.selfdrive.ui.tandem.settings.window import SettingsWindow
 
 Rows = Callable[[str], "FeatureRows"]   # StarPilot 7's settings page by name (StarPilotOwners.rows)
 Confirm = Callable[[str, str, str, Callable[[], None]], None]   # title, message, button, then the action on confirm
@@ -36,6 +39,17 @@ STYLE_PARAMS = [
 OFFSET_KEYS = [f"slc:offset:{i}" for i in range(1, 8)]   # StarPilot 7's offset per speed range; Tandem sets them alike
 CONFIRMATION = ("Off", "Both", "Higher only", "Lower only")   # StarPilot 7's SLCConfirmation choices
 OFFSET_MAX = 15
+# StarPilot 7's speed limit sources, first to third (starpilot/speed_limits/runtime_settings.SOURCE_PRIORITY_KEYS), and its
+# choices for them in plain words: the first word as a name, later ones as they read after "then" (design/speedlimitsources.html).
+SOURCE_KEYS = ("SLCPriority1", "SLCPriority2", "SLCPriority3")
+SOURCES = {
+  "Off": (N_("Off"), ""),
+  "Maps": (N_("Maps"), N_("maps", context="a speed limit source, after the first in a list")),
+  "Vision": (N_("Camera"), N_("camera", context="a speed limit source, after the first in a list")),
+  "Dashboard": (N_("Car"), N_("car", context="a speed limit source, after the first in a list")),
+}
+SOURCE_ROWS = [(N_("First"), N_("Used whenever it has a limit")), (N_("Second"), N_("When the first has none")),
+               (N_("Third"), N_("When neither has one"))]
 
 
 class SpeedSteering:
@@ -90,6 +104,38 @@ class SpeedSteering:
   @property
   def matching(self) -> bool:
     return self.speed_limits == 2
+
+  # Speed limit sources: StarPilot's three, in order (it shows Map Data as "Maps")
+
+  def source_choices(self, index: int) -> list[str]:
+    """StarPilot's choices for a source, as it offers them for this car (Maps only with a verified offline map package)."""
+    row = self._rows("slc").row(SOURCE_KEYS[index])
+    offered = set(row.choices) if row is not None else set()
+    return [choice for choice in SOURCES if choice in offered]   # in the sheet's order: Off, Maps, Camera, Car
+
+  def source(self, index: int) -> str:
+    value = self._rows("slc").value(SOURCE_KEYS[index], "Off")
+    return "Maps" if value == "Map Data" else value
+
+  def set_source(self, index: int, choice: str) -> None:
+    """Saves a source through StarPilot's settings owner, which checks it against what it offered."""
+    self._rows("slc").set(SOURCE_KEYS[index], choice)
+
+  def source_editable(self, index: int) -> bool:
+    return self._rows("slc").available(SOURCE_KEYS[index])
+
+  def sources_summary(self) -> str:
+    """The order on one line: "Maps, then camera"."""
+    names = [self.source(i) for i in range(len(SOURCE_KEYS))]
+    names = [n for n in names if n in SOURCES and n != "Off"]
+    if not names:
+      return N_("None")
+    words = [translate(SOURCES[names[0]][0])] + [translate(SOURCES[n][1]) for n in names[1:]]
+    if len(words) == 1:
+      return words[0]
+    if len(words) == 2:
+      return t_("{}, then {}", *words, context="speed limit sources in order")
+    return t_("{}, {}, then {}", *words, context="speed limit sources in order")
 
   @property
   def offset(self) -> float:
@@ -177,8 +223,34 @@ class SpeedSteering:
     return [N_("Speed limits off"), N_("Showing speed limits"), N_("Matching speed limits")][self.speed_limits]
 
 
-def everyday_panel(model: SpeedSteering) -> ListPanel:
-  """Driving › Everyday: driving style, speed limits and lane changes."""
+def sources_sheet(model: SpeedSteering, window: SettingsWindow) -> Sheet:
+  """Speed limit sources (design/speedlimitsources.html): StarPilot's three sources, each one of the choices it offers."""
+  def source_row(index: int, title: str, subtitle: str) -> SettingRow:
+    choices = model.source_choices(index)
+
+    def selected() -> int:
+      current = model.source(index)
+      return choices.index(current) if current in choices else 0
+
+    def chosen(i: int) -> None:
+      model.set_source(index, choices[i])
+
+    def editable() -> bool:
+      return model.source_editable(index)
+    line = SettingRow(title, subtitle, Segmented([SOURCES[c][0] for c in choices], selected, chosen, height=T.px(44),
+                                                 font_size=T.font_px(16)), height=T.px(66))
+    line.set_enabled(editable)
+    return line
+
+  rows: list[Widget] = [source_row(i, title, subtitle) for i, (title, subtitle) in enumerate(SOURCE_ROWS)]
+  rows.append(Text(N_("Maps reads your offline maps. Camera reads signs as you pass them. Car uses its own sign reading."),
+                   T.SIZE_SUBTITLE, T.TEXT_MUTED, padding=(T.px(8), T.px(10))))
+  return Sheet(N_("Speed limit sources"), Stack(rows, gap=0), subtitle=N_("When more than one has a limit, the first one wins"),
+               actions=[Button(N_("Done"), window.dismiss, ButtonStyle.PRIMARY)], on_dismiss=window.dismiss)
+
+
+def everyday_panel(model: SpeedSteering, window: SettingsWindow | None = None) -> ListPanel:
+  """Driving › Everyday: driving style, speed limits and lane changes. With the window, Limit sources opens its sheet."""
   style = SettingRow(N_("Driving Style"), lambda: N_("Relaxed while Safe Mode is on") if model.safe_mode else
                      N_("Sets following gap, acceleration and braking together"), Segmented(STYLES, lambda: model.style, model.set_style))
   style.set_enabled(lambda: not model.safe_mode)
@@ -197,11 +269,15 @@ def everyday_panel(model: SpeedSteering) -> ListPanel:
   follows.set_enabled(model.owns_set)
   for row in (offset, higher, lower, follows):
     row.set_visible(lambda: model.matching)
+  sources = SettingRow(N_("Limit sources"), N_("Where limits come from, in order"), indent=True,
+                       control=ValueButton(model.sources_summary, lambda: window.present(sources_sheet(model, window)) if window else None))
+  sources.set_visible(lambda: model.speed_limits > 0 and window is not None)   # StarPilot uses them to show and to match
 
   rows = [
     style,
     SettingRow(N_("Speed Limits"), N_("Match sets cruise to the posted limit"),
                Segmented(SPEED_LIMITS, lambda: model.speed_limits, model.set_speed_limits)),
+    sources,
     offset,
     higher,
     lower,

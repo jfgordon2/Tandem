@@ -25,6 +25,18 @@
       "match": true
     },
     {
+      "mock": "driving-limitsources",
+      "title": "Everyday, Limit sources",
+      "note": "Matches: Limit sources under Speed Limits (Show or Match), with StarPilot's three speed limit sources in order on its button.",
+      "match": true
+    },
+    {
+      "mock": "speedlimitsources",
+      "title": "Speed limit sources",
+      "note": "Matches: StarPilot's SLCPriority1-3 as First, Second and Third; Maps, Camera and Car are its Map Data, Vision and Dashboard, and only the sources StarPilot offers for the car appear. StarPilot checks each choice against what it offered.",
+      "match": true
+    },
+    {
       "mock": "drivingvehicle",
       "title": "Speed & Steering › Vehicle Profile",
       "note": "Matches: tiles fill the panel, no line under the title. Page ground uses true black (#000000).",

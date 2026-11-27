@@ -119,7 +119,7 @@ msgid "Road data still supplies speed limits"
 msgstr "Обмеження швидкості й далі беруться з дорожніх даних"
 
 #: destinations.py:218
-#: settings/search.py:293
+#: settings/search.py:294
 msgid "Search"
 msgstr "Пошук"
 
@@ -398,7 +398,7 @@ msgstr "Оновлення готове"
 
 #: home.py:152
 #: settings/search.py:25
-#: settings/search.py:224
+#: settings/search.py:225
 msgid "Software"
 msgstr "Програмне забезпечення"
 
@@ -527,7 +527,7 @@ msgid "openpilot may not start until these are sorted out"
 msgstr "openpilot може не запуститися, доки ці проблеми не вирішено"
 
 #: home_layout.py:22
-#: settings/speed_steering.py:25
+#: settings/speed_steering.py:28
 #: settings/tuner.py:63
 msgid "Sport"
 msgstr "Спортивний"
@@ -539,7 +539,7 @@ msgid "Standard"
 msgstr "Стандартний"
 
 #: home_layout.py:22
-#: settings/speed_steering.py:25
+#: settings/speed_steering.py:28
 #: settings/tuner.py:62
 msgid "Relaxed"
 msgstr "Спокійний"
@@ -550,7 +550,7 @@ msgid "{} style"
 msgstr "Стиль «{}»"
 
 #: home_layout.py:30
-#: settings/speed_steering.py:177
+#: settings/speed_steering.py:223
 msgid "Matching speed limits"
 msgstr "Дотримування обмежень швидкості"
 
@@ -560,22 +560,22 @@ msgid "{} style · {} · {}"
 msgstr "Стиль {} · {} · {}"
 
 #: home_layout.py:31
-#: settings/speed_steering.py:177
+#: settings/speed_steering.py:223
 msgid "Showing speed limits"
 msgstr "Показ обмежень швидкості"
 
 #: home_layout.py:31
-#: settings/speed_steering.py:177
+#: settings/speed_steering.py:223
 msgid "Speed limits off"
 msgstr "Обмеження швидкості вимкнено"
 
 #: home_layout.py:35
-#: settings/speed_steering.py:173
+#: settings/speed_steering.py:219
 msgid "Auto lane change"
 msgstr "Автоматична зміна смуги"
 
 #: home_layout.py:35
-#: settings/speed_steering.py:173
+#: settings/speed_steering.py:219
 msgid "Nudge to change lanes"
 msgstr "Легкий поштовх керма для зміни смуги"
 
@@ -946,7 +946,7 @@ msgid "From {} · ignored in {} s"
 msgstr "Джерело: {} · ігнорується через {} с"
 
 #: onroad/layers.py:558
-#: settings/speed_steering.py:26
+#: settings/speed_steering.py:29
 msgid "Match"
 msgstr "Дотримуватися"
 
@@ -1350,7 +1350,7 @@ msgid "Drive logging"
 msgstr "Журнал поїздки"
 
 #: ram.py:57
-#: settings/search.py:189
+#: settings/search.py:190
 #: settings/storage.py:182
 msgid "Uploads"
 msgstr "Вивантаження"
@@ -1625,54 +1625,54 @@ msgid "When you need to steer or brake now"
 msgstr "Коли треба негайно кермувати або гальмувати"
 
 #: settings/alerts.py:61
-#: settings/search.py:124
+#: settings/search.py:125
 msgid "Green Light"
 msgstr "Зелене світло"
 
 #: settings/alerts.py:61
-#: settings/search.py:124
+#: settings/search.py:125
 msgid "When the light turns green and you are stopped"
 msgstr "Коли ви стоїте й загоряється зелене"
 
 #: settings/alerts.py:62
-#: settings/search.py:125
+#: settings/search.py:126
 msgid "Lead Departure"
 msgstr "Рушання авто попереду"
 
 #: settings/alerts.py:62
-#: settings/search.py:125
+#: settings/search.py:126
 msgid "When the car ahead pulls away"
 msgstr "Коли авто попереду рушає"
 
 #: settings/alerts.py:63
-#: settings/search.py:126
+#: settings/search.py:127
 msgid "Loud Blind Spot"
 msgstr "Гучне попередження про сліпу зону"
 
 #: settings/alerts.py:63
-#: settings/search.py:126
+#: settings/search.py:127
 msgid "Signalling into an occupied lane, even when paused"
 msgstr "Коли вмикаєте покажчик у зайняту смугу, навіть під час паузи"
 
 #: settings/alerts.py:64
-#: settings/search.py:93
-#: settings/search.py:128
+#: settings/search.py:94
+#: settings/search.py:129
 msgid "Weather heads-up"
 msgstr "Завчасне сповіщення про погоду"
 
 #: settings/alerts.py:64
-#: settings/search.py:128
+#: settings/search.py:129
 msgid "Once, when rain, snow or storms are coming"
 msgstr "Один раз перед дощем, снігом або грозою"
 
 #: settings/alerts.py:255
 #: settings/alerts.py:274
-#: settings/search.py:127
+#: settings/search.py:128
 msgid "Sound Pack"
 msgstr "Набір звуків"
 
 #: settings/alerts.py:255
-#: settings/search.py:127
+#: settings/search.py:128
 msgid "The sounds every alert plays"
 msgstr "Звуки всіх сповіщень"
 
@@ -1741,7 +1741,7 @@ msgid "Reset to Normal"
 msgstr "Скинути до звичайної"
 
 #: settings/alerts.py:242
-#: settings/search.py:123
+#: settings/search.py:124
 msgid "Volume"
 msgstr "Гучність"
 
@@ -1767,12 +1767,12 @@ msgid "Tablet app"
 msgstr "Застосунок на планшеті"
 
 #: settings/android_auto.py:157
-#: settings/search.py:218
+#: settings/search.py:219
 msgid "StarPilot on your car's screen, through StarPort"
 msgstr "StarPilot на екрані вашого авто, через StarPort"
 
 #: settings/android_auto.py:170
-#: settings/search.py:220
+#: settings/search.py:221
 msgid "Shows StarPilot on your car's Android Auto screen"
 msgstr "Показує StarPilot на екрані Android Auto вашого авто"
 
@@ -1790,7 +1790,7 @@ msgid "Set up on your phone"
 msgstr "Налаштувати на телефоні"
 
 #: settings/android_auto.py:295
-#: settings/search.py:220
+#: settings/search.py:221
 msgid "StarPort"
 msgstr "StarPort"
 
@@ -2100,17 +2100,17 @@ msgstr "Пристрій Bluetooth"
 
 #: settings/bluetooth_tab.py:449
 #: settings/bluetooth_tab.py:449
-#: settings/search.py:216
+#: settings/search.py:217
 msgid "Disconnect"
 msgstr "Від'єднати"
 
 #: settings/bluetooth_tab.py:449
-#: settings/search.py:216
+#: settings/search.py:217
 msgid "It reconnects the next time you choose it"
 msgstr "Підключиться знову, коли ви його виберете"
 
 #: settings/bluetooth_tab.py:450
-#: settings/search.py:217
+#: settings/search.py:218
 msgid "Removes the pairing. Change it with the car off."
 msgstr "Видаляє сполучення. Змінюйте, коли авто вимкнене."
 
@@ -2265,7 +2265,7 @@ msgid "Remove"
 msgstr "Видалити"
 
 #: settings/bundles.py:50
-#: settings/search.py:116
+#: settings/search.py:117
 msgid "Developer View"
 msgstr "Вигляд розробника"
 
@@ -2274,7 +2274,7 @@ msgid "Side panel with live system and controls data"
 msgstr "Бічна панель із живими даними системи й керування"
 
 #: settings/bundles.py:54
-#: settings/search.py:117
+#: settings/search.py:118
 msgid "Lead Insights"
 msgstr "Дані про авто попереду"
 
@@ -2406,6 +2406,7 @@ msgid "Park the car to start a test."
 msgstr "Припаркуйте авто для початку тесту."
 
 #: settings/can_recorder.py:45
+#: settings/speed_steering.py:48
 msgid "Camera"
 msgstr "Камера"
 
@@ -2521,7 +2522,7 @@ msgstr "Мобільна мережа"
 
 #: settings/connections.py:104
 #: settings/search.py:33
-#: settings/search.py:215
+#: settings/search.py:216
 msgid "Bluetooth Devices"
 msgstr "Пристрої Bluetooth"
 
@@ -2532,7 +2533,7 @@ msgid "Network Test"
 msgstr "Тест мережі"
 
 #: settings/developer.py:67
-#: settings/search.py:201
+#: settings/search.py:202
 msgid "openpilot Longitudinal (Alpha)"
 msgstr "Поздовжнє керування openpilot (альфа)"
 
@@ -2541,7 +2542,7 @@ msgid "Turns off the car's emergency braking. Off while engaged."
 msgstr "Вимикає екстрене гальмування авто. Недоступно під час активного керування."
 
 #: settings/developer.py:73
-#: settings/search.py:200
+#: settings/search.py:201
 #: selfdrive/ui/layouts/settings/developer.py:68
 msgid "Joystick Debug Mode"
 msgstr "Налагодження джойстиком"
@@ -2579,7 +2580,7 @@ msgstr "Ім'я користувача GitHub"
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: settings/developer.py:77
-#: settings/search.py:197
+#: settings/search.py:198
 msgid "ADB"
 msgstr "ADB"
 
@@ -2589,7 +2590,7 @@ msgstr "Підключайтеся через USB або мережу (docs.comm
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: settings/developer.py:79
-#: settings/search.py:198
+#: settings/search.py:199
 msgid "SSH"
 msgstr "SSH"
 
@@ -2598,19 +2599,19 @@ msgid "Remote shell access with the keys below"
 msgstr "Віддалений доступ до оболонки з ключами нижче"
 
 #: settings/developer.py:80
-#: settings/search.py:199
+#: settings/search.py:200
 #: selfdrive/ui/layouts/settings/developer.py:65
 msgid "SSH Keys"
 msgstr "Ключі SSH"
 
 #: settings/developer.py:83
-#: settings/search.py:202
+#: settings/search.py:203
 #: selfdrive/ui/layouts/settings/developer.py:103
 msgid "UI Debug Mode"
 msgstr "Налагодження інтерфейсу"
 
 #: settings/developer.py:83
-#: settings/search.py:202
+#: settings/search.py:203
 msgid "Shows touches and the frame rate"
 msgstr "Показує дотики й частоту кадрів"
 
@@ -2726,7 +2727,7 @@ msgstr "Видалити сполучення"
 
 #: settings/device.py:295
 #: settings/device.py:124
-#: settings/search.py:159
+#: settings/search.py:160
 msgid "Remote Access"
 msgstr "Віддалений доступ"
 
@@ -2739,7 +2740,7 @@ msgid "DEVICE"
 msgstr "ПРИСТРІЙ"
 
 #: settings/device.py:40
-#: settings/search.py:142
+#: settings/search.py:143
 msgid "Driver Camera"
 msgstr "Камера водія"
 
@@ -2748,25 +2749,25 @@ msgid "Check that it can see your face. The car must be off."
 msgstr "Перевірте, чи видно обличчя. Авто має бути вимкнене."
 
 #: settings/device.py:41
-#: settings/search.py:143
-#: settings/speed_steering.py:346
+#: settings/search.py:144
+#: settings/speed_steering.py:422
 msgid "Driver Monitoring"
 msgstr "Моніторинг водія"
 
 #: settings/device.py:41
-#: settings/search.py:143
+#: settings/search.py:144
 msgid "Forget which side of the car the driver sits on"
 msgstr "Забути, з якого боку сидить водій"
 
 #: settings/device.py:109
 #: settings/device.py:109
-#: settings/search.py:166
+#: settings/search.py:167
 msgid "Power Off"
 msgstr "Вимкнути живлення"
 
 #: settings/device.py:112
 #: settings/device.py:113
-#: settings/search.py:165
+#: settings/search.py:166
 msgid "Restart"
 msgstr "Перезапустити"
 
@@ -2785,7 +2786,7 @@ msgstr "comma connect · поїздки й налаштування на тел�
 
 #: settings/device.py:258
 #: settings/device.py:131
-#: settings/search.py:162
+#: settings/search.py:163
 msgid "Regulatory"
 msgstr "Нормативні відомості"
 
@@ -2870,22 +2871,22 @@ msgid "Your code appears here once you choose a password"
 msgstr "Код з'явиться тут після вибору пароля"
 
 #: settings/device.py:121
-#: settings/search.py:158
+#: settings/search.py:159
 msgid "Phone App"
 msgstr "Застосунок телефона"
 
 #: settings/device.py:127
-#: settings/search.py:160
+#: settings/search.py:161
 msgid "Camera Calibration"
 msgstr "Калібрування камери"
 
 #: settings/device.py:129
-#: settings/search.py:161
+#: settings/search.py:162
 msgid "How It Works"
 msgstr "Як це працює"
 
 #: settings/device.py:129
-#: settings/search.py:161
+#: settings/search.py:162
 msgid "Rules, features and limits"
 msgstr "Правила, можливості й обмеження"
 
@@ -2894,13 +2895,13 @@ msgid "MORE"
 msgstr "БІЛЬШЕ"
 
 #: settings/device.py:132
-#: settings/search.py:163
+#: settings/search.py:164
 msgid "Device ID and Serial"
 msgstr "Ідентифікатор і серійний номер"
 
 #. Name, identifier, keyboard keys or command; keep as written.
 #: settings/device.py:133
-#: settings/search.py:164
+#: settings/search.py:165
 msgid "IMEI"
 msgstr "IMEI"
 
@@ -2933,12 +2934,12 @@ msgid "Larger"
 msgstr "Більший"
 
 #: settings/display.py:166
-#: settings/search.py:116
+#: settings/search.py:117
 msgid "Side panel with system and controls data."
 msgstr "Бічна панель із даними системи й керування."
 
 #: settings/display.py:167
-#: settings/search.py:117
+#: settings/search.py:118
 msgid "Distance to the car ahead, and the pedals on screen."
 msgstr "Відстань до авто попереду та педалі на екрані."
 
@@ -2973,24 +2974,24 @@ msgstr "Траєкторія «{}»"
 
 #: settings/display.py:265
 #: settings/display.py:256
-#: settings/search.py:118
+#: settings/search.py:119
 msgid "Path Style"
 msgstr "Стиль траєкторії"
 
 #: settings/display.py:265
 #: settings/display.py:257
-#: settings/search.py:118
+#: settings/search.py:119
 msgid "How the path ahead is drawn"
 msgstr "Як малюється траєкторія попереду"
 
 #: settings/display.py:267
 #: settings/display.py:261
-#: settings/search.py:119
+#: settings/search.py:120
 msgid "Turn Signal"
 msgstr "Покажчик повороту"
 
 #: settings/display.py:267
-#: settings/search.py:119
+#: settings/search.py:120
 msgid "Chevrons by the speed, or a whimsical animation"
 msgstr "Стрілки біля швидкості або кумедна анімація"
 
@@ -3046,42 +3047,42 @@ msgid "Sets {} options"
 msgstr "Задає параметри: {}"
 
 #: settings/display.py:233
-#: settings/search.py:108
+#: settings/search.py:109
 msgid "Text Size"
 msgstr "Розмір тексту"
 
 #: settings/display.py:233
-#: settings/search.py:108
+#: settings/search.py:109
 msgid "Larger text and icons on the driving screen"
 msgstr "Більший текст і значки на екрані водіння"
 
 #: settings/display.py:235
-#: settings/search.py:109
+#: settings/search.py:110
 msgid "Reduce Motion"
 msgstr "Менше руху"
 
 #: settings/display.py:235
-#: settings/search.py:109
+#: settings/search.py:110
 msgid "Long street names end in … instead of scrolling"
 msgstr "Довгі назви вулиць закінчуються … замість прокручування"
 
 #: settings/display.py:243
-#: settings/search.py:113
+#: settings/search.py:114
 msgid "Compass"
 msgstr "Компас"
 
 #: settings/display.py:243
-#: settings/search.py:113
+#: settings/search.py:114
 msgid "Heading beside the street name, like NE"
 msgstr "Напрямок біля назви вулиці, наприклад NE"
 
 #: settings/display.py:246
-#: settings/search.py:115
+#: settings/search.py:116
 msgid "Lead Car Tag"
 msgstr "Позначка авто попереду"
 
 #: settings/display.py:246
-#: settings/search.py:115
+#: settings/search.py:116
 msgid "Numbers above the car ahead. Off keeps only the bar under it"
 msgstr "Числа над авто попереду. Вимкнення залишає лише смужку під ним"
 
@@ -3103,42 +3104,42 @@ msgid "WHIMSY"
 msgstr "КУМЕДНІ"
 
 #: settings/display.py:237
-#: settings/search.py:110
+#: settings/search.py:111
 msgid "Camera View"
 msgstr "Огляд камери"
 
 #: settings/display.py:237
-#: settings/search.py:110
+#: settings/search.py:111
 msgid "Wide shows more of the road at low speed"
 msgstr "Широкий показує більше дороги на малій швидкості"
 
 #: settings/display.py:239
-#: settings/search.py:111
+#: settings/search.py:112
 msgid "Driver Camera in Reverse"
 msgstr "Камера водія під час руху назад"
 
 #: settings/display.py:239
-#: settings/search.py:111
+#: settings/search.py:112
 msgid "Shows the inside camera while backing up"
 msgstr "Показує камеру салону під час руху назад"
 
 #: settings/display.py:241
-#: settings/search.py:112
+#: settings/search.py:113
 msgid "Driving Style Banner"
 msgstr "Банер стилю водіння"
 
 #: settings/display.py:241
-#: settings/search.py:112
+#: settings/search.py:113
 msgid "Shows the current style when it changes"
 msgstr "Показує поточний стиль при зміні"
 
 #: settings/display.py:244
-#: settings/search.py:114
+#: settings/search.py:115
 msgid "Blind Spot Highlights"
 msgstr "Підсвічування сліпих зон"
 
 #: settings/display.py:244
-#: settings/search.py:114
+#: settings/search.py:115
 msgid "Colors the screen edge when a car is beside you"
 msgstr "Підсвічує край екрана, коли поруч авто"
 
@@ -3182,7 +3183,7 @@ msgstr "Швидкість і кермо"
 
 #: settings/driving_tab.py:206
 #: settings/search.py:26
-#: settings/search.py:107
+#: settings/search.py:108
 msgid "Display"
 msgstr "Екран"
 
@@ -3194,25 +3195,25 @@ msgstr "Модель водіння"
 
 #: settings/driving_tab.py:209
 #: settings/search.py:27
-#: settings/search.py:131
+#: settings/search.py:132
 msgid "Vehicle"
 msgstr "Авто"
 
 #: settings/driving_tab.py:210
 #: settings/search.py:27
-#: settings/search.py:136
+#: settings/search.py:137
 msgid "Assistance"
 msgstr "Допомога"
 
 #: settings/driving_tab.py:161
 #: settings/search.py:28
-#: settings/speed_steering.py:217
+#: settings/speed_steering.py:293
 msgid "Everyday"
 msgstr "Щодня"
 
 #: settings/driving_tab.py:162
 #: settings/search.py:28
-#: settings/search.py:92
+#: settings/search.py:93
 msgid "Weather"
 msgstr "Погода"
 
@@ -3261,7 +3262,7 @@ msgstr "Живлення"
 
 #: settings/essentials.py:171
 #: settings/search.py:31
-#: settings/search.py:183
+#: settings/search.py:184
 msgid "Storage & Data"
 msgstr "Сховище й дані"
 
@@ -3363,48 +3364,48 @@ msgstr "Неактивно"
 
 #: settings/general.py:26
 #: settings/general.py:41
-#: settings/search.py:170
+#: settings/search.py:171
 msgid "Language"
 msgstr "Мова"
 
 #: settings/general.py:37
-#: settings/search.py:168
+#: settings/search.py:169
 msgid "Units"
 msgstr "Одиниці"
 
 #: settings/general.py:37
-#: settings/search.py:168
+#: settings/search.py:169
 msgid "Speed and distance everywhere"
 msgstr "Швидкість і відстань усюди"
 
 #: settings/general.py:39
-#: settings/search.py:169
+#: settings/search.py:170
 #: sidebar.py:271
 msgid "Temperature"
 msgstr "Температура"
 
 #: settings/general.py:39
-#: settings/search.py:169
+#: settings/search.py:170
 msgid "For the weather forecast"
 msgstr "Для прогнозу погоди"
 
 #: settings/general.py:42
-#: settings/search.py:171
+#: settings/search.py:172
 msgid "Screen Brightness"
 msgstr "Яскравість екрана"
 
 #: settings/general.py:42
-#: settings/search.py:171
+#: settings/search.py:172
 msgid "Auto follows ambient light, day and night"
 msgstr "Авто враховує освітлення вдень і вночі"
 
 #: settings/general.py:44
-#: settings/search.py:172
+#: settings/search.py:173
 msgid "Standby"
 msgstr "Режим очікування"
 
 #: settings/general.py:44
-#: settings/search.py:172
+#: settings/search.py:173
 msgid "Screen sleeps while driving, wakes for alerts"
 msgstr "Екран спить під час водіння й прокидається для попереджень"
 
@@ -3635,13 +3636,13 @@ msgstr "Видалити карти"
 
 #: settings/maps.py:263
 #: settings/navigation.py:128
-#: settings/search.py:100
+#: settings/search.py:101
 msgid "Offline Maps"
 msgstr "Офлайн-карти"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/maps.py:263
-#: settings/search.py:100
+#: settings/search.py:101
 msgid "Routes, speed limits and street names without a connection"
 msgstr "Маршрути, обмеження швидкості й назви вулиць без з'єднання"
 
@@ -3991,7 +3992,7 @@ msgid "installing"
 msgstr "встановлення"
 
 #: settings/model.py:324
-#: settings/search.py:130
+#: settings/search.py:131
 msgid "Use recommended"
 msgstr "Використовувати рекомендовану"
 
@@ -4077,12 +4078,12 @@ msgstr "Телефон, щойно він має свіжу позицію"
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/navigation.py:119
-#: settings/search.py:98
+#: settings/search.py:99
 msgid "Preferred maps (when available)"
 msgstr "Бажані карти (якщо доступні)"
 
 #: settings/navigation.py:62
-#: settings/search.py:96
+#: settings/search.py:97
 msgid "Home, Work and favorites from Where to?"
 msgstr "Дім, Робота й обране з «Куди їдемо?»"
 
@@ -4102,7 +4103,7 @@ msgstr "{} · маршрути, обмеження швидкості й наз�
 
 #. English fallback for new navigation wording; translation pending, as permitted by AGENTS.md.
 #: settings/navigation.py:124
-#: settings/search.py:97
+#: settings/search.py:98
 msgid "Offline maps only"
 msgstr "Лише офлайн-карти"
 
@@ -4140,22 +4141,22 @@ msgid "Offline"
 msgstr "Офлайн"
 
 #: settings/navigation.py:141
-#: settings/search.py:95
+#: settings/search.py:96
 msgid "Turn guidance on the driving screen"
 msgstr "Підказки поворотів на екрані водіння"
 
 #: settings/navigation.py:142
-#: settings/search.py:96
+#: settings/search.py:97
 msgid "Saved Places"
 msgstr "Збережені місця"
 
 #: settings/navigation.py:144
-#: settings/search.py:102
+#: settings/search.py:103
 msgid "Directions"
 msgstr "Маршрути"
 
 #: settings/navigation.py:145
-#: settings/search.py:103
+#: settings/search.py:104
 msgid "Avoid"
 msgstr "Уникати"
 
@@ -4164,12 +4165,12 @@ msgid "When planning routes"
 msgstr "Під час прокладання маршрутів"
 
 #: settings/navigation.py:146
-#: settings/search.py:104
+#: settings/search.py:105
 msgid "Position"
 msgstr "Позиція"
 
 #: settings/navigation.py:147
-#: settings/search.py:105
+#: settings/search.py:106
 msgid "Map Keys"
 msgstr "Ключі карт"
 
@@ -4353,7 +4354,7 @@ msgstr "Змінити"
 
 #: settings/network_tab.py:396
 #: settings/network_tab.py:387
-#: settings/search.py:212
+#: settings/search.py:213
 msgid "Roaming, APN and IP address"
 msgstr "Роумінг, APN та IP-адреса"
 
@@ -4373,7 +4374,7 @@ msgstr "Введіть пароль"
 
 #: settings/network_tab.py:173
 #: settings/network_tab.py:383
-#: settings/search.py:209
+#: settings/search.py:210
 msgid "Hotspot name"
 msgstr "Назва точки доступу"
 
@@ -4382,37 +4383,37 @@ msgid "A saved network already uses this name"
 msgstr "Збережена мережа вже має таку назву"
 
 #: settings/network_tab.py:362
-#: settings/search.py:206
+#: settings/search.py:207
 msgid "Join a hidden network"
 msgstr "Підключитися до прихованої мережі"
 
 #: settings/network_tab.py:382
-#: settings/search.py:208
+#: settings/search.py:209
 msgid "Hotspot"
 msgstr "Точка доступу"
 
 #: settings/network_tab.py:382
-#: settings/search.py:208
+#: settings/search.py:209
 msgid "Share this device's connection"
 msgstr "Спільний доступ до інтернету цього пристрою"
 
 #: settings/network_tab.py:385
-#: settings/search.py:210
+#: settings/search.py:211
 msgid "Hotspot Password"
 msgstr "Пароль точки доступу"
 
 #: settings/network_tab.py:385
-#: settings/search.py:210
+#: settings/search.py:211
 msgid "For phones joining this device's hotspot"
 msgstr "Для телефонів, що підключаються до точки доступу"
 
 #: settings/network_tab.py:386
-#: settings/search.py:211
+#: settings/search.py:212
 msgid "Save Data"
 msgstr "Економія трафіку"
 
 #: settings/network_tab.py:386
-#: settings/search.py:211
+#: settings/search.py:212
 msgid "No large uploads on cellular or phone hotspots"
 msgstr "Без великих вивантажень через мобільну мережу чи точку доступу телефона"
 
@@ -4426,7 +4427,7 @@ msgstr "Використовувати мобільні дані поза мер
 
 #. English fallback pending cellular-status translation.
 #: settings/network_tab.py:395
-#: settings/search.py:213
+#: settings/search.py:214
 msgid "Cellular IP address"
 msgstr "IP-адреса мобільного зв'язку"
 
@@ -4590,44 +4591,44 @@ msgstr "Вимикати comma нижче {} на стоянці?"
 
 #: settings/power.py:169
 #: settings/power.py:138
-#: settings/search.py:175
+#: settings/search.py:176
 msgid "Parked Power"
 msgstr "Живлення на стоянці"
 
 #: settings/power.py:169
-#: settings/search.py:175
+#: settings/search.py:176
 msgid "Turn the comma off after a long park or a low battery"
 msgstr "Вимикає comma після довгої стоянки або за слабкого акумулятора"
 
 #: settings/power.py:172
 #: settings/power.py:173
-#: settings/search.py:176
+#: settings/search.py:177
 msgid "Maximum Parked Time"
 msgstr "Найдовша стоянка"
 
 #: settings/power.py:172
-#: settings/search.py:176
+#: settings/search.py:177
 msgid "Then it turns off, sparing the car's battery"
 msgstr "Потім вимикається, бережучи акумулятор авто"
 
 #: settings/power.py:175
 #: settings/power.py:176
-#: settings/search.py:177
+#: settings/search.py:178
 msgid "Low-Voltage Cutoff"
 msgstr "Відсічка низької напруги"
 
 #: settings/power.py:175
-#: settings/search.py:177
+#: settings/search.py:178
 msgid "Turns off sooner if the battery drops this low"
 msgstr "Вимикається раніше, якщо акумулятор сяде до цього рівня"
 
 #: settings/power.py:184
-#: settings/search.py:180
+#: settings/search.py:181
 msgid "Drive State"
 msgstr "Стан руху"
 
 #: settings/power.py:184
-#: settings/search.py:180
+#: settings/search.py:181
 msgid "Auto follows the car; force offroad or onroad for testing"
 msgstr "Авто стежить за машиною; для тестів примусьте Стоянку чи Їзду"
 
@@ -4641,12 +4642,12 @@ msgid "Turn the comma off after {} parked? Other protections can turn it off soo
 msgstr "Вимикати comma після {} стоянки? Інші захисти можуть вимкнути його раніше."
 
 #: settings/power.py:180
-#: settings/search.py:178
+#: settings/search.py:179
 msgid "Aggressive Cooling"
 msgstr "Посилене охолодження"
 
 #: settings/power.py:180
-#: settings/search.py:178
+#: settings/search.py:179
 msgid "Fan runs sooner and harder: 10 to 16 °C cooler, more noise"
 msgstr "Вентилятор вмикається раніше й сильніше: на 10–16 °C холодніше, більше шуму"
 
@@ -4788,570 +4789,580 @@ msgid "Connections"
 msgstr "З'єднання"
 
 #: settings/search.py:30
-#: settings/search.py:148
+#: settings/search.py:149
 #: settings/tuner.py:239
 msgid "Steering"
 msgstr "Кермування"
 
 #: settings/search.py:30
-#: settings/search.py:152
+#: settings/search.py:153
 #: settings/tuner.py:245
 msgid "Gas & Brake"
 msgstr "Газ і гальма"
 
 #: settings/search.py:30
-#: settings/search.py:154
+#: settings/search.py:155
 #: settings/tuner.py:309
 msgid "Following & Stops"
 msgstr "Дистанція й зупинки"
 
 #: settings/search.py:81
-#: settings/speed_steering.py:217
+#: settings/speed_steering.py:293
 msgid "Driving style, speed limits, lane changes and steering"
 msgstr "Стиль водіння, обмеження швидкості, зміна смуги й кермування"
 
 #: settings/search.py:82
-#: settings/speed_steering.py:182
+#: settings/speed_steering.py:254
 msgid "Driving Style"
 msgstr "Стиль водіння"
 
 #: settings/search.py:82
-#: settings/speed_steering.py:183
+#: settings/speed_steering.py:255
 msgid "Sets following gap, acceleration and braking together"
 msgstr "Разом задає дистанцію, прискорення й гальмування"
 
 #: settings/search.py:83
-#: settings/speed_steering.py:203
+#: settings/speed_steering.py:278
 msgid "Speed Limits"
 msgstr "Обмеження швидкості"
 
 #: settings/search.py:83
-#: settings/speed_steering.py:203
+#: settings/speed_steering.py:278
 msgid "Match sets cruise to the posted limit"
 msgstr "Дотримування задає круїзу швидкість за знаком"
 
 #: settings/search.py:84
-#: settings/speed_steering.py:185
+#: settings/speed_steering.py:272
+msgid "Limit sources"
+msgstr "Джерела обмежень"
+
+#: settings/search.py:84
+#: settings/speed_steering.py:272
+msgid "Where limits come from, in order"
+msgstr "Звідки беруться обмеження, по черзі"
+
+#: settings/search.py:85
+#: settings/speed_steering.py:257
 msgid "Offset"
 msgstr "Зсув"
 
-#: settings/search.py:84
-#: settings/speed_steering.py:185
+#: settings/search.py:85
+#: settings/speed_steering.py:257
 msgid "Added to every matched limit"
 msgstr "Додається до кожного прийнятого обмеження"
 
-#: settings/search.py:85
-#: settings/speed_steering.py:188
+#: settings/search.py:86
+#: settings/speed_steering.py:260
 msgid "Higher limits"
 msgstr "Вищі обмеження"
 
-#: settings/search.py:85
-#: settings/speed_steering.py:188
+#: settings/search.py:86
+#: settings/speed_steering.py:260
 msgid "When a posted limit goes up"
 msgstr "Коли обмеження на знаку зростає"
 
-#: settings/search.py:86
-#: settings/speed_steering.py:191
+#: settings/search.py:87
+#: settings/speed_steering.py:263
 msgid "Lower limits"
 msgstr "Нижчі обмеження"
 
-#: settings/search.py:86
-#: settings/speed_steering.py:191
+#: settings/search.py:87
+#: settings/speed_steering.py:263
 msgid "When a posted limit goes down"
 msgstr "Коли обмеження на знаку зменшується"
 
-#: settings/search.py:87
-#: settings/speed_steering.py:194
+#: settings/search.py:88
+#: settings/speed_steering.py:266
 msgid "MAX follows limits"
 msgstr "MAX дотримується обмежень"
 
-#: settings/search.py:87
-#: settings/speed_steering.py:194
+#: settings/search.py:88
+#: settings/speed_steering.py:266
 msgid "Each new limit sets MAX, so it slows promptly for lower ones"
 msgstr "Кожне нове обмеження задає MAX, щоб вчасно сповільнитися"
 
-#: settings/search.py:89
-#: settings/speed_steering.py:209
+#: settings/search.py:90
+#: settings/speed_steering.py:285
 msgid "Lane Changes"
 msgstr "Зміна смуги"
 
-#: settings/search.py:89
+#: settings/search.py:90
 msgid "Nudge or Auto"
 msgstr "Легкий поштовх або Авто"
 
-#: settings/search.py:90
-#: settings/speed_steering.py:211
+#: settings/search.py:91
+#: settings/speed_steering.py:287
 msgid "Smart Slowdowns"
 msgstr "Розумне сповільнення"
 
-#: settings/search.py:90
-#: settings/speed_steering.py:211
+#: settings/search.py:91
+#: settings/speed_steering.py:287
 msgid "Slows for curves, stop lights and stopped traffic on its own"
 msgstr "Самостійно сповільнюється перед поворотами, світлофорами й зупиненим рухом"
 
-#: settings/search.py:91
-#: settings/speed_steering.py:213
+#: settings/search.py:92
+#: settings/speed_steering.py:289
 msgid "Always-On Steering"
 msgstr "Постійне кермування"
 
-#: settings/search.py:91
+#: settings/search.py:92
 msgid "Keeps steering with cruise off"
 msgstr "Продовжує кермувати з вимкненим круїзом"
 
-#: settings/search.py:92
-#: settings/speed_steering.py:240
+#: settings/search.py:93
+#: settings/speed_steering.py:316
 msgid "Rain, snow and storms ahead, from local weather"
 msgstr "Дощ, сніг і грози попереду, за місцевою погодою"
 
-#: settings/search.py:93
-#: settings/speed_steering.py:238
+#: settings/search.py:94
+#: settings/speed_steering.py:314
 msgid "Warns before rain, snow or storms start, and says when they should stop"
 msgstr "Попереджає перед дощем, снігом або грозою й повідомляє, коли вони мають закінчитися"
 
-#: settings/search.py:97
+#: settings/search.py:98
 msgid "Routes only from downloaded maps, never online"
 msgstr "Маршрути лише із завантажених карт, ніколи онлайн"
 
-#: settings/search.py:98
+#: settings/search.py:99
 msgid "Online or downloaded maps first, with a fallback"
 msgstr "Спершу онлайн- чи завантажені карти, з резервом"
 
-#: settings/search.py:102
+#: settings/search.py:103
 msgid "Mapbox, or Google for live traffic"
 msgstr "Mapbox або Google для заторів наживо"
 
-#: settings/search.py:103
+#: settings/search.py:104
 msgid "Tolls, highways or ferries when planning routes"
 msgstr "Платні дороги, автомагістралі чи пороми під час прокладання маршрутів"
 
-#: settings/search.py:104
+#: settings/search.py:105
 msgid "Where the car's position comes from: the comma, the car or your phone"
 msgstr "Звідки береться позиція авто: comma, авто чи ваш телефон"
 
-#: settings/search.py:105
+#: settings/search.py:106
 msgid "The Mapbox and Google keys for search and routes"
 msgstr "Ключі Mapbox і Google для пошуку й маршрутів"
 
-#: settings/search.py:107
+#: settings/search.py:108
 msgid "The driving screen, the path and the turn signal"
 msgstr "Екран водіння, траєкторія і поворотник"
 
-#: settings/search.py:122
+#: settings/search.py:123
 msgid "Volume and the optional chimes"
 msgstr "Гучність і додаткові звуки"
 
-#: settings/search.py:123
+#: settings/search.py:124
 msgid "One volume for everything, or each group on its own"
 msgstr "Одна гучність для всього або окрема для кожної групи"
 
-#: settings/search.py:129
+#: settings/search.py:130
 msgid "The model that drives, and downloading others"
 msgstr "Модель водіння й завантаження інших"
 
-#: settings/search.py:130
+#: settings/search.py:131
 msgid "StarPilot's default driving model"
 msgstr "Типова модель водіння StarPilot"
 
-#: settings/search.py:131
+#: settings/search.py:132
 msgid "Your car, its steering wheel buttons and car-specific options"
 msgstr "Ваше авто, кнопки керма та спеціальні параметри"
 
-#: settings/search.py:132
+#: settings/search.py:133
 #: settings/vehicle.py:265
 msgid "Steering Wheel Buttons"
 msgstr "Кнопки керма"
 
-#: settings/search.py:132
+#: settings/search.py:133
 msgid "What the car's own buttons do while driving"
 msgstr "Дії штатних кнопок авто під час водіння"
 
-#: settings/search.py:133
+#: settings/search.py:134
 #: settings/vehicle.py:247
 msgid "Auto-Lock Doors"
 msgstr "Автоматично замикати двері"
 
-#: settings/search.py:133
+#: settings/search.py:134
 #: settings/vehicle.py:247
 msgid "Locks when you shift out of park"
 msgstr "Замикає після виходу з положення P"
 
-#: settings/search.py:134
+#: settings/search.py:135
 #: settings/vehicle.py:249
 msgid "Auto-Unlock Doors"
 msgstr "Автоматичне відмикання дверей"
 
-#: settings/search.py:134
+#: settings/search.py:135
 #: settings/vehicle.py:249
 msgid "Unlocks when you shift into park"
 msgstr "Відмикає при переході в положення P"
 
-#: settings/search.py:135
+#: settings/search.py:136
 #: settings/vehicle.py:264
 #: settings/vehicle.py:315
 msgid "More for your car"
 msgstr "Більше для вашого авто"
 
-#: settings/search.py:135
+#: settings/search.py:136
 #: settings/vehicle.py:264
 msgid "Features specific to your make and model"
 msgstr "Функції для вашої марки й моделі"
 
-#: settings/search.py:136
+#: settings/search.py:137
 msgid "openpilot's core switches and driver monitoring"
 msgstr "Основні перемикачі openpilot і моніторинг водія"
 
-#: settings/search.py:137
+#: settings/search.py:138
 msgid "Adaptive cruise and lane keeping"
 msgstr "Адаптивний круїз і утримання смуги"
 
-#: settings/search.py:138
-#: settings/speed_steering.py:327
+#: settings/search.py:139
+#: settings/speed_steering.py:403
 msgid "Disengage on Gas Pedal"
 msgstr "Вимикати педаллю газу"
 
-#: settings/search.py:138
-#: settings/speed_steering.py:327
+#: settings/search.py:139
+#: settings/speed_steering.py:403
 msgid "Pressing the accelerator turns openpilot off"
 msgstr "Натискання газу вимикає openpilot"
 
-#: settings/search.py:139
-#: settings/speed_steering.py:328
+#: settings/search.py:140
+#: settings/speed_steering.py:404
 msgid "Lane Departure Warnings"
 msgstr "Попередження про вихід зі смуги"
 
-#: settings/search.py:139
+#: settings/search.py:140
 msgid "Alerts when you drift over a lane line without signaling"
 msgstr "Попереджає при перетині лінії без покажчика повороту"
 
-#: settings/search.py:140
-#: settings/speed_steering.py:329
+#: settings/search.py:141
+#: settings/speed_steering.py:405
 msgid "Safe Mode"
 msgstr "Безпечний режим"
 
-#: settings/search.py:140
+#: settings/search.py:141
 msgid "Stock tuning, the default model and Relaxed"
 msgstr "Штатні налаштування, типова модель і спокійний стиль"
 
-#: settings/search.py:141
-#: settings/speed_steering.py:337
+#: settings/search.py:142
+#: settings/speed_steering.py:413
 msgid "Always-On Driver Monitoring"
 msgstr "Постійний моніторинг водія"
 
-#: settings/search.py:141
-#: settings/speed_steering.py:337
+#: settings/search.py:142
+#: settings/speed_steering.py:413
 msgid "Watches for distraction even when openpilot is off"
 msgstr "Стежить за неуважністю, навіть коли openpilot вимкнено"
 
-#: settings/search.py:142
+#: settings/search.py:143
 msgid "Check that it can see your face"
 msgstr "Перевірте, чи видно ваше обличчя"
 
-#: settings/search.py:144
-#: settings/speed_steering.py:341
+#: settings/search.py:145
+#: settings/speed_steering.py:417
 msgid "Sentry Mode"
 msgstr "Режим охорони"
 
-#: settings/search.py:144
-#: settings/speed_steering.py:341
+#: settings/search.py:145
+#: settings/speed_steering.py:417
 msgid "Pictures in Galaxy if the parked car is bumped"
 msgstr "Фото в Galaxy при ударі по припаркованому авто"
 
-#: settings/search.py:145
-#: settings/speed_steering.py:343
+#: settings/search.py:146
+#: settings/speed_steering.py:419
 msgid "Sensitivity"
 msgstr "Чутливість"
 
-#: settings/search.py:145
-#: settings/speed_steering.py:343
+#: settings/search.py:146
+#: settings/speed_steering.py:419
 msgid "High notices smaller bumps"
 msgstr "Висока виявляє слабші удари"
 
-#: settings/search.py:146
+#: settings/search.py:147
 msgid "Fine-tuning screens for steering, gas, brake and following"
 msgstr "Екрани тонкого налаштування керма, газу, гальм і дистанції"
 
-#: settings/search.py:148
+#: settings/search.py:149
 msgid "Lane centering and your car's steering tune"
 msgstr "Утримання в центрі смуги та налаштування керма вашого авто"
 
-#: settings/search.py:150
+#: settings/search.py:151
 #: settings/tuner.py:51
 msgid "Lane Centering"
 msgstr "Центрування в смузі"
 
-#: settings/search.py:150
+#: settings/search.py:151
 #: settings/tuner.py:51
 msgid "Steers toward the middle of the lane, not just the model's path"
 msgstr "Кермує до середини смуги, а не лише за траєкторією моделі"
 
-#: settings/search.py:152
+#: settings/search.py:153
 msgid "Acceleration and braking profiles, stops and takeoffs"
 msgstr "Профілі прискорення й гальмування, зупинки та рушання"
 
-#: settings/search.py:154
+#: settings/search.py:155
 msgid "Following gaps and how the car stops"
 msgstr "Дистанції та спосіб зупинки авто"
 
-#: settings/search.py:155
+#: settings/search.py:156
 msgid "Following Gaps"
 msgstr "Дистанції"
 
-#: settings/search.py:155
+#: settings/search.py:156
 msgid "Relaxed, Standard, Sport and Traffic"
 msgstr "Спокійний, Стандартний, Спортивний і Затор"
 
-#: settings/search.py:157
+#: settings/search.py:158
 msgid "Pairing, remote access, calibration, restart and power"
 msgstr "Сполучення, віддалений доступ, калібрування, перезапуск і живлення"
 
-#: settings/search.py:158
+#: settings/search.py:159
 msgid "comma connect: see drives and change settings on your phone"
 msgstr "comma connect: поїздки й налаштування на телефоні"
 
-#: settings/search.py:159
+#: settings/search.py:160
 msgid "Galaxy: reach this device from a web browser"
 msgstr "Galaxy: доступ до пристрою з браузера"
 
-#: settings/search.py:160
+#: settings/search.py:161
 msgid "How the device is mounted"
 msgstr "Як закріплено пристрій"
 
-#: settings/search.py:162
+#: settings/search.py:163
 msgid "Regulatory information"
 msgstr "Нормативні відомості"
 
-#: settings/search.py:163
+#: settings/search.py:164
 msgid "This device's IDs"
 msgstr "Ідентифікатори цього пристрою"
 
-#: settings/search.py:164
+#: settings/search.py:165
 msgid "The cellular modem's ID"
 msgstr "Ідентифікатор мобільного модема"
 
-#: settings/search.py:165
+#: settings/search.py:166
 msgid "Restart the device"
 msgstr "Перезапустити пристрій"
 
-#: settings/search.py:166
+#: settings/search.py:167
 msgid "Turn the device off until the car starts"
 msgstr "Вимкнути пристрій до запуску авто"
 
-#: settings/search.py:167
+#: settings/search.py:168
 msgid "Units, language, brightness and standby"
 msgstr "Одиниці, мова, яскравість і режим очікування"
 
-#: settings/search.py:170
+#: settings/search.py:171
 msgid "Menus and alerts"
 msgstr "Меню й попередження"
 
-#: settings/search.py:173
+#: settings/search.py:174
 msgid "Parked limits for the car's battery, cooling and drive state"
 msgstr "Межі стоянки для акумулятора авто, охолодження й стану руху"
 
-#: settings/search.py:182
+#: settings/search.py:183
 msgid "Snapshots of your settings"
 msgstr "Копії налаштувань"
 
-#: settings/search.py:183
+#: settings/search.py:184
 msgid "What's using space, and recording and uploads"
 msgstr "Використання місця, запис і вивантаження"
 
-#: settings/search.py:184
+#: settings/search.py:185
 #: settings/storage.py:176
 msgid "Recorded Drives"
 msgstr "Записані поїздки"
 
-#: settings/search.py:184
+#: settings/search.py:185
 #: settings/storage.py:176
 msgid "Oldest drives are removed when space runs low"
 msgstr "Коли бракує місця, видаляються найстаріші поїздки"
 
-#: settings/search.py:185
+#: settings/search.py:186
 msgid "Delete downloaded map data"
 msgstr "Видалити завантажені карти"
 
-#: settings/search.py:186
+#: settings/search.py:187
 #: settings/storage.py:178
 msgid "Unused Models"
 msgstr "Невикористовувані моделі"
 
-#: settings/search.py:186
+#: settings/search.py:187
 msgid "Downloaded models that aren't in use"
 msgstr "Завантажені невикористовувані моделі"
 
-#: settings/search.py:187
+#: settings/search.py:188
 #: settings/storage.py:180
 msgid "Record Driver Camera"
 msgstr "Запис камери водія"
 
-#: settings/search.py:187
+#: settings/search.py:188
 msgid "Saved and uploaded with your drives"
 msgstr "Зберігається й вивантажується з поїздками"
 
-#: settings/search.py:188
+#: settings/search.py:189
 #: settings/storage.py:181
 msgid "Record Microphone"
 msgstr "Запис мікрофона"
 
-#: settings/search.py:188
+#: settings/search.py:189
 msgid "Cabin audio in your drive recordings"
 msgstr "Звук салону в записах поїздок"
 
-#: settings/search.py:189
+#: settings/search.py:190
 #: settings/storage.py:182
 msgid "Drive logs and video for debugging"
 msgstr "Журнали й відео поїздок для налагодження"
 
-#: settings/search.py:190
+#: settings/search.py:191
 #: settings/storage.py:116
 msgid "Uploads on Cellular"
 msgstr "Вивантаження через мобільну мережу"
 
-#: settings/search.py:190
+#: settings/search.py:191
 #: settings/storage.py:116
 msgid "Full logs and video on cellular or a metered hotspot. Uses mobile data."
 msgstr "Повні журнали й відео через мобільну мережу або лімітовану точку доступу. Витрачає мобільний трафік."
 
-#: settings/search.py:192
+#: settings/search.py:193
 msgid "Upload more drives to train openpilot's driving models"
 msgstr "Вивантажуйте більше поїздок, щоб навчати моделі керування openpilot"
 
-#: settings/search.py:194
+#: settings/search.py:195
 msgid "What was using RAM on drives that ran low"
 msgstr "Що використовувало RAM у поїздках, коли її бракувало"
 
-#: settings/search.py:195
+#: settings/search.py:196
 msgid "Send what happened to the developers"
 msgstr "Надіслати опис проблеми розробникам"
 
-#: settings/search.py:196
+#: settings/search.py:197
 msgid "ADB, SSH and debug modes"
 msgstr "ADB, SSH та режими налагодження"
 
-#: settings/search.py:197
+#: settings/search.py:198
 msgid "Connect over USB or the network"
 msgstr "Підключення через USB або мережу"
 
-#: settings/search.py:198
+#: settings/search.py:199
 msgid "Remote shell access"
 msgstr "Віддалений доступ до оболонки"
 
-#: settings/search.py:199
+#: settings/search.py:200
 msgid "Adds every public key in a GitHub account"
 msgstr "Додає всі публічні ключі облікового запису GitHub"
 
-#: settings/search.py:200
+#: settings/search.py:201
 msgid "Drive openpilot's controls from a joystick"
 msgstr "Керування openpilot джойстиком"
 
-#: settings/search.py:201
+#: settings/search.py:202
 msgid "Turns off the car's emergency braking"
 msgstr "Вимикає екстрене гальмування авто"
 
-#: settings/search.py:204
+#: settings/search.py:205
 msgid "Networks nearby, and joining one"
 msgstr "Мережі поруч і підключення до них"
 
-#: settings/search.py:205
+#: settings/search.py:206
 msgid "IP Address"
 msgstr "IP-адреса"
 
-#: settings/search.py:205
+#: settings/search.py:206
 msgid "This device's local address, beside the connected network"
 msgstr "Локальна адреса пристрою біля підключеної мережі"
 
-#: settings/search.py:206
+#: settings/search.py:207
 msgid "Enter its name and password"
 msgstr "Введіть назву й пароль"
 
 #. English fallback pending cellular-status translation.
-#: settings/search.py:207
+#: settings/search.py:208
 msgid "Connection status, hotspot, data use, roaming and APN"
 msgstr "Стан з'єднання, точка доступу, використання даних, роумінг і APN"
 
-#: settings/search.py:209
+#: settings/search.py:210
 msgid "The name phones see when joining this device"
 msgstr "Назва, яку бачать телефони при підключенні"
 
 #. English fallback pending cellular-status translation.
-#: settings/search.py:212
+#: settings/search.py:213
 msgid "Roaming, APN and the cellular IP address"
 msgstr "Роумінг, APN та IP-адреса мобільного зв'язку"
 
 #. English fallback pending cellular-status translation.
-#: settings/search.py:213
+#: settings/search.py:214
 msgid "The modem's mobile data address"
 msgstr "Адреса мобільних даних модема"
 
-#: settings/search.py:214
+#: settings/search.py:215
 msgid "A wheel remote's buttons and what they do"
 msgstr "Кнопки пульта керма та їхні дії"
 
-#: settings/search.py:215
+#: settings/search.py:216
 msgid "Pair and connect phones, speakers and remotes"
 msgstr "Сполучайте й під'єднуйте телефони, динаміки та пульти"
 
-#: settings/search.py:221
+#: settings/search.py:222
 msgid "Download speed, upload speed and ping of this device's connection"
 msgstr "Швидкість завантаження, швидкість вивантаження та пінг з'єднання цього пристрою"
 
-#: settings/search.py:224
+#: settings/search.py:225
 msgid "Updates and the release notes"
 msgstr "Оновлення й примітки до випуску"
 
-#: settings/search.py:225
+#: settings/search.py:226
 #: settings/software.py:205
 msgid "Automatic Updates"
 msgstr "Автоматичні оновлення"
 
-#: settings/search.py:225
+#: settings/search.py:226
 msgid "Download while parked, install when you turn off the car"
 msgstr "Завантаження на стоянці, встановлення після вимкнення авто"
 
-#: settings/search.py:226
+#: settings/search.py:227
 #: settings/software.py:202
 msgid "Release Channel"
 msgstr "Канал оновлень"
 
-#: settings/search.py:226
+#: settings/search.py:227
 msgid "The branch to download updates from"
 msgstr "Гілка для завантаження оновлень"
 
-#: settings/search.py:227
+#: settings/search.py:228
 #: settings/software.py:211
 msgid "Reset Settings"
 msgstr "Скинути налаштування"
 
-#: settings/search.py:227
+#: settings/search.py:228
 msgid "Back to the Essentials defaults"
 msgstr "Повернути типові налаштування Essentials"
 
-#: settings/search.py:228
+#: settings/search.py:229
 #: settings/software.py:183
 #: settings/software.py:215
 msgid "Uninstall"
 msgstr "Видалити програму"
 
-#: settings/search.py:228
+#: settings/search.py:229
 msgid "Remove this software from the device"
 msgstr "Видалити цю програму з пристрою"
 
-#: settings/search.py:405
-#: settings/search.py:396
+#: settings/search.py:406
+#: settings/search.py:397
 msgid "Search settings"
 msgstr "Пошук налаштувань"
 
-#: settings/search.py:294
+#: settings/search.py:295
 msgid "Say a setting, like speed limit. Tap the mic when you're done."
 msgstr "Назвіть налаштування, наприклад обмеження швидкості. Завершивши, торкніться мікрофона."
 
-#: settings/search.py:376
-#: settings/search.py:335
+#: settings/search.py:377
+#: settings/search.py:336
 #, python-brace-format
 msgid "No settings match “{}”"
 msgstr "Немає налаштувань за запитом «{}»"
 
-#: settings/search.py:377
+#: settings/search.py:378
 msgid "Type a setting's name or what it does, like brightness or lane changes"
 msgstr "Введіть назву чи дію, наприклад яскравість або зміна смуги"
 
@@ -5515,130 +5526,201 @@ msgstr "Версія {}"
 msgid "What's new"
 msgstr "Що нового"
 
-#: settings/speed_steering.py:26
+#: settings/speed_steering.py:29
 #: setup.py:48
 msgid "Show"
 msgstr "Показувати"
 
-#: settings/speed_steering.py:27
+#: settings/speed_steering.py:30
 msgid "Update automatically"
 msgstr "Оновлювати автоматично"
 
-#: settings/speed_steering.py:27
+#: settings/speed_steering.py:30
 msgid "Tap to confirm"
 msgstr "Торкніться для підтвердження"
 
-#: settings/speed_steering.py:28
+#: settings/speed_steering.py:31
 msgid "Nudge"
 msgstr "Легкий поштовх"
 
-#: settings/speed_steering.py:247
+#: settings/speed_steering.py:47
+#: settings/storage.py:25
+#: sidebar.py:159
+msgid "Maps"
+msgstr "Карти"
+
+#: settings/speed_steering.py:47
+msgctxt "a speed limit source, after the first in a list"
+msgid "maps"
+msgstr "карти"
+
+#: settings/speed_steering.py:48
+msgctxt "a speed limit source, after the first in a list"
+msgid "camera"
+msgstr "камера"
+
+#: settings/speed_steering.py:49
+msgid "Car"
+msgstr "Авто"
+
+#: settings/speed_steering.py:49
+msgctxt "a speed limit source, after the first in a list"
+msgid "car"
+msgstr "авто"
+
+#: settings/speed_steering.py:51
+msgid "First"
+msgstr "Перше"
+
+#: settings/speed_steering.py:51
+msgid "Used whenever it has a limit"
+msgstr "Використовується, щойно має обмеження"
+
+#: settings/speed_steering.py:51
+msgid "Second"
+msgstr "Друге"
+
+#: settings/speed_steering.py:51
+msgid "When the first has none"
+msgstr "Коли в першого немає"
+
+#: settings/speed_steering.py:52
+msgid "Third"
+msgstr "Третє"
+
+#: settings/speed_steering.py:52
+msgid "When neither has one"
+msgstr "Коли в жодного немає"
+
+#: settings/speed_steering.py:138
+#, python-brace-format
+msgctxt "speed limit sources in order"
+msgid "{}, {}, then {}"
+msgstr "{}, {}, потім {}"
+
+#: settings/speed_steering.py:248
+msgid "Speed limit sources"
+msgstr "Джерела обмежень швидкості"
+
+#: settings/speed_steering.py:323
 msgid "Low"
 msgstr "Низька"
 
-#: settings/speed_steering.py:247
+#: settings/speed_steering.py:323
 msgid "High"
 msgstr "Висока"
 
-#: settings/speed_steering.py:153
+#: settings/speed_steering.py:132
+msgid "None"
+msgstr "Немає"
+
+#: settings/speed_steering.py:137
+#, python-brace-format
+msgctxt "speed limit sources in order"
+msgid "{}, then {}"
+msgstr "{}, потім {}"
+
+#: settings/speed_steering.py:199
 msgid "Starts one lane change per signal on its own."
 msgstr "Сам починає одну зміну смуги на кожен сигнал повороту."
 
-#: settings/speed_steering.py:153
+#: settings/speed_steering.py:199
 msgid "Changes lanes only when you nudge the wheel."
 msgstr "Змінює смугу лише після поштовху керма."
 
-#: settings/speed_steering.py:154
+#: settings/speed_steering.py:200
 msgid "Change lane changes?"
 msgstr "Змінити спосіб зміни смуги?"
 
-#: settings/speed_steering.py:213
+#: settings/speed_steering.py:246
+msgid "Maps reads your offline maps. Camera reads signs as you pass them. Car uses its own sign reading."
+msgstr "Карти читають ваші офлайн-карти. Камера читає знаки, повз які ви їдете. Авто використовує власне розпізнавання знаків."
+
+#: settings/speed_steering.py:248
+msgid "When more than one has a limit, the first one wins"
+msgstr "Якщо обмеження має кілька, перемагає перше"
+
+#: settings/speed_steering.py:289
 msgid "Keeps steering with cruise off."
 msgstr "Продовжує кермувати з вимкненим круїзом."
 
-#: settings/speed_steering.py:216
+#: settings/speed_steering.py:292
 #, python-brace-format
 msgid "{} settings"
 msgstr "Налаштувань: {}"
 
-#: settings/speed_steering.py:233
+#: settings/speed_steering.py:309
 msgid "Heads-up on"
 msgstr "Попередження ввімкнено"
 
-#: settings/speed_steering.py:241
+#: settings/speed_steering.py:317
 msgid "Needs an internet connection. Chips show it ahead and while it lasts."
 msgstr "Потрібен інтернет. Позначки видно завчасно та протягом негоди."
 
-#: settings/speed_steering.py:286
+#: settings/speed_steering.py:362
 msgid "Gas pedal disengages"
 msgstr "Педаль газу вимикає"
 
-#: settings/speed_steering.py:286
+#: settings/speed_steering.py:362
 msgid "Gas pedal doesn't disengage"
 msgstr "Педаль газу не вимикає"
 
-#: settings/speed_steering.py:312
+#: settings/speed_steering.py:388
 msgid "Driver monitoring always on"
 msgstr "Моніторинг водія завжди ввімкнено"
 
-#: settings/speed_steering.py:312
+#: settings/speed_steering.py:388
 msgid "Driver monitoring while engaged"
 msgstr "Моніторинг під час активного керування"
 
-#: settings/speed_steering.py:331
+#: settings/speed_steering.py:407
 msgid "openpilot's core switches"
 msgstr "Основні перемикачі openpilot"
 
-#: settings/speed_steering.py:346
+#: settings/speed_steering.py:422
 msgid "Watches that you're paying attention"
 msgstr "Перевіряє, чи ви уважні"
 
-#: settings/speed_steering.py:182
+#: settings/speed_steering.py:254
 msgid "Relaxed while Safe Mode is on"
 msgstr "Спокійний стиль у безпечному режимі"
 
-#: settings/speed_steering.py:195
+#: settings/speed_steering.py:267
 msgid "Your car's cruise sets MAX on this car; the limit still caps the speed"
 msgstr "У цьому авто MAX задає круїз-контроль; обмеження все одно стримує швидкість"
 
-#: settings/speed_steering.py:209
+#: settings/speed_steering.py:285
 #, python-brace-format
 msgid "Auto starts one change per signal, above {} {}"
 msgstr "Авто починає одну зміну смуги на кожен сигнал вище {} {}"
 
-#: settings/speed_steering.py:325
+#: settings/speed_steering.py:401
 msgid "Adaptive cruise and lane keeping. Your attention is required at all times."
 msgstr "Адаптивний круїз і утримання смуги. Ваша увага потрібна завжди."
 
-#: settings/speed_steering.py:328
+#: settings/speed_steering.py:404
 msgid "Alerts when you drift over a lane line without signaling, above 31 mph (50 km/h)"
 msgstr "Попереджає про перетин лінії без покажчика вище 31 mph (50 km/h)"
 
-#: settings/speed_steering.py:329
+#: settings/speed_steering.py:405
 msgid "Uses stock tuning, the default model and Relaxed until turned off."
 msgstr "Використовує штатні налаштування, типову модель і спокійний стиль до вимкнення."
 
-#: settings/speed_steering.py:340
+#: settings/speed_steering.py:416
 msgid "WHILE PARKED"
 msgstr "НА СТОЯНЦІ"
 
-#: settings/speed_steering.py:318
+#: settings/speed_steering.py:394
 msgid " Restarts openpilot if the car is on."
 msgstr " Якщо авто ввімкнене, openpilot перезапуститься."
 
-#: settings/speed_steering.py:342
+#: settings/speed_steering.py:418
 msgid "Turn off the car to change Sentry Mode"
 msgstr "Вимкніть авто, щоб змінити режим охорони"
 
 #: settings/storage.py:25
 msgid "Drives"
 msgstr "Поїздки"
-
-#: settings/storage.py:25
-#: sidebar.py:159
-#: sidebar.py:156
-msgid "Maps"
-msgstr "Карти"
 
 #: settings/storage.py:25
 msgid "Models"

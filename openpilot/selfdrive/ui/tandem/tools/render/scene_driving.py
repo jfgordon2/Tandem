@@ -48,6 +48,7 @@ def example_owner() -> Owner:
   """A parked RAV4 Hybrid's rows, with StarPilot's choices and defaults."""
   owner = Owner({
     "slc": {"SpeedLimitController": "On", "ShowSpeedLimits": "On", "SLCOnEngage": "On", "SLCConfirmation": "Higher only",
+            "SLCPriority1": "Maps", "SLCPriority2": "Vision", "SLCPriority3": "Off",
             **dict.fromkeys(OFFSET_KEYS, "3")},
     "profiles": {"profile:global_acceleration": "StarPilot Default", "profile:global_braking": "StarPilot Default",
                  "DisengageOnAccelerator": "On", "ForceStops": "Off", "ForceStopDistanceOffset": "0", "FasterLeadTakeoff": "Off"},
@@ -83,6 +84,8 @@ def example_owner() -> Owner:
         choices = ("No Action", "Change Personality", "Toggle Experimental Mode", "Pause Steering")
       if key.startswith("profile:global"):
         choices = ("StarPilot Default", "Normal", "Comfort", "Sport")
+      if key.startswith("SLCPriority"):
+        choices = ("Dashboard", "Vision", "Maps") if key == "SLCPriority1" else ("Off", "Dashboard", "Vision", "Maps")
       if key == "SoundPack":
         choices = ("StarPilot Sounds", "Stock Sounds", "Classic openpilot (pre-C4)", "openpilot 2025")
       rows[key] = replace(row, label=labels.get(key, key), choices=choices, default_value=row.value, unit=units.get(key, ""),
@@ -90,6 +93,17 @@ def example_owner() -> Owner:
   rows = owner.pages["relaxed"]
   rows["RelaxedFollow"] = replace(rows["RelaxedFollow"], value="1.8")   # one override, as the mock shows
   return owner
+
+
+def limit_sources_shots(window: SettingsWindow, owner: Any, shot: Callable[[str], None]) -> None:
+  """Everyday with Limit sources (design/driving-limitsources.html), and its sheet (speedlimitsources.html), fully open."""
+  from openpilot.selfdrive.ui.tandem.settings.speed_steering import SpeedSteering, sources_sheet
+  shot("driving-limitsources")
+  sheet = sources_sheet(SpeedSteering(Store(), owner.rows), window)
+  window.present(sheet)
+  sheet._shown_at = None
+  shot("speedlimitsources")
+  window.dismiss()
 
 
 def catalog_shot(window: SettingsWindow, shot: Callable[[str], None]) -> None:
@@ -157,6 +171,8 @@ def main(frame: Callable, save: Callable, out: str, tap: Callable, gui_app: Any)
                        ("vehicle", "drivingvehicle"), ("assistance", "assistance"), ("tuner", "tuner")):
       hub.pages[page]()
       shot(mock)
+      if page == "speed_steering":
+        limit_sources_shots(window, owner, shot)
       if page == "alerts":
         alerts_shots(window, owner, shot)
       if page == "model":

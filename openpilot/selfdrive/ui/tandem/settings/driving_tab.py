@@ -158,7 +158,7 @@ def driving_hub(window: SettingsWindow, services: DrivingServices) -> HubPage:
     tuner_button = Button(N_("Tuner Mode"), open_tuner, ButtonStyle.SECONDARY, width=T.SIDEBAR_WIDTH, accessory=chevron_glyph)
     tuner_button.set_visible(TUNER_MODE.get)
     return SectionPage(N_("SPEED & STEERING"), [
-      Section(N_("Everyday"), lambda: everyday_panel(speed)),
+      Section(N_("Everyday"), lambda: everyday_panel(speed, window)),
       Section(N_("Weather"), lambda: weather_panel(weather), value=weather.summary),
       Section(N_("Navigation"), lambda: navigation_panel(navigation.get(), open_destinations, open_key_help,
                                                          (lambda: maps.get()) if maps is not None else None, open_maps),

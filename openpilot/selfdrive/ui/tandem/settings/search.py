@@ -81,6 +81,7 @@ ENTRIES: list[Entry] = [
   _place(N_("Speed & Steering"), N_("Driving style, speed limits, lane changes and steering"), 0, S),
   Entry(N_("Driving Style"), N_("Sets following gap, acceleration and braking together"), 0, S, 0, "personality relaxed standard sport following distance"),
   Entry(N_("Speed Limits"), N_("Match sets cruise to the posted limit"), 0, S, 0, "slc speed limit controller"),
+  Entry(N_("Limit sources"), N_("Where limits come from, in order"), 0, S, 0, "speed limit source maps camera vision dashboard priority"),
   Entry(N_("Offset"), N_("Added to every matched limit"), 0, S, 0, "speed limit offset"),
   Entry(N_("Higher limits"), N_("When a posted limit goes up"), 0, S, 0, "confirm speed limit ask raise"),
   Entry(N_("Lower limits"), N_("When a posted limit goes down"), 0, S, 0, "confirm speed limit ask lower slow"),

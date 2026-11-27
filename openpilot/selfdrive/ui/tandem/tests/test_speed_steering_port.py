@@ -172,3 +172,29 @@ def test_assistance_reads_owned_and_plain_settings_and_sentry_is_an_explicit_act
   model.set_sentry(True)
   model.set_sentry_sensitivity(2)
   assert page(owner, "sentry") == {"sentry:enabled": "On", "sentry:sensitivity": "0.020"} and model.sentry_sensitivity == 2
+
+
+def _with_sources(owner: Owner, first: str = "Maps", second: str = "Vision", third: str = "Off") -> None:
+  rows = owner.pages["slc"]
+  for key, value, choices in (("SLCPriority1", first, ("Dashboard", "Vision", "Maps")),
+                              ("SLCPriority2", second, ("Off", "Dashboard", "Vision", "Maps")),
+                              ("SLCPriority3", third, ("Off", "Dashboard", "Vision", "Maps"))):
+    rows[key] = replace(Row(key, value), choices=choices)
+
+
+def test_limit_sources_are_starpilots_three_in_plain_words(owner: Owner) -> None:
+  from openpilot.selfdrive.ui.tandem.settings.speed_steering import SOURCE_KEYS
+  _with_sources(owner)
+  model = SpeedSteering(Store(), owner.rows)
+  assert model.sources_summary() == "Maps, then camera"
+  assert model.source_choices(0) == ["Maps", "Vision", "Dashboard"] and model.source_choices(1) == ["Off", "Maps", "Vision", "Dashboard"]
+  model.set_source(2, "Dashboard")
+  assert page(owner, "slc")[SOURCE_KEYS[2]] == "Dashboard" and model.sources_summary() == "Maps, camera, then car"
+  model.set_source(1, "Off")
+  model.set_source(2, "Off")
+  assert model.sources_summary() == "Maps"
+
+
+def test_starpilots_map_data_label_reads_as_maps(owner: Owner) -> None:
+  _with_sources(owner, first="Map Data")
+  assert SpeedSteering(Store(), owner.rows).source(0) == "Maps"
