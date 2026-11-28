@@ -59,6 +59,14 @@ def test_a_new_street_must_hold_before_it_shows() -> None:
   assert street.update("Oak Ave", 3.6, 36.0) == "Oak Ave"    # turned: named for 1.6 s
 
 
+def test_a_new_street_shows_half_a_second_after_mapd_names_it() -> None:
+  from openpilot.selfdrive.ui.tandem.onroad.streets import StreetName
+  street = StreetName()
+  street.update("Main St", 0.0, 0.0)
+  shown = [street.update("Oak Ave", 10.0 + t / 20, 100.0) for t in range(12)]   # mapd's 20 a second, after a turn
+  assert shown.index("Oak Ave") == 10
+
+
 def test_the_street_goes_when_mapd_goes_quiet() -> None:
   from openpilot.selfdrive.ui.tandem.onroad.streets import StreetName
   street = StreetName()

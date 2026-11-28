@@ -71,9 +71,9 @@ class StreetName:
 
   StarPilot 7 runs mapd as a development shadow (starpilot/maps/SHADOW_LIFECYCLE.md) whose messages are often invalid
   and nameless for seconds at a time between short valid ones (a 2026-11-26 drive: 593 and 1172 of 1199 a minute), so
-  showing only what it names now blinks. The last street stays until mapd names a different one for HOLD_S, as
-  StarPilot's own map waits before a new name, or until the car has driven LOST_M without mapd naming any street. That
-  is distance, not time: stopped at a light the street can't change, and at highway speed seconds cover a lot of road.
+  showing only what it names now blinks. The last street stays until mapd names a different one for HOLD_S, or until
+  the car has driven LOST_M without mapd naming any street. That is distance, not time: stopped at a light the street
+  can't change, and at highway speed seconds cover a lot of road.
   Over a 14-minute drive, 500 m blinked 7 times where 15 s blinked 11 (most nameless stretches were 100 to 300 m). If
   mapd sends nothing at all for SILENT_S (stopped, not just invalid), the street goes.
 
@@ -82,7 +82,9 @@ class StreetName:
     lost_m: How far the car may drive without any street named before the bar shows none.
     silent_s: How long without any message from mapd before the bar shows none.
   """
-  HOLD_S, LOST_M, SILENT_S = 1.5, 500.0, 10.0   # HOLD_S is StarPilot's NAME_HOLD_S (starpilot/ui/onroad_map.py)
+  # StarPilot's own map holds a new name 1.5 s (NAME_HOLD_S, starpilot/ui/onroad_map.py). mapd sends 20 a second, so
+  # 0.5 s is ten readings: enough to pass over a junction's other road, and a second sooner after each turn.
+  HOLD_S, LOST_M, SILENT_S = 0.5, 500.0, 10.0
 
   def __init__(self, hold_s: float = HOLD_S, lost_m: float = LOST_M, silent_s: float = SILENT_S) -> None:
     self._hold, self._lost, self._silent = hold_s, lost_m, silent_s
